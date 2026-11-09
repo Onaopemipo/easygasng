@@ -37,3 +37,7 @@ Review local preview http://127.0.0.1:4177 (private test harness; sample progres
 ?? packages/business-rules/src/loader-design.ts
 ?? tests/easygas-loader.test.ts
 ```
+
+## Subsequent authorised publication
+
+The user subsequently requested “push and deploy”. Source5b9deae was pushed to https://github.com/Onaopemipo/easygasng and deployed to https://easygas-client-demo.vercel.app. Vercel dpl_55FRjAMWJLcGhneF1eCEnDzx7Djh READY. Cloud build/TypeScript and hosted auth/customer privilege rejection/catalogue/no-index and loader-style checks pass. Earlier “local for review/no deployment” statements describe the pre-authorisation phase and are superseded for the client demo only. Configuration/database/native/live-provider holds unchanged. GitHub source CI run42590228787 is still running at handover; no passing result inferred. LDR-PUBLISH-01/G1 track this additional bounded scope. Evidence-only publication commit does not alter deployed app source.

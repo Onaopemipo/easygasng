@@ -51,3 +51,7 @@ User authorised source push and redeployment. Source repository: https://github.
 Hosted smoke evidence is in `docs/deployment/evidence/redeploy-20261109-*.txt`. Prior provider configuration was preserved. New invoice-template rollout remains default OFF, so historical documents retain their existing presentation; bank-transfer funding requires verified business bank configuration. These remain explicit acceptance/configuration dependencies. No native build, server provisioning, live payments, automatic assignment or actual Excel import authorised by this deployment. Production NO-GO remains.
 
 GitHub CI runs validation on push. Mobile bundle export is deferred and now requires explicit manual workflow input; mobile source type checks remain automatic. CI completion is separate from the verified Vercel cloud build and hosted smoke checks.
+
+## Branded-loader rollout
+
+User authorised push/deploy after local loader implementation. Source5b9deae; Vercel dpl_55FRjAMWJLcGhneF1eCEnDzx7Djh READY at stable alias https://easygas-client-demo.vercel.app. Cloud build/types and hosted smoke/auth/privilege/catalogue/no-index plus branded loader CSS/motion/theme checks pass. No schema/configuration changes or mobile builds. Source CI run42590228787 is still in progress at handover. Loader-specific traceability and deployment evidence: docs/traceability/central-loader-rtm.json, docs/loader/evidence/deployment/. Operational production NO-GO remains.
