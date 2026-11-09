@@ -95,3 +95,5 @@ Mobile web corrections (10 November2026): [matrix](mobile-web-corrections-rtm.md
 Customer wallet repair (10 November 2026): [matrix](wallet-repair-rtm.md) and [report](../wallet-repair/report.md). Three bounded local defects verified with48 targeted checks, types/build and local UI; hosted/bank/provider/device acceptance remains open. Previous NO-GO/import holds preserved.
 
 Linked-request phone repair (10 November 2026): [matrix](linked-request-contact-rtm.md). Backend formatting/validation verified; editable saved-draft contacts implemented, browser/hosted acceptance remains open. Existing NO-GO and scope preserved.
+
+10 November demo rollout: source508f137 pushed and Vercel READY; migration073 and hosted smoke verified in the existing [VDEMO matrix](vercel-client-demo-rtm.json). Feature acceptance and production NO-GO remain separate.

@@ -55,3 +55,9 @@ GitHub CI runs validation on push. Mobile bundle export is deferred and now requ
 ## Branded-loader rollout
 
 User authorised push/deploy after local loader implementation. Source5b9deae; Vercel dpl_55FRjAMWJLcGhneF1eCEnDzx7Djh READY at stable alias https://easygas-client-demo.vercel.app. Cloud build/types and hosted smoke/auth/privilege/catalogue/no-index plus branded loader CSS/motion/theme checks pass. No schema/configuration changes or mobile builds. Source CI run42590228787 is still in progress at handover. Loader-specific traceability and deployment evidence: docs/traceability/central-loader-rtm.json, docs/loader/evidence/deployment/. Operational production NO-GO remains.
+
+## 10 November 2026 repair rollout
+
+Source `508f137` pushed to main. Vercel `dpl_5X2wdwR4AkJzmumsbKnDeXZ4LhWV` READY at https://easygas-client-demo.vercel.app. Includes mobile viewport/cart/card/loader corrections, wallet branch/continuation/layout repair and linked-appointment contact validation/correction. Protected encrypted backup authenticated and archive-readable (not a restore drill); migration073 applied with users13, orders2 and wallet entries0 preserved. No seeding or financial backfill. Cloud compile/types and hosted auth/access/catalogue/no-index, wallet funding/configuration and affected route checks pass. No real financial mutation performed by rollout checks.
+
+Evidence: `docs/deployment/evidence/redeploy-20261110-*.txt`. Original physical/browser linked-confirmation, bank configuration, merchant and production gates remain open; production NO-GO/import/retention/native/server holds unchanged. CI completion is separate and not claimed.

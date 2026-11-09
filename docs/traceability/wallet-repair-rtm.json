@@ -10,7 +10,7 @@
       "securityControl": "Authenticated ownership, authoritative active funding context, independent bank approval, provider verification and exactly-once ledger posting preserved",
       "status": "VERIFIED_COMPLETE",
       "testResult": "PASS \u2014 47 targeted regression checks and 1 real PostgreSQL check; typecheck/build pass; local browser checks pass.",
-      "outstandingWork": "Hosted deployment and hosted customer retest pending. Actual receiving-bank configuration, merchant/provider and physical-device acceptance remain open; production NO-GO unchanged.",
+      "outstandingWork": "Hosted deployed; customer UI retest pending. Actual receiving-bank configuration, merchant/provider and physical-device acceptance remain open; production NO-GO unchanged.",
       "evidence": [
         "docs/wallet-repair/evidence/regression-tests.txt",
         "docs/wallet-repair/evidence/postgres-tests.txt",
@@ -53,7 +53,7 @@
       "securityControl": "Authenticated ownership, authoritative active funding context, independent bank approval, provider verification and exactly-once ledger posting preserved",
       "status": "VERIFIED_COMPLETE",
       "testResult": "PASS \u2014 47 targeted regression checks and 1 real PostgreSQL check; typecheck/build pass; local browser checks pass.",
-      "outstandingWork": "Hosted deployment and hosted customer retest pending. Actual receiving-bank configuration, merchant/provider and physical-device acceptance remain open; production NO-GO unchanged.",
+      "outstandingWork": "Hosted deployed; customer UI retest pending. Actual receiving-bank configuration, merchant/provider and physical-device acceptance remain open; production NO-GO unchanged.",
       "evidence": [
         "docs/wallet-repair/evidence/regression-tests.txt",
         "docs/wallet-repair/evidence/postgres-tests.txt",
@@ -88,7 +88,7 @@
       "securityControl": "Authenticated ownership, authoritative active funding context, independent bank approval, provider verification and exactly-once ledger posting preserved",
       "status": "VERIFIED_COMPLETE",
       "testResult": "PASS \u2014 47 targeted regression checks and 1 real PostgreSQL check; typecheck/build pass; local browser checks pass.",
-      "outstandingWork": "Hosted deployment and hosted customer retest pending. Actual receiving-bank configuration, merchant/provider and physical-device acceptance remain open; production NO-GO unchanged.",
+      "outstandingWork": "Hosted deployed; customer UI retest pending. Actual receiving-bank configuration, merchant/provider and physical-device acceptance remain open; production NO-GO unchanged.",
       "evidence": [
         "docs/wallet-repair/evidence/regression-tests.txt",
         "docs/wallet-repair/evidence/postgres-tests.txt",
@@ -150,5 +150,12 @@
     "Extends previous wallet top-up and MWEB-03 scopes; no prior requirement removed.",
     "Reviewed orchestrator financial-source hash change recorded in docs/wallet-repair/approved-scope-change.json; original baseline and previous phase evidence preserved.",
     "No hosted rollout, live activation, native build, VPS deployment or actual historical import."
-  ]
+  ],
+  "deployment20261110": {
+    "source": "508f137",
+    "deployment": "dpl_5X2wdwR4AkJzmumsbKnDeXZ4LhWV",
+    "status": "READY",
+    "evidence": "docs/deployment/evidence/redeploy-20261110-features.txt",
+    "limits": "Hosted route/authenticated wallet checks pass; full UI confirmation, provider and physical gates remain unchanged."
+  }
 }

@@ -13,3 +13,5 @@ Verification: 47/47 targeted regression tests plus 1/1 real PostgreSQL concurren
 Not deployed. Hosted retest, verified receiving-bank settings, merchant Paystack and physical-device acceptance remain open. Production NO-GO and prior import/retention/native/server decisions remain.
 
 Rollback: revert the scoped resolver/components and wallet-specific configuration changes together, restoring the matching reviewed source pin. No migration or customer data backfill is introduced by this phase.
+
+Deployment continuation: source508f137 deployed to the stable Vercel demo on10 November2026. See [deployment evidence](../deployment/vercel-client-demo.md). This supersedes the earlier not-deployed note only; feature/device/provider acceptance statuses remain unchanged.
