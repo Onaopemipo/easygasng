@@ -17,12 +17,17 @@
         "docs/deployment/evidence/ci-repair/postgres-restore.txt",
         "docs/deployment/evidence/ci-repair/mobile-audit.txt",
         "docs/deployment/evidence/ci-repair/mobile-types.txt",
-        "docs/deployment/evidence/ci-repair/traceability.txt"
+        "docs/deployment/evidence/ci-repair/traceability.txt",
+        "docs/deployment/evidence/ci-repair/final-jobs.json",
+        "docs/deployment/evidence/ci-repair/final-web/tests.txt",
+        "docs/deployment/evidence/ci-repair/final-web/build.txt",
+        "docs/deployment/evidence/ci-repair/final-web/types.txt",
+        "docs/deployment/evidence/ci-repair/final-web/dependency-audit.txt"
       ],
       "acceptanceGate": "CI-G1",
-      "status": "PARTIAL",
-      "reason": "Original three failures resolved in hosted run42579110993; matrix schema defect caused sole remaining failure. Schema repaired, local complete RTM validation pending; fresh hosted rerun required.",
-      "outstandingWork": "Fresh full hosted validation after correcting matrix schema.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Hosted run42580549402 passes both web and native source validation. All533 tests pass with no skipped tests; build/types/audits pass. Mobile export skipped, existing Expo58 preserved.",
+      "outstandingWork": "None for this bounded CI repair. Broader production gates and native/device build acceptance remain deferred and are not claimed.",
       "priority": "P0",
       "scope": "Existing CI validation only; no operational production release or native build",
       "uiReference": "GitHub Actions Release validation job results",
@@ -36,7 +41,7 @@
       "negativeTests": [
         "OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption"
       ],
-      "testResult": "PASS: local focused2/2, PostgreSQL2/2, mobile types/config and audit0; hosted second run532/533 with matrix schema defect retained as incomplete.",
+      "testResult": "PASS: hosted533/533 tests,0fail,0skip; web build/types/audit and native types/audit all success. Local focused2/2, PostgreSQL restore/security2/2, traceability2/2 and Expo configuration pass.",
       "validationCommands": [
         "DDI-AUDIT01",
         "OPS-T10",
@@ -62,12 +67,17 @@
         "docs/deployment/evidence/ci-repair/postgres-restore.txt",
         "docs/deployment/evidence/ci-repair/mobile-audit.txt",
         "docs/deployment/evidence/ci-repair/mobile-types.txt",
-        "docs/deployment/evidence/ci-repair/native-github.json"
+        "docs/deployment/evidence/ci-repair/native-github.json",
+        "docs/deployment/evidence/ci-repair/final-jobs.json",
+        "docs/deployment/evidence/ci-repair/final-web/tests.txt",
+        "docs/deployment/evidence/ci-repair/final-web/build.txt",
+        "docs/deployment/evidence/ci-repair/final-web/types.txt",
+        "docs/deployment/evidence/ci-repair/final-web/dependency-audit.txt"
       ],
       "acceptanceGate": "CI-G2",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Hosted native job129033400854 in run42579110993 passed typecheck/audit; export skipped. Local Expo config passes; Expo58 retained; audit0.",
-      "outstandingWork": "No remaining CI gate for mobile dependency repair. Native builds/device acceptance remain deliberately deferred and are not claimed.",
+      "reason": "Hosted run42580549402 passes both web and native source validation. All533 tests pass with no skipped tests; build/types/audits pass. Mobile export skipped, existing Expo58 preserved.",
+      "outstandingWork": "None for this bounded CI repair. Broader production gates and native/device build acceptance remain deferred and are not claimed.",
       "priority": "P1",
       "scope": "Existing CI validation only; no operational production release or native build",
       "uiReference": "GitHub Actions Release validation job results",
@@ -81,7 +91,7 @@
       "negativeTests": [
         "OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption"
       ],
-      "testResult": "PASS: hosted mobile source typecheck and dependency audit0; export skipped. Local Expo config passed.",
+      "testResult": "PASS: hosted533/533 tests,0fail,0skip; web build/types/audit and native types/audit all success. Local focused2/2, PostgreSQL restore/security2/2, traceability2/2 and Expo configuration pass.",
       "validationCommands": [
         "npm audit --omit=dev --audit-level=moderate",
         "mobile typecheck",
@@ -93,7 +103,7 @@
   "gates": [
     {
       "id": "CI-G1",
-      "status": "OPEN",
+      "status": "PASS",
       "requirement": "Fresh hosted web tests/build/types/audit pass"
     },
     {
@@ -101,5 +111,23 @@
       "status": "PASS",
       "requirement": "Fresh hosted mobile source types/audit pass with export skipped"
     }
+  ],
+  "verifiedRun": {
+    "id": 42580549402,
+    "url": "https://github.com/Onaopemipo/easygasng/actions/runs/42580549402",
+    "sourceCommit": "89e5e8ac5bedb6c690e5535abd4fc72e690ab459",
+    "web": "success",
+    "native": "success",
+    "tests": {
+      "pass": 533,
+      "fail": 0,
+      "skipped": 0
+    },
+    "mobileExport": "skipped as required"
+  },
+  "changeLog": [
+    "Original run42577799260:530/533, three web failures and mobile audit failure.",
+    "Repair run42579110993: original failures resolved;532/533 with new matrix schema failure; native success.",
+    "Final run42580549402:533/533, build/types/audits and both jobs success. Historical failures retained; no dropped tests, lowered audit threshold or native export."
   ]
 }

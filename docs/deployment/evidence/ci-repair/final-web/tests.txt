@@ -1,0 +1,3215 @@
+
+> easygas-platform@0.1.0 test
+> node --import tsx --test --test-concurrency=1 tests/*.test.ts
+
+TAP version 13
+# Subtest: ACI-01: older recorded migrations repair missing default-address field without losing addresses or inferring a default
+ok 1 - ACI-01: older recorded migrations repair missing default-address field without losing addresses or inferring a default
+  ---
+  duration_ms: 1715.882435
+  type: 'test'
+  ...
+# Subtest: ADR-01: full house addresses identify a single configured locality
+ok 2 - ADR-01: full house addresses identify a single configured locality
+  ---
+  duration_ms: 1.465616
+  type: 'test'
+  ...
+# Subtest: ADR-04: addresses without commas match only explicit locality and city suffixes
+ok 3 - ADR-04: addresses without commas match only explicit locality and city suffixes
+  ---
+  duration_ms: 0.131735
+  type: 'test'
+  ...
+# Subtest: ADR-02: ambiguous, unknown and street-name matches require confirmation
+ok 4 - ADR-02: ambiguous, unknown and street-name matches require confirmation
+  ---
+  duration_ms: 0.272655
+  type: 'test'
+  ...
+# Subtest: ADR-03: changing or deleting an address cannot reuse a previous automatic match
+ok 5 - ADR-03: changing or deleting an address cannot reuse a previous automatic match
+  ---
+  duration_ms: 0.108541
+  type: 'test'
+  ...
+# Admin isolated HTTP search60 request total ms: 428
+# Subtest: ADM-HTTP18: admin reads enforce authentication, read-only HTTP methods and a persistent per-user search budget
+ok 6 - ADM-HTTP18: admin reads enforce authentication, read-only HTTP methods and a persistent per-user search budget
+  ---
+  duration_ms: 2222.878006
+  type: 'test'
+  ...
+# Subtest: ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero-data states
+ok 7 - ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero-data states
+  ---
+  duration_ms: 1846.151426
+  type: 'test'
+  ...
+# Subtest: ADM-AUTH03: dashboard and search reject customer, forged role and cross-branch scope
+ok 8 - ADM-AUTH03: dashboard and search reject customer, forged role and cross-branch scope
+  ---
+  duration_ms: 1418.43189
+  type: 'test'
+  ...
+# Subtest: ADM-SEARCH12: search returns permitted records only and treats wildcards/injection as literal input
+ok 9 - ADM-SEARCH12: search returns permitted records only and treats wildcards/injection as literal input
+  ---
+  duration_ms: 1329.073762
+  type: 'test'
+  ...
+# Subtest: ADM-REL01: failed order widget is isolated without discarding other canonical widgets
+ok 10 - ADM-REL01: failed order widget is isolated without discarding other canonical widgets
+  ---
+  duration_ms: 1337.520327
+  type: 'test'
+  ...
+# Subtest: ADM-FILTER03: invalid dates, oversized ranges and excessive pages are rejected
+ok 11 - ADM-FILTER03: invalid dates, oversized ranges and excessive pages are rejected
+  ---
+  duration_ms: 1298.717183
+  type: 'test'
+  ...
+# Subtest: ADM-BIZ02: receipts exclude unverified collections and match the existing finance definition after reconciliation
+ok 12 - ADM-BIZ02: receipts exclude unverified collections and match the existing finance definition after reconciliation
+  ---
+  duration_ms: 1546.865328
+  type: 'test'
+  ...
+# Subtest: ADM-AUTH01: single canonical login returns actual role, never accepts a requested privilege
+ok 13 - ADM-AUTH01: single canonical login returns actual role, never accepts a requested privilege
+  ---
+  duration_ms: 1462.766875
+  type: 'test'
+  ...
+# Subtest: ADM-NOTIFY12: unread totals are not limited to display rows and links recheck branch and module access
+ok 14 - ADM-NOTIFY12: unread totals are not limited to display rows and links recheck branch and module access
+  ---
+  duration_ms: 1370.910605
+  type: 'test'
+  ...
+# Subtest: encrypted backup verifies authentication and restores the actual database in isolation
+ok 15 - encrypted backup verifies authentication and restores the actual database in isolation
+  ---
+  duration_ms: 2639.052046
+  type: 'test'
+  ...
+# Subtest: encrypted restore preserves completed service reports, verified receipts and immutable history
+ok 16 - encrypted restore preserves completed service reports, verified receipts and immutable history
+  ---
+  duration_ms: 2898.047277
+  type: 'test'
+  ...
+# Subtest: BULK-HTTP01: actual read handler enforces GET, authentication, staff/driver scope and disabled release configuration
+ok 17 - BULK-HTTP01: actual read handler enforces GET, authentication, staff/driver scope and disabled release configuration
+  ---
+  duration_ms: 1794.148422
+  type: 'test'
+  ...
+# Subtest: BULK-PG01: separate connections serialize duplicate vehicle loads and rollback preserves canonical reservations and custody history
+ok 18 - BULK-PG01: separate connections serialize duplicate vehicle loads and rollback preserves canonical reservations and custody history
+  ---
+  duration_ms: 1206.900612
+  type: 'test'
+  ...
+# Subtest: BULK-05: independent cash reconciliation cannot duplicate existing verified order principal
+ok 19 - BULK-05: independent cash reconciliation cannot duplicate existing verified order principal
+  ---
+  duration_ms: 1865.270088
+  type: 'test'
+  ...
+# Subtest: BULK-04: last-unit reservations, capacity, expired qualification and disabled-feature negatives preserve physical custody
+ok 20 - BULK-04: last-unit reservations, capacity, expired qualification and disabled-feature negatives preserve physical custody
+  ---
+  duration_ms: 1505.757144
+  type: 'test'
+  ...
+# Subtest: BULK-01: loading reserves only buffer; independent acknowledgement, return and replay preserve canonical mass
+ok 21 - BULK-01: loading reserves only buffer; independent acknowledgement, return and replay preserve canonical mass
+  ---
+  duration_ms: 1426.14842
+  type: 'test'
+  ...
+# Subtest: BULK-02: cancelling loaded gas retains vehicle reservation and discrepancy holds closure without inventing adjustments
+ok 22 - BULK-02: cancelling loaded gas retains vehicle reservation and discrepancy holds closure without inventing adjustments
+  ---
+  duration_ms: 1420.329499
+  type: 'test'
+  ...
+# Subtest: BULK-03: metered dispensing enforces arrival, invoice payment, safety and exact quantity; fulfilment debits canonical gas once
+ok 23 - BULK-03: metered dispensing enforces arrival, invoice payment, safety and exact quantity; fulfilment debits canonical gas once
+  ---
+  duration_ms: 1537.066897
+  type: 'test'
+  ...
+# Subtest: METER-02: emergency retirement stops dispensing and requires current owner verification and qualification
+ok 24 - METER-02: emergency retirement stops dispensing and requires current owner verification and qualification
+  ---
+  duration_ms: 1973.983124
+  type: 'test'
+  ...
+# Subtest: METER-01: renewed calibration preserves evidence, rejects stale/unauthorised changes and retires without releasing custody
+ok 25 - METER-01: renewed calibration preserves evidence, rejects stale/unauthorised changes and retires without releasing custody
+  ---
+  duration_ms: 1506.078489
+  type: 'test'
+  ...
+# Subtest: RECOVERY-01: shared independent approval atomically reconciles measured loss and releases only vehicle buffer once
+ok 26 - RECOVERY-01: shared independent approval atomically reconciles measured loss and releases only vehicle buffer once
+  ---
+  duration_ms: 1969.997827
+  type: 'test'
+  ...
+# Subtest: RECOVERY-02: changed balances, stale versions and disabled release cannot activate a stock recovery
+ok 27 - RECOVERY-02: changed balances, stale versions and disabled release cannot activate a stock recovery
+  ---
+  duration_ms: 1529.703193
+  type: 'test'
+  ...
+# Subtest: RECOVERY-03: future measurements, insufficient reserved stock and expired maker qualifications fail closed
+ok 28 - RECOVERY-03: future measurements, insufficient reserved stock and expired maker qualifications fail closed
+  ---
+  duration_ms: 1508.294883
+  type: 'test'
+  ...
+# Subtest: independently governed bundles calculate service-only savings and atomically snapshot linked fulfilments
+ok 29 - independently governed bundles calculate service-only savings and atomically snapshot linked fulfilments
+  ---
+  duration_ms: 2227.592452
+  type: 'test'
+  ...
+# Subtest: CRM-RETURN-01: campaign return reporting requires paid delivered purchase, real completion time and no refund; branch reads stay scoped
+ok 30 - CRM-RETURN-01: campaign return reporting requires paid delivered purchase, real completion time and no refund; branch reads stay scoped
+  ---
+  duration_ms: 1829.296796
+  type: 'test'
+  ...
+# Subtest: CRM-BRANCH-01: moved customers are excluded from new campaign audiences
+ok 31 - CRM-BRANCH-01: moved customers are excluded from new campaign audiences
+  ---
+  duration_ms: 1381.363568
+  type: 'test'
+  ...
+# Subtest: CRM-PAGE-01: bounded search pages retain every scoped customer and targeted follow-ups are not limited to the first page
+ok 32 - CRM-PAGE-01: bounded search pages retain every scoped customer and targeted follow-ups are not limited to the first page
+  ---
+  duration_ms: 1342.716582
+  type: 'test'
+  ...
+# Subtest: requested catalogue prices are exact, separate empty cylinders from refills and never invent stock
+ok 33 - requested catalogue prices are exact, separate empty cylinders from refills and never invent stock
+  ---
+  duration_ms: 1556.720703
+  type: 'test'
+  ...
+# Subtest: upgrade preserves stock, reservations and confirmed order prices and only imports once
+ok 34 - upgrade preserves stock, reservations and confirmed order prices and only imports once
+  ---
+  duration_ms: 1195.507274
+  type: 'test'
+  ...
+# Subtest: mixed checkout is atomic across product reservations, technician availability and replay
+ok 35 - mixed checkout is atomic across product reservations, technician availability and replay
+  ---
+  duration_ms: 2212.350764
+  type: 'test'
+  ...
+# Subtest: managed categories, variant metadata and archiving cannot bypass approved prices or compatibility review
+ok 36 - managed categories, variant metadata and archiving cannot bypass approved prices or compatibility review
+  ---
+  duration_ms: 1629.91281
+  type: 'test'
+  ...
+# Subtest: image validation rejects active/invalid formats and keeps booking photographs private and report evidence locked
+ok 37 - image validation rejects active/invalid formats and keeps booking photographs private and report evidence locked
+  ---
+  duration_ms: 1778.195518
+  type: 'test'
+  ...
+# Subtest: downloadable report escapes customer-controlled markup and distinguishes unsafe outcomes from certification
+ok 38 - downloadable report escapes customer-controlled markup and distinguishes unsafe outcomes from certification
+  ---
+  duration_ms: 3.176077
+  type: 'test'
+  ...
+# Subtest: reviewed recommendations count real events, never claim unknown compatibility and disappear for unavailable products
+ok 39 - reviewed recommendations count real events, never claim unknown compatibility and disappear for unavailable products
+  ---
+  duration_ms: 1617.951057
+  type: 'test'
+  ...
+# Subtest: finance reports separate service receipts, pending cash, liabilities and unknown profit without truncating ledger pagination
+ok 40 - finance reports separate service receipts, pending cash, liabilities and unknown profit without truncating ledger pagination
+  ---
+  duration_ms: 1755.589502
+  type: 'test'
+  ...
+# Subtest: purchase credit requires independent verification, is append-only and cannot replay funding
+ok 41 - purchase credit requires independent verification, is append-only and cannot replay funding
+  ---
+  duration_ms: 1689.288343
+  type: 'test'
+  ...
+# Subtest: wallet checkout debits once and cancellation restores exact purchase credit once
+ok 42 - wallet checkout debits once and cancellation restores exact purchase credit once
+  ---
+  duration_ms: 80.39717
+  type: 'test'
+  ...
+# Subtest: insufficient wallet funds cannot reserve stock or create a payment
+ok 43 - insufficient wallet funds cannot reserve stock or create a payment
+  ---
+  duration_ms: 16.945284
+  type: 'test'
+  ...
+# Subtest: POS uses approved server prices, prevents overselling and verifies cash-up independently
+ok 44 - POS uses approved server prices, prevents overselling and verifies cash-up independently
+  ---
+  duration_ms: 75.136939
+  type: 'test'
+  ...
+# Subtest: refund credit requires customer consent and cannot exceed the original verified order
+ok 45 - refund credit requires customer consent and cannot exceed the original verified order
+  ---
+  duration_ms: 86.856272
+  type: 'test'
+  ...
+# Subtest: new point-to-wallet conversions are closed while historical outcomes remain replayable
+ok 46 - new point-to-wallet conversions are closed while historical outcomes remain replayable
+  ---
+  duration_ms: 16.439693
+  type: 'test'
+  ...
+# Subtest: concurrent wallet checkouts cannot overdraw the same purchase-credit balance
+ok 47 - concurrent wallet checkouts cannot overdraw the same purchase-credit balance
+  ---
+  duration_ms: 68.121501
+  type: 'test'
+  ...
+# Subtest: prepaid wallet delivery collects no cash and cannot earn from unapproved seeded economics
+ok 48 - prepaid wallet delivery collects no cash and cannot earn from unapproved seeded economics
+  ---
+  duration_ms: 201.866163
+  type: 'test'
+  ...
+# Subtest: CRM-PAGE01: all follow-ups remain reachable with stable equal-date pagination and branch-private cursors
+ok 49 - CRM-PAGE01: all follow-ups remain reachable with stable equal-date pagination and branch-private cursors
+  ---
+  duration_ms: 1918.150913
+  type: 'test'
+  ...
+# Subtest: CRM-HTTP01: summary and paged follow-ups use actual authenticated GET handlers; mutations and private reads remain separated
+ok 50 - CRM-HTTP01: summary and paged follow-ups use actual authenticated GET handlers; mutations and private reads remain separated
+  ---
+  duration_ms: 1805.891507
+  type: 'test'
+  ...
+# {"measurement":"local PGlite order summary milliseconds","samples":10,"median":2.0040359999998145,"max":4.025148000000172}
+# Subtest: CD-R: all 15 customer routes are unique and grouped; service descendants and tracking match safely
+ok 51 - CD-R: all 15 customer routes are unique and grouped; service descendants and tracking match safely
+  ---
+  duration_ms: 1632.425477
+  type: 'test'
+  ...
+# Subtest: CD-D: safe login return rejects external, encoded, admin and malformed destinations
+ok 52 - CD-D: safe login return rejects external, encoded, admin and malformed destinations
+  ---
+  duration_ms: 0.542966
+  type: 'test'
+  ...
+# Subtest: CD-G,H: shared cart roundtrip preserves quantities through public/account/login navigation without duplicate products
+ok 53 - CD-G,H: shared cart roundtrip preserves quantities through public/account/login navigation without duplicate products
+  ---
+  duration_ms: 0.655173
+  type: 'test'
+  ...
+# Subtest: CD-J: empty dashboard has zero actual counts and no fabricated records
+ok 54 - CD-J: empty dashboard has zero actual counts and no fabricated records
+  ---
+  duration_ms: 33.299906
+  type: 'test'
+  ...
+# Subtest: CD-I,K,V,Z: order summary, actual unread counts, activity and strict identity ownership
+ok 55 - CD-I,K,V,Z: order summary, actual unread counts, activity and strict identity ownership
+  ---
+  duration_ms: 43.727682
+  type: 'test'
+  ...
+# Subtest: CD-L,M,Z: authoritative wallet/reward entries include reversals and remain customer-owned
+ok 56 - CD-L,M,Z: authoritative wallet/reward entries include reversals and remain customer-owned
+  ---
+  duration_ms: 9.665335
+  type: 'test'
+  ...
+# Subtest: CD-O,Q: verified delivered history excludes unpaid/cancelled/other accounts and counts each gas line once
+ok 57 - CD-O,Q: verified delivered history excludes unpaid/cancelled/other accounts and counts each gas line once
+  ---
+  duration_ms: 15.646347
+  type: 'test'
+  ...
+# Subtest: CD-U,Z: default address comes only from active owned backend locations
+ok 58 - CD-U,Z: default address comes only from active owned backend locations
+  ---
+  duration_ms: 23.8425
+  type: 'test'
+  ...
+# Subtest: CD-E,F: revoked and expired sessions cannot retrieve any dashboard source
+ok 59 - CD-E,F: revoked and expired sessions cannot retrieve any dashboard source
+  ---
+  duration_ms: 14.167121
+  type: 'test'
+  ...
+# Subtest: CD-Y: refill source failure does not prevent independent orders, wallet or history responses
+ok 60 - CD-Y: refill source failure does not prevent independent orders, wallet or history responses
+  ---
+  duration_ms: 14.539664
+  type: 'test'
+  ...
+# Subtest: CD-Z: browser-supplied customer IDs cannot widen existing customer API reads
+ok 61 - CD-Z: browser-supplied customer IDs cannot widen existing customer API reads
+  ---
+  duration_ms: 85.417188
+  type: 'test'
+  ...
+# Subtest: CD-63: customer overview query timing is measured on isolated local database
+ok 62 - CD-63: customer overview query timing is measured on isolated local database
+  ---
+  duration_ms: 22.61012
+  type: 'test'
+  ...
+# Subtest: CD-N: all five feedback states are owned; snooze and self-reports suppress obsolete reminders without manufacturing purchases
+ok 63 - CD-N: all five feedback states are owned; snooze and self-reports suppress obsolete reminders without manufacturing purchases
+  ---
+  duration_ms: 404.787326
+  type: 'test'
+  ...
+# Subtest: CM-01: customer creation, scoped management and privilege rejection
+ok 64 - CM-01: customer creation, scoped management and privilege rejection
+  ---
+  duration_ms: 1716.092776
+  type: 'test'
+  ...
+# Subtest: CUI-DATA: physical cylinders and issued invoices are canonical, owned, read-only and reject staff/identity injection
+ok 65 - CUI-DATA: physical cylinders and issued invoices are canonical, owned, read-only and reject staff/identity injection
+  ---
+  duration_ms: 1819.444683
+  type: 'test'
+  ...
+# Subtest: CUI-NAV: notification targets are allowlisted and never execute external links or malformed order identifiers
+ok 66 - CUI-NAV: notification targets are allowlisted and never execute external links or malformed order identifiers
+  ---
+  duration_ms: 0.454145
+  type: 'test'
+  ...
+# Subtest: CUI-SCOPE: onboarding is preserved and later authorised driver-GPS launch delta is explicit
+ok 67 - CUI-SCOPE: onboarding is preserved and later authorised driver-GPS launch delta is explicit
+  ---
+  duration_ms: 2.346124
+  type: 'test'
+  ...
+# Subtest: CUI-LINK: native destinations are allowlisted, reject credential URLs and retain only validated owned-order selectors
+ok 68 - CUI-LINK: native destinations are allowlisted, reject credential URLs and retain only validated owned-order selectors
+  ---
+  duration_ms: 1.032393
+  type: 'test'
+  ...
+# Subtest: CUI-HTTP: customer read resources use GET-compatible query actions instead of forbidden POST bodies
+ok 69 - CUI-HTTP: customer read resources use GET-compatible query actions instead of forbidden POST bodies
+  ---
+  duration_ms: 0.681793
+  type: 'test'
+  ...
+# Subtest: RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage
+ok 70 - RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage
+  ---
+  duration_ms: 554.892034
+  type: 'test'
+  ...
+# Subtest: RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate
+ok 71 - RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate
+  ---
+  duration_ms: 3.219471
+  type: 'test'
+  ...
+# Subtest: limited delegation requires independent owner review and cannot approve grantor requests or exceed its ceiling
+ok 72 - limited delegation requires independent owner review and cannot approve grantor requests or exceed its ceiling
+  ---
+  duration_ms: 1980.684822
+  type: 'test'
+  ...
+# Subtest: revoked delegation invalidates scheduled approval before activation
+ok 73 - revoked delegation invalidates scheduled approval before activation
+  ---
+  duration_ms: 1488.728156
+  type: 'test'
+  ...
+# Subtest: financial and security settings cannot be delegated through the limited grant workflow
+ok 74 - financial and security settings cannot be delegated through the limited grant workflow
+  ---
+  duration_ms: 1416.867613
+  type: 'test'
+  ...
+# Subtest: DEMO-GUARD01: isolated role fixtures refuse production and hosted database environments
+ok 75 - DEMO-GUARD01: isolated role fixtures refuse production and hosted database environments
+  ---
+  duration_ms: 561.038616
+  type: 'test'
+  ...
+# Subtest: Supabase migration creates an unexposed schema with RLS and a restricted server role
+ok 76 - Supabase migration creates an unexposed schema with RLS and a restricted server role
+  ---
+  duration_ms: 1504.416197
+  type: 'test'
+  ...
+# Subtest: the restricted trusted-server role can run the complete local order-to-cash workflow
+ok 77 - the restricted trusted-server role can run the complete local order-to-cash workflow
+  ---
+  duration_ms: 1841.507662
+  type: 'test'
+  ...
+# Subtest: the restricted runtime role supports new accounts, catalogue, purchasing, credit, support and maintenance without owner privileges
+ok 78 - the restricted runtime role supports new accounts, catalogue, purchasing, credit, support and maintenance without owner privileges
+  ---
+  duration_ms: 1530.188786
+  type: 'test'
+  ...
+# Subtest: DDI-S024: unavailable drivers cannot receive a legacy manual assignment
+ok 79 - DDI-S024: unavailable drivers cannot receive a legacy manual assignment
+  ---
+  duration_ms: 1919.216309
+  type: 'test'
+  ...
+# Subtest: DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection
+ok 80 - DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection
+  ---
+  duration_ms: 1420.397954
+  type: 'test'
+  ...
+# Subtest: DDI-READ01: scoped counts include every matching record and pagination never changes totals
+ok 81 - DDI-READ01: scoped counts include every matching record and pagination never changes totals
+  ---
+  duration_ms: 1580.160379
+  type: 'test'
+  ...
+# Subtest: DDI-READ02: dispatch reads reject customer/driver access and cross-branch filters
+ok 82 - DDI-READ02: dispatch reads reject customer/driver access and cross-branch filters
+  ---
+  duration_ms: 1347.003877
+  type: 'test'
+  ...
+# Subtest: DDI-READ03: empty-date dashboard reports actual zeros and unknown contact
+ok 83 - DDI-READ03: empty-date dashboard reports actual zeros and unknown contact
+  ---
+  duration_ms: 1324.015247
+  type: 'test'
+  ...
+# Subtest: DDI-CONTACT01: foreground contact is independently measured, scoped and expires without changing availability
+ok 84 - DDI-CONTACT01: foreground contact is independently measured, scoped and expires without changing availability
+  ---
+  duration_ms: 1338.922948
+  type: 'test'
+  ...
+# Subtest: DDI-PAY01: unverified payment and revoked COD exception block canonical assignment with no attempt
+ok 85 - DDI-PAY01: unverified payment and revoked COD exception block canonical assignment with no attempt
+  ---
+  duration_ms: 1366.591007
+  type: 'test'
+  ...
+# Subtest: DDI-S031: expired authorisation prevents driver acknowledgement without a response
+ok 86 - DDI-S031: expired authorisation prevents driver acknowledgement without a response
+  ---
+  duration_ms: 1374.472262
+  type: 'test'
+  ...
+# Subtest: DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes
+ok 87 - DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes
+  ---
+  duration_ms: 3.384778
+  type: 'test'
+  ...
+# Subtest: DDI-S016: Lagos date boundaries and contact freshness never use upload time or future observations
+ok 88 - DDI-S016: Lagos date boundaries and contact freshness never use upload time or future observations
+  ---
+  duration_ms: 0.853938
+  type: 'test'
+  ...
+# Subtest: DDI-READ04: literal search and status filters share scope and hide private order internals
+ok 89 - DDI-READ04: literal search and status filters share scope and hide private order internals
+  ---
+  duration_ms: 1356.808728
+  type: 'test'
+  ...
+# Subtest: DDI-KPI01: completed counts use actual Lagos delivery date rather than scheduled date
+ok 90 - DDI-KPI01: completed counts use actual Lagos delivery date rather than scheduled date
+  ---
+  duration_ms: 1342.44636
+  type: 'test'
+  ...
+# Subtest: DDI-MASS01: vehicle mass is read once from custody and never added to inclusive branch stock
+ok 91 - DDI-MASS01: vehicle mass is read once from custody and never added to inclusive branch stock
+  ---
+  duration_ms: 1375.256826
+  type: 'test'
+  ...
+# Subtest: DDI-DECLINE01: declined assignments surface in exceptions and replay retains one response
+ok 92 - DDI-DECLINE01: declined assignments surface in exceptions and replay retains one response
+  ---
+  duration_ms: 1375.436048
+  type: 'test'
+  ...
+# Subtest: DDI-S084: production assignment stays disabled without both explicit release approvals
+ok 93 - DDI-S084: production assignment stays disabled without both explicit release approvals
+  ---
+  duration_ms: 1352.442974
+  type: 'test'
+  ...
+# Subtest: DDI-PAY02: legacy invoice-less fulfilment uses the shared net-payment authority after an approved refund
+ok 94 - DDI-PAY02: legacy invoice-less fulfilment uses the shared net-payment authority after an approved refund
+  ---
+  duration_ms: 1303.656348
+  type: 'test'
+  ...
+# Subtest: DDI-S060: missing serialized cylinder allocation blocks dispatch before a delivery attempt
+ok 95 - DDI-S060: missing serialized cylinder allocation blocks dispatch before a delivery attempt
+  ---
+  duration_ms: 1303.844439
+  type: 'test'
+  ...
+# Subtest: DISP-CUSTODY01: dispatch recommendation and final backend guard include unallocated physical vehicle LPG
+ok 96 - DISP-CUSTODY01: dispatch recommendation and final backend guard include unallocated physical vehicle LPG
+  ---
+  duration_ms: 1909.411548
+  type: 'test'
+  ...
+# Subtest: DDI-PHOTO01: customer latest proof follows completed canonical deliveries; expired private URLs deny access while bytes/history remain
+ok 97 - DDI-PHOTO01: customer latest proof follows completed canonical deliveries; expired private URLs deny access while bytes/history remain
+  ---
+  duration_ms: 2144.71788
+  type: 'test'
+  ...
+# Subtest: ROUTE-PG01: independent connections serialize destination revisions and preserve immutable history
+ok 98 - ROUTE-PG01: independent connections serialize destination revisions and preserve immutable history
+  ---
+  duration_ms: 1021.230095
+  type: 'test'
+  ...
+# Subtest: ROUTE-01: Lagos deadlines, stop allowance and explicit whole-route cost
+ok 99 - ROUTE-01: Lagos deadlines, stop allowance and explicit whole-route cost
+  ---
+  duration_ms: 3.408276
+  type: 'test'
+  ...
+# Subtest: ROUTE-02: configured HTTPS OSRM contract, OFF flag and bounded invalid responses
+ok 100 - ROUTE-02: configured HTTPS OSRM contract, OFF flag and bounded invalid responses
+  ---
+  duration_ms: 4.168794
+  type: 'test'
+  ...
+# Subtest: ROUTE-03: authorised destination revisions and stale-context rejection using canonical orders/trips
+ok 101 - ROUTE-03: authorised destination revisions and stale-context rejection using canonical orders/trips
+  ---
+  duration_ms: 2032.220605
+  type: 'test'
+  ...
+# Subtest: BRAND-01: all SMTP email uses escaped branded HTML, embedded logo and original plain text
+ok 102 - BRAND-01: all SMTP email uses escaped branded HTML, embedded logo and original plain text
+  ---
+  duration_ms: 2.689304
+  type: 'test'
+  ...
+# Subtest: DOOR-MULTI01: every cylinder has distinct inspection, per-cylinder meter evidence and one settled supplementary obligation
+ok 103 - DOOR-MULTI01: every cylinder has distinct inspection, per-cylinder meter evidence and one settled supplementary obligation
+  ---
+  duration_ms: 2143.166306
+  type: 'test'
+  ...
+# Subtest: DOOR-MULTI02: partial execution credits only unfilled lines, restores only undispensed vehicle mass and retains paid credit for finance
+ok 104 - DOOR-MULTI02: partial execution credits only unfilled lines, restores only undispensed vehicle mass and retains paid credit for finance
+  ---
+  duration_ms: 1638.305358
+  type: 'test'
+  ...
+# Subtest: DOOR-01: exact consent, independent debit/cash verification and metered supplement share canonical stock without second fee
+ok 105 - DOOR-01: exact consent, independent debit/cash verification and metered supplement share canonical stock without second fee
+  ---
+  duration_ms: 2197.664928
+  type: 'test'
+  ...
+# Subtest: DOOR-02: rejected debit cancellation restores buffer without releasing branch custody or erasing consent
+ok 106 - DOOR-02: rejected debit cancellation restores buffer without releasing branch custody or erasing consent
+  ---
+  duration_ms: 1503.699684
+  type: 'test'
+  ...
+# Subtest: DOOR-03: changed prices, insufficient physical buffer, unsafe ownership and disabled release leave custody unchanged
+ok 107 - DOOR-03: changed prices, insufficient physical buffer, unsafe ownership and disabled release leave custody unchanged
+  ---
+  duration_ms: 1503.6578
+  type: 'test'
+  ...
+# Subtest: DOOR-04: exact cash, stale meter version and consent expiry fail closed; linked credit cancels without inventing a refund
+ok 108 - DOOR-04: exact cash, stale meter version and consent expiry fail closed; linked credit cancels without inventing a refund
+  ---
+  duration_ms: 1573.044317
+  type: 'test'
+  ...
+# Subtest: DOOR-05: finance can reconcile cash reported in time after meter retirement and quote expiry without permitting gas handover
+ok 109 - DOOR-05: finance can reconcile cash reported in time after meter retirement and quote expiry without permitting gas handover
+  ---
+  duration_ms: 1487.736803
+  type: 'test'
+  ...
+# Subtest: DOOR-PG01: independent connections serialize reservation, cash verification and metered supplement; forced abort preserves stock and custody
+ok 110 - DOOR-PG01: independent connections serialize reservation, cash verification and metered supplement; forced abort preserves stock and custody
+  ---
+  duration_ms: 1316.36468
+  type: 'test'
+  ...
+# Subtest: DOOR-PRODUCT01: acknowledged vehicle products share original consent/invoice/verified cash/code and one fee; return releases only remaining custody
+ok 111 - DOOR-PRODUCT01: acknowledged vehicle products share original consent/invoice/verified cash/code and one fee; return releases only remaining custody
+  ---
+  duration_ms: 2144.485198
+  type: 'test'
+  ...
+# Subtest: DOOR-PRODUCT02: manifested empty cylinders cannot be sold from branch and transfer exact serial ownership once on original visit
+ok 112 - DOOR-PRODUCT02: manifested empty cylinders cannot be sold from branch and transfer exact serial ownership once on original visit
+  ---
+  duration_ms: 1544.481812
+  type: 'test'
+  ...
+# Subtest: DR-BOUNDARY-01 delivery-only sessions reject legacy cash, sales and stock endpoints
+ok 113 - DR-BOUNDARY-01 delivery-only sessions reject legacy cash, sales and stock endpoints
+  ---
+  duration_ms: 1.037346
+  type: 'test'
+  ...
+# Subtest: DR-GPS-BOUNDARY: trip GPS authority does not grant fuel, cash or fleet-wide reads
+ok 114 - DR-GPS-BOUNDARY: trip GPS authority does not grant fuel, cash or fleet-wide reads
+  ---
+  duration_ms: 0.227087
+  type: 'test'
+  ...
+# Subtest: DR-BOUNDARY-02 delivery-only sessions reject skipped or invented order transitions
+ok 115 - DR-BOUNDARY-02 delivery-only sessions reject skipped or invented order transitions
+  ---
+  duration_ms: 0.160178
+  type: 'test'
+  ...
+# Subtest: DR-BOUNDARY-03 canonical delivery reads and guarded completion remain available
+ok 116 - DR-BOUNDARY-03 canonical delivery reads and guarded completion remain available
+  ---
+  duration_ms: 0.131104
+  type: 'test'
+  ...
+# Subtest: DR-COMPAT-01 legacy session policy remains unchanged pending explicit cutover
+ok 117 - DR-COMPAT-01 legacy session policy remains unchanged pending explicit cutover
+  ---
+  duration_ms: 0.098486
+  type: 'test'
+  ...
+# Subtest: DR-INTEGRATION-01 restricted canonical session enforces role, availability and legacy completion denial
+ok 118 - DR-INTEGRATION-01 restricted canonical session enforces role, availability and legacy completion denial
+  ---
+  duration_ms: 1987.737579
+  type: 'test'
+  ...
+# Subtest: ER-14: cumulative partial line refunds prorate discount and points, preserve delivery, and finish with an exact remaining refund
+ok 119 - ER-14: cumulative partial line refunds prorate discount and points, preserve delivery, and finish with an exact remaining refund
+  ---
+  duration_ms: 2351.893279
+  type: 'test'
+  ...
+# Subtest: ER-10O: approved catalogue offers enforce expiry, budget, point cost and lifetime reuse; unapproved edits cannot publish
+ok 120 - ER-10O: approved catalogue offers enforce expiry, budget, point cost and lifetime reuse; unapproved edits cannot publish
+  ---
+  duration_ms: 1784.091289
+  type: 'test'
+  ...
+# Subtest: ER-19R: independently approved referral hold blocks posting until separately approved clearance and audited retry
+ok 121 - ER-19R: independently approved referral hold blocks posting until separately approved clearance and audited retry
+  ---
+  duration_ms: 1844.269724
+  type: 'test'
+  ...
+# Subtest: ER-31S: Smart Refill offers require approved active offers, communication consent and real forecast history
+ok 122 - ER-31S: Smart Refill offers require approved active offers, communication consent and real forecast history
+  ---
+  duration_ms: 1575.040149
+  type: 'test'
+  ...
+# Subtest: ER-04S: completed service labour earns only after independent payment verification and full refund reverses once
+ok 123 - ER-04S: completed service labour earns only after independent payment verification and full refund reverses once
+  ---
+  duration_ms: 1873.217161
+  type: 'test'
+  ...
+# Subtest: ER-14Z: refund of an entirely points-funded product restores points without fictional monetary wallet credit
+ok 124 - ER-14Z: refund of an entirely points-funded product restores points without fictional monetary wallet credit
+  ---
+  duration_ms: 1720.079304
+  type: 'test'
+  ...
+# Subtest: ER-31P: approved Smart Refill offer uses verified historical sources and disappears on consent withdrawal
+ok 125 - ER-31P: approved Smart Refill offer uses verified historical sources and disappears on consent withdrawal
+  ---
+  duration_ms: 1608.054415
+  type: 'test'
+  ...
+# Subtest: ER-30G: decimal gas plus accessory discount preserves one delivery fee, quoted versions and exact reservations
+ok 126 - ER-30G: decimal gas plus accessory discount preserves one delivery fee, quoted versions and exact reservations
+  ---
+  duration_ms: 1557.748556
+  type: 'test'
+  ...
+# Subtest: ER-PG36: real PostgreSQL duplicate workers/refund approvals, encrypted backup and isolated restore preserve committed effects
+ok 127 - ER-PG36: real PostgreSQL duplicate workers/refund approvals, encrypted backup and isolated restore preserve committed effects
+  ---
+  duration_ms: 3201.254547
+  type: 'test'
+  ...
+# Subtest: ER-PGSEC: migrated private schema works under the restricted runtime role and rejects public ledger access
+ok 128 - ER-PGSEC: migrated private schema works under the restricted runtime role and rejects public ledger access
+  ---
+  duration_ms: 1291.246636
+  type: 'test'
+  ...
+# Subtest: ER-11: independent PostgreSQL connections cannot spend the same points across simultaneous checkouts
+ok 129 - ER-11: independent PostgreSQL connections cannot spend the same points across simultaneous checkouts
+  ---
+  duration_ms: 1258.107783
+  type: 'test'
+  ...
+# Subtest: ER-01: additive migration preserves customer IDs and immutable legacy balances
+ok 130 - ER-01: additive migration preserves customer IDs and immutable legacy balances
+  ---
+  duration_ms: 1883.338007
+  type: 'test'
+  ...
+# Subtest: ER-03: unapproved example economics and self approval cannot issue or redeem
+ok 131 - ER-03: unapproved example economics and self approval cannot issue or redeem
+  ---
+  duration_ms: 1764.399694
+  type: 'test'
+  ...
+# Subtest: ER-05: unverified COD and cancelled orders never enqueue; verified fulfilment awards once from immutable policy
+ok 132 - ER-05: unverified COD and cancelled orders never enqueue; verified fulfilment awards once from immutable policy
+  ---
+  duration_ms: 1777.6408
+  type: 'test'
+  ...
+# Subtest: ER-08: integer kobo calculations round down without floating point rewards
+ok 133 - ER-08: integer kobo calculations round down without floating point rewards
+  ---
+  duration_ms: 0.385143
+  type: 'test'
+  ...
+# Subtest: ER-10: checkout discount enforces min, cap, exclusions; same cart replay posts once and cancellation restores once
+ok 134 - ER-10: checkout discount enforces min, cap, exclusions; same cart replay posts once and cancellation restores once
+  ---
+  duration_ms: 1629.78565
+  type: 'test'
+  ...
+# Subtest: ER-13: failed wallet checkout rolls back discount and inventory with no leaked point hold
+ok 135 - ER-13: failed wallet checkout rolls back discount and inventory with no leaked point hold
+  ---
+  duration_ms: 1585.854931
+  type: 'test'
+  ...
+# Subtest: ER-15: full refund reverses original award once without point-only wallet debit
+ok 136 - ER-15: full refund reverses original award once without point-only wallet debit
+  ---
+  duration_ms: 1743.805783
+  type: 'test'
+  ...
+# Subtest: ER-22: reward ownership, strict API inputs, branch scope and session revocation are enforced
+ok 137 - ER-22: reward ownership, strict API inputs, branch scope and session revocation are enforced
+  ---
+  duration_ms: 1382.499644
+  type: 'test'
+  ...
+# Subtest: ER-25: worker failure retains durable retry source, rolls back optional posting and then succeeds once
+ok 138 - ER-25: worker failure retains durable retry source, rolls back optional posting and then succeeds once
+  ---
+  duration_ms: 1790.192248
+  type: 'test'
+  ...
+# Subtest: ER-37: emergency issuance flag pauses pending jobs and retains real history
+ok 139 - ER-37: emergency issuance flag pauses pending jobs and retains real history
+  ---
+  duration_ms: 1710.328761
+  type: 'test'
+  ...
+# Subtest: ER-18: approved referral first verified fulfilment awards once, hides identities and reverses once on refund
+ok 140 - ER-18: approved referral first verified fulfilment awards once, hides identities and reverses once on refund
+  ---
+  duration_ms: 1758.696752
+  type: 'test'
+  ...
+# Subtest: ER-21: manual point correction requires independent owner and finance approvals and cannot change wallet money
+ok 141 - ER-21: manual point correction requires independent owner and finance approvals and cannot change wallet money
+  ---
+  duration_ms: 1558.099492
+  type: 'test'
+  ...
+# Subtest: ER-26: a lost checkout response recovers the owned committed result and rejects changed payload
+ok 142 - ER-26: a lost checkout response recovers the owned committed result and rejects changed payload
+  ---
+  duration_ms: 1558.303566
+  type: 'test'
+  ...
+# Subtest: ER-38: referral sharing rejects localhost and private IDs and uses only the configured HTTPS public domain
+ok 143 - ER-38: referral sharing rejects localhost and private IDs and uses only the configured HTTPS public domain
+  ---
+  duration_ms: 3.578115
+  type: 'test'
+  ...
+# Subtest: ER-25Q: optional enqueue failure preserves verified fulfilment and records a durable finance incident
+ok 144 - ER-25Q: optional enqueue failure preserves verified fulfilment and records a durable finance incident
+  ---
+  duration_ms: 1660.274051
+  type: 'test'
+  ...
+# Subtest: ER-36: upgrade from revision 42 preserves legacy history and encrypted isolated restore preserves the new point ledger
+ok 145 - ER-36: upgrade from revision 42 preserves legacy history and encrypted isolated restore preserves the new point ledger
+  ---
+  duration_ms: 2159.491916
+  type: 'test'
+  ...
+# Subtest: ER-16: spent award reversal restricts point spending and opens finance review without debiting monetary wallet
+ok 146 - ER-16: spent award reversal restricts point spending and opens finance review without debiting monetary wallet
+  ---
+  duration_ms: 1721.506676
+  type: 'test'
+  ...
+# Subtest: ER-32: authorised reconciliation separates points from monetary liability and rechecks export scope
+ok 147 - ER-32: authorised reconciliation separates points from monetary liability and rechecks export scope
+  ---
+  duration_ms: 1516.760799
+  type: 'test'
+  ...
+# Subtest: ER-09: queued line eligibility and approved economics stay frozen across later policy and category changes
+ok 148 - ER-09: queued line eligibility and approved economics stay frozen across later policy and category changes
+  ---
+  duration_ms: 1861.576999
+  type: 'test'
+  ...
+# Subtest: ER-06: failed delivery never queues an award and excluded categories cannot receive checkout discounts
+ok 149 - ER-06: failed delivery never queues an award and excluded categories cannot receive checkout discounts
+  ---
+  duration_ms: 1641.077652
+  type: 'test'
+  ...
+# Subtest: ER-15F: independently verified full refund restores exactly the discounted monetary total and points only once
+ok 150 - ER-15F: independently verified full refund restores exactly the discounted monetary total and points only once
+  ---
+  duration_ms: 1719.332663
+  type: 'test'
+  ...
+# Subtest: ER-18Q: delayed worker awards the actual first eligible referral purchase even after a later purchase completes
+ok 151 - ER-18Q: delayed worker awards the actual first eligible referral purchase even after a later purchase completes
+  ---
+  duration_ms: 2021.528377
+  type: 'test'
+  ...
+# Subtest: XLS-PREVIEW-01: reconciliation and safety regression tests pass
+ok 152 - XLS-PREVIEW-01: reconciliation and safety regression tests pass
+  ---
+  duration_ms: 74.874284
+  type: 'test'
+  ...
+# Subtest: XLS-PREVIEW-02: recorded review remains unapproved with zero business writes
+ok 153 - XLS-PREVIEW-02: recorded review remains unapproved with zero business writes
+  ---
+  duration_ms: 0.506672
+  type: 'test'
+  ...
+# Subtest: DOC-IDENTITY-email: malformed or unsupported identity cannot activate
+ok 154 - DOC-IDENTITY-email: malformed or unsupported identity cannot activate
+  ---
+  duration_ms: 2.961937
+  type: 'test'
+  ...
+# Subtest: DOC-IDENTITY-site: malformed or unsupported identity cannot activate
+ok 155 - DOC-IDENTITY-site: malformed or unsupported identity cannot activate
+  ---
+  duration_ms: 0.47133
+  type: 'test'
+  ...
+# Subtest: DOC-IDENTITY-site-credentials: malformed or unsupported identity cannot activate
+ok 156 - DOC-IDENTITY-site-credentials: malformed or unsupported identity cannot activate
+  ---
+  duration_ms: 0.220637
+  type: 'test'
+  ...
+# Subtest: DOC-IDENTITY-unverified: malformed or unsupported identity cannot activate
+ok 157 - DOC-IDENTITY-unverified: malformed or unsupported identity cannot activate
+  ---
+  duration_ms: 0.132177
+  type: 'test'
+  ...
+# Subtest: DOC-IDENTITY-script: malformed or unsupported identity cannot activate
+ok 158 - DOC-IDENTITY-script: malformed or unsupported identity cannot activate
+  ---
+  duration_ms: 0.153037
+  type: 'test'
+  ...
+# Subtest: DOC-IDENTITY-unknown-key: malformed or unsupported identity cannot activate
+ok 159 - DOC-IDENTITY-unknown-key: malformed or unsupported identity cannot activate
+  ---
+  duration_ms: 0.098125
+  type: 'test'
+  ...
+# Subtest: DOC-IDENTITY-phone: malformed or unsupported identity cannot activate
+ok 160 - DOC-IDENTITY-phone: malformed or unsupported identity cannot activate
+  ---
+  duration_ms: 0.133809
+  type: 'test'
+  ...
+# Subtest: DOC-IDENTITY-APPROVAL: legal identity requires independent approval and never rewrites issued documents
+ok 161 - DOC-IDENTITY-APPROVAL: legal identity requires independent approval and never rewrites issued documents
+  ---
+  duration_ms: 2015.946779
+  type: 'test'
+  ...
+# Subtest: DOC-LIBRARY: authenticated HTTP own/scoped documents, filters, source totals, note privacy and no financial side effects
+ok 162 - DOC-LIBRARY: authenticated HTTP own/scoped documents, filters, source totals, note privacy and no financial side effects
+  ---
+  duration_ms: 2119.746769
+  type: 'test'
+  ...
+# Subtest: DOC-STATUS-BUDGET: status filtering refuses incomplete page-only counts above its canonical read budget
+ok 163 - DOC-STATUS-BUDGET: status filtering refuses incomplete page-only counts above its canonical read budget
+  ---
+  duration_ms: 1275.888039
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-A4: bounded A4 generation preserves content without mutating the source
+ok 164 - DOC-PDF-A4: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 593.086115
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-RECEIPT: bounded A4 generation preserves content without mutating the source
+ok 165 - DOC-PDF-RECEIPT: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 423.16422
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-LONG-ID: bounded A4 generation preserves content without mutating the source
+ok 166 - DOC-PDF-LONG-ID: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 425.007281
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-LONG-NAME: bounded A4 generation preserves content without mutating the source
+ok 167 - DOC-PDF-LONG-NAME: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 498.549355
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-LONG-ADDRESS: bounded A4 generation preserves content without mutating the source
+ok 168 - DOC-PDF-LONG-ADDRESS: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 532.535213
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-NAIRA: bounded A4 generation preserves content without mutating the source
+ok 169 - DOC-PDF-NAIRA: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 379.137405
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-OPTIONAL-IDENTITY: bounded A4 generation preserves content without mutating the source
+ok 170 - DOC-PDF-OPTIONAL-IDENTITY: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 365.299511
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-MULTIPAGE: bounded A4 generation preserves content without mutating the source
+ok 171 - DOC-PDF-MULTIPAGE: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 1912.246011
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-LONG-ITEM: bounded A4 generation preserves content without mutating the source
+ok 172 - DOC-PDF-LONG-ITEM: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 2266.595192
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-CREDIT-NOTE: bounded A4 generation preserves content without mutating the source
+ok 173 - DOC-PDF-CREDIT-NOTE: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 376.237498
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-MAX-AMOUNT: bounded A4 generation preserves content without mutating the source
+ok 174 - DOC-PDF-MAX-AMOUNT: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 371.395577
+  type: 'test'
+  ...
+# Subtest: DOC-PDF-UNICODE: bounded A4 generation preserves content without mutating the source
+ok 175 - DOC-PDF-UNICODE: bounded A4 generation preserves content without mutating the source
+  ---
+  duration_ms: 371.296465
+  type: 'test'
+  ...
+# Subtest: DOC-ROLLBACK: disabled flag and historical snapshots retain legacy renderer
+ok 176 - DOC-ROLLBACK: disabled flag and historical snapshots retain legacy renderer
+  ---
+  duration_ms: 1086.650752
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-UNPAID: invoice status never becomes a payment verification badge
+ok 177 - DOC-STATE-UNPAID: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 16.349546
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-FALSE-PAID-FLAG: invoice status never becomes a payment verification badge
+ok 178 - DOC-STATE-FALSE-PAID-FLAG: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 0.315669
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-PARTIAL: invoice status never becomes a payment verification badge
+ok 179 - DOC-STATE-PARTIAL: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 0.244803
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-PAID: invoice status never becomes a payment verification badge
+ok 180 - DOC-STATE-PAID: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 0.202841
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-ZERO-DUE-UNPAID: invoice status never becomes a payment verification badge
+ok 181 - DOC-STATE-ZERO-DUE-UNPAID: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 0.184684
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-VOID: invoice status never becomes a payment verification badge
+ok 182 - DOC-STATE-VOID: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 0.18858
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-UNKNOWN-BALANCE: invoice status never becomes a payment verification badge
+ok 183 - DOC-STATE-UNKNOWN-BALANCE: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 0.178024
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-OVERDUE: invoice status never becomes a payment verification badge
+ok 184 - DOC-STATE-OVERDUE: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 0.33004
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-ADJUSTED: invoice status never becomes a payment verification badge
+ok 185 - DOC-STATE-ADJUSTED: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 0.369629
+  type: 'test'
+  ...
+# Subtest: DOC-STATE-CREDIT-BALANCE: invoice status never becomes a payment verification badge
+ok 186 - DOC-STATE-CREDIT-BALANCE: invoice status never becomes a payment verification badge
+  ---
+  duration_ms: 0.414626
+  type: 'test'
+  ...
+# Subtest: DOC-MONEY-0: integer minor units retain exact cents
+ok 187 - DOC-MONEY-0: integer minor units retain exact cents
+  ---
+  duration_ms: 0.089332
+  type: 'test'
+  ...
+# Subtest: DOC-MONEY-1: integer minor units retain exact cents
+ok 188 - DOC-MONEY-1: integer minor units retain exact cents
+  ---
+  duration_ms: 0.04679
+  type: 'test'
+  ...
+# Subtest: DOC-MONEY-99: integer minor units retain exact cents
+ok 189 - DOC-MONEY-99: integer minor units retain exact cents
+  ---
+  duration_ms: 0.033599
+  type: 'test'
+  ...
+# Subtest: DOC-MONEY-100: integer minor units retain exact cents
+ok 190 - DOC-MONEY-100: integer minor units retain exact cents
+  ---
+  duration_ms: 0.031066
+  type: 'test'
+  ...
+# Subtest: DOC-MONEY-700508: integer minor units retain exact cents
+ok 191 - DOC-MONEY-700508: integer minor units retain exact cents
+  ---
+  duration_ms: 0.029354
+  type: 'test'
+  ...
+# Subtest: DOC-MONEY-1000000000000: integer minor units retain exact cents
+ok 192 - DOC-MONEY-1000000000000: integer minor units retain exact cents
+  ---
+  duration_ms: 0.031236
+  type: 'test'
+  ...
+# Subtest: DOC-AMOUNT-REJECT-0: invalid amount cannot render as an authoritative total
+ok 193 - DOC-AMOUNT-REJECT-0: invalid amount cannot render as an authoritative total
+  ---
+  duration_ms: 0.172746
+  type: 'test'
+  ...
+# Subtest: DOC-AMOUNT-REJECT-1: invalid amount cannot render as an authoritative total
+ok 194 - DOC-AMOUNT-REJECT-1: invalid amount cannot render as an authoritative total
+  ---
+  duration_ms: 0.05405
+  type: 'test'
+  ...
+# Subtest: DOC-AMOUNT-REJECT-2: invalid amount cannot render as an authoritative total
+ok 195 - DOC-AMOUNT-REJECT-2: invalid amount cannot render as an authoritative total
+  ---
+  duration_ms: 0.036624
+  type: 'test'
+  ...
+# Subtest: DOC-AMOUNT-REJECT-3: invalid amount cannot render as an authoritative total
+ok 196 - DOC-AMOUNT-REJECT-3: invalid amount cannot render as an authoritative total
+  ---
+  duration_ms: 0.032658
+  type: 'test'
+  ...
+# Subtest: DOC-AMOUNT-REJECT-4: invalid amount cannot render as an authoritative total
+ok 197 - DOC-AMOUNT-REJECT-4: invalid amount cannot render as an authoritative total
+  ---
+  duration_ms: 0.071927
+  type: 'test'
+  ...
+# Subtest: DOC-AMOUNT-REJECT-5: invalid amount cannot render as an authoritative total
+ok 198 - DOC-AMOUNT-REJECT-5: invalid amount cannot render as an authoritative total
+  ---
+  duration_ms: 0.109213
+  type: 'test'
+  ...
+# Subtest: DOC-AMOUNT-REJECT-6: invalid amount cannot render as an authoritative total
+ok 199 - DOC-AMOUNT-REJECT-6: invalid amount cannot render as an authoritative total
+  ---
+  duration_ms: 0.044346
+  type: 'test'
+  ...
+# Subtest: DOC-AMOUNT-REJECT-7: invalid amount cannot render as an authoritative total
+ok 200 - DOC-AMOUNT-REJECT-7: invalid amount cannot render as an authoritative total
+  ---
+  duration_ms: 0.036173
+  type: 'test'
+  ...
+# Subtest: DOC-AMOUNT-REJECT-8: invalid amount cannot render as an authoritative total
+ok 201 - DOC-AMOUNT-REJECT-8: invalid amount cannot render as an authoritative total
+  ---
+  duration_ms: 0.036965
+  type: 'test'
+  ...
+# Subtest: DOC-RECEIPT-DENY-posting: receipt refuses absent or mismatched verified evidence
+ok 202 - DOC-RECEIPT-DENY-posting: receipt refuses absent or mismatched verified evidence
+  ---
+  duration_ms: 0.12097
+  type: 'test'
+  ...
+# Subtest: DOC-RECEIPT-DENY-ledger: receipt refuses absent or mismatched verified evidence
+ok 203 - DOC-RECEIPT-DENY-ledger: receipt refuses absent or mismatched verified evidence
+  ---
+  duration_ms: 0.04757
+  type: 'test'
+  ...
+# Subtest: DOC-RECEIPT-DENY-state: receipt refuses absent or mismatched verified evidence
+ok 204 - DOC-RECEIPT-DENY-state: receipt refuses absent or mismatched verified evidence
+  ---
+  duration_ms: 0.04058
+  type: 'test'
+  ...
+# Subtest: DOC-RECEIPT-DENY-environment: receipt refuses absent or mismatched verified evidence
+ok 205 - DOC-RECEIPT-DENY-environment: receipt refuses absent or mismatched verified evidence
+  ---
+  duration_ms: 0.038087
+  type: 'test'
+  ...
+# Subtest: DOC-RECEIPT-DENY-gross: receipt refuses absent or mismatched verified evidence
+ok 206 - DOC-RECEIPT-DENY-gross: receipt refuses absent or mismatched verified evidence
+  ---
+  duration_ms: 0.061892
+  type: 'test'
+  ...
+# Subtest: DOC-RECEIPT-DENY-principal: receipt refuses absent or mismatched verified evidence
+ok 207 - DOC-RECEIPT-DENY-principal: receipt refuses absent or mismatched verified evidence
+  ---
+  duration_ms: 0.041582
+  type: 'test'
+  ...
+# Subtest: DOC-RECEIPT-DENY-due: receipt refuses absent or mismatched verified evidence
+ok 208 - DOC-RECEIPT-DENY-due: receipt refuses absent or mismatched verified evidence
+  ---
+  duration_ms: 0.041512
+  type: 'test'
+  ...
+# Subtest: DOC-RECEIPT-DENY-paid: receipt refuses absent or mismatched verified evidence
+ok 209 - DOC-RECEIPT-DENY-paid: receipt refuses absent or mismatched verified evidence
+  ---
+  duration_ms: 0.035172
+  type: 'test'
+  ...
+# Subtest: DOC-RECEIPT: verified collection is distinct from settlement and wallet liability
+ok 210 - DOC-RECEIPT: verified collection is distinct from settlement and wallet liability
+  ---
+  duration_ms: 0.345653
+  type: 'test'
+  ...
+# Subtest: DOC-NOTE-credit: adjustment retains original reference and never confirms refund
+ok 211 - DOC-NOTE-credit: adjustment retains original reference and never confirms refund
+  ---
+  duration_ms: 0.298723
+  type: 'test'
+  ...
+# Subtest: DOC-NOTE-debit: adjustment retains original reference and never confirms refund
+ok 212 - DOC-NOTE-debit: adjustment retains original reference and never confirms refund
+  ---
+  duration_ms: 0.151836
+  type: 'test'
+  ...
+# Subtest: DOC-NOTE-void: adjustment retains original reference and never confirms refund
+ok 213 - DOC-NOTE-void: adjustment retains original reference and never confirms refund
+  ---
+  duration_ms: 0.139487
+  type: 'test'
+  ...
+# Subtest: DOC-NOTE-DENY: pending adjustments cannot become approved documents
+ok 214 - DOC-NOTE-DENY: pending adjustments cannot become approved documents
+  ---
+  duration_ms: 0.102753
+  type: 'test'
+  ...
+# Subtest: DOC-LEGAL-OMIT: absent RC, TIN, email and website never copy mockup values
+ok 215 - DOC-LEGAL-OMIT: absent RC, TIN, email and website never copy mockup values
+  ---
+  duration_ms: 7.429712
+  type: 'test'
+  ...
+# Subtest: DOC-ESCAPE: customer, references and identity remain inert text
+ok 216 - DOC-ESCAPE: customer, references and identity remain inert text
+  ---
+  duration_ms: 2.257352
+  type: 'test'
+  ...
+# Subtest: DOC-SNAPSHOT: rendering never mutates issued items or identifiers
+ok 217 - DOC-SNAPSHOT: rendering never mutates issued items or identifiers
+  ---
+  duration_ms: 1.354722
+  type: 'test'
+  ...
+# Subtest: DOC-DATE: issue date is rendered in Africa/Lagos and invalid date is honest
+ok 218 - DOC-DATE: issue date is rendered in Africa/Lagos and invalid date is honest
+  ---
+  duration_ms: 0.177243
+  type: 'test'
+  ...
+# Subtest: DOC-LIMIT: document line count is bounded before rendering
+ok 219 - DOC-LIMIT: document line count is bounded before rendering
+  ---
+  duration_ms: 0.313936
+  type: 'test'
+  ...
+# Subtest: DOC-PRIVATE-DIAGNOSTIC: optional configuration and approval metadata do not leak into the customer document model
+ok 220 - DOC-PRIVATE-DIAGNOSTIC: optional configuration and approval metadata do not leak into the customer document model
+  ---
+  duration_ms: 0.218925
+  type: 'test'
+  ...
+# Subtest: BLK-01: independent tasks continue while a feature is blocked
+ok 221 - BLK-01: independent tasks continue while a feature is blocked
+  ---
+  duration_ms: 1.171179
+  type: 'test'
+  ...
+# Subtest: BLK-02: resolving a blocker enables only dependency-ready work
+ok 222 - BLK-02: resolving a blocker enables only dependency-ready work
+  ---
+  duration_ms: 0.157404
+  type: 'test'
+  ...
+# Subtest: BLK-03: invalid graphs fail instead of silently skipping tasks
+ok 223 - BLK-03: invalid graphs fail instead of silently skipping tasks
+  ---
+  duration_ms: 0.434805
+  type: 'test'
+  ...
+# Subtest: THEME-RESOLVE: explicit preferences apply across customer and staff workspaces
+ok 224 - THEME-RESOLVE: explicit preferences apply across customer and staff workspaces
+  ---
+  duration_ms: 0.143143
+  type: 'test'
+  ...
+# Subtest: THEME-BOOTSTRAP: pre-hydration theme tolerates storage failures and follows system only when requested
+ok 225 - THEME-BOOTSTRAP: pre-hydration theme tolerates storage failures and follows system only when requested
+  ---
+  duration_ms: 8.76211
+  type: 'test'
+  ...
+# Subtest: BLK-04: readiness explains inherited blockers and demands reassessment after resolution
+ok 226 - BLK-04: readiness explains inherited blockers and demands reassessment after resolution
+  ---
+  duration_ms: 6.526691
+  type: 'test'
+  ...
+# Subtest: THEME-CONTRAST: dark text, muted text, CTA and input boundaries meet declared contrast thresholds
+ok 227 - THEME-CONTRAST: dark text, muted text, CTA and input boundaries meet declared contrast thresholds
+  ---
+  duration_ms: 4.286535
+  type: 'test'
+  ...
+# Subtest: THEME-ROLLBACK: the deployment flag forces light before hydration without overwriting a stored dark preference
+ok 228 - THEME-ROLLBACK: the deployment flag forces light before hydration without overwriting a stored dark preference
+  ---
+  duration_ms: 2.401786
+  type: 'test'
+  ...
+# Subtest: THEME-STAFF: every administration route honours light, dark and system without role-specific exceptions
+ok 229 - THEME-STAFF: every administration route honours light, dark and system without role-specific exceptions
+  ---
+  duration_ms: 0.244553
+  type: 'test'
+  ...
+# Subtest: direct URL API refuses unauthenticated financial settings
+ok 230 - direct URL API refuses unauthenticated financial settings
+  ---
+  duration_ms: 1614.943553
+  type: 'test'
+  ...
+# Subtest: web cookie and mobile bearer requests enforce identical restricted-setting rules
+ok 231 - web cookie and mobile bearer requests enforce identical restricted-setting rules
+  ---
+  duration_ms: 21.750623
+  type: 'test'
+  ...
+# Subtest: mobile bearer tokens cannot approve fabricated requests or impersonate privileged identities
+ok 232 - mobile bearer tokens cannot approve fabricated requests or impersonate privileged identities
+  ---
+  duration_ms: 5.821625
+  type: 'test'
+  ...
+# Subtest: cross-origin mutation is refused before processing credentials
+ok 233 - cross-origin mutation is refused before processing credentials
+  ---
+  duration_ms: 0.814709
+  type: 'test'
+  ...
+# Subtest: JSON is mandatory and GET cannot mutate state
+ok 234 - JSON is mandatory and GET cannot mutate state
+  ---
+  duration_ms: 0.772415
+  type: 'test'
+  ...
+# Subtest: native sign-in returns an opaque token, web sign-in keeps it in an HttpOnly cookie
+ok 235 - native sign-in returns an opaque token, web sign-in keeps it in an HttpOnly cookie
+  ---
+  duration_ms: 120.579771
+  type: 'test'
+  ...
+# Subtest: oversized JSON bodies and malformed origin values are refused
+ok 236 - oversized JSON bodies and malformed origin values are refused
+  ---
+  duration_ms: 1.249048
+  type: 'test'
+  ...
+# Subtest: aggregate authentication budget persists across identities and resets after its window
+ok 237 - aggregate authentication budget persists across identities and resets after its window
+  ---
+  duration_ms: 39.060546
+  type: 'test'
+  ...
+# Subtest: G,H: live subscriptions reject forged branch scope, deduplicate committed snapshots and terminate after suspension
+ok 238 - G,H: live subscriptions reject forged branch scope, deduplicate committed snapshots and terminate after suspension
+  ---
+  duration_ms: 10048.910879
+  type: 'test'
+  ...
+# Subtest: inactive branch and cross-branch staff checkout fail before any reservation
+ok 239 - inactive branch and cross-branch staff checkout fail before any reservation
+  ---
+  duration_ms: 1711.710345
+  type: 'test'
+  ...
+# Subtest: cylinder sales require eligible serials, preserve reservation and transfer actual ownership once
+ok 240 - cylinder sales require eligible serials, preserve reservation and transfer actual ownership once
+  ---
+  duration_ms: 1445.384206
+  type: 'test'
+  ...
+# Subtest: cancellation releases serial allocation; second custody issue requires a return
+ok 241 - cancellation releases serial allocation; second custody issue requires a return
+  ---
+  duration_ms: 1355.942487
+  type: 'test'
+  ...
+# Subtest: failed-delivery reassignment cannot overbook an occupied window
+ok 242 - failed-delivery reassignment cannot overbook an occupied window
+  ---
+  duration_ms: 1397.117714
+  type: 'test'
+  ...
+# Subtest: refill history uses fulfilment dates and ignores unproven delivery timestamps
+ok 243 - refill history uses fulfilment dates and ignores unproven delivery timestamps
+  ---
+  duration_ms: 1260.550056
+  type: 'test'
+  ...
+# Subtest: F,N: operational dashboard and sales inventory must not expose financial metrics or costs
+ok 244 - F,N: operational dashboard and sales inventory must not expose financial metrics or costs
+  ---
+  duration_ms: 1973.877102
+  type: 'test'
+  ...
+# Subtest: A–E,M: governed corrections preserve reservations, stale counts fail and movements cannot be altered
+ok 245 - A–E,M: governed corrections preserve reservations, stale counts fail and movements cannot be altered
+  ---
+  duration_ms: 1734.924239
+  type: 'test'
+  ...
+# Subtest: G,H,L,N,O: branch tampering, protected exports, suspended accounts and forged permissions fail closed
+ok 246 - G,H,L,N,O: branch tampering, protected exports, suspended accounts and forged permissions fail closed
+  ---
+  duration_ms: 1544.768358
+  type: 'test'
+  ...
+# Subtest: I,J,P: expenses require independent approval, real payment evidence and append-only reversal
+ok 247 - I,J,P: expenses require independent approval, real payment evidence and append-only reversal
+  ---
+  duration_ms: 1835.971161
+  type: 'test'
+  ...
+# Subtest: controlled transfers reserve, dispatch, partially receive and quarantine damage without duplicate effects
+ok 248 - controlled transfers reserve, dispatch, partially receive and quarantine damage without duplicate effects
+  ---
+  duration_ms: 1645.004188
+  type: 'test'
+  ...
+# Subtest: supplier purchases do not add stock; independently approved partial receipts cannot overreceive
+ok 249 - supplier purchases do not add stock; independently approved partial receipts cannot overreceive
+  ---
+  duration_ms: 1583.482484
+  type: 'test'
+  ...
+# Subtest: report availability schedules deduplicate, recheck roles and never claim external delivery
+ok 250 - report availability schedules deduplicate, recheck roles and never claim external delivery
+  ---
+  duration_ms: 1487.846045
+  type: 'test'
+  ...
+# Subtest: K: quarantine release requires current independently documented qualifications; failed qualifications do not change custody
+ok 251 - K: quarantine release requires current independently documented qualifications; failed qualifications do not change custody
+  ---
+  duration_ms: 1519.301385
+  type: 'test'
+  ...
+# Subtest: valuation uses an approved method and complete acquisition movements, never selling prices
+ok 252 - valuation uses an approved method and complete acquisition movements, never selling prices
+  ---
+  duration_ms: 1603.489479
+  type: 'test'
+  ...
+# Subtest: E: competing corrections cannot apply stale snapshots or lose updates in serialized PGlite
+ok 253 - E: competing corrections cannot apply stale snapshots or lose updates in serialized PGlite
+  ---
+  duration_ms: 1531.759969
+  type: 'test'
+  ...
+# Subtest: stocktake sessions snapshot categories, generate scoped count sheets, reconcile all counts and reject intervening movements
+ok 254 - stocktake sessions snapshot categories, generate scoped count sheets, reconcile all counts and reject intervening movements
+  ---
+  duration_ms: 1594.713795
+  type: 'test'
+  ...
+# Subtest: INV-017HTTP: read/export permissions, limits and mutation method boundary are enforced at HTTP
+ok 255 - INV-017HTTP: read/export permissions, limits and mutation method boundary are enforced at HTTP
+  ---
+  duration_ms: 1894.623639
+  type: 'test'
+  ...
+# Subtest: INV-011–012: stock read separates gas and units and does not subtract quarantined quantities twice
+ok 256 - INV-011–012: stock read separates gas and units and does not subtract quarantined quantities twice
+  ---
+  duration_ms: 1873.988588
+  type: 'test'
+  ...
+# Subtest: INV-006: server paging, literal search, states and exports use the same authorised filters
+ok 257 - INV-006: server paging, literal search, states and exports use the same authorised filters
+  ---
+  duration_ms: 1436.714584
+  type: 'test'
+  ...
+# Subtest: INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs
+ok 258 - INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs
+  ---
+  duration_ms: 1423.621284
+  type: 'test'
+  ...
+# Subtest: INV-026,043: paginated movement history preserves references, quantities and original ledger rows
+ok 259 - INV-026,043: paginated movement history preserves references, quantities and original ledger rows
+  ---
+  duration_ms: 1336.556455
+  type: 'test'
+  ...
+# Subtest: INV-027–028: complete approved acquisition basis produces reconciled category values, never retail prices
+ok 260 - INV-027–028: complete approved acquisition basis produces reconciled category values, never retail prices
+  ---
+  duration_ms: 1424.179032
+  type: 'test'
+  ...
+# Subtest: INV-PDF01: authorised download uses immutable original plus approved notes; anonymous/foreign/driver reads fail closed
+ok 261 - INV-PDF01: authorised download uses immutable original plus approved notes; anonymous/foreign/driver reads fail closed
+  ---
+  duration_ms: 4548.836215
+  type: 'test'
+  ...
+# Subtest: LOCAL-01: early recorded rewards revision upgrades without losing customer, points or legacy redemption history
+ok 262 - LOCAL-01: early recorded rewards revision upgrades without losing customer, points or legacy redemption history
+  ---
+  duration_ms: 1644.885934
+  type: 'test'
+  ...
+# Subtest: MUI-01: saved appearance overrides system and corrupt preferences safely follow system
+ok 263 - MUI-01: saved appearance overrides system and corrupt preferences safely follow system
+  ---
+  duration_ms: 0.708432
+  type: 'test'
+  ...
+# Subtest: MOB-API01: local demo permits only loopback HTTP and released clients keep HTTPS and origin validation
+ok 264 - MOB-API01: local demo permits only loopback HTTP and released clients keep HTTPS and origin validation
+  ---
+  duration_ms: 0.810613
+  type: 'test'
+  ...
+# Subtest: MUI-01: all 99 screens map the existing customer routes and every administration navigation entry
+ok 265 - MUI-01: all 99 screens map the existing customer routes and every administration navigation entry
+  ---
+  duration_ms: 4.164682
+  type: 'test'
+  ...
+# Subtest: MUI-02: every screen renders populated and five alternate states without missing navigation targets
+ok 266 - MUI-02: every screen renders populated and five alternate states without missing navigation targets
+  ---
+  duration_ms: 24.881515
+  type: 'test'
+  ...
+# Subtest: MUI-03: field roles retain dedicated navigation through shared account screens and business visibility cannot grant excluded routes
+ok 267 - MUI-03: field roles retain dedicated navigation through shared account screens and business visibility cannot grant excluded routes
+  ---
+  duration_ms: 4.453292
+  type: 'test'
+  ...
+# Subtest: MUI-04: prototype never calls live APIs and preserves unavailable payment/GPS and physical safety boundaries
+ok 268 - MUI-04: prototype never calls live APIs and preserves unavailable payment/GPS and physical safety boundaries
+  ---
+  duration_ms: 5.158248
+  type: 'test'
+  ...
+# Subtest: MUI-05: design type stays at least 15px and declares compact layouts, reduced motion and keyboard focus
+ok 269 - MUI-05: design type stays at least 15px and declares compact layouts, reduced motion and keyboard focus
+  ---
+  duration_ms: 0.991502
+  type: 'test'
+  ...
+# Subtest: INV-BADGE-02: actual sidebar renders the same alert during refresh/failure and removes it only for a confirmed zero
+ok 270 - INV-BADGE-02: actual sidebar renders the same alert during refresh/failure and removes it only for a confirmed zero
+  ---
+  duration_ms: 28.060894
+  type: 'test'
+  ...
+# Subtest: RM-01–05,12,13: all 29 routes, exact groups/order, unique IDs and safe nested active matching
+ok 271 - RM-01–05,12,13: all 29 routes, exact groups/order, unique IDs and safe nested active matching
+  ---
+  duration_ms: 5.320939
+  type: 'test'
+  ...
+# Subtest: RM-06,08,09: mode-independent role visibility preserves dedicated assignment experiences
+ok 272 - RM-06,08,09: mode-independent role visibility preserves dedicated assignment experiences
+  ---
+  duration_ms: 0.443848
+  type: 'test'
+  ...
+# Subtest: navigation preferences reject corrupt storage and badge overflow remains bounded
+ok 273 - navigation preferences reject corrupt storage and badge overflow remains bounded
+  ---
+  duration_ms: 0.206637
+  type: 'test'
+  ...
+# Subtest: RM-07,10,11: fresh authentication, branch scope, counter aggregates and role/session revocation
+ok 274 - RM-07,10,11: fresh authentication, branch scope, counter aggregates and role/session revocation
+  ---
+  duration_ms: 2288.91323
+  type: 'test'
+  ...
+# Subtest: approval badge agrees with independent eligibility, excludes requester, recipient, expired and already-decided requests
+ok 275 - approval badge agrees with independent eligibility, excludes requester, recipient, expired and already-decided requests
+  ---
+  duration_ms: 1702.184548
+  type: 'test'
+  ...
+# Subtest: counter accuracy covers actionable orders/deliveries, configured inventory thresholds and unresolved financial items
+ok 276 - counter accuracy covers actionable orders/deliveries, configured inventory thresholds and unresolved financial items
+  ---
+  duration_ms: 1719.173893
+  type: 'test'
+  ...
+# Subtest: bounded delegation is included in approval counters only while independently valid
+ok 277 - bounded delegation is included in approval counters only while independently valid
+  ---
+  duration_ms: 1726.883883
+  type: 'test'
+  ...
+# Subtest: INV-BADGE-01: refresh and transient failure retain explicitly labelled confirmed counts without changing grants
+ok 278 - INV-BADGE-01: refresh and transient failure retain explicitly labelled confirmed counts without changing grants
+  ---
+  duration_ms: 0.52519
+  type: 'test'
+  ...
+# Subtest: permitted navigation maps actual backend read allowlists for every existing staff role
+ok 279 - permitted navigation maps actual backend read allowlists for every existing staff role
+  ---
+  duration_ms: 2104.902429
+  type: 'test'
+  ...
+# Navigation restricted PGlite fixture aggregate timings (ms): {"samples":[7.814980999999534,9.752606999998534,8.905248999999458,7.957251999998334,8.799622999998974,8.437985999999,8.318778999999267,13.355376000001343,8.006655000001047,8.023401000000376],"median":8.437985999999,"max":13.355376000001343}
+# Subtest: navigation aggregates run under the restricted private-schema runtime without new grants
+ok 280 - navigation aggregates run under the restricted private-schema runtime without new grants
+  ---
+  duration_ms: 1652.722175
+  type: 'test'
+  ...
+# Subtest: GPS-OFF01: offline capture authority expires and rejects off-trip, future and invalid observations
+ok 281 - GPS-OFF01: offline capture authority expires and rejects off-trip, future and invalid observations
+  ---
+  duration_ms: 1.352909
+  type: 'test'
+  ...
+# Subtest: GPS-OFF02: delayed driver GPS sync preserves observed time/history, replays once and cannot grant fuel/finance access
+ok 282 - GPS-OFF02: delayed driver GPS sync preserves observed time/history, replays once and cannot grant fuel/finance access
+  ---
+  duration_ms: 1890.664641
+  type: 'test'
+  ...
+# Subtest: GPS-OFF03: acknowledged GPS sequence cannot be reused after queue empties or a capture crashes
+ok 283 - GPS-OFF03: acknowledged GPS sequence cannot be reused after queue empties or a capture crashes
+  ---
+  duration_ms: 0.273155
+  type: 'test'
+  ...
+# Subtest: OPS-PG01: independent connections serialize invoice decisions, request replay and vehicle trip ownership
+ok 284 - OPS-PG01: independent connections serialize invoice decisions, request replay and vehicle trip ownership
+  ---
+  duration_ms: 981.239695
+  type: 'test'
+  ...
+# Subtest: OPS-T01: phone activation requires possession, preserves identity, expires/revokes, commits failed attempts and rejects replay
+ok 285 - OPS-T01: phone activation requires possession, preserves identity, expires/revokes, commits failed attempts and rejects replay
+  ---
+  duration_ms: 1985.079371
+  type: 'test'
+  ...
+# Subtest: OPS-T02: invoice notes need independent approval, never overwrite originals, invalidate stale requests and reject cross-customer access
+ok 286 - OPS-T02: invoice notes need independent approval, never overwrite originals, invalidate stale requests and reject cross-customer access
+  ---
+  duration_ms: 1491.319461
+  type: 'test'
+  ...
+# Subtest: OPS-T03: trip capture is account scoped, replay safe, bounded to duty, and reports actual purchases separately
+ok 287 - OPS-T03: trip capture is account scoped, replay safe, bounded to duty, and reports actual purchases separately
+  ---
+  duration_ms: 1409.085723
+  type: 'test'
+  ...
+# Subtest: OPS-T04: proof photos are private, append-only, retain historical records and reject invalid image input
+ok 288 - OPS-T04: proof photos are private, append-only, retain historical records and reject invalid image input
+  ---
+  duration_ms: 1394.842941
+  type: 'test'
+  ...
+# Subtest: OPS-T05: messaging encrypts contents, rechecks consent, quarantines uncertain sends and authenticates/deduplicates callbacks
+ok 289 - OPS-T05: messaging encrypts contents, rechecks consent, quarantines uncertain sends and authenticates/deduplicates callbacks
+  ---
+  duration_ms: 1372.128554
+  type: 'test'
+  ...
+# Subtest: OPS-T06: GPS rejects impossible jumps and gaps; no distance-derived actual fuel claim
+ok 290 - OPS-T06: GPS rejects impossible jumps and gaps; no distance-derived actual fuel claim
+  ---
+  duration_ms: 0.477208
+  type: 'test'
+  ...
+# Subtest: FIELD-GPS-02: fleet summary requires current accurate consented trip evidence and ignores future uploaded fixes
+ok 291 - FIELD-GPS-02: fleet summary requires current accurate consented trip evidence and ignores future uploaded fixes
+  ---
+  duration_ms: 1374.15643
+  type: 'test'
+  ...
+# Subtest: OPS-T07: enhanced dispatch requires a suitable active trip, records acknowledgement and rejects stale versions
+ok 292 - OPS-T07: enhanced dispatch requires a suitable active trip, records acknowledgement and rejects stale versions
+  ---
+  duration_ms: 1433.409288
+  type: 'test'
+  ...
+# Subtest: OPS-T08: win-back uses true completed delivery timestamps, preserves low-data state and requires marketing consent
+ok 293 - OPS-T08: win-back uses true completed delivery timestamps, preserves low-data state and requires marketing consent
+  ---
+  duration_ms: 1406.05396
+  type: 'test'
+  ...
+# Subtest: OPS-T09: doorstep review preserves original order, rejects driver-as-customer consent and never commits unverified van stock
+ok 294 - OPS-T09: doorstep review preserves original order, rejects driver-as-customer consent and never commits unverified van stock
+  ---
+  duration_ms: 1358.294179
+  type: 'test'
+  ...
+# Subtest: OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption
+ok 295 - OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption
+  ---
+  duration_ms: 118.856115
+  type: 'test'
+  ...
+# Subtest: OPS-T11: retain-all policy preserves expired proof bytes without widening access
+ok 296 - OPS-T11: retain-all policy preserves expired proof bytes without widening access
+  ---
+  duration_ms: 1370.510653
+  type: 'test'
+  ...
+# Subtest: TRK-17: independent PostgreSQL connections serialize final-capacity assignment and duplicate proof
+ok 297 - TRK-17: independent PostgreSQL connections serialize final-capacity assignment and duplicate proof
+  ---
+  duration_ms: 1208.441786
+  type: 'test'
+  ...
+# Subtest: TRK-01: committed versioned history is immutable and only owned orders are returned
+ok 298 - TRK-01: committed versioned history is immutable and only owned orders are returned
+  ---
+  duration_ms: 1869.518765
+  type: 'test'
+  ...
+# Subtest: TRK-04: skipped transitions, stale versions, branch and inactive dispatch fail without business effects
+ok 299 - TRK-04: skipped transitions, stale versions, branch and inactive dispatch fail without business effects
+  ---
+  duration_ms: 1436.475324
+  type: 'test'
+  ...
+# Subtest: TRK-11: pickup requires assignment and exact quantities; completion requires pickup and actual handover
+ok 300 - TRK-11: pickup requires assignment and exact quantities; completion requires pickup and actual handover
+  ---
+  duration_ms: 1482.67457
+  type: 'test'
+  ...
+# Subtest: TRK-12: proof expires, wrong guesses rate limit, and attempt reassignment rotates the code
+ok 301 - TRK-12: proof expires, wrong guesses rate limit, and attempt reassignment rotates the code
+  ---
+  duration_ms: 1516.284995
+  type: 'test'
+  ...
+# Subtest: TRK-15: stable retries and ambiguous commit recovery produce one stock, cash and handover effect
+ok 302 - TRK-15: stable retries and ambiguous commit recovery produce one stock, cash and handover effect
+  ---
+  duration_ms: 1491.308234
+  type: 'test'
+  ...
+# Subtest: TRK-27: held failed deliveries cannot be reissued or cancelled until physical return reconciliation
+ok 303 - TRK-27: held failed deliveries cannot be reissued or cancelled until physical return reconciliation
+  ---
+  duration_ms: 1525.854713
+  type: 'test'
+  ...
+# Subtest: TRK-18: outbox publication survives retry without duplicate in-app messages
+ok 304 - TRK-18: outbox publication survives retry without duplicate in-app messages
+  ---
+  duration_ms: 1359.160135
+  type: 'test'
+  ...
+# Subtest: TRK-21: snapshots reject older versions and remove revoked assignment records; GPS stays unavailable
+ok 305 - TRK-21: snapshots reject older versions and remove revoked assignment records; GPS stays unavailable
+  ---
+  duration_ms: 1.092622
+  type: 'test'
+  ...
+# Subtest: TRK-09: failed reassignment and rescheduling revalidate capacity with no attempted reservation changes
+ok 306 - TRK-09: failed reassignment and rescheduling revalidate capacity with no attempted reservation changes
+  ---
+  duration_ms: 1470.264232
+  type: 'test'
+  ...
+# Subtest: TRK-20: reassigned branch, revoked session and unrelated driver cannot read or mutate assigned delivery
+ok 307 - TRK-20: reassigned branch, revoked session and unrelated driver cannot read or mutate assigned delivery
+  ---
+  duration_ms: 1361.273713
+  type: 'test'
+  ...
+# Subtest: TRK-23: API never fabricates GPS, ETA or a proof for an unfulfilled order
+ok 308 - TRK-23: API never fabricates GPS, ETA or a proof for an unfulfilled order
+  ---
+  duration_ms: 1309.585374
+  type: 'test'
+  ...
+# Subtest: TRK-02: linked support requests verify customer ownership and preserve order branch
+ok 309 - TRK-02: linked support requests verify customer ownership and preserve order branch
+  ---
+  duration_ms: 1312.233795
+  type: 'test'
+  ...
+# Subtest: TRK-31: encrypted isolated restore preserves committed tracking, proof, operation outcome and outbox
+ok 310 - TRK-31: encrypted isolated restore preserves committed tracking, proof, operation outcome and outbox
+  ---
+  duration_ms: 2537.532081
+  type: 'test'
+  ...
+# Subtest: TRK-14: assigned driver help opens one branch incident without committing delivery or cash
+ok 311 - TRK-14: assigned driver help opens one branch incident without committing delivery or cash
+  ---
+  duration_ms: 1371.611748
+  type: 'test'
+  ...
+# Subtest: TRK-20S: real authenticated snapshot stream isolates customer orders and closes after session revocation
+ok 312 - TRK-20S: real authenticated snapshot stream isolates customer orders and closes after session revocation
+  ---
+  duration_ms: 1379.32899
+  type: 'test'
+  ...
+# Subtest: TRK-rollback: emergency write stop preserves history and rejects fulfilment with no event or stock effects
+ok 313 - TRK-rollback: emergency write stop preserves history and rejects fulfilment with no event or stock effects
+  ---
+  duration_ms: 1321.040394
+  type: 'test'
+  ...
+# Subtest: TRK-07: a legacy held failed refill cannot be reissued through another order
+ok 314 - TRK-07: a legacy held failed refill cannot be reissued through another order
+  ---
+  duration_ms: 1534.50215
+  type: 'test'
+  ...
+# Subtest: TRK-14F: structured unsafe-cylinder failure creates critical incident and immutable next-step evidence
+ok 315 - TRK-14F: structured unsafe-cylinder failure creates critical incident and immutable next-step evidence
+  ---
+  duration_ms: 1363.079694
+  type: 'test'
+  ...
+# Subtest: PWD-01: password defaults masked and reveal control cannot submit the form
+ok 316 - PWD-01: password defaults masked and reveal control cannot submit the form
+  ---
+  duration_ms: 6.295467
+  type: 'test'
+  ...
+# Subtest: PWD-02: disabled password remains disabled and normal inputs have no reveal button
+ok 317 - PWD-02: disabled password remains disabled and normal inputs have no reveal button
+  ---
+  duration_ms: 1.326253
+  type: 'test'
+  ...
+# Subtest: PWD-03: every audited web and native password entry uses the shared visibility control
+ok 318 - PWD-03: every audited web and native password entry uses the shared visibility control
+  ---
+  duration_ms: 7.339099
+  type: 'test'
+  ...
+# Subtest: PAY-FEE: zero, waiver discontinuities, caps and smallest integer gross match exhaustive search
+ok 319 - PAY-FEE: zero, waiver discontinuities, caps and smallest integer gross match exhaustive search
+  ---
+  duration_ms: 59.701554
+  type: 'test'
+  ...
+# Subtest: PAY-FEE-LIMIT: merchant absorption, maximum/invalid amounts and exact wallet principal remain distinct
+ok 320 - PAY-FEE-LIMIT: merchant absorption, maximum/invalid amounts and exact wallet principal remain distinct
+  ---
+  duration_ms: 1.527893
+  type: 'test'
+  ...
+# Subtest: PAY-POST: exact principal wallet credit, stable init, authenticated duplicate webhook and ledger immutability
+ok 321 - PAY-POST: exact principal wallet credit, stable init, authenticated duplicate webhook and ledger immutability
+  ---
+  duration_ms: 1769.245385
+  type: 'test'
+  ...
+# Subtest: PAY-ZERO-EFFECT: forged events, wrong amount/currency/environment, cross-customer and driver requests never credit funds
+ok 322 - PAY-ZERO-EFFECT: forged events, wrong amount/currency/environment, cross-customer and driver requests never credit funds
+  ---
+  duration_ms: 7299.935945
+  type: 'test'
+  ...
+# Subtest: PAY-RECOVERY: initialization timeout never launches a second charge; fee variance is separate from principal
+ok 323 - PAY-RECOVERY: initialization timeout never launches a second charge; fee variance is separate from principal
+  ---
+  duration_ms: 1252.277568
+  type: 'test'
+  ...
+# Subtest: PAY-RESUME: failed provider states persist without wallet effects
+ok 324 - PAY-RESUME: failed provider states persist without wallet effects
+  ---
+  duration_ms: 1258.253706
+  type: 'test'
+  ...
+# Subtest: PAY-EXPIRY: prepared quote expiry is visible and cannot initialize
+ok 325 - PAY-EXPIRY: prepared quote expiry is visible and cannot initialize
+  ---
+  duration_ms: 1198.413288
+  type: 'test'
+  ...
+# Subtest: PAY-INVOICE: verified collection allocates principal to existing immutable invoice, never fees or duplicate revenue
+ok 326 - PAY-INVOICE: verified collection allocates principal to existing immutable invoice, never fees or duplicate revenue
+  ---
+  duration_ms: 1293.460177
+  type: 'test'
+  ...
+# Subtest: WALLET-CARD: wallet checkout restricts approved channels to card and rejects transfer-only policy
+ok 327 - WALLET-CARD: wallet checkout restricts approved channels to card and rejects transfer-only policy
+  ---
+  duration_ms: 1196.024873
+  type: 'test'
+  ...
+# Subtest: WALLET-INSTANT: signed webhook verifies and credits card funding without waiting for worker or manual approval
+ok 328 - WALLET-INSTANT: signed webhook verifies and credits card funding without waiting for worker or manual approval
+  ---
+  duration_ms: 1221.299644
+  type: 'test'
+  ...
+# Subtest: DOC-POSTING-SNAPSHOT: new receipt preserves captured identity and customer despite later changes
+ok 329 - DOC-POSTING-SNAPSHOT: new receipt preserves captured identity and customer despite later changes
+  ---
+  duration_ms: 1224.568752
+  type: 'test'
+  ...
+# Subtest: PAY-POLICY: missing merchant terms, dashboard fee double charge, live activation and undeclared secrets fail closed
+ok 330 - PAY-POLICY: missing merchant terms, dashboard fee double charge, live activation and undeclared secrets fail closed
+  ---
+  duration_ms: 4.300048
+  type: 'test'
+  ...
+# Subtest: PAY-LINK: native payment return carries only one opaque intent ID; success/amount/provider redirects cannot authorize payment
+ok 331 - PAY-LINK: native payment return carries only one opaque intent ID; success/amount/provider redirects cannot authorize payment
+  ---
+  duration_ms: 0.819357
+  type: 'test'
+  ...
+# Subtest: PAY-PG-CONCURRENCY: separate connections post once; aborted posting rolls back wallet, audit and receipt
+ok 332 - PAY-PG-CONCURRENCY: separate connections post once; aborted posting rolls back wallet, audit and receipt
+  ---
+  duration_ms: 831.313359
+  type: 'test'
+  ...
+# Subtest: PAY-SIGNATURE: raw bytes, timestamp, rotation, malformed headers and no legacy downgrade
+ok 333 - PAY-SIGNATURE: raw bytes, timestamp, rotation, malformed headers and no legacy downgrade
+  ---
+  duration_ms: 1.439499
+  type: 'test'
+  ...
+# Subtest: PAY-ADAPTER: hosted callback, test key, amount/currency/environment identity and transport validation
+ok 334 - PAY-ADAPTER: hosted callback, test key, amount/currency/environment identity and transport validation
+  ---
+  duration_ms: 17.269124
+  type: 'test'
+  ...
+# Subtest: A: routine opening hours save immediately, persist and create a version and audit event
+ok 335 - A: routine opening hours save immediately, persist and create a version and audit event
+  ---
+  duration_ms: 1681.985567
+  type: 'test'
+  ...
+# Subtest: B: price proposal retains current price until an independent manager approves
+ok 336 - B: price proposal retains current price until an independent manager approves
+  ---
+  duration_ms: 46.502979
+  type: 'test'
+  ...
+# Subtest: C: settlement changes require verification and two distinct independent owner/finance approvers
+ok 337 - C: settlement changes require verification and two distinct independent owner/finance approvers
+  ---
+  duration_ms: 147.273974
+  type: 'test'
+  ...
+# Subtest: D: self-approval fails without changing request, settings or decisions
+ok 338 - D: self-approval fails without changing request, settings or decisions
+  ---
+  duration_ms: 33.227676
+  type: 'test'
+  ...
+# Subtest: E: revoked authority takes effect on existing sessions immediately
+ok 339 - E: revoked authority takes effect on existing sessions immediately
+  ---
+  duration_ms: 27.514108
+  type: 'test'
+  ...
+# Subtest: F: concurrent setting proposals cannot overwrite a newer activated version
+ok 340 - F: concurrent setting proposals cannot overwrite a newer activated version
+  ---
+  duration_ms: 55.409402
+  type: 'test'
+  ...
+# Subtest: G: rejecting wallet policy preserves its active value and records the rejection
+ok 341 - G: rejecting wallet policy preserves its active value and records the rejection
+  ---
+  duration_ms: 28.452031
+  type: 'test'
+  ...
+# Subtest: H: rollback creates a new governed version without rewriting history
+ok 342 - H: rollback creates a new governed version without rewriting history
+  ---
+  duration_ms: 118.245357
+  type: 'test'
+  ...
+# Subtest: I: emergency disable requires verification, an allowlisted protective action, and owner notification
+ok 343 - I: emergency disable requires verification, an allowlisted protective action, and owner notification
+  ---
+  duration_ms: 66.969867
+  type: 'test'
+  ...
+# Subtest: J1: sales cannot read protected financial settings or infer bank metadata
+ok 344 - J1: sales cannot read protected financial settings or infer bank metadata
+  ---
+  duration_ms: 19.86958
+  type: 'test'
+  ...
+# Subtest: J2: client-provided roles, approval levels and requester identities are rejected
+ok 345 - J2: client-provided roles, approval levels and requester identities are rejected
+  ---
+  duration_ms: 16.480074
+  type: 'test'
+  ...
+# Subtest: J3: staff cannot request their own promotion, including owners
+ok 346 - J3: staff cannot request their own promotion, including owners
+  ---
+  duration_ms: 21.74034
+  type: 'test'
+  ...
+# Subtest: J4: direct approval calls without authority are refused
+ok 347 - J4: direct approval calls without authority are refused
+  ---
+  duration_ms: 28.809543
+  type: 'test'
+  ...
+# Subtest: J5: approval classification cannot be downgraded through policy settings
+ok 348 - J5: approval classification cannot be downgraded through policy settings
+  ---
+  duration_ms: 18.497662
+  type: 'test'
+  ...
+# Subtest: J6: sales cannot delegate financial authority
+ok 349 - J6: sales cannot delegate financial authority
+  ---
+  duration_ms: 16.276362
+  type: 'test'
+  ...
+# Subtest: J7: managers cannot read or propose changes across branches
+ok 350 - J7: managers cannot read or propose changes across branches
+  ---
+  duration_ms: 17.354864
+  type: 'test'
+  ...
+# Subtest: J8: invalid, expired and revoked sessions cannot authorise operations
+ok 351 - J8: invalid, expired and revoked sessions cannot authorise operations
+  ---
+  duration_ms: 20.840242
+  type: 'test'
+  ...
+# Subtest: J9: suspended accounts lose authority without waiting for session expiry
+ok 352 - J9: suspended accounts lose authority without waiting for session expiry
+  ---
+  duration_ms: 15.042208
+  type: 'test'
+  ...
+# Subtest: J10: technical administrators cannot approve financial decisions
+ok 353 - J10: technical administrators cannot approve financial decisions
+  ---
+  duration_ms: 32.150767
+  type: 'test'
+  ...
+# Subtest: J11: rejected protected operations create persistent security audit events
+ok 354 - J11: rejected protected operations create persistent security audit events
+  ---
+  duration_ms: 17.32519
+  type: 'test'
+  ...
+# Subtest: approvals, version history and financial ledgers reject UPDATE and DELETE
+ok 355 - approvals, version history and financial ledgers reject UPDATE and DELETE
+  ---
+  duration_ms: 34.130788
+  type: 'test'
+  ...
+# Subtest: failed product activation retains independent decisions and records FAILED without changing the live value
+ok 356 - failed product activation retains independent decisions and records FAILED without changing the live value
+  ---
+  duration_ms: 51.084015
+  type: 'test'
+  ...
+# Subtest: material revisions invalidate old decisions and return to a new draft revision
+ok 357 - material revisions invalidate old decisions and return to a new draft revision
+  ---
+  duration_ms: 45.017142
+  type: 'test'
+  ...
+# Subtest: expired requests cannot be approved
+ok 358 - expired requests cannot be approved
+  ---
+  duration_ms: 40.867437
+  type: 'test'
+  ...
+# Subtest: invalid configuration values do not create a request or modify state
+ok 359 - invalid configuration values do not create a request or modify state
+  ---
+  duration_ms: 16.66558
+  type: 'test'
+  ...
+# Subtest: stock receipts are idempotent and conflicting receipt replays are rejected
+ok 360 - stock receipts are idempotent and conflicting receipt replays are rejected
+  ---
+  duration_ms: 27.220372
+  type: 'test'
+  ...
+# Subtest: checkout uses server prices, reserves once, prevents overselling and preserves agreed order prices
+ok 361 - checkout uses server prices, reserves once, prevents overselling and preserves agreed order prices
+  ---
+  duration_ms: 72.972415
+  type: 'test'
+  ...
+# Subtest: checkout refuses out-of-coverage addresses and forged totals
+ok 362 - checkout refuses out-of-coverage addresses and forged totals
+  ---
+  duration_ms: 22.025403
+  type: 'test'
+  ...
+# Subtest: customers cannot view another customer order history or staff reports
+ok 363 - customers cannot view another customer order history or staff reports
+  ---
+  duration_ms: 17.521341
+  type: 'test'
+  ...
+# Subtest: forecasts require verified cylinder-specific history and never invent sensor readings
+ok 364 - forecasts require verified cylinder-specific history and never invent sensor readings
+  ---
+  duration_ms: 0.353125
+  type: 'test'
+  ...
+# Subtest: verified customer code completes delivery once; independent finance reconciliation recognises revenue once
+ok 365 - verified customer code completes delivery once; independent finance reconciliation recognises revenue once
+  ---
+  duration_ms: 213.948433
+  type: 'test'
+  ...
+# Subtest: scheduled changes remain inactive until explicitly revalidated at their effective date
+ok 366 - scheduled changes remain inactive until explicitly revalidated at their effective date
+  ---
+  duration_ms: 93.849622
+  type: 'test'
+  ...
+# Subtest: protected staff changes require independent approvals and revoke the target sessions
+ok 367 - protected staff changes require independent approvals and revoke the target sessions
+  ---
+  duration_ms: 173.040566
+  type: 'test'
+  ...
+# Subtest: requester authority is rechecked before activation
+ok 368 - requester authority is rechecked before activation
+  ---
+  duration_ms: 46.479685
+  type: 'test'
+  ...
+# Subtest: branch permission changes cannot move a target through a forged request scope
+ok 369 - branch permission changes cannot move a target through a forged request scope
+  ---
+  duration_ms: 22.35989
+  type: 'test'
+  ...
+# Subtest: recent-password verification throttles failed attempts persistently
+ok 370 - recent-password verification throttles failed attempts persistently
+  ---
+  duration_ms: 199.298918
+  type: 'test'
+  ...
+# Subtest: delivery and business-hour settings reject invalid or empty configuration
+ok 371 - delivery and business-hour settings reject invalid or empty configuration
+  ---
+  duration_ms: 22.537985
+  type: 'test'
+  ...
+# Subtest: production publication settings hide drafts while authorised staff can still manage them
+ok 372 - production publication settings hide drafts while authorised staff can still manage them
+  ---
+  duration_ms: 29.358248
+  type: 'test'
+  ...
+# Subtest: successful sign-in rotates and revokes the previously supplied browser session
+ok 373 - successful sign-in rotates and revokes the previously supplied browser session
+  ---
+  duration_ms: 53.958205
+  type: 'test'
+  ...
+# Subtest: PM-T34: two or three verified refills produce preliminary low-confidence purchase estimates without false sensors
+ok 374 - PM-T34: two or three verified refills produce preliminary low-confidence purchase estimates without false sensors
+  ---
+  duration_ms: 1.048007
+  type: 'test'
+  ...
+# Subtest: PM-T01: opaque immutable customer IDs, phone lookup, duplicate detection and branch privacy
+ok 375 - PM-T01: opaque immutable customer IDs, phone lookup, duplicate detection and branch privacy
+  ---
+  duration_ms: 1824.25698
+  type: 'test'
+  ...
+# Subtest: PM-T09: assisted checkout preserves customer identity, operator attribution, one fee, retry and failure rollback
+ok 376 - PM-T09: assisted checkout preserves customer identity, operator attribution, one fee, retry and failure rollback
+  ---
+  duration_ms: 1200.23665
+  type: 'test'
+  ...
+# Subtest: PM-T08: legacy checkout retry fingerprints survive the added source metadata
+ok 377 - PM-T08: legacy checkout retry fingerprints survive the added source metadata
+  ---
+  duration_ms: 1096.620934
+  type: 'test'
+  ...
+# Subtest: PM-T10: assisted product quote uses branch prices and one fee, rejects stale totals and never reserves during review
+ok 378 - PM-T10: assisted product quote uses branch prices and one fee, rejects stale totals and never reserves during review
+  ---
+  duration_ms: 1346.655709
+  type: 'test'
+  ...
+# Subtest: PM-T11: invoice issue is immutable, numbered, ownership-scoped and derives settlement only from verified ledger
+ok 379 - PM-T11: invoice issue is immutable, numbered, ownership-scoped and derives settlement only from verified ledger
+  ---
+  duration_ms: 1959.538126
+  type: 'test'
+  ...
+# Subtest: PM-T47: independent PostgreSQL callers serialize provisional creation and invoice issuance without duplicate business effects
+ok 380 - PM-T47: independent PostgreSQL callers serialize provisional creation and invoice issuance without duplicate business effects
+  ---
+  duration_ms: 956.459953
+  type: 'test'
+  ...
+# Subtest: PM-T18: restricted private-schema runtime can create customer IDs and invoices while anonymous reads and invoice edits fail
+ok 381 - PM-T18: restricted private-schema runtime can create customer IDs and invoices while anonymous reads and invoice edits fail
+  ---
+  duration_ms: 1706.585391
+  type: 'test'
+  ...
+# Subtest: multi-connection PostgreSQL: independent approvals and duplicate activation
+ok 382 - multi-connection PostgreSQL: independent approvals and duplicate activation
+  ---
+  duration_ms: 1318.504045
+  type: 'test'
+  ...
+# Subtest: downloaded template has Excel BOM and blocks unchanged example
+ok 383 - downloaded template has Excel BOM and blocks unchanged example
+  ---
+  duration_ms: 1.532859
+  type: 'test'
+  ...
+# Subtest: CSV supports reordered headers, escaped quotes, commas, multiline fields and CRLF
+ok 384 - CSV supports reordered headers, escaped quotes, commas, multiline fields and CRLF
+  ---
+  duration_ms: 0.786013
+  type: 'test'
+  ...
+# Subtest: CSV rejects malformed quotes, columns and headers
+ok 385 - CSV rejects malformed quotes, columns and headers
+  ---
+  duration_ms: 0.297791
+  type: 'test'
+  ...
+# Subtest: JSON compatibility and draft-only validation protect existing catalogue
+ok 386 - JSON compatibility and draft-only validation protect existing catalogue
+  ---
+  duration_ms: 0.864129
+  type: 'test'
+  ...
+# Subtest: AUD-01: release preflight and runtime reject weakened TLS and enforce certificate/hostname verification
+ok 387 - AUD-01: release preflight and runtime reject weakened TLS and enforce certificate/hostname verification
+  ---
+  duration_ms: 5.294737
+  type: 'test'
+  ...
+# Subtest: AUD-02: owner retry and competing workers cannot duplicate an in-flight SMTP message
+ok 388 - AUD-02: owner retry and competing workers cannot duplicate an in-flight SMTP message
+  ---
+  duration_ms: 1839.164796
+  type: 'test'
+  ...
+# Subtest: AUD-03: interrupted SMTP requires expired lease, stopped-worker attestation and audited provider reconciliation
+ok 389 - AUD-03: interrupted SMTP requires expired lease, stopped-worker attestation and audited provider reconciliation
+  ---
+  duration_ms: 1399.510131
+  type: 'test'
+  ...
+# Subtest: AUD-04: verified TLS accepts a trusted matching certificate and rejects untrusted/wrong-host peers
+ok 390 - AUD-04: verified TLS accepts a trusted matching certificate and rejects untrusted/wrong-host peers
+  ---
+  duration_ms: 188.35942
+  type: 'test'
+  ...
+# Subtest: PR-03: encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys
+ok 391 - PR-03: encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys
+  ---
+  duration_ms: 928.97913
+  type: 'test'
+  ...
+# Subtest: PR-04: release audit rejects privileged owners and detects missing RLS and public grants under the actual runtime role
+ok 392 - PR-04: release audit rejects privileged owners and detects missing RLS and public grants under the actual runtime role
+  ---
+  duration_ms: 731.164605
+  type: 'test'
+  ...
+# Subtest: PR-08: supervised worker completes a real maintenance transaction and exits cleanly on SIGTERM
+ok 393 - PR-08: supervised worker completes a real maintenance transaction and exits cleanly on SIGTERM
+  ---
+  duration_ms: 1099.108767
+  type: 'test'
+  ...
+# Subtest: PR-01: release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions
+ok 394 - PR-01: release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions
+  ---
+  duration_ms: 1.634012
+  type: 'test'
+  ...
+# Subtest: PR-02: readiness rejects missing migrations, absent/stale worker and future heartbeat
+ok 395 - PR-02: readiness rejects missing migrations, absent/stale worker and future heartbeat
+  ---
+  duration_ms: 1734.449715
+  type: 'test'
+  ...
+# Subtest: PR-07: signed native configuration refuses local API origins and unconfirmed identifiers
+ok 396 - PR-07: signed native configuration refuses local API origins and unconfirmed identifiers
+  ---
+  duration_ms: 599.290682
+  type: 'test'
+  ...
+# Subtest: service drafts are not sellable; checklist and price activation require independent qualified approval
+ok 397 - service drafts are not sellable; checklist and price activation require independent qualified approval
+  ---
+  duration_ms: 3212.405548
+  type: 'test'
+  ...
+# Subtest: booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve
+ok 398 - booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve
+  ---
+  duration_ms: 1621.095221
+  type: 'test'
+  ...
+# Subtest: qualification expiry, stale service versions and out-of-area addresses reject booking without side effects
+ok 399 - qualification expiry, stale service versions and out-of-area addresses reject booking without side effects
+  ---
+  duration_ms: 1587.81959
+  type: 'test'
+  ...
+# Subtest: quotation revisions preserve price history; only latest customer approval reserves materials
+ok 400 - quotation revisions preserve price history; only latest customer approval reserves materials
+  ---
+  duration_ms: 1677.077776
+  type: 'test'
+  ...
+# Subtest: approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once
+ok 401 - approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once
+  ---
+  duration_ms: 1841.700365
+  type: 'test'
+  ...
+# Subtest: unsafe inspection cannot become safety clearance or customer-acknowledged success
+ok 402 - unsafe inspection cannot become safety clearance or customer-acknowledged success
+  ---
+  duration_ms: 1705.632259
+  type: 'test'
+  ...
+# Subtest: service deposit uses existing wallet ledger and cancellation refund requires separate finance approval
+ok 403 - service deposit uses existing wallet ledger and cancellation refund requires separate finance approval
+  ---
+  duration_ms: 1674.413378
+  type: 'test'
+  ...
+# Subtest: HDR-03: all seven primary links retain approved order and verified destinations
+ok 404 - HDR-03: all seven primary links retain approved order and verified destinations
+  ---
+  duration_ms: 1.043716
+  type: 'test'
+  ...
+# Subtest: HDR-05: exact, nested and anchor matches avoid false prefixes and duplicate Home selection
+ok 405 - HDR-05: exact, nested and anchor matches avoid false prefixes and duplicate Home selection
+  ---
+  duration_ms: 0.184503
+  type: 'test'
+  ...
+# Subtest: HDR-06: public search uses actual supplied names, safely encoded IDs and real help destinations
+ok 406 - HDR-06: public search uses actual supplied names, safely encoded IDs and real help destinations
+  ---
+  duration_ms: 0.24942
+  type: 'test'
+  ...
+# Subtest: HDR-23: unpublished products never enter public search results
+ok 407 - HDR-23: unpublished products never enter public search results
+  ---
+  duration_ms: 0.130073
+  type: 'test'
+  ...
+# Subtest: HDR-25: explicit server-authorised preview matches the local catalogue without treating drafts as published
+ok 408 - HDR-25: explicit server-authorised preview matches the local catalogue without treating drafts as published
+  ---
+  duration_ms: 0.28303
+  type: 'test'
+  ...
+# Subtest: HDR-26: catalogue authorises previews only in development and production still excludes unpublished products
+ok 409 - HDR-26: catalogue authorises previews only in development and production still excludes unpublished products
+  ---
+  duration_ms: 1988.239064
+  type: 'test'
+  ...
+# Subtest: CD-N-feedback: snooze expires exactly at 24 hours and respects verified refill chronology
+ok 410 - CD-N-feedback: snooze expires exactly at 24 hours and respects verified refill chronology
+  ---
+  duration_ms: 0.846515
+  type: 'test'
+  ...
+# Subtest: CD-N-feedback: self-report suppresses outdated estimates until a new verified purchase; later level reports cannot resurrect it
+ok 411 - CD-N-feedback: self-report suppresses outdated estimates until a new verified purchase; later level reports cannot resurrect it
+  ---
+  duration_ms: 0.226566
+  type: 'test'
+  ...
+# Subtest: ORIGIN-01: JSON and media accept same-port local aliases but reject cross-site, cross-port and malformed origins
+ok 412 - ORIGIN-01: JSON and media accept same-port local aliases but reject cross-site, cross-port and malformed origins
+  ---
+  duration_ms: 3.568417
+  type: 'test'
+  ...
+# Subtest: ORIGIN-02: production never enables loopback aliases and requires the configured exact origin
+ok 413 - ORIGIN-02: production never enables loopback aliases and requires the configured exact origin
+  ---
+  duration_ms: 0.53967
+  type: 'test'
+  ...
+# Subtest: authorised recurring COD creates a real order once and advances the plan
+ok 414 - authorised recurring COD creates a real order once and advances the plan
+  ---
+  duration_ms: 1772.139251
+  type: 'test'
+  ...
+# Subtest: price ceiling failure does not reserve stock or create a payment and does not repeat endlessly
+ok 415 - price ceiling failure does not reserve stock or create a payment and does not repeat endlessly
+  ---
+  duration_ms: 88.480169
+  type: 'test'
+  ...
+# Subtest: revocation prevents future automatic orders
+ok 416 - revocation prevents future automatic orders
+  ---
+  duration_ms: 71.235634
+  type: 'test'
+  ...
+# Subtest: delivery capacity rejects overbooking before additional stock reservations
+ok 417 - delivery capacity rejects overbooking before additional stock reservations
+  ---
+  duration_ms: 27.259791
+  type: 'test'
+  ...
+# Subtest: campaigns require independent approval, consent at delivery and deduplicate in-app delivery
+ok 418 - campaigns require independent approval, consent at delivery and deduplicate in-app delivery
+  ---
+  duration_ms: 145.306722
+  type: 'test'
+  ...
+# Subtest: EO-PG: independent PostgreSQL connections serialize duplicate operations and final-slot competition
+ok 419 - EO-PG: independent PostgreSQL connections serialize duplicate operations and final-slot competition
+  ---
+  duration_ms: 1306.480312
+  type: 'test'
+  ...
+# Subtest: EO-01: sequential and concurrent same-key retries recover one authoritative booking; conflicts and cross-customer reuse reject
+ok 420 - EO-01: sequential and concurrent same-key retries recover one authoritative booking; conflicts and cross-customer reuse reject
+  ---
+  duration_ms: 2234.937635
+  type: 'test'
+  ...
+# Subtest: EO-03: injected failure after outbox write rolls back booking, capacity, operation result, notifications and money
+ok 421 - EO-03: injected failure after outbox write rolls back booking, capacity, operation result, notifications and money
+  ---
+  duration_ms: 1677.265768
+  type: 'test'
+  ...
+# Subtest: EO-04: lost commit acknowledgement is reconciled using the persisted result without another business event
+ok 422 - EO-04: lost commit acknowledgement is reconciled using the persisted result without another business event
+  ---
+  duration_ms: 1614.093863
+  type: 'test'
+  ...
+# Subtest: RC-04: failed and competing rescheduling preserve a single capacity allocation and reject stale cancellation
+ok 423 - RC-04: failed and competing rescheduling preserve a single capacity allocation and reject stale cancellation
+  ---
+  duration_ms: 1729.874033
+  type: 'test'
+  ...
+# Subtest: RC-15: encrypted backup restores booking, operation, quotation, inventory, notifications and audit relationships
+ok 424 - RC-15: encrypted backup restores booking, operation, quotation, inventory, notifications and audit relationships
+  ---
+  duration_ms: 2989.852317
+  type: 'test'
+  ...
+# Subtest: BK-23: communication opt-out is respected while in-app history remains authoritative
+ok 425 - BK-23: communication opt-out is respected while in-app history remains authoritative
+  ---
+  duration_ms: 1637.24175
+  type: 'test'
+  ...
+# Subtest: EO-09: approval and material issue retries have one inventory effect; expired quotations cannot authorise work
+ok 426 - EO-09: approval and material issue retries have one inventory effect; expired quotations cannot authorise work
+  ---
+  duration_ms: 1829.073777
+  type: 'test'
+  ...
+# Subtest: RC-10: interrupted report publication preserves in-progress work; unsafe completion is rejected; permission revocation blocks recovery
+ok 427 - RC-10: interrupted report publication preserves in-progress work; unsafe completion is rejected; permission revocation blocks recovery
+  ---
+  duration_ms: 1691.446557
+  type: 'test'
+  ...
+# Subtest: BK-quiet: durable service events are scheduled after overnight and same-day quiet periods
+ok 428 - BK-quiet: durable service events are scheduled after overnight and same-day quiet periods
+  ---
+  duration_ms: 2.745134
+  type: 'test'
+  ...
+# Subtest: EO-10: wallet and independently approved refund failures roll back and replay without duplicate money
+ok 429 - EO-10: wallet and independently approved refund failures roll back and replay without duplicate money
+  ---
+  duration_ms: 1662.263767
+  type: 'test'
+  ...
+# Subtest: RC-13: failed additive migration rolls back DDL without losing a valid booking
+ok 430 - RC-13: failed additive migration rolls back DDL without losing a valid booking
+  ---
+  duration_ms: 1576.576563
+  type: 'test'
+  ...
+# Subtest: BK-private: operation persistence works under the restricted trusted server role and committed results are immutable
+ok 431 - BK-private: operation persistence works under the restricted trusted server role and committed results are immutable
+  ---
+  duration_ms: 1550.710696
+  type: 'test'
+  ...
+# Subtest: EO-contract: public service mutations require a stable identity and stale-sensitive changes require a version
+ok 432 - EO-contract: public service mutations require a stable identity and stale-sensitive changes require a version
+  ---
+  duration_ms: 3.931054
+  type: 'test'
+  ...
+# Subtest: SVC-CANCEL01: late pre-work cancellation uses existing independent finance approval and preserves money
+ok 433 - SVC-CANCEL01: late pre-work cancellation uses existing independent finance approval and preserves money
+  ---
+  duration_ms: 2179.223036
+  type: 'test'
+  ...
+# Subtest: SVC-CANCEL02: changed booking and chargeable work invalidate pre-work cancellation authority
+ok 434 - SVC-CANCEL02: changed booking and chargeable work invalidate pre-work cancellation authority
+  ---
+  duration_ms: 1762.610272
+  type: 'test'
+  ...
+# Subtest: SVC-DOC01: customer report strips internal acquisition costs without rewriting canonical evidence or quoted prices
+ok 435 - SVC-DOC01: customer report strips internal acquisition costs without rewriting canonical evidence or quoted prices
+  ---
+  duration_ms: 12.73755
+  type: 'test'
+  ...
+# Subtest: SVC-EX01: failed chargeable work uses customer-agreed dual-approved settlement and exact invoice credit/excess refund without certifying completion
+ok 436 - SVC-EX01: failed chargeable work uses customer-agreed dual-approved settlement and exact invoice credit/excess refund without certifying completion
+  ---
+  duration_ms: 2482.728869
+  type: 'test'
+  ...
+# Subtest: SVC-EX02: declined quote can close with an honest unsuccessful report and cannot charge unapproved labour
+ok 437 - SVC-EX02: declined quote can close with an honest unsuccessful report and cannot charge unapproved labour
+  ---
+  duration_ms: 1867.897078
+  type: 'test'
+  ...
+# Subtest: specific compatibility requires independent qualified review and expires with reviewer qualification
+ok 438 - specific compatibility requires independent qualified review and expires with reviewer qualification
+  ---
+  duration_ms: 2170.058782
+  type: 'test'
+  ...
+# Subtest: follow-ups require completed work, respect service consent and quiet hours, deduplicate and link rebooking
+ok 439 - follow-ups require completed work, respect service consent and quiet hours, deduplicate and link rebooking
+  ---
+  duration_ms: 1856.141662
+  type: 'test'
+  ...
+# Subtest: policy publication requires independently approved real content and effective date
+ok 440 - policy publication requires independently approved real content and effective date
+  ---
+  duration_ms: 1591.029937
+  type: 'test'
+  ...
+# Subtest: all new service tables and workflows function under the restricted private-schema server role
+ok 441 - all new service tables and workflows function under the restricted private-schema server role
+  ---
+  duration_ms: 1700.594427
+  type: 'test'
+  ...
+# Subtest: incremental Supabase migration upgrades the previous catalogue schema without losing existing records
+ok 442 - incremental Supabase migration upgrades the previous catalogue schema without losing existing records
+  ---
+  duration_ms: 751.096343
+  type: 'test'
+  ...
+# Subtest: production gates remain truthful and customer export includes owned service records only
+ok 443 - production gates remain truthful and customer export includes owned service records only
+  ---
+  duration_ms: 1689.052058
+  type: 'test'
+  ...
+# Subtest: SINV-DRAFT01: persistent immutable revisions, replay, source-bound issue and private draft history
+ok 444 - SINV-DRAFT01: persistent immutable revisions, replay, source-bound issue and private draft history
+  ---
+  duration_ms: 2234.104344
+  type: 'test'
+  ...
+# Subtest: SINV-DRAFT02: changed approved source invalidates saved draft, resave requires optimistic revision
+ok 445 - SINV-DRAFT02: changed approved source invalidates saved draft, resave requires optimistic revision
+  ---
+  duration_ms: 1674.99303
+  type: 'test'
+  ...
+# Subtest: SINV-DISPUTE01: customer dispute holds collection, preserves report and requires authorised independent review
+ok 446 - SINV-DISPUTE01: customer dispute holds collection, preserves report and requires authorised independent review
+  ---
+  duration_ms: 1821.749851
+  type: 'test'
+  ...
+# Subtest: PRIVACY-RETAIN01: explicit retain-all policy records truthful disposition and preserves owned records
+ok 447 - PRIVACY-RETAIN01: explicit retain-all policy records truthful disposition and preserves owned records
+  ---
+  duration_ms: 1625.519529
+  type: 'test'
+  ...
+# Subtest: SINV-HTTP01: real JSON and private PDF handlers work under restricted runtime and deny foreign/anonymous/technician access
+ok 448 - SINV-HTTP01: real JSON and private PDF handlers work under restricted runtime and deny foreign/anonymous/technician access
+  ---
+  duration_ms: 2743.119632
+  type: 'test'
+  ...
+# Subtest: SINV-PG01: independent connections issue one immutable service invoice, replay one request and rollback aborted issue
+ok 449 - SINV-PG01: independent connections issue one immutable service invoice, replay one request and rollback aborted issue
+  ---
+  duration_ms: 1493.033451
+  type: 'test'
+  ...
+# Subtest: SINV-01: existing service draft, verified work, immutable issued invoice, ledger balance and private ownership
+ok 450 - SINV-01: existing service draft, verified work, immutable issued invoice, ledger balance and private ownership
+  ---
+  duration_ms: 2937.295367
+  type: 'test'
+  ...
+# Subtest: SINV-02: shared independent service correction revokes old requests and cannot authorise new work or overwrite reports
+ok 451 - SINV-02: shared independent service correction revokes old requests and cannot authorise new work or overwrite reports
+  ---
+  duration_ms: 1773.831565
+  type: 'test'
+  ...
+# Subtest: SINV-03: completed-work refund preserves earned charges, revalidates historical requests and credits only excess once
+ok 452 - SINV-03: completed-work refund preserves earned charges, revalidates historical requests and credits only excess once
+  ---
+  duration_ms: 1758.945541
+  type: 'test'
+  ...
+# Subtest: SINV-04: unused quoted materials reconcile by independent credit on the same invoice and refund only the actual excess
+ok 453 - SINV-04: unused quoted materials reconcile by independent credit on the same invoice and refund only the actual excess
+  ---
+  duration_ms: 1956.544803
+  type: 'test'
+  ...
+# Subtest: SINV-05: equal-price quotation revision invalidates prior source-bound payment request and revocation stops reuse
+ok 454 - SINV-05: equal-price quotation revision invalidates prior source-bound payment request and revocation stops reuse
+  ---
+  duration_ms: 1726.469555
+  type: 'test'
+  ...
+# Subtest: SINV-06: pending invoice correction blocks backend work even after actual independent cash verification
+ok 455 - SINV-06: pending invoice correction blocks backend work even after actual independent cash verification
+  ---
+  duration_ms: 1695.071744
+  type: 'test'
+  ...
+# Subtest: SINV-07: failed/cancelled service remains historical and cannot create a collectible request despite a prior successful report
+ok 456 - SINV-07: failed/cancelled service remains historical and cannot create a collectible request despite a prior successful report
+  ---
+  duration_ms: 1741.492225
+  type: 'test'
+  ...
+# Subtest: SINV-08: existing full-service refund review remains available and cannot turn its refunded invoice into a new collectible debt
+ok 457 - SINV-08: existing full-service refund review remains available and cannot turn its refunded invoice into a new collectible debt
+  ---
+  duration_ms: 1756.589348
+  type: 'test'
+  ...
+# Subtest: SVC-REC01: expired work authority stops new use but independent recovery reconciles actual issued/used/damaged/returned stock exactly once
+ok 458 - SVC-REC01: expired work authority stops new use but independent recovery reconciles actual issued/used/damaged/returned stock exactly once
+  ---
+  duration_ms: 2493.486128
+  type: 'test'
+  ...
+# Subtest: A–C,K: draft, permissions, status injection and independent review share one authoritative workflow
+ok 459 - A–C,K: draft, permissions, status injection and independent review share one authoritative workflow
+  ---
+  duration_ms: 2056.480147
+  type: 'test'
+  ...
+# Subtest: D,G: distinct dual approval and revisions invalidate prior decisions by revision
+ok 460 - D,G: distinct dual approval and revisions invalidate prior decisions by revision
+  ---
+  duration_ms: 1711.485991
+  type: 'test'
+  ...
+# Subtest: E,H,J,O: schedule, stale requests, idempotent activation and append-only reversal
+ok 461 - E,H,J,O: schedule, stale requests, idempotent activation and append-only reversal
+  ---
+  duration_ms: 1611.681328
+  type: 'test'
+  ...
+# Subtest: F,L,M,N: fee rejection, expired request, revoked approver and governed location lifecycle
+ok 462 - F,L,M,N: fee rejection, expired request, revoked approver and governed location lifecycle
+  ---
+  duration_ms: 1585.136514
+  type: 'test'
+  ...
+# Subtest: I: activation database failure leaves active value intact, records failure, and revalidates a retry
+ok 463 - I: activation database failure leaves active value intact, records failure, and revalidates a retry
+  ---
+  duration_ms: 1544.297123
+  type: 'test'
+  ...
+# Subtest: decimal calculator matches confirmed gas quantities and rejects unsafe precision
+ok 464 - decimal calculator matches confirmed gas quantities and rejects unsafe precision
+  ---
+  duration_ms: 0.687601
+  type: 'test'
+  ...
+# Subtest: gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety
+ok 465 - gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety
+  ---
+  duration_ms: 1696.89031
+  type: 'test'
+  ...
+# Subtest: delivery fee is once per order in every area; inactive locations retain addresses and flag affected orders
+ok 466 - delivery fee is once per order in every area; inactive locations retain addresses and flag affected orders
+  ---
+  duration_ms: 1637.186874
+  type: 'test'
+  ...
+# Subtest: verified gas-cylinder filling and delivery consume bulk stock once and preserve custody restrictions
+ok 467 - verified gas-cylinder filling and delivery consume bulk stock once and preserve custody restrictions
+  ---
+  duration_ms: 1834.103396
+  type: 'test'
+  ...
+# Subtest: gas report exports preserve totals and escape untrusted spreadsheet and HTML text
+ok 468 - gas report exports preserve totals and escape untrusted spreadsheet and HTML text
+  ---
+  duration_ms: 4.567693
+  type: 'test'
+  ...
+# Subtest: confirmed cylinder maintenance is an unpublished draft governed by the existing service and safety approvals
+ok 469 - confirmed cylinder maintenance is an unpublished draft governed by the existing service and safety approvals
+  ---
+  duration_ms: 1501.238377
+  type: 'test'
+  ...
+# Subtest: SHOP-GUARD: shopping fixture refuses production and hosted database configuration before accessing accounts
+ok 470 - SHOP-GUARD: shopping fixture refuses production and hosted database configuration before accessing accounts
+  ---
+  duration_ms: 299.461125
+  type: 'test'
+  ...
+# Subtest: staff invitations are manageable without granting privileges, renew invalidates old links and accepted accounts appear in staff management
+ok 471 - staff invitations are manageable without granting privileges, renew invalidates old links and accepted accounts appear in staff management
+  ---
+  duration_ms: 2231.248645
+  type: 'test'
+  ...
+# Subtest: staff edits, suspension, reinstatement and invitation revocation enforce authority, branch and session safeguards
+ok 472 - staff edits, suspension, reinstatement and invitation revocation enforce authority, branch and session safeguards
+  ---
+  duration_ms: 1701.593575
+  type: 'test'
+  ...
+# Subtest: staff management invitation actions run with restricted runtime grants and moved administrators cannot validate old branch invitations
+ok 473 - staff management invitation actions run with restricted runtime grants and moved administrators cannot validate old branch invitations
+  ---
+  duration_ms: 1615.614137
+  type: 'test'
+  ...
+# Subtest: TF-DATA: technician summary and paged jobs are scoped, uncapped and honest about unknown history
+ok 474 - TF-DATA: technician summary and paged jobs are scoped, uncapped and honest about unknown history
+  ---
+  duration_ms: 2248.176047
+  type: 'test'
+  ...
+# Subtest: TF-TIME: Lagos periods, missing history and assessment labels never fabricate completion
+ok 475 - TF-TIME: Lagos periods, missing history and assessment labels never fabricate completion
+  ---
+  duration_ms: 11.566627
+  type: 'test'
+  ...
+# Subtest: TECH-T56 independent PostgreSQL connections serialize one paid work authorisation
+ok 476 - TECH-T56 independent PostgreSQL connections serialize one paid work authorisation
+  ---
+  duration_ms: 1287.771966
+  type: 'test'
+  ...
+# Subtest: FIELD-RECOVERY-01: interrupted acknowledgement recovers committed receipt without a second mutation
+ok 477 - FIELD-RECOVERY-01: interrupted acknowledgement recovers committed receipt without a second mutation
+  ---
+  duration_ms: 1.109808
+  type: 'test'
+  ...
+# Subtest: FIELD-RECOVERY-02: changed assignment/version, closed job, cross-account and work authorisation never replay
+ok 478 - FIELD-RECOVERY-02: changed assignment/version, closed job, cross-account and work authorisation never replay
+  ---
+  duration_ms: 1.068416
+  type: 'test'
+  ...
+# Subtest: FIELD-RECOVERY-03: expired credentials stop replay and retain later records; stable fingerprints ignore transport operation keys
+ok 479 - FIELD-RECOVERY-03: expired credentials stop replay and retain later records; stable fingerprints ignore transport operation keys
+  ---
+  duration_ms: 5.633666
+  type: 'test'
+  ...
+# Subtest: FIELD-PHOTO-01: queued photograph version is rechecked in the canonical locked booking before bytes or history change
+ok 480 - FIELD-PHOTO-01: queued photograph version is rechecked in the canonical locked booking before bytes or history change
+  ---
+  duration_ms: 2181.293912
+  type: 'test'
+  ...
+# Subtest: FIELD-SCOPE-01: production field roles cannot use legacy tokens to bypass scoped financial and unsafe completion boundaries
+ok 481 - FIELD-SCOPE-01: production field roles cannot use legacy tokens to bypass scoped financial and unsafe completion boundaries
+  ---
+  duration_ms: 1692.060688
+  type: 'test'
+  ...
+# Subtest: TECH-T26 unpaid work start fails at backend and changes no booking state
+ok 482 - TECH-T26 unpaid work start fails at backend and changes no booking state
+  ---
+  duration_ms: 2234.617617
+  type: 'test'
+  ...
+# Subtest: TECH-T21 quotation needs independent owner decision, customer approval and verified payment
+ok 483 - TECH-T21 quotation needs independent owner decision, customer approval and verified payment
+  ---
+  duration_ms: 1869.189295
+  type: 'test'
+  ...
+# Subtest: TECH-T02 technician capability excludes finance, approvals, delivery and unrestricted stock
+ok 484 - TECH-T02 technician capability excludes finance, approvals, delivery and unrestricted stock
+  ---
+  duration_ms: 0.335889
+  type: 'test'
+  ...
+# Subtest: TECH-T08 restricted session enforces assignment scope and cannot collect or fake payments
+ok 485 - TECH-T08 restricted session enforces assignment scope and cannot collect or fake payments
+  ---
+  duration_ms: 1643.971571
+  type: 'test'
+  ...
+# Subtest: TECH-T04 suspended, wrong-branch and expired-qualification actors cannot authorise paid work
+ok 486 - TECH-T04 suspended, wrong-branch and expired-qualification actors cannot authorise paid work
+  ---
+  duration_ms: 1698.040888
+  type: 'test'
+  ...
+# Subtest: TECH-T40 successful report requires current consented private proof; retries retain one image
+ok 487 - TECH-T40 successful report requires current consented private proof; retries retain one image
+  ---
+  duration_ms: 1771.095869
+  type: 'test'
+  ...
+# Subtest: TECH-T09 assignment response is versioned, idempotent and required before restricted visit progression
+ok 488 - TECH-T09 assignment response is versioned, idempotent and required before restricted visit progression
+  ---
+  duration_ms: 1627.72848
+  type: 'test'
+  ...
+# Subtest: TM-PG: independent PostgreSQL connections prevent duplicate/stale moderation and consent withdrawal wins publication races
+ok 489 - TM-PG: independent PostgreSQL connections prevent duplicate/stale moderation and consent withdrawal wins publication races
+  ---
+  duration_ms: 1284.216262
+  type: 'test'
+  ...
+# Subtest: TM-01: eligible purchase saves a private draft; publication requires separate approval
+ok 490 - TM-01: eligible purchase saves a private draft; publication requires separate approval
+  ---
+  duration_ms: 2215.420162
+  type: 'test'
+  ...
+# Subtest: TM-02: ineligible, duplicate, ownership, consent and unsafe input are rejected
+ok 491 - TM-02: ineligible, duplicate, ownership, consent and unsafe input are rejected
+  ---
+  duration_ms: 1669.750587
+  type: 'test'
+  ...
+# Subtest: TM-15: stale moderation cannot publish or overwrite a newer customer version
+ok 492 - TM-15: stale moderation cannot publish or overwrite a newer customer version
+  ---
+  duration_ms: 1642.385565
+  type: 'test'
+  ...
+# Subtest: TM-09: withdrawing published consent immediately removes public feedback and cannot be reversed by a moderator
+ok 493 - TM-09: withdrawing published consent immediately removes public feedback and cannot be reversed by a moderator
+  ---
+  duration_ms: 1673.160461
+  type: 'test'
+  ...
+# Subtest: TM-16: notification failure rolls back the entire transition and safe retry produces one event
+ok 494 - TM-16: notification failure rolls back the entire transition and safe retry produces one event
+  ---
+  duration_ms: 1634.439944
+  type: 'test'
+  ...
+# Subtest: TM-11: photos remain private until separately consented and moderated; withdrawal revokes public image access
+ok 495 - TM-11: photos remain private until separately consented and moderated; withdrawal revokes public image access
+  ---
+  duration_ms: 1656.537386
+  type: 'test'
+  ...
+# Subtest: TM-RUNTIME: the restricted server can run publication, browser roles cannot read records, and history cannot be changed
+ok 496 - TM-RUNTIME: the restricted server can run publication, browser roles cannot read records, and history cannot be changed
+  ---
+  duration_ms: 1575.605058
+  type: 'test'
+  ...
+# Subtest: HP-CONTENT: editorial and testimonial policy changes reuse independent approvals and reject unsafe content
+ok 497 - HP-CONTENT: editorial and testimonial policy changes reuse independent approvals and reject unsafe content
+  ---
+  duration_ms: 1714.993755
+  type: 'test'
+  ...
+# Subtest: TM-MEDIA-HTTP: upload requires photo consent; public image responses are never cached and withdrawal revokes anonymous reads
+ok 498 - TM-MEDIA-HTTP: upload requires photo consent; public image responses are never cached and withdrawal revokes anonymous reads
+  ---
+  duration_ms: 1749.429047
+  type: 'test'
+  ...
+# Subtest: HP-DATA: homepage reads published products with backend prices and active services through a bounded read model
+ok 499 - HP-DATA: homepage reads published products with backend prices and active services through a bounded read model
+  ---
+  duration_ms: 1617.395318
+  type: 'test'
+  ...
+# Subtest: TM-MANAGEMENT: owner searches and paginates all matches, exports filtered rows, and lower roles are denied
+ok 500 - TM-MANAGEMENT: owner searches and paginates all matches, exports filtered rows, and lower roles are denied
+  ---
+  duration_ms: 1625.15242
+  type: 'test'
+  ...
+# Subtest: TM-WITHDRAW-STALE: customer consent revocation wins over a stale screen and retries have one effect
+ok 501 - TM-WITHDRAW-STALE: customer consent revocation wins over a stale screen and retries have one effect
+  ---
+  duration_ms: 1629.473666
+  type: 'test'
+  ...
+# Subtest: TM-EXPORT: existing identity-verified account export includes only owned testimonial versions and consent history
+ok 502 - TM-EXPORT: existing identity-verified account export includes only owned testimonial versions and consent history
+  ---
+  duration_ms: 1699.622764
+  type: 'test'
+  ...
+# Subtest: TM-ENTRY: completed-transaction links select only an eligible owned transaction and prioritize an existing submission
+ok 503 - TM-ENTRY: completed-transaction links select only an eligible owned transaction and prioritize an existing submission
+  ---
+  duration_ms: 1612.586616
+  type: 'test'
+  ...
+# Subtest: PR-05: SMTP outbox sends once, never retries unknown outcomes, rejects unauthorised retry and preserves private message content
+ok 504 - PR-05: SMTP outbox sends once, never retries unknown outcomes, rejects unauthorised retry and preserves private message content
+  ---
+  duration_ms: 1886.710635
+  type: 'test'
+  ...
+# Subtest: PR-06: expired recovery messages cancel, explicit SMTP rejection backs off, and insecure SMTP configuration is refused
+ok 505 - PR-06: expired recovery messages cancel, explicit SMTP rejection backs off, and insecure SMTP configuration is refused
+  ---
+  duration_ms: 1354.16133
+  type: 'test'
+  ...
+# Subtest: FIELD-GPS-01: recent location excludes future, stale, inaccurate, invalid and off-duty evidence regardless of upload order
+ok 506 - FIELD-GPS-01: recent location excludes future, stale, inaccurate, invalid and off-duty evidence regardless of upload order
+  ---
+  duration_ms: 0.787299
+  type: 'test'
+  ...
+# Subtest: GPS-REC01: committed lost response clears only acknowledged evidence without replay or timestamp changes
+ok 507 - GPS-REC01: committed lost response clears only acknowledged evidence without replay or timestamp changes
+  ---
+  duration_ms: 1.383685
+  type: 'test'
+  ...
+# Subtest: GPS-REC02: conflicted trip is held while independent trip sync continues; non-GPS is untouched
+ok 508 - GPS-REC02: conflicted trip is held while independent trip sync continues; non-GPS is untouched
+  ---
+  duration_ms: 0.476778
+  type: 'test'
+  ...
+# Subtest: GPS-REC03: unknown commit, revoked authority and wrong account retain all unacknowledged evidence
+ok 509 - GPS-REC03: unknown commit, revoked authority and wrong account retain all unacknowledged evidence
+  ---
+  duration_ms: 0.93606
+  type: 'test'
+  ...
+# Subtest: GPS-REC04: an unrelated committed receipt never discards a different observation
+ok 510 - GPS-REC04: an unrelated committed receipt never discards a different observation
+  ---
+  duration_ms: 0.25594
+  type: 'test'
+  ...
+# Subtest: MANIFEST-HTTP01: actual handlers allow scoped driver receipt but reject customer access and restricted-driver stock issue
+ok 511 - MANIFEST-HTTP01: actual handlers allow scoped driver receipt but reject customer access and restricted-driver stock issue
+  ---
+  duration_ms: 1980.01787
+  type: 'test'
+  ...
+# Subtest: MANIFEST-PG01: independent connections serialize physical capacity and replay; forced abort preserves custody and canonical reservations
+ok 512 - MANIFEST-PG01: independent connections serialize physical capacity and replay; forced abort preserves custody and canonical reservations
+  ---
+  duration_ms: 1070.374563
+  type: 'test'
+  ...
+# Subtest: MANIFEST-01: qualified issue, independent exact receipt and measured capacity protect canonical branch inventory
+ok 513 - MANIFEST-01: qualified issue, independent exact receipt and measured capacity protect canonical branch inventory
+  ---
+  duration_ms: 1987.448745
+  type: 'test'
+  ...
+# Subtest: MANIFEST-02: loss/quarantine remains held until exact independent owner and finance recovery; no fabricated cost
+ok 514 - MANIFEST-02: loss/quarantine remains held until exact independent owner and finance recovery; no fabricated cost
+  ---
+  duration_ms: 1552.930299
+  type: 'test'
+  ...
+# Subtest: MANIFEST-03: inactive-driver custody needs exact independent recovery approval even when all stock is found
+ok 515 - MANIFEST-03: inactive-driver custody needs exact independent recovery approval even when all stock is found
+  ---
+  duration_ms: 1512.887421
+  type: 'test'
+  ...
+# Subtest: VDEMO-SEC01: Source bundle excludes local environment and data files
+ok 516 - VDEMO-SEC01: Source bundle excludes local environment and data files
+  ---
+  duration_ms: 3.178549
+  type: 'test'
+  ...
+# Subtest: VDEMO-SEC02: hosted demo bootstrap fails before connecting without explicit dedicated-resource confirmation
+ok 517 - VDEMO-SEC02: hosted demo bootstrap fails before connecting without explicit dedicated-resource confirmation
+  ---
+  duration_ms: 295.495923
+  type: 'test'
+  ...
+# Subtest: WALLET-UI: top-up methods render without inventing a receiving bank or claiming an unverified balance
+ok 518 - WALLET-UI: top-up methods render without inventing a receiving bank or claiming an unverified balance
+  ---
+  duration_ms: 6.725374
+  type: 'test'
+  ...
+# Subtest: WALLET-BANK: pending transfer, scoped independent approval, rejection and exactly-once ledger
+ok 519 - WALLET-BANK: pending transfer, scoped independent approval, rejection and exactly-once ledger
+  ---
+  duration_ms: 1989.910192
+  type: 'test'
+  ...
+# Subtest: CRM-CANCEL01: scoped cancellation stops unsent messages, preserves in-flight/accepted evidence and dedupe reports actual state
+ok 520 - CRM-CANCEL01: scoped cancellation stops unsent messages, preserves in-flight/accepted evidence and dedupe reports actual state
+  ---
+  duration_ms: 1902.67898
+  type: 'test'
+  ...
+# Subtest: addresses, preferences and sessions are customer-owned
+ok 521 - addresses, preferences and sessions are customer-owned
+  ---
+  duration_ms: 1704.068751
+  type: 'test'
+  ...
+# Subtest: recovery is non-enumerating, single-use, expires and revokes sessions
+ok 522 - recovery is non-enumerating, single-use, expires and revokes sessions
+  ---
+  duration_ms: 125.517609
+  type: 'test'
+  ...
+# Subtest: verification cannot be forged, reused or consumed for password reset
+ok 523 - verification cannot be forged, reused or consumed for password reset
+  ---
+  duration_ms: 15.617192
+  type: 'test'
+  ...
+# Subtest: support persists replies, hides staff notes and rejects cross-customer access
+ok 524 - support persists replies, hides staff notes and rejects cross-customer access
+  ---
+  duration_ms: 33.457846
+  type: 'test'
+  ...
+# Subtest: new products remain unpriced and unpublished with approval definitions
+ok 525 - new products remain unpriced and unpublished with approval definitions
+  ---
+  duration_ms: 11.668899
+  type: 'test'
+  ...
+# Subtest: supplier purchasing requires independent approval and receives stock once
+ok 526 - supplier purchasing requires independent approval and receives stock once
+  ---
+  duration_ms: 141.058257
+  type: 'test'
+  ...
+# Subtest: cylinder inspections quarantine failures and prevent unsafe filling or custody
+ok 527 - cylinder inspections quarantine failures and prevent unsafe filling or custody
+  ---
+  duration_ms: 68.083016
+  type: 'test'
+  ...
+# Subtest: branch transfers remove source stock and destination receipt is independent and idempotent
+ok 528 - branch transfers remove source stock and destination receipt is independent and idempotent
+  ---
+  duration_ms: 247.838459
+  type: 'test'
+  ...
+# Subtest: refill profiles require owned eligible data and report insufficient history honestly
+ok 529 - refill profiles require owned eligible data and report insufficient history honestly
+  ---
+  duration_ms: 18.974227
+  type: 'test'
+  ...
+# Subtest: staff invitation acceptance cannot grant privileges and suspension revokes live sessions
+ok 530 - staff invitation acceptance cannot grant privileges and suspension revokes live sessions
+  ---
+  duration_ms: 93.070073
+  type: 'test'
+  ...
+# Subtest: maintenance expires requests, activates scheduled routine values and flags overdue cylinders once
+ok 531 - maintenance expires requests, activates scheduled routine values and flags overdue cylinders once
+  ---
+  duration_ms: 112.171509
+  type: 'test'
+  ...
+# Subtest: product import creates protected drafts and cannot overwrite existing catalogue records
+ok 532 - product import creates protected drafts and cannot overwrite existing catalogue records
+  ---
+  duration_ms: 52.615106
+  type: 'test'
+  ...
+# Subtest: catalogue branch browsing enforces current user scope
+ok 533 - catalogue branch browsing enforces current user scope
+  ---
+  duration_ms: 10.725187
+  type: 'test'
+  ...
+1..533
+# tests 533
+# suites 0
+# pass 533
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 575982.247042
