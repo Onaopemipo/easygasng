@@ -1,0 +1,13 @@
+# Security verification and remaining limits
+
+Scrypt password hashing, opaque hashed expiring sessions, live user activation/role/branch checks, cookie/Bearer parity, password reauthentication and revocation are reused. Public registration cannot choose privileges. New service/customer records enforce ownership and assigned-technician scope. Technical administrators do not inherit business approval rights.
+
+Protected settings use current authority, independent decisions, expected versions, expiry and recent verification. Safety checklist approval rechecks the reviewer's qualification at decision and activation. Quotes, reports, decisions, financial and audit history are immutable. Materials, stock, balances and slot reservations use transactional locks and bounded quantities. Only definite PostgreSQL deadlock/serialization aborts retry; network/uncertain COMMIT is never blindly retried. External side effects must stay outside retried callbacks.
+
+HTTP mutations validate origin/content type and bounded JSON bodies. Persistent aggregate authentication action budgets supplement per-account/reauthentication throttles. These are not a complete IP/WAF/credential-stuffing defence and can themselves produce shared-budget contention. Image decoding accepts only bounded still formats, strips metadata and enforces private evidence access. Reports escape all dynamic HTML before print/PDF.
+
+Fresh private-schema tests deny anonymous reads and runtime DELETE/immutable report rewriting. Integration tests cover stale versions, independent approval, privilege/branch/customer isolation, double-booking rejection, quote consent, duplicate cash/credit/refund, unsafe outcome denial, private image access and exact compatibility review expiry.
+
+Dependency checks: web audit reports no known vulnerabilities; native still has aggregate Expo CLI advisories through Zod 3 and deepmerge. No unsafe major downgrade or unsupported override was forced. [Zod advisory](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5) identifies a patched major range; [deepmerge advisory](https://github.com/advisories/GHSA-gcqx-w48m-w2h4) reports no patched release at verification. Build tooling exposure differs from mobile runtime exposure and still requires reviewed remediation.
+
+Not verified: managed PostgreSQL concurrency/advisors, penetration testing, production TLS/runtime identity, load/abuse limits, physical device storage/lifecycle, privacy erasure/retention, external provider security, off-site restoration or LPG/legal certification. Green local tests do not establish these properties. See `reports/easygas-security-verification.md`.

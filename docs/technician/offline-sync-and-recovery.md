@@ -1,0 +1,6 @@
+# Offline and recovery
+Existing NativeForm secure drafts remain in use; they preserve record versions and warn when a saved draft belongs to an earlier version. The new workspace does NOT implement a complete encrypted dependency queue for technician assessment, photo and material operations. Availability fails visibly if the server does not acknowledge it; no fictional online/offline acceptance is shown. Service authorisation, verification and final completion require the backend.
+
+P0: do not claim full offline readiness. Implement per-user encrypted intent/evidence, stable operation IDs and receipt reconciliation; recheck assignment, version, payment, qualification, safety and stock on reconnect. Revocation/logout draft wipe needs explicit implementation/testing. Existing driver queue is preserved rather than misused to confirm technician work.
+
+Source snapshot: .data/technician-preflight-source.tgz. Additive schema can remain when rolling back the native app; do not delete historical quotes, approvals, payments, evidence or inventory. Existing encrypted backup/restore regression was adapted to pre-work verified payment and passed. Production restore drill, signed-app rollback and business-approved RTO/RPO remain outstanding. Never restore stale money or custody over newer transactions; use existing compensating corrections.

@@ -1,0 +1,315 @@
+{
+  "phase": "Homepage, testimonials and shared themes",
+  "updated": "2026-10-30",
+  "productionDecision": "NO-GO",
+  "blockers": [
+    {
+      "id": "HOSTED-DB",
+      "status": "OPEN",
+      "reason": "Existing free project quota exhausted; user requested local development."
+    },
+    {
+      "id": "PG-CONCURRENCY",
+      "status": "OPEN",
+      "reason": "No running local PostgreSQL daemon for multi-connection acceptance evidence."
+    },
+    {
+      "id": "PAYMENTS",
+      "status": "OPEN",
+      "reason": "User requested payments remain unconnected."
+    },
+    {
+      "id": "FIELD-PERFORMANCE",
+      "status": "OPEN",
+      "reason": "No production field performance measurements exist."
+    },
+    {
+      "id": "GAS-POLICY",
+      "status": "OPEN",
+      "reason": "Business quantity limits and available stock need independent business configuration before live gas ordering."
+    },
+    {
+      "id": "NATIVE-APP",
+      "status": "OPEN",
+      "reason": "No verified native app/store publication links; account promotion uses the working web account."
+    },
+    {
+      "id": "OS-EMULATION",
+      "status": "OPEN",
+      "reason": "Browser tooling does not expose OS colour-scheme emulation; physical System preference changes remain a target-browser verification item."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "PREFLIGHT",
+      "status": "DONE",
+      "dependsOn": [],
+      "blockerIds": [],
+      "requirements": [
+        "BLK-01"
+      ],
+      "owner": "Implementation",
+      "nextStep": "Preserve local-only constraints",
+      "evidence": [
+        "docs/audits/easygas-dark-mode-preflight.md"
+      ]
+    },
+    {
+      "id": "DEPENDENCY-REGISTER",
+      "status": "DONE",
+      "dependsOn": [
+        "PREFLIGHT"
+      ],
+      "blockerIds": [],
+      "requirements": [
+        "BLK-01",
+        "BLK-02",
+        "BLK-03",
+        "BLK-04"
+      ],
+      "owner": "Implementation",
+      "nextStep": "Use the register when reopening work; do not bypass prerequisites or treat closing a blocker as verification.",
+      "evidence": [
+        "packages/business-rules/src/task-register.ts",
+        "scripts/check-homepage-tasks.ts",
+        "docs/testing/easygas-theme-unit-20261030.txt"
+      ]
+    },
+    {
+      "id": "THEME",
+      "status": "DONE",
+      "dependsOn": [
+        "PREFLIGHT"
+      ],
+      "blockerIds": [],
+      "requirements": [
+        "TH-01",
+        "TH-02"
+      ],
+      "owner": "Implementation",
+      "nextStep": "Maintain verified local implementation; release dependencies are tracked separately.",
+      "evidence": [
+        "apps/web/components/theme-provider.tsx",
+        "apps/web/app/theme.css",
+        "docs/testing/easygas-theme-unit-20261030.txt"
+      ]
+    },
+    {
+      "id": "HOMEPAGE",
+      "status": "DONE",
+      "dependsOn": [
+        "PREFLIGHT"
+      ],
+      "blockerIds": [],
+      "requirements": [
+        "HP-01"
+      ],
+      "owner": "Implementation",
+      "nextStep": "Maintain verified local implementation; release dependencies are tracked separately.",
+      "evidence": [
+        "apps/web/components/site.tsx",
+        "docs/testing/easygas-homepage-browser-evidence.json"
+      ]
+    },
+    {
+      "id": "TESTIMONIAL-SCHEMA",
+      "status": "DONE",
+      "dependsOn": [
+        "PREFLIGHT"
+      ],
+      "blockerIds": [],
+      "requirements": [
+        "TM-01"
+      ],
+      "owner": "Implementation",
+      "nextStep": "Maintain verified local implementation; release dependencies are tracked separately.",
+      "evidence": [
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ]
+    },
+    {
+      "id": "TESTIMONIAL-WORKFLOW",
+      "status": "DONE",
+      "dependsOn": [
+        "TESTIMONIAL-SCHEMA"
+      ],
+      "blockerIds": [],
+      "requirements": [
+        "TM-01",
+        "TM-02",
+        "TM-03",
+        "TM-04",
+        "TM-05",
+        "TM-06",
+        "TM-07",
+        "TM-08",
+        "TM-09",
+        "TM-10"
+      ],
+      "owner": "Implementation",
+      "nextStep": "Maintain verified local implementation; release dependencies are tracked separately.",
+      "evidence": [
+        "apps/web/lib/testimonials.ts",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ]
+    },
+    {
+      "id": "TESTIMONIAL-UI",
+      "status": "DONE",
+      "dependsOn": [
+        "TESTIMONIAL-WORKFLOW"
+      ],
+      "blockerIds": [],
+      "requirements": [
+        "TM-12",
+        "TM-13"
+      ],
+      "owner": "Implementation",
+      "nextStep": "Maintain verified local implementation; release dependencies are tracked separately.",
+      "evidence": [
+        "apps/web/components/testimonials.tsx",
+        "docs/screenshots/easygas-testimonial-owner.png",
+        "docs/screenshots/easygas-testimonial-withdrawn.png"
+      ]
+    },
+    {
+      "id": "LOCAL-QA",
+      "status": "DONE",
+      "dependsOn": [
+        "THEME",
+        "HOMEPAGE",
+        "TESTIMONIAL-UI"
+      ],
+      "blockerIds": [],
+      "requirements": [
+        "HP-22"
+      ],
+      "owner": "Implementation",
+      "nextStep": "Rerun affected checks when implementation changes; production PostgreSQL and performance checks remain separate.",
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json"
+      ]
+    },
+    {
+      "id": "DOCUMENTATION",
+      "status": "DONE",
+      "dependsOn": [
+        "PREFLIGHT"
+      ],
+      "blockerIds": [],
+      "requirements": [
+        "BLK-05",
+        "BLK-06"
+      ],
+      "owner": "Implementation",
+      "nextStep": "Maintain evidence and reassess only affected tasks after changes.",
+      "evidence": [
+        "docs/reports/easygas-homepage-redesign-implementation.md",
+        "docs/traceability/easygas-homepage-theme-rtm.json",
+        "docs/operations/easygas-dark-mode-rollback.md"
+      ]
+    },
+    {
+      "id": "PG-ACCEPTANCE",
+      "status": "BLOCKED",
+      "dependsOn": [
+        "TESTIMONIAL-WORKFLOW"
+      ],
+      "blockerIds": [
+        "PG-CONCURRENCY"
+      ],
+      "requirements": [
+        "TM-15"
+      ],
+      "owner": "Infrastructure",
+      "nextStep": "Execute the prepared TM-PG test on an explicitly enabled disposable local easygas_test database, then complete managed advisor/grant acceptance.",
+      "evidence": [
+        "tests/testimonial-postgres.test.ts",
+        "docs/testing/easygas-testimonial-postgres-20261030.txt"
+      ]
+    },
+    {
+      "id": "PRODUCTION",
+      "status": "BLOCKED",
+      "dependsOn": [
+        "LOCAL-QA",
+        "PG-ACCEPTANCE",
+        "DOCUMENTATION",
+        "BUSINESS-ORDER-ACTIVATION"
+      ],
+      "blockerIds": [
+        "HOSTED-DB",
+        "PAYMENTS",
+        "FIELD-PERFORMANCE"
+      ],
+      "requirements": [
+        "HP-22"
+      ],
+      "owner": "Business owner",
+      "nextStep": "Resolve production prerequisites and rerun acceptance gates; no deployment authorised",
+      "evidence": []
+    },
+    {
+      "id": "BUSINESS-ORDER-ACTIVATION",
+      "status": "BLOCKED",
+      "dependsOn": [
+        "HOMEPAGE",
+        "LOCAL-QA"
+      ],
+      "blockerIds": [
+        "GAS-POLICY"
+      ],
+      "requirements": [
+        "HP-06",
+        "HP-10"
+      ],
+      "owner": "Business owner",
+      "nextStep": "Propose quantity policy and record available stock through existing approved business workflows, then run live-environment quote acceptance.",
+      "evidence": [
+        "docs/testing/easygas-homepage-browser-evidence.json"
+      ]
+    },
+    {
+      "id": "NATIVE-STORE-LINKS",
+      "status": "BLOCKED",
+      "dependsOn": [
+        "HOMEPAGE"
+      ],
+      "blockerIds": [
+        "NATIVE-APP"
+      ],
+      "requirements": [
+        "HP-12"
+      ],
+      "owner": "Mobile release owner",
+      "nextStep": "Supply genuine published app links; keep the web-account CTA active meanwhile.",
+      "evidence": [
+        "apps/web/components/site.tsx"
+      ],
+      "scope": "Optional future publication dependency; native app implementation is outside this phase."
+    },
+    {
+      "id": "SYSTEM-PREFERENCE-CHECK",
+      "status": "BLOCKED",
+      "dependsOn": [
+        "THEME"
+      ],
+      "blockerIds": [
+        "OS-EMULATION"
+      ],
+      "requirements": [
+        "TH-07"
+      ],
+      "owner": "Target-browser QA",
+      "nextStep": "Verify an actual OS preference change while System is selected; unit resolution/listener implementation is already present.",
+      "evidence": [
+        "apps/web/components/theme-provider.tsx",
+        "docs/testing/easygas-theme-unit-20261030.txt"
+      ]
+    }
+  ]
+}

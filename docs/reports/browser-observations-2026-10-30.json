@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-30 Australia/Brisbane",
+  "origin": "http://127.0.0.1:3004",
+  "database": "isolated .data/services-browser-qa-20261030; synthetic only",
+  "backgroundJobs": false,
+  "checks": [
+    "customer sign-in",
+    "customer appointment request persisted and displayed",
+    "owner confirmation and assigned state",
+    "qualification and named availability forms",
+    "readiness route NO-GO and owner gate UI",
+    "bundle management route",
+    "public product compatibility empty state"
+  ],
+  "responsive": [
+    {
+      "route": "/",
+      "viewport": 390,
+      "documentWidth": 390,
+      "bodyWidth": 390
+    },
+    {
+      "route": "/bookings",
+      "viewport": 390,
+      "documentWidth": 390
+    }
+  ],
+  "screenshots": [
+    "home-mobile-20261030.png",
+    "services-booking-mobile-20261030.png",
+    "services-booking-desktop-20261030.png",
+    "services-staff-desktop-20261030.png",
+    "production-readiness-20261030.png"
+  ],
+  "nativeDeviceAcceptance": false
+}

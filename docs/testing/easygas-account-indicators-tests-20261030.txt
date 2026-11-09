@@ -1,0 +1,37 @@
+✔ ACI-01: older recorded migrations repair missing default-address field without losing addresses or inferring a default (876.039792ms)
+{"measurement":"local PGlite order summary milliseconds","samples":10,"median":0.8943330000001879,"max":1.4361659999999574}
+✔ CD-R: all 15 customer routes are unique and grouped; service descendants and tracking match safely (785.11675ms)
+✔ CD-D: safe login return rejects external, encoded, admin and malformed destinations (0.412292ms)
+✔ CD-G,H: shared cart roundtrip preserves quantities through public/account/login navigation without duplicate products (0.437667ms)
+✔ CD-J: empty dashboard has zero actual counts and no fabricated records (17.232625ms)
+✔ CD-I,K,V,Z: order summary, actual unread counts, activity and strict identity ownership (22.106291ms)
+✔ CD-L,M,Z: authoritative wallet/reward entries include reversals and remain customer-owned (4.04925ms)
+✔ CD-O,Q: verified delivered history excludes unpaid/cancelled/other accounts and counts each gas line once (8.934417ms)
+✔ CD-U,Z: default address comes only from active owned backend locations (10.705958ms)
+✔ CD-E,F: revoked and expired sessions cannot retrieve any dashboard source (8.108833ms)
+✔ CD-Y: refill source failure does not prevent independent orders, wallet or history responses (6.17375ms)
+✔ CD-Z: browser-supplied customer IDs cannot widen existing customer API reads (28.174375ms)
+✔ CD-63: customer overview query timing is measured on isolated local database (9.724458ms)
+✔ CD-N: all five feedback states are owned; snooze and self-reports suppress obsolete reminders without manufacturing purchases (231.14675ms)
+✔ TM-01: eligible purchase saves a private draft; publication requires separate approval (1097.902458ms)
+✔ TM-02: ineligible, duplicate, ownership, consent and unsafe input are rejected (811.902833ms)
+✔ TM-15: stale moderation cannot publish or overwrite a newer customer version (821.898666ms)
+✔ TM-09: withdrawing published consent immediately removes public feedback and cannot be reversed by a moderator (802.552167ms)
+✔ TM-16: notification failure rolls back the entire transition and safe retry produces one event (835.295292ms)
+✔ TM-11: photos remain private until separately consented and moderated; withdrawal revokes public image access (823.794792ms)
+✔ TM-RUNTIME: the restricted server can run publication, browser roles cannot read records, and history cannot be changed (824.106583ms)
+✔ HP-CONTENT: editorial and testimonial policy changes reuse independent approvals and reject unsafe content (852.401667ms)
+✔ TM-MEDIA-HTTP: upload requires photo consent; public image responses are never cached and withdrawal revokes anonymous reads (895.887125ms)
+✔ HP-DATA: homepage reads published products with backend prices and active services through a bounded read model (788.481ms)
+✔ TM-MANAGEMENT: owner searches and paginates all matches, exports filtered rows, and lower roles are denied (817.078125ms)
+✔ TM-WITHDRAW-STALE: customer consent revocation wins over a stale screen and retries have one effect (787.908958ms)
+✔ TM-EXPORT: existing identity-verified account export includes only owned testimonial versions and consent history (846.032416ms)
+✔ TM-ENTRY: completed-transaction links select only an eligible owned transaction and prioritize an existing submission (775.561125ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14853.167417

@@ -1,0 +1,6 @@
+CREATE TABLE stocktakes(id text PRIMARY KEY,branch_id text NOT NULL REFERENCES branches(id),reference text NOT NULL UNIQUE,reason text NOT NULL,snapshot jsonb NOT NULL,created_by text NOT NULL REFERENCES users(id),status text NOT NULL DEFAULT 'open' CHECK(status IN ('open','submitted','closed')),counts_hash text,created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE stocktake_counts(id text PRIMARY KEY,stocktake_id text NOT NULL REFERENCES stocktakes(id),product_id text REFERENCES products(id),gas boolean NOT NULL,expected bigint NOT NULL CHECK(expected>=0),counted bigint NOT NULL CHECK(counted>=0),reason text NOT NULL,evidence text NOT NULL,operation_id text REFERENCES inventory_operations(id),created_at timestamptz NOT NULL DEFAULT now());
+CREATE UNIQUE INDEX stocktake_product_once ON stocktake_counts(stocktake_id,COALESCE(product_id,'__bulk_gas__'));
+CREATE INDEX stocktakes_branch ON stocktakes(branch_id,created_at DESC);
+CREATE TRIGGER stocktake_counts_immutable BEFORE UPDATE OR DELETE ON stocktake_counts FOR EACH ROW EXECUTE FUNCTION prevent_record_mutation();
+ALTER TABLE stocktake_counts ADD CONSTRAINT stocktake_units CHECK((gas AND product_id IS NULL) OR (NOT gas AND product_id IS NOT NULL));

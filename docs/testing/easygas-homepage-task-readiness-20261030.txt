@@ -1,0 +1,138 @@
+
+> easygas-platform@0.1.0 tasks:homepage
+> node --import tsx scripts/check-homepage-tasks.ts --write
+
+{
+  "ready": [],
+  "tasks": [
+    {
+      "id": "PREFLIGHT",
+      "status": "DONE",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [],
+      "needsReassessment": false
+    },
+    {
+      "id": "DEPENDENCY-REGISTER",
+      "status": "DONE",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [],
+      "needsReassessment": false
+    },
+    {
+      "id": "THEME",
+      "status": "DONE",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [],
+      "needsReassessment": false
+    },
+    {
+      "id": "HOMEPAGE",
+      "status": "DONE",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [],
+      "needsReassessment": false
+    },
+    {
+      "id": "TESTIMONIAL-SCHEMA",
+      "status": "DONE",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [],
+      "needsReassessment": false
+    },
+    {
+      "id": "TESTIMONIAL-WORKFLOW",
+      "status": "DONE",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [],
+      "needsReassessment": false
+    },
+    {
+      "id": "TESTIMONIAL-UI",
+      "status": "DONE",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [],
+      "needsReassessment": false
+    },
+    {
+      "id": "LOCAL-QA",
+      "status": "DONE",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [],
+      "needsReassessment": false
+    },
+    {
+      "id": "DOCUMENTATION",
+      "status": "DONE",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [],
+      "needsReassessment": false
+    },
+    {
+      "id": "PG-ACCEPTANCE",
+      "status": "BLOCKED",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [
+        "PG-CONCURRENCY"
+      ],
+      "needsReassessment": false
+    },
+    {
+      "id": "PRODUCTION",
+      "status": "BLOCKED",
+      "ready": false,
+      "unmetDependencies": [
+        "PG-ACCEPTANCE",
+        "BUSINESS-ORDER-ACTIVATION"
+      ],
+      "activeBlockers": [
+        "HOSTED-DB",
+        "PAYMENTS",
+        "FIELD-PERFORMANCE",
+        "PG-CONCURRENCY",
+        "GAS-POLICY"
+      ],
+      "needsReassessment": false
+    },
+    {
+      "id": "BUSINESS-ORDER-ACTIVATION",
+      "status": "BLOCKED",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [
+        "GAS-POLICY"
+      ],
+      "needsReassessment": false
+    },
+    {
+      "id": "NATIVE-STORE-LINKS",
+      "status": "BLOCKED",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [
+        "NATIVE-APP"
+      ],
+      "needsReassessment": false
+    },
+    {
+      "id": "SYSTEM-PREFERENCE-CHECK",
+      "status": "BLOCKED",
+      "ready": false,
+      "unmetDependencies": [],
+      "activeBlockers": [
+        "OS-EMULATION"
+      ],
+      "needsReassessment": false
+    }
+  ]
+}

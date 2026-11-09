@@ -1,0 +1,7 @@
+# Booking lifecycle
+
+Authoritative states remain pending_confirmation → confirmed → assigned → en_route → in_progress. Quote-required work enters awaiting_customer_approval; an approved latest quote permits in_progress. A valid report enters awaiting_acknowledgement where applicable; customer acknowledgement permits completed. Existing failed/cancelled terminal outcomes remain terminal. Do not introduce a separate rescheduled state: rescheduling updates the existing booking slot and records a pending_confirmation event/version.
+
+Creation locks customer, catalogue, slot and technician and uses the existing customer/idempotency uniqueness. Rescheduling locks booking, validates supplied version/cut-off, locks the destination slot/technician, updates the same booking and records an event in one dispatch transaction. Cancellation validates cut-off and optional version, releases only eligible material reservations and records cancellation; it does not assert money was refunded.
+
+Quotes retain immutable revisions and one customer decision per quotation. Optional valid_until is enforced for undecided quotes; existing null validity is explicitly displayed as unconfigured rather than inventing business terms. Quote approval reserves approved materials transactionally. Reports require assigned qualified personnel, exact checklist evidence, approved work and reconciled materials. Failed inspection evidence cannot become successful clearance. Existing report acknowledgement, refunds, wallet restrictions, cash verification and feedback rules remain authoritative.

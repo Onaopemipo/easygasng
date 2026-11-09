@@ -1,0 +1,44 @@
+{
+  "environment": "Existing isolated synthetic local preview http://127.0.0.1:3004; not hosted or normal business data",
+  "date": "2026-11-09",
+  "cases": [
+    {
+      "id": "BROWSER-ISSUE",
+      "status": "PASS",
+      "observation": "Canonical owner reauth and invoice issue on synthetic order created EGI-0000000001 once. Preview showed Unpaid invoice, zero verified paid, recorded balance850000kobo. No wallet/payment collection created."
+    },
+    {
+      "id": "BROWSER-LIBRARY",
+      "status": "PASS",
+      "observation": "Existing Financial Reconciliation page listed exact issued number/status/balance. View document used same shared presentation. Literal unmatched search returned0; exact number returned1."
+    },
+    {
+      "id": "BROWSER-KEYBOARD",
+      "status": "PASS",
+      "observation": "Shift+Tab from Close wrapped to Download PDF inside the modal; Escape closed it and restored focus to View document. Existing shared Modal retained."
+    },
+    {
+      "id": "BROWSER-PHONE",
+      "status": "PASS",
+      "observation": "390x844 viewport; document width280, document scrollWidth375 within390. No horizontal document overflow; normal viewport restored. Browser preview only, not installed native app."
+    },
+    {
+      "id": "BROWSER-CONTRAST",
+      "status": "PASS",
+      "observation": "Light private document palette visually inspected; default viewport1314, page scrollWidth1299, preview minimum text font15px. Full assistive-tech/tagged-PDF audit remains untested."
+    },
+    {
+      "id": "BROWSER-STATUS",
+      "status": "PASS",
+      "observation": "Actual Document status selector: Paid invoice returned0, Unpaid invoice returned1 for the canonical synthetic unpaid document. Restored Unpaid view; no verified-payment badge on invoice."
+    }
+  ],
+  "screenshots": [
+    "invoice-modal.png",
+    "document-library.png",
+    "library-invoice-preview.png",
+    "phone-document-preview.png",
+    "library-empty-search.png"
+  ],
+  "limits": "No merchant payment, real customer invoice, external message, hosted migration/deployment, native build, actual device sharing or stakeholder/legal acceptance. Receipt and PDF samples are rendering fixtures, not business transactions."
+}

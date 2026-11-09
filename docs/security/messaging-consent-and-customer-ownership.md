@@ -1,0 +1,5 @@
+# Messaging consent and customer ownership
+
+Public customer ID and phone are lookup attributes, never authentication. Lookup/create/order actions require authorised staff branch scope; customer read and invoice APIs enforce ownership on every request. Staff remain themselves and cannot mint a customer session or spend customer credit/rewards through assisted checkout. New provisional contact is not phone-verified or account-activated.
+
+Email outbox/preferences remain existing behaviour. No SMS/official WhatsApp provider has been selected, configured or enabled; no live recipient messages were sent during tests. The new order completion, OTP and invoice resend flows are outstanding. Implement separate transactional/marketing purpose, recorded channel consent and opt-out, quiet hours/caps, templates/window, hashed scoped tokens, signed callback receipts and durable event dedup before any live activation. Never send sensitive invoice lines in SMS or PII in URLs. Existing SMTP retry and TLS audit defects remain unresolved, not silently closed.

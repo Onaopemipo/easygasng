@@ -1,0 +1,209 @@
+{
+  "phase": "Offline driver GPS observation and delayed upload",
+  "date": "2026-11-08",
+  "productionDecision": "NO-GO unchanged; actual Excel import hold unchanged; no native build or deployment",
+  "requirements": [
+    {
+      "id": "GPS-R01",
+      "requirement": "Record consented offline/background driver GPS using existing encrypted queue",
+      "priority": "P0",
+      "scope": "Driver GPS recording/delayed upload only; no customer live GPS or ETA, no native build/server deployment",
+      "uiReference": "Existing role-specific driver workspace and fleet panel",
+      "route": "/admin/deliveries; existing driver workspace; /api/driver.location; /api/trip.sync",
+      "implementationFiles": [
+        "apps/mobile/driver-location.ts",
+        "apps/mobile/DriverTripTracking.tsx",
+        "apps/mobile/field-queue.ts",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/index.ts",
+        "apps/mobile/app.json",
+        "apps/mobile/package.json",
+        "apps/mobile/package-lock.json",
+        "packages/business-rules/src/offline-location.ts"
+      ],
+      "dataSource": "Existing driver_trips/trip_events, GPS observation timestamp and server created_at; encrypted field queue and device-only secure local lease/counter",
+      "securityControl": "Explicit driver/trip/background permission, eight-hour local bound, no API token in task lease, original timestamps, role/branch/ownership, GPS-only restricted sync, canonical replay, no invented live position",
+      "testFiles": [
+        "tests/offline-driver-location.test.ts",
+        "tests/trip-location-evidence.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/operations-completion.test.ts"
+      ],
+      "testIds": [
+        "GPS-OFF01",
+        "GPS-OFF03"
+      ],
+      "negativeTests": [
+        "expiresAt: now",
+        "accuracy: null"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/offline-gps-tests.txt",
+        "docs/production-completion/evidence/offline-gps-native-types.txt",
+        "docs/production-completion/evidence/offline-gps-web-types.txt",
+        "docs/production-completion/evidence/offline-gps-build.txt"
+      ],
+      "testResult": "Bounded checks pass; native/visual/physical acceptance not inferred. Native source/types implemented; actual background tasks, locked-screen/file/keychain/callback/race/storage behaviour not exercised.",
+      "status": "PARTIAL",
+      "reason": "Native source/types implemented; actual background tasks, locked-screen/file/keychain/callback/race/storage behaviour not exercised.",
+      "outstandingWork": "New native build and actual offline/background/restart/permission/force-quit/device/battery/storage acceptance. No mobile build performed.",
+      "acceptanceGate": "GPS-G01"
+    },
+    {
+      "id": "GPS-R02",
+      "requirement": "Synchronise delayed GPS through scoped canonical trip API without making old points live",
+      "priority": "P0",
+      "scope": "Driver GPS recording/delayed upload only; no customer live GPS or ETA, no native build/server deployment",
+      "uiReference": "Existing role-specific driver workspace and fleet panel",
+      "route": "/admin/deliveries; existing driver workspace; /api/driver.location; /api/trip.sync",
+      "implementationFiles": [
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/trip-metrics.ts"
+      ],
+      "dataSource": "Existing driver_trips/trip_events, GPS observation timestamp and server created_at; encrypted field queue and device-only secure local lease/counter",
+      "securityControl": "Explicit driver/trip/background permission, eight-hour local bound, no API token in task lease, original timestamps, role/branch/ownership, GPS-only restricted sync, canonical replay, no invented live position",
+      "testFiles": [
+        "tests/offline-driver-location.test.ts",
+        "tests/trip-location-evidence.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/operations-completion.test.ts"
+      ],
+      "testIds": [
+        "GPS-OFF02"
+      ],
+      "negativeTests": [
+        "only consented GPS",
+        "no longer authorised",
+        "recordedAt: observed"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/offline-gps-tests.txt",
+        "docs/production-completion/evidence/offline-gps-native-types.txt",
+        "docs/production-completion/evidence/offline-gps-web-types.txt",
+        "docs/production-completion/evidence/offline-gps-build.txt"
+      ],
+      "testResult": "PASS: 27/27 focused domain/backend/security checks, web build and web/native types. PASS: delayed sync/replay, canonical observed time, ownership and restricted GPS-only role guards exercised.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS: delayed sync/replay, canonical observed time, ownership and restricted GPS-only role guards exercised.",
+      "outstandingWork": "None within bounded backend contract; full physical/native and production gates remain separate.",
+      "acceptanceGate": "GPS-G02"
+    },
+    {
+      "id": "GPS-R03",
+      "requirement": "Show last known observation, age, receipt time and latest200 recorded points in existing fleet view",
+      "priority": "P0",
+      "scope": "Driver GPS recording/delayed upload only; no customer live GPS or ETA, no native build/server deployment",
+      "uiReference": "Existing role-specific driver workspace and fleet panel",
+      "route": "/admin/deliveries; existing driver workspace; /api/driver.location; /api/trip.sync",
+      "implementationFiles": [
+        "apps/web/components/operations-completion.tsx",
+        "packages/business-rules/src/trip-metrics.ts",
+        "apps/web/lib/driver-operations.ts"
+      ],
+      "dataSource": "Existing driver_trips/trip_events, GPS observation timestamp and server created_at; encrypted field queue and device-only secure local lease/counter",
+      "securityControl": "Explicit driver/trip/background permission, eight-hour local bound, no API token in task lease, original timestamps, role/branch/ownership, GPS-only restricted sync, canonical replay, no invented live position",
+      "testFiles": [
+        "tests/offline-driver-location.test.ts",
+        "tests/trip-location-evidence.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/operations-completion.test.ts"
+      ],
+      "testIds": [
+        "GPS-OFF01",
+        "GPS-OFF02"
+      ],
+      "negativeTests": [
+        "expiresAt: now",
+        "accuracy: null"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/offline-gps-tests.txt",
+        "docs/production-completion/evidence/offline-gps-native-types.txt",
+        "docs/production-completion/evidence/offline-gps-web-types.txt",
+        "docs/production-completion/evidence/offline-gps-build.txt"
+      ],
+      "testResult": "Bounded checks pass; native/visual/physical acceptance not inferred. DTO/history and web build/typecheck pass; this phase did not execute dispatcher browser visual interaction.",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "DTO/history and web build/typecheck pass; this phase did not execute dispatcher browser visual interaction.",
+      "outstandingWork": "Actual role-scoped browser interaction and customer/location-disclosure review.",
+      "acceptanceGate": "GPS-G03"
+    },
+    {
+      "id": "GPS-R04",
+      "requirement": "Validate installed native background/offline location end to end without false continuous/live guarantees",
+      "priority": "P0",
+      "scope": "Driver GPS recording/delayed upload only; no customer live GPS or ETA, no native build/server deployment",
+      "uiReference": "Existing role-specific driver workspace and fleet panel",
+      "route": "/admin/deliveries; existing driver workspace; /api/driver.location; /api/trip.sync",
+      "implementationFiles": [
+        "docs/operations/offline-driver-location.md"
+      ],
+      "dataSource": "Existing driver_trips/trip_events, GPS observation timestamp and server created_at; encrypted field queue and device-only secure local lease/counter",
+      "securityControl": "Explicit driver/trip/background permission, eight-hour local bound, no API token in task lease, original timestamps, role/branch/ownership, GPS-only restricted sync, canonical replay, no invented live position",
+      "testFiles": [
+        "tests/offline-driver-location.test.ts",
+        "tests/trip-location-evidence.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/operations-completion.test.ts"
+      ],
+      "testIds": [
+        "GPS-OFF01",
+        "GPS-OFF02",
+        "GPS-OFF03"
+      ],
+      "negativeTests": [
+        "expiresAt: now",
+        "accuracy: null"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/offline-gps-tests.txt",
+        "docs/production-completion/evidence/offline-gps-native-types.txt",
+        "docs/production-completion/evidence/offline-gps-web-types.txt",
+        "docs/production-completion/evidence/offline-gps-build.txt"
+      ],
+      "testResult": "Bounded checks pass; native/visual/physical acceptance not inferred. Native builds remain deferred by the user; physical phone capture/OS behaviour cannot be verified from source/typechecking.",
+      "status": "BLOCKED",
+      "reason": "Native builds remain deferred by the user; physical phone capture/OS behaviour cannot be verified from source/typechecking.",
+      "outstandingWork": "Build and physical iOS/Android airplane-mode/lock/restart/reconnect/logout/lease/device-storage acceptance; existing production NO-GO unchanged.",
+      "acceptanceGate": "GPS-G04"
+    }
+  ],
+  "gates": [
+    {
+      "id": "GPS-G01",
+      "status": "PARTIAL",
+      "reason": "Native source/types implemented; actual background tasks, locked-screen/file/keychain/callback/race/storage behaviour not exercised."
+    },
+    {
+      "id": "GPS-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS: delayed sync/replay, canonical observed time, ownership and restricted GPS-only role guards exercised."
+    },
+    {
+      "id": "GPS-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "DTO/history and web build/typecheck pass; this phase did not execute dispatcher browser visual interaction."
+    },
+    {
+      "id": "GPS-G04",
+      "status": "BLOCKED",
+      "reason": "Native builds remain deferred by the user; physical phone capture/OS behaviour cannot be verified from source/typechecking."
+    }
+  ],
+  "coverage": {
+    "requirements": 4,
+    "verifiedRequirements": 1,
+    "denominator": 4,
+    "nativePhysicalAcceptance": 0,
+    "note": "Blocked/unverified requirements retained. Backend contract is not installed-device acceptance."
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-08",
+      "change": "Extend existing encrypted queue/trip system with consented local background lease, observation timestamps and persistent sequence floor; GPS-only restricted trip lifecycle and dedicated own-trip read added. Force-quit/OS/physical/native acceptance retained; no new location/customer/delivery ledger."
+    }
+  ]
+}

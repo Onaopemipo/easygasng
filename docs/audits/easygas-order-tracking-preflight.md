@@ -1,0 +1,17 @@
+# Order tracking preflight — 2026-11-02
+
+Decision: **CONDITIONAL_PASS** for isolated local implementation. Public commercial production remains **NO-GO**. No production migration, payment connection, hosting or deployment authorised by this phase.
+
+Repository: main, unborn HEAD (git log reports no commits); all root application directories and configuration untracked, no staged changes. No destructive Git actions or baseline replacement. Existing development server on 3003 preserved. This prevents a trustworthy changed-files diff; phase-specific file list and tests supply scoped evidence.
+
+Existing authoritative modules: service.ts dispatch transactions; operations.ts checkout and transitionOrder; delivery.ts customer-code completion and independent cash reconciliation; cylinder-allocation.ts serialized allocation/issue; gas-delivery.ts quantity/inspection/reservation; governance.ts audit and in-app notifications; business-operation.ts persistent actor/payload-scoped outcomes. Database supports local PGlite and managed PostgreSQL, additive migrations through 039. Existing order_events were append-only by application convention, without immutable trigger/version/correlation. No existing WebSocket/SSE order transport. Existing notification/outbox and workers must be reused; no provider activation.
+
+Routes: customer /orders and /track; /admin/orders and /admin/deliveries share Records; driver role already has dedicated navigation. Native Expo App.tsx uses same API with assigned orders and SecureStore pending delivery queue. No separate application required. Support, incidents, branches, inventory, cylinders and staff remain authoritative.
+
+Baseline executed: `node --import tsx --test tests/integrity-regressions.test.ts`, 5 passed, 0 failed. Evidence docs/testing/order-tracking-baseline-20261102.txt. Covers inactive/cross-branch checkout, cylinder allocation/issue and held-cylinder reissue, failed reassignment capacity and fulfilment dates. These controls must remain active. Further dispatch-time checks and PostgreSQL contention tests still required; baseline is not physical LPG certification.
+
+Known dependencies: no approved GPS/routing provider or driver privacy/device activation evidence. GPS must stay OFF and ETA unavailable. Disposable multi-connection PostgreSQL must be separately discovered/enabled; PGlite will not be called concurrency evidence. Real device lifecycle, operational backup owners/RPO/RTO and qualified LPG inspection remain external acceptance dependencies. Optional photo proof and supervisor exception approval cannot bypass normal proof/custody.
+
+Execution register: (1) baseline PASS; (2) additive event/attempt architecture IN_PROGRESS; (3) atomic dispatch/proof controls depends on 2; (4) customer live snapshots and dispatch/driver UX depends on 2–3; (5) GPS activation BLOCKED independently; (6) isolated PostgreSQL/device gates NOT_TESTED pending environment; (7) regression/build/traceability depends on implementation. Continue safe tasks while activation dependencies remain blocked.
+
+Post-baseline hardening finding: existing refill inspection excluded delivery_failed when detecting another live cylinder commitment. A physically picked-up failed attempt can still hold that serial. Inspection and dispatch now retain that commitment until physical return; new TRK-07 exercises the legacy cross-order edge case. No unsafe fill, stock issue or custody transfer is performed to work around it.

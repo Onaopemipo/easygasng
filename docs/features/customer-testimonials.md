@@ -1,0 +1,19 @@
+# Customer testimonials
+
+Customers and commercial customers can use Account & Privacy → Your testimonials. Entry links also appear on the dashboard, completed-service cards, delivered verified-paid orders, and the homepage/footer.
+
+An eligible transaction is a delivered order with verified payment evidence, or a completed service booking with a report. Each transaction can have one testimonial. Drafts are private. Rating, original text, selected public name and explicit consent are stored in immutable versions. All ratings, including one star, use the same review queue. Editing a live testimonial creates a draft version and removes it from public display until it is reviewed again. Withdrawn/rejected submissions are terminal in this release; there is no automatic replacement-review loophole.
+
+Public display selects only the current approved, published and consented version. The public DTO excludes customer IDs, email, phone, order references, street addresses and moderation details. Public location is withheld by default. There are no invented reviews or customer portraits; no-review installations show a genuine invitation instead.
+
+Optional photos reuse `media_assets` and the existing image validation pipeline. Text consent and a separate photo consent are required. Only an owned draft can receive a photo, and attaching one creates a new immutable version. File formats and maximum size are bounded by business policy and platform limits (PNG/JPEG/WebP; maximum 8 MB). Conversion strips embedded metadata. Every public photo request revalidates current publication/consent and uses no-store, so withdrawal revokes public reads.
+
+Owner → Growth & Engagement → Customer Testimonials provides server-backed search, status/rating/date filters, sorting, pagination, selection, CSV export, original versions and immutable events. Exported text is protected against spreadsheet formula interpretation. An export contains at most 5,000 matching rows; larger selections require narrower filters and are never silently truncated. Status totals, published rating distribution, six-month submissions, approval time and retention-review counts use backend aggregates.
+
+Settings → Website & Testimonials uses the existing independent approval workflow for editorial/contact content and testimonial policy. The policy controls enabled state, text limits, public selection size, daily submission limit, photo enablement/formats/size, in-app notifications and retention-review age. Consent/moderation cannot be disabled. Photos default off. Retention age creates a review count; it never silently deletes immutable history.
+
+Privacy exception to optimistic editing: an owned consent withdrawal intentionally succeeds despite an older UI revision, so concurrent moderation cannot prevent revocation. A repeated withdrawal returns the existing terminal result without a duplicate event. Moderator and content edits still require the exact current revision. `TM-WITHDRAW-STALE` verifies this locally; `TM-PG` prepares the real multi-connection race.
+
+The existing identity-verified personal-data export now includes only owned testimonial versions and consent/events. Completed purchase/service entry links prioritize the owned transaction (including an older transaction) without trusting client ownership. First-name/initial preferences do not require an irrelevant custom-name field. The embedded account section shows 100 recent submissions; the full version/consent history is available through the existing verified data export. `TM-ENTRY` and `TM-EXPORT` cover ownership and identity checks.
+
+JSON and multipart endpoints share the existing request-origin policy: same-port loopback aliases are accepted only in development; production requires its configured exact origin. `ORIGIN-01`, `ORIGIN-02` and the actual upload handler checks verify the rule.

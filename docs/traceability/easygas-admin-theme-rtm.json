@@ -1,0 +1,231 @@
+{
+  "phase": "Administration and restricted staff theme extension",
+  "releaseDecision": "Local implementation only; existing production NO-GO retained",
+  "scopeChanges": [
+    "User request supersedes previous phase administration light-only boundary. No roles, permissions, routes or backend schema changed.",
+    "AT-05: user-reported inactive tab contrast regression corrected across category/service/settings tabs; search wrapper also corrected.",
+    "31 October: AT-06 fixes public footer retaining a light background under dark mode; scoped .site-footer leaves staff/customer footer regions separate."
+  ],
+  "requirements": [
+    {
+      "priority": "P1",
+      "scope": "Shared appearance for all staff using the administration shell",
+      "uiReference": "Existing shared sun/moon switch; existing role-specific navigation retained",
+      "route": "/admin and all administration child routes",
+      "dataSource": "Browser-local easygas.theme; OS preference only for System",
+      "securityControl": "Presentation only; existing session, role and branch checks unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Automated theme/navigation checks and isolated owner/technician browser verification passed.",
+      "testResult": "PASS: local automated checks and browser scenarios",
+      "outstandingWork": "No deployment requested; existing production release blockers remain.",
+      "implementationFiles": [
+        "packages/business-rules/src/theme.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-admin-theme-tests-20261030.txt",
+        "docs/testing/easygas-admin-theme-browser-20261030.txt",
+        "docs/screenshots/easygas-admin-dark-20261030.png"
+      ],
+      "negativeTests": [],
+      "id": "AT-01",
+      "requirement": "Admin and staff header exposes the shared light/dark switch",
+      "testIds": ["THEME-STAFF"],
+      "acceptanceGate": "AT-01-G"
+    },
+    {
+      "priority": "P1",
+      "scope": "Shared appearance for all staff using the administration shell",
+      "uiReference": "Existing shared sun/moon switch; existing role-specific navigation retained",
+      "route": "/admin and all administration child routes",
+      "dataSource": "Browser-local easygas.theme; OS preference only for System",
+      "securityControl": "Presentation only; existing session, role and branch checks unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Automated theme/navigation checks and isolated owner/technician browser verification passed.",
+      "testResult": "PASS: local automated checks and browser scenarios",
+      "outstandingWork": "No deployment requested; existing production release blockers remain.",
+      "implementationFiles": [
+        "packages/business-rules/src/theme.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-admin-theme-tests-20261030.txt",
+        "docs/testing/easygas-admin-theme-browser-20261030.txt",
+        "docs/screenshots/easygas-admin-dark-20261030.png"
+      ],
+      "negativeTests": [],
+      "id": "AT-02",
+      "requirement": "Theme preference survives reload and resolves consistently before hydration",
+      "testIds": ["THEME-BOOTSTRAP"],
+      "acceptanceGate": "AT-02-G"
+    },
+    {
+      "priority": "P1",
+      "scope": "Shared appearance for all staff using the administration shell",
+      "uiReference": "Existing shared sun/moon switch; existing role-specific navigation retained",
+      "route": "/admin and all administration child routes",
+      "dataSource": "Browser-local easygas.theme; OS preference only for System",
+      "securityControl": "Presentation only; existing session, role and branch checks unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Automated theme/navigation checks and isolated owner/technician browser verification passed.",
+      "testResult": "PASS: local automated checks and browser scenarios",
+      "outstandingWork": "No deployment requested; existing production release blockers remain.",
+      "implementationFiles": [
+        "packages/business-rules/src/theme.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-admin-theme-tests-20261030.txt",
+        "docs/testing/easygas-admin-theme-browser-20261030.txt",
+        "docs/screenshots/easygas-admin-dark-20261030.png"
+      ],
+      "negativeTests": [],
+      "id": "AT-03",
+      "requirement": "Workspace surfaces, headings, filters, tables and popovers use dark semantic colours",
+      "testIds": ["THEME-CONTRAST"],
+      "acceptanceGate": "AT-03-G"
+    },
+    {
+      "priority": "P1",
+      "scope": "Shared appearance for all staff using the administration shell",
+      "uiReference": "Existing shared sun/moon switch; existing role-specific navigation retained",
+      "route": "/admin and all administration child routes",
+      "dataSource": "Browser-local easygas.theme; OS preference only for System",
+      "securityControl": "Presentation only; existing session, role and branch checks unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Automated theme/navigation checks and isolated owner/technician browser verification passed.",
+      "testResult": "PASS: local automated checks and browser scenarios",
+      "outstandingWork": "No deployment requested; existing production release blockers remain.",
+      "implementationFiles": [
+        "packages/business-rules/src/theme.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-admin-theme-tests-20261030.txt",
+        "docs/testing/easygas-admin-theme-browser-20261030.txt",
+        "docs/screenshots/easygas-admin-dark-20261030.png"
+      ],
+      "negativeTests": [],
+      "id": "AT-04",
+      "requirement": "Role-specific navigation remains intact and global light-only rollback still works",
+      "testIds": ["THEME-ROLLBACK"],
+      "acceptanceGate": "AT-04-G"
+    },
+    {
+      "priority": "P1",
+      "scope": "Shared appearance for all staff using the administration shell",
+      "uiReference": "Existing shared sun/moon switch; existing role-specific navigation retained",
+      "route": "/products; shared service and business settings tabs",
+      "dataSource": "Browser-local easygas.theme; OS preference only for System",
+      "securityControl": "Presentation only; existing session, role and branch checks unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser computed colours and screenshot confirmed inactive foreground on secondary, active primary-foreground on primary; switched Accessories then All and verified 12 products return.",
+      "testResult": "PASS: local automated checks and browser scenarios",
+      "outstandingWork": "No deployment requested; existing production release blockers remain.",
+      "implementationFiles": [
+        "packages/business-rules/src/theme.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-tab-contrast-tests-20261030.txt",
+        "docs/screenshots/easygas-product-tabs-dark-20261030.png"
+      ],
+      "negativeTests": [],
+      "id": "AT-05",
+      "requirement": "Inactive product category tabs remain readable in dark mode; selected/hover/focus states and search wrapper use semantic colours",
+      "testIds": ["THEME-CONTRAST"],
+      "acceptanceGate": "AT-05-G"
+    },
+    {
+      "priority": "P1",
+      "scope": "Shared appearance for all staff using the administration shell",
+      "uiReference": "Existing shared sun/moon switch; existing role-specific navigation retained",
+      "route": "All public routes using Footer",
+      "dataSource": "Existing public footer links and configured website contact information",
+      "securityControl": "Presentation only; existing session, role and branch checks unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser verified dark background rgb(4,21,16), headings/links rgb(244,248,245), and unchanged light background rgb(252,253,250).",
+      "testResult": "PASS: theme contrast tests and light/dark browser verification",
+      "outstandingWork": "No deployment requested; existing production release blockers remain.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-footer-theme-tests-20261031.txt",
+        "docs/screenshots/easygas-footer-dark-20261031.png"
+      ],
+      "negativeTests": [],
+      "id": "AT-06",
+      "requirement": "Public footer uses a coherent dark surface with readable headings, links, body text and keyboard focus",
+      "testIds": ["THEME-CONTRAST"],
+      "acceptanceGate": "AT-06-G"
+    }
+  ],
+  "gates": [
+    {
+      "id": "AT-01-G",
+      "status": "PASS",
+      "description": "Admin and staff header exposes the shared light/dark switch"
+    },
+    {
+      "id": "AT-02-G",
+      "status": "PASS",
+      "description": "Theme preference survives reload and resolves consistently before hydration"
+    },
+    {
+      "id": "AT-03-G",
+      "status": "PASS",
+      "description": "Workspace surfaces, headings, filters, tables and popovers use dark semantic colours"
+    },
+    {
+      "id": "AT-04-G",
+      "status": "PASS",
+      "description": "Role-specific navigation remains intact and global light-only rollback still works"
+    },
+    {
+      "id": "AT-05-G",
+      "status": "PASS",
+      "description": "Product category dark-mode contrast and filtering verified"
+    },
+    {
+      "id": "AT-06-G",
+      "status": "PASS",
+      "description": "Dark footer contrast and unchanged light surface verified"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# Location privacy
+The current workspace honestly displays GPS/ETA as unavailable and reads permission state without prompting on login. Navigation opens the authorised active address in an external map. No fabricated map positions, ETA, background tracking or customer-location publication is added. Active-job consent, background lifecycle and GPS outage acceptance are still pending; do not infer them from existing trip modules.

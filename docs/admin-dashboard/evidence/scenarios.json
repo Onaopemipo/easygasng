@@ -1,0 +1,338 @@
+[
+  {
+    "id": "AUTH-01",
+    "requirement": "Shared login works for owner/admin/staff without pre-login role selection.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "AUTH-02",
+    "requirement": "Staff lands on authorized workspace only.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "AUTH-03",
+    "requirement": "Owner/admin sees only effective authorized modules.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "AUTH-04",
+    "requirement": "Multiple-role context switch (if applicable) cannot escalate privileges.",
+    "status": "NOT_APPLICABLE",
+    "evidence": "Canonical single role; no multi-role switch exists or was introduced"
+  },
+  {
+    "id": "AUTH-05",
+    "requirement": "Forged role/context fails server-side.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "AUTH-06",
+    "requirement": "Direct unauthorized route fails safely.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "AUTH-07",
+    "requirement": "Direct unauthorized API/export fails safely.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "AUTH-08",
+    "requirement": "Cross-branch customer/order access denied.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "AUTH-09",
+    "requirement": "Suspended staff loses access promptly.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "AUTH-10",
+    "requirement": "Session expiry returns to sign-in and safe redirect.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "AUTH-11",
+    "requirement": "Sensitive approval rejects self-approval and insufficient privileges.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "AUTH-12",
+    "requirement": "Search/realtime data cannot cross permission boundaries.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "UI-01",
+    "requirement": "All 27 specified grouped routes plus Dashboard render or report explicit blocker (count actual registry entries programmatically).",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "UI-02",
+    "requirement": "Correct grouping and ordering.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "UI-03",
+    "requirement": "Sidebar collapse/expand and active route.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "UI-04",
+    "requirement": "Mobile drawer opens/closes and restores focus.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "UI-05",
+    "requirement": "Deep links, refresh, back/forward.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "UI-06",
+    "requirement": "Light/dark/system mode and no flash.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "UI-07",
+    "requirement": "KPI cards real data or honest empty state.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "UI-08",
+    "requirement": "Order trend filter and timezone.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "UI-09",
+    "requirement": "Order status chart matches authoritative taxonomy.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "UI-10",
+    "requirement": "Recent orders pagination and click-through.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "UI-11",
+    "requirement": "Quick actions route and enforce permissions.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "UI-12",
+    "requirement": "Notifications and unread counts reflect real events.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "UI-13",
+    "requirement": "Search handles no results and access restrictions.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "UI-14",
+    "requirement": "Desktop/tablet/mobile responsive and accessibility verification.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-01",
+    "requirement": "Dashboard order count matches scoped source.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "BIZ-02",
+    "requirement": "Verified revenue calculation matches finance policy.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-03",
+    "requirement": "Date/branch filters consistently apply to widgets.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-04",
+    "requirement": "Customer counts deduplicate identities.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-05",
+    "requirement": "Cylinder status counts respect custody.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-06",
+    "requirement": "Phone-assisted order workflow remains intact.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-07",
+    "requirement": "POS unauthorized branch rejected.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-08",
+    "requirement": "Inactive branch fulfillment rejected.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-09",
+    "requirement": "Order amendment preserves original lines and one eligible delivery fee.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-10",
+    "requirement": "Driver assignment and manual override revalidate capacity.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-11",
+    "requirement": "Proof-of-delivery evidence stays linked to historical order.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-12",
+    "requirement": "Technician quote\u2192approval\u2192payment\u2192work gate enforced.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-13",
+    "requirement": "Paystack duplicate webhook posts payment once.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-14",
+    "requirement": "Refund and wallet records remain reconciled.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-15",
+    "requirement": "Inventory movements cannot duplicate or go negative.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-16",
+    "requirement": "Customer testimonials require consent and moderation.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "BIZ-17",
+    "requirement": "No fake records or metrics are present.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "BIZ-18",
+    "requirement": "Existing customer/driver/technician clients pass API contract tests.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "REL-01",
+    "requirement": "Widget partial failure isolation.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "REL-02",
+    "requirement": "Realtime reconnect and event dedupe.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "REL-03",
+    "requirement": "Polling cleanup and bounded request rates.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "REL-04",
+    "requirement": "Stale data clearly marked.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "REL-05",
+    "requirement": "Concurrent updates do not lose authorized state.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "REL-06",
+    "requirement": "Ambiguous payment outcomes reconcile before mutation.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "REL-07",
+    "requirement": "Backup/restore procedure tested in isolated environment where available.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "REL-08",
+    "requirement": "Migration rollback/forward-fix tested.",
+    "status": "NOT_APPLICABLE",
+    "evidence": "No schema migration in this phase; prior additive schema and hold preserved"
+  },
+  {
+    "id": "REL-09",
+    "requirement": "No production notifications sent in tests.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "REL-10",
+    "requirement": "Existing unrelated Git changes preserved.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  },
+  {
+    "id": "REL-11",
+    "requirement": "Lint, typecheck, unit/integration, build execute and record results.",
+    "status": "PARTIAL",
+    "evidence": "full-regression-tests.txt + targeted dashboard-tests.txt; remaining browser/operational acceptance in blocker register"
+  },
+  {
+    "id": "REL-12",
+    "requirement": "No unsafe release-state change.",
+    "status": "PASS",
+    "evidence": "Targeted/new tests, full regression and/or browser evidence; see executed scope below"
+  }
+]

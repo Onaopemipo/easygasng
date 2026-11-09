@@ -1,0 +1,1761 @@
+{
+  "phase": "Order tracking, dispatch, driver operations and proof",
+  "preflight": "CONDITIONAL_PASS",
+  "releaseDecision": "NO-GO \u2014 public commercial production; scoped local tracking implemented with explicit remaining gaps",
+  "scopeChanges": [
+    "Snapshot-based authenticated SSE uses committed authoritative reads, not a separate durable delta broker. Outbox handles in-app notifications.",
+    "Preserved /admin/orders inspection/finance workflows; new dispatch workspace on /admin/deliveries; role-specific driver navigation retained.",
+    "GPS collection/routing, alternative supervisor proof and unsafe-return automation remain restricted; no provider, photo, public share link, hosting or payment activation.",
+    "Hosted Supabase migration packaging/deployment not performed; generic local migrations/bootstrap tested.",
+    "Local browser permission to localhost:3004 declined during sign-out; no workaround used and remaining browser acceptance retained as unverified."
+  ],
+  "requirements": [
+    {
+      "id": "TRK-01",
+      "requirement": "Customer timeline uses real committed history",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "No gap in locally verified timeline scenario.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "No gap in locally verified timeline scenario.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-01"
+      ],
+      "acceptanceGate": "OT-G02",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-02",
+      "requirement": "Order ownership, ID deep links and order-linked support isolation",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Public share links intentionally absent; scoped ID retrieval never replaces ownership.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Public share links intentionally absent; scoped ID retrieval never replaces ownership.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts",
+        "apps/web/components/workflows.tsx"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-01",
+        "TRK-02"
+      ],
+      "acceptanceGate": "OT-G03",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-03",
+      "requirement": "Separate status dimensions and validated transitions",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Native enums preserved; collected cash is not verified payment.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Native enums preserved; collected cash is not verified payment.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-04",
+        "TRK-15"
+      ],
+      "acceptanceGate": "OT-G02",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-04",
+      "requirement": "Invalid or stale transitions have zero unintended business effects",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Independent PostgreSQL verification separately retained in TRK-17.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Independent PostgreSQL verification separately retained in TRK-17.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-04"
+      ],
+      "acceptanceGate": "OT-G04",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-05",
+      "requirement": "Cross-branch dispatch fails closed",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local actor/branch checks verified; no production certification.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Local actor/branch checks verified; no production certification.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-04",
+        "TRK-20"
+      ],
+      "acceptanceGate": "OT-G04",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-06",
+      "requirement": "Inactive branch fulfilment fails closed",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "No additional local implementation gap in tested scenario.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "No additional local implementation gap in tested scenario.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-04"
+      ],
+      "acceptanceGate": "OT-G04",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-07",
+      "requirement": "Serial, inspection and custody eligibility before fulfilment",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local eligibility and cross-order held-refill reissue tests pass; qualified physical safety remains separately blocked.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Executed integrity/shared-gas regressions verify local enforcement; qualified physical LPG acceptance remains a release gate.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/lib/cylinder-allocation.ts",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-07"
+      ],
+      "acceptanceGate": "OT-G06",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-08",
+      "requirement": "Held cylinder/goods reissue requires physical return or authorized custody",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "No automatic restock on cancellation; unsafe physical cases remain restricted.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "No automatic restock on cancellation; unsafe physical cases remain restricted.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-27"
+      ],
+      "acceptanceGate": "OT-G06",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-09",
+      "requirement": "Failed reassignment and reschedule revalidate capacity",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Positive/negative local paths tested; multi-connection contention remains TRK-17.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Positive/negative local paths tested; multi-connection contention remains TRK-17.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-09"
+      ],
+      "acceptanceGate": "OT-G04",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-10",
+      "requirement": "Simultaneous independent assignments cannot overbook",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "BLOCKED",
+      "reason": "Run TRK-17 on explicitly enabled disposable local PostgreSQL; Docker daemon/socket absent.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "Run TRK-17 on explicitly enabled disposable local PostgreSQL; Docker daemon/socket absent.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "tests/order-tracking-postgres.test.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G04",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-11",
+      "requirement": "Pickup requires assigned driver, exact manifest, stock and custody",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Native device acceptance remains separately untested.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Native device acceptance remains separately untested.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts",
+        "apps/mobile/App.tsx",
+        "apps/mobile/offline.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-11"
+      ],
+      "acceptanceGate": "OT-G05",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-12",
+      "requirement": "Delivery code expires, is bounded against guesses and cannot repeat business effect",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Code rotates per attempt; successful retries return prior outcome; no supervisor override.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Code rotates per attempt; successful retries return prior outcome; no supervisor override.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-12",
+        "TRK-15",
+        "TRK-27"
+      ],
+      "acceptanceGate": "OT-G06",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-13",
+      "requirement": "Delivered requires pickup, complete handover, valid code and custody",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser proof negative/positive used synthetic records only; qualified physical acceptance is not claimed.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Browser proof negative/positive used synthetic records only; qualified physical acceptance is not claimed.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-11",
+        "TRK-15"
+      ],
+      "acceptanceGate": "OT-G06",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-14",
+      "requirement": "Failed attempts, rescheduling and exceptions preserve history/next action",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Structured failure categories, severity, owner, customer-safe message and next action are recorded with immutable evidence and operational incident; local tests passed.",
+      "testResult": "PASS: failed/rescheduled history, structured unsafe-cylinder incident/evidence and help dedupe tests executed",
+      "outstandingWork": "No additional local gap in tested structured failure/reschedule scenario; qualified unsafe-return and alternate-proof policies remain separate open gates.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-09",
+        "TRK-14",
+        "TRK-14F"
+      ],
+      "acceptanceGate": "OT-G10",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-15",
+      "requirement": "Retried public mutations commit one logical business effect",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Persistent UUID actor/payload/role/branch outcomes tested; no exactly-once external-message claim. PostgreSQL concurrency stays blocked.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Persistent UUID actor/payload/role/branch outcomes tested; no exactly-once external-message claim. PostgreSQL concurrency stays blocked.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-15"
+      ],
+      "acceptanceGate": "OT-G09",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-16",
+      "requirement": "Ambiguous commit recovers existing authoritative outcome",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Outcome recovery simulated by discarding successful response and querying key; actual connection-loss-at-COMMIT drill is not claimed.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Outcome recovery simulated by discarding successful response and querying key; actual connection-loss-at-COMMIT drill is not claimed.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-15"
+      ],
+      "acceptanceGate": "OT-G09",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-17",
+      "requirement": "Multi-connection PostgreSQL contention and failure injection",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "BLOCKED",
+      "reason": "Disposable loopback PostgreSQL target unavailable. Test is explicitly skipped/NOT_TESTED, not substituted with PGlite.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "Disposable loopback PostgreSQL target unavailable. Test is explicitly skipped/NOT_TESTED, not substituted with PGlite.",
+      "implementationFiles": [
+        "tests/order-tracking-postgres.test.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G13",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-18",
+      "requirement": "Durable outbox replay and actual worker restart",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "PARTIAL",
+      "reason": "Rollback/retry atomicity passes locally. OS-process crash/restart/release-worker exercise remains NOT_TESTED.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "Rollback/retry atomicity passes locally. OS-process crash/restart/release-worker exercise remains NOT_TESTED.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/lib/maintenance.ts",
+        "apps/web/lib/refills.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G08",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-19",
+      "requirement": "Notification failure cannot reverse committed order",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Separate worker transaction and rollback/retry tested. No external channels activated.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Separate worker transaction and rollback/retry tested. No external channels activated.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/lib/refills.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-18"
+      ],
+      "acceptanceGate": "OT-G08",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-20",
+      "requirement": "Subscription authentication, branch/assignment isolation and revocation",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Real dispatcher-backed stream closes after account revocation; production proxy/load acceptance remains open.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Real dispatcher-backed stream closes after account revocation; production proxy/load acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/lib/tracking-stream.ts",
+        "apps/web/app/api/tracking/stream/route.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-20",
+        "TRK-20S"
+      ],
+      "acceptanceGate": "OT-G07",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-21",
+      "requirement": "Out-of-order snapshots, revoked records and stale state reconcile",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Complete snapshot reconciliation used; durable delta replay not claimed.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Complete snapshot reconciliation used; durable delta replay not claimed.",
+      "implementationFiles": [
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts",
+        "apps/web/lib/tracking-stream.ts",
+        "apps/web/app/api/tracking/stream/route.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-21"
+      ],
+      "acceptanceGate": "OT-G07",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-22",
+      "requirement": "Native offline queue never presents pending proof as delivered",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "PARTIAL",
+      "reason": "Encrypted existing queue now retains operation identity/version/handover and compiles. Actual offline/reconnect/account/device lifecycle tests NOT_TESTED.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "Encrypted existing queue now retains operation identity/version/handover and compiles. Actual offline/reconnect/account/device lifecycle tests NOT_TESTED.",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/offline.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G05",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-23",
+      "requirement": "GPS default off and stop-sharing lifecycle",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "BLOCKED",
+      "reason": "GPS/ETA explicitly unavailable with no collector. Lifecycle stop-sharing/activation cannot be certified without connected collector, approved privacy/provider/device gates.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "GPS/ETA explicitly unavailable with no collector. Lifecycle stop-sharing/activation cannot be certified without connected collector, approved privacy/provider/device gates.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts",
+        "apps/mobile/App.tsx",
+        "apps/mobile/offline.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G11",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-24",
+      "requirement": "GPS stale/offline, retention and multi-stop privacy",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "BLOCKED",
+      "reason": "No GPS positions collected/exposed. Collector, retention policy, routing provider and real-device privacy acceptance remain unimplemented/unapproved.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "No GPS positions collected/exposed. Collector, retention policy, routing provider and real-device privacy acceptance remain unimplemented/unapproved.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts",
+        "apps/mobile/App.tsx",
+        "apps/mobile/offline.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G11",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-25",
+      "requirement": "No fabricated driver position or ETA",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Only actual delivery window and unavailable GPS/ETA returned; no provider or simulated movement.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Only actual delivery window and unavailable GPS/ETA returned; no provider or simulated movement.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-23"
+      ],
+      "acceptanceGate": "OT-G11",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-26",
+      "requirement": "Public tracking-token expiry/revocation and enumeration",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "NOT_APPLICABLE",
+      "reason": "No public/shareable tracking token feature added. Existing authenticated ownership/ID checks remain covered by TRK-02/20.",
+      "testResult": "NOT_APPLICABLE: public token feature absent",
+      "outstandingWork": "No public/shareable tracking token feature added. Existing authenticated ownership/ID checks remain covered by TRK-02/20.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/lib/tracking-stream.ts",
+        "apps/web/app/api/tracking/stream/route.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G03",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-27",
+      "requirement": "Physical returns and custody reconciliation",
+      "priority": "P0",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "PARTIAL",
+      "reason": "Full manifest/eligible condition required and no consumed-stock restoration. Unsafe return/quarantine processing, qualified receipt and complete operational reconciliation still need review/implementation.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "Full manifest/eligible condition required and no consumed-stock restoration. Unsafe return/quarantine processing, qualified receipt and complete operational reconciliation still need review/implementation.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G10",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-28",
+      "requirement": "Responsive desktop/tablet/mobile, theme and accessibility",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "PARTIAL",
+      "reason": "Customer/driver light/dark and 390px checked; one-pixel existing header overflow fixed but not browser-rechecked after permission decline. Admin/tablet/zoom/keyboard/screen-reader/native acceptance NOT_TESTED.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "Customer/driver light/dark and 390px checked; one-pixel existing header overflow fixed but not browser-rechecked after permission decline. Admin/tablet/zoom/keyboard/screen-reader/native acceptance NOT_TESTED.",
+      "implementationFiles": [
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G12",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-29",
+      "requirement": "Customer/admin/driver/support views agree on committed state",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "PARTIAL",
+      "reason": "Customer and driver arrival/proof synchronization verified in browser; linked support backend ownership tested. Admin/support full UI acceptance not completed after localhost origin permission denial.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "Customer and driver arrival/proof synchronization verified in browser; linked support backend ownership tested. Admin/support full UI acceptance not completed after localhost origin permission denial.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts",
+        "apps/web/components/workflows.tsx"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G12",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-30",
+      "requirement": "Real data, metrics and proof only",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Metrics explicitly limited to latest 100 permitted orders and actual timestamp pairs; fixture proof is labelled test-only, never production certification.",
+      "testResult": "PASS: mapped executed local tests/browser observations; see remaining release limits",
+      "outstandingWork": "Metrics explicitly limited to latest 100 permitted orders and actual timestamp pairs; fixture proof is labelled test-only, never production certification.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [
+        "TRK-01",
+        "TRK-23"
+      ],
+      "acceptanceGate": "OT-G03",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-31",
+      "requirement": "Rollback, restore and operational fallback exercises",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "PARTIAL",
+      "reason": "Encrypted isolated proof/outcome/outbox restore and emergency write stop pass. Actual PostgreSQL restore, operators, RPO/RTO, manual fallback and source rollback rehearsal remain open.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "Encrypted isolated proof/outcome/outbox restore and emergency write stop pass. Actual PostgreSQL restore, operators, RPO/RTO, manual fallback and source rollback rehearsal remain open.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "docs/operations/order-tracking-recovery-runbook.md"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G14",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    },
+    {
+      "id": "TRK-32",
+      "requirement": "Lint, typecheck, build and affected regression suites",
+      "priority": "P1",
+      "scope": "Existing local EasyGas web/native tracking and fulfilment; production NO-GO preserved",
+      "uiReference": "EasyGas_Order_Tracking_Codex_Master_Prompt.md, approved 2026-11-02",
+      "route": "/orders; /track; /admin/orders; /admin/deliveries; /support; /api/orders; /api/tracking/stream; existing native orders/driver screen",
+      "dataSource": "Authoritative orders/order_events, delivery_attempts/evidence/outbox, inventory/gas/cylinder records, live actor sessions/branch scope and business_operation_results",
+      "securityControl": "Server ownership/assignment/branch, stale-version and actor/payload operation identity checks; immutable audit/proof; existing stock/cash/custody protections; fail-closed GPS and proof restrictions",
+      "status": "PARTIAL",
+      "reason": "Executed regression/typecheck/build evidence recorded. No lint script exists; PostgreSQL and actual device tests remain explicitly unexecuted, in denominators.",
+      "testResult": "PARTIAL / NOT_TESTED: executed local subset and explicit remaining gates",
+      "outstandingWork": "Executed regression/typecheck/build evidence recorded. No lint script exists; PostgreSQL and actual device tests remain explicitly unexecuted, in denominators.",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts",
+        "database/migrations/040_order_tracking.sql",
+        "database/migrations/041_tracking_audit_hardening.sql",
+        "database/migrations/042_tracking_support.sql",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css",
+        "packages/business-rules/src/order-tracking.ts",
+        "apps/mobile/App.tsx",
+        "apps/mobile/offline.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/platform.test.ts",
+        "tests/commerce.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/order-tracking-regression-20261102.txt",
+        "docs/testing/order-tracking-browser-20261102.txt",
+        "docs/testing/order-tracking-environment-20261102.txt",
+        "docs/testing/order-tracking-typecheck-20261102.txt",
+        "docs/testing/order-tracking-mobile-typecheck-20261102.txt",
+        "docs/testing/order-tracking-build-20261102.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "OT-G13",
+      "negativeTests": [
+        "identity conflicts",
+        "fully booked",
+        "actual handover"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "OT-G01",
+      "status": "PASS",
+      "description": "Preflight recorded; local-only, unborn Git and unrelated changes preserved"
+    },
+    {
+      "id": "OT-G02",
+      "status": "PASS",
+      "description": "Canonical state contract, immutable versioned history and additive migration tested locally"
+    },
+    {
+      "id": "OT-G03",
+      "status": "PASS",
+      "description": "Owned snapshots/support, no public-token access; customer browser timeline verified"
+    },
+    {
+      "id": "OT-G04",
+      "status": "BLOCKED",
+      "description": "Local branch/capacity/stock checks pass; independent PostgreSQL assignment contention NOT_TESTED"
+    },
+    {
+      "id": "OT-G05",
+      "status": "NOT_TESTED",
+      "description": "Assigned driver web path verified, native compile passes; real device/offline lifecycle acceptance pending"
+    },
+    {
+      "id": "OT-G06",
+      "status": "BLOCKED",
+      "description": "Normal code/pickup/handover enforced locally; qualified physical safety and alternate-proof governance outstanding"
+    },
+    {
+      "id": "OT-G07",
+      "status": "NOT_TESTED",
+      "description": "Real authenticated stream revocation and browser updates pass; production proxy/load and durable delta-broker replay not certified"
+    },
+    {
+      "id": "OT-G08",
+      "status": "NOT_TESTED",
+      "description": "Atomic in-app outbox rollback/retry pass; actual worker process restart/deployed reliability unexecuted"
+    },
+    {
+      "id": "OT-G09",
+      "status": "BLOCKED",
+      "description": "Persistent outcome/stock/cash retry evidence passes locally; independent PostgreSQL failures/contention pending"
+    },
+    {
+      "id": "OT-G10",
+      "status": "NOT_TESTED",
+      "description": "Structured failure/help incidents and held-return restrictions implemented; qualified unsafe-return and comprehensive operational reconciliation acceptance pending"
+    },
+    {
+      "id": "OT-G11",
+      "status": "BLOCKED",
+      "description": "GPS/ETA disabled; no approved provider/privacy/retention/device activation and no connected collector"
+    },
+    {
+      "id": "OT-G12",
+      "status": "NOT_TESTED",
+      "description": "Customer/driver browser evidence exists; admin-origin access declined, mobile fix/tablet/keyboard/screen-reader acceptance incomplete"
+    },
+    {
+      "id": "OT-G13",
+      "status": "BLOCKED",
+      "description": "Web/native typecheck/build and affected suites pass; PostgreSQL/device/security/performance release gates and lint unavailable"
+    },
+    {
+      "id": "OT-G14",
+      "status": "NOT_TESTED",
+      "description": "Encrypted isolated restore/emergency stop pass; real manual fallback/owners/RPO/RTO and release rollback rehearsal unexecuted"
+    }
+  ],
+  "coverage": {
+    "requirements": 32,
+    "applicable": 31,
+    "statusCounts": {
+      "BLOCKED": 4,
+      "NOT_APPLICABLE": 1,
+      "PARTIAL": 7,
+      "VERIFIED_COMPLETE": 20
+    },
+    "verifiedApplicable": 20,
+    "note": "Blocked, partial and untested remain in applicable denominator. Native/device/PostgreSQL/GPS and full operational acceptance are not green."
+  }
+}

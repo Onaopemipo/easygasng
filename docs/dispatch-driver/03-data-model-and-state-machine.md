@@ -1,0 +1,25 @@
+# Canonical data and contracts
+
+There is one orders/delivery_attempts/order_events/dispatch_responses system. There is one users identity system, one immutable inventory/financial history and one vehicle/LPG custody model. New read projections do not create copies of business records.
+
+`dispatch.centre`: owner global or explicit branch; manager/dispatcher their branch. Validated Lagos date; literal reference/customer/address search; area, status, delivery-window, derived priority, stable sort and bounded page size. Complete scoped counts are calculated independently of returned page. Readiness reuses fulfilmentReady inside rolled-back savepoints; over250 queue candidates produces unavailable readiness rather than a partial figure. Large-volume SQL aggregation and load testing remain an acceptance gate; the current read materialises the selected-day matching set before paging.
+
+Completed uses delivered_at converted to Africa/Lagos, not scheduled delivery date. Other queues use delivery_date. Online means server foreground contact within90seconds, not availability/GPS. Null/future contact is unknown; old contact is stale. Active-account counts are current even when viewing historical delivery dates. Selected-date loaded/delivered/verified-return mass is branch-scoped; current open-load remaining is labelled estimated custody, not a physical stock measurement. Search/area filters cannot partition multi-order vehicle mass and do not change this branch summary.
+
+Paid uses invoiceBalance and verified_payments net of approved refunds; approved branch COD is explicitly labelled Approved COD. Cached payment_status is not dispatch authority. Pending corrections/supplements and all existing financial controls remain enforced by fulfilmentReady.
+
+Assignment still uses dispatch.assign/reassign and transitionOrder → beginAttempt, guarded versions, current active/available branch driver, trip/vehicle/capacity, stock, physical serials/inspection, payment and independent custody rules. Declared availability is locked when beginning the canonical attempt. No new automatic assignment endpoint exists.
+
+Existing state sequence remains assigned → acknowledged → pickup → out_for_delivery → arrived → proof-backed delivered, with existing failure, help and return paths. Acknowledgement requires current owned/versioned assigned attempt, active branch and unexpired delivery_code_expires_at. This reuses the existing24-hour authorisation, not a newly invented10-minute timer. Old15-minute escalation history remains valid.
+
+070 adds only nullable users.driver_last_seen_at plus a branch index. `driver.heartbeat` requires a current restricted driver session and active branch, records server time at most every15seconds and does not alter availability, GPS, stock, money or dispatch state. It intentionally avoids a financial operation-result entry per heartbeat. Existing API auth/rate limits apply.
+
+Actual GPS comes from consented active branch trips only while that driver has an active assignment. Captured time, receipt time, age and accuracy are preserved; delayed uploads never become fresh. Precise-location read access is audited without copying coordinates into the audit detail. No map tile provider is configured.
+
+Declined current attempts and expired assigned authorisations are projected into Exceptions; they are not counted as healthy live/assigned deliveries. Reasons/history remain on the original attempt. Reassignment uses the existing dispatch.reassign operation, only to a different eligible driver and only after the existing unpicked/version/capacity/custody checks. A repeated decline retains one response; no new attempt is fabricated by the read model.
+
+Final serial-safety refinement: cylinderAllocationReadiness is extracted from the existing issueCylinders authority and reused by fulfilmentReady. Complete reserved serial counts and current eligibility now block assignment/readiness/pickup as well as final issue. The original line name and allocation history still survive catalogue edits. No new stock movements, duplicate serial model or alternate safety rules were created. DDI-S060 reproduced the missing-serial early-dispatch defect before this change; the same fixture now rejects with no attempt/order-state effects.
+
+If the queue exceeds250 readiness candidates, probes are skipped entirely and readiness is unavailable; complete order counts and paging still use every matching record. The final261-record follow-up proves this does not publish a partial count. This bounds wasted probe work but does not replace required production-volume/query-plan acceptance.
+
+State readiness also reuses the existing orderTransitions map. Accepted orders stay in the queue but are not counted ready or offered assignment before preparation. The per-row review opens the existing tracking/actions component with canonical orderId, so older selected records do not disappear behind the general latest100 list. Its default unfiltered behaviour for existing callers is unchanged.

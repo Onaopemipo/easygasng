@@ -1,0 +1,9 @@
+# Customer matching review
+
+Actual source:77 distinct nonempty name strings across all rows;74 normalized non-stock name groups;44 repeated-name groups. These are not confirmed unique people. Source contact has178 numerically stored phone cells;160 unsupported/missing-prefix phone representations need review, and20 customer activity rows lack contact.13 distinct valid-format phone keys exist; valid format does not mean verified ownership. One shared-phone group spans7 rows with multiple aliases.
+
+The local read-only target snapshot has4 users, of which customer/commercial records are queried separately. No target candidates matched these source rows.215 source rows require customer review;0 approved matches and0 customer creates/updates. Snapshot schema is through049. Names alone never cause a match. Exact target-verified phone can suggest a candidate only, and source phone remains unverified. Shared household/business phones are not merged. No branch is inferred from workbook presence or a similar name.
+
+Private `customer-review.csv` contains source row/ID, original name/phone/address, suggested target IDs/evidence, and blank selected target/reviewer/reason fields. Allowed future review decisions: MATCH_EXISTING, CREATE_PROVISIONAL, DEFER, REJECT. These are customer decisions to record, not an enabled import API. A future approved create must use existing users/public_customer_id and existing identity controls, not a second customer table/login. No verified contact, active login or marketing consent is inferred.
+
+Phones remain strings in preview. XML raw type/value and format remain in provenance; numeric lost leading zeros cannot be reconstructed without evidence. CSV phone cells are prefixed with an apostrophe to preserve digits in Excel; this is an export-protection prefix, not a change to the source phone. Names/phones/addresses and matching IDs stay in the private ignored review folder, not this document.

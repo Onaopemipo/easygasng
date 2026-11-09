@@ -1,0 +1,32 @@
+{
+  "environment": "Isolated local PGlite QA, development server port 3004",
+  "readout": {
+    "brokenImages": [],
+    "client": 1425,
+    "heading": "Cooking gas delivered to your door!",
+    "scroll": 1425,
+    "theme": "dark",
+    "toggleSize": {
+      "height": 44,
+      "width": 44
+    },
+    "width": 1440
+  },
+  "consoleErrors": [],
+  "cases": {
+    "crossTabSynchronization": "PASS: toggling tab 41 changed tab 40 to dark",
+    "reloadPersistence": "PASS: dark persisted after reload",
+    "keyboardTheme": "PASS: Enter changed theme while quantity 2.5, location Lekki and cart 1 remained",
+    "zeroQuantity": "PASS: no payable total shown at zero; order action disabled",
+    "mobileNavigation": "PASS: Toggle navigation opens all seven links; Escape closes",
+    "testimonialCustomer": "PASS: completed-service draft and pending submission",
+    "testimonialOwner": "PASS: identity verification, original history, approval, separate publication",
+    "testimonialWithdrawal": "PASS: customer withdrew a published one-star synthetic review; homepage quote list became empty",
+    "adminBoundary": "PASS: /admin/testimonials resolved light while public theme preference retained",
+    "routeSmoke": "30 checks, 15 customer routes in both themes, no document overflow"
+  },
+  "limitations": [
+    "The browser read API did not expose performance.getEntriesByType; no LCP, INP, CLS or production timing claims are made.",
+    "No real customer testimonial was fabricated or published in the normal local database."
+  ]
+}

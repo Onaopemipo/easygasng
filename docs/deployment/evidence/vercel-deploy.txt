@@ -1,0 +1,108 @@
+Vercel CLI 59.18.0 (Node.js 24.21.0)
+Deploying easygas-client-demo
+Uploading [--------------------] (0.0B/7.7MB)
+Uploading [=====---------------] (1.9MB/7.7MB)
+Uploading [==========----------] (3.8MB/7.7MB)
+Uploading [===============-----] (5.8MB/7.7MB)
+Uploading [====================] (7.7MB/7.7MB)
+  Inspect         https://vercel.com/onaopemipos-projects/easygas-client-demo/4RaZFWEktdHs4M231g8SN9zBcfZV
+  Production      https://easygas-client-demo-feeftrb1z-onaopemipos-projects.vercel.app
+Building…
+Building…
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 2 cores, 8 GB
+Retrieving list of deployment files...
+Previous build caches not available.
+Concatenating deployment archive files...
+Extracting deployment files...
+Extracted 292 deployment files...
+Running "vercel build"
+Vercel CLI 65.11.0
+Running "install" command: `cd ../.. && npm ci --include=dev`...
+npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+added 61 packages, and audited 63 packages in 8s
+10 packages are looking for funding
+run `npm fund` for details
+found 0 vulnerabilities
+npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+Detected Next.js version: 16.4.3
+Running "npm run build"
+npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+> @easygas/web@0.1.0 build
+> next build --webpack
+▲ Next.js 16.4.3 (webpack)
+Applying modifyConfig from Vercel
+✓ Running next.config.ts took 111ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+Creating an optimized production build ...
+✓ Compiled successfully in 15.1s
+Running TypeScript ...
+Finished TypeScript in 12.4s ...
+Collecting page data using 1 worker ...
+Generating static pages using 1 worker (0/10) ...
+Generating static pages using 1 worker (2/10)
+Generating static pages using 1 worker (4/10)
+Generating static pages using 1 worker (7/10)
+✓ Generating static pages using 1 worker (10/10) in 1236ms
+Finalizing page optimization ...
+Collecting build traces ...
+Running onBuildComplete from Vercel
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /[...slug]
+├ ○ /activate
+├ ƒ /admin/[[...section]]
+├ ƒ /api/[action]
+├ ƒ /api/business-live
+├ ƒ /api/invoices/[orderId]
+├ ƒ /api/media
+├ ƒ /api/media/[id]
+├ ƒ /api/messaging/meta
+├ ƒ /api/payments/paystack/[operation]
+├ ƒ /api/status
+├ ƒ /api/tracking/stream
+├ ○ /icon.png
+├ ○ /payment-request
+├ ○ /payment-return
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+Build Completed in /vercel/output [53s]
+Deploying outputs...
+[2K[1A[2K[G  Production      https://easygas-client-demo-feeftrb1z-onaopemipos-projects.vercel.app
+Completing…
+▲ Aliased         https://easygas-client-demo.vercel.app
+{
+  "status": "ok",
+  "deployment": {
+    "id": "dpl_4RaZFWEktdHs4M231g8SN9zBcfZV",
+    "url": "https://easygas-client-demo-feeftrb1z-onaopemipos-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/onaopemipos-projects/easygas-client-demo/4RaZFWEktdHs4M231g8SN9zBcfZV",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_4RaZFWEktdHs4M231g8SN9zBcfZV"
+  },
+  "message": "Deployment easygas-client-demo-feeftrb1z-onaopemipos-projects.vercel.app ready.",
+  "next": [
+    {
+      "command": "vercel curl https://easygas-client-demo-feeftrb1z-onaopemipos-projects.vercel.app",
+      "when": "Verify deployment, including when Deployment Protection is enabled"
+    },
+    {
+      "command": "vercel inspect easygas-client-demo-feeftrb1z-onaopemipos-projects.vercel.app --scope onaopemipos-projects",
+      "when": "Inspect deployment"
+    },
+    {
+      "command": "vercel deploy --prod --scope onaopemipos-projects",
+      "when": "Promote to production"
+    }
+  ]
+}

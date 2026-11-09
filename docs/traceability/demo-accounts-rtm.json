@@ -1,0 +1,49 @@
+{
+  "phase": "Isolated local demo account handover",
+  "date": "2026-11-05",
+  "productionDecision": "NO-GO unchanged",
+  "requirements": [
+    {
+      "id": "DEMO-01",
+      "requirement": "Provide working isolated local test accounts across customer/staff roles",
+      "priority": "P1",
+      "scope": "Explicit local demo accounts only; current business database and existing passwords preserved",
+      "uiReference": "Existing mobile/web sign-in",
+      "route": "/api/login; /api/me; native sign-in; /login",
+      "dataSource": "Dedicated .data/mobile-demo-accounts; protected ignored credential manifest",
+      "securityControl": "Refuse production/hosted database config; separate data directory; no existing-account overwrite/reset; salted password hashes; credential file0600 and database directory0700; outbound channels disabled",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Nine actual sign-in and session-role checks passed against local demo server; provisioning guard negatives passed.",
+      "outstandingWork": "No remaining work for requested demo credentials; no claim of business workflow/safety or production release acceptance.",
+      "implementationFiles": [
+        "scripts/prepare-mobile-demo.ts",
+        "docs/operations/mobile-demo-accounts.md"
+      ],
+      "testFiles": [
+        "tests/demo-provisioning-guards.test.ts"
+      ],
+      "testIds": [
+        "DEMO-GUARD01"
+      ],
+      "negativeTests": [
+        "Production and hosted DATABASE_URL contexts fail before database access; pre-existing accounts are never reset."
+      ],
+      "evidence": [
+        "docs/audits/demo-account-evidence/login-checks.json",
+        "docs/audits/demo-account-evidence/guards.txt"
+      ],
+      "testResult": "PASS: nine real login/session-role checks; production/hosted guard test passed.",
+      "acceptanceGate": "DEMO-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DEMO-G01",
+      "status": "PASS",
+      "reason": "All nine roles authenticated against the running isolated local backend and returned correct session roles."
+    }
+  ],
+  "scopeChanges": [
+    "User requested test accounts. Local backend port3003 now uses a separate fixture dataset; existing .data/postgres and passwords were not changed. Email/SMS/WhatsApp disabled. No stock or financial records imported."
+  ]
+}

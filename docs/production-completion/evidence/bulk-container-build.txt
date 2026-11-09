@@ -1,0 +1,119 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 753B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 138B done
+#3 DONE 0.0s
+
+#4 [build  1/10] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#4 resolve docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 47.70kB 0.1s done
+#5 DONE 0.1s
+
+#6 [build  4/10] COPY apps/web/package.json ./apps/web/package.json
+#6 CACHED
+
+#7 [build  2/10] WORKDIR /app
+#7 CACHED
+
+#8 [build  3/10] COPY package.json package-lock.json ./
+#8 CACHED
+
+#9 [build  5/10] RUN npm ci
+#9 CACHED
+
+#10 [build  6/10] COPY apps/web ./apps/web
+#10 DONE 0.2s
+
+#11 [build  7/10] COPY packages ./packages
+#11 DONE 0.0s
+
+#12 [build  8/10] COPY database ./database
+#12 DONE 0.1s
+
+#13 [build  9/10] COPY scripts ./scripts
+#13 DONE 0.0s
+
+#14 [build 10/10] RUN npm run build
+#14 0.511 
+#14 0.511 > easygas-platform@0.1.0 build
+#14 0.511 > npm run build --workspace apps/web
+#14 0.511 
+#14 0.630 
+#14 0.630 > @easygas/web@0.1.0 build
+#14 0.630 > next build --webpack
+#14 0.630 
+#14 0.856 ▲ Next.js 16.4.3 (webpack)
+#14 0.883 ✓ Running next.config.ts took 26ms
+#14 0.887 Attention: Next.js now collects completely anonymous telemetry regarding usage.
+#14 0.887 This information is used to shape Next.js' roadmap and prioritize features.
+#14 0.887 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+#14 0.887 https://nextjs.org/telemetry
+#14 0.887 
+#14 0.928 
+#14 0.964   Creating an optimized production build ...
+#14 12.21 ✓ Compiled successfully in 9.7s
+#14 12.22   Running TypeScript ...
+#14 18.66   Finished TypeScript in 6.4s ...
+#14 18.66   Collecting page data using 11 workers ...
+#14 19.67   Generating static pages using 11 workers (0/10) ...
+#14 20.44   Generating static pages using 11 workers (2/10) 
+#14 20.44   Generating static pages using 11 workers (4/10) 
+#14 20.44   Generating static pages using 11 workers (7/10) 
+#14 20.44 ✓ Generating static pages using 11 workers (10/10) in 776ms
+#14 21.09   Finalizing page optimization ...
+#14 21.09   Collecting build traces ...
+#14 27.54 
+#14 27.54 Route (app)
+#14 27.54 ┌ ƒ /
+#14 27.54 ├ ○ /_not-found
+#14 27.54 ├ ƒ /[...slug]
+#14 27.54 ├ ○ /activate
+#14 27.54 ├ ƒ /admin/[[...section]]
+#14 27.54 ├ ƒ /api/[action]
+#14 27.54 ├ ƒ /api/business-live
+#14 27.54 ├ ƒ /api/invoices/[orderId]
+#14 27.54 ├ ƒ /api/media
+#14 27.54 ├ ƒ /api/media/[id]
+#14 27.54 ├ ƒ /api/messaging/meta
+#14 27.54 ├ ƒ /api/payments/paystack/[operation]
+#14 27.54 ├ ƒ /api/status
+#14 27.54 ├ ƒ /api/tracking/stream
+#14 27.54 ├ ○ /icon.png
+#14 27.54 ├ ○ /payment-request
+#14 27.54 ├ ○ /payment-return
+#14 27.54 ├ ○ /robots.txt
+#14 27.54 └ ○ /sitemap.xml
+#14 27.54 
+#14 27.54 
+#14 27.54 ○  (Static)   prerendered as static content
+#14 27.54 ƒ  (Dynamic)  server-rendered on demand
+#14 27.54 
+#14 DONE 27.6s
+
+#7 [build  2/10] WORKDIR /app
+#7 CACHED
+
+#15 [runtime 3/3] COPY --from=build --chown=node:node /app /app
+#15 DONE 1.1s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 13.5s done
+#16 exporting manifest sha256:614c51ac1bac90c8f37480712cd5bb467262ad03abc609b2d651f9cecd09b515 done
+#16 exporting config sha256:06260d37b0f7644d946e572efb4915c5fbd407d0fa1264a5deae8d74abacdff8 done
+#16 exporting attestation manifest sha256:a9eb2ea444b951c6d2605c8bb0d3fdab45ed533ac99d38ec12810bb2a1be9166 0.0s done
+#16 exporting manifest list sha256:0aff98330b3869a388f118f0b44dbaca522f50aadf3539602e48e85c6f1da6bc done
+#16 naming to docker.io/library/easygas:local-acceptance-bulk-20261106 done
+#16 unpacking to docker.io/library/easygas:local-acceptance-bulk-20261106
+#16 unpacking to docker.io/library/easygas:local-acceptance-bulk-20261106 2.7s done
+#16 DONE 16.3s

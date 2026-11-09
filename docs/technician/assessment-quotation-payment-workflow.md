@@ -1,0 +1,8 @@
+# Assessment → approval → verified payment → chargeable work
+Legacy in_progress is retained as an appointment status for compatibility, but work_phase is authoritative: arrival permits assessment only. Assessment notes are append-only booking events, not a new work-order system. A new quote pauses work. Customer acceptance alone never sets work_phase authorised.
+
+booking.work.start locks and scopes the booking, checks version, active branch and independent technician qualification, latest customer-approved/unexpired quote, activated independent business review, verified balance (including approved refunds), and current phase. It binds the authorised quote ID, increments the canonical booking version and records audit/outbox via the existing operation wrapper. Invalid requests roll back. Old and direct API consumers cannot issue/use materials or submit successful reports without the same guard.
+
+Quotation review uses booking.quote.request_review and the existing approval centre. Reauthenticate as the assigned technician before submitting; owner independently reauthenticates and decides the generic request. No technician self-approval, mark-paid or ledger mutation is exposed in the restricted shell. Fixed agreed scope is supported without inventing an extra quote.
+
+Verified payments come solely from the canonical payment ledger. Cash receipt capture is not verification. Existing authorised independent cash/purchase-credit workflows remain; no provider is activated. Pre-service immutable invoice/payment-request presentation and live Paystack/provider acceptance remain incomplete, so TG-09 is not a broad PASS.

@@ -1,0 +1,29 @@
+✔ service drafts are not sellable; checklist and price activation require independent qualified approval (1769.304917ms)
+✔ booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve (915.777542ms)
+✔ qualification expiry, stale service versions and out-of-area addresses reject booking without side effects (830.607458ms)
+✔ quotation revisions preserve price history; only latest customer approval reserves materials (859.344875ms)
+✖ approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once (897.727125ms)
+✔ unsafe inspection cannot become safety clearance or customer-acknowledged success (853.671334ms)
+✔ service deposit uses existing wallet ledger and cancellation refund requires separate finance approval (855.205583ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7441.371833
+
+✖ failing tests:
+
+test at tests/professional-services.test.ts:1:4766
+✖ approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once (897.727125ms)
+  Error: Your account does not have permission for this action.
+      at allow (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/auth.ts:65:11)
+      at technician (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/professional-services.ts:98:3)
+      at professionalServiceAction (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/professional-services.ts:1665:11)
+      at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/service.ts:452:34)
+      at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/src/base.ts:494:24) {
+    status: 403,
+    code: 'FORBIDDEN'
+  }

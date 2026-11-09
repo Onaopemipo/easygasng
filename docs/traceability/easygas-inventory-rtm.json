@@ -1,0 +1,2804 @@
+{
+  "phase": "Approved inventory end-to-end consolidation",
+  "productionDecision": "NO-GO unchanged",
+  "requirements": [
+    {
+      "id": "INV-001",
+      "requirement": "Existing grouped sidebar remains unchanged in structure and routes.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing grouped navigation source unchanged; exact29-route registry regression passes.",
+      "acceptanceGate": "G02",
+      "status": "PARTIAL",
+      "reason": "Existing grouped navigation source unchanged; exact29-route registry regression passes.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-002",
+      "requirement": "Inventory active link and expand/collapse persist.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Inventory active branch/route observed; previous sidebar collapse tests retained.",
+      "acceptanceGate": "G02",
+      "status": "PARTIAL",
+      "reason": "Inventory active branch/route observed; previous sidebar collapse tests retained.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-003",
+      "requirement": "Single login resolves permissions without role selection.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing canonical shared login unchanged; admin phase AUTH tests remain green.",
+      "acceptanceGate": "G02",
+      "status": "PARTIAL",
+      "reason": "Existing canonical shared login unchanged; admin phase AUTH tests remain green.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-004",
+      "requirement": "All seven current tabs work; deep-link/filter/back navigation works.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Seven tabs observed; query persisted Gas Hose across tabs and Products\u2192Back; keyboard ArrowRight activates Receipts.",
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Seven tabs observed; query persisted Gas Hose across tabs and Products\u2192Back; keyboard ArrowRight activates Receipts.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-005",
+      "requirement": "All top actions and quick actions invoke authorized real flows.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: CSV/Add Stock and operational panels verified; actual mutations tested at service/DB boundary, not all browser submissions.",
+      "acceptanceGate": "G03",
+      "status": "PARTIAL",
+      "reason": "CSV/Add Stock and operational panels verified; actual mutations tested at service/DB boundary, not all browser submissions.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-006",
+      "requirement": "Search, filter, sorting, pagination, clear and export work.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [
+        "INV-006"
+      ],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "PASS: Synthetic25-row paging20+5, sort/input limits, literal wildcard/injection, state/export filters; browser Gas Hose1-row CSV confirmed.",
+      "acceptanceGate": "G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Synthetic25-row paging20+5, sort/input limits, literal wildcard/injection, state/export filters; browser Gas Hose1-row CSV confirmed.",
+      "outstandingWork": "None for the bounded data/read/export contract; other phase gates and production holds remain."
+    },
+    {
+      "id": "INV-007",
+      "requirement": "Responsive desktop/tablet/mobile and accessible keyboard/tabs/forms.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Root widths1536/1280/1024/768/390/320 fit; local table scroll; formal screenreader/zoom acceptance remains.",
+      "acceptanceGate": "G19",
+      "status": "PARTIAL",
+      "reason": "Root widths1536/1280/1024/768/390/320 fit; local table scroll; formal screenreader/zoom acceptance remains.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-008",
+      "requirement": "Light/Dark/System modes have usable contrast.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Dark active tabs verified contrast fix; light/dark screenshots; System/no-flash full acceptance pending.",
+      "acceptanceGate": "G19",
+      "status": "PARTIAL",
+      "reason": "Dark active tabs verified contrast fix; light/dark screenshots; System/no-flash full acceptance pending.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-009",
+      "requirement": "Empty/zero/missing cost/stale/error/loading states accurate.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Actual0 units/0kg,8 reorder rows, unavailable valuation; stale/permission/code paths present, full outage browser injection not run.",
+      "acceptanceGate": "G03",
+      "status": "PARTIAL",
+      "reason": "Actual0 units/0kg,8 reorder rows, unavailable valuation; stale/permission/code paths present, full outage browser injection not run.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-010",
+      "requirement": "No mockup numbers, fabricated stock, identities, valuation or images are seeded.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: No seed/import/deployment command; application keeps actual0 stock. Test identities only in disposable fixtures.",
+      "acceptanceGate": "G03",
+      "status": "PARTIAL",
+      "reason": "No seed/import/deployment command; application keeps actual0 stock. Test identities only in disposable fixtures.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-011",
+      "requirement": "kg and unit counts are not aggregated incorrectly.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [
+        "INV-011\u2013012"
+      ],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "PASS: Separate SQL units/grams totals, gas category only grams, no combined quantity.",
+      "acceptanceGate": "G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Separate SQL units/grams totals, gas category only grams, no combined quantity.",
+      "outstandingWork": "None for the bounded data/read/export contract; other phase gates and production holds remain."
+    },
+    {
+      "id": "INV-012",
+      "requirement": "Available = authoritative on-hand minus eligible reservations/holds per current semantics.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [
+        "INV-011\u2013012"
+      ],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "PASS: Fixture eligible10/reserved3/held2 gives onHand12/available7; gas25300/300/200 gives onHand25.5kg/available25kg; held not double-subtracted.",
+      "acceptanceGate": "G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Fixture eligible10/reserved3/held2 gives onHand12/available7; gas25300/300/200 gives onHand25.5kg/available25kg; held not double-subtracted.",
+      "outstandingWork": "None for the bounded data/read/export contract; other phase gates and production holds remain."
+    },
+    {
+      "id": "INV-013",
+      "requirement": "Receipt commits one valid movement and updates correct branch.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing governed receipt replay/stock-movement tests pass.",
+      "acceptanceGate": "G06",
+      "status": "PARTIAL",
+      "reason": "Existing governed receipt replay/stock-movement tests pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-014",
+      "requirement": "Partial receipt, overreceipt and duplicate supplier reference safely handled.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing independent partial purchase receipts reject overreceive and duplicate mismatched references.",
+      "acceptanceGate": "G06",
+      "status": "PARTIAL",
+      "reason": "Existing independent partial purchase receipts reject overreceive and duplicate mismatched references.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-015",
+      "requirement": "Unauthorized receipt blocked without effects.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing protected mutation/branch/role tests pass; exact all-role UI acceptance pending.",
+      "acceptanceGate": "G06",
+      "status": "PARTIAL",
+      "reason": "Existing protected mutation/branch/role tests pass; exact all-role UI acceptance pending.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-016",
+      "requirement": "Adjustment requires approval and logs original/correction.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Original approval delta/stale count/movement immutability tests pass.",
+      "acceptanceGate": "G07",
+      "status": "PARTIAL",
+      "reason": "Original approval delta/stale count/movement immutability tests pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-017",
+      "requirement": "Self-approval rejected where prohibited.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Independent request/approval tests and self-approval negatives pass.",
+      "acceptanceGate": "G07",
+      "status": "PARTIAL",
+      "reason": "Independent request/approval tests and self-approval negatives pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-018",
+      "requirement": "Stocktake variance reconciliation and stale-count conflict.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing stocktake snapshot/count-sheet/submit/stale-movement tests pass.",
+      "acceptanceGate": "G08",
+      "status": "PARTIAL",
+      "reason": "Existing stocktake snapshot/count-sheet/submit/stale-movement tests pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-019",
+      "requirement": "Return condition and quarantine enforced.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Qualified hold release and supplier disposition remain; all return-source/condition browser acceptance pending.",
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Qualified hold release and supplier disposition remain; all return-source/condition browser acceptance pending.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-020",
+      "requirement": "Transfer does not make stock simultaneously available in both locations.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing transfer source reserve/dispatch/destination receipt tests pass; full serial/vehicle path not certified.",
+      "acceptanceGate": "G10",
+      "status": "PARTIAL",
+      "reason": "Existing transfer source reserve/dispatch/destination receipt tests pass; full serial/vehicle path not certified.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-021",
+      "requirement": "Partial/damaged transfer receipt reconciles.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Partial transfer/damage-hold/replay tests pass; exception UI acceptance incomplete.",
+      "acceptanceGate": "G10",
+      "status": "PARTIAL",
+      "reason": "Partial transfer/damage-hold/replay tests pass; exception UI acceptance incomplete.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-022",
+      "requirement": "Vehicle loading/unloading and on-site additions constrained by vehicle stock.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Prior verified vehicle-stock doorstep commit/custody gap remains; no bypass.",
+      "acceptanceGate": "G10",
+      "status": "BLOCKED",
+      "reason": "Prior verified vehicle-stock doorstep commit/custody gap remains; no bypass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-023",
+      "requirement": "Bundles consume/reserve underlying components only once.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing component reservation/checkout tests pass; full inventory UI bundle acceptance pending.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing component reservation/checkout tests pass; full inventory UI bundle acceptance pending.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-024",
+      "requirement": "Service material usage and return linked to authorized service.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing pre-work payment/assignment/material issue guards and reconciliation tests pass; broader return/device acceptance open.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing pre-work payment/assignment/material issue guards and reconciliation tests pass; broader return/device acceptance open.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-025",
+      "requirement": "Purchase orders do not increase physical stock before receipt.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Purchase does not add physical stock until independently approved valid receiving; regression passes.",
+      "acceptanceGate": "G06",
+      "status": "PARTIAL",
+      "reason": "Purchase does not add physical stock until independently approved valid receiving; regression passes.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-026",
+      "requirement": "Movement history immutable and correction auditable.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: New paged immutable history reads actor/reference/unit; original correction/append-only tests pass. Rich origin/evidence drilldown incomplete.",
+      "acceptanceGate": "G13",
+      "status": "PARTIAL",
+      "reason": "New paged immutable history reads actor/reference/unit; original correction/append-only tests pass. Rich origin/evidence drilldown incomplete.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-027",
+      "requirement": "Stock valuation unavailable when acquisition costs/policy missing.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [
+        "INV-027\u2013028"
+      ],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "PASS: Unconfigured/incomplete/restricted acquisition basis returns unavailable, not retail prices; tested.",
+      "acceptanceGate": "G14",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Unconfigured/incomplete/restricted acquisition basis returns unavailable, not retail prices; tested.",
+      "outstandingWork": "None for the bounded data/read/export contract; other phase gates and production holds remain."
+    },
+    {
+      "id": "INV-028",
+      "requirement": "Valid valuation follows approved costing method.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [
+        "INV-027\u2013028"
+      ],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "PASS: Approved complete acquisition10units\u00d710000kobo yields100000; category sum equals valuation and operational role cannot read costs.",
+      "acceptanceGate": "G14",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Approved complete acquisition10units\u00d710000kobo yields100000; category sum equals valuation and operational role cannot read costs.",
+      "outstandingWork": "None for the bounded data/read/export contract; other phase gates and production holds remain."
+    },
+    {
+      "id": "INV-029",
+      "requirement": "Threshold and alert counts are consistent with inventory state.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Sidebar/query reorder condition equality asserted, pending approvals separate; selected/global scope labelled.",
+      "acceptanceGate": "G15",
+      "status": "PARTIAL",
+      "reason": "Sidebar/query reorder condition equality asserted, pending approvals separate; selected/global scope labelled.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-030",
+      "requirement": "Branch-scoped access and exports cannot leak other branches.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [
+        "INV-030,051,052"
+      ],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "PASS: Current branch/role/revocation + new cross-branch workspace/export negatives; no financial cost fields.",
+      "acceptanceGate": "G17",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current branch/role/revocation + new cross-branch workspace/export negatives; no financial cost fields.",
+      "outstandingWork": "None for the bounded data/read/export contract; other phase gates and production holds remain."
+    },
+    {
+      "id": "INV-031",
+      "requirement": "R01 serialized cylinder checkout/dispatch/returns fail safely without eligibility.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing eligible serial checkout/dispatch/custody tests pass; physical safety and whole affected path certification remain open.",
+      "acceptanceGate": "G11",
+      "status": "BLOCKED",
+      "reason": "Existing eligible serial checkout/dispatch/custody tests pass; physical safety and whole affected path certification remain open.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-032",
+      "requirement": "R02 unauthorized branch checkout/stock issue rejected.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing inactive/cross-branch checkout-before-reservation regressions pass.",
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Existing inactive/cross-branch checkout-before-reservation regressions pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-033",
+      "requirement": "R03 inactive branch fulfilment rejected.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing inactive branch operation/fulfilment regressions pass.",
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Existing inactive branch operation/fulfilment regressions pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-034",
+      "requirement": "R04 failed delivery reassignment revalidates capacity.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing failed delivery reassignment cannot overbook test passes.",
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Existing failed delivery reassignment cannot overbook test passes.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-035",
+      "requirement": "R05 held cylinder reissue blocked until valid return/transfer.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing second custody issue blocked until return test passes.",
+      "acceptanceGate": "G11",
+      "status": "BLOCKED",
+      "reason": "Existing second custody issue blocked until return test passes.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-036",
+      "requirement": "Concurrent reservation for last available stock allows only valid allocation.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Independent PostgreSQL competing stock corrections/final gas reservation tests pass.",
+      "acceptanceGate": "G18",
+      "status": "PARTIAL",
+      "reason": "Independent PostgreSQL competing stock corrections/final gas reservation tests pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-037",
+      "requirement": "Duplicate receipt/transfer/issue request posts once.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Receipt/transfer replay and conflicting reference tests pass.",
+      "acceptanceGate": "G18",
+      "status": "PARTIAL",
+      "reason": "Receipt/transfer replay and conflicting reference tests pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-038",
+      "requirement": "Timeout after commit returns original operation result.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing operation-recovery/replay tests pass; full inventory-specific post-commit network timeout browser drill pending.",
+      "acceptanceGate": "G18",
+      "status": "PARTIAL",
+      "reason": "Existing operation-recovery/replay tests pass; full inventory-specific post-commit network timeout browser drill pending.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-039",
+      "requirement": "Payment/webhook retries do not duplicate inventory effects.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing payment/webhook/idempotent commerce tests pass; no live provider activated.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing payment/webhook/idempotent commerce tests pass; no live provider activated.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-040",
+      "requirement": "Customer order cancellation releases eligible reservations only.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing cancellation/reservation/serial allocation release tests pass.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing cancellation/reservation/serial allocation release tests pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-041",
+      "requirement": "POS stock movement obeys branch permissions and payment rules.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing POS branch/payment/stock tests pass.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing POS branch/payment/stock tests pass.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-042",
+      "requirement": "Cylinder ownership, empty/filled and inspection statuses preserved.",
+      "priority": "P0",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing serialized ownership/inspection/custody tests pass; physical qualified acceptance not claimed.",
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Existing serialized ownership/inspection/custody tests pass; physical qualified acceptance not claimed.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-043",
+      "requirement": "Stock movements link to delivery, service and order references.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Movement origin reference strings retained; generic complete origin/evidence navigation remains partial.",
+      "acceptanceGate": "G13",
+      "status": "PARTIAL",
+      "reason": "Movement origin reference strings retained; generic complete origin/evidence navigation remains partial.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-044",
+      "requirement": "Inventory reports reconcile against authoritative movement ledger.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing ledger/valuation/finance source reconciliation tests pass; comprehensive new origin explorer reconciliation pending.",
+      "acceptanceGate": "G13",
+      "status": "PARTIAL",
+      "reason": "Existing ledger/valuation/finance source reconciliation tests pass; comprehensive new origin explorer reconciliation pending.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-045",
+      "requirement": "Historical import dry-run does not alter live stock.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing XLS preview tests confirm targetBusinessWrites0/importApprovedfalse.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "Existing XLS preview tests confirm targetBusinessWrites0/importApprovedfalse.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-046",
+      "requirement": "Approved import replay is idempotent; rejected rows remain exceptions.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Actual import explicitly held; approved importer execution not authorised or certified.",
+      "acceptanceGate": "G16",
+      "status": "BLOCKED",
+      "reason": "Actual import explicitly held; approved importer execution not authorised or certified.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-047",
+      "requirement": "Excel historical costs and delivery fees are preserved.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Historical ambiguity/fees/cost review preserved in preview; business confirmation outstanding.",
+      "acceptanceGate": "G16",
+      "status": "BLOCKED",
+      "reason": "Historical ambiguity/fees/cost review preserved in preview; business confirmation outstanding.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-048",
+      "requirement": "Failed migration or rollback leaves existing records intact.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: No schema change; existing encrypted isolated restores pass, production rollback drill not performed.",
+      "acceptanceGate": "G20",
+      "status": "PARTIAL",
+      "reason": "No schema change; existing encrypted isolated restores pass, production rollback drill not performed.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-049",
+      "requirement": "Event-worker failure cannot create phantom real-time stock.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: No optimistic stock; read-only post-commit polling/fallback; full worker fault/reconnect test not run this phase.",
+      "acceptanceGate": "G15",
+      "status": "PARTIAL",
+      "reason": "No optimistic stock; read-only post-commit polling/fallback; full worker fault/reconnect test not run this phase.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-050",
+      "requirement": "Role revocation during operation denies unauthorized commit.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing revocation/approval-revalidation negatives pass; direct scoped new read revoked account fails.",
+      "acceptanceGate": "G17",
+      "status": "PARTIAL",
+      "reason": "Existing revocation/approval-revalidation negatives pass; direct scoped new read revoked account fails.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-051",
+      "requirement": "Cross-branch IDOR and serial enumeration denied.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [
+        "INV-030,051,052"
+      ],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "PASS: New branch IDOR read/export reject; no serial enumeration endpoint added; field-role guards precede facade.",
+      "acceptanceGate": "G17",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "New branch IDOR read/export reject; no serial enumeration endpoint added; field-role guards precede facade.",
+      "outstandingWork": "None for the bounded data/read/export contract; other phase gates and production holds remain."
+    },
+    {
+      "id": "INV-052",
+      "requirement": "Export protects sensitive cost data and CSV formula injection.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [
+        "INV-030,051,052"
+      ],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "PASS: Formula prefix escaped; new export has no acquisition costs/customer data; roles and limits tested.",
+      "acceptanceGate": "G17",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Formula prefix escaped; new export has no acquisition costs/customer data; roles and limits tested.",
+      "outstandingWork": "None for the bounded data/read/export contract; other phase gates and production holds remain."
+    },
+    {
+      "id": "INV-053",
+      "requirement": "Existing products, orders, drivers, technician, wallet, finance, approvals and audit regression suites remain valid.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Final347/347 existing+new regression pass, no skip/failure.",
+      "acceptanceGate": "G21",
+      "status": "PARTIAL",
+      "reason": "Final347/347 existing+new regression pass, no skip/failure.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-054",
+      "requirement": "Multi-connection PostgreSQL integration tests verify concurrency and zero unintended effects.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Full disposable PostgreSQL run includes independent-connection stock/approval/service/tracking/recovery tests.",
+      "acceptanceGate": "G18",
+      "status": "PARTIAL",
+      "reason": "Full disposable PostgreSQL run includes independent-connection stock/approval/service/tracking/recovery tests.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-055",
+      "requirement": "Production build, typecheck, lint and targeted browser acceptance verified.",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Web typecheck/build pass; no lint script; targeted browser read/navigation/download checks, full accessibility/role acceptance open.",
+      "acceptanceGate": "G21",
+      "status": "PARTIAL",
+      "reason": "Web typecheck/build pass; no lint script; targeted browser read/navigation/download checks, full accessibility/role acceptance open.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    },
+    {
+      "id": "INV-056",
+      "requirement": "Recovery after backup restore or application rollback reconciles inventory state (only claim tested if performed).",
+      "priority": "P1",
+      "scope": "Existing inventory and integrations; no import/release approval",
+      "uiReference": "EasyGas_Approved_Inventory_UI.png",
+      "route": "/admin/inventory and canonical integration routes",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/inventory-valuation.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "inventory/gas_stock, immutable movements, holds, cylinders, governed operations and acquisition costs",
+      "securityControl": "Current session/role/branch, independent approvals, serial custody and existing transaction guards",
+      "testFiles": [
+        "tests/inventory-workspace.test.ts",
+        "tests/inventory-workspace-http.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/postgres-approval-concurrency.test.ts",
+        "tests/backups.test.ts",
+        "tests/excel-preview.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs"
+      ],
+      "evidence": [
+        "docs/inventory/evidence/targeted-tests.txt",
+        "docs/inventory/evidence/final-regression-tests.txt",
+        "docs/inventory/inventory-preflight-audit.md",
+        "docs/inventory/evidence/browser-export.json",
+        "docs/inventory/evidence/browser-verification.md",
+        "docs/inventory/evidence/source-preservation.json"
+      ],
+      "testResult": "Supporting executed evidence; full acceptance incomplete: Existing encrypted database/PG restore checks pass; production RTO/RPO/physical reconciliation drill remains open.",
+      "acceptanceGate": "G20",
+      "status": "PARTIAL",
+      "reason": "Existing encrypted database/PG restore checks pass; production RTO/RPO/physical reconciliation drill remains open.",
+      "outstandingWork": "See docs/reports/easygas-inventory-blockers.md; requirement remains in coverage denominator."
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "status": "PASS",
+      "requirement": "Repository audit and baseline preservation",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G02",
+      "status": "PASS",
+      "requirement": "Existing sidebar, routes, single login and permissions",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G03",
+      "status": "NOT_TESTED",
+      "requirement": "Approved inventory content without fabricated records",
+      "reason": "Full applicable UI/operational acceptance not executed; supporting tests are not full gate closure"
+    },
+    {
+      "id": "G04",
+      "status": "PASS",
+      "requirement": "Stock table/search/filter/pagination/export",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G05",
+      "status": "PASS",
+      "requirement": "Correct kg/unit/held/reserved/available",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G06",
+      "status": "NOT_TESTED",
+      "requirement": "Stock receipts and supplier purchases",
+      "reason": "Full applicable UI/operational acceptance not executed; supporting tests are not full gate closure"
+    },
+    {
+      "id": "G07",
+      "status": "PASS",
+      "requirement": "Adjustments and independent approvals",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G08",
+      "status": "PASS",
+      "requirement": "Stocktake and reconciliation",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G09",
+      "status": "NOT_TESTED",
+      "requirement": "Returns and condition handling",
+      "reason": "Full applicable UI/operational acceptance not executed; supporting tests are not full gate closure"
+    },
+    {
+      "id": "G10",
+      "status": "BLOCKED",
+      "requirement": "Branch/warehouse/vehicle transfers and custody",
+      "reason": "Prior safety/vehicle or explicit historical import acceptance remains open"
+    },
+    {
+      "id": "G11",
+      "status": "BLOCKED",
+      "requirement": "Cylinder serialization/inspection/P0 controls",
+      "reason": "Prior safety/vehicle or explicit historical import acceptance remains open"
+    },
+    {
+      "id": "G12",
+      "status": "BLOCKED",
+      "requirement": "Order/POS/delivery/service integration",
+      "reason": "Prior safety/vehicle or explicit historical import acceptance remains open"
+    },
+    {
+      "id": "G13",
+      "status": "NOT_TESTED",
+      "requirement": "Inventory movement ledger and history",
+      "reason": "Full applicable UI/operational acceptance not executed; supporting tests are not full gate closure"
+    },
+    {
+      "id": "G14",
+      "status": "PASS",
+      "requirement": "Valuation policy and missing-data states",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G15",
+      "status": "NOT_TESTED",
+      "requirement": "Realtime alerts/reporting integrity",
+      "reason": "Full applicable UI/operational acceptance not executed; supporting tests are not full gate closure"
+    },
+    {
+      "id": "G16",
+      "status": "BLOCKED",
+      "requirement": "Historical Excel migration compatibility",
+      "reason": "Prior safety/vehicle or explicit historical import acceptance remains open"
+    },
+    {
+      "id": "G17",
+      "status": "PASS",
+      "requirement": "Authorization/privacy/audit/anti-abuse",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G18",
+      "status": "PASS",
+      "requirement": "Idempotency/concurrency/transaction safety",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G19",
+      "status": "NOT_TESTED",
+      "requirement": "Accessibility/responsive/themes",
+      "reason": "Full applicable UI/operational acceptance not executed; supporting tests are not full gate closure"
+    },
+    {
+      "id": "G20",
+      "status": "NOT_TESTED",
+      "requirement": "Backup/rollback/recovery",
+      "reason": "Full applicable UI/operational acceptance not executed; supporting tests are not full gate closure"
+    },
+    {
+      "id": "G21",
+      "status": "PASS",
+      "requirement": "Regression/build checks",
+      "reason": "Executed bounded technical evidence; no release approval"
+    },
+    {
+      "id": "G22",
+      "status": "PASS",
+      "requirement": "Documentation/traceability/blockers",
+      "reason": "Executed bounded technical evidence; no release approval"
+    }
+  ],
+  "scopeChanges": [
+    {
+      "reason": "Approved sidebar/role-switch picture is explicitly excluded. Existing29 routes and single-login retained. Actual0 quantities/unknown costs replace illustrative values. New stock/history server pagination replaces only the old Stock/History presentation; legacy governed mutation forms retained. No new schema/ledger/import/release approval."
+    }
+  ],
+  "coverage": {
+    "requirements": 56,
+    "verifiedComplete": 8,
+    "partial": 43,
+    "blocked": 5,
+    "gates": 22,
+    "gatesPassed": 11,
+    "gatesBlocked": 4,
+    "gatesNotTested": 7,
+    "productionDecision": "NO-GO unchanged"
+  }
+}

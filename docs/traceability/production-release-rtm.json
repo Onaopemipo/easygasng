@@ -1,0 +1,522 @@
+{
+  "phase": "Production release continuation \u2014 web and signed native",
+  "date": "2026-11-05",
+  "productionDecision": "NO-GO",
+  "scopeChanges": [
+    "User explicitly includes signed native apps in first release. Prior local-only hosting, unconnected payments and unapproved reward economics remain unchanged.",
+    "New SMTP adapter is implemented behind OFF flag; no live email/provider activation.",
+    "No prior blocked/untested requirement removed; privacy fulfilment, physical partial handover, tenant and all existing master release gates remain open where applicable.",
+    "2 November whole-app audit reproduces TLS preflight and in-flight mail retry defects; PR-R01/PR-R05 downgraded to DEFECTIVE without dropping prior positive evidence or scope.",
+    "2026-11-05 production continuation: user selected Namecheap VPS (not yet provisioned) and existing SproutOS/Zuri Tales mobile accounts. TLS/runtime and SMTP in-flight retry fixes, dispatch alerts and private invoice PDFs added; no deployment or release approval implied.",
+    {
+      "date": "2026-11-08",
+      "change": "User requires all records retained; destructive erasure superseded by non-destructive retention controls and truthful request dispositions, not removed from traceability."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "PR-R01",
+      "requirement": "Production environment preflight fails closed",
+      "priority": "P0",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "APP_URL, DATABASE_URL/TLS and reviewed revision; no secrets in output",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "PARTIAL",
+      "reason": "AUD-01/AUD-02 regression protections implemented locally; provider/host acceptance remains outstanding.",
+      "testResult": "PASS: focused regression evidence; no production TLS or SMTP acceptance claim.",
+      "outstandingWork": "Provisioned VPS certificate/hostname negative tests and approved live environment acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/release-checks.ts",
+        "scripts/release-check.ts",
+        "apps/web/lib/database-tls.ts",
+        "apps/web/lib/db.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/production-audit-findings.test.ts"
+      ],
+      "testIds": [
+        "PR-01",
+        "AUD-01"
+      ],
+      "evidence": [
+        "docs/testing/production-release-focused-20261102.txt",
+        "docs/audits/production-20261102/defect-reproductions.txt",
+        "docs/audits/production-completion-evidence/security-regression.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "PR-G01"
+    },
+    {
+      "id": "PR-R02",
+      "requirement": "Restricted runtime identity, complete schema, RLS and no PUBLIC grants",
+      "priority": "P0",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "pg_roles, pg_tables, pg_namespace, pg_class ACL/RLS and schema_migrations",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed fixture evidence verifies the bounded application capability.",
+      "testResult": "PASS \u2014 mapped executed automated evidence; external acceptance remains separate.",
+      "outstandingWork": "Deployment-specific TLS/identity/advisor acceptance remains required.",
+      "implementationFiles": [
+        "apps/web/lib/release-checks.ts"
+      ],
+      "testFiles": [
+        "tests/production-backup-postgres.test.ts"
+      ],
+      "testIds": [
+        "PR-04"
+      ],
+      "evidence": [
+        "docs/testing/production-worker-postgres-20261102.txt"
+      ],
+      "negativeTests": [
+        "encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys"
+      ],
+      "acceptanceGate": "PR-G01"
+    },
+    {
+      "id": "PR-R03",
+      "requirement": "Generic uncached schema and worker readiness probe",
+      "priority": "P0",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "All required migration markers and committed maintenance completion within five minutes",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed fixture evidence verifies the bounded application capability.",
+      "testResult": "PASS \u2014 mapped executed automated evidence; external acceptance remains separate.",
+      "outstandingWork": "Configure external monitoring/on-call and rehearse outage alerts on the actual deployment.",
+      "implementationFiles": [
+        "apps/web/lib/release-checks.ts",
+        "apps/web/app/api/status/route.ts",
+        "scripts/healthcheck.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [
+        "PR-02"
+      ],
+      "evidence": [
+        "docs/testing/production-release-focused-20261102.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "PR-G01"
+    },
+    {
+      "id": "PR-R04",
+      "requirement": "Authenticated managed PostgreSQL backup and isolated restore tooling",
+      "priority": "P0",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "pg_dump custom archive, AES-GCM envelope/checksum, source identity and empty dedicated target",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed fixture evidence verifies the bounded application capability.",
+      "testResult": "PASS \u2014 mapped executed automated evidence; external acceptance remains separate.",
+      "outstandingWork": "512 MiB compressed archive limit; off-site retention/PITR, restore grants/reconciliation, RPO/RTO and production drill remain open.",
+      "implementationFiles": [
+        "apps/web/lib/postgres-backup.ts",
+        "scripts/postgres-backup.ts",
+        "apps/web/lib/backups.ts"
+      ],
+      "testFiles": [
+        "tests/production-backup-postgres.test.ts"
+      ],
+      "testIds": [
+        "PR-03"
+      ],
+      "evidence": [
+        "docs/testing/production-worker-postgres-20261102.txt"
+      ],
+      "negativeTests": [
+        "encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys"
+      ],
+      "acceptanceGate": "PR-G01"
+    },
+    {
+      "id": "PR-R05",
+      "requirement": "Transactional SMTP queue claims, backoff, expired-link suppression and reviewed retries",
+      "priority": "P0",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "message_outbox, account_challenges, users.active, operational_incidents and audit_events",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "PARTIAL",
+      "reason": "AUD-01/AUD-02 regression protections implemented locally; provider/host acceptance remains outstanding.",
+      "testResult": "PASS: focused regression evidence; no production TLS or SMTP acceptance claim.",
+      "outstandingWork": "Approved SMTP sender/provider live acceptance, supervised-worker stopped-send investigation and operational recovery acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/transactional-mail.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/components/mail-delivery.tsx"
+      ],
+      "testFiles": [
+        "tests/transactional-mail.test.ts",
+        "tests/production-audit-findings.test.ts"
+      ],
+      "testIds": [
+        "PR-05",
+        "PR-06",
+        "AUD-02"
+      ],
+      "evidence": [
+        "docs/testing/production-release-focused-20261102.txt",
+        "docs/audits/production-20261102/defect-reproductions.txt",
+        "docs/audits/production-completion-evidence/security-regression.txt"
+      ],
+      "negativeTests": [
+        "SMTP outbox sends once, never retries unknown outcomes, rejects unauthorised retry and preserves private message content"
+      ],
+      "acceptanceGate": "PR-G01"
+    },
+    {
+      "id": "PR-R06",
+      "requirement": "Owner email status/retry UI with reauthentication and duplicate acknowledgement",
+      "priority": "P1",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "Owner-only mail.status/mail.retry APIs return message metadata without recipient/body/token",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Execute browser light/dark/responsive/accessibility acceptance. Backend permission/retry negatives pass; compilation alone does not verify the UI.",
+      "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
+      "outstandingWork": "Execute browser light/dark/responsive/accessibility acceptance. Backend permission/retry negatives pass; compilation alone does not verify the UI.",
+      "implementationFiles": [
+        "apps/web/components/mail-delivery.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/transactional-mail.ts"
+      ],
+      "testFiles": [
+        "tests/transactional-mail.test.ts"
+      ],
+      "testIds": [
+        "PR-05"
+      ],
+      "evidence": [
+        "docs/testing/production-release-focused-20261102.txt"
+      ],
+      "negativeTests": [
+        "SMTP outbox sends once, never retries unknown outcomes, rejects unauthorised retry and preserves private message content"
+      ],
+      "acceptanceGate": "PR-G02"
+    },
+    {
+      "id": "PR-R07",
+      "requirement": "Supervised worker serial cycles, transaction completion and graceful shutdown",
+      "priority": "P0",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "Committed job_runs and existing maintenance transactional jobs; failure incidents",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed fixture evidence verifies the bounded application capability.",
+      "testResult": "PASS \u2014 mapped executed automated evidence; external acceptance remains separate.",
+      "outstandingWork": "Container supervision/restart/outage acceptance remains unexecuted; actual SIGTERM on the PostgreSQL fixture worker passed.",
+      "implementationFiles": [
+        "scripts/worker.ts",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/observability.ts"
+      ],
+      "testFiles": [
+        "tests/production-backup-postgres.test.ts"
+      ],
+      "testIds": [
+        "PR-08"
+      ],
+      "evidence": [
+        "docs/testing/production-worker-postgres-20261102.txt"
+      ],
+      "negativeTests": [
+        "encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys"
+      ],
+      "acceptanceGate": "PR-G01"
+    },
+    {
+      "id": "PR-R08",
+      "requirement": "Compatible native toolchain, native production guards and iOS/Android bundle preparation",
+      "priority": "P1",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "Expo SDK58 supported patch dependency set and explicit HTTPS/identifier ownership guards",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "PARTIAL",
+      "reason": "Both platform exports, native prebuild and Xcode simulator Release compilation passed. Null-catalogue startup crash fixed; standard simulator-local ad-hoc build completed onboarding and handled/retried missing API configuration without crashing.",
+      "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
+      "outstandingWork": "8 moderate upstream native build-tool advisories remain (0 high/critical); no compatible patch in installed major ranges. No forced downgrade/major override. Signed iOS/Android physical-device, store entry and distribution acceptance remain.",
+      "implementationFiles": [
+        "apps/mobile/app.config.js",
+        "apps/mobile/app.json",
+        "apps/mobile/eas.json",
+        "apps/mobile/package.json",
+        "apps/mobile/package-lock.json"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [
+        "PR-07"
+      ],
+      "evidence": [
+        "docs/testing/production-release-focused-20261102.txt",
+        "docs/testing/production-native-types-20261102.txt",
+        "docs/testing/production-native-export-20261102.txt",
+        "docs/testing/production-native-compatibility-20261102.txt",
+        "docs/testing/production-native-audit-20261102.json",
+        "docs/audits/production-completion-evidence/native-export.txt",
+        "docs/audits/production-completion-evidence/native-typecheck.txt",
+        "docs/audits/production-completion-evidence/native-prebuild.txt",
+        "docs/audits/production-completion-evidence/native-dependency-audit.json",
+        "docs/audits/production-completion-evidence/native-ios-simulator-build-final.txt",
+        "docs/audits/production-completion-evidence/ios-simulator-guard.png"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "PR-G03"
+    },
+    {
+      "id": "PR-R09",
+      "requirement": "Non-root production container, TLS proxy and supervised compose configuration",
+      "priority": "P1",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "Protected runtime env file, reviewed release image, loopback binding and TLS reverse proxy",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Compose configuration parses; Docker daemon unavailable, nginx absent. Image build/runtime, TLS and deployment tests remain NOT_TESTED.",
+      "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
+      "outstandingWork": "Namecheap compose overlay validates without printing secrets. VPS not yet provisioned; Docker daemon unavailable locally. Real image/runtime/nginx/certificates/monitoring/load/restore acceptance remains.",
+      "implementationFiles": [
+        "deploy/Dockerfile",
+        "deploy/compose.yml",
+        "deploy/nginx.conf",
+        ".dockerignore",
+        "deploy/compose.namecheap.yml",
+        "deploy/postgres-hba.conf",
+        "deploy/NAMECHEAP-VPS.md"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/testing/production-compose-config-20261102.txt",
+        "docs/audits/production-completion-evidence/compose-config.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "PR-G02"
+    },
+    {
+      "id": "PR-R10",
+      "requirement": "CI regression, actual PostgreSQL, build/types, native exports and audit gates",
+      "priority": "P1",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "Reviewed Git revision and GitHub Actions with disposable PostgreSQL16 service and artifact upload",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Workflow is not executed on hosted CI; repository HEAD is unborn. Native moderate-advisory gate intentionally blocks until resolved/accepted; no green CI claim.",
+      "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
+      "outstandingWork": "Workflow is not executed on hosted CI; repository HEAD remains unborn. Native 8-moderate-advisory gate intentionally blocks until resolved/accepted; no green CI claim.",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml"
+      ],
+      "testFiles": [
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/testing/production-release-build-20261102.txt"
+      ],
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ],
+      "acceptanceGate": "PR-G02"
+    },
+    {
+      "id": "PR-R11",
+      "requirement": "Approved privacy retention/erasure and controlled fulfilment",
+      "priority": "P0",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "Existing privacy_requests and owned exports; financial/safety records and backups require retention classification Business instruction 2026-11-08: all records retained; existing privacy_requests retain request/disposition and immutable audit_events retain policy application.",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags Destructive proof purge disabled under fixed retain-all policy. Customer deletion-review disposition is retained, not erased/completed; owned export and expiry/consent access checks preserved.",
+      "status": "PARTIAL",
+      "reason": "Business/legal must define retention and erasure boundaries; implement and test controlled pseudonymisation/erasure across free text, media, retained ledgers and backups after approval. Intake/export alone is incomplete. User supplied retain-all instruction; application proof purge is non-destructive and deletion review transparently retains records. No claim of legal or backup/recovery acceptance.",
+      "testResult": "PASS: final frozen-source broad regression408/408 with actual disposable PostgreSQL enabled,0 failures/skips. Focused24/24 and HTTP/PostgreSQL2/2 overlap the broad run and are not additional unique coverage. Final web build/types and2/2 matrix checks pass; isolated browser finance draft-save/issue and customer retained-disposition verified. Complete business requirement remains PARTIAL.",
+      "outstandingWork": "Business instruction retains all records, superseding destructive erasure scope. Production backup/restore retention-hold acceptance, independent policy review and applicable full proof/device gates remain; all previous requirements remain tracked. No server work or actual import.",
+      "implementationFiles": [
+        "apps/web/lib/accounts.ts",
+        "docs/reports/production-release-20261102.md",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/workflows.tsx",
+        "docs/operations/record-retention.md"
+      ],
+      "testFiles": [
+        "tests/transactional-mail.test.ts",
+        "tests/service-invoice-drafts.test.ts",
+        "tests/operations-completion.test.ts"
+      ],
+      "testIds": [
+        "PRIVACY-RETAIN01",
+        "OPS-T11"
+      ],
+      "evidence": [
+        "docs/testing/production-release-focused-20261102.txt",
+        "docs/production-completion/evidence/draft-revision-tests.txt",
+        "docs/production-completion/evidence/draft-revision-postgres.txt",
+        "docs/production-completion/evidence/draft-revision-build.txt",
+        "docs/production-completion/evidence/draft-revision-types.txt",
+        "docs/production-completion/evidence/draft-revision-browser.json",
+        "docs/production-completion/evidence/draft-revision-browser.png",
+        "docs/production-completion/evidence/retain-all-browser.png",
+        "docs/production-completion/evidence/draft-revision-accepted-regression.txt",
+        "docs/production-completion/evidence/draft-revision-traceability.txt",
+        "docs/production-completion/evidence/draft-revision-source-sha256.txt"
+      ],
+      "negativeTests": [
+        "SMTP outbox sends once, never retries unknown outcomes, rejects unauthorised retry and preserves private message content"
+      ],
+      "acceptanceGate": "PR-G04"
+    },
+    {
+      "id": "PR-R12",
+      "requirement": "Real business, finance, qualified safety and release acceptance",
+      "priority": "P0",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "Actual policy publications, stock/serial inspections, qualified staff and independent approver acceptance",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "BLOCKED",
+      "reason": "Preserve existing NO-GO, partial physical handover and tenant gates. Approve actual scope, policies, stock/cash reconciliation and safety operations; do not substitute fixtures for acceptance.",
+      "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
+      "outstandingWork": "Preserve existing NO-GO, partial physical handover and tenant gates. Approve actual scope, policies, stock/cash reconciliation and safety operations; do not substitute fixtures for acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts",
+        "docs/reports/production-release-20261102.md"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/testing/easyrewards-completion-final-20261102.txt"
+      ],
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ],
+      "acceptanceGate": "PR-G04"
+    },
+    {
+      "id": "PR-R13",
+      "requirement": "Authorised production hosting, verified SMTP and distribution signing configuration",
+      "priority": "P0",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "Owner-provided production identities/secrets; EAS login exists, one Apple Development identity found",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "BLOCKED",
+      "reason": "Namecheap VPS selected by user; server does not yet exist. Existing Expo owner and Apple team identified; a separate EasyGas EAS project is linked.",
+      "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
+      "outstandingWork": "Provision VPS and SSH access; approve runtime source and domain/TLS configuration; configure and test SMTP/providers; register EasyGas store entries/signing credentials and complete signed-device acceptance. No paid build or server purchase performed.",
+      "implementationFiles": [
+        "deploy/compose.yml",
+        "apps/mobile/eas.json",
+        "apps/web/lib/transactional-mail.ts",
+        "scripts/release-check.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/testing/production-release-focused-20261102.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "PR-G04"
+    },
+    {
+      "id": "PR-R14",
+      "requirement": "Final web and actual signed-device acceptance",
+      "priority": "P1",
+      "scope": "Web and signed native release continuation; preserve prior phase denominators and NO-GO",
+      "uiReference": "Existing EasyGas UI/navigation; no sidebar or staff mobile navigation replacement",
+      "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
+      "dataSource": "Reviewed build revision, final browser evidence and signed physical iOS/Android devices",
+      "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
+      "status": "BLOCKED",
+      "reason": "Local public web guards and native simulator onboarding/catalogue-unavailable retry exercised. No actual signed physical-device or authenticated full-lifecycle acceptance claim.",
+      "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
+      "outstandingWork": "Execute UI/a11y, lifecycle/offline/token/session, dispatch/safety/payment/refund tests. Earlier browser refusal is preserved; no alternate-origin workaround or actual signed build/device certification claimed.",
+      "implementationFiles": [
+        "docs/reports/production-release-20261102.md",
+        "apps/mobile/eas.json"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/testing/production-release-focused-20261102.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "PR-G04"
+    }
+  ],
+  "gates": [
+    {
+      "id": "PR-G01",
+      "requirement": "Bounded automated release controls",
+      "status": "FAIL",
+      "reason": "AUD-01\u201304 local regression protections pass; bounded controls do not close actual deployed TLS, provider and independent release qualification."
+    },
+    {
+      "id": "PR-G02",
+      "requirement": "UI, container and hosted CI acceptance",
+      "status": "NOT_TESTED",
+      "reason": "Build/configuration evidence exists; no final UI, container daemon, nginx runtime or hosted CI execution."
+    },
+    {
+      "id": "PR-G03",
+      "requirement": "Native dependency and signed release acceptance",
+      "status": "BLOCKED",
+      "reason": "Both platform bundles pass, but 8 moderate native build-tool advisories and signed physical-device/distribution acceptance remain."
+    },
+    {
+      "id": "PR-G04",
+      "requirement": "Business, privacy, infrastructure and independent release authority",
+      "status": "BLOCKED",
+      "reason": "Actual hosting/provider/retention/recovery/signing/safety and authorisation inputs outstanding."
+    }
+  ]
+}

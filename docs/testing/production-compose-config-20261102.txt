@@ -1,0 +1,62 @@
+name: deploy
+networks:
+  default:
+    name: deploy_default
+services:
+  web:
+    build:
+      context: /Users/philipog/Documents/ChatGPT/Easygas Smart Solution
+      dockerfile: deploy/Dockerfile
+    cap_drop:
+      - ALL
+    env_file:
+      - path: /Users/philipog/Documents/ChatGPT/Easygas Smart Solution/deploy/${EASYGAS_PRODUCTION_ENV_FILE:?Set
+          absolute protected env filename}
+        required: true
+    environment:
+      EASYGAS_BACKGROUND_JOBS: "false"
+      NODE_ENV: production
+    image: easygas:${EASYGAS_RELEASE_SHA:?Set reviewed release SHA}
+    init: true
+    networks:
+      default: null
+    ports:
+      - host_ip: 127.0.0.1
+        mode: ingress
+        protocol: tcp
+        published: "3000"
+        target: 3000
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 5m
+  worker:
+    cap_drop:
+      - ALL
+    command:
+      - sh
+      - -c
+      - npm run release:check && exec node --import tsx scripts/worker.ts --watch
+    env_file:
+      - path: /Users/philipog/Documents/ChatGPT/Easygas Smart Solution/deploy/${EASYGAS_PRODUCTION_ENV_FILE:?Set
+          absolute protected env filename}
+        required: true
+    environment:
+      EASYGAS_BACKGROUND_JOBS: "false"
+      EASYGAS_HEALTH_URL: http://web:3000/api/status
+      NODE_ENV: production
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - --import
+        - tsx
+        - scripts/healthcheck.ts
+    image: easygas:${EASYGAS_RELEASE_SHA:?Set reviewed release SHA}
+    init: true
+    networks:
+      default: null
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 5m

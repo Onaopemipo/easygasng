@@ -1,0 +1,13 @@
+# Approval governance for inventory and finance
+
+Reuses `packages/business-rules/src/approval-states.ts`, `governance.ts`, `approval-workflow.ts` and the existing Approval Centre. Inventory operations do not define a second decision table/state machine. The new immutable operation metadata references exactly one shared request and stores the business evidence reviewed alongside the proposal.
+
+Canonical states: DRAFT, PENDING_APPROVAL, CHANGES_REQUESTED, PARTIALLY_APPROVED, APPROVED, SCHEDULED, APPLYING, ACTIVE, REJECTED, CANCELLED, EXPIRED, FAILED, SUPERSEDED, ROLLED_BACK. Lowercase storage is retained for compatibility. Each transition is audited, policy captured at submission, current authority independently revalidated at activation. Existing risk-4 dual approvals, delegation ceilings/expiry, fresh verification, revisions invalidating old decisions, scheduling, expiry, failure savepoints, and governed settings rollback remain unchanged.
+
+New business operations use conservative risk-3 independent-owner approval because no business-approved manager limits were provided. A requester cannot self-approve; a requesting owner needs another owner. Operation payload/reference/requester/branch are immutable; changing only its approval JSON to point elsewhere cannot activate a different operation. The review dialog shows recorded payload, quantities (grams for gas), stock snapshot/delta, costs (kobo), payee and document references as applicable. One-time operations are excluded from normal editable Settings lists.
+
+ACTIVE means one approved domain effect was applied: adjustment/count movement, reserved transfer, approved purchase or expense, held disposition, or expense reversal. Transfer reserved/in_transit/partial/received/discrepancy and expense recorded/paid/reversed are operational states after approval. Approval does not dispatch, receive, pay or reconcile by itself.
+
+Activation runs inside the existing savepoint. A changed stock/reservation snapshot, missing current qualification, invalid requester/approver/branch or already-applied operation fails safely and preserves decision evidence. Retries revalidate. A stale request requires a new count/request; it cannot force its earlier balance. One-time operations cannot use configuration rollback to restore physical stock or money: create a fresh justified inverse adjustment/physical return or expense reversal. Historical records survive all corrections.
+
+Immediate protective quarantine is a narrow restriction exception: removes unsafe unreserved stock and appends audit/evidence immediately. Release always requires the qualified independent approval path. Existing emergency disabling remains limited to the previous allowlist; no financial activation bypass is added.

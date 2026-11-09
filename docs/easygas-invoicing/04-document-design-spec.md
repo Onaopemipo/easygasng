@@ -1,0 +1,9 @@
+# Approved restrained document system
+
+Shared view model powers FinancialDocumentPreview and approvedDocumentPdf. Authentic local HD logo, approved tagline, white print palette, restrained green vector curves, clear document title/state, full metadata/reference wrapping, bill-to card, aligned financial table, separate processing charge, green emphasis total, context and footer. No customer avatar, QR, signature, fake tax ID, sample support email or sample website. Missing optional fields are omitted.
+
+A4 PDF: local embedded OFL Noto Sans regular/bold subsets, Naira glyph and Latin diacritics, explicit code-point fallback for unsupported glyphs. Automatic long text/row splitting, repeated table header on continuation pages, grouped ordinary totals, repeated page identity/header, page numbering, bounded1000 rows and250k model characters, no remote image/font requests. New server tracing includes Paystack PDF fonts/logo as well as invoice endpoints. Rendered sample invoice/receipt/credit note and100-row multipage document are isolated fixtures only.
+
+New document version is captured only when `EASYGAS_DOCUMENT_TEMPLATE_V2=true`; exported default flag isfalse. Unversioned/v1 issued snapshots always use preserved legacy PDF renderer. Turning the flag off immediately selects legacy presentation without changing any business record. Approved-note PDFs are additive printable views behind the same flag. UI previews consistently use the approved visual model; they do not silently reissue/overwrite historical PDFs. This deliberate legacy-PDF compatibility boundary is retained, not dropped to force old files into a new template.
+
+HTML previews remain light/readable in dark app themes. Web font minimum15px; metadata wraps on phones. Existing Modal retains focus trap/Escape/return focus. Print selected document hides app controls and other records; server PDF is the recommended share/export format. No whole-app sidebar redesign.

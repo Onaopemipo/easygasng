@@ -1,0 +1,35 @@
+✔ purchase credit requires independent verification, is append-only and cannot replay funding (992.167125ms)
+✔ wallet checkout debits once and cancellation restores exact purchase credit once (42.554792ms)
+✔ insufficient wallet funds cannot reserve stock or create a payment (7.315958ms)
+✔ POS uses approved server prices, prevents overselling and verifies cash-up independently (41.647625ms)
+✔ refund credit requires customer consent and cannot exceed the original verified order (46.962042ms)
+✔ new point-to-wallet conversions are closed while historical outcomes remain replayable (7.620166ms)
+✔ concurrent wallet checkouts cannot overdraw the same purchase-credit balance (39.866959ms)
+✔ prepaid wallet delivery collects no cash and cannot earn from unapproved seeded economics (97.484667ms)
+✔ CRM-HTTP01: summary and paged follow-ups use actual authenticated GET handlers; mutations and private reads remain separated (940.138083ms)
+✔ DDI-PHOTO01: customer latest proof follows completed canonical deliveries; expired private URLs deny access while bytes/history remain (1133.365792ms)
+✔ PAY-FEE: zero, waiver discontinuities, caps and smallest integer gross match exhaustive search (29.911042ms)
+✔ PAY-FEE-LIMIT: merchant absorption, maximum/invalid amounts and exact wallet principal remain distinct (0.591292ms)
+✔ PAY-POST: exact principal wallet credit, stable init, authenticated duplicate webhook and ledger immutability (887.4485ms)
+✔ PAY-ZERO-EFFECT: forged events, wrong amount/currency/environment, cross-customer and driver requests never credit funds (3945.75725ms)
+✔ PAY-RECOVERY: initialization timeout never launches a second charge; fee variance is separate from principal (636.103083ms)
+✔ PAY-RESUME: failed provider states persist without wallet effects (644.162458ms)
+✔ PAY-EXPIRY: prepared quote expiry is visible and cannot initialize (658.541792ms)
+✔ PAY-INVOICE: verified collection allocates principal to existing immutable invoice, never fees or duplicate revenue (676.348875ms)
+✔ WALLET-CARD: wallet checkout restricts approved channels to card and rejects transfer-only policy (624.074041ms)
+✔ WALLET-INSTANT: signed webhook verifies and credits card funding without waiting for worker or manual approval (635.19175ms)
+✔ PAY-POLICY: missing merchant terms, dashboard fee double charge, live activation and undeclared secrets fail closed (2.224625ms)
+✔ PAY-LINK: native payment return carries only one opaque intent ID; success/amount/provider redirects cannot authorize payment (0.468375ms)
+✔ PAY-SIGNATURE: raw bytes, timestamp, rotation, malformed headers and no legacy downgrade (0.803458ms)
+✔ PAY-ADAPTER: hosted callback, test key, amount/currency/environment identity and transport validation (9.921416ms)
+✔ SINV-HTTP01: real JSON and private PDF handlers work under restricted runtime and deny foreign/anonymous/technician access (1500.962875ms)
+✔ MANIFEST-HTTP01: actual handlers allow scoped driver receipt but reject customer access and restricted-driver stock issue (1088.791042ms)
+✔ WALLET-BANK: pending transfer, scoped independent approval, rejection and exactly-once ledger (997.816625ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18677.013709

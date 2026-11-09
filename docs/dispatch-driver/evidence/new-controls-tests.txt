@@ -1,0 +1,27 @@
+✔ purchase credit requires independent verification, is append-only and cannot replay funding (1895.584916ms)
+✔ wallet checkout debits once and cancellation restores exact purchase credit once (65.262708ms)
+✔ insufficient wallet funds cannot reserve stock or create a payment (11.65625ms)
+✔ POS uses approved server prices, prevents overselling and verifies cash-up independently (58.224333ms)
+✔ refund credit requires customer consent and cannot exceed the original verified order (71.846916ms)
+✔ new point-to-wallet conversions are closed while historical outcomes remain replayable (13.744167ms)
+✔ concurrent wallet checkouts cannot overdraw the same purchase-credit balance (52.114167ms)
+✔ prepaid wallet delivery collects no cash and cannot earn from unapproved seeded economics (209.584583ms)
+✔ Supabase migration creates an unexposed schema with RLS and a restricted server role (2003.894042ms)
+✔ the restricted trusted-server role can run the complete local order-to-cash workflow (1690.548416ms)
+✔ the restricted runtime role supports new accounts, catalogue, purchasing, credit, support and maintenance without owner privileges (1027.139542ms)
+✔ DDI-S024: unavailable drivers cannot receive a legacy manual assignment (2025.768125ms)
+✔ DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection (1109.106625ms)
+✔ DDI-S010: scoped counts include every matching record and pagination never changes totals (1370.817875ms)
+✔ DDI-S015: dispatch reads reject customer/driver access and cross-branch filters (847.307584ms)
+✔ DDI-S018: empty-date dashboard reports actual zeros and unknown contact (836.721ms)
+✔ DDI-S033: foreground contact is independently measured, scoped and expires without changing availability (834.173292ms)
+✔ DDI-S028: unverified payment and revoked COD exception block canonical assignment with no attempt (897.976959ms)
+✔ DDI-S031: expired authorisation prevents driver acknowledgement without a response (875.584417ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10028.492458

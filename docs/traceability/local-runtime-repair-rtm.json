@@ -1,0 +1,52 @@
+{
+  "phase": "Local API schema compatibility repair",
+  "date": "2026-11-02",
+  "productionDecision": "NO-GO",
+  "scopeChanges": [
+    "Known early development 043 marker predated completed discount/referral tables. Additive guarded repair runs before dependent 044; do not edit or replay the original whole migration."
+  ],
+  "requirements": [
+    {
+      "id": "LOCAL-R01",
+      "requirement": "Recover the local API from a known early recorded EasyRewards revision without losing business history",
+      "priority": "P0",
+      "scope": "Local development schema compatibility only; production NO-GO unchanged",
+      "uiReference": "Existing website and staff UI; no layout changes",
+      "route": "/api/health; /api/catalogue; /api/me; /; /admin/staff",
+      "dataSource": "Existing schema_migrations 043 and legacy reward tables; additive 043c repair before 044",
+      "securityControl": "Transactional migration; preserve users, reward_entries, reward_redemptions and original 043; guard known schema shape; immutable ledger remains enforced; programme flags unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Known early043 fixture upgrades twice with immutable history preserved; normal core rewards regression and live HTTP smoke pass.",
+      "testResult": "PASS \u2014 23 tests, zero failures/skips; web typecheck and five live HTTP checks pass.",
+      "outstandingWork": "No remaining local repair item. Existing production NO-GO and external acceptance gates remain unchanged.",
+      "implementationFiles": [
+        "apps/web/lib/db.ts",
+        "database/migrations/043c_early_rewards_compatibility.sql",
+        "scripts/export-bootstrap.ts",
+        "database/bootstrap.sql"
+      ],
+      "testFiles": [
+        "tests/local-rewards-upgrade.test.ts",
+        "tests/easyrewards.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/local-web-smoke-20261102.txt",
+        "docs/testing/local-rewards-upgrade-20261102.txt",
+        "docs/testing/local-runtime-types-20261102.txt"
+      ],
+      "testIds": ["LOCAL-01"],
+      "negativeTests": [
+        "early recorded rewards revision upgrades without losing customer, points or legacy redemption history"
+      ],
+      "acceptanceGate": "LOCAL-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "LOCAL-G01",
+      "requirement": "Legacy preservation and live API recovery",
+      "status": "PASS",
+      "reason": "23 executed regressions and five HTTP checks pass; local server left running on port3003."
+    }
+  ]
+}

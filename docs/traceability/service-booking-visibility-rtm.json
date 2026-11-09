@@ -1,0 +1,46 @@
+{
+  "phase": "Customer service booking visibility",
+  "requirements": [
+    {
+      "id": "SBV-001",
+      "requirement": "Expose customer service booking entry and booking history on the website",
+      "priority": "P1",
+      "scope": "Customer website navigation and booking discovery",
+      "uiReference": "/services",
+      "route": "/services; /bookings",
+      "dataSource": "services.catalogue: active service_catalogue records; current local result []",
+      "securityControl": "Only approved active services exposed; existing auth, qualification and slot controls retained",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Book a Service navigation and browse/history actions verified in local browser; six header tests pass",
+      "testResult": "PASS \u2014 HDR-03 and typecheck; browser confirms booking heading, links and honest empty state",
+      "outstandingWork": "Appointments cannot open until business approves service configurations, qualified personnel and slots; production NO-GO unchanged",
+      "implementationFiles": [
+        "packages/business-rules/src/public-header.ts",
+        "apps/web/components/professional-services.tsx"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts"
+      ],
+      "evidence": [
+        "docs/reports/service-booking-visibility/tests.txt",
+        "docs/reports/service-booking-visibility/typecheck.txt"
+      ],
+      "testIds": [
+        "HDR-03"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "SBV-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "SBV-G01",
+      "status": "PASS",
+      "description": "Customer discovery visible; active-service controls preserved"
+    }
+  ],
+  "productionDecision": "NO-GO unchanged",
+  "scopeChanges": [
+    "Services navigation label clarified to Book a Service; route and position preserved"
+  ]
+}

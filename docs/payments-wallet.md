@@ -1,0 +1,14 @@
+# Payments, purchase credit and reconciliation
+
+Current wallet funding continuation: see [bank transfer/card operating guide](wallet-topups/README.md) and [traceability](traceability/wallet-topups-rtm.md). Manual bank transfer requires independently verified business approval. Paystack supports synthetic sandbox card funding only, automatically posting verified principal. Live-money activation remains blocked and production NO-GO unchanged. Older statements below about providers being entirely unconnected are superseded by the sandbox integration; withdrawal/peer transfer remain unsupported.
+
+
+External payment providers remain intentionally unconnected. There is no live card/bank payment promise, webhook adapter or real settlement proof. COD and restricted purchase-credit operations are business-configured and independently governed. New fixtures/tests never enable them in the normal business database.
+
+Products retain existing server pricing, immutable receipts, wallet debit/cancellation reversal and independent collected-cash verification. Service payments use the same append-only verified payment ledger with an exclusive booking/order target. The customer may apply enabled purchase credit up to approved charges, including a partial deposit, using a stable matching request key. Row locks protect balance. Pending unverified cash is considered before accepting another payment, preventing duplicate collection against the same due amount.
+
+The assigned technician records actual service cash with a unique matching receipt reference. A different recently verified owner/finance actor verifies the collection against unpaid approved charges. Recording collection is not verification. Service refund requests require explicit customer acceptance of restricted credit, an eligible cancelled/failed/completed booking and verified unrefunded payments; independent existing credit approval applies one adjustment. This is not bank/cash/provider refund execution or a complete arbitrary partial-refund/dispute system.
+
+`/admin/reconciliation` separates delivered verified product receipts, reconciled POS receipts, completed service verified receipts net of approved credit refunds, pending cash and owner-global prepaid liability/reward balances. Its payment ledger uses keyset pagination. Old finance CSV remains bounded and must not be treated as complete books. Profit is deliberately unavailable without labour/overhead inputs; actual material costs alone cannot establish profit.
+
+Before launch finance must reconcile physical cash, tender/ledger totals, credit liabilities, refunds and service deposits; approve refund/tax/receipt policies; verify overpayment and pending-cash exception resolution. No withdrawal, peer transfer, interest or unrestricted stored-money capability is represented.

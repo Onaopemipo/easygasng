@@ -1,0 +1,2 @@
+# Existing delivery state machine
+The canonical order, attempt and tracking services remain authoritative. Assigned → acknowledged dispatch response → inspected pickup → out_for_delivery → arrived → private photo upload → verified OTP and full handover → existing completeDelivery transaction → delivered. The client only shows completion after a server reread reports delivered. Decline/failure records go to dispatch; they do not discard custody or create a replacement order. Version conflicts require a fresh assignment review.

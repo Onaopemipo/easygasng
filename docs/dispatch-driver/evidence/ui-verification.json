@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-09",
+  "environment": "Isolated synthetic local DB,127.0.0.1:3004; hosted business data untouched",
+  "checks": [
+    {
+      "id": "UI-RESP01",
+      "result": "PASS",
+      "sizes": [
+        "1561x1008",
+        "768x1024",
+        "390x844"
+      ],
+      "evidence": [
+        "desktop-light.png",
+        "desktop-dark.png",
+        "tablet-dark.png",
+        "phone-dark.png"
+      ],
+      "documentWidthMatchesViewport": true,
+      "tabletTextBelow15px": 0
+    },
+    {
+      "id": "UI-THEME01",
+      "result": "PASS bounded visual inspection",
+      "details": "Readable inactive controls/cards, wrapped table text and dark pagination; no native accessibility certification"
+    },
+    {
+      "id": "UI-OUTAGE01",
+      "result": "PASS",
+      "details": "Terminated only isolated3004 server; refresh showed Updates unavailable with count1 and last-success timestamp retained; restart + Refresh recovered;3003 normal server untouched",
+      "evidence": "refresh-outage.png"
+    },
+    {
+      "id": "UI-FILTER01",
+      "result": "PASS",
+      "details": "Search no synthetic match persisted across Live tab; zero-result message and counts agree",
+      "evidence": "search-tab-empty.png"
+    },
+    {
+      "id": "UI-ASSIGN01",
+      "result": "PASS blocked state",
+      "details": "No active trip \u2192 candidate disabled; operational release OFF \u2192 final submit disabled",
+      "evidence": "assignment-blocked.png"
+    },
+    {
+      "id": "UI-KEYBOARD01",
+      "result": "PASS bounded keyboard",
+      "details": "Shift+Tab from drawer close moved to textarea inside dialog; Escape closed and returned focus to Assign Driver"
+    },
+    {
+      "id": "UI-REUSE01",
+      "result": "PASS read-only navigation",
+      "details": "Create Vehicle Manifest opened original expanded Vehicle product manifests and returns; original bulk/dispatch/fleet accordions retained. No form submitted."
+    },
+    {
+      "id": "UI-ORDER01",
+      "result": "PASS read-only",
+      "details": "Per-row View details loaded only EG-2026-88F87D49 in the existing canonical tracking/actions component; no form submitted. Optional orderId preserves legacy default behaviour.",
+      "evidence": "selected-order-actions.png"
+    },
+    {
+      "id": "UI-DRIVERDETAIL01",
+      "result": "PASS read-only",
+      "details": "View status details expanded Last authenticated contact: Unknown and explicit GPS unavailability; no fake coordinates or timestamps.",
+      "evidence": "driver-status-details.png"
+    }
+  ],
+  "notTested": [
+    "Signed native lifecycle/camera/offline queue",
+    "Assistive technology",
+    "Configured embedded map",
+    "Independent physical/business release",
+    "Hosted070 migration"
+  ]
+}

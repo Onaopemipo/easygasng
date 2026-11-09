@@ -1,0 +1,3290 @@
+{
+  "phase": "Mobile interactive design prototype and screen specifications",
+  "date": "2026-11-02",
+  "productionDecision": "NO-GO \u2014 existing release and audit decisions preserved",
+  "scopeChanges": [
+    "User chose interactive prototype and specifications rather than native implementation.",
+    "MUI-099 adds role-filtered mobile workspace while preserving MUI-001\u2013098."
+  ],
+  "coverage": {
+    "designRequirements": 99,
+    "verifiedDesignRequirements": 99,
+    "nativeImplementationClaimed": false
+  },
+  "requirements": [
+    {
+      "id": "MUI-001",
+      "requirement": "Design Your EasyGas mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-home",
+      "route": "/account",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: customer.dashboard",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-002",
+      "requirement": "Design Shop essentials mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-shop",
+      "route": "/products",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: catalogue",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-003",
+      "requirement": "Design Product details mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-product",
+      "route": "/products",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: catalogue",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-004",
+      "requirement": "Design Order cooking gas mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-gas",
+      "route": "/gas-order",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: gas.catalogue; gas.quote; checkout",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-005",
+      "requirement": "Design Your basket mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-cart",
+      "route": "/cart",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: catalogue",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-006",
+      "requirement": "Design Checkout mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-checkout",
+      "route": "/checkout",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: checkout; rewards.checkout-outcome",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-007",
+      "requirement": "Design Delivery addresses mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-addresses",
+      "route": "/account-settings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: account.profile",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-008",
+      "requirement": "Design Add an address mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-addressform",
+      "route": "/account-settings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: address.save",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-009",
+      "requirement": "Design Order received mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-confirmation",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-010",
+      "requirement": "Design My orders mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-orders",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-011",
+      "requirement": "Design Order details mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-order",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-012",
+      "requirement": "Design Track your delivery mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-track",
+      "route": "/track",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; tracking stream",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-013",
+      "requirement": "Design Request a refund mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-refund",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: refund.lines; refund.request",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-014",
+      "requirement": "Design Professional services mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-services",
+      "route": "/services",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: services.catalogue",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-015",
+      "requirement": "Design Service details mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-service",
+      "route": "/services",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: services.catalogue",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-016",
+      "requirement": "Design Book a service mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-book",
+      "route": "/services",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: services.slots; booking.create",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-017",
+      "requirement": "Design My appointments mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-bookings",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-018",
+      "requirement": "Design Appointment details mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-booking",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.reschedule",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-019",
+      "requirement": "Design Your quotation mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-quote",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: booking.quote.decide",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-020",
+      "requirement": "Design Service report mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-report",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.acknowledge",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-021",
+      "requirement": "Design My wallet mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-wallet",
+      "route": "/wallet",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: wallet",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-022",
+      "requirement": "Design Credit & redemption mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-credit",
+      "route": "/purchase-credit",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: credits",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-023",
+      "requirement": "Design EasyRewards mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-rewards",
+      "route": "/rewards",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: rewards.summary; rewards.offers",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-024",
+      "requirement": "Design Reward details mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-offer",
+      "route": "/rewards",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: rewards.offers; checkout",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-025",
+      "requirement": "Design Cooking gas profiles mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-profiles",
+      "route": "/consumption",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: refill.profiles",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-026",
+      "requirement": "Design Your cooking profile mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-profile",
+      "route": "/consumption",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: refill.profiles; refill.feedback",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-027",
+      "requirement": "Design Refill plans mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-plans",
+      "route": "/schedules",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: schedules",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-028",
+      "requirement": "Design Recurring orders mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-recurring",
+      "route": "/recurring",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: schedule.authorisations",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-029",
+      "requirement": "Design Smart Refill mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-smart",
+      "route": "/refill",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: refill.profiles; rewards.smart-offers",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-030",
+      "requirement": "Design Notifications mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-notices",
+      "route": "/notifications",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: me; notifications.read",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-031",
+      "requirement": "Design Your account mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-account",
+      "route": "/account-settings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: account.profile",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-032",
+      "requirement": "Design Personal details mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-personal",
+      "route": "/account-settings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: account.update",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-033",
+      "requirement": "Design Security & sessions mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-security",
+      "route": "/account-settings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: account.profile; account.password",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-034",
+      "requirement": "Design Account & privacy mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-privacy",
+      "route": "/account-settings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: account.export; privacy.request",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-035",
+      "requirement": "Design Your preferences mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-preferences",
+      "route": "/account-settings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: preferences.save",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-036",
+      "requirement": "Design Help & safety mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-help",
+      "route": "/help",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: policies",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-037",
+      "requirement": "Design Support conversations mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-support",
+      "route": "/support",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: support.list",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-038",
+      "requirement": "Design Your conversation mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-thread",
+      "route": "/support",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: support.reply",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-039",
+      "requirement": "Design Customer policies mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#c-policies",
+      "route": "/help",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: policies",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-040",
+      "requirement": "Design More cooking. Less worry. mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#a-welcome",
+      "route": "/login",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: login; register; account.recover; account.verify",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-041",
+      "requirement": "Design Welcome back mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#a-login",
+      "route": "/login",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: login; register; account.recover; account.verify",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-042",
+      "requirement": "Design Create your account mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#a-register",
+      "route": "/register",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: login; register; account.recover; account.verify",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-043",
+      "requirement": "Design Reset your password mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#a-recover",
+      "route": "/recover",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: login; register; account.recover; account.verify",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-044",
+      "requirement": "Design Check your email mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#a-verify",
+      "route": "/verify",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: login; register; account.recover; account.verify",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-045",
+      "requirement": "Design Today\u2019s route mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-home",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-046",
+      "requirement": "Design Assigned deliveries mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-tasks",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-047",
+      "requirement": "Design Delivery details mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-job",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-048",
+      "requirement": "Design Confirm collection mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-pickup",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-049",
+      "requirement": "Design Complete delivery mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-proof",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-050",
+      "requirement": "Design Delivery issue mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-issue",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-051",
+      "requirement": "Design Return reconciliation mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-return",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-052",
+      "requirement": "Design Pending sync mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-offline",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-053",
+      "requirement": "Design Dispatch support mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-support",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-054",
+      "requirement": "Design Driver account mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#d-account",
+      "route": "/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-055",
+      "requirement": "Design Your workday mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-home",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-056",
+      "requirement": "Design Your appointments mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-agenda",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-057",
+      "requirement": "Design Job details mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-job",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-058",
+      "requirement": "Design Safety checklist mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-checklist",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-059",
+      "requirement": "Design Prepare a quotation mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-quote",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-060",
+      "requirement": "Design Job materials mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-materials",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-061",
+      "requirement": "Design Submit your report mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-report",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-062",
+      "requirement": "Design Report a safety concern mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-safety",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-063",
+      "requirement": "Design Completed jobs mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-history",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-064",
+      "requirement": "Design Technician account mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#t-account",
+      "route": "/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-065",
+      "requirement": "Design Dashboard mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-dashboard",
+      "route": "/admin",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: business.snapshot",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-066",
+      "requirement": "Design Orders mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-orders",
+      "route": "/admin/orders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-067",
+      "requirement": "Design Retail POS mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-pos",
+      "route": "/admin/pos",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: pos",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-068",
+      "requirement": "Design Customers mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-customers",
+      "route": "/admin/customers",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: customers",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-069",
+      "requirement": "Design Support Desk mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-support",
+      "route": "/admin/support",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: support.list",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-070",
+      "requirement": "Design Products mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-products",
+      "route": "/admin/products",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: products.manage",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-071",
+      "requirement": "Design Inventory mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-inventory",
+      "route": "/admin/inventory",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: business.snapshot",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-072",
+      "requirement": "Design Cylinders mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-cylinders",
+      "route": "/admin/cylinders",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: cylinders",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-073",
+      "requirement": "Design Product & Service Bundles mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-bundles",
+      "route": "/admin/bundles",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bundles.manage",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-074",
+      "requirement": "Design Deliveries mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-deliveries",
+      "route": "/admin/deliveries",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: orders",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-075",
+      "requirement": "Design Service Bookings mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-bookings",
+      "route": "/admin/bookings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-076",
+      "requirement": "Design Professional Services mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-services",
+      "route": "/admin/services",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: services.manage",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-077",
+      "requirement": "Design Technicians mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-technicians",
+      "route": "/admin/technicians",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: services.manage",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-078",
+      "requirement": "Design Quotations mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-quotations",
+      "route": "/admin/quotations",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: bookings",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-079",
+      "requirement": "Design Wallet & Payments mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-finance",
+      "route": "/admin/finance",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: business.snapshot",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-080",
+      "requirement": "Design Financial Reconciliation mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-reconciliation",
+      "route": "/admin/reconciliation",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: finance.summary",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-081",
+      "requirement": "Design Credits & Refunds mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-credits",
+      "route": "/admin/credits",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: credits",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-082",
+      "requirement": "Design Reports & Analytics mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-reports",
+      "route": "/admin/reports",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: business.snapshot",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-083",
+      "requirement": "Design Campaigns mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-campaigns",
+      "route": "/admin/campaigns",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: campaigns",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-084",
+      "requirement": "Design Recommendations mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-recommendations",
+      "route": "/admin/recommendations",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: recommendations.manage",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-085",
+      "requirement": "Design Customer Testimonials mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-testimonials",
+      "route": "/admin/testimonials",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: testimonials.manage",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-086",
+      "requirement": "Design Staff Management mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-staff",
+      "route": "/admin/staff",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: staff.manage",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-087",
+      "requirement": "Design Approval Centre mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-approvals",
+      "route": "/admin/approvals",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: approvals",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-088",
+      "requirement": "Design Settings mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-settings",
+      "route": "/admin/settings",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: settings",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-089",
+      "requirement": "Design Operations Centre mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-operations",
+      "route": "/admin/operations",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: purchasing",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-090",
+      "requirement": "Design Operational Incidents mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-incidents",
+      "route": "/admin/incidents",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: incidents",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-091",
+      "requirement": "Design Customer Policies mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-policies",
+      "route": "/admin/policies",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: policies.manage",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-092",
+      "requirement": "Design Audit History mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-audit",
+      "route": "/admin/audit",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: audit",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-093",
+      "requirement": "Design Launch Readiness mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-readiness",
+      "route": "/admin/readiness",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: production.readiness",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-094",
+      "requirement": "Design Record details mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-detail",
+      "route": "/admin",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: Scoped read actions",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-095",
+      "requirement": "Design Create or edit a record mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-edit",
+      "route": "/admin",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: Existing governed mutation actions",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-096",
+      "requirement": "Design Review approval mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-review",
+      "route": "/admin",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: approval.decide",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-097",
+      "requirement": "Design Import products mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-import",
+      "route": "/admin",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: product.import",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-098",
+      "requirement": "Design Verify your password mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-verify",
+      "route": "/admin",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: reauth",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    },
+    {
+      "id": "MUI-099",
+      "requirement": "Design Your mobile workspace mobile screen with six review states",
+      "priority": "P1",
+      "scope": "Approved interactive design prototype only",
+      "uiReference": "docs/design/mobile-ui/index.html#b-workspace",
+      "route": "/admin",
+      "dataSource": "Fictional in-memory fixtures; future integration relationship: navigation",
+      "securityControl": "No live API calls or credentials; role-filtered design visibility is not backend authorization",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Screen design rendered in both themes; prototype render/state and inventory tests passed. No native or backend completion claimed.",
+      "testResult": "PASS \u2014 MUI-01, MUI-02; browser light390/dark360 screen walk",
+      "outstandingWork": "Native implementation, authenticated integration and physical-device acceptance are outside this approved design deliverable and remain outstanding.",
+      "implementationFiles": [
+        "docs/design/mobile-ui/app.js",
+        "docs/design/mobile-ui/design.css",
+        "docs/design/mobile-ui/screen-manifest.json",
+        "docs/design/mobile-ui/SCREEN_SPECIFICATION.md"
+      ],
+      "testFiles": [
+        "tests/mobile-ui-design.test.ts"
+      ],
+      "evidence": [
+        "docs/design/mobile-ui/logic-validation.txt",
+        "docs/design/mobile-ui/browser-validation.json"
+      ],
+      "testIds": [
+        "MUI-01",
+        "MUI-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "MUI-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "MUI-G01",
+      "status": "PASS",
+      "description": "99 prototype screens, rendered states, mappings and role isolation; five design tests and 198 browser renders. Native and production acceptance excluded."
+    }
+  ]
+}

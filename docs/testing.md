@@ -1,0 +1,13 @@
+# Testing and evidence
+
+Run `npm test`, `npm run typecheck` and `EASYGAS_PREVIEW=true npm run build` from the repository root. For native, run `npm run typecheck` in `apps/mobile`, then `npx expo export --platform ios --platform android --output-dir /tmp/easygas-mobile-check`. Native has a separate pinned lockfile; do not run a forced major Expo downgrade to suppress advisories.
+
+The isolated Node/tsx suite uses single-process test concurrency and separate PGlite databases. It covers existing auth/governance/order/stock/POS/credit/refund/recurring/support flows and adds serial allocation/custody/capacity/timestamp regressions, service qualification/slots/ownership/replay, quote/material/report/safety/payment flows, image access/validation, mixed checkout rollback, HTML escaping, recommendations, compatibility expiry, follow-up consent/rebooking, policy approval, private runtime permissions, incremental migrations, bundles and owner readiness/export isolation.
+
+Exact final execution counts and build/audit outputs are in [the test report](reports/easygas-test-results.md) and its saved log files. No coverage percentage is claimed; a coverage instrumentation run was not performed. PGlite serialised concurrency tests do not prove independent PostgreSQL session races or production latency.
+
+Browser acceptance used an isolated synthetic service database on localhost:3004 with background jobs disabled. It verified customer sign-in/booking persistence, owner confirmation/assignment, qualification/slot forms, bundle/readiness routes, public compatibility states and 390px homepage/booking widths of 390px. Screenshots are in `docs/screenshots/*20261030.png`. Native exports are Hermes/asset artifacts, not signed installs or device acceptance.
+
+To reproduce synthetic service QA with no existing server using its directory: `node --import tsx scripts/prepare-services-browser-qa.ts`, then start the web workspace on port 3004 with `EASYGAS_DATA_DIR` pointing to `.data/services-browser-qa-20261030`, `EASYGAS_BACKGROUND_JOBS=false` and `EASYGAS_PREVIEW=true`. The fixture is explicitly test-only and refuses production/hosted URLs. It creates synthetic accounts and qualification evidence in that isolated directory. Never point it at normal business data. Reusing a populated fixture directory is not an idempotent setup operation.
+
+Required future acceptance: separate-connection managed PostgreSQL purchase/booking/cancel/expiry/deadlock tests, network/uncertain COMMIT recovery, realistic load, accessibility/assistive tech, physical-device offline/keyboard/lifecycle/media/PDF, real qualified field safety, provider sandbox/reconciliation, production migration/restore/rollback and monitored failure drills.

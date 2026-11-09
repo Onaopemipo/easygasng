@@ -1,0 +1,200 @@
+{
+  "phase": "Temporary Vercel client demo \u2014 9 November 2026",
+  "productionDecision": "NO-GO unchanged; temporary isolated demo authorised; real import remains held",
+  "requirements": [
+    {
+      "id": "VDEMO-01",
+      "requirement": "Separate temporary Vercel project and persistent isolated database",
+      "priority": "P0",
+      "scope": "Temporary client demonstration only",
+      "uiReference": "Existing approved web UI",
+      "route": "Existing web routes",
+      "implementationFiles": [
+        "docs/deployment/vercel-client-demo.md",
+        ".vercelignore",
+        "apps/web/next.config.ts",
+        "scripts/prepare-vercel-demo.ts",
+        "scripts/configure-vercel-demo.ts"
+      ],
+      "dataSource": "New dedicated Neon Free database; no copied local customers or transactions",
+      "securityControl": "Separate project/runtime role/TLS and no source secrets uploaded",
+      "testFiles": [
+        "tests/vercel-demo.test.ts",
+        "tests/deployment.test.ts",
+        "scripts/check-vercel-demo.mjs"
+      ],
+      "testIds": [
+        "VDEMO-SEC01",
+        "VDEMO-SEC02"
+      ],
+      "negativeTests": [
+        "Source bundle excludes local environment and data files"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/vercel-demo-local-tests.txt",
+        "docs/deployment/evidence/vercel-demo-hosted-tests.txt",
+        "docs/deployment/evidence/vercel-demo-runtime.txt",
+        "docs/deployment/evidence/vercel-deploy.txt",
+        "docs/deployment/evidence/vercel-demo-configuration.txt",
+        "docs/deployment/evidence/vercel-demo-stock.txt",
+        "docs/deployment/evidence/vercel-demo-home.png",
+        "docs/deployment/evidence/vercel-demo-admin.png"
+      ],
+      "acceptanceGate": "VDEMO-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded temporary client demo deployed and checked on the actual hosted URL. This does not close the original production requirements/gates.",
+      "testResult": "PASS:7/7 local deployment/security/traceability checks, hosted VDEMO-HTTP01, actual remote restricted-runtime checks and browser catalogue/cart/owner sign-in/services checks. Cloud build READY. No production release or full-business/device acceptance inferred.",
+      "outstandingWork": "None for this bounded temporary-demo requirement. Original production/provider/device/operational and historical-import gates remain tracked in prior matrices."
+    },
+    {
+      "id": "VDEMO-02",
+      "requirement": "Usable branded web demo and synthetic test access",
+      "priority": "P1",
+      "scope": "Temporary client demonstration only",
+      "uiReference": "Existing approved web UI",
+      "route": "/, /products, /services, /login, /admin",
+      "implementationFiles": [
+        "docs/deployment/vercel-client-demo.md",
+        "apps/web/app/layout.tsx",
+        "scripts/check-vercel-demo.mjs"
+      ],
+      "dataSource": "Explicit synthetic demo accounts/catalogue configuration only",
+      "securityControl": "Normal backend auth, private admin routes and no live payments or outbound messaging",
+      "testFiles": [
+        "tests/vercel-demo.test.ts",
+        "tests/deployment.test.ts",
+        "scripts/check-vercel-demo.mjs"
+      ],
+      "testIds": [
+        "VDEMO-HTTP01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/deployment/evidence/vercel-demo-local-tests.txt",
+        "docs/deployment/evidence/vercel-demo-hosted-tests.txt",
+        "docs/deployment/evidence/vercel-demo-runtime.txt",
+        "docs/deployment/evidence/vercel-deploy.txt",
+        "docs/deployment/evidence/vercel-demo-configuration.txt",
+        "docs/deployment/evidence/vercel-demo-stock.txt",
+        "docs/deployment/evidence/vercel-demo-home.png",
+        "docs/deployment/evidence/vercel-demo-admin.png"
+      ],
+      "acceptanceGate": "VDEMO-G2",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded temporary client demo deployed and checked on the actual hosted URL. This does not close the original production requirements/gates.",
+      "testResult": "PASS:7/7 local deployment/security/traceability checks, hosted VDEMO-HTTP01, actual remote restricted-runtime checks and browser catalogue/cart/owner sign-in/services checks. Cloud build READY. No production release or full-business/device acceptance inferred.",
+      "outstandingWork": "None for this bounded temporary-demo requirement. Original production/provider/device/operational and historical-import gates remain tracked in prior matrices."
+    },
+    {
+      "id": "VDEMO-03",
+      "requirement": "Preserve production/import/retention decisions and document teardown",
+      "priority": "P1",
+      "scope": "Temporary client demonstration only",
+      "uiReference": "Demo notice",
+      "route": "Existing web shell",
+      "implementationFiles": [
+        "docs/deployment/vercel-client-demo.md",
+        "apps/web/app/layout.tsx",
+        "apps/web/app/robots.ts",
+        ".vercelignore"
+      ],
+      "dataSource": "Existing production and historical import decisions",
+      "securityControl": "Demo marked explicitly; providers OFF, no real stock or identities migrated",
+      "testFiles": [
+        "tests/vercel-demo.test.ts",
+        "tests/deployment.test.ts",
+        "scripts/check-vercel-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/deployment/evidence/vercel-demo-local-tests.txt",
+        "docs/deployment/evidence/vercel-demo-hosted-tests.txt",
+        "docs/deployment/evidence/vercel-demo-runtime.txt",
+        "docs/deployment/evidence/vercel-deploy.txt",
+        "docs/deployment/evidence/vercel-demo-configuration.txt",
+        "docs/deployment/evidence/vercel-demo-stock.txt",
+        "docs/deployment/evidence/vercel-demo-home.png",
+        "docs/deployment/evidence/vercel-demo-admin.png"
+      ],
+      "acceptanceGate": "VDEMO-G3",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded temporary client demo deployed and checked on the actual hosted URL. This does not close the original production requirements/gates.",
+      "testResult": "PASS:7/7 local deployment/security/traceability checks, hosted VDEMO-HTTP01, actual remote restricted-runtime checks and browser catalogue/cart/owner sign-in/services checks. Cloud build READY. No production release or full-business/device acceptance inferred.",
+      "outstandingWork": "None for this bounded temporary-demo requirement. Original production/provider/device/operational and historical-import gates remain tracked in prior matrices."
+    }
+  ],
+  "gates": [
+    {
+      "id": "VDEMO-G1",
+      "status": "PASS",
+      "evidence": [
+        "docs/deployment/evidence/vercel-demo-local-tests.txt",
+        "docs/deployment/evidence/vercel-demo-hosted-tests.txt",
+        "docs/deployment/evidence/vercel-demo-runtime.txt",
+        "docs/deployment/evidence/vercel-deploy.txt",
+        "docs/deployment/evidence/vercel-demo-configuration.txt",
+        "docs/deployment/evidence/vercel-demo-stock.txt",
+        "docs/deployment/evidence/vercel-demo-home.png",
+        "docs/deployment/evidence/vercel-demo-admin.png"
+      ]
+    },
+    {
+      "id": "VDEMO-G2",
+      "status": "PASS",
+      "evidence": [
+        "docs/deployment/evidence/vercel-demo-local-tests.txt",
+        "docs/deployment/evidence/vercel-demo-hosted-tests.txt",
+        "docs/deployment/evidence/vercel-demo-runtime.txt",
+        "docs/deployment/evidence/vercel-deploy.txt",
+        "docs/deployment/evidence/vercel-demo-configuration.txt",
+        "docs/deployment/evidence/vercel-demo-stock.txt",
+        "docs/deployment/evidence/vercel-demo-home.png",
+        "docs/deployment/evidence/vercel-demo-admin.png"
+      ]
+    },
+    {
+      "id": "VDEMO-G3",
+      "status": "PASS",
+      "evidence": [
+        "docs/deployment/evidence/vercel-demo-local-tests.txt",
+        "docs/deployment/evidence/vercel-demo-hosted-tests.txt",
+        "docs/deployment/evidence/vercel-demo-runtime.txt",
+        "docs/deployment/evidence/vercel-deploy.txt",
+        "docs/deployment/evidence/vercel-demo-configuration.txt",
+        "docs/deployment/evidence/vercel-demo-stock.txt",
+        "docs/deployment/evidence/vercel-demo-home.png",
+        "docs/deployment/evidence/vercel-demo-admin.png"
+      ]
+    }
+  ],
+  "coverage": {
+    "denominator": 3,
+    "verified": 3,
+    "note": "3/3 bounded temporary-demo requirements verified; all original application/release matrices and gates remain authoritative. No whole-app production completion claim."
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-09",
+      "change": "User explicitly authorised temporary Vercel deployment for client demonstration; prior server deferral is lifted only for this demo. No real import or live-provider activation authorised."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Deployed and checked actual isolated Vercel/Neon demo; Free database selected, application owner secrets removed, normal runtime/auth preserved. No local/business data imported, providers OFF and existing NO-GO/retention/import holds retained."
+    }
+  ],
+  "redeployment20261109": {
+    "request": "Push all changes and deploy",
+    "gitRemote": "https://github.com/Onaopemipo/easygasng.git",
+    "deploymentId": "dpl_yZaERKondML9nt2b8FkMjfV8uXxT",
+    "url": "https://easygas-client-demo.vercel.app",
+    "status": "PARTIAL",
+    "reason": "Cloud build READY; hosted origin/sign-in/identity/privilege/catalogue/no-index smoke test PASS. Encrypted backup authenticated/archive-readable; migrations070,071,072 applied, users/orders/wallet entry counts preserved. Git push pending.",
+    "evidence": [
+      "docs/deployment/evidence/redeploy-20261109-build.txt",
+      "docs/deployment/evidence/redeploy-20261109-hosted.txt",
+      "docs/deployment/evidence/redeploy-20261109-migrations.txt"
+    ],
+    "outstandingWork": "Git push; original production gates remain. Mobile export explicitly gated to manual authorisation."
+  }
+}

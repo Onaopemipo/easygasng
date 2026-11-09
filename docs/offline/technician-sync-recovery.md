@@ -1,0 +1,9 @@
+# Technician sync and recovery — PARTIAL
+
+Current implementation reuses SecureStore session/theme/report drafts and the existing native service forms. Checklist/report draft storage is account/job scoped; final report/proof/stock/payment effects require server acceptance. In-memory authorised reads can remain visible while refresh fails; they are not durable offline job cache. Availability is disabled after failed confirmation and displays cached/offline wording, with last confirmed sync on Home. No offline success or payment verification is invented.
+
+Remaining engineering: technician-specific encrypted durable job/checklist/photo queue with actor/job/version/key/time/retention; upload hash and lost-ack reconciliation; causal replay after reauthentication/current assignment/version checks; quarantine of revoked/reassigned jobs; crash/corruption/storage-pressure/reinstall policy; user-visible recoverable conflicts; safe encrypted evidence export/purge policy on sign-out. Driver field-queue infrastructure exists but has not been represented as an implemented technician photo queue.
+
+Until these are implemented and tested, use an authenticated online connection for service evidence submission and final work transitions. Do not certify completion if the server has not confirmed mandatory evidence. Do not retry a financial/material side effect under a new identity/key. Resolve stale/reassigned/safety-held work with operations. Never bypass payment/approval gates to regain connectivity.
+
+Recovery evidence in this phase: existing transactional/idempotency/concurrency regressions pass against disposable local PostgreSQL; SecureStore draft APIs exist, but physical-device termination/revocation/photo replay remains unverified. T58–T66 and G16/G17 stay in the denominator. Production remains NO-GO.

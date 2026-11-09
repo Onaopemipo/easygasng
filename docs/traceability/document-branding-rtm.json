@@ -1,0 +1,197 @@
+{
+  "phase": "EasyGas document branding",
+  "date": "2026-11-08",
+  "productionDecision": "NO-GO unchanged",
+  "scopeChanges": [
+    "Presentation only. No mobile build, server deployment, provider activation or actual Excel import."
+  ],
+  "requirements": [
+    {
+      "id": "BRAND-01",
+      "requirement": "Apply EasyGas logo and palette to every existing outbound email",
+      "priority": "high",
+      "scope": "Shared existing email/invoice presentation",
+      "evidence": [
+        "docs/branding/evidence/tests.txt",
+        "docs/branding/evidence/email-preview.html"
+      ],
+      "status": "PARTIAL",
+      "reason": "Bounded local evidence only; production NO-GO unchanged",
+      "outstandingWork": "Live inbox rendering in Gmail/Outlook/Apple Mail remains untested; no real email sent.",
+      "uiReference": "Existing EasyGas HD logo and website green/lime/orange tokens",
+      "route": "/api/invoices/[orderId]; /api/payments/paystack/[operation]",
+      "implementationFiles": [
+        "apps/web/lib/document-brand.ts",
+        "apps/web/lib/transactional-mail.ts"
+      ],
+      "dataSource": "Existing immutable invoice snapshots and verified ledger; Existing message_outbox subject/body; Existing HD EasyGas logo and globals.css palette",
+      "securityControl": "HTML escaping and HTTPS-only linkification; Original text alternative and SMTP uncertain-send controls; Unchanged invoice ownership checks and private no-store responses",
+      "testFiles": [
+        "tests/document-brand.test.ts",
+        "tests/invoice-pdf.test.ts",
+        "tests/transactional-mail.test.ts"
+      ],
+      "testIds": [
+        "BRAND-01",
+        "INV-PDF01",
+        "PR-05",
+        "PR-06"
+      ],
+      "negativeTests": [
+        "href=\"javascript:",
+        "anonymous/foreign/driver",
+        "never retries unknown outcomes"
+      ],
+      "testResult": "PASS: 4/4 focused tests, web typecheck/build; three-page PDF visual inspection. Live inbox and authenticated web visual acceptance remain open.",
+      "acceptanceGate": "BRAND-G01"
+    },
+    {
+      "id": "BRAND-02",
+      "requirement": "Brand order/service invoice and sandbox receipt PDF exports with HD logo, repeated page header/footer",
+      "priority": "high",
+      "scope": "Shared existing email/invoice presentation",
+      "evidence": [
+        "docs/branding/evidence/tests.txt",
+        "docs/branding/evidence/invoice-preview.png",
+        "docs/audits/production-completion-evidence/invoice-synthetic.pdf"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local evidence only; production NO-GO unchanged",
+      "outstandingWork": "None within this bounded local rendering/security requirement; full production acceptance remains separate.",
+      "uiReference": "Existing EasyGas HD logo and website green/lime/orange tokens",
+      "route": "/api/invoices/[orderId]; /api/payments/paystack/[operation]",
+      "implementationFiles": [
+        "apps/web/lib/invoice-pdf.ts"
+      ],
+      "dataSource": "Existing immutable invoice snapshots and verified ledger; Existing message_outbox subject/body; Existing HD EasyGas logo and globals.css palette",
+      "securityControl": "HTML escaping and HTTPS-only linkification; Original text alternative and SMTP uncertain-send controls; Unchanged invoice ownership checks and private no-store responses",
+      "testFiles": [
+        "tests/document-brand.test.ts",
+        "tests/invoice-pdf.test.ts",
+        "tests/transactional-mail.test.ts"
+      ],
+      "testIds": [
+        "BRAND-01",
+        "INV-PDF01",
+        "PR-05",
+        "PR-06"
+      ],
+      "negativeTests": [
+        "href=\"javascript:",
+        "anonymous/foreign/driver",
+        "never retries unknown outcomes"
+      ],
+      "testResult": "PASS: 4/4 focused tests, web typecheck/build; three-page PDF visual inspection. Live inbox and authenticated web visual acceptance remain open.",
+      "acceptanceGate": "BRAND-G02"
+    },
+    {
+      "id": "BRAND-03",
+      "requirement": "Brand on-screen and printable web invoices without altering financial records",
+      "priority": "high",
+      "scope": "Shared existing email/invoice presentation",
+      "evidence": [
+        "docs/branding/evidence/typecheck.txt",
+        "docs/branding/evidence/build.txt"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Bounded local evidence only; production NO-GO unchanged",
+      "outstandingWork": "Authenticated browser/light-dark/print visual acceptance remains untested in this phase.",
+      "uiReference": "Existing EasyGas HD logo and website green/lime/orange tokens",
+      "route": "/api/invoices/[orderId]; /api/payments/paystack/[operation]",
+      "implementationFiles": [
+        "apps/web/components/order-invoice.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing immutable invoice snapshots and verified ledger; Existing message_outbox subject/body; Existing HD EasyGas logo and globals.css palette",
+      "securityControl": "HTML escaping and HTTPS-only linkification; Original text alternative and SMTP uncertain-send controls; Unchanged invoice ownership checks and private no-store responses",
+      "testFiles": [
+        "tests/document-brand.test.ts",
+        "tests/invoice-pdf.test.ts",
+        "tests/transactional-mail.test.ts"
+      ],
+      "testIds": [
+        "BRAND-01",
+        "INV-PDF01",
+        "PR-05",
+        "PR-06"
+      ],
+      "negativeTests": [
+        "href=\"javascript:",
+        "anonymous/foreign/driver",
+        "never retries unknown outcomes"
+      ],
+      "testResult": "PASS: 4/4 focused tests, web typecheck/build; three-page PDF visual inspection. Live inbox and authenticated web visual acceptance remain open.",
+      "acceptanceGate": "BRAND-G03"
+    },
+    {
+      "id": "BRAND-04",
+      "requirement": "Preserve security, original financial snapshots and safe mail delivery",
+      "priority": "high",
+      "scope": "Shared existing email/invoice presentation",
+      "evidence": [
+        "docs/branding/evidence/tests.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local evidence only; production NO-GO unchanged",
+      "outstandingWork": "None within this bounded local rendering/security requirement; full production acceptance remains separate.",
+      "uiReference": "Existing EasyGas HD logo and website green/lime/orange tokens",
+      "route": "/api/invoices/[orderId]; /api/payments/paystack/[operation]",
+      "implementationFiles": [
+        "apps/web/lib/transactional-mail.ts",
+        "apps/web/lib/document-brand.ts",
+        "apps/web/lib/invoice-pdf.ts"
+      ],
+      "dataSource": "Existing immutable invoice snapshots and verified ledger; Existing message_outbox subject/body; Existing HD EasyGas logo and globals.css palette",
+      "securityControl": "HTML escaping and HTTPS-only linkification; Original text alternative and SMTP uncertain-send controls; Unchanged invoice ownership checks and private no-store responses",
+      "testFiles": [
+        "tests/document-brand.test.ts",
+        "tests/invoice-pdf.test.ts",
+        "tests/transactional-mail.test.ts"
+      ],
+      "testIds": [
+        "BRAND-01",
+        "INV-PDF01",
+        "PR-05",
+        "PR-06"
+      ],
+      "negativeTests": [
+        "href=\"javascript:",
+        "anonymous/foreign/driver",
+        "never retries unknown outcomes"
+      ],
+      "testResult": "PASS: 4/4 focused tests, web typecheck/build; three-page PDF visual inspection. Live inbox and authenticated web visual acceptance remain open.",
+      "acceptanceGate": "BRAND-G04"
+    }
+  ],
+  "changeLog": [
+    "Shared escaped email HTML with CID logo; branded multipage PDF and web invoice header. Existing financial and messaging semantics retained."
+  ],
+  "gates": [
+    {
+      "id": "BRAND-G01",
+      "status": "PARTIAL",
+      "reason": "Bounded local evidence only; production NO-GO unchanged"
+    },
+    {
+      "id": "BRAND-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local evidence only; production NO-GO unchanged"
+    },
+    {
+      "id": "BRAND-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Bounded local evidence only; production NO-GO unchanged"
+    },
+    {
+      "id": "BRAND-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local evidence only; production NO-GO unchanged"
+    }
+  ],
+  "coverage": {
+    "requirements": 4,
+    "verified": 2,
+    "denominator": 4,
+    "note": "All blocked/unverified scopes retained; not whole-app coverage."
+  }
+}

@@ -1,0 +1,9 @@
+# Security and webhook controls
+
+Raw bytes are size-bounded256KiB before JSON parsing. Configured timestamped mode verifies HMAC-SHA512(timestamp+'.'+raw), active whsec rotation keys and ±300-second freshness. Legacy SHA512(raw,testsecret) is explicit only and refuses requests carrying the newer header; no downgrade. See dated official signing reference in05. Durable event hash and provider-event key dedupe deliveries; raw card/customer payloads are not persisted/logged. Only charge.success is consumed; unsupported event types fail closed without financial effects. Refund/dispute consumers are unfinished engineering.
+
+Provider adapter fixed HTTPS origin, redirects rejected,15-second timeout, hosted origin allowlist, real email and minimal attempt metadata. No client-side secret or card collection. Provider verify independently matches reference, attempt identity, test domain, currency, integer gross and customer email; canonical active identity, branch, obligation version/balance and quote expiry rechecked inside transaction. Merchant is bound by the server account credential; live domain/key rejected.
+
+Customer/commercial own-account APIs only; driver/technician restricted sessions cannot pay for customers. POST origin validation plus authenticated token/cookie. Per-user30/minute budget. Existing settings approval/reauth prevents self-authorised fee changes. Receipt requires committed posting and own-customer or finance branch scope. Private PDF uses no-store/nosniff/sandbox headers and existing renderer.
+
+Tests: PAY-SIGNATURE, PAY-ADAPTER, PAY-ZERO-EFFECT, PAY-PG-CONCURRENCY. PostgreSQL test uses disposable localhost schema, separate connections and injected rollback before posting commit. Actual process termination/commit acknowledgement loss, public webhook rate controls, signing rotation drill, privacy retention and alert delivery remain acceptance work. Never equate local mock tests with official provider validation.

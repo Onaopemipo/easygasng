@@ -1,0 +1,427 @@
+{
+  "phase": "Whole-app commercial production blocker audit",
+  "date": "2026-11-02",
+  "productionDecision": "NO-GO",
+  "scopeChanges": [
+    "Audit covers existing web and signed native scope. No production capability enabled, no findings silently excluded.",
+    "Two fresh defect reproductions downgrade prior production release rows. Passing reproductions are defect confirmation, not successful security acceptance.",
+    "279 current regressions including actual PostgreSQL pass; obsolete unavailable-PG claims are superseded locally without declaring production capacity/recovery accepted.",
+    {
+      "date": "2026-11-08",
+      "change": "User requires all records retained; destructive erasure superseded by non-destructive retention controls and truthful request dispositions, not removed from traceability."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "AUD-B01",
+      "requirement": "Reject effective TLS verification bypass",
+      "priority": "P1",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Parsed URL/env SSL options vs configured policy",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "PARTIAL",
+      "reason": "Previously reproduced defect is fixed locally with focused and full PostgreSQL-enabled regression evidence; deployment-specific acceptance remains outstanding.",
+      "testResult": "PASS locally: 311 tests, zero failures/skips; no deployed production acceptance claim.",
+      "outstandingWork": "Validate actual production TLS certificates/hostname and SMTP worker/provider operation on the provisioned VPS.",
+      "implementationFiles": [
+        "apps/web/lib/release-checks.ts",
+        "apps/web/lib/db.ts",
+        "apps/web/lib/database-tls.ts"
+      ],
+      "testFiles": [
+        "tests/production-audit-findings.test.ts"
+      ],
+      "testIds": [
+        "AUD-01"
+      ],
+      "evidence": [
+        "docs/audits/production-20261102/defect-reproductions.txt",
+        "docs/audits/production-completion-evidence/regression-final.txt"
+      ],
+      "negativeTests": [
+        "reproduced defect"
+      ],
+      "acceptanceGate": "AUD-G01"
+    },
+    {
+      "id": "AUD-B02",
+      "requirement": "Fence active SMTP sends against concurrent owner retry",
+      "priority": "P1",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "message_outbox state/attempts and owner retry API",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "PARTIAL",
+      "reason": "Previously reproduced defect is fixed locally with focused and full PostgreSQL-enabled regression evidence; deployment-specific acceptance remains outstanding.",
+      "testResult": "PASS locally: 311 tests, zero failures/skips; no deployed production acceptance claim.",
+      "outstandingWork": "Validate actual production TLS certificates/hostname and SMTP worker/provider operation on the provisioned VPS.",
+      "implementationFiles": [
+        "apps/web/lib/transactional-mail.ts",
+        "apps/web/components/mail-delivery.tsx"
+      ],
+      "testFiles": [
+        "tests/production-audit-findings.test.ts"
+      ],
+      "testIds": [
+        "AUD-02"
+      ],
+      "evidence": [
+        "docs/audits/production-20261102/defect-reproductions.txt",
+        "docs/audits/production-completion-evidence/regression-final.txt"
+      ],
+      "negativeTests": [
+        "reproduced defect"
+      ],
+      "acceptanceGate": "AUD-G01"
+    },
+    {
+      "id": "AUD-B03",
+      "requirement": "Complete approved privacy retention and erasure fulfilment",
+      "priority": "P0",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "privacy_requests intake/export; no erasure fulfilment path found Business instruction 2026-11-08: all records retained; existing privacy_requests retain request/disposition and immutable audit_events retain policy application.",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded Destructive proof purge disabled under fixed retain-all policy. Customer deletion-review disposition is retained, not erased/completed; owned export and expiry/consent access checks preserved.",
+      "status": "PARTIAL",
+      "reason": "privacy_requests intake/export; no erasure fulfilment path found. Owner: Business/privacy/backend User supplied retain-all instruction; application proof purge is non-destructive and deletion review transparently retains records. No claim of legal or backup/recovery acceptance.",
+      "testResult": "PASS: final frozen-source broad regression408/408 with actual disposable PostgreSQL enabled,0 failures/skips. Focused24/24 and HTTP/PostgreSQL2/2 overlap the broad run and are not additional unique coverage. Final web build/types and2/2 matrix checks pass; isolated browser finance draft-save/issue and customer retained-disposition verified. Complete business requirement remains PARTIAL.",
+      "outstandingWork": "Business instruction retains all records, superseding destructive erasure scope. Production backup/restore retention-hold acceptance, independent policy review and applicable full proof/device gates remain; all previous requirements remain tracked. No server work or actual import.",
+      "implementationFiles": [
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/workflows.tsx",
+        "docs/operations/record-retention.md"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/service-invoice-drafts.test.ts",
+        "tests/operations-completion.test.ts"
+      ],
+      "testIds": [
+        "PRIVACY-RETAIN01",
+        "OPS-T11"
+      ],
+      "evidence": [
+        "docs/audits/production-20261102/regression.txt",
+        "docs/production-completion/evidence/draft-revision-tests.txt",
+        "docs/production-completion/evidence/draft-revision-postgres.txt",
+        "docs/production-completion/evidence/draft-revision-build.txt",
+        "docs/production-completion/evidence/draft-revision-types.txt",
+        "docs/production-completion/evidence/draft-revision-browser.json",
+        "docs/production-completion/evidence/draft-revision-browser.png",
+        "docs/production-completion/evidence/retain-all-browser.png",
+        "docs/production-completion/evidence/draft-revision-accepted-regression.txt",
+        "docs/production-completion/evidence/draft-revision-traceability.txt",
+        "docs/production-completion/evidence/draft-revision-source-sha256.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "AUD-G01"
+    },
+    {
+      "id": "AUD-B04",
+      "requirement": "Configure and accept sellable stock, gas policy, tender and services",
+      "priority": "P0",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Local public API:12 products with0 availability, ordering/COD/wallet false, gas policy null,0 visible services",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "BLOCKED",
+      "reason": "Local public API:12 products with0 availability, ordering/COD/wallet false, gas policy null,0 visible services. Owner: Business/stock/finance/services",
+      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
+      "outstandingWork": "Real approved quantity/price/capacity/location policy, counted/inspected stock, qualified service schedules, tender and stocked end-to-end acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/audits/production-20261102/public-runtime.json",
+        "docs/audits/production-20261102/regression.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "AUD-G02"
+    },
+    {
+      "id": "AUD-B05",
+      "requirement": "Provision and validate authorised production runtime",
+      "priority": "P0",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Actual configured local environment; no accepted deployed HTTPS/TLS runtime",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "BLOCKED",
+      "reason": "Actual configured local environment; no accepted deployed HTTPS/TLS runtime. Owner: Platform/owner",
+      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
+      "outstandingWork": "Authorise hosting change, provision reviewed environment/secrets/certificate and validate migration/runtime separation.",
+      "implementationFiles": [
+        "deploy/compose.yml",
+        "deploy/Dockerfile",
+        "deploy/nginx.conf",
+        "scripts/release-check.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/audits/production-20261102/preflight.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "AUD-G02"
+    },
+    {
+      "id": "AUD-B06",
+      "requirement": "Produce signed native distribution builds",
+      "priority": "P0",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Existing build config/types and prior unsigned exports; no accepted signed binaries/store release evidence",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "BLOCKED",
+      "reason": "Existing build config/types and prior unsigned exports; no accepted signed binaries/store release evidence. Owner: Mobile/owner",
+      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
+      "outstandingWork": "Confirm app identifiers/project/distribution identities, sign both platforms, verify store declarations and devices.",
+      "implementationFiles": [
+        "apps/mobile/app.config.js",
+        "apps/mobile/eas.json",
+        "apps/mobile/app.json"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/audits/production-20261102/native-types.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "AUD-G03"
+    },
+    {
+      "id": "AUD-B07",
+      "requirement": "Resolve or govern native toolchain moderate advisories",
+      "priority": "P1",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Fresh npm audit:12 moderate affected-package entries, no high/critical",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "BLOCKED",
+      "reason": "Fresh npm audit:12 moderate affected-package entries, no high/critical. Owner: Mobile/security",
+      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
+      "outstandingWork": "Compatible upstream fixes or explicit independent risk disposition; re-audit/export/build without incompatible forced downgrade.",
+      "implementationFiles": [
+        "apps/mobile/package.json",
+        "apps/mobile/package-lock.json",
+        ".github/workflows/release-validation.yml"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/audits/production-20261102/native-dependencies.json"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "AUD-G03"
+    },
+    {
+      "id": "AUD-B08",
+      "requirement": "Establish reviewed source, CI and rollback baseline",
+      "priority": "P0",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Git unborn HEAD/untracked source; local build is not hosted CI/artifact provenance",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "BLOCKED",
+      "reason": "Git unborn HEAD/untracked source; local build is not hosted CI/artifact provenance. Owner: Release/owner",
+      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
+      "outstandingWork": "Reviewed versioned source, executed CI evidence and known-good compatible rollback artifact.",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "scripts/release-check.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/audits/production-20261102/preflight.txt",
+        "docs/audits/production-20261102/build.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "AUD-G02"
+    },
+    {
+      "id": "AUD-B09",
+      "requirement": "Certify off-site recovery, runtime grants and production restore",
+      "priority": "P1",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Real isolated restore passed; ownership/ACLs excluded by restore tool; no accepted off-site/production drill",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Real isolated restore passed; ownership/ACLs excluded by restore tool; no accepted off-site/production drill. Owner: Platform/operations/finance",
+      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
+      "outstandingWork": "Reapply reviewed grants, run restored restricted-runtime ledger/stock/jobs checks, accept recovery owners/RPO/RTO and off-site restoration.",
+      "implementationFiles": [
+        "apps/web/lib/postgres-backup.ts",
+        "scripts/postgres-backup.ts",
+        "apps/web/lib/backups.ts"
+      ],
+      "testFiles": [
+        "tests/production-backup-postgres.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/audits/production-20261102/regression.txt"
+      ],
+      "negativeTests": [
+        "encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys"
+      ],
+      "acceptanceGate": "AUD-G02"
+    },
+    {
+      "id": "AUD-B10",
+      "requirement": "Accept legal/business, cash and qualified physical safety operation",
+      "priority": "P0",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Persisted governance/ledger/custody code and synthetic tests do not provide real owner/qualified acceptance",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "BLOCKED",
+      "reason": "Persisted governance/ledger/custody code and synthetic tests do not provide real owner/qualified acceptance. Owner: Business/finance/safety/operations",
+      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
+      "outstandingWork": "Real policy texts, staff/independent authority, stock/inspection/qualification and finance reconciliation/fallback signoffs.",
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/policies.ts",
+        "apps/web/lib/cylinder-allocation.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/audits/production-20261102/regression.txt",
+        "docs/audits/production-20261102/public-runtime.json"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "AUD-G02"
+    },
+    {
+      "id": "AUD-B11",
+      "requirement": "Complete final browser and signed-device acceptance",
+      "priority": "P1",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Code/compiler/regressions; no final comprehensive UI/a11y or signed-device acceptance",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Code/compiler/regressions; no final comprehensive UI/a11y or signed-device acceptance. Owner: QA/mobile/operations",
+      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
+      "outstandingWork": "Execute responsive/themes/a11y/account-switch/offline/lifecycle/retry/revocation and stocked web/native journeys.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/offline.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/audits/production-20261102/build.txt",
+        "docs/audits/production-20261102/web-types.txt",
+        "docs/audits/production-20261102/native-types.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "AUD-G03"
+    },
+    {
+      "id": "AUD-B12",
+      "requirement": "Validate deployed container/proxy, monitoring, load and security",
+      "priority": "P1",
+      "scope": "Requested commercial web plus signed native release; all prior scope/denominators preserved",
+      "uiReference": "Existing customer/admin/native experiences; no redesign in this audit",
+      "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
+      "dataSource": "Local worker SIGTERM/health tests; Docker/nginx/hosted CI/external alerts/target load not accepted",
+      "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Local worker SIGTERM/health tests; Docker/nginx/hosted CI/external alerts/target load not accepted. Owner: Platform/security/operations",
+      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
+      "outstandingWork": "Real runtime/TLS/SSE/load/abuse/outage/alert/security testing; named on-call, redacted actionable diagnostics and manual recovery rehearsal.",
+      "implementationFiles": [
+        "deploy/Dockerfile",
+        "deploy/compose.yml",
+        "deploy/nginx.conf",
+        "scripts/worker.ts",
+        "apps/web/app/api/status/route.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [],
+      "evidence": [
+        "docs/audits/production-20261102/regression.txt",
+        "docs/audits/production-20261102/preflight.txt"
+      ],
+      "negativeTests": [
+        "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
+      ],
+      "acceptanceGate": "AUD-G02"
+    }
+  ],
+  "gates": [
+    {
+      "id": "AUD-G01",
+      "requirement": "Code security/privacy integrity",
+      "status": "FAIL",
+      "reason": "AUD-B01/B02 reproduced; controlled privacy fulfilment absent."
+    },
+    {
+      "id": "AUD-G02",
+      "requirement": "Commercial environment, operation and recovery acceptance",
+      "status": "BLOCKED",
+      "reason": "Sellable data/approvals, hosted runtime/source/CI, off-site recovery, real safety/finance and monitoring acceptance outstanding."
+    },
+    {
+      "id": "AUD-G03",
+      "requirement": "Signed native and final UI/device/security acceptance",
+      "status": "BLOCKED",
+      "reason": "Native moderate advisories, distribution and final browser/device acceptance remain open."
+    }
+  ]
+}

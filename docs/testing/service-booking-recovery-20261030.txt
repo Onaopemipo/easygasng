@@ -1,0 +1,21 @@
+✔ EO-01: sequential and concurrent same-key retries recover one authoritative booking; conflicts and cross-customer reuse reject (1076.947584ms)
+✔ EO-03: injected failure after outbox write rolls back booking, capacity, operation result, notifications and money (844.275333ms)
+✔ EO-04: lost commit acknowledgement is reconciled using the persisted result without another business event (765.912125ms)
+✔ RC-04: failed and competing rescheduling preserve a single capacity allocation and reject stale cancellation (798.836209ms)
+✔ RC-15: encrypted backup restores booking, operation, quotation, inventory, notifications and audit relationships (1337.682541ms)
+✔ BK-23: communication opt-out is respected while in-app history remains authoritative (850.659834ms)
+✔ EO-09: approval and material issue retries have one inventory effect; expired quotations cannot authorise work (827.255833ms)
+✔ RC-10: interrupted report publication preserves in-progress work; unsafe completion is rejected; permission revocation blocks recovery (810.1725ms)
+✔ BK-quiet: durable service events are scheduled after overnight and same-day quiet periods (0.507667ms)
+✔ EO-10: wallet and independently approved refund failures roll back and replay without duplicate money (773.570917ms)
+✔ RC-13: failed additive migration rolls back DDL without losing a valid booking (776.505167ms)
+✔ BK-private: operation persistence works under the restricted trusted server role and committed results are immutable (737.124333ms)
+✔ EO-contract: public service mutations require a stable identity and stale-sensitive changes require a version (1.058458ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10061.395084

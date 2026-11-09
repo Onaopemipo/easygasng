@@ -1,0 +1,74 @@
+✔ encrypted backup verifies authentication and restores the actual database in isolation (4604.820708ms)
+✔ encrypted restore preserves completed service reports, verified receipts and immutable history (2519.794125ms)
+✔ mixed checkout is atomic across product reservations, technician availability and replay (3641.699625ms)
+✔ managed categories, variant metadata and archiving cannot bypass approved prices or compatibility review (1376.795125ms)
+✖ image validation rejects active/invalid formats and keeps booking photographs private and report evidence locked (1400.6725ms)
+✔ downloadable report escapes customer-controlled markup and distinguishes unsafe outcomes from certification (2.431125ms)
+✔ reviewed recommendations count real events, never claim unknown compatibility and disappear for unavailable products (1304.245875ms)
+✔ finance reports separate service receipts, pending cash, liabilities and unknown profit without truncating ledger pagination (1070.347791ms)
+✔ ER-14: cumulative partial line refunds prorate discount and points, preserve delivery, and finish with an exact remaining refund (3886.1005ms)
+✔ ER-10O: approved catalogue offers enforce expiry, budget, point cost and lifetime reuse; unapproved edits cannot publish (1535.932708ms)
+✔ ER-19R: independently approved referral hold blocks posting until separately approved clearance and audited retry (1384.916583ms)
+✔ ER-31S: Smart Refill offers require approved active offers, communication consent and real forecast history (1295.282041ms)
+✔ ER-04S: completed service labour earns only after independent payment verification and full refund reverses once (1235.512417ms)
+✔ ER-14Z: refund of an entirely points-funded product restores points without fictional monetary wallet credit (969.045792ms)
+✔ ER-31P: approved Smart Refill offer uses verified historical sources and disappears on consent withdrawal (911.60175ms)
+✔ ER-30G: decimal gas plus accessory discount preserves one delivery fee, quoted versions and exact reservations (911.679959ms)
+✔ service drafts are not sellable; checklist and price activation require independent qualified approval (4821.420541ms)
+✔ booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve (1449.573708ms)
+✔ qualification expiry, stale service versions and out-of-area addresses reject booking without side effects (1298.651ms)
+✔ quotation revisions preserve price history; only latest customer approval reserves materials (1222.946875ms)
+✔ approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once (1117.338625ms)
+✔ unsafe inspection cannot become safety clearance or customer-acknowledged success (921.3155ms)
+✔ service deposit uses existing wallet ledger and cancellation refund requires separate finance approval (989.553959ms)
+✔ EO-01: sequential and concurrent same-key retries recover one authoritative booking; conflicts and cross-customer reuse reject (3760.053583ms)
+✔ EO-03: injected failure after outbox write rolls back booking, capacity, operation result, notifications and money (1457.849833ms)
+✔ EO-04: lost commit acknowledgement is reconciled using the persisted result without another business event (1298.642042ms)
+✔ RC-04: failed and competing rescheduling preserve a single capacity allocation and reject stale cancellation (1367.154416ms)
+✔ RC-15: encrypted backup restores booking, operation, quotation, inventory, notifications and audit relationships (1967.555917ms)
+✔ BK-23: communication opt-out is respected while in-app history remains authoritative (893.907833ms)
+✔ EO-09: approval and material issue retries have one inventory effect; expired quotations cannot authorise work (1063.494167ms)
+✔ RC-10: interrupted report publication preserves in-progress work; unsafe completion is rejected; permission revocation blocks recovery (911.4595ms)
+✔ BK-quiet: durable service events are scheduled after overnight and same-day quiet periods (0.579792ms)
+✔ EO-10: wallet and independently approved refund failures roll back and replay without duplicate money (850.590166ms)
+✔ RC-13: failed additive migration rolls back DDL without losing a valid booking (815.765292ms)
+✔ BK-private: operation persistence works under the restricted trusted server role and committed results are immutable (789.830042ms)
+✔ EO-contract: public service mutations require a stable identity and stale-sensitive changes require a version (1.088667ms)
+✔ specific compatibility requires independent qualified review and expires with reviewer qualification (3798.481333ms)
+✔ follow-ups require completed work, respect service consent and quiet hours, deduplicate and link rebooking (1761.414833ms)
+✔ policy publication requires independently approved real content and effective date (1159.852791ms)
+✔ all new service tables and workflows function under the restricted private-schema server role (1247.116625ms)
+✔ incremental Supabase migration upgrades the previous catalogue schema without losing existing records (510.853375ms)
+✔ production gates remain truthful and customer export includes owned service records only (1068.904042ms)
+✔ TECH-T26 unpaid work start fails at backend and changes no booking state (3748.275125ms)
+✔ TECH-T21 quotation needs independent owner decision, customer approval and verified payment (1762.471042ms)
+✔ TECH-T02 technician capability excludes finance, approvals, delivery and unrestricted stock (0.279375ms)
+✔ TECH-T08 restricted session enforces assignment scope and cannot collect or fake payments (1301.019917ms)
+✔ TECH-T04 suspended, wrong-branch and expired-qualification actors cannot authorise paid work (1347.932875ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 46
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15990.822792
+
+✖ failing tests:
+
+test at tests/catalogue-services-integration.test.ts:1:3786
+✖ image validation rejects active/invalid formats and keeps booking photographs private and report evidence locked (1400.6725ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  400 !== 409
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/catalogue-services-integration.test.ts:224:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 409,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

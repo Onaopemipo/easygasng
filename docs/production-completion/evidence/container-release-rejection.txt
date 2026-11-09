@@ -1,0 +1,45 @@
+
+> easygas-platform@0.1.0 release:check
+> node --import tsx scripts/release-check.ts
+
+{
+  "technicalChecksPassed": false,
+  "releaseDecision": "NO-GO until business, operational and release acceptance gates are signed",
+  "checks": [
+    {
+      "id": "origin",
+      "ok": false,
+      "detail": "Use the canonical public HTTPS origin without credentials, path or query."
+    },
+    {
+      "id": "database",
+      "ok": false,
+      "detail": "Production requires a dedicated PostgreSQL database."
+    },
+    {
+      "id": "database-tls",
+      "ok": false,
+      "detail": "Require certificate and hostname verification (sslmode=verify-full); never disable TLS verification."
+    },
+    {
+      "id": "worker",
+      "ok": true,
+      "detail": "Use one supervised external worker; disable the in-process timer."
+    },
+    {
+      "id": "preview",
+      "ok": true,
+      "detail": "Do not release a QA build."
+    },
+    {
+      "id": "release",
+      "ok": false,
+      "detail": "Supply the reviewed 40-character Git revision as EASYGAS_RELEASE_SHA."
+    },
+    {
+      "id": "transactional-mail",
+      "ok": false,
+      "detail": "Configure an approved authenticated TLS SMTP sender and verify actual recovery delivery before launch."
+    }
+  ]
+}

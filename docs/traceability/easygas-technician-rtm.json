@@ -1,0 +1,1575 @@
+{
+  "phase": "Approved technician app",
+  "productionDecision": "NO-GO unchanged",
+  "requirements": [
+    {
+      "id": "TECH-01",
+      "requirement": "Repository baseline and non-destructive audit",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-01",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-02",
+      "requirement": "Shared model/API reuse",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-02",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-03",
+      "requirement": "Approved 13-screen visual fidelity",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-03",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-04",
+      "requirement": "Auth/role/branch",
+      "priority": "P0",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-04",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-05",
+      "requirement": "Home and availability",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-05",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-06",
+      "requirement": "Assigned jobs/acknowledgement",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-06",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-07",
+      "requirement": "Assessment workflow",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-07",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-08",
+      "requirement": "Quotation and approvals",
+      "priority": "P0",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-08",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-09",
+      "requirement": "Invoice and verified payment restrictions",
+      "priority": "P0",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-09",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-10",
+      "requirement": "State machine",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-10",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-11",
+      "requirement": "Checklists/safety",
+      "priority": "P0",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-11",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-12",
+      "requirement": "Materials/inventory",
+      "priority": "P0",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-12",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-13",
+      "requirement": "Proof storage/privacy",
+      "priority": "P0",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-13",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-14",
+      "requirement": "Completion/reporting",
+      "priority": "P0",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-14",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-15",
+      "requirement": "History/notifications/profile",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-15",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-16",
+      "requirement": "Offline reconciliation",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-16",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-17",
+      "requirement": "Security and exactly-once effects",
+      "priority": "P0",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-17",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-18",
+      "requirement": "Accessibility/device quality",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-18",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-19",
+      "requirement": "Regression/build",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-19",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-20",
+      "requirement": "Documentation/traceability",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-20",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-21",
+      "requirement": "Rollback/recovery",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-21",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    },
+    {
+      "id": "TECH-22",
+      "requirement": "Production-scope restrictions",
+      "priority": "P1",
+      "scope": "Approved technician app; canonical service system",
+      "uiReference": "codex-clipboard-41d648a6-f30c-4e32-8459-7ffb9bd24175.png",
+      "route": "Technician workspace",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "database/migrations/053_technician_work_authorisation.sql",
+        "database/migrations/054_technician_session_scope.sql",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/lib/media.ts",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/055_service_proof.sql",
+        "database/migrations/056_service_assignment_response.sql"
+      ],
+      "dataSource": "Canonical bookings/quotes/verified_payments/materials/reports/media/users",
+      "securityControl": "Session role, branch, assignment, independent qualifications and business authorisation",
+      "testFiles": [
+        "tests/technician-work.test.ts",
+        "tests/technician-postgres.test.ts"
+      ],
+      "testIds": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T56",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "negativeTests": [
+        "TECH-T26",
+        "TECH-T21",
+        "TECH-T02",
+        "TECH-T08",
+        "TECH-T04",
+        "TECH-T40",
+        "TECH-T09"
+      ],
+      "evidence": [
+        "docs/technician/evidence/critical-tests.txt",
+        "docs/technician/evidence/postgres-tests.txt",
+        "docs/technician/evidence/regression-tests.txt",
+        "docs/technician/evidence/web-types.txt",
+        "docs/technician/evidence/mobile-types.txt",
+        "docs/technician/evidence/ios-build.txt",
+        "docs/technician/evidence/traceability-tests.txt",
+        "docs/technician/evidence/final-regression-tests.txt",
+        "docs/technician/evidence/technician-home.png",
+        "docs/technician/evidence/customer-preservation.txt"
+      ],
+      "testResult": "Full isolated PostgreSQL regression 332 PASS /0 FAIL /0 SKIP; 7 critical tests PASS; web/mobile types, web build and iOS simulator build PASS. Full visual/offline/physical-device acceptance remains incomplete.",
+      "acceptanceGate": "TG-22",
+      "status": "PARTIAL",
+      "reason": "Canonical integration and critical guard implemented; see gate and blocker register for full acceptance gaps.",
+      "outstandingWork": "Retain all T01\u2013T56 and TG-01\u201322; complete exact visual, offline, retention/restore, invoice and physical-device acceptance."
+    }
+  ],
+  "gates": [
+    {
+      "id": "TG-01",
+      "status": "PASS",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-02",
+      "status": "PASS",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-03",
+      "status": "FAIL",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-04",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-05",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-06",
+      "status": "FAIL",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-07",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-08",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-09",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-10",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-11",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-12",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-13",
+      "status": "FAIL",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-14",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-15",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-16",
+      "status": "FAIL",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-17",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-18",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-19",
+      "status": "PASS",
+      "reason": "Executed regression/types/build and complete honest phase documentation/traceability. Lint script is unavailable; physical device acceptance remains TG-18 NOT_TESTED."
+    },
+    {
+      "id": "TG-20",
+      "status": "PASS",
+      "reason": "Executed regression/types/build and complete honest phase documentation/traceability. Lint script is unavailable; physical device acceptance remains TG-18 NOT_TESTED."
+    },
+    {
+      "id": "TG-21",
+      "status": "NOT_TESTED",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    },
+    {
+      "id": "TG-22",
+      "status": "PASS",
+      "reason": "See docs/testing/technician-app-acceptance.md and docs/technician/blockers-and-dependencies.md; partial evidence does not certify the full gate."
+    }
+  ],
+  "scopeChanges": [
+    "Legacy in_progress appointment status retained for compatibility; new work_phase distinguishes assessment from chargeable work. New quotation pauses authorisation.",
+    "Old unrestricted sessions retain cash-record compatibility; new technician sessions exclude cash and financial administration. Explicit P0 cutover remains.",
+    "Existing successful-service fixtures now use approved/verified pre-work payment, retaining stock, safety, finance, rewards and recovery assertions."
+  ]
+}

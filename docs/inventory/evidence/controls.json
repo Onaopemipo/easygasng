@@ -1,0 +1,202 @@
+[
+  {
+    "id": "INV-C01",
+    "control": "Stock Movement",
+    "handler": "inventory.movements",
+    "authority": "stock_movements/gas_stock_movements",
+    "behavior": "Server paginated History",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C02",
+    "control": "Export Stock CSV",
+    "handler": "inventory.export",
+    "authority": "same filtered stock CTE + audit_events",
+    "behavior": "<=5000 rows;CSV escaping;no costs",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C03",
+    "control": "Add Stock",
+    "handler": "inventory.receipt",
+    "authority": "stock_receipts + projections + ledgers",
+    "behavior": "Existing receiving form",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C04",
+    "control": "Refresh",
+    "handler": "inventory.workspace",
+    "authority": "canonical branch reads",
+    "behavior": "No optimistic stock",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C05",
+    "control": "Stock tab",
+    "handler": "inventory.workspace",
+    "authority": "inventory/gas_stock/holds",
+    "behavior": "20/page",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C06",
+    "control": "Receipts tab",
+    "handler": "inventory.receipt",
+    "authority": "stock_receipts/purchase_orders",
+    "behavior": "Original form retained",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C07",
+    "control": "Adjustments tab",
+    "handler": "inventory.adjust/stocktake/quarantine/threshold",
+    "authority": "inventory_operations/change_requests",
+    "behavior": "Independent approval/stale snapshot",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C08",
+    "control": "Returns tab",
+    "handler": "inventory.return/release/disposition",
+    "authority": "stock_holds/custody",
+    "behavior": "Unsaleable/qualified review",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C09",
+    "control": "Transfers tab",
+    "handler": "transfer.request/dispatch/receive/cancel",
+    "authority": "stock_transfers/ledgers",
+    "behavior": "Partial/damage/custody;generic serial transfer blocked",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C10",
+    "control": "Purchases tab",
+    "handler": "purchase.create + supplier controls",
+    "authority": "purchase_orders/suppliers",
+    "behavior": "Ordered !=received",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C11",
+    "control": "History tab",
+    "handler": "inventory.movements",
+    "authority": "immutable movements",
+    "behavior": "20/page",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C12",
+    "control": "Category selectors",
+    "handler": "inventory.workspace category",
+    "authority": "product asset/category;bulk gas separately",
+    "behavior": "No services added",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C13",
+    "control": "Search",
+    "handler": "inventory.workspace q",
+    "authority": "name/SKU/branch literal LIKE",
+    "behavior": "<=100 characters",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C14",
+    "control": "Branch filter",
+    "handler": "inventory.workspace branchId",
+    "authority": "current session/branches",
+    "behavior": "No nonowner override",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C15",
+    "control": "Stock state filter",
+    "handler": "inventory.workspace status",
+    "authority": "eligible/reserved/holds/threshold",
+    "behavior": "Closed enums",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C16",
+    "control": "Sort",
+    "handler": "inventory.workspace sort",
+    "authority": "server allowlisted SQL ordering",
+    "behavior": "No SQL interpolation from arbitrary input",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C17",
+    "control": "Clear filters",
+    "handler": "existing /admin/inventory URL",
+    "authority": "current tab preserved",
+    "behavior": "Query/page reset",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C18",
+    "control": "Previous/Next",
+    "handler": "workspace/movements page",
+    "authority": "count +20 rows",
+    "behavior": "Bounded server pagination",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C19",
+    "control": "Row menu",
+    "handler": "existing catalogue/custody/tab controls",
+    "authority": "same canonical modules",
+    "behavior": "No arbitrary direct issue",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C20",
+    "control": "Alerts",
+    "handler": "stock status filter/Approval Centre",
+    "authority": "threshold SQL / unexpired requests",
+    "behavior": "Scope labeled separately from sidebar",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C21",
+    "control": "Quick actions",
+    "handler": "original receipt/adjustment/return/transfer tabs",
+    "authority": "same mutation services",
+    "behavior": "Writer role;server rechecks",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C22",
+    "control": "Record Usage",
+    "handler": "existing /admin/bookings",
+    "authority": "authorised service material authority",
+    "behavior": "No free-form stock consumption",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C23",
+    "control": "View all movements",
+    "handler": "inventory.movements",
+    "authority": "immutable ledgers",
+    "behavior": "Filters and paging",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C24",
+    "control": "Valuation review/chart",
+    "handler": "inventoryValuation / Reports",
+    "authority": "approved acquisition movements",
+    "behavior": "No fabricated chart when unavailable",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  },
+  {
+    "id": "INV-C25",
+    "control": "Dates/kind in History",
+    "handler": "inventory.movements",
+    "authority": "Lagos timestamp/kind",
+    "behavior": "Validated range/literal parameters",
+    "status": "IMPLEMENTED; acceptance scope in verification"
+  }
+]

@@ -1,0 +1,9 @@
+# Inventory integrations
+
+No customer/product/order/cylinder/procurement/payment identity replacement or second stock ledger. Existing fulfilment, cancellation, POS, bundle component, driver loading/returns, failed-assignment capacity, professional-service pre-work quote/payment and material reconciliation remain canonical. New reads observe committed records only; stock/serial/payment mutations are unchanged.
+
+Relevant authority: inventory-business.ts, inventory-valuation.ts, business-reporting.ts, governance.ts, service.ts; existing orders/POS/gas-delivery/custody/professional-services/operations and Excel preview modules. Access through existing /admin/products,/cylinders,/orders,/pos,/deliveries,/operations,/approvals,/reports,/reconciliation,/audit,/settings,/readiness. Record Usage opens existing bookings; exact job still undergoes backend qualification/assignment/payment and material gates.
+
+Excel staging/reconciliation/source-row work is preserved. The actual historical import is NOT approved: ambiguous payments, stock balance, fees and customer matches require customer confirmation. This implementation neither posts historical balances nor emits invoices, loyalty, payment requests, dispatch or messages from import rows. Existing Python/Node preview and rejection tests remain in scope; no import activation or new migration.
+
+Inventory-workspace stock/history polling is foreground-only30s with focus/committed refresh, abort/generation cancellation and cleanup. Existing mutation tab SSE remains, with existing fallback refresh.401 clears protected data and returns to login;403 clears data; connection failures retain explicitly stale data and retry. No optimistic committed stock, new realtime service or offline mutation queue. Full worker/reconnect/load/browser role acceptance remains outstanding.

@@ -1,0 +1,230 @@
+{
+  "phase": "Complete customer addresses and automatic location assistance",
+  "releaseDecision": "NO-GO \u2014 existing production decision unchanged",
+  "scopeChanges": [
+    "Shared matching added to homepage calculator, gas ordering, product checkout, combined checkout, service requests and saved addresses. Existing area choices remain editable.",
+    "Uses current API-supplied locations/checkout zones/service coverage. No external geocoder, GPS, postal verification, new DB schema or automatic operational coverage approval.",
+    "Exact comma-separated locality names, or locality plus Lagos/Nigeria suffix without commas, are supported. Other address formats require manual location selection."
+  ],
+  "requirements": [
+    {
+      "id": "ADR-01",
+      "requirement": "Accept complete house addresses and resolve an eligible configured locality",
+      "priority": "P1",
+      "scope": "Customer complete-address entry and location assistance",
+      "uiReference": "User request 2026-11-01; existing customer forms retained",
+      "route": "/; /gas-order; /checkout; /combined-checkout; /services/[id]; /account-settings",
+      "dataSource": "Existing gas catalogue active locations; product catalogue zones; service configured zones; owned account.profile/address.save",
+      "securityControl": "No external address transmission; only supplied eligible area options; existing server ownership, coverage, stock, payment and service validation retained. Named-area matching does not authorize dispatch.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Passed mapped resolver/regression tests, typecheck/build and documented local browser scenarios.",
+      "testResult": "PASS: 24 targeted tests plus browser scenarios",
+      "outstandingWork": "Existing production NO-GO gates remain. Physical address verification and external geocoding are outside this phase; unmatched addresses require customer selection.",
+      "implementationFiles": [
+        "packages/business-rules/src/address-location.ts",
+        "apps/web/components/address-area-fields.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/address-location.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-address-location-tests-20261101.txt",
+        "docs/testing/easygas-address-location-typecheck-20261101.txt",
+        "docs/testing/easygas-address-location-build-20261101.txt",
+        "docs/testing/easygas-address-location-browser-20261101.txt"
+      ],
+      "testIds": [
+        "ADR-01",
+        "ADR-04"
+      ],
+      "acceptanceGate": "ADR-G1",
+      "negativeTests": [
+        "unknown and street-name matches require confirmation"
+      ]
+    },
+    {
+      "id": "ADR-02",
+      "requirement": "Handle ambiguous, unavailable, unknown and conflicting locations without guessing",
+      "priority": "P1",
+      "scope": "Customer complete-address entry and location assistance",
+      "uiReference": "User request 2026-11-01; existing customer forms retained",
+      "route": "/; /gas-order; /checkout; /combined-checkout; /services/[id]; /account-settings",
+      "dataSource": "Existing gas catalogue active locations; product catalogue zones; service configured zones; owned account.profile/address.save",
+      "securityControl": "No external address transmission; only supplied eligible area options; existing server ownership, coverage, stock, payment and service validation retained. Named-area matching does not authorize dispatch.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Passed mapped resolver/regression tests, typecheck/build and documented local browser scenarios.",
+      "testResult": "PASS: 24 targeted tests plus browser scenarios",
+      "outstandingWork": "Existing production NO-GO gates remain. Physical address verification and external geocoding are outside this phase; unmatched addresses require customer selection.",
+      "implementationFiles": [
+        "packages/business-rules/src/address-location.ts",
+        "apps/web/components/address-area-fields.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/address-location.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-address-location-tests-20261101.txt",
+        "docs/testing/easygas-address-location-typecheck-20261101.txt",
+        "docs/testing/easygas-address-location-build-20261101.txt",
+        "docs/testing/easygas-address-location-browser-20261101.txt"
+      ],
+      "testIds": [
+        "ADR-02"
+      ],
+      "acceptanceGate": "ADR-G1",
+      "negativeTests": [
+        "unknown and street-name matches require confirmation"
+      ]
+    },
+    {
+      "id": "ADR-03",
+      "requirement": "Clear stale automatic selections on address changes and allow manual correction",
+      "priority": "P1",
+      "scope": "Customer complete-address entry and location assistance",
+      "uiReference": "User request 2026-11-01; existing customer forms retained",
+      "route": "/; /gas-order; /checkout; /combined-checkout; /services/[id]; /account-settings",
+      "dataSource": "Existing gas catalogue active locations; product catalogue zones; service configured zones; owned account.profile/address.save",
+      "securityControl": "No external address transmission; only supplied eligible area options; existing server ownership, coverage, stock, payment and service validation retained. Named-area matching does not authorize dispatch.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Passed mapped resolver/regression tests, typecheck/build and documented local browser scenarios.",
+      "testResult": "PASS: 24 targeted tests plus browser scenarios",
+      "outstandingWork": "Existing production NO-GO gates remain. Physical address verification and external geocoding are outside this phase; unmatched addresses require customer selection.",
+      "implementationFiles": [
+        "packages/business-rules/src/address-location.ts",
+        "apps/web/components/address-area-fields.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/address-location.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-address-location-tests-20261101.txt",
+        "docs/testing/easygas-address-location-typecheck-20261101.txt",
+        "docs/testing/easygas-address-location-build-20261101.txt",
+        "docs/testing/easygas-address-location-browser-20261101.txt"
+      ],
+      "testIds": [
+        "ADR-03"
+      ],
+      "acceptanceGate": "ADR-G1",
+      "negativeTests": [
+        "unknown and street-name matches require confirmation"
+      ]
+    },
+    {
+      "id": "ADR-05",
+      "requirement": "Apply the same area matching to gas, product, combined checkout and service addresses",
+      "priority": "P1",
+      "scope": "Customer complete-address entry and location assistance",
+      "uiReference": "User request 2026-11-01; existing customer forms retained",
+      "route": "/; /gas-order; /checkout; /combined-checkout; /services/[id]; /account-settings",
+      "dataSource": "Existing gas catalogue active locations; product catalogue zones; service configured zones; owned account.profile/address.save",
+      "securityControl": "No external address transmission; only supplied eligible area options; existing server ownership, coverage, stock, payment and service validation retained. Named-area matching does not authorize dispatch.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Passed mapped resolver/regression tests, typecheck/build and documented local browser scenarios.",
+      "testResult": "PASS: 24 targeted tests plus browser scenarios",
+      "outstandingWork": "Existing production NO-GO gates remain. Physical address verification and external geocoding are outside this phase; unmatched addresses require customer selection.",
+      "implementationFiles": [
+        "packages/business-rules/src/address-location.ts",
+        "apps/web/components/address-area-fields.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/address-location.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-address-location-tests-20261101.txt",
+        "docs/testing/easygas-address-location-typecheck-20261101.txt",
+        "docs/testing/easygas-address-location-build-20261101.txt",
+        "docs/testing/easygas-address-location-browser-20261101.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "ADR-G2",
+      "negativeTests": [
+        "unknown and street-name matches require confirmation"
+      ]
+    },
+    {
+      "id": "ADR-06",
+      "requirement": "Save and reload the complete owned customer address with its selected location",
+      "priority": "P1",
+      "scope": "Customer complete-address entry and location assistance",
+      "uiReference": "User request 2026-11-01; existing customer forms retained",
+      "route": "/; /gas-order; /checkout; /combined-checkout; /services/[id]; /account-settings",
+      "dataSource": "Existing gas catalogue active locations; product catalogue zones; service configured zones; owned account.profile/address.save",
+      "securityControl": "No external address transmission; only supplied eligible area options; existing server ownership, coverage, stock, payment and service validation retained. Named-area matching does not authorize dispatch.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Passed mapped resolver/regression tests, typecheck/build and documented local browser scenarios.",
+      "testResult": "PASS: 24 targeted tests plus browser scenarios",
+      "outstandingWork": "Existing production NO-GO gates remain. Physical address verification and external geocoding are outside this phase; unmatched addresses require customer selection.",
+      "implementationFiles": [
+        "packages/business-rules/src/address-location.ts",
+        "apps/web/components/address-area-fields.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/address-location.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-address-location-tests-20261101.txt",
+        "docs/testing/easygas-address-location-typecheck-20261101.txt",
+        "docs/testing/easygas-address-location-build-20261101.txt",
+        "docs/testing/easygas-address-location-browser-20261101.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "ADR-G2",
+      "negativeTests": [
+        "unknown and street-name matches require confirmation"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "ADR-G1",
+      "status": "PASS",
+      "description": "Resolver negatives, typecheck, production build and existing service/recovery regression tests"
+    },
+    {
+      "id": "ADR-G2",
+      "status": "PASS",
+      "description": "Browser verification of address selection, manual correction, per-service coverage and saved-address persistence"
+    }
+  ]
+}

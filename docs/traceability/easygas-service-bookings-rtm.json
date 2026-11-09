@@ -1,0 +1,2942 @@
+{
+  "phase": "Customer service bookings and recovery",
+  "sourceSpecifications": [
+    "/Users/philipog/.codex/attachments/90fd74ff-5603-4798-9529-c17d19cd7d15/Pasted text.txt",
+    "/Users/philipog/.codex/attachments/88431f13-ec31-40a7-a275-11ac35bce751/Pasted text.txt",
+    "/Users/philipog/.codex/attachments/f927bc3a-088f-4bcd-a95d-0179e40447ad/Pasted text.txt",
+    "/Users/philipog/.codex/attachments/914c85ed-9ce7-410c-aa58-06f1fea7a569/Pasted text.txt",
+    "/Users/philipog/.codex/attachments/856f411c-82c4-4ca2-9c0a-3937fb0a21f2/Pasted text.txt",
+    "/Users/philipog/.codex/attachments/141fcfd7-686e-44b5-939b-73947b9f582c/Pasted text.txt"
+  ],
+  "releaseDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "BK-01",
+      "requirement": "Service Catalogue",
+      "priority": "P1",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G02",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-02",
+      "requirement": "Customer Authentication",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G14",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-03",
+      "requirement": "Service Location",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G04",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-04",
+      "requirement": "Appointment Availability",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G04",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-05",
+      "requirement": "Double Booking",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Required independent PostgreSQL connection tests cannot run without an enabled disposable local server.",
+      "testResult": "PARTIAL / NOT TESTED: Required independent PostgreSQL connection tests cannot run without an enabled disposable local server.",
+      "outstandingWork": "Required independent PostgreSQL connection tests cannot run without an enabled disposable local server.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G05",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-06",
+      "requirement": "Booking Creation",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "BK-G03",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "BK-07",
+      "requirement": "Duplicate Submission",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "BK-08",
+      "requirement": "Customer Ownership",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "BK-G13",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "BK-09",
+      "requirement": "Rescheduling",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-04",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-04"
+      ],
+      "acceptanceGate": "BK-G08",
+      "negativeTests": [
+        "RC-04"
+      ]
+    },
+    {
+      "id": "BK-10",
+      "requirement": "Cancellation",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-04",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-04"
+      ],
+      "acceptanceGate": "BK-G08",
+      "negativeTests": [
+        "RC-04"
+      ]
+    },
+    {
+      "id": "BK-11",
+      "requirement": "Technician Eligibility",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G09",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-12",
+      "requirement": "Quotation Approval",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-09",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-09"
+      ],
+      "acceptanceGate": "BK-G10",
+      "negativeTests": [
+        "EO-09"
+      ]
+    },
+    {
+      "id": "BK-13",
+      "requirement": "Unapproved Charges",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-09",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-09"
+      ],
+      "acceptanceGate": "REC-03",
+      "negativeTests": [
+        "EO-09"
+      ]
+    },
+    {
+      "id": "BK-14",
+      "requirement": "Service Completion",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-10",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-10"
+      ],
+      "acceptanceGate": "BK-G12",
+      "negativeTests": [
+        "RC-10"
+      ]
+    },
+    {
+      "id": "BK-15",
+      "requirement": "Unsafe Inspection",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-10",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-10"
+      ],
+      "acceptanceGate": "BK-G12",
+      "negativeTests": [
+        "RC-10"
+      ]
+    },
+    {
+      "id": "BK-16",
+      "requirement": "Service Reports",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G11",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-17",
+      "requirement": "Follow-Ups",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G11",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-18",
+      "requirement": "Empty States",
+      "priority": "P1",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G01",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-19",
+      "requirement": "Website Navigation",
+      "priority": "P1",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G14",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-20",
+      "requirement": "Responsive Design",
+      "priority": "P1",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G15",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-21",
+      "requirement": "Booking Status Transitions",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G18",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-22",
+      "requirement": "Session Expiry",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "PARTIAL",
+      "reason": "Shared session invalidation remains in place; sign-out and secure login return were browser-verified, but mid-form expiry recovery was not separately exercised.",
+      "testResult": "PARTIAL / NOT TESTED: Shared session invalidation remains in place; sign-out and secure login return were browser-verified, but mid-form expiry recovery was not separately exercised.",
+      "outstandingWork": "Shared session invalidation remains in place; sign-out and secure login return were browser-verified, but mid-form expiry recovery was not separately exercised.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G14",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-23",
+      "requirement": "Appointment Notification",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "PARTIAL",
+      "reason": "Durable in-app/outbox tests pass; external delivery/worker acknowledgement handling is intentionally unconnected.",
+      "testResult": "PARTIAL / NOT TESTED: Durable in-app/outbox tests pass; external delivery/worker acknowledgement handling is intentionally unconnected.",
+      "outstandingWork": "Durable in-app/outbox tests pass; external delivery/worker acknowledgement handling is intentionally unconnected.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G16",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "BK-24",
+      "requirement": "Booking and Dashboard Consistency",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "BK-G18",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "BK-25",
+      "requirement": "Payment Restrictions",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: browser/existing regression evidence",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "BK-G17",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "EO-01",
+      "requirement": "Same booking request submitted twice sequentially",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "EO-02",
+      "requirement": "Same booking request submitted concurrently",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "testResult": "PARTIAL / NOT TESTED: Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "outstandingWork": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "EO-03",
+      "requirement": "Server crashes before database commit",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "PARTIAL",
+      "reason": "Injected pre-commit interruption rolled back all effects; an actual OS process kill during PostgreSQL commit remains unperformed.",
+      "testResult": "PARTIAL / NOT TESTED: Injected pre-commit interruption rolled back all effects; an actual OS process kill during PostgreSQL commit remains unperformed.",
+      "outstandingWork": "Injected pre-commit interruption rolled back all effects; an actual OS process kill during PostgreSQL commit remains unperformed.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "EO-04",
+      "requirement": "Server crashes after commit before response",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-04",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-04"
+      ],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-04"
+      ]
+    },
+    {
+      "id": "EO-05",
+      "requirement": "Same key used with different payload",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "EO-06",
+      "requirement": "Different customer reuses operation reference",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "EO-07",
+      "requirement": "Two customers compete for final appointment slot",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "testResult": "PARTIAL / NOT TESTED: Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "outstandingWork": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "EO-08",
+      "requirement": "Worker crashes during event processing",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "testResult": "PARTIAL / NOT TESTED: Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "outstandingWork": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "EO-09",
+      "requirement": "Same material issue processed twice",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-09",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-09"
+      ],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-09"
+      ]
+    },
+    {
+      "id": "EO-10",
+      "requirement": "Same wallet debit submitted twice",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-10",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-10"
+      ],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-10"
+      ]
+    },
+    {
+      "id": "EO-11",
+      "requirement": "Same refund event processed twice",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-10",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-10"
+      ],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-10"
+      ]
+    },
+    {
+      "id": "EO-12",
+      "requirement": "Notification provider acknowledgement lost",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "testResult": "PARTIAL / NOT TESTED: Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "outstandingWork": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "EO-13",
+      "requirement": "Application restarts during pending operation",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "testResult": "PARTIAL / NOT TESTED: Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "outstandingWork": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "EO-14",
+      "requirement": "Database connection drops during commit",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "PARTIAL",
+      "reason": "Lost commit acknowledgement was injected after a real local commit; real PostgreSQL connection failure during COMMIT remains unperformed.",
+      "testResult": "PARTIAL / NOT TESTED: Lost commit acknowledgement was injected after a real local commit; real PostgreSQL connection failure during COMMIT remains unperformed.",
+      "outstandingWork": "Lost commit acknowledgement was injected after a real local commit; real PostgreSQL connection failure during COMMIT remains unperformed.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "EO-15",
+      "requirement": "Idempotency key expires while business record remains",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "PARTIAL",
+      "reason": "Operation results have no expiry and are immutable; an artificial expired-key legacy replay drill remains unperformed.",
+      "testResult": "PARTIAL / NOT TESTED: Operation results have no expiry and are immutable; an artificial expired-key legacy replay drill remains unperformed.",
+      "outstandingWork": "Operation results have no expiry and are immutable; an artificial expired-key legacy replay drill remains unperformed.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01-EO",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "RC-01",
+      "requirement": "Booking transaction fails before commit",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-03",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-03"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-03"
+      ]
+    },
+    {
+      "id": "RC-02",
+      "requirement": "Booking response times out after commit",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-04",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-04"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-04"
+      ]
+    },
+    {
+      "id": "RC-03",
+      "requirement": "Technician assignment fails",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Independent PostgreSQL final-capacity competition and scheduling crash tests remain unexecuted.",
+      "testResult": "PARTIAL / NOT TESTED: Independent PostgreSQL final-capacity competition and scheduling crash tests remain unexecuted.",
+      "outstandingWork": "Independent PostgreSQL final-capacity competition and scheduling crash tests remain unexecuted.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-02",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "RC-04",
+      "requirement": "Rescheduling fails",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-04",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-04"
+      ],
+      "acceptanceGate": "REC-02",
+      "negativeTests": [
+        "RC-04"
+      ]
+    },
+    {
+      "id": "RC-05",
+      "requirement": "Concurrent rescheduling",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Independent PostgreSQL final-capacity competition and scheduling crash tests remain unexecuted.",
+      "testResult": "PARTIAL / NOT TESTED: Independent PostgreSQL final-capacity competition and scheduling crash tests remain unexecuted.",
+      "outstandingWork": "Independent PostgreSQL final-capacity competition and scheduling crash tests remain unexecuted.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-02",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "RC-06",
+      "requirement": "Cancellation notification fails",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "No external sender is configured; provider acknowledgement and worker lease recovery cannot be certified.",
+      "testResult": "PARTIAL / NOT TESTED: No external sender is configured; provider acknowledgement and worker lease recovery cannot be certified.",
+      "outstandingWork": "No external sender is configured; provider acknowledgement and worker lease recovery cannot be certified.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-06",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "RC-07",
+      "requirement": "Refund processing fails",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-10",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-10"
+      ],
+      "acceptanceGate": "REC-03",
+      "negativeTests": [
+        "EO-10"
+      ]
+    },
+    {
+      "id": "RC-08",
+      "requirement": "Quotation approval retried",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-09",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-09"
+      ],
+      "acceptanceGate": "REC-03",
+      "negativeTests": [
+        "EO-09"
+      ]
+    },
+    {
+      "id": "RC-09",
+      "requirement": "Inventory movement retried",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-09",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-09"
+      ],
+      "acceptanceGate": "REC-04",
+      "negativeTests": [
+        "EO-09"
+      ]
+    },
+    {
+      "id": "RC-10",
+      "requirement": "Service completion interrupted",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-10",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-10"
+      ],
+      "acceptanceGate": "REC-05",
+      "negativeTests": [
+        "RC-10"
+      ]
+    },
+    {
+      "id": "RC-11",
+      "requirement": "Notification worker restarts",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "No external sender is configured; provider acknowledgement and worker lease recovery cannot be certified.",
+      "testResult": "PARTIAL / NOT TESTED: No external sender is configured; provider acknowledgement and worker lease recovery cannot be certified.",
+      "outstandingWork": "No external sender is configured; provider acknowledgement and worker lease recovery cannot be certified.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-06",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "RC-12",
+      "requirement": "Database unavailable during booking",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Runbooks and injected rollback exist; an actual application/database outage drill remains unperformed.",
+      "testResult": "PARTIAL / NOT TESTED: Runbooks and injected rollback exist; an actual application/database outage drill remains unperformed.",
+      "outstandingWork": "Runbooks and injected rollback exist; an actual application/database outage drill remains unperformed.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-10",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "RC-13",
+      "requirement": "Migration fails",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-13",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-13"
+      ],
+      "acceptanceGate": "REC-07",
+      "negativeTests": [
+        "RC-13"
+      ]
+    },
+    {
+      "id": "RC-14",
+      "requirement": "Application release rolled back",
+      "priority": "P1",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Unborn Git main has no known-good prior committed release/build for a genuine release rollback.",
+      "testResult": "PARTIAL / NOT TESTED: Unborn Git main has no known-good prior committed release/build for a genuine release rollback.",
+      "outstandingWork": "Unborn Git main has no known-good prior committed release/build for a genuine release rollback.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-08",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "RC-15",
+      "requirement": "Backup restored to isolated environment",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-15",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-15"
+      ],
+      "acceptanceGate": "REC-09",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "RC-16",
+      "requirement": "Manual fallback records reconciled",
+      "priority": "P1",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Controlled manual fallback is documented; a full manual request reconciliation drill remains unperformed.",
+      "testResult": "PARTIAL / NOT TESTED: Controlled manual fallback is documented; a full manual request reconciliation drill remains unperformed.",
+      "outstandingWork": "Controlled manual fallback is documented; a full manual request reconciliation drill remains unperformed.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-11",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "RC-17",
+      "requirement": "Permission revoked during recovery",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-10",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-10"
+      ],
+      "acceptanceGate": "REC-12",
+      "negativeTests": [
+        "RC-10"
+      ]
+    },
+    {
+      "id": "RC-18",
+      "requirement": "Unsafe inspection completion attempted",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-10",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-10"
+      ],
+      "acceptanceGate": "REC-05",
+      "negativeTests": [
+        "RC-10"
+      ]
+    },
+    {
+      "id": "REC01-T01",
+      "requirement": "Valid booking creation",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "REC01-T02",
+      "requirement": "Database failure before commit",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-03",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-03"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-03"
+      ]
+    },
+    {
+      "id": "REC01-T03",
+      "requirement": "Timeout after successful commit",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-04",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-04"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-04"
+      ]
+    },
+    {
+      "id": "REC01-T04",
+      "requirement": "Duplicate submission with same key",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "REC01-T05",
+      "requirement": "Same key with different request data",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "REC01-T06",
+      "requirement": "Two simultaneous requests for final slot",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "testResult": "PARTIAL / NOT TESTED: Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "outstandingWork": "Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "REC01-T07",
+      "requirement": "Concurrent cancellation and rescheduling",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "BLOCKED",
+      "reason": "Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "testResult": "PARTIAL / NOT TESTED: Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "outstandingWork": "Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "REC01-T08",
+      "requirement": "Failure during material reservation",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-09",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-09"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-09"
+      ]
+    },
+    {
+      "id": "REC01-T09",
+      "requirement": "Failure during financial processing",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-10",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-10"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-10"
+      ]
+    },
+    {
+      "id": "REC01-T10",
+      "requirement": "Application restart during recovery",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "testResult": "PARTIAL / NOT TESTED: Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "outstandingWork": "Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-PG"
+      ]
+    },
+    {
+      "id": "REC01-T11",
+      "requirement": "Unauthorised retry using another customer's reference",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: EO-01",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "EO-01"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "EO-01"
+      ]
+    },
+    {
+      "id": "REC01-T12",
+      "requirement": "Stale booking version update",
+      "priority": "P0",
+      "scope": "Customer bookings and recovery phase; local implementation only",
+      "uiReference": "Supplied Service Bookings reference 7338f495 and six attached specifications",
+      "route": "/bookings; /services/:id; /account",
+      "dataSource": "service_bookings/slots/catalogue, immutable service events/quotes/reports, business_operation_results, verified payments/material movements, message_outbox",
+      "securityControl": "Fresh active session, customer ownership, branch and qualification checks, locked versions, immutable references, independent money approvals",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local integration/backend/browser scenario passed; production-like concurrency and operational recovery are evaluated separately at their gates.",
+      "testResult": "PASS: RC-04",
+      "outstandingWork": "No further work for this local scenario; related broader acceptance gates remain independently open.",
+      "implementationFiles": [
+        "apps/web/lib/business-operation.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/033_service_booking_recovery.sql"
+      ],
+      "testFiles": [
+        "tests/service-booking-recovery.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/service-booking-recovery-20261030.txt",
+        "docs/testing/customer-service-booking-regression-20261030.txt",
+        "docs/testing/customer-service-booking-browser-20261030.md",
+        "docs/testing/service-booking-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "RC-04"
+      ],
+      "acceptanceGate": "REC-01",
+      "negativeTests": [
+        "RC-04"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "BK-G01",
+      "requirement": "Approved EasyGas booking design implemented",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G02",
+      "requirement": "Existing service catalogue integrated",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G03",
+      "requirement": "Booking creation works",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G04",
+      "requirement": "Appointment availability verified",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G05",
+      "requirement": "Double-booking prevented",
+      "status": "BLOCKED",
+      "reason": "Required independent PostgreSQL connection tests cannot run without an enabled disposable local server.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G06",
+      "requirement": "Customer booking history works",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G07",
+      "requirement": "Booking details and status tracking work",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G08",
+      "requirement": "Rescheduling and cancellation work",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G09",
+      "requirement": "Technician eligibility enforced",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G10",
+      "requirement": "Customer quotation approvals work",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G11",
+      "requirement": "Service reports and follow-ups work",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G12",
+      "requirement": "Safety-related completion restrictions enforced",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G13",
+      "requirement": "Customer data isolation verified",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G14",
+      "requirement": "Website and dashboard navigation integrated",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G15",
+      "requirement": "Responsive and accessible experience verified",
+      "status": "NOT_TESTED",
+      "reason": "Three viewport checks and keyboard tabs passed; dedicated screen-reader/reduced-motion preference verification was not performed.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G16",
+      "requirement": "Notification handling verified",
+      "status": "BLOCKED",
+      "reason": "Durable in-app/outbox tests pass; external delivery/worker acknowledgement handling is intentionally unconnected.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G17",
+      "requirement": "Existing payment restrictions preserved",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "BK-G18",
+      "requirement": "Existing business workflows remain functional",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-01",
+      "requirement": "Transaction Integrity",
+      "status": "BLOCKED",
+      "reason": "Multi-connection PostgreSQL and true crash/disconnect verification remain unavailable.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-01-EO",
+      "requirement": "Exactly-Once Business Effect Integrity",
+      "status": "BLOCKED",
+      "reason": "Generic keyed web operations pass local tests; legacy unkeyed callers and true PostgreSQL crash/restart remain outside the proven guarantee.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-02",
+      "requirement": "Scheduling Integrity",
+      "status": "BLOCKED",
+      "reason": "Independent PostgreSQL final-capacity competition and scheduling crash tests remain unexecuted.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-03",
+      "requirement": "Financial Integrity",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-04",
+      "requirement": "Inventory & Service Materials",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-05",
+      "requirement": "Service Completion & Safety",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-06",
+      "requirement": "Notification Recovery",
+      "status": "BLOCKED",
+      "reason": "No external sender is configured; provider acknowledgement and worker lease recovery cannot be certified.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-07",
+      "requirement": "Database & Migration Recovery",
+      "status": "PASS",
+      "reason": "Implemented and verified in local integration/browser evidence; no production clearance inferred.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-08",
+      "requirement": "Application Deployment Rollback",
+      "status": "BLOCKED",
+      "reason": "Unborn Git main has no known-good prior committed release/build for a genuine release rollback.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-09",
+      "requirement": "Backup & Restoration",
+      "status": "BLOCKED",
+      "reason": "Local encrypted restore passed; scheduled/off-site supervised backup and production restoration remain unprovisioned.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-10",
+      "requirement": "Outage & Business Continuity",
+      "status": "NOT_TESTED",
+      "reason": "Runbooks and injected rollback exist; an actual application/database outage drill remains unperformed.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-11",
+      "requirement": "Manual Fallback & Reconciliation",
+      "status": "NOT_TESTED",
+      "reason": "Controlled manual fallback is documented; a full manual request reconciliation drill remains unperformed.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-12",
+      "requirement": "Recovery Permissions & Auditability",
+      "status": "NOT_TESTED",
+      "reason": "Application negative permission tests pass; operator-level restore/deployment access review still needs an operational drill.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    },
+    {
+      "id": "REC-13",
+      "requirement": "Recovery Testing & Evidence",
+      "status": "BLOCKED",
+      "reason": "Critical environment-dependent recovery evidence remains missing.",
+      "verificationDate": "2026-10-30",
+      "responsibleReviewer": "Codex local automated/browser verification; business/platform approval outstanding"
+    }
+  ],
+  "changeLog": [
+    "Preserved existing booking engine; added reusable optional keyed operation results around its handlers.",
+    "Existing legacy unkeyed clients retain natural protections; a universal all-client exactly-once claim is explicitly withheld.",
+    "No provider, hosting, production deployment, new staff privilege or service category activated.",
+    "No known-good release exists on unborn main; deployment rollback gate remains blocked."
+  ]
+}

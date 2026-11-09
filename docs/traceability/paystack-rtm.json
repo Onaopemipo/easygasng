@@ -1,0 +1,2034 @@
+{
+  "phase": "Paystack repository-first sandbox integration",
+  "date": "2026-11-06",
+  "productionDecision": "NO-GO unchanged; Excel actual import not approved",
+  "scopeChanges": [],
+  "requirements": [
+    {
+      "id": "PAY-R00",
+      "requirement": "EXECUTION CONTRACT \u2014 READ FIRST",
+      "priority": "P1",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "docs/payments/paystack/00-repository-audit.md"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PASS: baseline tests/typecheck/build before source changes.",
+      "acceptanceGate": "PAY-01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Preflight audit and baseline run before edits; no lint script available.",
+      "outstandingWork": "Post-change regression tracked separately."
+    },
+    {
+      "id": "PAY-R01",
+      "requirement": "BUSINESS SCOPE AND CHANNEL MATRIX",
+      "priority": "P1",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/components/hosted-payment.tsx",
+        "apps/mobile/HostedPayment.tsx",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "See 82 scenario rows and 26 gates; retain all gaps and existing NO-GO."
+    },
+    {
+      "id": "PAY-R02",
+      "requirement": "PAYMENT POLICY AUTHORITY AND CONFIGURATION",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/payments/policy.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/components/payment-gateway-policy.tsx",
+        "database/migrations/057_paystack_sandbox.sql",
+        "scripts/configure-paystack-sandbox-demo.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "See 82 scenario rows and 26 gates; retain all gaps and existing NO-GO."
+    },
+    {
+      "id": "PAY-R03",
+      "requirement": "CANONICAL DATA MODEL \u2014 EXTEND, DO NOT DUPLICATE",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "database/migrations/057_paystack_sandbox.sql",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "See 82 scenario rows and 26 gates; retain all gaps and existing NO-GO."
+    },
+    {
+      "id": "PAY-R04",
+      "requirement": "FEE QUOTATION AND CUSTOMER-PAID PROCESSING CHARGE",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "packages/business-rules/src/payment-fees.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/payment-fees.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE",
+        "PAY-FEE-LIMIT"
+      ],
+      "negativeTests": [
+        "PAY-FEE-LIMIT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PASS: isolated fee boundary and exhaustive minimality tests.",
+      "acceptanceGate": "PAY-04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Synthetic policy exhaustive minimality and boundary tests passed; not merchant pricing approval.",
+      "outstandingWork": "Merchant rates/pass-through approval remains PAY-03."
+    },
+    {
+      "id": "PAY-R05",
+      "requirement": "PAYSTACK ADAPTER AND PROVIDER INTEGRATION",
+      "priority": "P1",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/payments/paystack-provider.ts",
+        "apps/web/lib/payments/runtime.ts",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt",
+        "docs/payments/paystack/evidence/sandbox-invoice-lock-tests.txt",
+        "docs/payments/paystack/evidence/sandbox-invoice-lock-types.txt",
+        "docs/payments/paystack/evidence/sandbox-restricted-runtime-after.txt",
+        "docs/payments/paystack/evidence/sandbox-restricted-runtime-before.txt",
+        "docs/payments/paystack/evidence/merchant-test-email-authorisation.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-initialization.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-verification.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-decline.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-posting-proof.txt",
+        "docs/payments/paystack/evidence/merchant-test-payment-verified.png",
+        "docs/payments/paystack/evidence/merchant-test-payment-declined.png",
+        "docs/payments/paystack/evidence/merchant-test-receipt.png"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "See 82 scenario rows and 26 gates; retain all gaps and existing NO-GO. Official sandbox success/decline/manual-verification/receipt now exercised; genuine automatic signed webhook not observed (inbox total0). Remaining full-scope gates retained."
+    },
+    {
+      "id": "PAY-R06",
+      "requirement": "PHONE-ASSISTED ORDER \u2192 ONE-TIME PROFILE \u2192 PAYMENT",
+      "priority": "P1",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/invoice-corrections.ts",
+        "apps/web/components/payment-request.tsx"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "Unfinished engineering and unexecuted acceptance remain; details in dependency register and scenarios. Credentials alone will not complete these."
+    },
+    {
+      "id": "PAY-R07",
+      "requirement": "CHECKOUT AND INVOICE PAYMENT",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/invoices.ts",
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/web/components/order-invoice.tsx",
+        "apps/mobile/Invoices.tsx"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt",
+        "docs/payments/paystack/evidence/merchant-test-email-authorisation.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-initialization.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-verification.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-decline.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-posting-proof.txt",
+        "docs/payments/paystack/evidence/merchant-test-payment-verified.png",
+        "docs/payments/paystack/evidence/merchant-test-payment-declined.png",
+        "docs/payments/paystack/evidence/merchant-test-receipt.png"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "See 82 scenario rows and 26 gates; retain all gaps and existing NO-GO. Official sandbox success/decline/manual-verification/receipt now exercised; genuine automatic signed webhook not observed (inbox total0). Remaining full-scope gates retained."
+    },
+    {
+      "id": "PAY-R08",
+      "requirement": "WALLET TOP-UPS AND CLOSED-LOOP CREDIT",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/mobile/CustomerWallet.tsx"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt",
+        "docs/payments/paystack/evidence/merchant-test-email-authorisation.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-initialization.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-verification.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-decline.txt",
+        "docs/payments/paystack/evidence/merchant-real-test-posting-proof.txt",
+        "docs/payments/paystack/evidence/merchant-test-payment-verified.png",
+        "docs/payments/paystack/evidence/merchant-test-payment-declined.png",
+        "docs/payments/paystack/evidence/merchant-test-receipt.png"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "See 82 scenario rows and 26 gates; retain all gaps and existing NO-GO. Official sandbox success/decline/manual-verification/receipt now exercised; genuine automatic signed webhook not observed (inbox total0). Remaining full-scope gates retained."
+    },
+    {
+      "id": "PAY-R09",
+      "requirement": "PROFESSIONAL SERVICES AND ON-SITE ORDER ADDITIONS",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/doorstep-amendments.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/components/customer-bookings.tsx"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "Unfinished engineering and unexecuted acceptance remain; details in dependency register and scenarios. Credentials alone will not complete these."
+    },
+    {
+      "id": "PAY-R10",
+      "requirement": "WEBHOOKS, VERIFICATION AND EXACTLY-ONCE EFFECTS",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/payments/webhooks.ts",
+        "apps/web/lib/payments/orchestrator.ts",
+        "scripts/worker.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "See 82 scenario rows and 26 gates; retain all gaps and existing NO-GO."
+    },
+    {
+      "id": "PAY-R11",
+      "requirement": "REFUNDS, CANCELLATIONS, REVERSALS AND DISPUTES",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "Unfinished engineering and unexecuted acceptance remain; details in dependency register and scenarios. Credentials alone will not complete these."
+    },
+    {
+      "id": "PAY-R12",
+      "requirement": "RECONCILIATION, SETTLEMENTS AND FINANCIAL REPORTS",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/financial-reports.ts",
+        "apps/web/lib/payments/reporting.ts",
+        "apps/web/components/paystack-reconciliation.tsx",
+        "apps/web/components/reconciliation.tsx"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "Unfinished engineering and unexecuted acceptance remain; details in dependency register and scenarios. Credentials alone will not complete these."
+    },
+    {
+      "id": "PAY-R13",
+      "requirement": "MESSAGING, NOTIFICATIONS AND RECEIPTS",
+      "priority": "P1",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/payments/documents.ts",
+        "apps/web/lib/invoice-pdf.ts",
+        "apps/web/lib/governance.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "Unfinished engineering and unexecuted acceptance remain; details in dependency register and scenarios. Credentials alone will not complete these."
+    },
+    {
+      "id": "PAY-R14",
+      "requirement": "ADMIN, STAFF, CUSTOMER, DRIVER AND TECHNICIAN UI",
+      "priority": "P1",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/components/hosted-payment.tsx",
+        "apps/mobile/HostedPayment.tsx",
+        "apps/web/components/payment-gateway-policy.tsx"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "Unfinished engineering and unexecuted acceptance remain; details in dependency register and scenarios. Credentials alone will not complete these."
+    },
+    {
+      "id": "PAY-R15",
+      "requirement": "SECURITY, AUTHORIZATION AND PRIVACY",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/app/api/payments/paystack/[operation]/route.ts",
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/payments/paystack-provider.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "See 82 scenario rows and 26 gates; retain all gaps and existing NO-GO."
+    },
+    {
+      "id": "PAY-R16",
+      "requirement": "MIGRATIONS, DATA PRESERVATION AND BACKWARD COMPATIBILITY",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "database/migrations/057_paystack_sandbox.sql",
+        "apps/web/lib/db.ts"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "Unfinished engineering and unexecuted acceptance remain; details in dependency register and scenarios. Credentials alone will not complete these."
+    },
+    {
+      "id": "PAY-R17",
+      "requirement": "OFFLINE, FAILURES, RETRIES AND RECOVERY",
+      "priority": "P0",
+      "scope": "Full approved specification; sandbox implementation; live activation excluded",
+      "uiReference": "Existing customer web/native and Settings/Approval Centre",
+      "route": "/api/payments/paystack/[operation]; existing financial/order/service routes",
+      "implementationFiles": [
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/web/lib/payments/webhooks.ts",
+        "apps/mobile/HostedPayment.tsx"
+      ],
+      "dataSource": "Existing customer/invoice/order/booking/wallet ledgers plus immutable payment quote/postings",
+      "securityControl": "Server authentication, own-customer and branch scope, server verification, independent policy approval, test-only/off defaults",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT"
+      ],
+      "negativeTests": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt",
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "testResult": "PARTIAL: see named execution logs; no provider sandbox evidence yet",
+      "acceptanceGate": "PAY-02",
+      "status": "PARTIAL",
+      "reason": "Foundations implemented; full cross-channel/refund/settlement/device/operational acceptance incomplete.",
+      "outstandingWork": "Unfinished engineering and unexecuted acceptance remain; details in dependency register and scenarios. Credentials alone will not complete these."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "PAY-A01",
+      "requirement": "existing login",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-A02",
+      "requirement": "role scope",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-A03",
+      "requirement": "customer checkout",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-A04",
+      "requirement": "manual/COD path",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-A05",
+      "requirement": "invoice issue",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-A06",
+      "requirement": "wallet balance",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-A07",
+      "requirement": "refunds",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-A08",
+      "requirement": "driver assignment",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-A09",
+      "requirement": "technician quote",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-A10",
+      "requirement": "stock reservation",
+      "category": "Baseline/regression",
+      "status": "PARTIAL",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Existing baseline suite passed; explicit post-change channel mapping required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-B01",
+      "requirement": "zero amount",
+      "category": "Fee policy",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/payment-fees.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: zero amount. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-B02",
+      "requirement": "below waiver threshold",
+      "category": "Fee policy",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/payment-fees.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: below waiver. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-B03",
+      "requirement": "at waiver threshold",
+      "category": "Fee policy",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/payment-fees.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: at waiver. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-B04",
+      "requirement": "threshold+1",
+      "category": "Fee policy",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/payment-fees.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: threshold+1. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-B05",
+      "requirement": "cap boundary",
+      "category": "Fee policy",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/payment-fees.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: cap boundary. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-B06",
+      "requirement": "above cap",
+      "category": "Fee policy",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/payment-fees.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: above cap. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-B07",
+      "requirement": "12.5kg example",
+      "category": "Fee policy",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-B08",
+      "requirement": "wallet exact credit",
+      "category": "Fee policy",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/payment-fees.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE-LIMIT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: wallet exact credit. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-B09",
+      "requirement": "discounts",
+      "category": "Fee policy",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-B10",
+      "requirement": "loyalty redemption",
+      "category": "Fee policy",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-B11",
+      "requirement": "partial invoice",
+      "category": "Fee policy",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-B12",
+      "requirement": "expired fee quote",
+      "category": "Fee policy",
+      "status": "PARTIAL",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-EXPIRY"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "Bounded expiry/deep-link/report assertions pass; full channel/native/finance acceptance still required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-B13",
+      "requirement": "policy change mid-checkout",
+      "category": "Fee policy",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-B14",
+      "requirement": "gross-up minimality/rounding",
+      "category": "Fee policy",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/payment-fees.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: minimality/rounding. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-C01",
+      "requirement": "successful checkout",
+      "category": "Payment lifecycle",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Engineering/acceptance incomplete; do not reclassify as credentials-only blocker.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-C02",
+      "requirement": "failed",
+      "category": "Payment lifecycle",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-C03",
+      "requirement": "abandoned",
+      "category": "Payment lifecycle",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-RESUME"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: abandoned persisted with no ledger effects. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-C04",
+      "requirement": "pending",
+      "category": "Payment lifecycle",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-C05",
+      "requirement": "redirect before webhook",
+      "category": "Payment lifecycle",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-C06",
+      "requirement": "webhook before redirect",
+      "category": "Payment lifecycle",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-C07",
+      "requirement": "duplicate webhook",
+      "category": "Payment lifecycle",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: duplicate authenticated webhook. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-C08",
+      "requirement": "out-of-order event",
+      "category": "Payment lifecycle",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-C09",
+      "requirement": "wrong amount",
+      "category": "Payment lifecycle",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: wrong amount. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-C10",
+      "requirement": "wrong currency",
+      "category": "Payment lifecycle",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: wrong currency. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-C11",
+      "requirement": "wrong environment",
+      "category": "Payment lifecycle",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: wrong environment. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-C12",
+      "requirement": "unknown reference",
+      "category": "Payment lifecycle",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: unknown reference. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-C13",
+      "requirement": "duplicate payment attempt",
+      "category": "Payment lifecycle",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: duplicate initialization. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-C14",
+      "requirement": "provider timeout/retry",
+      "category": "Payment lifecycle",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-RECOVERY"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: lost initialization response. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-D01",
+      "requirement": "top-up exact amount",
+      "category": "Wallet",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: principal-only credit. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-D02",
+      "requirement": "concurrent webhook",
+      "category": "Wallet",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-D03",
+      "requirement": "concurrent top-up",
+      "category": "Wallet",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-D04",
+      "requirement": "refund funded balance",
+      "category": "Wallet",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-D05",
+      "requirement": "insufficient balance",
+      "category": "Wallet",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-D06",
+      "requirement": "reversed payment",
+      "category": "Wallet",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-D07",
+      "requirement": "existing wallet compatibility",
+      "category": "Wallet",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-D08",
+      "requirement": "no cross-customer credit",
+      "category": "Wallet",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-ZERO-EFFECT"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: cross-customer rejection. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-E01",
+      "requirement": "full refund",
+      "category": "Refund/reconciliation",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-E02",
+      "requirement": "partial refund",
+      "category": "Refund/reconciliation",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-E03",
+      "requirement": "duplicate refund",
+      "category": "Refund/reconciliation",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-E04",
+      "requirement": "self-approval rejected",
+      "category": "Refund/reconciliation",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-E05",
+      "requirement": "failed provider refund",
+      "category": "Refund/reconciliation",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-E06",
+      "requirement": "settlement variance",
+      "category": "Refund/reconciliation",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-E07",
+      "requirement": "fee variance",
+      "category": "Refund/reconciliation",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-RECOVERY"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: fee variance. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-E08",
+      "requirement": "chargeback",
+      "category": "Refund/reconciliation",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-E09",
+      "requirement": "unmatched transaction",
+      "category": "Refund/reconciliation",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-E10",
+      "requirement": "reconciliation retry",
+      "category": "Refund/reconciliation",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-E11",
+      "requirement": "no wallet-as-revenue",
+      "category": "Refund/reconciliation",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: wallet excluded from obligation collections. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-E12",
+      "requirement": "branch reporting",
+      "category": "Refund/reconciliation",
+      "status": "PARTIAL",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "Bounded expiry/deep-link/report assertions pass; full channel/native/finance acceptance still required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F01",
+      "requirement": "phone-assisted link",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Engineering/acceptance incomplete; do not reclassify as credentials-only blocker.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F02",
+      "requirement": "once-only profile",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Engineering/acceptance incomplete; do not reclassify as credentials-only blocker.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F03",
+      "requirement": "expired/forwarded link",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F04",
+      "requirement": "mobile deep-link",
+      "category": "Channel workflows",
+      "status": "PARTIAL",
+      "testFiles": [
+        "tests/paystack-policy.test.ts"
+      ],
+      "testIds": [
+        "PAY-LINK"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/policy-tests.txt"
+      ],
+      "reason": "Bounded expiry/deep-link/report assertions pass; full channel/native/finance acceptance still required.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F05",
+      "requirement": "service payment gate",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F06",
+      "requirement": "driver amendment",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F07",
+      "requirement": "one delivery fee",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F08",
+      "requirement": "insufficient vehicle stock",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F09",
+      "requirement": "invoice payment",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F10",
+      "requirement": "messaging fallback",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Engineering/acceptance incomplete; do not reclassify as credentials-only blocker.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F11",
+      "requirement": "notification dedupe",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-F12",
+      "requirement": "no duplicate receipt",
+      "category": "Channel workflows",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-G01",
+      "requirement": "forged signature",
+      "category": "Security and operations",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-provider.test.ts"
+      ],
+      "testIds": [
+        "PAY-SIGNATURE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: forged signature. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-G02",
+      "requirement": "replay",
+      "category": "Security and operations",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-provider.test.ts"
+      ],
+      "testIds": [
+        "PAY-SIGNATURE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: stale signature. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-G03",
+      "requirement": "raw body signature validation",
+      "category": "Security and operations",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-provider.test.ts"
+      ],
+      "testIds": [
+        "PAY-SIGNATURE"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "PASS in isolated mocked boundary: raw bytes. Not official sandbox E2E.",
+      "outstandingWork": "Official provider/channel acceptance remains separate."
+    },
+    {
+      "id": "PAY-G04",
+      "requirement": "role escalation",
+      "category": "Security and operations",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-G05",
+      "requirement": "branch escalation",
+      "category": "Security and operations",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-G06",
+      "requirement": "cross-customer invoice access",
+      "category": "Security and operations",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-G07",
+      "requirement": "leaked secret scan",
+      "category": "Security and operations",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-G08",
+      "requirement": "rate limit",
+      "category": "Security and operations",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-G09",
+      "requirement": "server restart during posting",
+      "category": "Security and operations",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Full named scenario acceptance has not been executed; remains in denominator.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-G10",
+      "requirement": "two-connection concurrent posting",
+      "category": "Security and operations",
+      "status": "VERIFIED_COMPLETE",
+      "testFiles": [
+        "tests/paystack-postgres.test.ts"
+      ],
+      "testIds": [
+        "PAY-PG-CONCURRENCY"
+      ],
+      "evidence": [
+        "docs/payments/paystack/evidence/postgres-tests.txt"
+      ],
+      "reason": "PASS: separate PostgreSQL connections, one posting and rollback failure injection.",
+      "outstandingWork": "Actual process kill/staging drill remains G09/G11."
+    },
+    {
+      "id": "PAY-G11",
+      "requirement": "restore/rollback",
+      "category": "Security and operations",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Engineering/acceptance incomplete; do not reclassify as credentials-only blocker.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    },
+    {
+      "id": "PAY-G12",
+      "requirement": "accessibility/theme regression",
+      "category": "Security and operations",
+      "status": "NOT_IMPLEMENTED",
+      "testFiles": [],
+      "testIds": [],
+      "evidence": [],
+      "reason": "Engineering/acceptance incomplete; do not reclassify as credentials-only blocker.",
+      "outstandingWork": "Implement and execute scenario with zero unintended effects."
+    }
+  ],
+  "gates": [
+    {
+      "id": "PAY-01",
+      "gate": "Repository audit and baseline evidence complete.",
+      "status": "PASS",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [
+        "docs/payments/paystack/evidence/baseline-tests.txt"
+      ],
+      "reason": "Audit/baseline recorded before changes; lint unavailable (no script)."
+    },
+    {
+      "id": "PAY-02",
+      "gate": "Existing flows and historical data preserved.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-03",
+      "gate": "Paystack merchant eligibility, fee policy and pass-through verified/approved.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "External merchant/provider/business approval unavailable; engineering gaps separately retained."
+    },
+    {
+      "id": "PAY-04",
+      "gate": "Server-authoritative fee gross-up correct at thresholds/caps.",
+      "status": "PASS",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "Synthetic fee policy solver boundary/minimality tests passed."
+    },
+    {
+      "id": "PAY-05",
+      "gate": "Transparent customer fee disclosure and explicit confirmation.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-06",
+      "gate": "Web and mobile checkout complete in sandbox.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-07",
+      "gate": "Staff-assisted order completion link and one-time profile complete.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-08",
+      "gate": "Invoice issue, payment, receipt and allocation consistent.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-09",
+      "gate": "Wallet top-up credits exactly intended amount once.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-10",
+      "gate": "Professional service payment gate enforced.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-11",
+      "gate": "On-site amendment collects additional payment without duplicate delivery fee.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-12",
+      "gate": "Webhook signature, replay and event dedupe verified.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-13",
+      "gate": "Provider verify, reference/amount/currency/environment checks verified.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-14",
+      "gate": "Exactly-once business effects under concurrency and crashes verified.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-15",
+      "gate": "Refund approvals, partial refunds and reversals verified.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-16",
+      "gate": "Reconciliation, settlement and fee variance reports correct.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-17",
+      "gate": "Customer, finance, driver, technician and staff access restrictions tested.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-18",
+      "gate": "SMS/WhatsApp/email delivery and failure handling tested with configured providers.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "External merchant/provider/business approval unavailable; engineering gaps separately retained."
+    },
+    {
+      "id": "PAY-19",
+      "gate": "Secrets, privacy, monitoring, audit and alerting reviewed.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-20",
+      "gate": "Staging migration, backup restore and rollback exercised.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-21",
+      "gate": "Mobile/web regression, accessibility and light/dark modes pass.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    },
+    {
+      "id": "PAY-22",
+      "gate": "Finance signs off liabilities, fees, refunds and revenue definitions.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "External merchant/provider/business approval unavailable; engineering gaps separately retained."
+    },
+    {
+      "id": "PAY-23",
+      "gate": "Owner signs off payment policy and customer disclosures.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "External merchant/provider/business approval unavailable; engineering gaps separately retained."
+    },
+    {
+      "id": "PAY-24",
+      "gate": "Operations signs off fulfilment gating and failure procedures.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "External merchant/provider/business approval unavailable; engineering gaps separately retained."
+    },
+    {
+      "id": "PAY-25",
+      "gate": "Live provider credentials and activation remain disabled until separately authorised.",
+      "status": "PASS",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [
+        "docs/payments/paystack/evidence/core-tests.txt"
+      ],
+      "reason": "No credentials supplied or activated; runtime rejects live mode/keys; defaults OFF."
+    },
+    {
+      "id": "PAY-26",
+      "gate": "Existing P0 cylinder/branch/capacity controls remain enforced.",
+      "status": "BLOCKED",
+      "responsibleOwner": "Engineering and independent business approvers",
+      "date": "2026-11-06",
+      "evidence": [],
+      "reason": "Required engineering, scenario execution or independent acceptance is incomplete."
+    }
+  ],
+  "coverage": {
+    "requirementsDenominator": 18,
+    "scenariosDenominator": 82,
+    "gatesDenominator": 26,
+    "note": "Blocked/partial/untested rows retained. Scenario passes are mock-boundary evidence, not provider E2E.",
+    "verifiedRequirements": 2,
+    "partialRequirements": 16,
+    "verifiedScenarios": 24,
+    "passedGates": 3,
+    "criticalRequirementsDenominator": 12,
+    "verifiedCriticalRequirements": 1,
+    "routeCoverage": {
+      "status": "NOT_MEASURED",
+      "reason": "No complete web/native/provider journey acceptance; API source and build do not verify route coverage."
+    }
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-06",
+      "change": "Initial authorised sandbox phase: no requirement removed. Fee/verification/ledger foundations and scoped UI added; original production NO-GO/import hold retained. Full checkout/refund/reversal/settlement/amendment and operational acceptance incomplete."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "User added server test-key variable and deployed dpl_GKt5Ls6wHDHk1CxdzaRbSc8k8dGQ (Ready). Read-only hosted availability confirms unavailable; authenticated existing settings show disabled, null fee, empty channels and unknown automatic-fee setting. Added EASYGAS_PAYSTACK_MODE=test and EASYGAS_PAYMENT_DATA_CLASS=synthetic to Vercel Production target for isolated demo only; these require subsequent deployment. Signing mode awaits merchant confirmation; enabled remains false. Secret is non-downloadable and its validity has not been asserted. No payment policy approved or actual charge attempted. Existing PAY requirements/statuses, production NO-GO and import hold preserved."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Merchant screenshot confirms EasyGas Nigeria Test Mode with masked test secret, correct callback/webhook URLs and no separate webhook secret. Explicit legacy HMAC SHA512 signing selected; runtime test adapter enabled for webhook verification only. Existing DB gateway policy remains disabled, no fee/channel policy fabricated and no payment attempted. Redeployment and unsigned-webhook rejection verification in progress; existing statuses/NO-GO unchanged."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Deployed explicit legacy HMAC signature configuration to temporary test demo, dpl_E7neXt1G1ALvLx8SjVwHEfs6oM9u READY. Actual hosted unsigned and forged signatures both return401; public configuration available=false. Four adapter/policy plus six orchestration checks pass. Merchant fee-bearer choice pending; DB policy remains disabled. No genuine provider-signed event, successful charge or provider-key validity claimed. Existing production NO-GO/status denominators unchanged. Evidence docs/payments/paystack/evidence/merchant-*.txt."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "User explicitly chooses customer-paid processing fees. Saved existing governed setting.propose draft fac05363-95a6-489b-b147-691a549bef19 in isolated demo with customer bearer and candidate public local Nigeria fee schedule (150bps +10000kobo, waiver below250000kobo, cap200000kobo), clearly unverified against merchant terms. Draft enabled=false, passThroughApproved=false, providerAutomaticFees=unknown; no active policy or financial approvals changed. Existing checkout separate charge/acceptance reused. Four fee/policy negative/boundary tests pass; actual provider payment remains pending. Await merchant confirmation dashboard automatic customer-charge addition is OFF; live NO-GO unchanged."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "User confirms dashboard automatic fee pass-through was already OFF. Updated existing draft fac05363-95a6-489b-b147-691a549bef19 via approval.edit with providerAutomaticFees=off and customer bearer. Active policy unchanged/disabled; no independent approval or merchant-specific term verification fabricated. Requested concrete public-local-rate/card-only sandbox policy approval before activation. No production gate/status changes."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "User explicitly approved exact local-NGN card sandbox policy. Updated existing draft enabled=true, card channel, customer fee bearer/passThroughApproved=true for test-only scope, automatic fees OFF and approved100000naira gross maximum; wallet funding/partial invoices remain false. Submitted request fac05363-95a6-489b-b147-691a549bef19 through existing approval.submit; pending_approval, zero decisions, active policy version1 remains disabled. Found exactly1owner and1finance; owner is requester, so required owner+finance independent reviews cannot complete with current identities. Actual SELF_APPROVAL403 verified.12 fee/policy/provider/orchestration tests passed; no genuine provider charge claimed. Asked explicit permission for additional privileged sandbox-only test requester; did not create one or bypass governance. Existing requirements/status denominators and productionNO-GO unchanged."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "User explicitly authorised sandbox-only privileged test requester. Added one audited synthetic finance requester via restricted isolated demo runtime; random credentials private0600, existing identities unchanged. Superseded prior owner-made request through approval.cancel; synthetic requester proposed same approved policy, distinct demo owner+finance test accounts reviewed through normal APIs. Request521b825e-c7b5-45ba-93ff-f8e831a3e4f1 ACTIVE, policyversion2. This exercises account separation and is not real-business independent financial approval. Actual configuration available=true,test,walletFunding=false; card-only100000naira ceiling/customer fee. Existing real delivery coverage empty, so added separate labelled synthetic test location through manager proposal/owner decision; no real coverage assertions or inspected-cylinder fabrications. Twelve regression checks and hosted auth/isolation pass. Actual provider payment still pending real test email (.invalid customer intentionally blocked), successful-webhook/receipt acceptance not claimed. Existing productionNO-GO and import holds preserved."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Actual sandbox order/invoice fixture created through checkout/invoice.issue, labelled DO NOT DISPATCH. Restricted PostgreSQL quote exposed42501 permission denied customer_invoices because SELECT FOR UPDATE requires UPDATE on immutable invoice table. Removed invoice row UPDATE lock, preserving existing source-order FOR UPDATE and immutable invoice grants/triggers; invoice corrections already use same source lock. Extended PAY-INVOICE runtime-permission guard regression and source lock assertion;6 orchestration tests/typecheck pass. Actual restricted Neon runtime now reaches intended409 real-customer-email-required rather than503/42501. No grants relaxed. Fix redeployment in progress; real test mailbox/provider exercise pending."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Invoice lock fix deployed dpl_9hLUecG3X9f3k45fTXbaiQ32nrb4 READY, canonicaldemo alias. Actual hosted invoice quote now409 real-customer-email-required, proving42501/503 repair on restricted role.12 final fee/provider/policy/ledger checks pass, web typecheck/cloud build pass; hosted existing owner/customer identity+scope checks pass. No actual Paystack initialize/charge/signed-success/receipt claimed. Await authorised mailbox; no existing real customer identity changed. Sandbox request521b825e-c7b5-45ba-93ff-f8e831a3e4f1 remains active; original productionNO-GO unchanged."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "User supplied and authorised real test mailbox for Paystack Test Mode. Updated email of existing synthetic demo customer only, preserving userID/password/orders/invoices; guarded against existing-email collision and audited. Real Paystack TEST initialization accepted credentials. Actual hosted Success scenario paid700508kobo (principal680000+fee20508); server verify returnedpaid, repeat verification replayed without additional ledger effects, immutable invoice remained680000 and amountDue0. PDFreceipt200/branded/visually reviewed. Actual Declined test returnedfailed, invoicepaid0/due680000 and receipt404. Customer UI verified both states. Restricted PostgreSQL proves one posting and one principal payment. Native Chrome read-only Paystack dashboard confirms transaction success/fee20508, correct saved Test webhookURL, and automatic pass-fees OFF. Genuine webhook inbox total0; no successful automatic webhook delivery claimed. Webhook/background-worker/production gates remain open; live unsupported, walletfundingfalse, originalNO-GO/import holds unchanged."
+    }
+  ]
+}

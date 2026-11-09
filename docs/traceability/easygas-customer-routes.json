@@ -1,0 +1,317 @@
+[
+  {
+    "route": "/account",
+    "label": "Overview",
+    "group": "overview",
+    "component": "CustomerDashboard",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "customer.dashboard widgets, wallet, schedules, refill.profiles",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/notifications",
+    "label": "Notifications",
+    "group": "overview",
+    "component": "NotificationInbox",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "me, notifications.read",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/account-settings",
+    "label": "Account & Privacy",
+    "group": "overview",
+    "component": "AccountSettings",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "account.profile, owned address/preferences/session actions",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/services",
+    "label": "Professional Services",
+    "group": "gas",
+    "component": "ProfessionalServices",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "services.catalogue and authorised booking APIs",
+    "authentication": "Public route; customer workspace shown when signed in",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/bookings",
+    "label": "Service Appointments",
+    "group": "gas",
+    "component": "ProfessionalServices (bookings mode)",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "bookings",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/consumption",
+    "label": "Cooking Gas Profiles",
+    "group": "gas",
+    "component": "RefillProfiles",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "refill.profiles and owned feedback",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/orders",
+    "label": "My Orders",
+    "group": "orders",
+    "component": "Account",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "orders",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/wallet",
+    "label": "My Wallet",
+    "group": "orders",
+    "component": "Account",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "wallet",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/purchase-credit",
+    "label": "Credit & Redemption",
+    "group": "orders",
+    "component": "CreditWallet",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "credits, rewards.program",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/rewards",
+    "label": "EasyRewards",
+    "group": "plans",
+    "component": "Account",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "wallet",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/schedules",
+    "label": "Refill Plans",
+    "group": "plans",
+    "component": "Account",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "schedules",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/recurring",
+    "label": "Recurring Orders",
+    "group": "plans",
+    "component": "RecurringOrders",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "schedule.authorisations",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/refill",
+    "label": "Smart Refill",
+    "group": "plans",
+    "component": "Account + RefillProfiles",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "refill.profiles",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/help",
+    "label": "Help & Support",
+    "group": "support",
+    "component": "ContentPage",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "existing FAQs and support.create",
+    "authentication": "Public route; customer workspace shown when signed in",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  },
+  {
+    "route": "/support",
+    "label": "Support Conversations",
+    "group": "support",
+    "component": "SupportDesk",
+    "page": "apps/web/app/[...slug]/page.tsx",
+    "layout": "apps/web/components/customer-workspace.tsx",
+    "entry": "apps/web/components/site.tsx",
+    "dataSource": "support.list and owned thread actions",
+    "authentication": "Server session required",
+    "ownership": "Authenticated actor ID; record-level owner checks for private reads/writes",
+    "loading": "Existing Loading / useRecords; dashboard independent skeletons",
+    "empty": "Existing owned empty states or informational public content",
+    "error": "Existing API Notice; dashboard card retry/failure isolation",
+    "tests": [
+      "tests/customer-dashboard.test.ts"
+    ],
+    "evidence": "docs/testing/customer-dashboard-browser-20261030.json",
+    "status": "VERIFIED_COMPLETE",
+    "verification": "Rendered and loaded with correct active link and no overflow at desktop1560 and mobile390; no unsupported business operation certified"
+  }
+]

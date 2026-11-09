@@ -1,0 +1,51 @@
+{
+  "phase": "Legacy account indicator schema compatibility repair",
+  "releaseDecision": "Local repair verified; existing production NO-GO retained",
+  "scopeChanges": [
+    "Additive migrations038/039 repair historical migration023 drift. Original migration023 remains unchanged.",
+    "No authentication/ownership policy changes; no default address selected for customers."
+  ],
+  "requirements": [
+    {
+      "id": "ACI-01",
+      "requirement": "Repair account indicators on legacy databases missing the default-address field",
+      "priority": "P0",
+      "scope": "Existing local account database and forward-compatible migration/bootstrap",
+      "uiReference": "User screenshot of customer account indicator warning",
+      "route": "/account; /api/customer.dashboard?widget=navigation",
+      "dataSource": "Owned notifications, orders, service bookings, support requests and default address",
+      "securityControl": "Existing authenticated customer identity filtering remains unchanged; no cross-account reads, no inferred address preference, existing unique-default constraint restored",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Reproduced actual 42703 failure; upgraded existing local database; warning cleared in original Firefox session; legacy-upgrade regression passed",
+      "testResult": "PASS: 28 upgrade/dashboard/testimonial tests; real local account browser verification",
+      "outstandingWork": "No local blocker. Existing production NO-GO unchanged; hosted deployments require explicit migration038/039 under existing release controls.",
+      "implementationFiles": [
+        "database/migrations/038_address_default_compatibility.sql",
+        "database/policies/address-default-access.sql",
+        "apps/web/lib/db.ts",
+        "scripts/export-bootstrap.ts",
+        "database/bootstrap.sql"
+      ],
+      "testFiles": [
+        "tests/account-indicators-upgrade.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-account-indicators-tests-20261030.txt",
+        "docs/testing/easygas-account-indicators-browser-20261030.txt",
+        "docs/screenshots/easygas-account-indicators-fixed-20261030.png"
+      ],
+      "testIds": ["ACI-01"],
+      "acceptanceGate": "ACI-G01",
+      "negativeTests": ["42703", "23505", "otherToken", "customerId"]
+    }
+  ],
+  "gates": [
+    {
+      "id": "ACI-G01",
+      "status": "PASS",
+      "description": "Existing local account recovers, legacy addresses persist, repeat upgrade is safe, ownership/default uniqueness are enforced"
+    }
+  ]
+}

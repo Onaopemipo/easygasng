@@ -1,0 +1,11 @@
+# Reconciliation runbook
+
+Worker calls processPaystackInbox only when explicitly configured sandbox. Signed inbox receipt is durable before acknowledgement. Worker verifies known references; unknown references go under review. Pending attempts are polled in bounded batches; provider verification errors schedule retry without reinitialising a charge. Fee variance and obligation mismatch create unique exceptions. Under-review successes never auto-post.
+
+`finance.paystack` extends existing finance dispatch, owner global/finance own branch. Bounded date/purpose report separates gross, principal collected against obligations, wallet funding liability, fee recovery and known provider fees. Unknown fees remain counted; estimated net is null if unknown and actual settlement is ALWAYS null until authoritative settlement integration exists. These collections are not added to existing sales revenue totals. Branch report tests use the same verified ledger source.
+
+Daily finance procedure: inspect pending references/exception category; compare authenticated provider transaction details to immutable intent; preserve evidence; obtain independent approved correction/refund rather than editing quote/posting; retry verification with same reference. Disable new quotes via independently approved payment.gateway.enabled=false while leaving configured reconciliation worker available for outstanding attempts. Never turn off verification while money is unresolved.
+
+Existing Financial Reconciliation now contains a sandbox collections panel with UTC date/purpose filters, scoped totals, up to200 rows, explicit truncated-view warning, displayed-row CSV export, exceptions and owner-only unmatched events. UI interaction/theme acceptance is unexecuted; existence is not completion.
+
+Unfinished: provider settlement/payout imports and statement matching, scheduled cursors/leases and provider retry budget, full finance filters/pagination/exception resolution and comprehensive exports, reversal/dispute consumers, actual-fee and payout notifications/alerts. These are engineering blockers, not proof of reconciliation completion. Sandbox does not process actual settlements (official authentication docs).

@@ -1,0 +1,58 @@
+{
+  "phase": "Mobile local backend connection",
+  "date": "2026-11-05",
+  "productionDecision": "NO-GO unchanged",
+  "requirements": [
+    {
+      "id": "MOB-API01",
+      "requirement": "Connect the local mobile simulator demo to the existing backend",
+      "priority": "P1",
+      "scope": "Local simulator demo only; deployed production remains HTTPS-only and NO-GO",
+      "uiReference": "Existing native UI/navigation",
+      "route": "Native home/products/sign-in; existing /api/catalogue and /api/login",
+      "dataSource": "Running local backend at http://127.0.0.1:3003; existing users and catalogue",
+      "securityControl": "Separate local-demo app identifier and explicit config; loopback HTTP only; unchanged server authentication and ownership; no password reset or live provider activation",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Installed and launched separate EasyGas Local iOS simulator build; backend products/prices displayed, sign-in backend rejection verified with synthetic nonexistent account, form cleared and left ready.",
+      "outstandingWork": "None for bounded iOS simulator connection. Android installation, physical-device and hosted production acceptance remain outside this bounded phase and remain tracked by existing release matrices.",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/app.config.js",
+        "apps/mobile/eas.json",
+        "packages/business-rules/src/mobile-origin.ts",
+        "apps/mobile/package.json",
+        "docs/operations/mobile-local-backend.md"
+      ],
+      "testFiles": [
+        "tests/mobile-origin.test.ts",
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [
+        "MOB-API01",
+        "PR-07"
+      ],
+      "negativeTests": [
+        "Release refuses loopback HTTP, public HTTP and credentials/path/query origins; local demo refuses public HTTP."
+      ],
+      "evidence": [
+        "docs/audits/mobile-backend-evidence/tests.txt",
+        "docs/audits/mobile-backend-evidence/types.txt",
+        "docs/audits/mobile-backend-evidence/ios-build.txt",
+        "docs/audits/mobile-backend-evidence/catalogue-connected.png",
+        "docs/audits/mobile-backend-evidence/sign-in-ready.png"
+      ],
+      "testResult": "PASS: four focused tests, native typecheck, actual Xcode simulator build and real UI catalogue/authentication roundtrip.",
+      "acceptanceGate": "MOB-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "MOB-G01",
+      "status": "PASS",
+      "reason": "Actual simulator loaded catalogue from the running backend and reached backend sign-in; production guards remain tested."
+    }
+  ],
+  "scopeChanges": [
+    "User requested mobile backend connection. A labelled loopback-only local demo is separate from production app identifiers; no production HTTPS bypass, credential change or import."
+  ]
+}

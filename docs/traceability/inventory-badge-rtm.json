@@ -1,0 +1,77 @@
+{
+  "phase": "Inventory navigation badge stability \u2014 9 November 2026",
+  "productionDecision": "Production NO-GO and historical import hold unchanged; existing temporary demo authorised",
+  "requirements": [
+    {
+      "id": "INV-BADGE-01",
+      "requirement": "Keep confirmed inventory alerts visible through periodic refresh and label stale counts without weakening authentication",
+      "priority": "P1",
+      "scope": "Existing administration navigation refresh; all other menus/roles preserved",
+      "uiReference": "Existing inventory sidebar attention badge",
+      "route": "/admin/*",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/admin-navigation.tsx",
+        "packages/business-rules/src/admin-navigation.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing authenticated navigation aggregate and last successful in-memory snapshot",
+      "securityControl": "Counts remain role/branch scoped; failed authentication clears protected state; stale/refreshing counts explicitly labelled and fresh zero clears alerts",
+      "testFiles": [
+        "tests/navigation.test.ts",
+        "tests/navigation-badge-render.test.ts"
+      ],
+      "testIds": [
+        "INV-BADGE-01",
+        "INV-BADGE-02"
+      ],
+      "negativeTests": [
+        "INV-BADGE-02: actual sidebar renders the same alert during refresh/failure and removes it only for a confirmed zero"
+      ],
+      "evidence": [
+        "docs/traceability/evidence/inventory-badge-tests.txt",
+        "docs/traceability/evidence/inventory-badge-types.txt",
+        "docs/traceability/evidence/inventory-badge-build.txt",
+        "docs/traceability/evidence/inventory-badge-deploy.txt",
+        "docs/traceability/evidence/inventory-badge-hosted-tests.txt",
+        "docs/traceability/evidence/inventory-badge-browser.txt",
+        "docs/traceability/evidence/inventory-badge-live.png"
+      ],
+      "acceptanceGate": "INV-BADGE-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Removed pre-request counter clearing. Last verified count/time survives refresh; failures are explicitly stale with a dashed badge and accessible timestamp. Successful snapshots replace counts including zero; authentication failure/logout still clear protected state. Actual hosted manual refresh and Inventory navigation checked.",
+      "testResult": "PASS:13/13 navigation/rendering/traceability checks, web types and local/cloud production build. Hosted VDEMO-HTTP01 passes on new demo deployment; live browser shows4 before/during/after refresh and on Inventory page. Network-failure/zero/unknown/revoked-grant states verified in real component rendering; no injected live failures claimed.",
+      "outstandingWork": "None for the scoped refresh defect. Initial first-load remains a loading/unknown state until counts arrive. All unrelated full-app production gates/NO-GO and import/retention decisions remain."
+    }
+  ],
+  "gates": [
+    {
+      "id": "INV-BADGE-G1",
+      "status": "PASS",
+      "evidence": [
+        "docs/traceability/evidence/inventory-badge-tests.txt",
+        "docs/traceability/evidence/inventory-badge-types.txt",
+        "docs/traceability/evidence/inventory-badge-build.txt",
+        "docs/traceability/evidence/inventory-badge-deploy.txt",
+        "docs/traceability/evidence/inventory-badge-hosted-tests.txt",
+        "docs/traceability/evidence/inventory-badge-browser.txt",
+        "docs/traceability/evidence/inventory-badge-live.png"
+      ]
+    }
+  ],
+  "coverage": {
+    "denominator": 1,
+    "verified": 1,
+    "note": "1/1 scoped refresh defect verified; prior RM/navigation and production requirements retained."
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-09",
+      "change": "Reproduced deterministic counter clearing on every30-second/focus/mutation refresh. Preserve existing RM navigation requirements and production/import decisions."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Implemented scoped in-memory refreshing/stale presentation and successful-zero removal, preserving backend aggregate, branch/role access and auth clearing.13/13 checks plus actual hosted owner/customer isolation and browser refresh/navigation acceptance; temporary demo updated. No business data changed."
+    }
+  ]
+}

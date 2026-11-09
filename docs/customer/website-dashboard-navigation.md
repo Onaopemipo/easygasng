@@ -1,0 +1,11 @@
+# Website and customer workspace navigation
+
+The public header retains existing navigation/search/cart and adds the shared account dropdown: My Dashboard, My Orders, Account Settings, Back to Website and Sign Out. Guests retain Login / Sign Up and existing account creation. Authenticated login pages redirect to their safe intended destination instead of asking for credentials again.
+
+CustomerWorkspace exposes Back to Website in its header, full/compact sidebar, mobile drawer and account menu. A Continue Shopping link is available across all customer workspace routes. These are ordinary navigation links and do not revoke sessions or clear the cart. Search reuses the supported public product name/category search; its label accurately states its scope.
+
+customer-navigation.ts registers all 15 paths once, groups them by business purpose and maps service details to the services active state. /track is an alias for the existing orders experience. Services/help remain public for guests. Other customer paths plus checkout/combined-checkout have server session guards. Staff administration and native route configurations are unchanged.
+
+safeCustomerReturn accepts only configured internal paths, explicit checkout/cart/gas/tracking routes and validated service slugs. It rejects external/protocol-relative/backslash/control-character/hash/admin destinations and strips unsupported query parameters. Only a validated order ref is retained. Gas/service/cart sign-in actions include safe return destinations. A guest gas draft is retained in session storage through login, then restored and revalidated by the existing quotation flow.
+
+Site revalidates the session on route, visible focus/visibility/pageshow and every 30 seconds. A 401 clears protected identity and returns protected pages to login. Cross-tab login/logout announces only a timestamp in localStorage; it contains no token/customer payload. Logout revokes the current session, clears session drafts and identity, then uses full-document navigation to clear client router state. Public browsing and the non-sensitive product cart remain available. Browser cross-tab logout and switching between two isolated customers were verified; this is not an independent production penetration test.

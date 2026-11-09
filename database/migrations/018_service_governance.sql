@@ -1,0 +1,15 @@
+ALTER TABLE recommendation_events ADD COLUMN IF NOT EXISTS dedupe_key text;
+CREATE UNIQUE INDEX IF NOT EXISTS recommendation_event_dedupe ON recommendation_events(dedupe_key);
+ALTER TABLE media_assets ADD COLUMN service_id text;
+ALTER TABLE media_assets ADD COLUMN branch_id text;
+ALTER TABLE media_assets ADD CONSTRAINT media_service_fk FOREIGN KEY(service_id,branch_id) REFERENCES service_catalogue(id,branch_id);
+ALTER TABLE media_assets DROP CONSTRAINT media_assets_check;
+ALTER TABLE media_assets ADD CONSTRAINT media_target CHECK((product_id IS NOT NULL)::integer+(booking_id IS NOT NULL)::integer+(service_id IS NOT NULL)::integer=1 AND (service_id IS NULL OR branch_id IS NOT NULL));
+CREATE TABLE legal_documents(kind text PRIMARY KEY,title text NOT NULL,content text NOT NULL DEFAULT '',published boolean NOT NULL DEFAULT false,version integer NOT NULL DEFAULT 1,effective_at timestamptz);
+INSERT INTO legal_documents(kind,title) VALUES ('terms','Terms and Conditions'),('privacy','Privacy Policy'),('delivery','Delivery Policy'),('refund','Refund Policy'),('cancellation','Cancellation Policy'),('service-booking','Service Booking Terms'),('warranty','Service Warranty Terms'),('purchase-credit','Prepaid Purchase Credit Terms'),('loyalty','Loyalty Programme Terms');
+INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) SELECT 'legal.'||kind,title,'Business Policies','Business-reviewed policy publication requires independent owner approval.','owner',3,'legal','["owner"]','["owner"]','["owner","administrator"]','[]',true FROM legal_documents;
+INSERT INTO settings(key,scope,value) SELECT 'legal.'||kind,'lagos',jsonb_build_object('title',title,'content','','published',false,'effectiveAt',NULL) FROM legal_documents;
+CREATE TABLE product_compatibility(id text PRIMARY KEY,product_id text NOT NULL REFERENCES products(id),equipment_brand text NOT NULL,equipment_model text NOT NULL,connection_spec text NOT NULL,pressure_spec text NOT NULL,evidence text NOT NULL,status text NOT NULL CHECK(status IN ('unknown','professional_confirmation','verified_compatible','incompatible')),proposed_by text NOT NULL REFERENCES users(id),reviewed_by text REFERENCES users(id),created_at timestamptz NOT NULL DEFAULT now(),CHECK(proposed_by<>reviewed_by));
+CREATE TABLE service_followups(id text PRIMARY KEY,booking_id text NOT NULL REFERENCES service_bookings(id),customer_id text NOT NULL REFERENCES users(id),due_date date NOT NULL,reason text NOT NULL,created_by text NOT NULL REFERENCES users(id),dismissed_at timestamptz,rebooked_id text REFERENCES service_bookings(id),created_at timestamptz NOT NULL DEFAULT now());
+CREATE INDEX followups_customer ON service_followups(customer_id,due_date);
+ALTER TABLE communication_preferences ADD COLUMN service_reminders boolean NOT NULL DEFAULT true;

@@ -1,0 +1,101 @@
+{
+  "scope": "ephemeral memory database only",
+  "findings": [
+    {
+      "finding": "F01",
+      "observed": "Checkout accepted an order for inactive Lagos branch"
+    },
+    {
+      "finding": "F02",
+      "observed": "Sales account assigned to other branch created Lagos order"
+    },
+    {
+      "finding": "F03",
+      "observed": "Empty-cylinder delivery completed with no serialised cylinders registered or allocated"
+    },
+    {
+      "finding": "F04",
+      "observed": "Cylinder already held by customer reassigned directly to another without recorded return"
+    },
+    {
+      "finding": "F05",
+      "observed": "All 3 refill timestamps use payment verification dates, not synthetic delivery events 5 days earlier"
+    },
+    {
+      "forecastCases": [
+        {
+          "name": "none",
+          "result": {
+            "available": false,
+            "reason": "At least three verified refills for this cylinder are needed for a personalised estimate.",
+            "confidence": "low"
+          }
+        },
+        {
+          "name": "one",
+          "result": {
+            "available": false,
+            "reason": "At least three verified refills for this cylinder are needed for a personalised estimate.",
+            "confidence": "low"
+          }
+        },
+        {
+          "name": "regular",
+          "result": {
+            "available": true,
+            "nextDate": "2026-10-29T12:00:00.000Z",
+            "daysLeft": 0,
+            "estimatedPercent": 0,
+            "confidence": "medium",
+            "reason": "Estimate based on recent verified refill intervals. This is not a sensor measurement."
+          }
+        },
+        {
+          "name": "irregular",
+          "result": {
+            "available": true,
+            "nextDate": "2027-01-07T12:00:00.000Z",
+            "daysLeft": 70,
+            "estimatedPercent": 93,
+            "confidence": "medium",
+            "reason": "Estimate based on recent verified refill intervals. This is not a sensor measurement."
+          }
+        },
+        {
+          "name": "multiple",
+          "result": {
+            "available": true,
+            "nextDate": "2026-10-29T12:00:00.000Z",
+            "daysLeft": 0,
+            "estimatedPercent": 0,
+            "confidence": "medium",
+            "reason": "Estimate based on recent verified refill intervals. This is not a sensor measurement."
+          }
+        },
+        {
+          "name": "early",
+          "result": {
+            "available": true,
+            "nextDate": "2026-11-17T00:00:00.000Z",
+            "daysLeft": 19,
+            "estimatedPercent": 95,
+            "confidence": "medium",
+            "reason": "Estimate based on recent verified refill intervals. This is not a sensor measurement."
+          }
+        },
+        {
+          "name": "long",
+          "result": {
+            "available": false,
+            "reason": "There is not enough consistent purchase history yet.",
+            "confidence": "low"
+          }
+        }
+      ]
+    },
+    {
+      "finding": "F06",
+      "observed": "Delivery reassignment restored 2 active orders into a window configured for capacity 1"
+    }
+  ]
+}

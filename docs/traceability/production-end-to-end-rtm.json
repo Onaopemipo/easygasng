@@ -1,0 +1,954 @@
+{
+  "phase": "Complete non-payment production continuation 6 November2026",
+  "productionDecision": "NO-GO unchanged; Excel import hold unchanged",
+  "requirements": [
+    {
+      "id": "E2E-01",
+      "requirement": "Delivery vehicle stock, custody and doorstep commitment",
+      "priority": "P0",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/doorstep-amendments.ts",
+        "docs/production-completion/vehicle-custody-proposal.md",
+        "database/migrations/058_bulk_lpg_custody.sql",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/bulk-lpg-reservation.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/operations-completion.tsx",
+        "apps/mobile/BulkLPG.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "scripts/export-bootstrap.ts",
+        "database/bootstrap.sql",
+        "apps/web/app/api/[action]/route.ts",
+        "docs/production-completion/DELIVERY.md",
+        "apps/web/lib/bulk-lpg-recovery.ts",
+        "apps/web/lib/inventory-business.ts",
+        "database/migrations/059_bulk_recovery_operation.sql",
+        "apps/web/lib/db.ts",
+        "apps/web/lib/release-checks.ts",
+        "docs/production-completion/discrepancy-recovery.md",
+        "apps/web/lib/doorstep-execution.ts",
+        "database/migrations/060_doorstep_execution.sql",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/invoices.ts",
+        "apps/web/components/doorstep-actions.tsx",
+        "apps/web/components/order-operations.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "docs/production-completion/doorstep-implementation.md",
+        "database/migrations/064_doorstep_cylinders.sql",
+        "database/migrations/065_invoice_excess.sql",
+        "apps/web/components/doorstep-cylinder-form.tsx",
+        "apps/web/lib/invoice-corrections.ts",
+        "apps/web/lib/commerce.ts",
+        "database/migrations/066_vehicle_products.sql",
+        "database/migrations/067_vehicle_product_guards.sql",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/vehicle-manifest-schema.ts",
+        "apps/web/lib/doorstep-products.ts",
+        "apps/web/lib/delivery-code.ts",
+        "apps/web/lib/order-financial-basis.ts",
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/components/doorstep-product-actions.tsx",
+        "apps/mobile/VehicleManifest.tsx",
+        "docs/production-completion/approved-completion-execution.md"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies Protected doorstep_execution linked to original immutable proposal/consent, invoice_notes, verified_payments, original bulk load, customer cylinder and canonical gas movements. No new order/customer ledger. Per-cylinder doorstep lines, physical vehicle manifests/serials and original-order product execution; canonical branch inventory/reservations/movements, original invoices and verified receipts.",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data Exact unexpired consent/price, current qualified inspection/driver/meter, acknowledged physical buffer, independent debit/cash decisions, immutable protected execution, scoped driver capabilities, pending-custody trip/handover guards and atomic gram/financial effects. Measured payload limit, qualified inventory custody, exact independent driver receipt, distinct customer consent/finance/code handover, immutable serial ownership evidence and dual-approved discrepancy/inactive-driver recovery. No additional delivery fee.",
+      "testFiles": [
+        "tests/technician-recovery.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/helpers/bulk-lpg-fixture.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/doorstep-execution.test.ts",
+        "tests/doorstep-postgres.test.ts",
+        "tests/helpers/doorstep-fixture.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/doorstep-cylinders.test.ts",
+        "tests/doorstep-products.test.ts",
+        "tests/vehicle-products.test.ts",
+        "tests/vehicle-products-http.test.ts",
+        "tests/vehicle-products-postgres.test.ts"
+      ],
+      "testIds": [
+        "FIELD-SCOPE-01",
+        "BULK-01",
+        "BULK-02",
+        "BULK-03",
+        "BULK-04",
+        "BULK-PG01",
+        "BULK-05",
+        "BULK-HTTP01",
+        "METER-01",
+        "METER-02",
+        "RECOVERY-01",
+        "RECOVERY-02",
+        "RECOVERY-03",
+        "DOOR-01",
+        "DOOR-02",
+        "DOOR-03",
+        "DOOR-04",
+        "DOOR-05",
+        "DOOR-PG01"
+      ],
+      "negativeTests": [
+        "FIELD-SCOPE-01",
+        "BULK-02",
+        "BULK-03",
+        "BULK-04",
+        "BULK-PG01",
+        "BULK-05",
+        "BULK-HTTP01",
+        "METER-01",
+        "METER-02",
+        "RECOVERY-01",
+        "RECOVERY-02",
+        "RECOVERY-03",
+        "DOOR-03",
+        "DOOR-04",
+        "DOOR-05",
+        "DOOR-PG01"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/field-safety-tests.txt",
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt",
+        "docs/production-completion/evidence/bulk-tests.txt",
+        "docs/production-completion/evidence/bulk-postgres.txt",
+        "docs/production-completion/evidence/bulk-qualification-tests.txt",
+        "docs/production-completion/evidence/bulk-build.txt",
+        "docs/production-completion/evidence/bulk-driver-export.txt",
+        "docs/production-completion/evidence/bulk-local-http.txt",
+        "docs/production-completion/evidence/bulk-container-acceptance.txt",
+        "docs/production-completion/evidence/bulk-container-build.txt",
+        "docs/production-completion/evidence/bulk-http-handler.txt",
+        "docs/production-completion/evidence/bulk-final-regression.txt",
+        "docs/production-completion/evidence/bulk-final-postgres.txt",
+        "docs/production-completion/evidence/bulk-final-build.txt",
+        "docs/production-completion/evidence/bulk-final-types.txt",
+        "docs/production-completion/evidence/bulk-final-container-build.txt",
+        "docs/production-completion/evidence/bulk-final-container-acceptance.txt",
+        "docs/production-completion/evidence/delivery-meter-tests.txt",
+        "docs/production-completion/evidence/delivery-build.txt",
+        "docs/production-completion/evidence/delivery-types.txt",
+        "docs/production-completion/evidence/delivery-traceability.txt",
+        "docs/production-completion/evidence/delivery-regression.txt",
+        "docs/production-completion/evidence/recovery-focused-final.txt",
+        "docs/production-completion/evidence/recovery-postgres.txt",
+        "docs/production-completion/evidence/recovery-build.txt",
+        "docs/production-completion/evidence/recovery-types.txt",
+        "docs/production-completion/evidence/recovery-bootstrap.txt",
+        "docs/production-completion/evidence/recovery-final-regression.txt",
+        "docs/production-completion/evidence/recovery-traceability.txt",
+        "docs/production-completion/evidence/recovery-source-sha256.txt",
+        "docs/production-completion/evidence/doorstep-focused-final.txt",
+        "docs/production-completion/evidence/doorstep-postgres.txt",
+        "docs/production-completion/evidence/doorstep-regression.txt",
+        "docs/production-completion/evidence/doorstep-build.txt",
+        "docs/production-completion/evidence/doorstep-types.txt",
+        "docs/production-completion/evidence/doorstep-native-types.txt",
+        "docs/production-completion/evidence/doorstep-native-export.txt",
+        "docs/production-completion/evidence/doorstep-bootstrap.txt",
+        "docs/production-completion/evidence/doorstep-container-build.txt",
+        "docs/production-completion/evidence/doorstep-container-acceptance.txt",
+        "docs/production-completion/evidence/doorstep-traceability.txt",
+        "docs/production-completion/evidence/doorstep-source-sha256.txt",
+        "docs/production-completion/evidence/approved-completion-regression.txt",
+        "docs/production-completion/evidence/approved-completion-focused.txt",
+        "docs/production-completion/evidence/approved-completion-web-build.txt",
+        "docs/production-completion/evidence/approved-completion-web-types.txt",
+        "docs/production-completion/evidence/approved-completion-native-types.txt",
+        "docs/production-completion/evidence/approved-completion-traceability.txt",
+        "docs/production-completion/evidence/approved-completion-inventory.png"
+      ],
+      "testResult": "PASS bounded final379-test run:364 passed,15 PostgreSQL skips,0 failures; separate15/15 PostgreSQL concurrency/rollback/release checks,20/20 targeted custody/operations/release checks and1/1 actual HTTP handler test. Build/types/native export/image checks recorded. Full physical/native/doorstep/staging acceptance remains incomplete. 8 November METER-01/02 and existing custody focused suite:7/7 passed; Next production build, web typecheck and2/2 RTM validation pass. Actual new-control browser/PG concurrency/physical acceptance remains open. Current continuation regression:381 tests,366 passed,15 PostgreSQL-dependent skips,0 failures. METER-02 is covered separately in the7/7 focused run; executions are not added as unique coverage. Recovery continuation:9/9 focused custody/meter/recovery checks and1/1 real PostgreSQL test pass, including concurrent approvals and forced transaction abort. Full physical/browser acceptance remains open. Final focused13/13 custody/recovery/meter/release tests and1/1 real PostgreSQL concurrency/forced-abort check pass; new operation kind is distinct in059; web build/typecheck pass. Actual operational/production acceptance remains open. Broad PostgreSQL-enabled regression385/385 passed,0 skips/failures. Final vehicle-capacity guard subsequently covered by13/13 focused checks,1/1 PG concurrency/rollback and build/types. No new production gate is closed. Doorstep broad run390/390 passed,0 skips/failures. Final focused18/18 checks and1/1 actual PostgreSQL race/rollback test cover subsequent financial-exception hardening. Web build/types, native types and iOS/Android Hermes export pass. Full operational acceptance is incomplete. Fresh final-source local Docker image build and2/2 isolation/fail-closed startup checks pass;2/2 RTM validation passes. Finance controls load without requiring private photo access. No actual deployment or browser/device acceptance is inferred. PASS: 434/434 broad regression with actual disposable PostgreSQL enabled; 0 failures/skips. Subsequent final targeted 13/13 passes include actual restricted-driver HTTP, independent PostgreSQL capacity/replay/forced rollback, multi-cylinder credit/financial basis, physical manifest/serial handover, service settlement/recovery and customer document privacy. Focused tests overlap broad tests and are not additional whole-scope coverage. Web production build and web/native source types pass. MANIFEST-UI01 verifies inventory controls/product choices only; no active demo trip or full operational/device/provider acceptance claimed.",
+      "acceptanceGate": "E2E-G01",
+      "status": "PARTIAL",
+      "reason": "9 November approved continuation adds implemented canonical custody/settlement/recovery controls and bounded executed tests. Full operational/provider/device/release acceptance remains incomplete; no 100% claim.",
+      "outstandingWork": "Complete all-role browser/operational/physical safety acceptance of multi-cylinder and physical-product paths, partial/failed visit and invoice/refund variants; actual field-device and staging/release gates. Atomic physical handover uses separately requoted/consented subsets. Prior NO-GO/import/build/server holds remain."
+    },
+    {
+      "id": "E2E-02",
+      "requirement": "Service invoice and work lifecycle",
+      "priority": "P0",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "docs/reports/production-completion-tasks-20261105.md",
+        "apps/web/lib/doorstep-execution.ts",
+        "apps/web/lib/doorstep-amendments.ts",
+        "database/migrations/060_doorstep_execution.sql",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/bulk-lpg-reservation.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/invoices.ts",
+        "apps/web/lib/db.ts",
+        "apps/web/lib/release-checks.ts",
+        "scripts/export-bootstrap.ts",
+        "database/bootstrap.sql",
+        "apps/web/components/doorstep-actions.tsx",
+        "apps/web/components/order-operations.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "docs/production-completion/doorstep-implementation.md",
+        "database/migrations/061_service_invoices.sql",
+        "apps/web/lib/service-invoices.ts",
+        "apps/web/lib/service-invoice-source.ts",
+        "apps/web/lib/service-refunds.ts",
+        "apps/web/lib/invoice-corrections.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/reward-services.ts",
+        "apps/web/lib/customer-dashboard.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/web/lib/invoice-pdf.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/components/order-invoice.tsx",
+        "apps/web/components/payment-request.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/api/invoices/[orderId]/route.ts",
+        "apps/mobile/Invoices.tsx",
+        "docs/production-completion/service-invoices-implementation.md",
+        "apps/mobile/Services.tsx",
+        "apps/web/components/workflows.tsx",
+        "database/migrations/062_service_invoice_drafts.sql",
+        "database/migrations/064_doorstep_cylinders.sql",
+        "database/migrations/065_invoice_excess.sql",
+        "apps/web/components/doorstep-cylinder-form.tsx",
+        "database/migrations/068_service_exception_settlements.sql",
+        "database/migrations/069_service_material_recovery.sql",
+        "apps/web/lib/service-settlements.ts",
+        "apps/web/lib/service-settlement-source.ts",
+        "apps/web/lib/service-material-recovery.ts",
+        "apps/web/lib/service-recovery-schema.ts",
+        "packages/business-rules/src/service-document.ts",
+        "packages/business-rules/src/service-report.ts",
+        "docs/production-completion/approved-completion-execution.md"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies Protected doorstep_execution linked to original immutable proposal/consent, invoice_notes, verified_payments, original bulk load, customer cylinder and canonical gas movements. No new order/customer ledger. Canonical service_bookings/service_quotes/service_reports, customer_invoices with booking_id, invoice_notes/payment_requests and existing verified_payments/credit_requests/wallet_entries. Existing immutable service_invoice_drafts source-bound to current approved quotation/report; operational_incidents/incident_events retain service disputes. Existing quote/work authority history, immutable unsuccessful reports, service settlement proposals/consents and exact material recovery history.",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data Exact unexpired consent/price, current qualified inspection/driver/meter, acknowledged physical buffer, independent debit/cash decisions, immutable protected execution, scoped driver capabilities, pending-custody trip/handover guards and atomic gram/financial effects. Exactly one invoice source; booking locks and unique source; unchanged forced RLS/immutability; own-customer and branch access; independently approved notes; hashed expiring source-bound requests; backend invoice/scope work hold; net-refund revalidation and no fabricated provider effects. Finance/owner recent verification, locked booking and optimistic draft revision, exact source/revision issue, required operation replay identity, RLS/append-only draft rows; customer-owned report disputes hold collection and require independent recent-verified operations review. Reviewed pre-work cancellation uses shared no-self-approval/required finance policy, recent verification, exact booking revision and work/report/material guards; no financial erasure/refund inferred. Failed/cancelled charge collection requires latest report-bound documented ceiling, reconciled stock, service-manager proposal, independent owner+finance approval and owning customer consent. Work/safety outcome remains unsuccessful. Cost fields removed from customer report exports; no unapproved labour charge.",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/doorstep-execution.test.ts",
+        "tests/doorstep-postgres.test.ts",
+        "tests/helpers/doorstep-fixture.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/service-invoices.test.ts",
+        "tests/service-invoices-http.test.ts",
+        "tests/service-invoices-postgres.test.ts",
+        "tests/service-invoice-drafts.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/service-cancellation-review.test.ts",
+        "tests/doorstep-cylinders.test.ts",
+        "tests/service-exception-settlements.test.ts",
+        "tests/service-material-recovery.test.ts",
+        "tests/service-document-privacy.test.ts"
+      ],
+      "testIds": [
+        "DOOR-01",
+        "DOOR-02",
+        "DOOR-03",
+        "DOOR-04",
+        "DOOR-05",
+        "DOOR-PG01",
+        "SINV-01",
+        "SINV-02",
+        "SINV-03",
+        "SINV-04",
+        "SINV-05",
+        "SINV-06",
+        "SINV-HTTP01",
+        "SINV-PG01",
+        "SINV-07",
+        "SINV-08",
+        "SINV-DRAFT01",
+        "SINV-DRAFT02",
+        "SINV-DISPUTE01"
+      ],
+      "negativeTests": [
+        "RTM-01",
+        "DOOR-03",
+        "DOOR-04",
+        "DOOR-05",
+        "DOOR-PG01",
+        "SINV-02",
+        "SINV-03",
+        "SINV-05",
+        "SINV-06",
+        "SINV-HTTP01",
+        "SINV-PG01",
+        "SINV-07",
+        "SINV-08"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt",
+        "docs/production-completion/evidence/doorstep-focused-final.txt",
+        "docs/production-completion/evidence/doorstep-postgres.txt",
+        "docs/production-completion/evidence/doorstep-regression.txt",
+        "docs/production-completion/evidence/doorstep-build.txt",
+        "docs/production-completion/evidence/doorstep-types.txt",
+        "docs/production-completion/evidence/doorstep-native-types.txt",
+        "docs/production-completion/evidence/doorstep-native-export.txt",
+        "docs/production-completion/evidence/doorstep-bootstrap.txt",
+        "docs/production-completion/evidence/doorstep-container-build.txt",
+        "docs/production-completion/evidence/doorstep-container-acceptance.txt",
+        "docs/production-completion/evidence/doorstep-traceability.txt",
+        "docs/production-completion/evidence/doorstep-source-sha256.txt",
+        "docs/production-completion/evidence/continuation-regression.txt",
+        "docs/production-completion/evidence/continuation-build.txt",
+        "docs/production-completion/evidence/continuation-types.txt",
+        "docs/production-completion/evidence/continuation-mobile-types.txt",
+        "docs/production-completion/evidence/continuation-traceability.txt",
+        "docs/production-completion/evidence/continuation-source-sha256.txt",
+        "docs/production-completion/evidence/continuation-service-focused.txt",
+        "docs/production-completion/evidence/continuation-service-postgres.txt",
+        "docs/production-completion/evidence/continuation-browser.json",
+        "docs/production-completion/evidence/continuation-customer-invoice.png",
+        "docs/production-completion/evidence/continuation-finance-invoice.png",
+        "docs/production-completion/evidence/draft-revision-tests.txt",
+        "docs/production-completion/evidence/draft-revision-postgres.txt",
+        "docs/production-completion/evidence/draft-revision-build.txt",
+        "docs/production-completion/evidence/draft-revision-types.txt",
+        "docs/production-completion/evidence/draft-revision-browser.json",
+        "docs/production-completion/evidence/draft-revision-browser.png",
+        "docs/production-completion/evidence/retain-all-browser.png",
+        "docs/production-completion/evidence/draft-revision-accepted-regression.txt",
+        "docs/production-completion/evidence/draft-revision-traceability.txt",
+        "docs/production-completion/evidence/draft-revision-source-sha256.txt",
+        "docs/production-completion/evidence/remaining-features-regression.txt",
+        "docs/production-completion/evidence/remaining-features-focused.txt",
+        "docs/production-completion/evidence/remaining-features-web-types.txt",
+        "docs/production-completion/evidence/remaining-features-native-types.txt",
+        "docs/production-completion/evidence/remaining-features-accepted-regression.txt",
+        "docs/production-completion/evidence/remaining-features-final-focused.txt",
+        "docs/production-completion/evidence/remaining-features-routing-final.txt",
+        "docs/production-completion/evidence/remaining-features-final-build.txt",
+        "docs/production-completion/evidence/remaining-features-traceability.txt",
+        "docs/production-completion/evidence/remaining-features-source.sha256",
+        "docs/production-completion/evidence/approved-completion-regression.txt",
+        "docs/production-completion/evidence/approved-completion-focused.txt",
+        "docs/production-completion/evidence/approved-completion-web-build.txt",
+        "docs/production-completion/evidence/approved-completion-web-types.txt",
+        "docs/production-completion/evidence/approved-completion-native-types.txt",
+        "docs/production-completion/evidence/approved-completion-traceability.txt",
+        "docs/production-completion/evidence/approved-completion-inventory.png"
+      ],
+      "testResult": "PASS: final frozen-source broad regression408/408 with actual disposable PostgreSQL enabled,0 failures/skips. Focused24/24 and HTTP/PostgreSQL2/2 overlap the broad run and are not additional unique coverage. Final web build/types and2/2 matrix checks pass; isolated browser finance draft-save/issue and customer retained-disposition verified. Complete business requirement remains PARTIAL. 9 November continuation: focused checks pass; broad regression result recorded separately when executed. No full acceptance inferred. Final continuation broad regression424/424 with actual disposable PostgreSQL enabled:0 failures/skips. Final focused17/17 and routing-hardening3/3 overlap; not extra unique coverage. Web build/types, native source types and RTM2/2 pass. UI/provider/physical scope remains unverified. PASS: 434/434 broad regression with actual disposable PostgreSQL enabled; 0 failures/skips. Subsequent final targeted 13/13 passes include actual restricted-driver HTTP, independent PostgreSQL capacity/replay/forced rollback, multi-cylinder credit/financial basis, physical manifest/serial handover, service settlement/recovery and customer document privacy. Focused tests overlap broad tests and are not additional whole-scope coverage. Web production build and web/native source types pass. MANIFEST-UI01 verifies inventory controls/product choices only; no active demo trip or full operational/device/provider acceptance claimed.",
+      "acceptanceGate": "E2E-G02",
+      "status": "PARTIAL",
+      "reason": "9 November approved continuation adds implemented canonical custody/settlement/recovery controls and bounded executed tests. Full operational/provider/device/release acceptance remains incomplete; no 100% claim.",
+      "outstandingWork": "Complete all-role browser/business acceptance of failed/stopped/changed-scope settlements, zero-waiver/void, cash/payment-request/provider-funded reversal variants and physical material recovery. Existing invoice source, full-refund and dispute controls remain; production/provider/device gates open."
+    },
+    {
+      "id": "E2E-03",
+      "requirement": "Dispatch recommendations and route cost",
+      "priority": "P1",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "docs/reports/production-completion-tasks-20261105.md",
+        "apps/web/lib/driver-operations.ts",
+        "packages/business-rules/src/trip-metrics.ts",
+        "apps/web/lib/fleet-constraints.ts",
+        "apps/web/lib/dispatch-routing.ts",
+        "apps/web/lib/dispatch-routing-schema.ts",
+        "packages/business-rules/src/dispatch-routing.ts",
+        "database/migrations/063_dispatch_routing.sql",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/admin.tsx"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies Immutable dispatch_destinations and dispatch_route_estimates, approved dispatch.routing settings, original-timestamp trip_events and fixed trusted OSRM road response.",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data Confirmed address-hash-bound pins; current consent/accuracy/recency; scoped active trips; configured HTTPS processor; bounded invalid responses; network outside transactions; reauthenticated locked context; expiry/revalidation at assignment; audited manual fallback; no fee mutation.",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/trip-location-evidence.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/dispatch-custody-capacity.test.ts",
+        "tests/dispatch-routing.test.ts",
+        "tests/dispatch-routing-postgres.test.ts"
+      ],
+      "testIds": [
+        "FIELD-GPS-01",
+        "FIELD-GPS-02",
+        "DISP-CUSTODY01"
+      ],
+      "negativeTests": [
+        "RTM-01",
+        "FIELD-GPS-01",
+        "FIELD-GPS-02",
+        "DISP-CUSTODY01"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt",
+        "docs/production-completion/evidence/trip-location-tests.txt",
+        "docs/production-completion/evidence/regression-continuation.txt",
+        "docs/production-completion/evidence/continuation-regression.txt",
+        "docs/production-completion/evidence/continuation-build.txt",
+        "docs/production-completion/evidence/continuation-types.txt",
+        "docs/production-completion/evidence/continuation-mobile-types.txt",
+        "docs/production-completion/evidence/continuation-traceability.txt",
+        "docs/production-completion/evidence/continuation-source-sha256.txt",
+        "docs/production-completion/evidence/continuation-dispatch.txt",
+        "docs/production-completion/evidence/remaining-features-regression.txt",
+        "docs/production-completion/evidence/remaining-features-focused.txt",
+        "docs/production-completion/evidence/remaining-features-web-types.txt",
+        "docs/production-completion/evidence/remaining-features-native-types.txt",
+        "docs/production-completion/evidence/remaining-features-accepted-regression.txt",
+        "docs/production-completion/evidence/remaining-features-final-focused.txt",
+        "docs/production-completion/evidence/remaining-features-routing-final.txt",
+        "docs/production-completion/evidence/remaining-features-final-build.txt",
+        "docs/production-completion/evidence/remaining-features-traceability.txt",
+        "docs/production-completion/evidence/remaining-features-source.sha256"
+      ],
+      "testResult": "PASS FIELD-GPS-01/02 plus existing operations:13/13 focused tests. Full continuation373 tests:359 pass,14 PostgreSQL skips,0 failures. Full dispatch acceptance remains incomplete. 9 November continuation: focused checks pass; broad regression result recorded separately when executed. No full acceptance inferred. Final continuation broad regression424/424 with actual disposable PostgreSQL enabled:0 failures/skips. Final focused17/17 and routing-hardening3/3 overlap; not extra unique coverage. Web build/types, native source types and RTM2/2 pass. UI/provider/physical scope remains unverified.",
+      "acceptanceGate": "E2E-G03",
+      "status": "PARTIAL",
+      "reason": "Governed immutable destination/OSRM road/deadline/cost planning and estimate-bound assignment added. External provider and actual operating/browser acceptance remain open; default OFF.",
+      "outstandingWork": "Configured trusted road-routing processor/privacy acceptance, actual operating-rate approval, all-role dispatch browser/business/custody acceptance and remaining release gates. Deadline-order road planning is implemented; traffic-aware route optimization and ETA promises are not claimed. Manual assignment and final backend fulfilment checks remain."
+    },
+    {
+      "id": "E2E-04",
+      "requirement": "Durable field evidence and offline recovery",
+      "priority": "P0",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "apps/mobile/field-queue.ts",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/DriverPhoto.tsx",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts",
+        "apps/web/app/api/media/route.ts",
+        "apps/mobile/driver-location.ts",
+        "apps/mobile/DriverTripTracking.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/index.ts",
+        "apps/mobile/app.json",
+        "apps/mobile/package.json",
+        "apps/mobile/package-lock.json",
+        "packages/business-rules/src/offline-location.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/trip-metrics.ts",
+        "docs/operations/offline-driver-location.md",
+        "packages/business-rules/src/trip-recovery.ts"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data GPS receipt-first recovery acknowledges only matching trip.sync event IDs, holds conflicts per trip, retains original timestamps/operation identity and propagates revoked auth. No financial/delivery event replay on GPS sync.",
+      "testFiles": [
+        "tests/technician-recovery.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/offline-driver-location.test.ts",
+        "tests/trip-recovery.test.ts"
+      ],
+      "testIds": [
+        "FIELD-RECOVERY-01",
+        "FIELD-RECOVERY-02",
+        "FIELD-RECOVERY-03",
+        "FIELD-PHOTO-01"
+      ],
+      "negativeTests": [
+        "FIELD-RECOVERY-02",
+        "FIELD-RECOVERY-03",
+        "FIELD-PHOTO-01"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/field-safety-tests.txt",
+        "docs/production-completion/evidence/native-export.txt",
+        "docs/production-completion/evidence/technician-ios-build.txt",
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt",
+        "docs/production-completion/evidence/technician-ui-reconnection.txt",
+        "docs/production-completion/evidence/technician-home-reconnected.png",
+        "docs/production-completion/evidence/offline-gps-tests.txt",
+        "docs/production-completion/evidence/offline-gps-native-types.txt",
+        "docs/production-completion/evidence/offline-gps-web-types.txt",
+        "docs/production-completion/evidence/offline-gps-build.txt",
+        "docs/production-completion/evidence/remaining-features-regression.txt",
+        "docs/production-completion/evidence/remaining-features-focused.txt",
+        "docs/production-completion/evidence/remaining-features-web-types.txt",
+        "docs/production-completion/evidence/remaining-features-native-types.txt",
+        "docs/production-completion/evidence/remaining-features-accepted-regression.txt",
+        "docs/production-completion/evidence/remaining-features-final-focused.txt",
+        "docs/production-completion/evidence/remaining-features-routing-final.txt",
+        "docs/production-completion/evidence/remaining-features-final-build.txt",
+        "docs/production-completion/evidence/remaining-features-traceability.txt",
+        "docs/production-completion/evidence/remaining-features-source.sha256"
+      ],
+      "testResult": "PASS bounded replay/assignment/version/authentication negative tests; native export and iOS simulator build. Full device/storage/GPS acceptance pending. Fresh installed simulator authenticated and navigated Home/Jobs/Profile, then reconnected after local backend restart with unchanged identity. No assigned jobs/photo/process-death acceptance fabricated. 9 November continuation: focused checks pass; broad regression result recorded separately when executed. No full acceptance inferred. Final continuation broad regression424/424 with actual disposable PostgreSQL enabled:0 failures/skips. Final focused17/17 and routing-hardening3/3 overlap; not extra unique coverage. Web build/types, native source types and RTM2/2 pass. UI/provider/physical scope remains unverified.",
+      "acceptanceGate": "E2E-G04",
+      "status": "PARTIAL",
+      "reason": "Source-only GPS receipt-first recovery isolates trip conflicts and preserves pending evidence. Physical background/storage/permissions/restart acceptance remains deferred with mobile builds.",
+      "outstandingWork": "Fresh simulator interaction after Mac unlock; physical camera/background/process death/storage failure; offline job snapshot/read UX and full draft review/disposition policy; signed-device and all retained TF gates. Offline GPS native build, physical lock/background/kill/restart/storage/reconnect and dispatcher browser acceptance remain; see GPS-R01\u201304. No live/force-quit tracking guarantee."
+    },
+    {
+      "id": "E2E-05",
+      "requirement": "Messaging and secure activation acceptance",
+      "priority": "P1",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "docs/reports/production-completion-tasks-20261105.md",
+        "apps/web/lib/winback-crm.ts",
+        "apps/web/lib/channel-messaging.ts",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/winback-cancellation.test.ts",
+        "tests/crm-followup-pagination.test.ts",
+        "tests/crm-http.test.ts"
+      ],
+      "testIds": [
+        "CRM-CANCEL01"
+      ],
+      "negativeTests": [
+        "RTM-01",
+        "CRM-CANCEL01"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt",
+        "docs/production-completion/evidence/continuation-regression.txt",
+        "docs/production-completion/evidence/continuation-build.txt",
+        "docs/production-completion/evidence/continuation-types.txt",
+        "docs/production-completion/evidence/continuation-mobile-types.txt",
+        "docs/production-completion/evidence/continuation-traceability.txt",
+        "docs/production-completion/evidence/continuation-source-sha256.txt",
+        "docs/production-completion/evidence/continuation-crm.txt",
+        "docs/production-completion/evidence/remaining-features-regression.txt",
+        "docs/production-completion/evidence/remaining-features-focused.txt",
+        "docs/production-completion/evidence/remaining-features-web-types.txt",
+        "docs/production-completion/evidence/remaining-features-native-types.txt",
+        "docs/production-completion/evidence/remaining-features-accepted-regression.txt",
+        "docs/production-completion/evidence/remaining-features-final-focused.txt",
+        "docs/production-completion/evidence/remaining-features-routing-final.txt",
+        "docs/production-completion/evidence/remaining-features-final-build.txt",
+        "docs/production-completion/evidence/remaining-features-traceability.txt",
+        "docs/production-completion/evidence/remaining-features-source.sha256"
+      ],
+      "testResult": "NOT EXECUTED for full continuation scope 9 November continuation: focused checks pass; broad regression result recorded separately when executed. No full acceptance inferred. Final continuation broad regression424/424 with actual disposable PostgreSQL enabled:0 failures/skips. Final focused17/17 and routing-hardening3/3 overlap; not extra unique coverage. Web build/types, native source types and RTM2/2 pass. UI/provider/physical scope remains unverified.",
+      "acceptanceGate": "E2E-G05",
+      "status": "PARTIAL",
+      "reason": "Branch-private precise cursor pagination exposes follow-ups beyond the old200-record limit. Full CRM lifecycle/scale and real-channel acceptance remain open. Actual GET summary/follow-up HTTP path repaired; foreign customer reads and POST reads rejected by real handlers.",
+      "outstandingWork": "Full campaign/channel lifecycle, load/scale and official SMS/WhatsApp accounts/templates/credentials/real receipt acceptance. Follow-ups beyond200 and actual GET panel data-loading are now implemented; no production activation or actual Excel import."
+    },
+    {
+      "id": "E2E-06",
+      "requirement": "CRM campaign conversion lifecycle",
+      "priority": "P1",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "apps/web/lib/scheduling.ts",
+        "apps/web/lib/winback-crm.ts",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/lib/channel-messaging.ts"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data",
+      "testFiles": [
+        "tests/campaign-return.test.ts",
+        "tests/scheduling.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/winback-cancellation.test.ts"
+      ],
+      "testIds": [
+        "CRM-RETURN-01",
+        "CRM-BRANCH-01",
+        "CRM-PAGE-01",
+        "CRM-CANCEL01"
+      ],
+      "negativeTests": [
+        "CRM-RETURN-01",
+        "CRM-BRANCH-01",
+        "CRM-PAGE-01",
+        "CRM-CANCEL01"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/crm-regression-tests.txt",
+        "docs/production-completion/evidence/campaign-tests.txt",
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt",
+        "docs/production-completion/evidence/continuation-regression.txt",
+        "docs/production-completion/evidence/continuation-build.txt",
+        "docs/production-completion/evidence/continuation-types.txt",
+        "docs/production-completion/evidence/continuation-mobile-types.txt",
+        "docs/production-completion/evidence/continuation-traceability.txt",
+        "docs/production-completion/evidence/continuation-source-sha256.txt",
+        "docs/production-completion/evidence/continuation-crm.txt"
+      ],
+      "testResult": "PASS bounded purchase-history association, branch audience, pagination and permission checks. Complete configured-provider campaign acceptance pending.",
+      "acceptanceGate": "E2E-G06",
+      "status": "PARTIAL",
+      "reason": "Existing campaigns expose temporal qualifying-purchase return counts without causal attribution; moved customer suppression and paged CRM search/targeted lookup added. Branch-scoped channel counts, persisted queue status, exact daily dedupe before budget allocation and audited unsent-win-back cancellation implemented. Leased/accepted evidence is retained without claiming provider recall.",
+      "outstandingWork": "Campaign lifecycle/channel policy completion, consented actual SMS/WhatsApp/template/receipt acceptance, all-role UI and realistic scale/query plan tests."
+    },
+    {
+      "id": "E2E-07",
+      "requirement": "Reconciled inventory and Excel confirmation hold",
+      "priority": "P1",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "docs/reports/production-completion-tasks-20261105.md"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data",
+      "testFiles": [
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "RTM-01"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt"
+      ],
+      "testResult": "NOT EXECUTED for full continuation scope",
+      "acceptanceGate": "E2E-G07",
+      "status": "PARTIAL",
+      "reason": "Prior implementation exists; remaining engineering and acceptance retained.",
+      "outstandingWork": "Close mapped current dependency register; no production activation or actual Excel import."
+    },
+    {
+      "id": "E2E-08",
+      "requirement": "Privacy retention and erasure",
+      "priority": "P0",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "docs/reports/production-completion-tasks-20261105.md",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/workflows.tsx",
+        "docs/operations/record-retention.md"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies Business instruction 2026-11-08: all records retained; existing privacy_requests retain request/disposition and immutable audit_events retain policy application.",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data Destructive proof purge disabled under fixed retain-all policy. Customer deletion-review disposition is retained, not erased/completed; owned export and expiry/consent access checks preserved.",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/service-invoice-drafts.test.ts",
+        "tests/operations-completion.test.ts"
+      ],
+      "testIds": [
+        "PRIVACY-RETAIN01",
+        "OPS-T11"
+      ],
+      "negativeTests": [
+        "RTM-01"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt",
+        "docs/production-completion/evidence/draft-revision-tests.txt",
+        "docs/production-completion/evidence/draft-revision-postgres.txt",
+        "docs/production-completion/evidence/draft-revision-build.txt",
+        "docs/production-completion/evidence/draft-revision-types.txt",
+        "docs/production-completion/evidence/draft-revision-browser.json",
+        "docs/production-completion/evidence/draft-revision-browser.png",
+        "docs/production-completion/evidence/retain-all-browser.png",
+        "docs/production-completion/evidence/draft-revision-accepted-regression.txt",
+        "docs/production-completion/evidence/draft-revision-traceability.txt",
+        "docs/production-completion/evidence/draft-revision-source-sha256.txt"
+      ],
+      "testResult": "PASS: final frozen-source broad regression408/408 with actual disposable PostgreSQL enabled,0 failures/skips. Focused24/24 and HTTP/PostgreSQL2/2 overlap the broad run and are not additional unique coverage. Final web build/types and2/2 matrix checks pass; isolated browser finance draft-save/issue and customer retained-disposition verified. Complete business requirement remains PARTIAL.",
+      "acceptanceGate": "E2E-G08",
+      "status": "PARTIAL",
+      "reason": "Prior implementation exists; remaining engineering and acceptance retained. User supplied retain-all instruction; application proof purge is non-destructive and deletion review transparently retains records. No claim of legal or backup/recovery acceptance.",
+      "outstandingWork": "Business instruction retains all records, superseding destructive erasure scope. Production backup/restore retention-hold acceptance, independent policy review and applicable full proof/device gates remain; all previous requirements remain tracked. No server work or actual import."
+    },
+    {
+      "id": "E2E-09",
+      "requirement": "Namecheap production deployment and recovery",
+      "priority": "P0",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "docs/reports/production-completion-tasks-20261105.md",
+        "deploy/Dockerfile",
+        "scripts/container-acceptance.ts"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "scripts/container-acceptance.ts"
+      ],
+      "testIds": [
+        "CONTAINER-01",
+        "CONTAINER-02"
+      ],
+      "negativeTests": [
+        "RTM-01",
+        "CONTAINER-02"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt",
+        "docs/production-completion/evidence/container-build.txt",
+        "docs/production-completion/evidence/container-acceptance.txt"
+      ],
+      "testResult": "PASS actual local Docker build; non-root/runtime-file isolation and missing-production-configuration rejection. Full Compose/TLS/worker/restore/load and provisioned VPS acceptance outstanding.",
+      "acceptanceGate": "E2E-G09",
+      "status": "PARTIAL",
+      "reason": "Local Docker is available and bounded image acceptance passed. VPS is not provisioned; full deployment/recovery acceptance remains open.",
+      "outstandingWork": "Close mapped current dependency register; no production activation or actual Excel import."
+    },
+    {
+      "id": "E2E-10",
+      "requirement": "Signed mobile distribution and device acceptance",
+      "priority": "P1",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "docs/reports/production-completion-tasks-20261105.md"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data",
+      "testFiles": [
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "RTM-01"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt"
+      ],
+      "testResult": "NOT EXECUTED for full continuation scope",
+      "acceptanceGate": "E2E-G10",
+      "status": "PARTIAL",
+      "reason": "Prior implementation exists; remaining engineering and acceptance retained.",
+      "outstandingWork": "Close mapped current dependency register; no production activation or actual Excel import."
+    },
+    {
+      "id": "E2E-11",
+      "requirement": "Reviewed source, CI and independent release sign-off",
+      "priority": "P0",
+      "scope": "Complete non-payment production continuation; all prior requirements remain",
+      "uiReference": "Existing approved web/customer/driver/technician experiences",
+      "route": "Existing canonical app routes; acceptance not inferred from existence",
+      "implementationFiles": [
+        "docs/reports/production-completion-tasks-20261105.md"
+      ],
+      "dataSource": "Existing canonical identities, orders, bookings, ledgers, custody and governed policies",
+      "securityControl": "Existing scoped sessions, independent approvals, fail-closed production flags, no imported or invented business data",
+      "testFiles": [
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "RTM-01"
+      ],
+      "evidence": [
+        "docs/production-completion/evidence/regression-final.txt",
+        "docs/production-completion/evidence/postgres-regression.txt"
+      ],
+      "testResult": "NOT EXECUTED for full continuation scope",
+      "acceptanceGate": "E2E-G11",
+      "status": "PARTIAL",
+      "reason": "Prior implementation exists; remaining engineering and acceptance retained.",
+      "outstandingWork": "Close mapped current dependency register; no production activation or actual Excel import."
+    }
+  ],
+  "gates": [
+    {
+      "id": "E2E-G01",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G02",
+      "status": "BLOCKED",
+      "reason": "Bounded backend/HTTP/PostgreSQL and customer/finance browser cases pass; persistent draft/revision and every exception/operational/provider acceptance remain incomplete. No complete-scope gate sign-off.",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G03",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G04",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G05",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G06",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G07",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G08",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G09",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G10",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    },
+    {
+      "id": "E2E-G11",
+      "status": "BLOCKED",
+      "reason": "Engineering/independent acceptance outstanding",
+      "owner": "Engineering/business/operations",
+      "evidence": []
+    }
+  ],
+  "scopeChanges": [
+    {
+      "date": "2026-11-08",
+      "change": "User authorised remaining implementation/testing and deferred mobile builds and server implementation (interpreted as hosting/provisioning/deployment). Local backend/API work continues. E2E-09/10 and all prior gates remain in production denominators; no live activation/import authorised.",
+      "affectedRequirements": [
+        "E2E-09",
+        "E2E-10",
+        "E2E-11"
+      ]
+    },
+    {
+      "date": "2026-11-08",
+      "change": "User requires all records retained; destructive erasure superseded by non-destructive retention controls and truthful request dispositions, not removed from traceability."
+    }
+  ],
+  "coverage": {
+    "denominator": 11,
+    "verified": 0,
+    "note": "All partial/blocked/untested requirements retained; prior matrices remain authoritative.",
+    "implementationStatus": "PARTIAL",
+    "verificationStatus": "Bounded tests only; full11-area acceptance incomplete",
+    "criticalStatus": "New custody, financial settlement, restricted-role and rollback negative tests pass; full physical/business/release acceptance remains open.",
+    "routeCoverage": "Not measured for complete journeys; simulator build/export is not interaction acceptance",
+    "gateCoverage": "0/11 complete continuation gates; all retained"
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-06",
+      "change": "User authorised complete non-payment continuation. All11 scope areas and prior matrices retained; no production activation/import. Production role boundary, encrypted technician queue and bounded CRM continuation implemented with evidence. Vehicle physical stock model question raised; unaffected engineering continues."
+    },
+    {
+      "date": "2026-11-06",
+      "change": "Customer confirmed bulk LPG dispensed on-site and unlocked Mac. Fresh technician simulator sign-in/navigation and actual local Docker build/isolation/fail-closed startup checks passed. Bulk custody integration and complete release acceptance remain unfinished; no prior gate or import hold removed."
+    },
+    {
+      "date": "2026-11-06",
+      "change": "User requested end-to-end bulk delivery implementation. Audit confirms existing gas reservation and original invoice authority must be reused; no duplicate balances or live stock fixture. Full doorstep supplementary obligation remains in scope."
+    },
+    {
+      "date": "2026-11-06",
+      "change": "Implemented original-order bulk custody on canonical branch balance, with inventory/driver independent qualified controls and both clients. Production readiness/bootstrap now includes migrations057/058. Supplementary doorstep commit and operational gates remain open."
+    },
+    {
+      "date": "2026-11-06",
+      "change": "Final cash guard serializes reconciliation on canonical order and rejects duplicate verified principal; production cannot bypass missing bulk custody by disabling the feature. Final source regression379/364pass/15PGskips, separately15/15PG; actual read handler security test passed. All outstanding requirements/gates retained."
+    },
+    {
+      "date": "2026-11-08",
+      "change": "Created complete non-payment delivery package with eleven retained stable requirement IDs, dependencies and acceptance. Implemented bounded meter renewal/retirement; overall request remains PARTIAL, no gates closed."
+    },
+    {
+      "date": "2026-11-08",
+      "change": "Added independently governed measured discrepancy recovery on existing inventory/approval authorities. No schema, opening balances, source baseline, production activation or Excel import. Doorstep supplemental and other engineering scope remain open."
+    },
+    {
+      "date": "2026-11-08",
+      "change": "Distinct bulk_return_recovery kind prevents older generic stock-adjustment interpretation; migration/readiness/bootstrap updated to059. Fresh review and expired-maker/reservation/future-observation negatives added; all prior gate/requirement denominators and NO-GO remain."
+    },
+    {
+      "date": "2026-11-08",
+      "change": "Staged gas-only single-cylinder doorstep execution on existing order/invoice/vehicle/payment/cylinder authorities.060 protected execution, scoped verified-COD original handover and web/native controls added; original quantities/prices/fee snapshots retained. Physical-product/multi-cylinder and full exception/operational scope remains in denominator, no requirements or release gates removed."
+    },
+    {
+      "date": "2026-11-08",
+      "change": "Unified service invoice source/draft preview/issue/corrections/review requests/final-material/excess-refund reconciliation, dispatch extra-custody capacity and CRM cancel/dedupe/branch privacy implemented. Schema061; no mobile build or server deployment. Full request remains PARTIAL / NO-GO."
+    },
+    {
+      "date": "2026-11-08",
+      "change": "Persistent source-bound service invoice drafts, canonical incident-backed customer dispute hold/review, and user-directed retain-all/no-purge disposition added. All requirements/gates and original NO-GO/import hold remain; full engineering request is incomplete."
+    },
+    {
+      "date": "2026-11-08",
+      "change": "Offline driver GPS source/contract continuation; new GPS-R01\u201304 traceability retains physical/native and browser gates. Existing delivery/field financial restrictions and NO-GO/import hold preserved."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Shared pre-work cancellation approval, governed dispatch road planning, GPS conflict isolation and full follow-up pagination added. All11 E2E areas, prior gates, deferred mobile builds/server deployment and import/retention/NO-GO controls retained. Whole request remains PARTIAL."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Explicit user approval to complete all retained areas. Per-cylinder doorstep obligations and separate excess-collection purchase credit advanced under original E2E-01/02; all scope/gates/holds retained; implementation in progress."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Approved completion implemented migrations064\u2013069: per-cylinder partial recovery, actual physical manifest/serial doorstep handover, customer-consented excess credit, failed-service independently approved settlement and material custody recovery. Shared authorities and all11 requirements/gates retained. Full scope remains PARTIAL; actual operational/provider/device/import/deployment acceptance is outstanding."
+    }
+  ]
+}

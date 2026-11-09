@@ -1,0 +1,12 @@
+Evidence register date: 2026-11-02 Australia/Brisbane. Database event timestamps retain actual Africa/Lagos times (2026-11-01); no synthetic timestamps substituted.
+Environment: isolated .data/order-tracking-browser-qa-20261102, loopback port 3004, synthetic Tracking QA actors/addresses/orders. Normal 3003 preserved. No cloud, external notifications or real payments.
+PASS customer /track: three actual fixture orders, real references/items/prices/window, assigned driver and committed events, separate payment status, valid own confirmation code, explicit unavailable GPS/ETA; live SSE connection visible.
+PASS driver /admin/deliveries: dedicated Assigned work navigation, only two assigned stops; unassigned customer order not visible.
+PASS driver arrival through UI: submitted reason with current version/operation; attempt became arrived. Customer tab on distinct cookie hostname received arrived without refresh.
+PASS proof negative: attempt to complete without handover attestation rejected with explicit error; no Delivered claim shown.
+PASS synthetic proof positive: fixture code + full-handover attestation and synthetic cash amount accepted; driver displayed Delivered with payment collected, not verified. Customer tab then received Delivered/collected without refresh. No real delivery proof or finance acceptance is claimed.
+PASS theme observations: customer dark, driver light and driver mobile dark readable. Screenshots saved and visually inspected.
+PARTIAL mobile viewport: 390x844 driver content shown, measured document width 391. A one-pixel overflow came from existing account-menu text; CSS min-width/ellipsis correction applied afterward but browser recheck was not executed.
+NOT_TESTED admin browser dispatch/assignment, tablet/zoom/screen-reader/real native device/offline lifecycle checks. Browser permission to localhost:3004 was declined at Sign Out; session stopped immediately, no alternate login/surface workaround attempted.
+Owned QA server stopped after testing. Temporary tabs use default automatic tool cleanup; no subsequent blocked-origin interaction attempted. Viewport override was reset before permission rejection.
+Screenshots: docs/screenshots/order-tracking-customer-dark-20261102.png; order-tracking-driver-light-20261102.png; order-tracking-driver-mobile-20261102.png; order-tracking-driver-mobile-dark-20261102.png.

@@ -1,0 +1,9 @@
+# Inventory UI specification and visual differences
+
+Approved content integrated INSIDE the existing admin shell. Sidebar/header/brand/grouping/routes/role filtering/collapse/footer are preserved; mockup role switch and sidebar replacement explicitly excluded.
+
+Content:heading and real top actions, five coloured KPI cards, seven semantic workflow tabs, stock categories, name/SKU/branch search, branch/status/sort/clear, paginated stock table, alert/actions/movement right rail, bulk-gas balance table, honest valuation/category graph when cost basis is complete. Explicit unit suffixes and missing threshold/value reasons. Stock and history state live in URL via Next navigation; page resets on filter changes. Native browser Back returns existing route/filter URL after module navigation.
+
+Visual differences are intentional: actual quantities/branch names/products/assets, not illustrated records; no fake48.75million chart or growth percentages; no bulk row-selection checkbox without an implemented bulk operation. More availability/held columns require a local horizontal table scroll. ProductArt uses existing assets (green cylinder, not mockup orange copies). Cards wrap3/2 columns as space reduces; rail moves below content at1100px, single-column mobile. Semantic table headers, accessible tabs/arrow keys,15px typography, min44px controls, text status labels and theme tokens. Row menus expand within table rows; no clipped absolute menu.
+
+Forms are existing operational modules; their secondary layouts are preserved, not silently rebuilt. Stocktake, held disposition, supplier qualification and purchase controls remain. This is a consolidation, not full independent visual certification of every existing form. Formal screenreader/zoom/system-preference/contrast/device and populated browser mutation acceptance remain open where not executed. See control matrix and browser evidence.

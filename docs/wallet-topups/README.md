@@ -1,0 +1,20 @@
+# Customer wallet top-ups
+
+## Audit and implementation
+Existing authorities: `wallet_entries` append-only balance, `credit_requests` independent owner/finance decision, `commerceAction` row locks/reauth/branch controls, Paystack intents/attempts/postings and signed durable inbox. No duplicate wallet, approval engine, customer identity or financial balance column introduced. Baseline commerce/fee suite:10 passed before edits.
+
+Customer dashboard `/account` → **Top Up Wallet** → `/wallet#top-up` offers bank transfer and credit/debit card. Transfer status/history is customer-scoped. The existing `/admin/credits` Credits & Refunds screen shows sender, date, reference and destination snapshot. Owner/branch finance must reauthenticate, independently match receipt to their actual bank statement, and approve/reject with evidence/reason. Request submission never credits. Approval atomically records the existing immutable wallet entry; retries cannot duplicate it. Rejected requests stay rejected. Customer identity/branch come from authentication, not form fields. Amount and current balance limits are revalidated at approval while the customer is locked.
+
+Card funding uses existing approved Paystack fee quotes, customer fee consent and hosted checkout; EasyGas never handles card details. Wallet quotes restrict channels to card (manual transfer must use the approval path). A signed webhook is persisted then immediately reconciled against Paystack verification; verified principal posts automatically once, without business approval. Return page also verifies automatically, offering retry if verification is delayed. Durable inbox/worker recovery remains in place. Failed/pending/mismatched/unverified payments never credit. Processing charge remains separate from wallet principal.
+
+## Configuration and activation
+Bank destination details were not supplied; no fabricated details are seeded. Set `EASYGAS_WALLET_BANK_ACCOUNTS` on the server to a JSON object keyed by actual branch IDs, e.g. `{ "<branch-id>": {"bankName":"<actual bank>","accountName":"<actual business account>","accountNumber":"<10 digit account>"} }`. This is deployment-owned public destination configuration, never customer-submitted or a secret key. Restart the runtime after configuration. The existing governed branch `wallet.enabled` and `wallet.maximum` policies apply. Bank submission remains unavailable without complete configuration and active branch.
+
+Migration071 only extends existing credit kind plus destination/evidence snapshot metadata. Registry/local marker/bootstrap updated; no historic records changed. Managed/hosted databases require the normal explicit backup/migration process. Do not delete approved history to roll back; disable funding/configuration instead. No hosted rollout or live transaction performed in this phase.
+
+Existing Paystack runtime explicitly supports **test mode on synthetic data only**. Existing merchant test credentials/webhook, approved `payment.gateway` with `walletFunding=true` and channel `card`, fee policy/pass-through consent and limits are still required. This phase does not bypass that release restriction or enable live-money processing. Live card acceptance remains a launch gate; the existing production NO-GO is unchanged.
+
+## Verification and outstanding acceptance
+Executed evidence is under `evidence/`; mock-provider tests cover exact principal, signatures, wrong amount/currency/environment, retries, automatic posting and wallet approval guards. These are not real merchant payments. Final web types/build and RTM validation are recorded separately. Browser/manual customer/business acceptance, actual bank receipt matching and official merchant sandbox walkthrough are open; native builds and server rollout remain deferred by prior instruction. All requested requirements remain in the matrix denominator.
+
+Official reference: https://paystack.com/docs/payments/verify-payments/ (server verification), https://paystack.com/docs/payments/webhooks/ (authenticated event origin). Consulted9November2026.

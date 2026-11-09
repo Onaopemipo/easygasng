@@ -1,0 +1,3 @@
+DO $$ DECLARE t text; BEGIN FOREACH t IN ARRAY ARRAY['product_categories','media_assets','commerce_checkouts','checkout_fulfilments','recommendation_rules','recommendation_events'] LOOP EXECUTE format('ALTER TABLE easygas_private.%I ENABLE ROW LEVEL SECURITY',t); EXECUTE format('CREATE POLICY trusted_server ON easygas_private.%I TO easygas_server USING(true) WITH CHECK(true)',t); EXECUTE format('GRANT SELECT,INSERT ON easygas_private.%I TO easygas_server',t); END LOOP; END $$;
+GRANT UPDATE ON easygas_private.product_categories,easygas_private.media_assets,easygas_private.recommendation_rules TO easygas_server;
+GRANT UPDATE(sku,parent_id,attributes,archived,updated_at) ON easygas_private.products TO easygas_server;

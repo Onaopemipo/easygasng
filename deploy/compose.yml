@@ -1,0 +1,37 @@
+# Use a secret-protected env file outside the repository. No hosted DB is created.
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: easygas:${EASYGAS_RELEASE_SHA:?Set reviewed release SHA}
+    env_file: ${EASYGAS_PRODUCTION_ENV_FILE:?Set absolute protected env filename}
+    environment:
+      NODE_ENV: production
+      EASYGAS_BACKGROUND_JOBS: "false"
+    stop_grace_period: 5m
+    restart: unless-stopped
+    init: true
+    ports: ["127.0.0.1:3000:3000"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+  worker:
+    image: easygas:${EASYGAS_RELEASE_SHA:?Set reviewed release SHA}
+    env_file: ${EASYGAS_PRODUCTION_ENV_FILE:?Set absolute protected env filename}
+    environment:
+      NODE_ENV: production
+      EASYGAS_BACKGROUND_JOBS: "false"
+      EASYGAS_HEALTH_URL: http://web:3000/api/status
+    command:
+      [
+        "sh",
+        "-c",
+        "npm run release:check && exec node --import tsx scripts/worker.ts --watch",
+      ]
+    stop_grace_period: 5m
+    restart: unless-stopped
+    init: true
+    healthcheck:
+      test: ["CMD", "node", "--import", "tsx", "scripts/healthcheck.ts"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]

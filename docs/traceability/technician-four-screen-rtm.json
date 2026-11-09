@@ -1,0 +1,3430 @@
+{
+  "phase": "Technician four-screen consolidation",
+  "productionDecision": "NO-GO unchanged",
+  "requirements": [
+    {
+      "id": "TF-T01",
+      "requirement": "baseline lint/typecheck/build",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/web-typecheck.txt",
+        "docs/technician-four/evidence/mobile-typecheck.txt",
+        "docs/technician-four/evidence/web-build.txt",
+        "docs/technician-four/evidence/ios-build.txt",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PASS baseline and final typechecks/builds; no lint script exists.",
+      "acceptanceGate": "G21",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS baseline and final typechecks/builds; no lint script exists.",
+      "outstandingWork": "None for this bounded scenario; broader gates remain open.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T02",
+      "requirement": "baseline technician navigation",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G03",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T03",
+      "requirement": "existing customer app",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G19",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T04",
+      "requirement": "existing driver app",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G19",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T05",
+      "requirement": "existing admin service/booking/quotation workflows",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G19",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T06",
+      "requirement": "existing inventory/finance invariants",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G18",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T07",
+      "requirement": "technician sign-in",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T08",
+      "requirement": "expired session",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T09",
+      "requirement": "revoked technician",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T10",
+      "requirement": "cross-technician job read denied",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T11",
+      "requirement": "cross-technician mutation denied",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T12",
+      "requirement": "branch scope denied",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T13",
+      "requirement": "self-privilege escalation denied",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T14",
+      "requirement": "unauthorised photo access denied",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T15",
+      "requirement": "availability persists",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/technician-four/evidence/availability-layout-typecheck.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G05",
+      "status": "PARTIAL",
+      "reason": "Availability layout corrected: online helper text remains identical across switch states. Existing server command and offline warning retained; broader availability acceptance remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T16",
+      "requirement": "offline availability distinction",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G05",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T17",
+      "requirement": "accurate counts",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Scoped service_bookings/slots; immutable terminal service_booking_events; verified completed-customer service_feedback; current users/branch; full own unread notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TF-DATA"
+      ],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PASS TF-DATA:106 canonical assignments; uncapped summary,20-row pages, completion event timestamps, actual rating, unread35 and scope isolation.",
+      "acceptanceGate": "G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS TF-DATA:106 canonical assignments; uncapped summary,20-row pages, completion event timestamps, actual rating, unread35 and scope isolation.",
+      "outstandingWork": "None for this bounded scenario; broader gates remain open.",
+      "executedTests": [
+        "TF-DATA: technician summary and paged jobs are scoped, uncapped and honest about unknown history",
+        "TF-TIME: Lagos periods, missing history and assessment labels never fabricate completion"
+      ]
+    },
+    {
+      "id": "TF-T18",
+      "requirement": "zero-job empty state",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/jobs.png",
+        "docs/technician-four/evidence/history.png",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PASS native zero-assignment account: actual zero metrics and honest empty Jobs/History; no runtime seeding.",
+      "acceptanceGate": "G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS native zero-assignment account: actual zero metrics and honest empty Jobs/History; no runtime seeding.",
+      "outstandingWork": "None for this bounded scenario; broader gates remain open.",
+      "executedTests": [
+        "TF-DATA: technician summary and paged jobs are scoped, uncapped and honest about unknown history",
+        "TF-TIME: Lagos periods, missing history and assessment labels never fabricate completion"
+      ]
+    },
+    {
+      "id": "TF-T19",
+      "requirement": "View My Jobs",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G03",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T20",
+      "requirement": "photo shortcut job picker",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T21",
+      "requirement": "report shortcut job picker",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T22",
+      "requirement": "bottom tabs and deep links",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G03",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T23",
+      "requirement": "notification badge/read state",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G15",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T24",
+      "requirement": "assigned list/search/filters",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G06",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "TF-DATA: technician summary and paged jobs are scoped, uncapped and honest about unknown history",
+        "TF-TIME: Lagos periods, missing history and assessment labels never fabricate completion"
+      ]
+    },
+    {
+      "id": "TF-T25",
+      "requirement": "accept/decline",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G07",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T26",
+      "requirement": "reassignment conflict",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G08",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T27",
+      "requirement": "invalid status transition",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G08",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T28",
+      "requirement": "valid status transition",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G08",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T29",
+      "requirement": "concurrent status update",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G08",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T30",
+      "requirement": "cancellation/reschedule",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G08",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T31",
+      "requirement": "customer contact privacy",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T32",
+      "requirement": "safety hold",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G10",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T33",
+      "requirement": "assessment before quote",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T34",
+      "requirement": "quote submitted",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T35",
+      "requirement": "approval required",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T36",
+      "requirement": "unverified payment blocks chargeable work",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T37",
+      "requirement": "verified payment permits authorised work",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T38",
+      "requirement": "quotation revision",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T39",
+      "requirement": "technician cannot self-approve",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T40",
+      "requirement": "approved exception audited",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T41",
+      "requirement": "required checklist validation",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G10",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T42",
+      "requirement": "safety failure escalation",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G10",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T43",
+      "requirement": "camera permission denial",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T44",
+      "requirement": "invalid/oversized upload",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T45",
+      "requirement": "secure successful photo upload",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T46",
+      "requirement": "duplicate photo submission idempotency",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T47",
+      "requirement": "report draft persistence",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T48",
+      "requirement": "report submission",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T49",
+      "requirement": "completion blocked without required proof",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T50",
+      "requirement": "completed report historical access",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T51",
+      "requirement": "previous evidence preserved",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Services.tsx",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G12",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T52",
+      "requirement": "date-grouped history and filters",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Scoped service_bookings/slots; immutable terminal service_booking_events; verified completed-customer service_feedback; current users/branch; full own unread notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G13",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "TF-DATA: technician summary and paged jobs are scoped, uncapped and honest about unknown history",
+        "TF-TIME: Lagos periods, missing history and assessment labels never fabricate completion"
+      ]
+    },
+    {
+      "id": "TF-T53",
+      "requirement": "no fabricated ratings",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Scoped service_bookings/slots; immutable terminal service_booking_events; verified completed-customer service_feedback; current users/branch; full own unread notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TF-DATA"
+      ],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PASS TF-DATA/TF-TIME: null rating without reviews, actual verified completed-customer feedback average and no invented timestamps.",
+      "acceptanceGate": "G13",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS TF-DATA/TF-TIME: null rating without reviews, actual verified completed-customer feedback average and no invented timestamps.",
+      "outstandingWork": "None for this bounded scenario; broader gates remain open.",
+      "executedTests": [
+        "TF-DATA: technician summary and paged jobs are scoped, uncapped and honest about unknown history",
+        "TF-TIME: Lagos periods, missing history and assessment labels never fabricate completion"
+      ]
+    },
+    {
+      "id": "TF-T54",
+      "requirement": "personal edit permissions",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Canonical own users, technician_qualifications, communication_preferences, sessions and SecureStore",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G14",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T55",
+      "requirement": "skills cannot be self-granted",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Canonical own users, technician_qualifications, communication_preferences, sessions and SecureStore",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G14",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T56",
+      "requirement": "notification preferences",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Canonical own users, technician_qualifications, communication_preferences, sessions and SecureStore",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G15",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T57",
+      "requirement": "sign out and unsynced warning",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Canonical own users, technician_qualifications, communication_preferences, sessions and SecureStore",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G14",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T58",
+      "requirement": "offline draft save",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/field-queue.ts",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing SecureStore report drafts and driver-oriented encrypted field queue; no implemented technician photo replay is claimed",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/production-completion/evidence/field-safety-tests.txt"
+      ],
+      "testResult": "PASS bounded FIELD recovery/scope tests; complete scenario/device acceptance remains incomplete.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "6 November continuation adds production field-role enforcement and technician encrypted draft/photo replay. Backend eligibility and approvals remain authoritative; no offline work/payment/completion success.",
+      "outstandingWork": "Actual final-build/device storage, lifecycle, revocation and camera/background acceptance; complete offline snapshot/review UX and applicable prior operational gates remain. See production-end-to-end-rtm.json.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T59",
+      "requirement": "offline photo queue",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/field-queue.ts",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing SecureStore report drafts and driver-oriented encrypted field queue; no implemented technician photo replay is claimed",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/production-completion/evidence/field-safety-tests.txt"
+      ],
+      "testResult": "PASS bounded FIELD recovery/scope tests; complete scenario/device acceptance remains incomplete.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "6 November continuation adds production field-role enforcement and technician encrypted draft/photo replay. Backend eligibility and approvals remain authoritative; no offline work/payment/completion success.",
+      "outstandingWork": "Actual final-build/device storage, lifecycle, revocation and camera/background acceptance; complete offline snapshot/review UX and applicable prior operational gates remain. See production-end-to-end-rtm.json.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T60",
+      "requirement": "reconnect sync",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/field-queue.ts",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing SecureStore report drafts and driver-oriented encrypted field queue; no implemented technician photo replay is claimed",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/production-completion/evidence/field-safety-tests.txt"
+      ],
+      "testResult": "PASS bounded FIELD recovery/scope tests; complete scenario/device acceptance remains incomplete.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "6 November continuation adds production field-role enforcement and technician encrypted draft/photo replay. Backend eligibility and approvals remain authoritative; no offline work/payment/completion success.",
+      "outstandingWork": "Actual final-build/device storage, lifecycle, revocation and camera/background acceptance; complete offline snapshot/review UX and applicable prior operational gates remain. See production-end-to-end-rtm.json.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T61",
+      "requirement": "duplicate retry no double effect",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/field-queue.ts",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing SecureStore report drafts and driver-oriented encrypted field queue; no implemented technician photo replay is claimed",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/production-completion/evidence/field-safety-tests.txt"
+      ],
+      "testResult": "PASS bounded FIELD recovery/scope tests; complete scenario/device acceptance remains incomplete.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "6 November continuation adds production field-role enforcement and technician encrypted draft/photo replay. Backend eligibility and approvals remain authoritative; no offline work/payment/completion success.",
+      "outstandingWork": "Actual final-build/device storage, lifecycle, revocation and camera/background acceptance; complete offline snapshot/review UX and applicable prior operational gates remain. See production-end-to-end-rtm.json.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T62",
+      "requirement": "assignment revoked during offline",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/field-queue.ts",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing SecureStore report drafts and driver-oriented encrypted field queue; no implemented technician photo replay is claimed",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/production-completion/evidence/field-safety-tests.txt"
+      ],
+      "testResult": "PASS bounded FIELD recovery/scope tests; complete scenario/device acceptance remains incomplete.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "6 November continuation adds production field-role enforcement and technician encrypted draft/photo replay. Backend eligibility and approvals remain authoritative; no offline work/payment/completion success.",
+      "outstandingWork": "Actual final-build/device storage, lifecycle, revocation and camera/background acceptance; complete offline snapshot/review UX and applicable prior operational gates remain. See production-end-to-end-rtm.json.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T63",
+      "requirement": "stale version conflict",
+      "priority": "P0",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/field-queue.ts",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing SecureStore report drafts and driver-oriented encrypted field queue; no implemented technician photo replay is claimed",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/production-completion/evidence/field-safety-tests.txt"
+      ],
+      "testResult": "PASS bounded FIELD recovery/scope tests; complete scenario/device acceptance remains incomplete.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "6 November continuation adds production field-role enforcement and technician encrypted draft/photo replay. Backend eligibility and approvals remain authoritative; no offline work/payment/completion success.",
+      "outstandingWork": "Actual final-build/device storage, lifecycle, revocation and camera/background acceptance; complete offline snapshot/review UX and applicable prior operational gates remain. See production-end-to-end-rtm.json.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T64",
+      "requirement": "crash/restart recovery",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/field-queue.ts",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing SecureStore report drafts and driver-oriented encrypted field queue; no implemented technician photo replay is claimed",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/production-completion/evidence/field-safety-tests.txt"
+      ],
+      "testResult": "PASS bounded FIELD recovery/scope tests; complete scenario/device acceptance remains incomplete.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "6 November continuation adds production field-role enforcement and technician encrypted draft/photo replay. Backend eligibility and approvals remain authoritative; no offline work/payment/completion success.",
+      "outstandingWork": "Actual final-build/device storage, lifecycle, revocation and camera/background acceptance; complete offline snapshot/review UX and applicable prior operational gates remain. See production-end-to-end-rtm.json.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T65",
+      "requirement": "failed upload recovery",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/field-queue.ts",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing SecureStore report drafts and driver-oriented encrypted field queue; no implemented technician photo replay is claimed",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/production-completion/evidence/field-safety-tests.txt"
+      ],
+      "testResult": "PASS bounded FIELD recovery/scope tests; complete scenario/device acceptance remains incomplete.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "6 November continuation adds production field-role enforcement and technician encrypted draft/photo replay. Backend eligibility and approvals remain authoritative; no offline work/payment/completion success.",
+      "outstandingWork": "Actual final-build/device storage, lifecycle, revocation and camera/background acceptance; complete offline snapshot/review UX and applicable prior operational gates remain. See production-end-to-end-rtm.json.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T66",
+      "requirement": "audit trace and reconciliation",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/field-queue.ts",
+        "packages/business-rules/src/technician-recovery.ts",
+        "apps/web/lib/service-photos.ts"
+      ],
+      "dataSource": "Existing SecureStore report drafts and driver-oriented encrypted field queue; no implemented technician photo replay is claimed",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt",
+        "docs/production-completion/evidence/field-safety-tests.txt"
+      ],
+      "testResult": "PASS bounded FIELD recovery/scope tests; complete scenario/device acceptance remains incomplete.",
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "6 November continuation adds production field-role enforcement and technician encrypted draft/photo replay. Backend eligibility and approvals remain authoritative; no offline work/payment/completion success.",
+      "outstandingWork": "Actual final-build/device storage, lifecycle, revocation and camera/background acceptance; complete offline snapshot/review UX and applicable prior operational gates remain. See production-end-to-end-rtm.json.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T67",
+      "requirement": "four-screen screenshot comparison",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G02",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T68",
+      "requirement": "small/large screen layout",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G20",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T69",
+      "requirement": "keyboard/screen reader/reduced motion",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G20",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T70",
+      "requirement": "Light/Dark/System if supported",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G20",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T71",
+      "requirement": "production build",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G21",
+      "status": "BLOCKED",
+      "reason": "Signed production iOS/Android and applicable launch gates; simulator Release is not store evidence.",
+      "outstandingWork": "Signed production iOS/Android and applicable launch gates; simulator Release is not store evidence.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T72",
+      "requirement": "no demo data or dead controls",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G19",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T73",
+      "requirement": "production-like database multi-connection checks for changed transactional operations",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G17",
+      "status": "PARTIAL",
+      "reason": "Existing canonical workflow retained and automated regressions pass; full native/field acceptance for this scenario remains incomplete.",
+      "outstandingWork": "Complete scenario-specific populated-job/device/permission/recovery acceptance; see acceptance table and blocker register.",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    },
+    {
+      "id": "TF-T74",
+      "requirement": "independent rollback/recovery rehearsal where feasible",
+      "priority": "P1",
+      "scope": "Existing technician four tabs and dependent service workflow",
+      "uiReference": "01\u201304 supplied technician screen references",
+      "route": "Existing dedicated technician shell and canonical service endpoints",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/web/lib/technician-mobile.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/technician-session.ts",
+        "packages/business-rules/src/technician-mobile.ts"
+      ],
+      "dataSource": "Existing users/bookings/slots/events/quotes/payments/materials/media/reports/notifications",
+      "securityControl": "Current active technician/branch/assignment/session, independent approvals and verified pre-work payment",
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "unsafe inspection cannot become safety clearance or customer-acknowledged success"
+      ],
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md",
+        "docs/technician-four/evidence/final-technician-tests.txt"
+      ],
+      "testResult": "PARTIAL:349-test regression passed; scenario-specific native/recovery acceptance not claimed.",
+      "acceptanceGate": "G22",
+      "status": "BLOCKED",
+      "reason": "Independent operator rollback/restore rehearsal (TF-B06).",
+      "outstandingWork": "Independent operator rollback/restore rehearsal (TF-B06).",
+      "executedTests": [
+        "Existing professional-services/technician-work regression suite; consult acceptance evidence for scenario limits"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "status": "PASS",
+      "requirement": "preflight and repository preservation",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "None for preflight scope"
+    },
+    {
+      "id": "G02",
+      "status": "PARTIAL",
+      "requirement": "four-screen visual fidelity",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G03",
+      "status": "PARTIAL",
+      "requirement": "shared navigation and responsiveness",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G04",
+      "status": "PARTIAL",
+      "requirement": "technician identity and authorisation",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G05",
+      "status": "PARTIAL",
+      "requirement": "accurate Home data and availability",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G06",
+      "status": "PARTIAL",
+      "requirement": "Jobs list/filters",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G07",
+      "status": "PARTIAL",
+      "requirement": "assignment acknowledgement",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G08",
+      "status": "PARTIAL",
+      "requirement": "service state machine",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G09",
+      "status": "PARTIAL",
+      "requirement": "assessment/quotation/payment gate",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G10",
+      "status": "PARTIAL",
+      "requirement": "safety checklist and incident handling",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G11",
+      "status": "PARTIAL",
+      "requirement": "photographic proof and private storage",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G12",
+      "status": "PARTIAL",
+      "requirement": "service report and customer records",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G13",
+      "status": "PARTIAL",
+      "requirement": "history integrity",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G14",
+      "status": "PARTIAL",
+      "requirement": "profile/security/skills",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G15",
+      "status": "PARTIAL",
+      "requirement": "notifications",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G16",
+      "status": "BLOCKED",
+      "requirement": "offline queue and reconciliation",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Engineering offline queue and device reconciliation required"
+    },
+    {
+      "id": "G17",
+      "status": "PARTIAL",
+      "requirement": "exactly-once effects",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G18",
+      "status": "PARTIAL",
+      "requirement": "stock/material integration",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G19",
+      "status": "PARTIAL",
+      "requirement": "customer/admin compatibility",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G20",
+      "status": "PARTIAL",
+      "requirement": "accessibility/performance",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G21",
+      "status": "PARTIAL",
+      "requirement": "regression/build",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G22",
+      "status": "PARTIAL",
+      "requirement": "documentation/rollback",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Bounded automated/native evidence is not full acceptance; see matching retained scenarios"
+    },
+    {
+      "id": "G23",
+      "status": "BLOCKED",
+      "requirement": "production readiness evidence",
+      "evidence": [
+        "docs/technician-four/evidence/full-tests.txt",
+        "docs/technician-four/evidence/focused-tests.txt",
+        "docs/testing/technician-mobile-acceptance.md"
+      ],
+      "outstandingWork": "Prior production NO-GO gates remain, including engineering and signed-device/hosting/restore evidence"
+    }
+  ],
+  "scopeChanges": [
+    {
+      "date": "2026-11-06",
+      "change": "Existing green cylinder/neutral initials used as approved fallback; no authoritative avatar or TECH-014 field. Discovered existing service_feedback and reused verified completed-customer reviews. No requirements dropped."
+    },
+    {
+      "date": "2026-11-06",
+      "change": "TF-T15 availability layout correction: keep helper copy identical for enabled and disabled states so text wrapping cannot move the following cards. Existing offline warning, canonical switch value and server command retained. Native TypeScript checked; broader acceptance remains PARTIAL."
+    }
+  ],
+  "coverage": {
+    "requirements": 74,
+    "statuses": {
+      "VERIFIED_COMPLETE": 4,
+      "PARTIAL": 68,
+      "BLOCKED": 2
+    },
+    "verifiedPercent": 5.41,
+    "gates": 23,
+    "gateStatuses": {
+      "PASS": 1,
+      "PARTIAL": 20,
+      "BLOCKED": 2
+    },
+    "routeCoverage": "Four primary technician screens implemented; populated/auth/offline/device flows not fully accepted",
+    "criticalCoverage": "P0 negatives retained; no whole-app security completion claim"
+  }
+}

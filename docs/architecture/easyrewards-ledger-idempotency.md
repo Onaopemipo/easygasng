@@ -1,0 +1,19 @@
+# EasyRewards ledger, idempotency and durable outcomes
+
+Source: `apps/web/lib/rewards.ts`, `rewards-referrals.ts`, `rewards-adjustment.ts`; revision 043. Existing `reward_entries.reference` is globally unique and immutable. Natural identities: order:<order>, discount:<order>, discount-restore:<order>, refund:<order>, referral:<opaque attribution>, referral-refund:<original owned award entry>, adjustment:<approved request>. Private customer IDs are not embedded in referral references or links.
+
+Checkout uses existing customer + idempotencyKey order identity and request hash. The parsed checkout schema gives stable field order; changed points/cart under the same key rejects. Same key/same payload returns the prior committed order. `rewards.checkout-outcome` returns only the authenticated customer's minimal committed order outcome. NOT_FOUND is not proof a timed-out request failed: retry the same identity and payload. No second checkout or operation ledger is introduced.
+
+Point-spending transactions lock the customer row before SUM(points) and append. Branch/order stock locking stays in the established checkout. Across branches, the same customer lock serialises competing point spends. SQL unique keys protect duplicate ledger/source postings. This design is implemented but independent-connection PostgreSQL contention is NOT VERIFIED: the guarded actual PostgreSQL test is skipped without an explicitly enabled disposable local target.
+
+Verified fulfilment enqueues a unique durable job with approved policy version and frozen actual eligible source lines. Calculation/notification run in the existing maintenance worker, inside a per-job savepoint. Optional posting errors roll back the posting, retain a retry count and eventually mark review after five failures. A failed optional enqueue rolls back its savepoint and records an existing finance operational incident while preserving fulfilment/payment. That incident requires reviewed reconciliation of the source-event policy; it is not permission to scan/backfill history.
+
+Worker takes pending jobs with FOR UPDATE SKIP LOCKED. Source eligibility and actual verified_payments coverage are rechecked. Ledger, metadata, referral and notification commit together; a restart after commit sees completed status/unique references. No exactly-once network, email or SMS delivery claim. Both external payment and messaging providers remain disconnected.
+
+Manual adjustments use immutable approval request identity. A repeated approval after activation returns the existing governance conflict, not another ledger posting; recover by reading the original request/history. Never create a replacement request to resolve an ambiguous outcome without checking the first.
+
+## Completion evidence and identities
+
+Partial refunds reuse credit_requests: customer + refund_operation_key is unique, and the canonical line/reason fingerprint rejects changed payloads. One pending request per order, order/customer locks, immutable approved allocation records and the existing independent credit decision serialise financial effects. References partial-refund:<credit> and partial-restore:<credit> post only incremental compensation; zero-money point refunds skip wallet INSERT. Service sources use service:<booking> and service-refund:<booking>, with unique durable jobs and frozen eligible labour. No automatic backfill is introduced.
+
+The real PostgreSQL tests now execute: competing point spends, duplicate workers, concurrent same-key refund creation/approval, authenticated encrypted pg_dump restored into a new database, immutable restored history and runtime-role RLS. Previously skipped PostgreSQL scenarios are no longer claimed blocked for lack of a runtime. Production restore ownership/RPO/RTO and actual device/physical acceptance remain separate.

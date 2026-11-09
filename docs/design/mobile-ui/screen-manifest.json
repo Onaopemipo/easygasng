@@ -1,0 +1,1819 @@
+{
+  "title": "EasyGas mobile design system & interaction prototype",
+  "version": "1.0",
+  "date": "2026-11-02",
+  "mode": "Design prototype \u2014 fixture data only; no API writes",
+  "screens": [
+    {
+      "id": "c-home",
+      "title": "Your EasyGas",
+      "icon": "home",
+      "persona": "customer",
+      "webRoute": "/account",
+      "api": "customer.dashboard",
+      "group": "Overview",
+      "requirementId": "MUI-001"
+    },
+    {
+      "id": "c-shop",
+      "title": "Shop essentials",
+      "icon": "bag",
+      "persona": "customer",
+      "webRoute": "/products",
+      "api": "catalogue",
+      "group": "Shopping",
+      "requirementId": "MUI-002"
+    },
+    {
+      "id": "c-product",
+      "title": "Product details",
+      "icon": "cylinder",
+      "persona": "customer",
+      "webRoute": "/products",
+      "api": "catalogue",
+      "group": "Shopping",
+      "requirementId": "MUI-003"
+    },
+    {
+      "id": "c-gas",
+      "title": "Order cooking gas",
+      "icon": "flame",
+      "persona": "customer",
+      "webRoute": "/gas-order",
+      "api": "gas.catalogue; gas.quote; checkout",
+      "group": "Shopping",
+      "requirementId": "MUI-004"
+    },
+    {
+      "id": "c-cart",
+      "title": "Your basket",
+      "icon": "bag",
+      "persona": "customer",
+      "webRoute": "/cart",
+      "api": "catalogue",
+      "group": "Shopping",
+      "requirementId": "MUI-005"
+    },
+    {
+      "id": "c-checkout",
+      "title": "Checkout",
+      "icon": "card",
+      "persona": "customer",
+      "webRoute": "/checkout",
+      "api": "checkout; rewards.checkout-outcome",
+      "group": "Shopping",
+      "requirementId": "MUI-006"
+    },
+    {
+      "id": "c-addresses",
+      "title": "Delivery addresses",
+      "icon": "pin",
+      "persona": "customer",
+      "webRoute": "/account-settings",
+      "api": "account.profile",
+      "group": "Account & support",
+      "requirementId": "MUI-007"
+    },
+    {
+      "id": "c-addressform",
+      "title": "Add an address",
+      "icon": "pin",
+      "persona": "customer",
+      "webRoute": "/account-settings",
+      "api": "address.save",
+      "group": "Account & support",
+      "requirementId": "MUI-008"
+    },
+    {
+      "id": "c-confirmation",
+      "title": "Order received",
+      "icon": "check",
+      "persona": "customer",
+      "webRoute": "/orders",
+      "api": "orders",
+      "group": "Shopping",
+      "requirementId": "MUI-009"
+    },
+    {
+      "id": "c-orders",
+      "title": "My orders",
+      "icon": "box",
+      "persona": "customer",
+      "webRoute": "/orders",
+      "api": "orders",
+      "group": "Orders & credit",
+      "requirementId": "MUI-010"
+    },
+    {
+      "id": "c-order",
+      "title": "Order details",
+      "icon": "file",
+      "persona": "customer",
+      "webRoute": "/orders",
+      "api": "orders",
+      "group": "Orders & credit",
+      "requirementId": "MUI-011"
+    },
+    {
+      "id": "c-track",
+      "title": "Track your delivery",
+      "icon": "truck",
+      "persona": "customer",
+      "webRoute": "/track",
+      "api": "orders; tracking stream",
+      "group": "Orders & credit",
+      "requirementId": "MUI-012"
+    },
+    {
+      "id": "c-refund",
+      "title": "Request a refund",
+      "icon": "refresh",
+      "persona": "customer",
+      "webRoute": "/orders",
+      "api": "refund.lines; refund.request",
+      "group": "Orders & credit",
+      "requirementId": "MUI-013"
+    },
+    {
+      "id": "c-services",
+      "title": "Professional services",
+      "icon": "wrench",
+      "persona": "customer",
+      "webRoute": "/services",
+      "api": "services.catalogue",
+      "group": "Services",
+      "requirementId": "MUI-014"
+    },
+    {
+      "id": "c-service",
+      "title": "Service details",
+      "icon": "wrench",
+      "persona": "customer",
+      "webRoute": "/services",
+      "api": "services.catalogue",
+      "group": "Services",
+      "requirementId": "MUI-015"
+    },
+    {
+      "id": "c-book",
+      "title": "Book a service",
+      "icon": "calendar",
+      "persona": "customer",
+      "webRoute": "/services",
+      "api": "services.slots; booking.create",
+      "group": "Services",
+      "requirementId": "MUI-016"
+    },
+    {
+      "id": "c-bookings",
+      "title": "My appointments",
+      "icon": "calendar",
+      "persona": "customer",
+      "webRoute": "/bookings",
+      "api": "bookings",
+      "group": "Services",
+      "requirementId": "MUI-017"
+    },
+    {
+      "id": "c-booking",
+      "title": "Appointment details",
+      "icon": "calendar",
+      "persona": "customer",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.reschedule",
+      "group": "Services",
+      "requirementId": "MUI-018"
+    },
+    {
+      "id": "c-quote",
+      "title": "Your quotation",
+      "icon": "file",
+      "persona": "customer",
+      "webRoute": "/bookings",
+      "api": "booking.quote.decide",
+      "group": "Services",
+      "requirementId": "MUI-019"
+    },
+    {
+      "id": "c-report",
+      "title": "Service report",
+      "icon": "shield",
+      "persona": "customer",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.acknowledge",
+      "group": "Services",
+      "requirementId": "MUI-020"
+    },
+    {
+      "id": "c-wallet",
+      "title": "My wallet",
+      "icon": "wallet",
+      "persona": "customer",
+      "webRoute": "/wallet",
+      "api": "wallet",
+      "group": "Orders & credit",
+      "requirementId": "MUI-021"
+    },
+    {
+      "id": "c-credit",
+      "title": "Credit & redemption",
+      "icon": "card",
+      "persona": "customer",
+      "webRoute": "/purchase-credit",
+      "api": "credits",
+      "group": "Orders & credit",
+      "requirementId": "MUI-022"
+    },
+    {
+      "id": "c-rewards",
+      "title": "EasyRewards",
+      "icon": "gift",
+      "persona": "customer",
+      "webRoute": "/rewards",
+      "api": "rewards.summary; rewards.offers",
+      "group": "Rewards & plans",
+      "requirementId": "MUI-023"
+    },
+    {
+      "id": "c-offer",
+      "title": "Reward details",
+      "icon": "gift",
+      "persona": "customer",
+      "webRoute": "/rewards",
+      "api": "rewards.offers; checkout",
+      "group": "Rewards & plans",
+      "requirementId": "MUI-024"
+    },
+    {
+      "id": "c-profiles",
+      "title": "Cooking gas profiles",
+      "icon": "chart",
+      "persona": "customer",
+      "webRoute": "/consumption",
+      "api": "refill.profiles",
+      "group": "Rewards & plans",
+      "requirementId": "MUI-025"
+    },
+    {
+      "id": "c-profile",
+      "title": "Your cooking profile",
+      "icon": "chart",
+      "persona": "customer",
+      "webRoute": "/consumption",
+      "api": "refill.profiles; refill.feedback",
+      "group": "Rewards & plans",
+      "requirementId": "MUI-026"
+    },
+    {
+      "id": "c-plans",
+      "title": "Refill plans",
+      "icon": "calendar",
+      "persona": "customer",
+      "webRoute": "/schedules",
+      "api": "schedules",
+      "group": "Rewards & plans",
+      "requirementId": "MUI-027"
+    },
+    {
+      "id": "c-recurring",
+      "title": "Recurring orders",
+      "icon": "refresh",
+      "persona": "customer",
+      "webRoute": "/recurring",
+      "api": "schedule.authorisations",
+      "group": "Rewards & plans",
+      "requirementId": "MUI-028"
+    },
+    {
+      "id": "c-smart",
+      "title": "Smart Refill",
+      "icon": "flame",
+      "persona": "customer",
+      "webRoute": "/refill",
+      "api": "refill.profiles; rewards.smart-offers",
+      "group": "Rewards & plans",
+      "requirementId": "MUI-029"
+    },
+    {
+      "id": "c-notices",
+      "title": "Notifications",
+      "icon": "bell",
+      "persona": "customer",
+      "webRoute": "/notifications",
+      "api": "me; notifications.read",
+      "group": "Account & support",
+      "requirementId": "MUI-030"
+    },
+    {
+      "id": "c-account",
+      "title": "Your account",
+      "icon": "user",
+      "persona": "customer",
+      "webRoute": "/account-settings",
+      "api": "account.profile",
+      "group": "Account & support",
+      "requirementId": "MUI-031"
+    },
+    {
+      "id": "c-personal",
+      "title": "Personal details",
+      "icon": "user",
+      "persona": "customer",
+      "webRoute": "/account-settings",
+      "api": "account.update",
+      "group": "Account & support",
+      "requirementId": "MUI-032"
+    },
+    {
+      "id": "c-security",
+      "title": "Security & sessions",
+      "icon": "shield",
+      "persona": "customer",
+      "webRoute": "/account-settings",
+      "api": "account.profile; account.password",
+      "group": "Account & support",
+      "requirementId": "MUI-033"
+    },
+    {
+      "id": "c-privacy",
+      "title": "Account & privacy",
+      "icon": "shield",
+      "persona": "customer",
+      "webRoute": "/account-settings",
+      "api": "account.export; privacy.request",
+      "group": "Account & support",
+      "requirementId": "MUI-034"
+    },
+    {
+      "id": "c-preferences",
+      "title": "Your preferences",
+      "icon": "settings",
+      "persona": "customer",
+      "webRoute": "/account-settings",
+      "api": "preferences.save",
+      "group": "Account & support",
+      "requirementId": "MUI-035"
+    },
+    {
+      "id": "c-help",
+      "title": "Help & safety",
+      "icon": "headset",
+      "persona": "customer",
+      "webRoute": "/help",
+      "api": "policies",
+      "group": "Account & support",
+      "requirementId": "MUI-036"
+    },
+    {
+      "id": "c-support",
+      "title": "Support conversations",
+      "icon": "headset",
+      "persona": "customer",
+      "webRoute": "/support",
+      "api": "support.list",
+      "group": "Account & support",
+      "requirementId": "MUI-037"
+    },
+    {
+      "id": "c-thread",
+      "title": "Your conversation",
+      "icon": "headset",
+      "persona": "customer",
+      "webRoute": "/support",
+      "api": "support.reply",
+      "group": "Account & support",
+      "requirementId": "MUI-038"
+    },
+    {
+      "id": "c-policies",
+      "title": "Customer policies",
+      "icon": "file",
+      "persona": "customer",
+      "webRoute": "/help",
+      "api": "policies",
+      "group": "Account & support",
+      "requirementId": "MUI-039"
+    },
+    {
+      "id": "a-welcome",
+      "title": "More cooking. Less worry.",
+      "icon": "user",
+      "persona": "customer",
+      "webRoute": "/login",
+      "api": "login; register; account.recover; account.verify",
+      "group": "Getting started",
+      "requirementId": "MUI-040"
+    },
+    {
+      "id": "a-login",
+      "title": "Welcome back",
+      "icon": "user",
+      "persona": "customer",
+      "webRoute": "/login",
+      "api": "login; register; account.recover; account.verify",
+      "group": "Getting started",
+      "requirementId": "MUI-041"
+    },
+    {
+      "id": "a-register",
+      "title": "Create your account",
+      "icon": "user",
+      "persona": "customer",
+      "webRoute": "/register",
+      "api": "login; register; account.recover; account.verify",
+      "group": "Getting started",
+      "requirementId": "MUI-042"
+    },
+    {
+      "id": "a-recover",
+      "title": "Reset your password",
+      "icon": "user",
+      "persona": "customer",
+      "webRoute": "/recover",
+      "api": "login; register; account.recover; account.verify",
+      "group": "Getting started",
+      "requirementId": "MUI-043"
+    },
+    {
+      "id": "a-verify",
+      "title": "Check your email",
+      "icon": "user",
+      "persona": "customer",
+      "webRoute": "/verify",
+      "api": "login; register; account.recover; account.verify",
+      "group": "Getting started",
+      "requirementId": "MUI-044"
+    },
+    {
+      "id": "d-home",
+      "title": "Today\u2019s route",
+      "icon": "home",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-045"
+    },
+    {
+      "id": "d-tasks",
+      "title": "Assigned deliveries",
+      "icon": "truck",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-046"
+    },
+    {
+      "id": "d-job",
+      "title": "Delivery details",
+      "icon": "box",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-047"
+    },
+    {
+      "id": "d-pickup",
+      "title": "Confirm collection",
+      "icon": "cylinder",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-048"
+    },
+    {
+      "id": "d-proof",
+      "title": "Complete delivery",
+      "icon": "check",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-049"
+    },
+    {
+      "id": "d-issue",
+      "title": "Delivery issue",
+      "icon": "warning",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-050"
+    },
+    {
+      "id": "d-return",
+      "title": "Return reconciliation",
+      "icon": "refresh",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-051"
+    },
+    {
+      "id": "d-offline",
+      "title": "Pending sync",
+      "icon": "refresh",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-052"
+    },
+    {
+      "id": "d-support",
+      "title": "Dispatch support",
+      "icon": "headset",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-053"
+    },
+    {
+      "id": "d-account",
+      "title": "Driver account",
+      "icon": "user",
+      "persona": "driver",
+      "webRoute": "/orders",
+      "api": "orders; delivery.pickup; delivery.complete; delivery.help; delivery.return",
+      "group": "Field workspace",
+      "requirementId": "MUI-054"
+    },
+    {
+      "id": "t-home",
+      "title": "Your workday",
+      "icon": "home",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-055"
+    },
+    {
+      "id": "t-agenda",
+      "title": "Your appointments",
+      "icon": "calendar",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-056"
+    },
+    {
+      "id": "t-job",
+      "title": "Job details",
+      "icon": "wrench",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-057"
+    },
+    {
+      "id": "t-checklist",
+      "title": "Safety checklist",
+      "icon": "shield",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-058"
+    },
+    {
+      "id": "t-quote",
+      "title": "Prepare a quotation",
+      "icon": "file",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-059"
+    },
+    {
+      "id": "t-materials",
+      "title": "Job materials",
+      "icon": "box",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-060"
+    },
+    {
+      "id": "t-report",
+      "title": "Submit your report",
+      "icon": "file",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-061"
+    },
+    {
+      "id": "t-safety",
+      "title": "Report a safety concern",
+      "icon": "warning",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-062"
+    },
+    {
+      "id": "t-history",
+      "title": "Completed jobs",
+      "icon": "check",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-063"
+    },
+    {
+      "id": "t-account",
+      "title": "Technician account",
+      "icon": "user",
+      "persona": "technician",
+      "webRoute": "/bookings",
+      "api": "bookings; booking.start; booking.quote; service.material.issue; service.material.usage; service.material.return; booking.report",
+      "group": "Field workspace",
+      "requirementId": "MUI-064"
+    },
+    {
+      "id": "b-dashboard",
+      "title": "Dashboard",
+      "icon": "House",
+      "persona": "business",
+      "webRoute": "/admin",
+      "api": "business.snapshot",
+      "roles": [
+        "owner",
+        "manager",
+        "inventory",
+        "sales",
+        "finance",
+        "dispatcher",
+        "administrator"
+      ],
+      "group": "Overview",
+      "scope": "branch",
+      "requirementId": "MUI-065"
+    },
+    {
+      "id": "b-orders",
+      "title": "Orders",
+      "icon": "ShoppingCart",
+      "persona": "business",
+      "webRoute": "/admin/orders",
+      "api": "orders",
+      "roles": [
+        "owner",
+        "manager",
+        "sales",
+        "dispatcher",
+        "finance"
+      ],
+      "group": "Sales & Customers",
+      "scope": "branch",
+      "requirementId": "MUI-066"
+    },
+    {
+      "id": "b-pos",
+      "title": "Retail POS",
+      "icon": "Monitor",
+      "persona": "business",
+      "webRoute": "/admin/pos",
+      "api": "pos",
+      "roles": [
+        "owner",
+        "manager",
+        "sales",
+        "finance"
+      ],
+      "group": "Sales & Customers",
+      "scope": "branch",
+      "requirementId": "MUI-067"
+    },
+    {
+      "id": "b-customers",
+      "title": "Customers",
+      "icon": "UsersRound",
+      "persona": "business",
+      "webRoute": "/admin/customers",
+      "api": "customers",
+      "roles": [
+        "owner",
+        "manager"
+      ],
+      "group": "Sales & Customers",
+      "scope": "branch",
+      "requirementId": "MUI-068"
+    },
+    {
+      "id": "b-support",
+      "title": "Support Desk",
+      "icon": "Headset",
+      "persona": "business",
+      "webRoute": "/admin/support",
+      "api": "support.list",
+      "roles": [
+        "owner",
+        "manager",
+        "sales"
+      ],
+      "group": "Sales & Customers",
+      "scope": "branch",
+      "requirementId": "MUI-069"
+    },
+    {
+      "id": "b-products",
+      "title": "Products",
+      "icon": "Package",
+      "persona": "business",
+      "webRoute": "/admin/products",
+      "api": "products.manage",
+      "roles": [
+        "owner",
+        "manager",
+        "sales",
+        "inventory",
+        "technician",
+        "service_manager",
+        "safety_officer"
+      ],
+      "group": "Products & Stock",
+      "scope": "branch",
+      "requirementId": "MUI-070"
+    },
+    {
+      "id": "b-inventory",
+      "title": "Inventory",
+      "icon": "Warehouse",
+      "persona": "business",
+      "webRoute": "/admin/inventory",
+      "api": "business.snapshot",
+      "roles": [
+        "owner",
+        "manager",
+        "inventory",
+        "sales",
+        "finance",
+        "dispatcher",
+        "administrator"
+      ],
+      "group": "Products & Stock",
+      "scope": "branch",
+      "requirementId": "MUI-071"
+    },
+    {
+      "id": "b-cylinders",
+      "title": "Cylinders",
+      "icon": "Cylinder",
+      "persona": "business",
+      "webRoute": "/admin/cylinders",
+      "api": "cylinders",
+      "roles": [
+        "owner",
+        "manager",
+        "inventory"
+      ],
+      "group": "Products & Stock",
+      "scope": "branch",
+      "requirementId": "MUI-072"
+    },
+    {
+      "id": "b-bundles",
+      "title": "Product & Service Bundles",
+      "icon": "Layers",
+      "persona": "business",
+      "webRoute": "/admin/bundles",
+      "api": "bundles.manage",
+      "roles": [
+        "owner",
+        "service_manager"
+      ],
+      "group": "Products & Stock",
+      "scope": "branch",
+      "requirementId": "MUI-073"
+    },
+    {
+      "id": "b-deliveries",
+      "title": "Deliveries",
+      "icon": "Truck",
+      "persona": "business",
+      "webRoute": "/admin/deliveries",
+      "api": "orders",
+      "roles": [
+        "owner",
+        "manager",
+        "dispatcher",
+        "driver"
+      ],
+      "group": "Delivery & Services",
+      "scope": "assignment",
+      "requirementId": "MUI-074"
+    },
+    {
+      "id": "b-bookings",
+      "title": "Service Bookings",
+      "icon": "CalendarCheck",
+      "persona": "business",
+      "webRoute": "/admin/bookings",
+      "api": "bookings",
+      "roles": [
+        "owner",
+        "service_manager",
+        "technician",
+        "safety_officer",
+        "inventory",
+        "finance"
+      ],
+      "group": "Delivery & Services",
+      "scope": "assignment",
+      "requirementId": "MUI-075"
+    },
+    {
+      "id": "b-services",
+      "title": "Professional Services",
+      "icon": "Wrench",
+      "persona": "business",
+      "webRoute": "/admin/services",
+      "api": "services.manage",
+      "roles": [
+        "owner",
+        "service_manager",
+        "technician",
+        "safety_officer",
+        "inventory",
+        "finance"
+      ],
+      "group": "Delivery & Services",
+      "scope": "branch",
+      "requirementId": "MUI-076"
+    },
+    {
+      "id": "b-technicians",
+      "title": "Technicians",
+      "icon": "HardHat",
+      "persona": "business",
+      "webRoute": "/admin/technicians",
+      "api": "services.manage",
+      "roles": [
+        "owner",
+        "service_manager",
+        "safety_officer",
+        "inventory",
+        "finance"
+      ],
+      "group": "Delivery & Services",
+      "scope": "branch",
+      "requirementId": "MUI-077"
+    },
+    {
+      "id": "b-quotations",
+      "title": "Quotations",
+      "icon": "FileText",
+      "persona": "business",
+      "webRoute": "/admin/quotations",
+      "api": "bookings",
+      "roles": [
+        "owner",
+        "service_manager",
+        "safety_officer",
+        "inventory",
+        "finance"
+      ],
+      "group": "Delivery & Services",
+      "scope": "branch",
+      "requirementId": "MUI-078"
+    },
+    {
+      "id": "b-finance",
+      "title": "Wallet & Payments",
+      "icon": "Wallet",
+      "persona": "business",
+      "webRoute": "/admin/finance",
+      "api": "business.snapshot",
+      "roles": [
+        "owner",
+        "finance"
+      ],
+      "group": "Finance & Performance",
+      "scope": "branch",
+      "requirementId": "MUI-079"
+    },
+    {
+      "id": "b-reconciliation",
+      "title": "Financial Reconciliation",
+      "icon": "RefreshCw",
+      "persona": "business",
+      "webRoute": "/admin/reconciliation",
+      "api": "finance.summary",
+      "roles": [
+        "owner",
+        "finance"
+      ],
+      "group": "Finance & Performance",
+      "scope": "branch",
+      "requirementId": "MUI-080"
+    },
+    {
+      "id": "b-credits",
+      "title": "Credits & Refunds",
+      "icon": "Receipt",
+      "persona": "business",
+      "webRoute": "/admin/credits",
+      "api": "credits",
+      "roles": [
+        "owner",
+        "finance"
+      ],
+      "group": "Finance & Performance",
+      "scope": "branch",
+      "requirementId": "MUI-081"
+    },
+    {
+      "id": "b-reports",
+      "title": "Reports & Analytics",
+      "icon": "ChartNoAxesCombined",
+      "persona": "business",
+      "webRoute": "/admin/reports",
+      "api": "business.snapshot",
+      "roles": [
+        "owner",
+        "manager",
+        "inventory",
+        "sales",
+        "finance",
+        "dispatcher",
+        "administrator"
+      ],
+      "group": "Finance & Performance",
+      "scope": "branch",
+      "requirementId": "MUI-082"
+    },
+    {
+      "id": "b-campaigns",
+      "title": "Campaigns",
+      "icon": "Megaphone",
+      "persona": "business",
+      "webRoute": "/admin/campaigns",
+      "api": "campaigns",
+      "roles": [
+        "owner",
+        "manager"
+      ],
+      "group": "Growth & Engagement",
+      "scope": "branch",
+      "requirementId": "MUI-083"
+    },
+    {
+      "id": "b-recommendations",
+      "title": "Recommendations",
+      "icon": "Lightbulb",
+      "persona": "business",
+      "webRoute": "/admin/recommendations",
+      "api": "recommendations.manage",
+      "roles": [
+        "owner",
+        "service_manager",
+        "safety_officer"
+      ],
+      "group": "Growth & Engagement",
+      "scope": "branch",
+      "requirementId": "MUI-084"
+    },
+    {
+      "id": "b-testimonials",
+      "title": "Customer Testimonials",
+      "icon": "Headset",
+      "persona": "business",
+      "webRoute": "/admin/testimonials",
+      "api": "testimonials.manage",
+      "roles": [
+        "owner"
+      ],
+      "group": "Growth & Engagement",
+      "scope": "global",
+      "requirementId": "MUI-085"
+    },
+    {
+      "id": "b-staff",
+      "title": "Staff Management",
+      "icon": "UsersRound",
+      "persona": "business",
+      "webRoute": "/admin/staff",
+      "api": "staff.manage",
+      "roles": [
+        "owner",
+        "administrator",
+        "manager"
+      ],
+      "group": "Administration & Control",
+      "scope": "branch",
+      "requirementId": "MUI-086"
+    },
+    {
+      "id": "b-approvals",
+      "title": "Approval Centre",
+      "icon": "ShieldCheck",
+      "persona": "business",
+      "webRoute": "/admin/approvals",
+      "api": "approvals",
+      "roles": [
+        "owner",
+        "manager",
+        "sales",
+        "inventory",
+        "dispatcher",
+        "finance",
+        "administrator",
+        "service_manager",
+        "safety_officer"
+      ],
+      "group": "Administration & Control",
+      "scope": "branch",
+      "requirementId": "MUI-087"
+    },
+    {
+      "id": "b-settings",
+      "title": "Settings",
+      "icon": "Settings",
+      "persona": "business",
+      "webRoute": "/admin/settings",
+      "api": "settings",
+      "roles": [
+        "owner",
+        "manager",
+        "sales",
+        "inventory",
+        "dispatcher",
+        "finance",
+        "administrator",
+        "service_manager",
+        "safety_officer"
+      ],
+      "group": "Administration & Control",
+      "scope": "branch",
+      "requirementId": "MUI-088"
+    },
+    {
+      "id": "b-operations",
+      "title": "Operations Centre",
+      "icon": "ClipboardList",
+      "persona": "business",
+      "webRoute": "/admin/operations",
+      "api": "purchasing",
+      "roles": [
+        "owner",
+        "manager",
+        "inventory",
+        "finance"
+      ],
+      "group": "Administration & Control",
+      "scope": "branch",
+      "requirementId": "MUI-089"
+    },
+    {
+      "id": "b-incidents",
+      "title": "Operational Incidents",
+      "icon": "TriangleAlert",
+      "persona": "business",
+      "webRoute": "/admin/incidents",
+      "api": "incidents",
+      "roles": [
+        "owner",
+        "administrator",
+        "service_manager",
+        "safety_officer",
+        "finance"
+      ],
+      "group": "Administration & Control",
+      "scope": "branch",
+      "requirementId": "MUI-090"
+    },
+    {
+      "id": "b-policies",
+      "title": "Customer Policies",
+      "icon": "FileCheck",
+      "persona": "business",
+      "webRoute": "/admin/policies",
+      "api": "policies.manage",
+      "roles": [
+        "owner",
+        "administrator"
+      ],
+      "group": "Administration & Control",
+      "scope": "branch",
+      "requirementId": "MUI-091"
+    },
+    {
+      "id": "b-audit",
+      "title": "Audit History",
+      "icon": "ScrollText",
+      "persona": "business",
+      "webRoute": "/admin/audit",
+      "api": "audit",
+      "roles": [
+        "owner",
+        "administrator"
+      ],
+      "group": "Administration & Control",
+      "scope": "global",
+      "requirementId": "MUI-092"
+    },
+    {
+      "id": "b-readiness",
+      "title": "Launch Readiness",
+      "icon": "Rocket",
+      "persona": "business",
+      "webRoute": "/admin/readiness",
+      "api": "production.readiness",
+      "roles": [
+        "owner"
+      ],
+      "group": "Administration & Control",
+      "scope": "global",
+      "requirementId": "MUI-093"
+    },
+    {
+      "id": "b-detail",
+      "title": "Record details",
+      "icon": "file",
+      "persona": "business",
+      "webRoute": "/admin",
+      "api": "Scoped read actions",
+      "group": "Contextual flows",
+      "roles": [
+        "owner"
+      ],
+      "requirementId": "MUI-094"
+    },
+    {
+      "id": "b-edit",
+      "title": "Create or edit a record",
+      "icon": "file",
+      "persona": "business",
+      "webRoute": "/admin",
+      "api": "Existing governed mutation actions",
+      "group": "Contextual flows",
+      "roles": [
+        "owner"
+      ],
+      "requirementId": "MUI-095"
+    },
+    {
+      "id": "b-review",
+      "title": "Review approval",
+      "icon": "file",
+      "persona": "business",
+      "webRoute": "/admin",
+      "api": "approval.decide",
+      "group": "Contextual flows",
+      "roles": [
+        "owner"
+      ],
+      "requirementId": "MUI-096"
+    },
+    {
+      "id": "b-import",
+      "title": "Import products",
+      "icon": "file",
+      "persona": "business",
+      "webRoute": "/admin",
+      "api": "product.import",
+      "group": "Contextual flows",
+      "roles": [
+        "owner"
+      ],
+      "requirementId": "MUI-097"
+    },
+    {
+      "id": "b-verify",
+      "title": "Verify your password",
+      "icon": "file",
+      "persona": "business",
+      "webRoute": "/admin",
+      "api": "reauth",
+      "group": "Contextual flows",
+      "roles": [
+        "owner"
+      ],
+      "requirementId": "MUI-098"
+    },
+    {
+      "id": "b-workspace",
+      "title": "Your mobile workspace",
+      "icon": "more",
+      "persona": "business",
+      "webRoute": "/admin",
+      "api": "navigation",
+      "group": "Overview",
+      "roles": [
+        "owner",
+        "manager",
+        "finance",
+        "inventory",
+        "sales",
+        "dispatcher",
+        "administrator",
+        "service_manager",
+        "safety_officer"
+      ],
+      "scope": "role-filtered navigation",
+      "requirementId": "MUI-099"
+    }
+  ],
+  "customerNavigation": [
+    {
+      "href": "/account",
+      "label": "Overview",
+      "group": "overview",
+      "icon": "House"
+    },
+    {
+      "href": "/notifications",
+      "label": "Notifications",
+      "group": "overview",
+      "icon": "Bell",
+      "counter": "notifications"
+    },
+    {
+      "href": "/account-settings",
+      "label": "Account & Privacy",
+      "group": "overview",
+      "icon": "UserRound"
+    },
+    {
+      "href": "/services",
+      "label": "Professional Services",
+      "group": "gas",
+      "icon": "Wrench"
+    },
+    {
+      "href": "/bookings",
+      "label": "Service Appointments",
+      "group": "gas",
+      "icon": "CalendarDays",
+      "counter": "bookings"
+    },
+    {
+      "href": "/consumption",
+      "label": "Cooking Gas Profiles",
+      "group": "gas",
+      "icon": "ChartColumn"
+    },
+    {
+      "href": "/orders",
+      "label": "My Orders",
+      "group": "orders",
+      "icon": "ShoppingCart",
+      "counter": "orders"
+    },
+    {
+      "href": "/wallet",
+      "label": "My Wallet",
+      "group": "orders",
+      "icon": "Wallet"
+    },
+    {
+      "href": "/purchase-credit",
+      "label": "Credit & Redemption",
+      "group": "orders",
+      "icon": "CreditCard"
+    },
+    {
+      "href": "/rewards",
+      "label": "EasyRewards",
+      "group": "plans",
+      "icon": "Gift"
+    },
+    {
+      "href": "/schedules",
+      "label": "Refill Plans",
+      "group": "plans",
+      "icon": "CalendarDays"
+    },
+    {
+      "href": "/recurring",
+      "label": "Recurring Orders",
+      "group": "plans",
+      "icon": "RefreshCw"
+    },
+    {
+      "href": "/refill",
+      "label": "Smart Refill",
+      "group": "plans",
+      "icon": "CircleGauge"
+    },
+    {
+      "href": "/help",
+      "label": "Help & Support",
+      "group": "support",
+      "icon": "Headphones"
+    },
+    {
+      "href": "/support",
+      "label": "Support Conversations",
+      "group": "support",
+      "icon": "MessagesSquare",
+      "counter": "support"
+    }
+  ],
+  "businessNavigation": [
+    {
+      "id": "overview",
+      "label": "Overview",
+      "items": [
+        {
+          "id": "dashboard",
+          "label": "Dashboard",
+          "icon": "House",
+          "roles": [
+            "owner",
+            "manager",
+            "inventory",
+            "sales",
+            "finance",
+            "dispatcher",
+            "administrator"
+          ],
+          "readAction": "business.snapshot",
+          "scope": "branch",
+          "href": "/admin",
+          "match": "exact"
+        }
+      ]
+    },
+    {
+      "id": "sales",
+      "label": "Sales & Customers",
+      "items": [
+        {
+          "id": "orders",
+          "label": "Orders",
+          "icon": "ShoppingCart",
+          "roles": [
+            "owner",
+            "manager",
+            "sales",
+            "dispatcher",
+            "finance"
+          ],
+          "readAction": "orders",
+          "badgeKey": "orders",
+          "scope": "branch",
+          "href": "/admin/orders",
+          "match": "section"
+        },
+        {
+          "id": "pos",
+          "label": "Retail POS",
+          "icon": "Monitor",
+          "roles": [
+            "owner",
+            "manager",
+            "sales",
+            "finance"
+          ],
+          "readAction": "pos",
+          "scope": "branch",
+          "href": "/admin/pos",
+          "match": "section"
+        },
+        {
+          "id": "customers",
+          "label": "Customers",
+          "icon": "UsersRound",
+          "roles": [
+            "owner",
+            "manager"
+          ],
+          "readAction": "customers",
+          "scope": "branch",
+          "href": "/admin/customers",
+          "match": "section"
+        },
+        {
+          "id": "support",
+          "label": "Support Desk",
+          "icon": "Headset",
+          "roles": [
+            "owner",
+            "manager",
+            "sales"
+          ],
+          "readAction": "support.list",
+          "badgeKey": "support",
+          "scope": "branch",
+          "href": "/admin/support",
+          "match": "section"
+        }
+      ]
+    },
+    {
+      "id": "stock",
+      "label": "Products & Stock",
+      "items": [
+        {
+          "id": "products",
+          "label": "Products",
+          "icon": "Package",
+          "roles": [
+            "owner",
+            "manager",
+            "sales",
+            "inventory",
+            "technician",
+            "service_manager",
+            "safety_officer"
+          ],
+          "readAction": "products.manage",
+          "scope": "branch",
+          "href": "/admin/products",
+          "match": "section"
+        },
+        {
+          "id": "inventory",
+          "label": "Inventory",
+          "icon": "Warehouse",
+          "roles": [
+            "owner",
+            "manager",
+            "inventory",
+            "sales",
+            "finance",
+            "dispatcher",
+            "administrator"
+          ],
+          "readAction": "business.snapshot",
+          "badgeKey": "inventory",
+          "scope": "branch",
+          "href": "/admin/inventory",
+          "match": "section"
+        },
+        {
+          "id": "cylinders",
+          "label": "Cylinders",
+          "icon": "Cylinder",
+          "roles": [
+            "owner",
+            "manager",
+            "inventory"
+          ],
+          "readAction": "cylinders",
+          "scope": "branch",
+          "href": "/admin/cylinders",
+          "match": "section"
+        },
+        {
+          "id": "bundles",
+          "label": "Product & Service Bundles",
+          "icon": "Layers",
+          "roles": [
+            "owner",
+            "service_manager"
+          ],
+          "readAction": "bundles.manage",
+          "scope": "branch",
+          "href": "/admin/bundles",
+          "match": "section"
+        }
+      ]
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery & Services",
+      "items": [
+        {
+          "id": "deliveries",
+          "label": "Deliveries",
+          "icon": "Truck",
+          "roles": [
+            "owner",
+            "manager",
+            "dispatcher",
+            "driver"
+          ],
+          "readAction": "orders",
+          "badgeKey": "deliveries",
+          "scope": "assignment",
+          "href": "/admin/deliveries",
+          "match": "section"
+        },
+        {
+          "id": "bookings",
+          "label": "Service Bookings",
+          "icon": "CalendarCheck",
+          "roles": [
+            "owner",
+            "service_manager",
+            "technician",
+            "safety_officer",
+            "inventory",
+            "finance"
+          ],
+          "readAction": "bookings",
+          "badgeKey": "bookings",
+          "scope": "assignment",
+          "href": "/admin/bookings",
+          "match": "section"
+        },
+        {
+          "id": "services",
+          "label": "Professional Services",
+          "icon": "Wrench",
+          "roles": [
+            "owner",
+            "service_manager",
+            "technician",
+            "safety_officer",
+            "inventory",
+            "finance"
+          ],
+          "readAction": "services.manage",
+          "scope": "branch",
+          "href": "/admin/services",
+          "match": "section"
+        },
+        {
+          "id": "technicians",
+          "label": "Technicians",
+          "icon": "HardHat",
+          "roles": [
+            "owner",
+            "service_manager",
+            "safety_officer",
+            "inventory",
+            "finance"
+          ],
+          "readAction": "services.manage",
+          "scope": "branch",
+          "href": "/admin/technicians",
+          "match": "section"
+        },
+        {
+          "id": "quotations",
+          "label": "Quotations",
+          "icon": "FileText",
+          "roles": [
+            "owner",
+            "service_manager",
+            "safety_officer",
+            "inventory",
+            "finance"
+          ],
+          "readAction": "bookings",
+          "scope": "branch",
+          "href": "/admin/quotations",
+          "match": "section"
+        }
+      ]
+    },
+    {
+      "id": "finance",
+      "label": "Finance & Performance",
+      "items": [
+        {
+          "id": "finance",
+          "label": "Wallet & Payments",
+          "icon": "Wallet",
+          "roles": [
+            "owner",
+            "finance"
+          ],
+          "readAction": "business.snapshot",
+          "scope": "branch",
+          "href": "/admin/finance",
+          "match": "section"
+        },
+        {
+          "id": "reconciliation",
+          "label": "Financial Reconciliation",
+          "icon": "RefreshCw",
+          "roles": [
+            "owner",
+            "finance"
+          ],
+          "readAction": "finance.summary",
+          "badgeKey": "reconciliation",
+          "scope": "branch",
+          "href": "/admin/reconciliation",
+          "match": "section"
+        },
+        {
+          "id": "credits",
+          "label": "Credits & Refunds",
+          "icon": "Receipt",
+          "roles": [
+            "owner",
+            "finance"
+          ],
+          "readAction": "credits",
+          "scope": "branch",
+          "href": "/admin/credits",
+          "match": "section"
+        },
+        {
+          "id": "reports",
+          "label": "Reports & Analytics",
+          "icon": "ChartNoAxesCombined",
+          "roles": [
+            "owner",
+            "manager",
+            "inventory",
+            "sales",
+            "finance",
+            "dispatcher",
+            "administrator"
+          ],
+          "readAction": "business.snapshot",
+          "scope": "branch",
+          "href": "/admin/reports",
+          "match": "section"
+        }
+      ]
+    },
+    {
+      "id": "growth",
+      "label": "Growth & Engagement",
+      "items": [
+        {
+          "id": "campaigns",
+          "label": "Campaigns",
+          "icon": "Megaphone",
+          "roles": [
+            "owner",
+            "manager"
+          ],
+          "readAction": "campaigns",
+          "scope": "branch",
+          "href": "/admin/campaigns",
+          "match": "section"
+        },
+        {
+          "id": "recommendations",
+          "label": "Recommendations",
+          "icon": "Lightbulb",
+          "roles": [
+            "owner",
+            "service_manager",
+            "safety_officer"
+          ],
+          "readAction": "recommendations.manage",
+          "scope": "branch",
+          "href": "/admin/recommendations",
+          "match": "section"
+        },
+        {
+          "id": "testimonials",
+          "label": "Customer Testimonials",
+          "icon": "Headset",
+          "roles": [
+            "owner"
+          ],
+          "readAction": "testimonials.manage",
+          "scope": "global",
+          "href": "/admin/testimonials",
+          "match": "section"
+        }
+      ]
+    },
+    {
+      "id": "administration",
+      "label": "Administration & Control",
+      "items": [
+        {
+          "id": "staff",
+          "label": "Staff Management",
+          "icon": "UsersRound",
+          "roles": [
+            "owner",
+            "administrator",
+            "manager"
+          ],
+          "readAction": "staff.manage",
+          "scope": "branch",
+          "href": "/admin/staff",
+          "match": "section"
+        },
+        {
+          "id": "approvals",
+          "label": "Approval Centre",
+          "icon": "ShieldCheck",
+          "roles": [
+            "owner",
+            "manager",
+            "sales",
+            "inventory",
+            "dispatcher",
+            "finance",
+            "administrator",
+            "service_manager",
+            "safety_officer"
+          ],
+          "readAction": "approvals",
+          "badgeKey": "approvals",
+          "scope": "branch",
+          "href": "/admin/approvals",
+          "match": "section"
+        },
+        {
+          "id": "settings",
+          "label": "Settings",
+          "icon": "Settings",
+          "roles": [
+            "owner",
+            "manager",
+            "sales",
+            "inventory",
+            "dispatcher",
+            "finance",
+            "administrator",
+            "service_manager",
+            "safety_officer"
+          ],
+          "readAction": "settings",
+          "scope": "branch",
+          "href": "/admin/settings",
+          "match": "section"
+        },
+        {
+          "id": "operations",
+          "label": "Operations Centre",
+          "icon": "ClipboardList",
+          "roles": [
+            "owner",
+            "manager",
+            "inventory",
+            "finance"
+          ],
+          "readAction": "purchasing",
+          "scope": "branch",
+          "href": "/admin/operations",
+          "match": "section"
+        },
+        {
+          "id": "incidents",
+          "label": "Operational Incidents",
+          "icon": "TriangleAlert",
+          "roles": [
+            "owner",
+            "administrator",
+            "service_manager",
+            "safety_officer",
+            "finance"
+          ],
+          "readAction": "incidents",
+          "badgeKey": "incidents",
+          "scope": "branch",
+          "href": "/admin/incidents",
+          "match": "section"
+        },
+        {
+          "id": "policies",
+          "label": "Customer Policies",
+          "icon": "FileCheck",
+          "roles": [
+            "owner",
+            "administrator"
+          ],
+          "readAction": "policies.manage",
+          "scope": "branch",
+          "href": "/admin/policies",
+          "match": "section"
+        },
+        {
+          "id": "audit",
+          "label": "Audit History",
+          "icon": "ScrollText",
+          "roles": [
+            "owner",
+            "administrator"
+          ],
+          "readAction": "audit",
+          "scope": "global",
+          "href": "/admin/audit",
+          "match": "section"
+        },
+        {
+          "id": "readiness",
+          "label": "Launch Readiness",
+          "icon": "Rocket",
+          "roles": [
+            "owner"
+          ],
+          "readAction": "production.readiness",
+          "scope": "global",
+          "href": "/admin/readiness",
+          "match": "section"
+        }
+      ]
+    }
+  ]
+}

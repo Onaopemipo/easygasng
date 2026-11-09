@@ -1,0 +1,2357 @@
+{
+  "phase": "customer-dashboard",
+  "date": "2026-10-30",
+  "releaseDecision": "NO-GO \u2014 Public Commercial Production",
+  "requirements": [
+    {
+      "id": "CD-REQ-001",
+      "requirement": "Shared customer authentication",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Shared customer authentication",
+      "route": "Website / /account",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z",
+        "CD-E,F"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-002",
+      "requirement": "Website to dashboard navigation",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Website to dashboard navigation",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z",
+        "CD-E,F"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-003",
+      "requirement": "Dashboard to website navigation",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Dashboard to website navigation",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z",
+        "CD-E,F"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-004",
+      "requirement": "Continue Shopping navigation",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Continue Shopping navigation",
+      "route": "Website / dashboard",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z",
+        "CD-E,F"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-005",
+      "requirement": "Shopping cart continuity",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Shopping cart continuity",
+      "route": "Cart / dashboard",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-G,H"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-006",
+      "requirement": "Guest cart recovery",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Guest cart recovery",
+      "route": "Authentication / checkout",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-G,H"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-007",
+      "requirement": "Saved delivery location continuity",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Saved delivery location continuity",
+      "route": "Website / dashboard",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-U,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-008",
+      "requirement": "Protected route redirects",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Protected route redirects",
+      "route": "Customer routes",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-D"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json",
+        "docs/testing/customer-protected-routes-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-009",
+      "requirement": "Session expiry",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Session expiry",
+      "route": "Customer routes",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-E,F"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json",
+        "docs/testing/customer-protected-routes-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-010",
+      "requirement": "Cross-tab logout",
+      "priority": "P0",
+      "scope": "shared",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Cross-tab logout",
+      "route": "Website / dashboard",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/lib/auth.ts",
+        "apps/web/components/ui.tsx"
+      ],
+      "dataSource": "Existing authenticated session and shared easygas.cart; no new identity/cart store",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-E,F"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-011",
+      "requirement": "Approved EasyGas visual design",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Approved EasyGas visual design",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-06",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-012",
+      "requirement": "Official logo and brand colours",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Official logo and brand colours",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-06",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-013",
+      "requirement": "Personalised customer welcome",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Personalised customer welcome",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-06",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-014",
+      "requirement": "Promotional hero",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Promotional hero",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-06",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-015",
+      "requirement": "Workspace header",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Workspace header",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-U,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-06",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-016",
+      "requirement": "All 15 customer routes",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 All 15 customer routes",
+      "route": "Customer sidebar",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-017",
+      "requirement": "Grouped sidebar",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Grouped sidebar",
+      "route": "Customer sidebar",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-018",
+      "requirement": "Expanded sidebar",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Expanded sidebar",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-019",
+      "requirement": "Collapsed sidebar",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Collapsed sidebar",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-020",
+      "requirement": "Mobile navigation drawer",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Mobile navigation drawer",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-021",
+      "requirement": "Active route highlighting",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Active route highlighting",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-022",
+      "requirement": "Navigation preference persistence",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Navigation preference persistence",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Authenticated profile, customer route configuration and UI-only per-user preferences",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-023",
+      "requirement": "Orders summary",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Orders summary",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Customer-owned orders, wallet_entries, reward_entries, refill_schedules, service_bookings, notifications and verified_payments",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-I,K,V,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-08",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-024",
+      "requirement": "Wallet balance",
+      "priority": "P0",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Wallet balance",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "wallet_entries sum(amount_kobo), reward_entries sum(points), including signed adjustments; never unverified funding",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-L,M,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-08",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-025",
+      "requirement": "EasyRewards summary",
+      "priority": "P0",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 EasyRewards summary",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "wallet_entries sum(amount_kobo), reward_entries sum(points), including signed adjustments; never unverified funding",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-L,M,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-08",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-026",
+      "requirement": "Next refill summary",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Next refill summary",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Customer-owned orders, wallet_entries, reward_entries, refill_schedules, service_bookings, notifications and verified_payments",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-08",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-027",
+      "requirement": "Dashboard loading states",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Dashboard loading states",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Customer-owned orders, wallet_entries, reward_entries, refill_schedules, service_bookings, notifications and verified_payments",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-J"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-08",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-028",
+      "requirement": "Empty states",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Empty states",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Customer-owned orders, wallet_entries, reward_entries, refill_schedules, service_bookings, notifications and verified_payments",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-J"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-08",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-029",
+      "requirement": "Independent widget failures",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Independent widget failures",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Customer-owned orders, wallet_entries, reward_entries, refill_schedules, service_bookings, notifications and verified_payments",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Y"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-15",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-030",
+      "requirement": "Recent activity",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Recent activity",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Customer-owned orders, wallet_entries, reward_entries, refill_schedules, service_bookings, notifications and verified_payments",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-O,Q"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-09",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-031",
+      "requirement": "Activity links",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Activity links",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Customer-owned orders, wallet_entries, reward_entries, refill_schedules, service_bookings, notifications and verified_payments",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-O,Q"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-09",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-032",
+      "requirement": "Notification indicators",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Notification indicators",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Customer-owned orders, wallet_entries, reward_entries, refill_schedules, service_bookings, notifications and verified_payments",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-I,K,V,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-09",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-033",
+      "requirement": "Cooking gas profiles",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Cooking gas profiles",
+      "route": "/consumption",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Owned consumption_profiles, refill_history and existing forecast service",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-10",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-034",
+      "requirement": "Verified refill history",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Verified refill history",
+      "route": "/consumption",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Owned consumption_profiles, refill_history and existing forecast service",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-O,Q"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-10",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-035",
+      "requirement": "Gas purchase history chart",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Gas purchase history chart",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Owned consumption_profiles, refill_history and existing forecast service",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-O,Q"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-10",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-036",
+      "requirement": "Smart refill predictions",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Smart refill predictions",
+      "route": "/refill",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Owned consumption_profiles, refill_history and existing forecast service",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-10",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-037",
+      "requirement": "Insufficient-data handling",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Insufficient-data handling",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Owned consumption_profiles, refill_history and existing forecast service",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-10",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-038",
+      "requirement": "Prediction confidence",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Prediction confidence",
+      "route": "/refill",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Owned consumption_profiles, refill_history and existing forecast service",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-10",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-039",
+      "requirement": "Customer refill feedback",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Customer refill feedback",
+      "route": "/refill",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/forecast.ts",
+        "packages/business-rules/src/refill-feedback.ts",
+        "database/migrations/032_customer_refill_feedback.sql",
+        "supabase/migrations/20261030030143_customer_refill_feedback_states.sql"
+      ],
+      "dataSource": "Owned consumption_profiles, refill_history and existing forecast service",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-N",
+        "CD-N-feedback"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts",
+        "tests/refill-feedback.test.ts"
+      ],
+      "testResult": "PASS: executed ownership, rate-limit, worker suppression, 24-hour boundary, verified-history and browser self-report tests.",
+      "acceptanceGate": "CD-10",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All five feedback states persist through the owned existing workflow. Self-reports suppress obsolete forecasts without creating history; snooze pauses estimated reminders for 24 hours; later verified purchases supersede the report.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json",
+        "docs/screenshots/customer-refill-feedback-20261030.png"
+      ],
+      "outstandingWork": "None within local scope. External reports remain explicitly unverified; online notifications remain disconnected.",
+      "negativeTests": [
+        "CD-N"
+      ]
+    },
+    {
+      "id": "CD-REQ-040",
+      "requirement": "Refill reminder preferences",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Refill reminder preferences",
+      "route": "/refill",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Owned consumption_profiles, refill_history and existing forecast service",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-10",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-041",
+      "requirement": "Order Gas",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Order Gas",
+      "route": "Existing ordering route",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Existing customer workflow route and authoritative API",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-11",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-042",
+      "requirement": "Book a Service",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Book a Service",
+      "route": "/services",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Existing customer workflow route and authoritative API",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-11",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-043",
+      "requirement": "Wallet action",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Wallet action",
+      "route": "/wallet",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Existing customer workflow route and authoritative API",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-11",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-044",
+      "requirement": "View Rewards",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 View Rewards",
+      "route": "/rewards",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Existing customer workflow route and authoritative API",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-11",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-045",
+      "requirement": "Plan a Refill",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Plan a Refill",
+      "route": "/schedules",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Existing customer workflow route and authoritative API",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-11",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-046",
+      "requirement": "View My Orders",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 View My Orders",
+      "route": "/orders",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Existing customer workflow route and authoritative API",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-11",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-047",
+      "requirement": "Account Settings",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Account Settings",
+      "route": "/account-settings",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Existing customer workflow route and authoritative API",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-048",
+      "requirement": "Support access",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Support access",
+      "route": "/help, /support",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "dataSource": "Existing customer workflow route and authoritative API",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-049",
+      "requirement": "Customer order isolation",
+      "priority": "P0",
+      "scope": "backend",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Customer order isolation",
+      "route": "Orders",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-I,K,V,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-12",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-050",
+      "requirement": "Wallet isolation",
+      "priority": "P0",
+      "scope": "backend",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Wallet isolation",
+      "route": "Wallet",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "wallet_entries sum(amount_kobo), reward_entries sum(points), including signed adjustments; never unverified funding",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-L,M,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-12",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-051",
+      "requirement": "Loyalty isolation",
+      "priority": "P0",
+      "scope": "backend",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Loyalty isolation",
+      "route": "Rewards",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "wallet_entries sum(amount_kobo), reward_entries sum(points), including signed adjustments; never unverified funding",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-L,M,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-12",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-052",
+      "requirement": "Gas profile isolation",
+      "priority": "P0",
+      "scope": "backend",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Gas profile isolation",
+      "route": "Consumption",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-12",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-053",
+      "requirement": "Service booking isolation",
+      "priority": "P0",
+      "scope": "backend",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Service booking isolation",
+      "route": "Bookings",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-12",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-054",
+      "requirement": "Notification isolation",
+      "priority": "P0",
+      "scope": "backend",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Notification isolation",
+      "route": "Notifications",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-I,K,V,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-12",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-055",
+      "requirement": "Support conversation isolation",
+      "priority": "P0",
+      "scope": "backend",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Support conversation isolation",
+      "route": "Support",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-12",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-056",
+      "requirement": "Saved address isolation",
+      "priority": "P0",
+      "scope": "backend",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Saved address isolation",
+      "route": "Customer addresses",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-U,Z"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-12",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-057",
+      "requirement": "Desktop responsiveness",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Desktop responsiveness",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-13",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-058",
+      "requirement": "Tablet responsiveness",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Tablet responsiveness",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PARTIAL: linked automated tests passed; outstanding verification is listed explicitly.",
+      "acceptanceGate": "CD-13",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Responsive tablet CSS implemented; final tablet viewport override could not be applied to the replacement QA tab.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "Run and retain an actual 1024px browser verification.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-059",
+      "requirement": "Mobile responsiveness",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Mobile responsiveness",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-13",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-060",
+      "requirement": "Keyboard accessibility",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Keyboard accessibility",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PARTIAL: linked automated tests passed; outstanding verification is listed explicitly.",
+      "acceptanceGate": "CD-14",
+      "status": "PARTIAL",
+      "reason": "Four navigation groups verified by Space/Enter; mobile initial focus and Escape restoration verified. Full forward/backward drawer trap and all compact tooltip keyboard checks remain unverified.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "Complete remaining keyboard focus-cycle checks in the final browser build.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-061",
+      "requirement": "Screen reader accessibility",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Screen reader accessibility",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PARTIAL: linked automated tests passed; outstanding verification is listed explicitly.",
+      "acceptanceGate": "CD-14",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Semantic navigation, headings, labels, inert drawer background and actual browser accessibility tree inspected. No dedicated screen-reader session executed.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "Run VoiceOver or equivalent with expanded/compact/drawer and history table.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-062",
+      "requirement": "Reduced-motion support",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Reduced-motion support",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-R"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PARTIAL: linked automated tests passed; outstanding verification is listed explicitly.",
+      "acceptanceGate": "CD-14",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Reduced-motion CSS disables transitions/animations in the workspace; live preference override not exercised in this phase.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "Verify computed motion with prefers-reduced-motion enabled.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-063",
+      "requirement": "Dashboard loading performance",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Dashboard loading performance",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-63"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-15",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    },
+    {
+      "id": "CD-REQ-064",
+      "requirement": "Subscription cleanup",
+      "priority": "P0",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Subscription cleanup",
+      "route": "Customer layout",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/components/customer-workspace.tsx"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-E,F"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-15",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": [
+        "CD-Z",
+        "CD-I,K,V,Z",
+        "CD-E,F"
+      ]
+    },
+    {
+      "id": "CD-REQ-065",
+      "requirement": "Error recovery",
+      "priority": "P1",
+      "scope": "dashboard",
+      "uiReference": "docs/customer/approved-dashboard-reference-20261030.png \u2014 Error recovery",
+      "route": "Customer dashboard",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/lib/customer-dashboard.ts"
+      ],
+      "dataSource": "Authenticated identity and ownership predicates in existing services",
+      "securityControl": "Server actor validates active unexpired/unrevoked session. Queries bind authenticated user ID; strict new read model rejects browser-supplied customer IDs. UI preferences confer no authority.",
+      "testIds": [
+        "CD-Y"
+      ],
+      "testFiles": [
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testResult": "PASS (linked executed tests; see reason for any remaining verification)",
+      "acceptanceGate": "CD-15",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source reviewed; successful targeted regression and/or browser evidence confirms the specified local behaviour.",
+      "evidence": [
+        "docs/testing/customer-dashboard-focused-20261030.txt",
+        "docs/testing/customer-dashboard-regression-20261030.txt",
+        "docs/testing/customer-dashboard-browser-20261030.json",
+        "docs/testing/customer-dashboard-journeys-20261030.json"
+      ],
+      "outstandingWork": "None within the documented local verification scope.",
+      "negativeTests": []
+    }
+  ],
+  "gates": [
+    {
+      "id": "CD-01",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-02",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-03",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-04",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-05",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-06",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-07",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-08",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-09",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-10",
+      "status": "PASS",
+      "reason": "Existing forecasts/history, all five owned feedback states, worker snooze/self-report suppression, verified-purchase supersession and browser persistence verified. No unverified gas purchase is created."
+    },
+    {
+      "id": "CD-11",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-12",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    },
+    {
+      "id": "CD-13",
+      "status": "NOT_TESTED",
+      "reason": "Desktop and all 15 mobile routes verified; final tablet verification outstanding."
+    },
+    {
+      "id": "CD-14",
+      "status": "NOT_TESTED",
+      "reason": "Keyboard groups, labels, focus restoration and AX tree verified; full focus-cycle, screen reader and live reduced-motion checks outstanding."
+    },
+    {
+      "id": "CD-15",
+      "status": "PASS",
+      "reason": "Local code, regression and browser evidence; external commercial integrations are excluded."
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-10-30",
+      "change": "Initial full 65-requirement mapping; unsupported feedback and unexecuted accessibility/tablet checks remain visible. No requirements removed."
+    },
+    {
+      "date": "2026-10-30",
+      "change": "CD-REQ-039 closed using additive state-constraint migration032. Existing three states/append-only history/ownership/rate limits remain valid; two additional customer signals do not create financial or verified purchase records. Full worker and browser tests passed."
+    }
+  ]
+}

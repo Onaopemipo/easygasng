@@ -1,0 +1,2646 @@
+{
+  "phase": "Homepage, testimonials, shared themes and dependency-aware task register",
+  "sourceSpecifications": [
+    "EasyGas_Dark_Mode_Codex_Master_Prompt.md",
+    "Approved Homepage master/continuations, phases 24\u201325",
+    "User refinement: dependency-aware task register alongside blocker register"
+  ],
+  "releaseDecision": "NO-GO \u2014 Public Commercial Production",
+  "scopeChanges": [
+    "Owner-only testimonial module adds the approved /admin/testimonials route; administration navigation grows from 28 to 29 routes. Existing role-specific navigation is preserved.",
+    "Photos reuse media_assets rather than introducing another storage system.",
+    "No verified app store URLs or real testimonials are invented; working web CTA and genuine empty state are used.",
+    "Additive migrations 034\u2013037 remain local; no hosted project or deployment is created."
+  ],
+  "requirements": [
+    {
+      "id": "HP-01",
+      "requirement": "Homepage Rendering",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G01",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-02",
+      "requirement": "Navigation Integrity",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G02",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-03",
+      "requirement": "Authentication Continuity",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G02",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-04",
+      "requirement": "Gas Pricing",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "HP-DATA"
+      ],
+      "acceptanceGate": "HP-G03",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-05",
+      "requirement": "Delivery Fee",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "HP-DATA"
+      ],
+      "acceptanceGate": "HP-G03",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-06",
+      "requirement": "Gas Quantity Validation",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "BLOCKED",
+      "reason": "Actual business quantity policy/stock are not activated. Validation, estimate, draft and checkout restrictions are implemented; operational limits are not invented.",
+      "testResult": "BLOCKED: local checks pass; environment acceptance remains open",
+      "outstandingWork": "Business owner proposes/approves the genuine quantity policy, records available stock and executes configured-environment checkout acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G03",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-07",
+      "requirement": "Delivery Locations",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G03",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-08",
+      "requirement": "Product Catalogue",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "HP-DATA"
+      ],
+      "acceptanceGate": "HP-G04",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-09",
+      "requirement": "Product Availability",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "HP-DATA"
+      ],
+      "acceptanceGate": "HP-G04",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-10",
+      "requirement": "Cart Integration",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "BLOCKED",
+      "reason": "Actual business quantity policy/stock are not activated. Validation, estimate, draft and checkout restrictions are implemented; operational limits are not invented.",
+      "testResult": "BLOCKED: local checks pass; environment acceptance remains open",
+      "outstandingWork": "Business owner proposes/approves the genuine quantity policy, records available stock and executes configured-environment checkout acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G03",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-11",
+      "requirement": "Service Integration",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "HP-DATA"
+      ],
+      "acceptanceGate": "HP-G04",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-12",
+      "requirement": "Rewards Integration",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G05",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-13",
+      "requirement": "Testimonial Submission",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "TM-01",
+        "TM-02",
+        "TM-09",
+        "TM-RUNTIME"
+      ],
+      "acceptanceGate": "HP-G05",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-14",
+      "requirement": "Testimonial Moderation",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "TM-01",
+        "TM-02",
+        "TM-09",
+        "TM-RUNTIME"
+      ],
+      "acceptanceGate": "HP-G05",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-15",
+      "requirement": "Testimonial Privacy",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/request-origin.ts",
+        "apps/web/lib/accounts.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts",
+        "tests/request-origin.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "TM-01",
+        "TM-02",
+        "TM-09",
+        "TM-RUNTIME"
+      ],
+      "acceptanceGate": "HP-G07",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "HP-16",
+      "requirement": "Testimonial Withdrawal",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "TM-01",
+        "TM-02",
+        "TM-09",
+        "TM-RUNTIME"
+      ],
+      "acceptanceGate": "HP-G07",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "HP-17",
+      "requirement": "No Demo Content",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "HP-DATA"
+      ],
+      "acceptanceGate": "HP-G05",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-18",
+      "requirement": "Footer Navigation",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G06",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-19",
+      "requirement": "Responsive Layout",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G01",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-20",
+      "requirement": "Accessibility",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G08",
+      "negativeTests": []
+    },
+    {
+      "id": "HP-21",
+      "requirement": "Security",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/request-origin.ts",
+        "apps/web/lib/accounts.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts",
+        "tests/request-origin.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [
+        "TM-01",
+        "TM-02",
+        "TM-09",
+        "TM-RUNTIME",
+        "ORIGIN-01",
+        "ORIGIN-02",
+        "TM-EXPORT"
+      ],
+      "acceptanceGate": "HP-G07",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "HP-22",
+      "requirement": "Regression",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/; /gas-order; /products; /services; /account-settings; /admin/testimonials",
+      "dataSource": "Published product/inventory prices, active service catalogue, gas settings/locations, website.content and consented testimonial versions",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "BLOCKED",
+      "reason": "Local regression passes, but actual multi-connection PostgreSQL checks require an explicitly enabled disposable runtime.",
+      "testResult": "BLOCKED: local checks pass; environment acceptance remains open",
+      "outstandingWork": "Execute the prepared environment-gated PostgreSQL suites before production acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-homepage-regression-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonials-20261030.txt"
+      ],
+      "testIds": [],
+      "acceptanceGate": "HP-G09",
+      "negativeTests": []
+    },
+    {
+      "id": "TM-01",
+      "requirement": "Eligible Submission",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json",
+        "docs/testing/easygas-testimonial-entry-browser.json"
+      ],
+      "testIds": [
+        "TM-01",
+        "TM-ENTRY",
+        "TM-EXPORT"
+      ],
+      "acceptanceGate": "TM-G01",
+      "negativeTests": []
+    },
+    {
+      "id": "TM-02",
+      "requirement": "Ineligible Submission",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-02"
+      ],
+      "acceptanceGate": "TM-G01",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "TM-03",
+      "requirement": "Duplicate Submission",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-02"
+      ],
+      "acceptanceGate": "TM-G01",
+      "negativeTests": []
+    },
+    {
+      "id": "TM-04",
+      "requirement": "Customer Ownership",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql",
+        "apps/web/lib/request-origin.ts",
+        "apps/web/lib/accounts.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/request-origin.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json",
+        "docs/testing/easygas-testimonial-entry-browser.json"
+      ],
+      "testIds": [
+        "TM-02",
+        "TM-ENTRY",
+        "TM-EXPORT"
+      ],
+      "acceptanceGate": "TM-G01",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "TM-05",
+      "requirement": "Unauthorised Approval",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-02",
+        "TM-RUNTIME"
+      ],
+      "acceptanceGate": "TM-G02",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "TM-06",
+      "requirement": "Publication Without Consent",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-02"
+      ],
+      "acceptanceGate": "TM-G02",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "TM-07",
+      "requirement": "Approved Publication",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-01"
+      ],
+      "acceptanceGate": "TM-G02",
+      "negativeTests": []
+    },
+    {
+      "id": "TM-08",
+      "requirement": "Negative Review",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-01"
+      ],
+      "acceptanceGate": "TM-G02",
+      "negativeTests": []
+    },
+    {
+      "id": "TM-09",
+      "requirement": "Withdrawal",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-09",
+        "TM-MEDIA-HTTP",
+        "TM-WITHDRAW-STALE"
+      ],
+      "acceptanceGate": "TM-G04",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "TM-10",
+      "requirement": "Material Edit",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-01",
+        "TM-15"
+      ],
+      "acceptanceGate": "TM-G04",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "TM-11",
+      "requirement": "Unsafe Content",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql",
+        "apps/web/lib/request-origin.ts",
+        "apps/web/lib/accounts.ts"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/request-origin.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-02",
+        "TM-11",
+        "TM-MEDIA-HTTP"
+      ],
+      "acceptanceGate": "TM-G04",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "TM-12",
+      "requirement": "Homepage Empty State",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-09"
+      ],
+      "acceptanceGate": "TM-G03",
+      "negativeTests": []
+    },
+    {
+      "id": "TM-13",
+      "requirement": "Homepage Display",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-01",
+        "TM-11"
+      ],
+      "acceptanceGate": "TM-G03",
+      "negativeTests": []
+    },
+    {
+      "id": "TM-14",
+      "requirement": "Moderation Audit",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-15",
+        "TM-RUNTIME"
+      ],
+      "acceptanceGate": "TM-G05",
+      "negativeTests": []
+    },
+    {
+      "id": "TM-15",
+      "requirement": "Concurrent Moderation",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "BLOCKED",
+      "reason": "Prepared TM-PG covers duplicate creation, moderator competition, customer edit/approval and withdrawal/publication races on independent PostgreSQL connections. It is environment-skipped; local stale-revision tests do not substitute for this proof.",
+      "testResult": "BLOCKED: local checks pass; environment acceptance remains open",
+      "outstandingWork": "Provide disposable PostgreSQL and execute actual concurrent moderator/customer races with the restricted runtime.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts",
+        "tests/testimonial-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json",
+        "docs/testing/easygas-testimonial-postgres-20261030.txt"
+      ],
+      "testIds": [
+        "TM-15"
+      ],
+      "acceptanceGate": "TM-G06",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "TM-16",
+      "requirement": "Notification Failure",
+      "priority": "P0",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "/account-settings#testimonials; /admin/testimonials; /api/media/[id]; /",
+      "dataSource": "Eligible delivered verified-paid orders/completed service reports, customer_testimonials, immutable versions/events, media_assets and policy settings",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/testimonials.tsx",
+        "database/migrations/034_homepage_testimonials.sql",
+        "database/migrations/036_testimonial_media_consent.sql",
+        "database/policies/testimonial-access.sql"
+      ],
+      "testFiles": [
+        "tests/testimonials.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-testimonials-20261030.txt",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-testimonial-carousel-browser.json",
+        "docs/testing/easygas-testimonial-management-browser.json"
+      ],
+      "testIds": [
+        "TM-16"
+      ],
+      "acceptanceGate": "TM-G06",
+      "negativeTests": [
+        "TM-02",
+        "TM-15",
+        "TM-16"
+      ]
+    },
+    {
+      "id": "TH-01",
+      "requirement": "approved light homepage preserved",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G05",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-02",
+      "requirement": "approved dark homepage visual fidelity",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G05",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-03",
+      "requirement": "accessible header toggle works",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G03",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-04",
+      "requirement": "preference survives refresh/navigation",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G04",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-05",
+      "requirement": "website \u2194 dashboard retains theme, auth, cart, location",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G04",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-06",
+      "requirement": "guest/login preference precedence",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G04",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-07",
+      "requirement": "system preference behavior if supported",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "PARTIAL",
+      "reason": "System preference resolution and the listener are implemented and unit-tested; physical OS-theme change was not emulated through browser tooling.",
+      "testResult": "PARTIAL: implementation/local checks present; stated target-browser verification remains",
+      "outstandingWork": "Verify an actual OS preference change on a target browser while System is selected.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G04",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-08",
+      "requirement": "no flash/hydration mismatch",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Early root assignment and hydration-safe initialization are tested; fresh navigation has no hydration errors. No first-paint timing trace is claimed.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G02",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-09",
+      "requirement": "storage failure fallback",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G02",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-10",
+      "requirement": "cross-tab synchronization where supported",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G04",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-11",
+      "requirement": "mobile/keyboard theme switching",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G03",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-12",
+      "requirement": "all discovered customer routes in both themes",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G06",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-13",
+      "requirement": "forms/modals/charts/toasts/empty/error/loading states readable",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Representative forms, modals, cards, navigation, empty/loading and notification states inspected; route records are smoke evidence, not every possible data combination.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G06",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-14",
+      "requirement": "calculator selections preserved and prices backend-driven",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G09",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-15",
+      "requirement": "cart and checkout unchanged",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "PARTIAL",
+      "reason": "Cart persistence, unavailable totals, checkout rendering and backend regression pass; live business ordering remains disabled by unconfigured business policy.",
+      "testResult": "PARTIAL: implementation/local checks present; stated target-browser verification remains",
+      "outstandingWork": "Activate approved business limits/stock and rerun live-environment checkout acceptance.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G09",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-16",
+      "requirement": "genuine approved testimonials only",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G07",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-17",
+      "requirement": "verified footer contacts/links",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G07",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-18",
+      "requirement": "contrast and focus accessibility",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-CONTRAST"
+      ],
+      "acceptanceGate": "DM-G08",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-19",
+      "requirement": "reduced-motion compliance",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-CONTRAST"
+      ],
+      "acceptanceGate": "DM-G08",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-20",
+      "requirement": "admin visual regression prevention",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G09",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-21",
+      "requirement": "auth/session/logout unchanged",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G09",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-22",
+      "requirement": "screenshots at desktop 1440, tablet 768, mobile 390 in both themes",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G05",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-23",
+      "requirement": "lint, typecheck, automated tests, production build",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json",
+        "docs/testing/easygas-homepage-build-20261030.txt",
+        "docs/testing/easygas-homepage-typecheck-20261030.txt",
+        "docs/testing/easygas-homepage-format-20261030.txt",
+        "docs/testing/easygas-homepage-regression-20261030.txt"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP",
+        "THEME-ROLLBACK"
+      ],
+      "acceptanceGate": "DM-G10",
+      "negativeTests": []
+    },
+    {
+      "id": "TH-24",
+      "requirement": "no console errors, broken links or horizontal overflow",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "All documented public/customer routes; /admin remains light",
+      "dataSource": "Single root theme context; easygas.theme browser preference; matchMedia only for System; no new account theme schema",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "packages/business-rules/src/theme.ts",
+        "apps/web/app/theme.css",
+        "apps/web/app/layout.tsx"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt",
+        "docs/testing/easygas-theme-browser-routes.json",
+        "docs/testing/easygas-theme-public-routes.json",
+        "docs/testing/easygas-homepage-browser-evidence.json",
+        "docs/testing/easygas-homepage-clean-console.json"
+      ],
+      "testIds": [
+        "THEME-RESOLVE",
+        "THEME-BOOTSTRAP"
+      ],
+      "acceptanceGate": "DM-G06",
+      "negativeTests": []
+    },
+    {
+      "id": "BLK-01",
+      "requirement": "Independent tasks continue around external blockers",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "Implementation workflow / npm run tasks:homepage",
+      "dataSource": "Versioned phase task/blocker register and actual evidence paths",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "packages/business-rules/src/task-register.ts",
+        "scripts/check-homepage-tasks.ts",
+        "docs/reports/easygas-homepage-task-register.json"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt"
+      ],
+      "testIds": [
+        "BLK-01",
+        "BLK-02",
+        "BLK-03",
+        "BLK-04"
+      ],
+      "acceptanceGate": "BLK-G01",
+      "negativeTests": []
+    },
+    {
+      "id": "BLK-02",
+      "requirement": "Dependencies must complete before dependent work becomes runnable",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "Implementation workflow / npm run tasks:homepage",
+      "dataSource": "Versioned phase task/blocker register and actual evidence paths",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "packages/business-rules/src/task-register.ts",
+        "scripts/check-homepage-tasks.ts",
+        "docs/reports/easygas-homepage-task-register.json"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt"
+      ],
+      "testIds": [
+        "BLK-01",
+        "BLK-02",
+        "BLK-03",
+        "BLK-04"
+      ],
+      "acceptanceGate": "BLK-G01",
+      "negativeTests": []
+    },
+    {
+      "id": "BLK-03",
+      "requirement": "Invalid dependency graphs and unknown identities fail validation",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "Implementation workflow / npm run tasks:homepage",
+      "dataSource": "Versioned phase task/blocker register and actual evidence paths",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "packages/business-rules/src/task-register.ts",
+        "scripts/check-homepage-tasks.ts",
+        "docs/reports/easygas-homepage-task-register.json"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt"
+      ],
+      "testIds": [
+        "BLK-01",
+        "BLK-02",
+        "BLK-03",
+        "BLK-04"
+      ],
+      "acceptanceGate": "BLK-G01",
+      "negativeTests": []
+    },
+    {
+      "id": "BLK-04",
+      "requirement": "Inherited blockers and resolved-blocker reassessment are visible",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "Implementation workflow / npm run tasks:homepage",
+      "dataSource": "Versioned phase task/blocker register and actual evidence paths",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "packages/business-rules/src/task-register.ts",
+        "scripts/check-homepage-tasks.ts",
+        "docs/reports/easygas-homepage-task-register.json"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt"
+      ],
+      "testIds": [
+        "BLK-01",
+        "BLK-02",
+        "BLK-03",
+        "BLK-04"
+      ],
+      "acceptanceGate": "BLK-G01",
+      "negativeTests": []
+    },
+    {
+      "id": "BLK-05",
+      "requirement": "Task and blocker registers identify owners, evidence and next actions",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "Implementation workflow / npm run tasks:homepage",
+      "dataSource": "Versioned phase task/blocker register and actual evidence paths",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "packages/business-rules/src/task-register.ts",
+        "scripts/check-homepage-tasks.ts",
+        "docs/reports/easygas-homepage-task-register.json"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt"
+      ],
+      "testIds": [
+        "BLK-01",
+        "BLK-02",
+        "BLK-03",
+        "BLK-04"
+      ],
+      "acceptanceGate": "BLK-G01",
+      "negativeTests": []
+    },
+    {
+      "id": "BLK-06",
+      "requirement": "Unverified and externally blocked requirements remain in the phase denominator",
+      "priority": "P1",
+      "scope": "Local homepage, customer testimonials, shared themes and dependency-aware safe continuation",
+      "uiReference": "User-provided approved light/dark homepage references and associated master specifications",
+      "route": "Implementation workflow / npm run tasks:homepage",
+      "dataSource": "Versioned phase task/blocker register and actual evidence paths",
+      "securityControl": "Fresh session/ownership/role checks, independent settings approval, consent/version checks and immutable history; theme preferences never change privileges",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed local scenario and authoritative implementation evidence are recorded; external release gates are evaluated separately.",
+      "testResult": "PASS: documented local scenarios; stated verification limits remain visible",
+      "outstandingWork": "No further local implementation work for this scenario; retain independent release blockers.",
+      "implementationFiles": [
+        "packages/business-rules/src/task-register.ts",
+        "scripts/check-homepage-tasks.ts",
+        "docs/reports/easygas-homepage-task-register.json"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-theme-unit-20261030.txt"
+      ],
+      "testIds": [
+        "BLK-01",
+        "BLK-02",
+        "BLK-03",
+        "BLK-04"
+      ],
+      "acceptanceGate": "BLK-G01",
+      "negativeTests": []
+    }
+  ],
+  "gates": [
+    {
+      "id": "HP-G01",
+      "name": "Visual design",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "HP-G02",
+      "name": "Navigation",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "HP-G03",
+      "name": "Gas ordering",
+      "status": "BLOCKED",
+      "reason": "GAS-POLICY: current business limits/stock are not activated."
+    },
+    {
+      "id": "HP-G04",
+      "name": "Products & services",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "HP-G05",
+      "name": "Customer engagement",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "HP-G06",
+      "name": "Footer & coverage",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "HP-G07",
+      "name": "Security & privacy",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "HP-G08",
+      "name": "Performance & accessibility",
+      "status": "BLOCKED",
+      "reason": "FIELD-PERFORMANCE: no real LCP/INP/CLS acceptance measurement."
+    },
+    {
+      "id": "HP-G09",
+      "name": "Regression & release evidence",
+      "status": "BLOCKED",
+      "reason": "PG-CONCURRENCY and hosted release certification remain open."
+    },
+    {
+      "id": "TM-G01",
+      "name": "Customer submission",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "TM-G02",
+      "name": "Moderation",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "TM-G03",
+      "name": "Public display",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "TM-G04",
+      "name": "Security & privacy",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "TM-G05",
+      "name": "Business management",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "TM-G06",
+      "name": "Integration & regression",
+      "status": "BLOCKED",
+      "reason": "Real multi-connection PostgreSQL acceptance is not executed."
+    },
+    {
+      "id": "DM-G01",
+      "name": "Preflight and repository safety",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "DM-G02",
+      "name": "One theme architecture and hydration",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "DM-G03",
+      "name": "Accessible switchers",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "DM-G04",
+      "name": "Persistence and continuity",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "DM-G05",
+      "name": "Light/dark visual fidelity",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "DM-G06",
+      "name": "Route/state coverage",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "DM-G07",
+      "name": "Real content",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "DM-G08",
+      "name": "Accessibility and responsive quality",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "DM-G09",
+      "name": "Business/auth/cart/booking regression",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "DM-G10",
+      "name": "Tests, screenshots, build and performance",
+      "status": "BLOCKED",
+      "reason": "Actual performance evidence remains unavailable; functional checks and screenshots pass."
+    },
+    {
+      "id": "DM-G11",
+      "name": "Documentation and rollback",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    },
+    {
+      "id": "BLK-G01",
+      "name": "Dependency-aware safe continuation",
+      "status": "PASS",
+      "reason": "PASS for the documented local implementation and executed scenarios; not public commercial certification."
+    }
+  ],
+  "verification": {
+    "automated": {
+      "tests": 206,
+      "pass": 203,
+      "fail": 0,
+      "skipped": 3
+    },
+    "typecheck": "PASS",
+    "formatting": "PASS",
+    "productionBuild": "PASS",
+    "lint": "NOT_APPLICABLE: no configured command",
+    "customerRouteObservations": 30,
+    "publicCheckoutRouteObservations": 56,
+    "responsiveHomepageScreenshots": 6,
+    "requirementCoverage": {
+      "total": 68,
+      "verified": 62,
+      "partial": 2,
+      "blocked": 4
+    },
+    "acceptanceGates": {
+      "total": 27,
+      "pass": 22,
+      "blocked": 5
+    }
+  }
+}

@@ -1,0 +1,2 @@
+# Technician requirements traceability
+Machine-readable authority: ../traceability/easygas-technician-rtm.json. Readable summary: ../traceability/easygas-technician-rtm.md. Stable TECH-01–22 remain in the coverage denominator. All T01–56 and TG-01–22 are tracked; successful endpoint/type checks are not whole-screen or whole-gate acceptance. See testing/technician-app-acceptance.md and reports/easygas-technician-implementation.md for actual evidence and remaining defects. Existing NO-GO/import/provider holds remain.

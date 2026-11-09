@@ -1,0 +1,4 @@
+# Checklist and safety
+Reuse the approved service checklist and version captured on each booking. Existing report submission validates exact IDs, mandatory notes and no duplicate responses; a failed check cannot be submitted as successful clearance. Unsafe reports use existing incidents and review. The new guard does not prevent technicians from reporting an unsafe assessment while awaiting payment.
+
+The software does not certify physical LPG compliance. Three-state pass/fail/not-applicable with immutable reasons, separate draft/corrective amendments and real-device inspection acceptance are not fully implemented. Successful reports now require verified work authorisation, and current consented technician proof uploaded after work authorisation. Encrypted offline and physical inspection acceptance remain open; do not enable production.

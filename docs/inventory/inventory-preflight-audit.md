@@ -1,0 +1,19 @@
+# Inventory preflight — 6 November 2026
+
+Completed before source changes. Branch main, unborn HEAD;16 untracked top-level entries, no staged/committed base. Preserve previous customer/driver/technician/admin work. Source-only snapshot `.data/inventory-preflight-source.tgz`; git-before.txt captures status. Baseline341 tests:328 pass,13 PostgreSQL skips,0 fail. No lint script. Next16.4.3/React19/TypeScript, SQL through existing DB/PGlite/PostgreSQL adapter, schema through056. Existing SSE business-live and30-second fallback, canonical auth/branch/approval/outbox, shared theme and grouped navigation.
+
+Route `/admin/inventory` mounts BusinessCentre inventory in admin.tsx, not its legacy Inventory function. Seven existing tabs:Stock,Receipts,Adjustments,Returns,Transfers,Purchases,History. Existing workflows must be retained. Current stock list fetches business.snapshot then filters/paginates in browser: server pagination gap. Shared sidebar/registry/header must remain untouched.
+
+Authoritative maps:
+- inventory(quantity,reserved,threshold), products SKU/category/asset; gas_stock integer grams/reserved_grams/threshold_grams. Available=quantity-reserved; held stock has already left eligible inventory, so never subtract holds again.
+- stock_movements/gas_stock_movements append-only; stock_receipts unique references/cost evidence, stock_holds unsaleable balances.
+- inventory_operations+change_requests existing independent decisions and stale before/reserved snapshot checks. stocktakes/count snapshots. stock_transfers reservations/dispatch/partial receipts/damage holds. suppliers/purchase_orders/receipts separate identities; ordering does not receive stock.
+- cylinders, cylinder allocations/custody/inspection; generic returned cylinders cannot bypass qualified serialized release. Vehicle/order/service integration stays in existing delivery/professional-services engines.
+- inventory-valuation.ts existing independently approved weighted_average, complete acquisition movements/opening cost required. Retail inventory.price_kobo is selling price, never valuation.
+- business-reporting.ts existing summaries/report exports, inventory-business.ts existing governed mutations, governance.ts approvals/audit. No duplicate ledger justified.
+
+Reproduced in existing isolated demo owner browser:8 physical product rows, each0 quantity/reserved/available with threshold10; bulk gas0kg and unconfigured threshold. Inventory valuation Unavailable. Navigation badge8 from navigation.ts SQL counts physical available<=threshold plus gas with configured threshold; do not replace with mockup4850/820/110. No supplier receipts/import balances were invented. Excel audit/staging remains held for customer confirmation of payments/stock/historical fees/matches.
+
+Classification: receipt/adjustment/quarantine/return release/transfer/purchase/stocktake/history exist with integration tests; stock UI and server pagination/filter state/control traceability partial. Cost configuration missing business authority, not a reason to insert sample costs. Broader vehicle doorstep and legacy unrestricted field-session cutover/offline/physical safety remain prior P0 blockers. Exact all-role/browser/transaction acceptance must be tested, not inferred from file existence.
+
+Safe plan: add derived bounded inventory workspace/history/export reads; reuse existing valuation and immutable ledgers; approved content within existing shell, preserve seven mutation tabs and forms. Preserve permissions and no role selector. Introduce no schema until proven essential. Run existing stock/finance/safety/concurrency/restore regressions; negative reads/exports and no unit mixing. PF-01: uncertain serialized/vehicle/cost invariants remain restricted; independent read-only/UI work continues. Production NO-GO and actual Excel import hold remain.

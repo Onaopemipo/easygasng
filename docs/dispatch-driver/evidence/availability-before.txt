@@ -1,0 +1,47 @@
+✖ DDI-S024: unavailable drivers cannot receive a legacy manual assignment (1145.080667ms)
+✖ DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection (839.757958ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2411.059833
+
+✖ failing tests:
+
+test at tests/dispatch-centre-safety.test.ts:1:159
+✖ DDI-S024: unavailable drivers cannot receive a legacy manual assignment (1145.080667ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/dispatch-centre-safety.test.ts:13:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /unavailable|availability/i,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/dispatch-centre-safety.test.ts:1:819
+✖ DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection (839.757958ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /unavailable|availability/i. Input:
+  
+  'Error: Driver needs an active suitable vehicle trip in the fulfilment branch.'
+  
+      at async TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/dispatch-centre-safety.test.ts:29:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Driver needs an active suitable vehicle trip in the fulfilment branch.
+        at vehicleReady (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/fleet-constraints.ts:16:11)
+        at async driverOperations (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/driver-operations.ts:288:5)
+        at async businessOperation (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/business-operation.ts:62:18)
+        at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/src/base.ts:494:24),
+    expected: /unavailable|availability/i,
+    operator: 'rejects',
+    diff: 'simple'
+  }

@@ -1,0 +1,21 @@
+✖ PR-03: encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys (289.4845ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 605.977417
+
+✖ failing tests:
+
+test at tests/production-backup-postgres.test.ts:1:442
+✖ PR-03: encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys (289.4845ms)
+  Error: PostgreSQL backup tool failed. Check tool compatibility and protected database configuration; credentials are not logged.
+      at pgTool (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/postgres-backup.ts:49:11)
+      at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/postgres-backup.ts:61:5)
+      at async temporary (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/postgres-backup.ts:32:12)
+      at async TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/production-backup-postgres.test.ts:45:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

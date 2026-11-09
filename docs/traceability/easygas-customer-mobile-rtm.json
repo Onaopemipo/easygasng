@@ -1,0 +1,717 @@
+{
+  "phase": "Customer functionality twelve-screen consolidation",
+  "date": "2026-11-05",
+  "productionDecision": "NO-GO unchanged",
+  "requirements": [
+    {
+      "id": "CUI-01",
+      "requirement": "Home",
+      "priority": "P1",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "Home",
+      "implementationFiles": [
+        "apps/mobile/CustomerHome.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "customer.dashboard navigation; refill.profiles; users; notifications; consumption_profiles",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Logo, actual greeting/count, six actions, independent GET resources, refresh, honest refill state implemented; populated forecast cases and all-device fidelity remain untested.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G03"
+    },
+    {
+      "id": "CUI-02",
+      "requirement": "Order Gas",
+      "priority": "P0",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "Order Gas",
+      "implementationFiles": [
+        "apps/mobile/GasOrder.tsx",
+        "packages/business-rules/src/gas-pricing.ts",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "gas.catalogue; gas.quote; checkout; settings; delivery_locations; gas_stock; order_gas_lines",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/integrity-regressions.test.ts",
+        "tests/order-tracking.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP",
+        "gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety",
+        "inactive branch and cross-branch staff checkout fail before any reservation",
+        "cancellation releases serial allocation; second custody issue requires a return",
+        "TRK-09"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Configured capacity tiles and canonical validation preserved; decimal draft typing repaired and observed. Demo business quantity policy is unconfigured; no unsafe checkout bypass.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G07"
+    },
+    {
+      "id": "CUI-03",
+      "requirement": "Checkout",
+      "priority": "P0",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "Checkout",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/invoices.ts",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "checkout; invoice.order; orders; verified_payments; customer_invoices",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/invoice-pdf.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP",
+        "OPS-T02",
+        "INV-PDF01"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "BLOCKED",
+      "reason": "Existing configured COD/credit checkout retained, no enabled Paystack channels or verified payment claims. Approved merchant credentials/provider scenarios remain unavailable.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G08"
+    },
+    {
+      "id": "CUI-04",
+      "requirement": "Track Order",
+      "priority": "P0",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "Track Order",
+      "implementationFiles": [
+        "apps/mobile/TrackingSummary.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "orders; delivery.photos; orders; order_events; delivery_attempts; delivery_evidence",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/order-tracking.test.ts",
+        "tests/operations-completion.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP",
+        "TRK-01",
+        "TRK-20",
+        "OPS-T04"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Existing polling/evidence retained; real timeline summary added; no synthetic map/ETA. Populated native tracking/proof scenario not executed.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G09"
+    },
+    {
+      "id": "CUI-05",
+      "requirement": "Book a Service",
+      "priority": "P1",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "Book a Service",
+      "implementationFiles": [
+        "apps/mobile/Services.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "services.catalogue; service_catalogue",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Only actual active catalogue consumed; semantic service rows and hero added. Demo catalogue empty; no screenshot services invented.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G10"
+    },
+    {
+      "id": "CUI-06",
+      "requirement": "Service Booking",
+      "priority": "P1",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "Service Booking",
+      "implementationFiles": [
+        "apps/mobile/Services.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "booking.create; booking.quote.decide; booking.reschedule; booking.cancel; service_bookings; service_slots; quotations",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Existing booking/qualification/slots/quotes/status handlers retained. Populated native qualified slot/booking path not executed.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G10"
+    },
+    {
+      "id": "CUI-07",
+      "requirement": "My Cylinders",
+      "priority": "P0",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "My Cylinders",
+      "implementationFiles": [
+        "apps/mobile/Cylinders.tsx",
+        "apps/web/lib/customer-dashboard.ts",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "refill.profiles; customer.dashboard extension planned; cylinders; consumption_profiles",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Owned physical cylinders are distinct from consumption profiles; bounded read and negative ownership tests passed, including two same-size owned units. Registration requests an inspection, not physical custody mutation; physical profile-history attribution remains limited by existing model.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G11"
+    },
+    {
+      "id": "CUI-08",
+      "requirement": "Refill Plan",
+      "priority": "P1",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "Refill Plan",
+      "implementationFiles": [
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "schedules; schedule.create; schedule.update; preferences.save; refill_schedules; communication_preferences",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Actual plan summaries and current create/pause/resume/cancel handlers retained; reminders are product-linked in current model. No cylinder linkage or automatic charge fabricated.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G11"
+    },
+    {
+      "id": "CUI-09",
+      "requirement": "My Wallet",
+      "priority": "P0",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "My Wallet",
+      "implementationFiles": [
+        "apps/mobile/CustomerWallet.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "wallet; wallet_entries; reward_entries",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/easyrewards.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP",
+        "ER-10",
+        "ER-13",
+        "ER-22"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Ledger-based purchase-credit view with actual transactions and refresh; funding and transfers unavailable. Rewards remain a separate existing flow. Populated native ledger/redemption states not executed.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G12"
+    },
+    {
+      "id": "CUI-10",
+      "requirement": "Invoices & Receipts",
+      "priority": "P0",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "Invoices & Receipts",
+      "implementationFiles": [
+        "apps/mobile/Invoices.tsx",
+        "apps/web/lib/customer-dashboard.ts",
+        "apps/web/app/api/invoices/[orderId]/route.ts",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "orders; invoice.order; GET /api/invoices/[orderId]; customer_invoices; verified_payments; invoice correction notes",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/invoice-pdf.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP",
+        "OPS-T02",
+        "INV-PDF01"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Actual issued invoice list, authoritative current balances and existing private PDF sharing added. No fabricated receipts; receipt-document service unavailable, native populated PDF share sheet not executed.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G08"
+    },
+    {
+      "id": "CUI-11",
+      "requirement": "Notifications",
+      "priority": "P1",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "Notifications",
+      "implementationFiles": [
+        "apps/mobile/CustomerNotifications.tsx",
+        "packages/business-rules/src/customer-mobile.ts",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "me; notifications.read; notifications; communication_preferences",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Actual dated messages, unread/read operations, safe related destinations and preferences implemented. Populated native notification scenarios and provider delivery untested; channels remain off.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G13"
+    },
+    {
+      "id": "CUI-12",
+      "requirement": "My Account",
+      "priority": "P1",
+      "scope": "Approved customer functionality only; onboarding/splash excluded",
+      "uiReference": "User approved twelve-screen collage",
+      "route": "My Account",
+      "implementationFiles": [
+        "apps/mobile/AccountHub.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "dataSource": "account.profile; address.save; preferences.save; logout; users; account_addresses; sessions",
+      "securityControl": "Existing authenticated customer ownership, server transactions and branch/stock/custody controls; no new identity or ledger",
+      "testFiles": [
+        "tests/customer-mobile.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-SCOPE",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "negativeTests": [
+        "CUI-DATA",
+        "CUI-NAV",
+        "CUI-LINK",
+        "CUI-HTTP"
+      ],
+      "evidence": [
+        "docs/audits/customer-mobile-evidence/regression-final.txt",
+        "docs/audits/customer-mobile-evidence/customer-tests.txt",
+        "docs/audits/customer-mobile-evidence/http-reads.txt",
+        "docs/audits/customer-mobile-evidence/ios-build-final.txt",
+        "docs/audits/customer-mobile-evidence/native-smoke.md"
+      ],
+      "testResult": "PASS: 319 regression tests / zero failures / zero skips with disposable PostgreSQL; focused tests and actual HTTP reads passed. Native smoke limited to documented screens; full requirement acceptance is not asserted.",
+      "status": "PARTIAL",
+      "reason": "Stable ID/account/address/privacy/session/support handlers retained; Account tab, Back history and protected destination continuation added. Actual sign-out and protected destination auth-return verified; cold-start and full cross-account native matrix pending.",
+      "outstandingWork": "See all retained T01\u2013T54 and CUI-G01\u201320 outcomes; populated/native/device/provider acceptance remains open as specified.",
+      "acceptanceGate": "CUI-G06"
+    }
+  ],
+  "gates": [
+    {
+      "id": "CUI-G01",
+      "status": "PASS",
+      "reason": "Executed audit/test/build/restriction evidence supports this bounded gate; no production release certification.",
+      "requirement": "Preflight/repository safety"
+    },
+    {
+      "id": "CUI-G02",
+      "status": "PASS",
+      "reason": "Executed audit/test/build/restriction evidence supports this bounded gate; no production release certification.",
+      "requirement": "Canonical data reuse"
+    },
+    {
+      "id": "CUI-G03",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Visual fidelity all twelve screens"
+    },
+    {
+      "id": "CUI-G04",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Navigation/deep links"
+    },
+    {
+      "id": "CUI-G05",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Light/Dark/System"
+    },
+    {
+      "id": "CUI-G06",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Authentication/customer isolation"
+    },
+    {
+      "id": "CUI-G07",
+      "status": "BLOCKED",
+      "reason": "Business quantity policy/stock/custody configuration not approved for demo checkout.",
+      "requirement": "Ordering/pricing"
+    },
+    {
+      "id": "CUI-G08",
+      "status": "BLOCKED",
+      "reason": "Approved merchant/provider configuration absent; no live/sandbox payment certification.",
+      "requirement": "Paystack/invoice integrity"
+    },
+    {
+      "id": "CUI-G09",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Tracking/proof"
+    },
+    {
+      "id": "CUI-G10",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Services/booking"
+    },
+    {
+      "id": "CUI-G11",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Cylinders/refill"
+    },
+    {
+      "id": "CUI-G12",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Wallet/rewards"
+    },
+    {
+      "id": "CUI-G13",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Notifications"
+    },
+    {
+      "id": "CUI-G14",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Offline/recovery"
+    },
+    {
+      "id": "CUI-G15",
+      "status": "NOT_TESTED",
+      "reason": "Existing domain tests and partial native smoke do not certify every populated/device scenario; see T01\u201354.",
+      "requirement": "Responsive/accessibility/performance"
+    },
+    {
+      "id": "CUI-G16",
+      "status": "PASS",
+      "reason": "Executed audit/test/build/restriction evidence supports this bounded gate; no production release certification.",
+      "requirement": "P0 security/safety"
+    },
+    {
+      "id": "CUI-G17",
+      "status": "PASS",
+      "reason": "Executed audit/test/build/restriction evidence supports this bounded gate; no production release certification.",
+      "requirement": "Regression/builds"
+    },
+    {
+      "id": "CUI-G18",
+      "status": "PASS",
+      "reason": "Executed audit/test/build/restriction evidence supports this bounded gate; no production release certification.",
+      "requirement": "Documentation/traceability"
+    },
+    {
+      "id": "CUI-G19",
+      "status": "PASS",
+      "reason": "Executed audit/test/build/restriction evidence supports this bounded gate; no production release certification.",
+      "requirement": "No dummy data"
+    },
+    {
+      "id": "CUI-G20",
+      "status": "PASS",
+      "reason": "Executed audit/test/build/restriction evidence supports this bounded gate; no production release certification.",
+      "requirement": "Release restrictions"
+    }
+  ],
+  "scopeChanges": [
+    "New approved twelve-screen functionality scope supersedes earlier visual mapping only; earlier RTM IDs/results preserved. Onboarding/splash explicitly excluded, not reverted or redesigned.",
+    "Actual HTTP testing exposed new loader POST/read mismatch; fixed to GET and CUI-HTTP regression added. Backend restrictions preserved.",
+    "Physical cylinder listing and issued invoice listing extend existing read model only; no schema, identity or ledger duplication.",
+    "Registration remains an inspection request, receipts/funding/transfer/Paystack/GPS remain accurately unavailable; prior NO-GO and import hold unchanged."
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-09",
+      "change": "CUI-SCOPE original onboarding/config manifest retained. Later user-requested offline driver GPS explicitly supersedes only the app.json launch hash via offline-gps-authorised-launch-change.json; no onboarding, identity or native build scope change. Regression caught the stale blanket hash assertion."
+    }
+  ]
+}

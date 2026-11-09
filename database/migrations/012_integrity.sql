@@ -1,0 +1,11 @@
+ALTER TABLE orders ADD COLUMN delivered_at timestamptz;
+UPDATE orders o SET delivered_at=(SELECT min(e.created_at) FROM order_events e WHERE e.order_id=o.id AND e.status='delivered') WHERE status='delivered';
+ALTER TABLE cylinders DROP CONSTRAINT cylinders_status_check;
+ALTER TABLE cylinders ADD CONSTRAINT cylinders_status_check CHECK(status IN ('filled','empty','damaged','quarantined','inspection_due','sold'));
+CREATE TABLE cylinder_allocations(id text PRIMARY KEY,cylinder_id text NOT NULL REFERENCES cylinders(id),order_id text REFERENCES orders(id),sale_id text REFERENCES pos_sales(id),state text NOT NULL CHECK(state IN ('reserved','issued','released')),created_at timestamptz NOT NULL DEFAULT now(),CHECK((order_id IS NOT NULL)::integer+(sale_id IS NOT NULL)::integer=1));
+CREATE UNIQUE INDEX cylinder_allocated_once ON cylinder_allocations(cylinder_id) WHERE state IN ('reserved','issued');
+CREATE INDEX cylinder_allocations_order ON cylinder_allocations(order_id);
+CREATE INDEX order_events_order ON order_events(order_id,created_at);
+CREATE INDEX payments_order ON verified_payments(order_id);
+CREATE INDEX wallet_customer ON wallet_entries(customer_id,created_at);
+CREATE INDEX rewards_customer ON reward_entries(customer_id,created_at);

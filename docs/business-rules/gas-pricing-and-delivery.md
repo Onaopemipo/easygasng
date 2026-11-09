@@ -1,0 +1,11 @@
+# Gas pricing and delivery business rules
+
+EasyGas customer fulfilment is delivery only. Initial persisted configuration is NGN 1,800 per kg (180,000 kobo) and NGN 5,000 (500,000 kobo) once per physical delivery order. These values are read from versioned settings, not frontend constants. Gas pricing and flat-fee changes use the same settings approval engine as service, wallet and access controls. Online payment adapters remain disconnected; only explicitly enabled cash on delivery or available purchase credit can be used.
+
+A refill quantity is independent of cylinder capacity. The approved capacity list initially contains 3, 6, 12.5, 25 and 50 kg. The business must configure minimum and maximum quantities, increments and decimal places before ordering. These limits start null; the application does not invent operational limits. Quantities are represented as integer grams, with at most three decimal places. Gas must not exceed nominal capacity or the independently recorded additional-fill allowance after physical inspection and residual-gas checks.
+
+For 12.5 kg, gas is NGN 22,500 plus NGN 5,000 delivery, totalling NGN 27,500. Seven kg in a 12.5 kg cylinder plus four kg in a 6 kg cylinder costs NGN 19,800 plus one delivery fee, totalling NGN 24,800. New cylinder purchase and professional installation are separate charges. Products in the same eligible delivery share its one fee. Staged service appointments keep separate call-out, billing and completion records through the existing atomic mixed checkout.
+
+Checkout recalculates all money and checks the accepted pricing, fee and quantity-policy versions. Changed prices require a new explicit customer review. Confirmed orders retain their stored unit prices, quantities, subtotals, fee and total. Eligible cancellation releases reserved grams and physical stock; existing purchase-credit cancellation/refund controls remain authoritative. Delivery consumes reserved grams once. Short filling is not silently substituted: staff must resolve the order rather than change agreed quantities during completion.
+
+See [calculator arithmetic](gas-price-calculator.md), [locations](delivery-locations.md), and [shared approval workflow](../architecture/shared-approval-workflow.md).

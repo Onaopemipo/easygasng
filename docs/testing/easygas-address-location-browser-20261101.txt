@@ -1,0 +1,12 @@
+Local browser verification, 2026-11-01, Codex In-app Browser.
+Normal local server 3003 preserved. Isolated QA server 3004 used for customer mutations.
+PASS Homepage: entering Flat 4, 12 Example Street, Victoria Island, Lagos, Nigeria selected Victoria Island; header preference also synchronized.
+PASS Homepage ambiguity: 12 Example Street, Ajah, Lekki, Lagos cleared selected location and showed confirmation guidance. Manual Ajah selection synchronized header.
+PASS Full gas-order form: complete house address selected Victoria Island. Textarea has browser street-address autocomplete, and complete text remains visible.
+PASS Saved address: signed in as synthetic customer@bookings-qa.example.test; created Address matching QA with full synthetic street, Flat 4, 12 building and synthetic phone. Automatically selected Victoria Island. Save succeeded and full text plus correct location persisted after reload. Existing QA Home/default unchanged.
+PASS Product checkout: typed Flat 4 12 Synthetic Street Victoria Island Lagos Nigeria (without commas); Delivery area selected Victoria Island.
+PASS Service booking: configured service only covers Lekki. 12 Synthetic Street, Lekki, Lagos selected Lekki; changing to Victoria Island cleared Service area. No service booking submitted.
+PASS Combined checkout: 12 Synthetic Street, Ajah, Lagos selected Ajah. No order/payment submitted.
+Screenshot: docs/screenshots/easygas-address-location-20261101.png inspected visually: dark-mode full-address field, readable matching confirmation and Victoria Island selection.
+Owned browser tabs closed and isolated QA server stopped. No deployment or production-data mutation.
+Limit: matching recognizes configured area names; it is not geocoding, postal-address verification or proof of physical service coverage. Ambiguous/unknown addresses need manual confirmation. No external address provider receives input.

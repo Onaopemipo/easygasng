@@ -1,0 +1,11 @@
+# Technician four-screen feature map
+
+Home: actual greeting/name/branch, decorative cylinder/waves, persisted availability, uncapped total/in-progress/month-completion metrics, View My Jobs, Take Service Photo and Create Service Report. No Home materials/support shortcuts. The latter two actions first select an authorised eligible assigned job; empty eligibility explains required approvals and verified payment. Assessment evidence remains in existing job details. Availability is distinct from connectivity and employment.
+
+Jobs: All/Assigned/In Progress/Completed, canonical counts, debounced literal text search (reference/service/permitted customer), optional address filter,20-row paging, status labels, address/schedule and own detail. Declined assignment is explicitly awaiting operations. Assessment does not display as authorised work. Existing accept/decline, maps/contact, assessment, checklist/materials, private evidence and reports remain inside the selected job.
+
+History: actual terminal-event date groups,7/30/90-day or current-month range in Lagos, search/address filter, all-time completed/total counts, actual verified rating or no reviews. Missing event date is labelled, with schedule fallback for filtering only. Past includes completed/cancelled/failed; no fabricated completion date. Older jobs use own-ID detail.
+
+Profile: actual current account name/branch/status; neutral initials without a real avatar source. Only own name is editable. Email, record ID, role and branch are read-only. Qualifications/expiry come from existing records and are admin-managed. Availability, password, reminder preferences, Light/Dark/System and support reuse existing actions. Sign out warns about unsynced evidence and uses existing session logout.
+
+Bottom navigation remains Home/Jobs/History/Profile, active pale-green pill, minimum44pt controls, shared scalable minimum15pt text. History metrics use two columns below500pt to preserve readable labels, four columns on wider layouts. No role selector or administration sidebar. Subscreen back returns to Profile; selected workflow back returns to its details. Android hardware back is handled. Loading/error/empty states distinguish missing data from successful zero counts. No new synthetic runtime records were inserted.

@@ -1,0 +1,577 @@
+[
+  {
+    "id": "dashboard",
+    "label": "Dashboard",
+    "icon": "House",
+    "roles": [
+      "owner",
+      "manager",
+      "inventory",
+      "sales",
+      "finance",
+      "dispatcher",
+      "administrator"
+    ],
+    "readAction": "business.snapshot",
+    "scope": "branch",
+    "href": "/admin",
+    "match": "exact",
+    "group": "Overview",
+    "order": 1,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "orders",
+    "label": "Orders",
+    "icon": "ShoppingCart",
+    "roles": [
+      "owner",
+      "manager",
+      "sales",
+      "dispatcher",
+      "finance"
+    ],
+    "readAction": "orders",
+    "badgeKey": "orders",
+    "scope": "branch",
+    "href": "/admin/orders",
+    "match": "section",
+    "group": "Sales & Customers",
+    "order": 2,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "pos",
+    "label": "Retail POS",
+    "icon": "Monitor",
+    "roles": [
+      "owner",
+      "manager",
+      "sales",
+      "finance"
+    ],
+    "readAction": "pos",
+    "scope": "branch",
+    "href": "/admin/pos",
+    "match": "section",
+    "group": "Sales & Customers",
+    "order": 3,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "customers",
+    "label": "Customers",
+    "icon": "UsersRound",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "readAction": "customers",
+    "scope": "branch",
+    "href": "/admin/customers",
+    "match": "section",
+    "group": "Sales & Customers",
+    "order": 4,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "support",
+    "label": "Support Desk",
+    "icon": "Headset",
+    "roles": [
+      "owner",
+      "manager",
+      "sales"
+    ],
+    "readAction": "support.list",
+    "badgeKey": "support",
+    "scope": "branch",
+    "href": "/admin/support",
+    "match": "section",
+    "group": "Sales & Customers",
+    "order": 5,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "products",
+    "label": "Products",
+    "icon": "Package",
+    "roles": [
+      "owner",
+      "manager",
+      "sales",
+      "inventory",
+      "technician",
+      "service_manager",
+      "safety_officer"
+    ],
+    "readAction": "products.manage",
+    "scope": "branch",
+    "href": "/admin/products",
+    "match": "section",
+    "group": "Products & Stock",
+    "order": 6,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "inventory",
+    "label": "Inventory",
+    "icon": "Warehouse",
+    "roles": [
+      "owner",
+      "manager",
+      "inventory",
+      "sales",
+      "finance",
+      "dispatcher",
+      "administrator"
+    ],
+    "readAction": "business.snapshot",
+    "badgeKey": "inventory",
+    "scope": "branch",
+    "href": "/admin/inventory",
+    "match": "section",
+    "group": "Products & Stock",
+    "order": 7,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "cylinders",
+    "label": "Cylinders",
+    "icon": "Cylinder",
+    "roles": [
+      "owner",
+      "manager",
+      "inventory"
+    ],
+    "readAction": "cylinders",
+    "scope": "branch",
+    "href": "/admin/cylinders",
+    "match": "section",
+    "group": "Products & Stock",
+    "order": 8,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "bundles",
+    "label": "Product & Service Bundles",
+    "icon": "Layers",
+    "roles": [
+      "owner",
+      "service_manager"
+    ],
+    "readAction": "bundles.manage",
+    "scope": "branch",
+    "href": "/admin/bundles",
+    "match": "section",
+    "group": "Products & Stock",
+    "order": 9,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "deliveries",
+    "label": "Deliveries",
+    "icon": "Truck",
+    "roles": [
+      "owner",
+      "manager",
+      "dispatcher",
+      "driver"
+    ],
+    "readAction": "orders",
+    "badgeKey": "deliveries",
+    "scope": "assignment",
+    "href": "/admin/deliveries",
+    "match": "section",
+    "group": "Delivery & Services",
+    "order": 10,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "bookings",
+    "label": "Service Bookings",
+    "icon": "CalendarCheck",
+    "roles": [
+      "owner",
+      "service_manager",
+      "technician",
+      "safety_officer",
+      "inventory",
+      "finance"
+    ],
+    "readAction": "bookings",
+    "badgeKey": "bookings",
+    "scope": "assignment",
+    "href": "/admin/bookings",
+    "match": "section",
+    "group": "Delivery & Services",
+    "order": 11,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "services",
+    "label": "Professional Services",
+    "icon": "Wrench",
+    "roles": [
+      "owner",
+      "service_manager",
+      "technician",
+      "safety_officer",
+      "inventory",
+      "finance"
+    ],
+    "readAction": "services.manage",
+    "scope": "branch",
+    "href": "/admin/services",
+    "match": "section",
+    "group": "Delivery & Services",
+    "order": 12,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "technicians",
+    "label": "Technicians",
+    "icon": "HardHat",
+    "roles": [
+      "owner",
+      "service_manager",
+      "safety_officer",
+      "inventory",
+      "finance"
+    ],
+    "readAction": "services.manage",
+    "scope": "branch",
+    "href": "/admin/technicians",
+    "match": "section",
+    "group": "Delivery & Services",
+    "order": 13,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "quotations",
+    "label": "Quotations",
+    "icon": "FileText",
+    "roles": [
+      "owner",
+      "service_manager",
+      "safety_officer",
+      "inventory",
+      "finance"
+    ],
+    "readAction": "bookings",
+    "scope": "branch",
+    "href": "/admin/quotations",
+    "match": "section",
+    "group": "Delivery & Services",
+    "order": 14,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "finance",
+    "label": "Wallet & Payments",
+    "icon": "Wallet",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "readAction": "business.snapshot",
+    "scope": "branch",
+    "href": "/admin/finance",
+    "match": "section",
+    "group": "Finance & Performance",
+    "order": 15,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "reconciliation",
+    "label": "Financial Reconciliation",
+    "icon": "RefreshCw",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "readAction": "finance.summary",
+    "badgeKey": "reconciliation",
+    "scope": "branch",
+    "href": "/admin/reconciliation",
+    "match": "section",
+    "group": "Finance & Performance",
+    "order": 16,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "credits",
+    "label": "Credits & Refunds",
+    "icon": "Receipt",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "readAction": "credits",
+    "scope": "branch",
+    "href": "/admin/credits",
+    "match": "section",
+    "group": "Finance & Performance",
+    "order": 17,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "reports",
+    "label": "Reports & Analytics",
+    "icon": "ChartNoAxesCombined",
+    "roles": [
+      "owner",
+      "manager",
+      "inventory",
+      "sales",
+      "finance",
+      "dispatcher",
+      "administrator"
+    ],
+    "readAction": "business.snapshot",
+    "scope": "branch",
+    "href": "/admin/reports",
+    "match": "section",
+    "group": "Finance & Performance",
+    "order": 18,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "campaigns",
+    "label": "Campaigns",
+    "icon": "Megaphone",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "readAction": "campaigns",
+    "scope": "branch",
+    "href": "/admin/campaigns",
+    "match": "section",
+    "group": "Growth & Engagement",
+    "order": 19,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "recommendations",
+    "label": "Recommendations",
+    "icon": "Lightbulb",
+    "roles": [
+      "owner",
+      "service_manager",
+      "safety_officer"
+    ],
+    "readAction": "recommendations.manage",
+    "scope": "branch",
+    "href": "/admin/recommendations",
+    "match": "section",
+    "group": "Growth & Engagement",
+    "order": 20,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "staff",
+    "label": "Staff Management",
+    "icon": "UsersRound",
+    "roles": [
+      "owner",
+      "administrator",
+      "manager"
+    ],
+    "readAction": "staff.manage",
+    "scope": "branch",
+    "href": "/admin/staff",
+    "match": "section",
+    "group": "Administration & Control",
+    "order": 21,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "approvals",
+    "label": "Approval Centre",
+    "icon": "ShieldCheck",
+    "roles": [
+      "owner",
+      "manager",
+      "sales",
+      "inventory",
+      "dispatcher",
+      "finance",
+      "administrator",
+      "service_manager",
+      "safety_officer"
+    ],
+    "readAction": "approvals",
+    "badgeKey": "approvals",
+    "scope": "branch",
+    "href": "/admin/approvals",
+    "match": "section",
+    "group": "Administration & Control",
+    "order": 22,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "settings",
+    "label": "Settings",
+    "icon": "Settings",
+    "roles": [
+      "owner",
+      "manager",
+      "sales",
+      "inventory",
+      "dispatcher",
+      "finance",
+      "administrator",
+      "service_manager",
+      "safety_officer"
+    ],
+    "readAction": "settings",
+    "scope": "branch",
+    "href": "/admin/settings",
+    "match": "section",
+    "group": "Administration & Control",
+    "order": 23,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "operations",
+    "label": "Operations Centre",
+    "icon": "ClipboardList",
+    "roles": [
+      "owner",
+      "manager",
+      "inventory",
+      "finance"
+    ],
+    "readAction": "purchasing",
+    "scope": "branch",
+    "href": "/admin/operations",
+    "match": "section",
+    "group": "Administration & Control",
+    "order": 24,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "incidents",
+    "label": "Operational Incidents",
+    "icon": "TriangleAlert",
+    "roles": [
+      "owner",
+      "administrator",
+      "service_manager",
+      "safety_officer",
+      "finance"
+    ],
+    "readAction": "incidents",
+    "badgeKey": "incidents",
+    "scope": "branch",
+    "href": "/admin/incidents",
+    "match": "section",
+    "group": "Administration & Control",
+    "order": 25,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "policies",
+    "label": "Customer Policies",
+    "icon": "FileCheck",
+    "roles": [
+      "owner",
+      "administrator"
+    ],
+    "readAction": "policies.manage",
+    "scope": "branch",
+    "href": "/admin/policies",
+    "match": "section",
+    "group": "Administration & Control",
+    "order": 26,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "audit",
+    "label": "Audit History",
+    "icon": "ScrollText",
+    "roles": [
+      "owner",
+      "administrator"
+    ],
+    "readAction": "audit",
+    "scope": "global",
+    "href": "/admin/audit",
+    "match": "section",
+    "group": "Administration & Control",
+    "order": 27,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  },
+  {
+    "id": "readiness",
+    "label": "Launch Readiness",
+    "icon": "Rocket",
+    "roles": [
+      "owner"
+    ],
+    "readAction": "production.readiness",
+    "scope": "global",
+    "href": "/admin/readiness",
+    "match": "section",
+    "group": "Administration & Control",
+    "order": 28,
+    "desktop": "PASS",
+    "compact": "PASS",
+    "mobile": "PASS"
+  }
+]

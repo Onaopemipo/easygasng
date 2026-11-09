@@ -1,0 +1,27 @@
+✔ Supabase migration creates an unexposed schema with RLS and a restricted server role (1016.6085ms)
+✔ the restricted trusted-server role can run the complete local order-to-cash workflow (914.361083ms)
+✔ the restricted runtime role supports new accounts, catalogue, purchasing, credit, support and maintenance without owner privileges (773.345958ms)
+﹣ TRK-17: independent PostgreSQL connections serialize final-capacity assignment and duplicate proof (0.322167ms) # NOT_TESTED: no explicitly enabled disposable local PostgreSQL; Docker daemon unavailable. PGlite is not concurrency evidence.
+✔ TRK-01: committed versioned history is immutable and only owned orders are returned (1244.540834ms)
+✔ TRK-04: skipped transitions, stale versions, branch and inactive dispatch fail without business effects (717.636333ms)
+✔ TRK-11: pickup requires assignment and exact quantities; completion requires pickup and actual handover (728.729458ms)
+✔ TRK-12: proof expires, wrong guesses rate limit, and attempt reassignment rotates the code (693.193541ms)
+✔ TRK-15: stable retries and ambiguous commit recovery produce one stock, cash and handover effect (707.185833ms)
+✔ TRK-27: held failed deliveries cannot be reissued or cancelled until physical return reconciliation (748.742792ms)
+✔ TRK-18: outbox publication survives retry without duplicate in-app messages (658.049084ms)
+✔ TRK-21: snapshots reject older versions and remove revoked assignment records; GPS stays unavailable (0.650416ms)
+✔ TRK-09: failed reassignment and rescheduling revalidate capacity with no attempted reservation changes (698.307625ms)
+✔ TRK-20: reassigned branch, revoked session and unrelated driver cannot read or mutate assigned delivery (649.971167ms)
+✔ TRK-23: API never fabricates GPS, ETA or a proof for an unfulfilled order (608.797833ms)
+✔ TRK-02: linked support requests verify customer ownership and preserve order branch (629.298917ms)
+✔ TRK-31: encrypted isolated restore preserves committed tracking, proof, operation outcome and outbox (1223.361625ms)
+✔ TRK-14: assigned driver help opens one branch incident without committing delivery or cash (636.544167ms)
+✔ TRK-20S: real authenticated snapshot stream isolates customer orders and closes after session revocation (694.198792ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 11124.642959

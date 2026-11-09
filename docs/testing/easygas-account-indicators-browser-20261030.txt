@@ -1,0 +1,7 @@
+Firefox existing local account on 127.0.0.1:3003/account reproduced Account indicators unavailable.
+Read-only authenticated endpoint /api/customer.dashboard?widget=navigation initially returned generic failure.
+Temporary local-only diagnostic identified PostgreSQL 42703: column a.is_default does not exist. Diagnostic instrumentation and temporary output were removed.
+Added migrations038/039, updated local migration revision sentinel39, regenerated bootstrap. Existing dev server applied local upgrade using existing connection. No second process opened its database.
+Endpoint then returned counts notifications0/orders0/bookings0/support0 and addressnull. Existing account page refreshed its indicators; warning disappeared and notification label read 0 unread. Account records were preserved; no default address was inferred.
+Saved docs/screenshots/easygas-account-indicators-fixed-20261030.png. Temporary diagnostic browser tab closed; original account tab retained.
+No hosted database or production deployment changed. Managed/production databases require explicit migration by existing release procedure.

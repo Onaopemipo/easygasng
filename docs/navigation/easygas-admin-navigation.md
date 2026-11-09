@@ -1,0 +1,15 @@
+# EasyGas administration navigation
+
+The central contract is `packages/business-rules/src/admin-navigation.ts`. It defines seven ordered groups and 28 unique existing route paths, their labels/icons, existing read actions, role allowlists, scope and optional badge key. The catch-all server page, expanded sidebar, compact sidebar, drawer, breadcrumbs and active matcher consume this contract. See [route matrix](easygas-route-matrix.md) for the complete register.
+
+`/admin` matches exactly. Section paths match themselves and slash-delimited descendants, using the most specific known path; query/fragment/trailing slash do not change selection. Unknown paths never select another item. Existing unsupported nested pages remain not-found; the matcher does not invent new pages. Only display labels changed for Operations Centre and Launch Readiness.
+
+The sidebar is 264px expanded and 74px compact. Dashboard stays first. Six additional group headings toggle their contents; Overview is the always-visible shortcut. Active groups open on navigation; a collapsed active group keeps a green heading indicator. Group controls are semantic buttons with `aria-expanded`/`aria-controls`. Compact mode exposes all authorised icons directly, separated by group, with complete hover/focus labels and exact accessible badge counts. It does not hide routes inside collapsed sections.
+
+Below 901px the permanent sidebar becomes a focus-managed drawer, with full labels even if compact mode was saved. A 901–1100px first visit defaults to compact; an explicit saved preference wins. The drawer closes after selection, on backdrop, close button or Escape. Main content becomes inert; body scrolling is locked and restored. Long names truncate in the narrow header without reducing font size. Brand assets reuse the existing HD logo and transparent flame icon, with no logo reprocessing.
+
+Sidebar/group preferences use per-user `easygas.navigation.v1:<user id>` browser storage. A per-user UI-only `easygas_nav_<user id>` cookie restores width during server rendering. Only collapsed state and known group booleans are stored; no credential, token, role grant, business count or sensitive record is persisted. Corrupt data falls back safely. The active group remains discoverable after reload. A blocked storage API does not block navigation.
+
+The existing order search is retained as a working route shortcut; service-only experiences link to assigned work. No fake global search or keyboard shortcut was added. The header retains refresh/notifications/help and gains an account disclosure with Profile, Help, Verify Identity and Sign Out. Branch context displays the authenticated branch, replacing the old hardcoded Lagos label. There is no new global branch switcher: existing page-specific authorised selectors remain responsible for their data scope.
+
+Drivers receive only assigned Deliveries; technicians receive Bookings and Professional Services. Their native mobile navigation and assignment filtering are unchanged. No full 28-route workspace is forced onto these roles. Owner/manager/service-role landing redirects use the existing route paths.

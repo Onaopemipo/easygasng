@@ -1,0 +1,24 @@
+✔ ORIGIN-01: JSON and media accept same-port local aliases but reject cross-site, cross-port and malformed origins (2.593208ms)
+✔ ORIGIN-02: production never enables loopback aliases and requires the configured exact origin (0.278333ms)
+✔ TM-01: eligible purchase saves a private draft; publication requires separate approval (1089.630958ms)
+✔ TM-02: ineligible, duplicate, ownership, consent and unsafe input are rejected (929.073459ms)
+✔ TM-15: stale moderation cannot publish or overwrite a newer customer version (779.994542ms)
+✔ TM-09: withdrawing published consent immediately removes public feedback and cannot be reversed by a moderator (845.489042ms)
+✔ TM-16: notification failure rolls back the entire transition and safe retry produces one event (809.102541ms)
+✔ TM-11: photos remain private until separately consented and moderated; withdrawal revokes public image access (792.313791ms)
+✔ TM-RUNTIME: the restricted server can run publication, browser roles cannot read records, and history cannot be changed (789.615083ms)
+✔ HP-CONTENT: editorial and testimonial policy changes reuse independent approvals and reject unsafe content (800.390417ms)
+✔ TM-MEDIA-HTTP: upload requires photo consent; public image responses are never cached and withdrawal revokes anonymous reads (840.89225ms)
+✔ HP-DATA: homepage reads published products with backend prices and active services through a bounded read model (754.190375ms)
+✔ TM-MANAGEMENT: owner searches and paginates all matches, exports filtered rows, and lower roles are denied (753.753584ms)
+✔ TM-WITHDRAW-STALE: customer consent revocation wins over a stale screen and retries have one effect (795.102208ms)
+✔ TM-EXPORT: existing identity-verified account export includes only owned testimonial versions and consent history (812.968667ms)
+✔ TM-ENTRY: completed-transaction links select only an eligible owned transaction and prioritize an existing submission (759.859791ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12010.774125

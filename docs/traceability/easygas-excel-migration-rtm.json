@@ -1,0 +1,605 @@
+{
+  "phase": "EasyGas Excel audit and migration preview, not import",
+  "sourceSha256": "761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380",
+  "productionDecision": "NO-GO unchanged",
+  "importApproved": false,
+  "targetBusinessWrites": 0,
+  "requirements": [
+    {
+      "id": "XLS-REQ-01",
+      "requirement": "Repository audit and baseline",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current audit/preview deliverable only; broad IM gate may still be blocked on import/customer acceptance",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Customer confirmation and separate staged importer/governance/security implementation; visual review remains manual",
+      "implementationFiles": [
+        "docs/audits/easygas-excel-preflight.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-01"
+    },
+    {
+      "id": "XLS-REQ-02",
+      "requirement": "Workbook discovery, raw/cache/formula/format handling",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current audit/preview deliverable only; broad IM gate may still be blocked on import/customer acceptance",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Customer confirmation and separate staged importer/governance/security implementation; visual review remains manual",
+      "implementationFiles": [
+        "docs/migration/easygas-workbook-data-dictionary.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-02"
+    },
+    {
+      "id": "XLS-REQ-03",
+      "requirement": "Row classification and stable source/event provenance",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current audit/preview deliverable only; broad IM gate may still be blocked on import/customer acceptance",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Customer confirmation and separate staged importer/governance/security implementation; visual review remains manual",
+      "implementationFiles": [
+        "docs/migration/easygas-row-classification.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-03"
+    },
+    {
+      "id": "XLS-REQ-04",
+      "requirement": "Customer review candidates; no automatic identity matching",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current audit/preview deliverable only; broad IM gate may still be blocked on import/customer acceptance",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Customer confirmation and separate staged importer/governance/security implementation; visual review remains manual",
+      "implementationFiles": [
+        "docs/migration/easygas-customer-matching.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-04"
+    },
+    {
+      "id": "XLS-REQ-05",
+      "requirement": "Mechanical stock bridge and unresolved physical cutover",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current audit/preview deliverable only; broad IM gate may still be blocked on import/customer acceptance",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Customer confirmation and separate staged importer/governance/security implementation; visual review remains manual",
+      "implementationFiles": [
+        "docs/migration/easygas-inventory-reconciliation.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-06"
+    },
+    {
+      "id": "XLS-REQ-06",
+      "requirement": "Recorded finance reconciliation without debt/settlement inference",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current audit/preview deliverable only; broad IM gate may still be blocked on import/customer acceptance",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Customer confirmation and separate staged importer/governance/security implementation; visual review remains manual",
+      "implementationFiles": [
+        "docs/migration/easygas-financial-reconciliation.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-07"
+    },
+    {
+      "id": "XLS-REQ-07",
+      "requirement": "Refill/dormant exclusions and consent boundaries",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current audit/preview deliverable only; broad IM gate may still be blocked on import/customer acceptance",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Customer confirmation and separate staged importer/governance/security implementation; visual review remains manual",
+      "implementationFiles": [
+        "docs/migration/easygas-refill-history.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-09"
+    },
+    {
+      "id": "XLS-REQ-08",
+      "requirement": "Private zero-write preview and downloadable exception/review files",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Current audit/preview deliverable only; broad IM gate may still be blocked on import/customer acceptance",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Customer confirmation and separate staged importer/governance/security implementation; visual review remains manual",
+      "implementationFiles": [
+        "scripts/easygas_excel_preview.py",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-14"
+    },
+    {
+      "id": "XLS-REQ-09",
+      "requirement": "Actual import approval/commit and row-to-target persistence",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "BLOCKED",
+      "reason": "User explicitly requires customer confirmation of payments, physical stock, historical delivery fees and identity matches before actual import approval",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Obtain customer resolutions, then separately review exact writes/approvals, concurrency and restoration before any import",
+      "implementationFiles": [
+        "docs/migration/easygas-import-runbook.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-11"
+    },
+    {
+      "id": "XLS-REQ-10",
+      "requirement": "Posted stock/finance effects with independent cutover approval",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "BLOCKED",
+      "reason": "User explicitly requires customer confirmation of payments, physical stock, historical delivery fees and identity matches before actual import approval",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Obtain customer resolutions, then separately review exact writes/approvals, concurrency and restoration before any import",
+      "implementationFiles": [
+        "docs/migration/easygas-import-runbook.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-06"
+    },
+    {
+      "id": "XLS-REQ-11",
+      "requirement": "Committed historical orders/customer/profile/CRM integration",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "BLOCKED",
+      "reason": "User explicitly requires customer confirmation of payments, physical stock, historical delivery fees and identity matches before actual import approval",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Obtain customer resolutions, then separately review exact writes/approvals, concurrency and restoration before any import",
+      "implementationFiles": [
+        "docs/migration/easygas-import-runbook.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-05"
+    },
+    {
+      "id": "XLS-REQ-12",
+      "requirement": "Actual importer concurrency/crash recovery/compensation/restore",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "BLOCKED",
+      "reason": "User explicitly requires customer confirmation of payments, physical stock, historical delivery fees and identity matches before actual import approval",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Obtain customer resolutions, then separately review exact writes/approvals, concurrency and restoration before any import",
+      "implementationFiles": [
+        "docs/migration/easygas-import-runbook.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-12"
+    },
+    {
+      "id": "XLS-REQ-13",
+      "requirement": "Current preview tests, report and traceability",
+      "priority": "P1",
+      "scope": "Audit/reconciliation/preview authorised; actual import explicitly withheld",
+      "uiReference": "Private index.html and CSV exports; no app/commit endpoint",
+      "route": "No new application route; private local artefact",
+      "dataSource": "Source workbook SHA256761854f961474cfb7789cddf4d9e16759796581bff8cc420253d9ceb32e1c380; source cell references in data dictionary; isolated local read-only target snapshot",
+      "securityControl": "No DB connector/commit in workbook preview; owner-only ignored PII files; escaped HTML/CSP/CSV; original source hash unchanged; no business side effects",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Current audit/preview deliverable only; broad IM gate may still be blocked on import/customer acceptance",
+      "testResult": "PASS for executed preview subset; actual import is not tested/approved",
+      "outstandingWork": "Customer confirmation and separate staged importer/governance/security implementation; visual review remains manual",
+      "implementationFiles": [
+        "docs/testing/easygas-excel-migration-tests.md",
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel-target-snapshot.mjs"
+      ],
+      "testFiles": [
+        "tests/excel/test_preview.py",
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/audits/excel-evidence/preview-tests.txt",
+        "docs/audits/excel-evidence/workbook-summary.json",
+        "docs/audits/excel-evidence/independent-check.json",
+        "docs/audits/excel-evidence/target-readonly-summary.json",
+        "docs/audits/excel-evidence/validation.txt",
+        "docs/audits/excel-evidence/preview-qa.json"
+      ],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "IM-18"
+    }
+  ],
+  "gates": [
+    {
+      "id": "IM-01",
+      "status": "PASS",
+      "description": "preflight",
+      "reason": "Verified for current read-only preview scope"
+    },
+    {
+      "id": "IM-02",
+      "status": "PASS",
+      "description": "workbook/formula audit",
+      "reason": "Verified for current read-only preview scope"
+    },
+    {
+      "id": "IM-03",
+      "status": "PASS",
+      "description": "classification/provenance",
+      "reason": "Verified for current read-only preview scope"
+    },
+    {
+      "id": "IM-04",
+      "status": "BLOCKED",
+      "description": "customer identity approval",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-05",
+      "status": "BLOCKED",
+      "description": "historical orders",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-06",
+      "status": "BLOCKED",
+      "description": "inventory/cutover",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-07",
+      "status": "BLOCKED",
+      "description": "financial reconciliation/sign-off",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-08",
+      "status": "BLOCKED",
+      "description": "accessory/service accounting",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-09",
+      "status": "BLOCKED",
+      "description": "refill history",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-10",
+      "status": "BLOCKED",
+      "description": "dormant analytics",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-11",
+      "status": "BLOCKED",
+      "description": "review/approval workflow",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-12",
+      "status": "BLOCKED",
+      "description": "exactly-once/concurrency",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-13",
+      "status": "BLOCKED",
+      "description": "recovery/reimport",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-14",
+      "status": "NOT_TESTED",
+      "description": "privacy/permissions",
+      "reason": "Partial filesystem/structural/baseline evidence; full admin role, device, PostgreSQL or visual/build acceptance not yet complete"
+    },
+    {
+      "id": "IM-15",
+      "status": "PASS",
+      "description": "no import side effects",
+      "reason": "Verified for current read-only preview scope"
+    },
+    {
+      "id": "IM-16",
+      "status": "NOT_TESTED",
+      "description": "existing modules/P0 regressions",
+      "reason": "Partial filesystem/structural/baseline evidence; full admin role, device, PostgreSQL or visual/build acceptance not yet complete"
+    },
+    {
+      "id": "IM-17",
+      "status": "BLOCKED",
+      "description": "actual workbook/client sign-off",
+      "reason": "Actual import and customer approvals explicitly withheld; review documents expose unresolved decisions"
+    },
+    {
+      "id": "IM-18",
+      "status": "NOT_TESTED",
+      "description": "documentation/build",
+      "reason": "Partial filesystem/structural/baseline evidence; full admin role, device, PostgreSQL or visual/build acceptance not yet complete"
+    }
+  ],
+  "scopeChanges": [
+    "Current user explicitly authorises audit, reconciliation and preview first; actual import remains withheld pending four customer confirmations.",
+    "Original full-import requirements remain visible as blocked, not dropped from coverage.",
+    "No app schema/route/ledger change; pure preview does not replace or compete with existing product/master-data import or business ledgers."
+  ]
+}

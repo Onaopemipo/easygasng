@@ -1,0 +1,120 @@
+{
+  "phase": "Authorised isolated demo shopping setup",
+  "productionDecision": "NO-GO unchanged; Excel import hold preserved",
+  "requirements": [
+    {
+      "id": "SHOP-01",
+      "requirement": "Configure only explicitly authorised isolated demo stock",
+      "priority": "P0",
+      "scope": "Authorised isolated shopping test setup; no production data/import or checkout activation",
+      "uiReference": "Existing products/cart UI",
+      "route": "/products; /cart; existing stock/setting APIs",
+      "implementationFiles": [
+        "scripts/prepare-shopping-demo.ts",
+        "apps/web/components/site.tsx"
+      ],
+      "dataSource": "Isolated mobile-demo manifest, server PID/database lock, inventory/stock_receipts/gas_stock_movements",
+      "securityControl": "Exact isolated-demo manifest and lock-PID checks, loopback-only API, existing role/reauth/independent approvals, stable receipt references, unchanged checkout stock validation",
+      "testFiles": [
+        "tests/shopping-demo.test.ts",
+        "tests/inventory-finance.test.ts"
+      ],
+      "testIds": [
+        "SHOP-GUARD"
+      ],
+      "negativeTests": [
+        "SHOP-GUARD"
+      ],
+      "evidence": [
+        "docs/shopping-demo/evidence/stock-gas-tests.txt",
+        "docs/shopping-demo/evidence/fixture-guards.txt",
+        "docs/shopping-demo/evidence/configuration-replay.txt",
+        "docs/shopping-demo/evidence/browser-check.txt",
+        "docs/shopping-demo/evidence/cart.png",
+        "docs/shopping-demo/evidence/typecheck.txt"
+      ],
+      "testResult": "PASS:22 inventory/gas regressions,1 fixture isolation guard, TypeScript and manual cart check.",
+      "acceptanceGate": "SHOP-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Guarded script checks manifest and database-lock ownership of local port3003; synthetic stock receipts use existing audited APIs and stable references. Production/hosted modes reject before credentials are accessed.",
+      "outstandingWork": "None for bounded stock/cart setup. Live checkout/payment/delivery and overall production gates remain separate."
+    },
+    {
+      "id": "SHOP-02",
+      "requirement": "Configure demo gas quantity policy through independent approval",
+      "priority": "P1",
+      "scope": "Authorised isolated shopping test setup; no production data/import or checkout activation",
+      "uiReference": "Existing products/cart UI",
+      "route": "/products; /cart; existing stock/setting APIs",
+      "implementationFiles": [
+        "scripts/prepare-shopping-demo.ts",
+        "apps/web/components/site.tsx"
+      ],
+      "dataSource": "Existing settings/change_requests and governance audit",
+      "securityControl": "Exact isolated-demo manifest and lock-PID checks, loopback-only API, existing role/reauth/independent approvals, stable receipt references, unchanged checkout stock validation",
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/shopping-demo/evidence/stock-gas-tests.txt",
+        "docs/shopping-demo/evidence/fixture-guards.txt",
+        "docs/shopping-demo/evidence/configuration-replay.txt",
+        "docs/shopping-demo/evidence/browser-check.txt",
+        "docs/shopping-demo/evidence/cart.png",
+        "docs/shopping-demo/evidence/typecheck.txt"
+      ],
+      "testResult": "PASS:22 inventory/gas regressions,1 fixture isolation guard, TypeScript and manual cart check.",
+      "acceptanceGate": "SHOP-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Only unset policy configured through manager proposal and independent owner approval; actual catalogue confirms0.5\u201350kg in0.5kg increments. No payment/delivery activation.",
+      "outstandingWork": "None for bounded stock/cart setup. Live checkout/payment/delivery and overall production gates remain separate."
+    },
+    {
+      "id": "SHOP-03",
+      "requirement": "Enable stocked product cart and preserve unavailable-product guards",
+      "priority": "P1",
+      "scope": "Authorised isolated shopping test setup; no production data/import or checkout activation",
+      "uiReference": "Existing products/cart UI",
+      "route": "/products; /cart; existing stock/setting APIs",
+      "implementationFiles": [
+        "scripts/prepare-shopping-demo.ts",
+        "apps/web/components/site.tsx"
+      ],
+      "dataSource": "Canonical catalogue/inventory plus existing local browser cart",
+      "securityControl": "Exact isolated-demo manifest and lock-PID checks, loopback-only API, existing role/reauth/independent approvals, stable receipt references, unchanged checkout stock validation",
+      "testFiles": [
+        "tests/inventory-finance.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/shopping-demo/evidence/stock-gas-tests.txt",
+        "docs/shopping-demo/evidence/fixture-guards.txt",
+        "docs/shopping-demo/evidence/configuration-replay.txt",
+        "docs/shopping-demo/evidence/browser-check.txt",
+        "docs/shopping-demo/evidence/cart.png",
+        "docs/shopping-demo/evidence/typecheck.txt"
+      ],
+      "testResult": "PASS:22 inventory/gas regressions,1 fixture isolation guard, TypeScript and manual cart check.",
+      "acceptanceGate": "SHOP-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser added one6kg cylinder, indicator0\u21921 and cart displayed quantity1/NGN31000 total; unpriced accessories remain disabled with clear labels. No order/payment submitted.",
+      "outstandingWork": "None for bounded stock/cart setup. Live checkout/payment/delivery and overall production gates remain separate."
+    }
+  ],
+  "gates": [
+    {
+      "id": "SHOP-G1",
+      "status": "PASS",
+      "requirement": "Isolated stock/quantity policy configured and cart addition verified"
+    }
+  ],
+  "scopeChanges": [
+    {
+      "date": "2026-11-06",
+      "change": "User explicitly approved isolated demo test stock after zero-stock diagnosis. No business inventory, existing prices, delivery/payment flags, imports or production approvals changed."
+    }
+  ]
+}

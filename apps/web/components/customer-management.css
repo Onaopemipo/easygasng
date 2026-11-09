@@ -1,0 +1,387 @@
+.customer-management {
+  font-size: 15px;
+  color: #101827;
+}
+.cm-breadcrumb {
+  color: #66758b;
+  margin: 0 0 14px;
+}
+.cm-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+.cm-heading h1 {
+  font-size: 42px;
+  letter-spacing: -1.5px;
+  margin: 0 0 8px;
+}
+.cm-heading p,
+.cm-shortcuts p {
+  color: #65738b;
+  margin: 0;
+  line-height: 1.6;
+}
+.cm-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.cm-metric,
+.cm-directory,
+.cm-shortcuts section {
+  border: 1px solid #e5eaf0;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 5px 24px #142b2710;
+}
+.cm-metric {
+  padding: 22px;
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+}
+.cm-icon {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background: #e5f8e9;
+  color: #008b32;
+}
+.tone-1 {
+  background: #e8f2ff;
+  color: #075bff;
+}
+.tone-2 {
+  background: #fff4e0;
+  color: #fa7c00;
+}
+.tone-3 {
+  background: #f2e9ff;
+  color: #6a12da;
+}
+.cm-metric strong {
+  display: block;
+  font-size: 32px;
+  margin: 8px 0;
+}
+.customer-management small {
+  display: block;
+  color: #65738b;
+  font-size: 15px;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+.cm-directory {
+  padding: 22px;
+}
+.cm-filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.cm-filters input,
+.cm-filters select,
+.cm-pagination select,
+.cm-form input,
+.cm-form select {
+  min-height: 46px;
+  border: 1px solid #dfe5ec;
+  border-radius: 9px;
+  padding: 10px 14px;
+  background: white;
+  font-size: 15px;
+  min-width: 0;
+}
+.cm-search {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+.cm-search svg {
+  position: absolute;
+  left: 14px;
+}
+.cm-search input {
+  width: 100%;
+  padding-left: 44px;
+}
+.customer-management table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+  font-size: 15px;
+}
+.customer-management th {
+  background: #f6f8fa;
+  color: #4b5565;
+  font-weight: 500;
+  text-align: left;
+  padding: 16px;
+}
+.customer-management td {
+  padding: 20px 16px;
+  border-bottom: 1px solid #e9edf1;
+}
+.customer-management input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #007638;
+}
+.cm-person {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.cm-avatar {
+  background: linear-gradient(135deg, #007840, #003d24);
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+.cm-contact {
+  display: grid;
+  gap: 8px;
+}
+.cm-contact span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cm-contact span + span {
+  color: #65738b;
+}
+.cm-status {
+  display: inline-flex;
+  border-radius: 24px;
+  padding: 8px 14px;
+  background: #e4f9e9;
+  color: #00782d;
+}
+.cm-status.inactive {
+  background: #f1f3f6;
+  color: #526074;
+}
+.cm-status.suspended {
+  background: #fff0f0;
+  color: #b21c35;
+}
+.cm-actions {
+  position: relative;
+}
+.cm-actions summary {
+  list-style: none;
+  cursor: pointer;
+  border: 1px solid #e1e7ed;
+  border-radius: 10px;
+  padding: 6px 17px;
+  font-size: 24px;
+}
+.cm-actions[open] {
+  display: grid;
+  gap: 8px;
+}
+.cm-actions button {
+  border: 1px solid #e1e7ed;
+  border-radius: 7px;
+  padding: 9px;
+  background: white;
+  font-size: 15px;
+}
+.cm-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #65738b;
+  margin-top: 20px;
+}
+.cm-pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cm-pagination button,
+.cm-page {
+  padding: 10px;
+  border: 1px solid #e3e9ee;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: white;
+}
+.cm-page {
+  background: #e0f8e7;
+  color: #00692c;
+  font-weight: 700;
+}
+.cm-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+.cm-shortcuts section {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+.cm-shortcuts section > div {
+  display: flex;
+  gap: 18px;
+}
+.cm-shortcuts h2 {
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+.cm-shortcuts .button {
+  width: 100%;
+  background: #edf8f1;
+  color: #005b2c;
+}
+.cm-form {
+  display: grid;
+  gap: 18px;
+}
+.cm-form label {
+  display: grid;
+  gap: 8px;
+}
+.cm-form p {
+  color: #65738b;
+  line-height: 1.6;
+}
+.cm-empty {
+  padding: 32px;
+  text-align: center;
+}
+@media (max-width: 1250px) {
+  .cm-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cm-filters {
+    flex-wrap: wrap;
+  }
+  .cm-search {
+    flex-basis: 100%;
+  }
+  .cm-shortcuts {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .cm-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .cm-heading h1 {
+    font-size: 34px;
+  }
+  .cm-metrics {
+    grid-template-columns: 1fr;
+  }
+  .cm-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .cm-directory {
+    padding: 14px;
+  }
+  .cm-filters > * {
+    flex: 1;
+  }
+  .cm-shortcuts section > div {
+    gap: 12px;
+  }
+}
+.customer-management table {
+  white-space: normal;
+  min-width: 930px;
+}
+.cm-person {
+  min-width: 190px;
+}
+.cm-contact {
+  min-width: 210px;
+  max-width: 270px;
+  overflow-wrap: anywhere;
+}
+.cm-contact span {
+  align-items: flex-start;
+}
+.cm-contact svg {
+  flex-shrink: 0;
+}
+.cm-search {
+  min-width: 240px;
+}
+.cm-filters select {
+  flex: 1;
+}
+.cm-filters {
+  flex-wrap: wrap;
+}
+.cm-filters .cm-search {
+  flex: 2;
+}
+.cm-metric {
+  gap: 16px;
+  padding: 20px;
+}
+.cm-metric small {
+  line-height: 1.5;
+}
+@media (min-width: 901px) and (max-width: 1450px) {
+  .cm-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cm-shortcuts {
+    grid-template-columns: 1fr;
+  }
+}
+.customer-management,
+.cm-directory,
+.cm-shortcuts,
+.cm-shortcuts section {
+  min-width: 0;
+  max-width: 100%;
+}
+.cm-directory .table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.cm-filters select {
+  height: 48px;
+}
+.cm-filters {
+  align-items: center;
+}
+@media (max-width: 600px) {
+  .cm-filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cm-search {
+    min-width: 0;
+  }
+  .cm-pagination > div {
+    flex-wrap: wrap;
+  }
+  .cm-heading .button {
+    max-width: 100%;
+  }
+}

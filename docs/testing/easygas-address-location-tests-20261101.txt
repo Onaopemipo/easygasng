@@ -1,0 +1,32 @@
+✔ ADR-01: full house addresses identify a single configured locality (0.944333ms)
+✔ ADR-04: addresses without commas match only explicit locality and city suffixes (0.071084ms)
+✔ ADR-02: ambiguous, unknown and street-name matches require confirmation (0.1135ms)
+✔ ADR-03: changing or deleting an address cannot reuse a previous automatic match (0.061417ms)
+✔ service drafts are not sellable; checklist and price activation require independent qualified approval (1913.713417ms)
+✔ booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve (834.978ms)
+✔ qualification expiry, stale service versions and out-of-area addresses reject booking without side effects (785.407709ms)
+✔ quotation revisions preserve price history; only latest customer approval reserves materials (809.2765ms)
+✔ approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once (878.92525ms)
+✔ unsafe inspection cannot become safety clearance or customer-acknowledged success (820.316166ms)
+✔ service deposit uses existing wallet ledger and cancellation refund requires separate finance approval (831.92475ms)
+✔ EO-01: sequential and concurrent same-key retries recover one authoritative booking; conflicts and cross-customer reuse reject (1356.965625ms)
+✔ EO-03: injected failure after outbox write rolls back booking, capacity, operation result, notifications and money (939.832667ms)
+✔ EO-04: lost commit acknowledgement is reconciled using the persisted result without another business event (792.439958ms)
+✔ RC-04: failed and competing rescheduling preserve a single capacity allocation and reject stale cancellation (809.661042ms)
+✔ RC-15: encrypted backup restores booking, operation, quotation, inventory, notifications and audit relationships (1463.307834ms)
+✔ BK-23: communication opt-out is respected while in-app history remains authoritative (808.211334ms)
+✔ EO-09: approval and material issue retries have one inventory effect; expired quotations cannot authorise work (823.774083ms)
+✔ RC-10: interrupted report publication preserves in-progress work; unsafe completion is rejected; permission revocation blocks recovery (777.2015ms)
+✔ BK-quiet: durable service events are scheduled after overnight and same-day quiet periods (0.536416ms)
+✔ EO-10: wallet and independently approved refund failures roll back and replay without duplicate money (835.26975ms)
+✔ RC-13: failed additive migration rolls back DDL without losing a valid booking (764.029209ms)
+✔ BK-private: operation persistence works under the restricted trusted server role and committed results are immutable (741.902958ms)
+✔ EO-contract: public service mutations require a stable identity and stale-sensitive changes require a version (0.984584ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10539.622083

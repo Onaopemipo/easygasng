@@ -1,0 +1,16 @@
+# Homepage, testimonials and dark mode preflight — 30 October 2026
+
+Decision: CONDITIONAL_PASS for local implementation. Main is unborn (no HEAD), all source is untracked; preserve every existing file and do not commit/reset/deploy. Framework Next.js 16.4.3, React client Site plus server-protected routes, custom CSS. No existing dark provider/class/media resolution exists. One root ThemeProvider will own presentation; admin remains explicitly light until its independent dark audit. No account theme preference column exists: browser choice is authoritative, with optional System mode; no theme schema is needed.
+
+Reuse public Header/Footer, GasOrder, catalogue/gas.catalogue, current cart, customer workspace/session invalidation, professional services, completed service_feedback and orders. Existing immutable service_feedback is operational feedback without public consent, moderation or publication; extend it with a separate consented publication envelope, never auto-publish existing feedback. Existing setting_definitions/settings/approval service remains the sole configuration system. New publication records are necessary for order/service eligibility and audit; no duplicate authentication, booking or ledger.
+
+Preserve home delivery only, backend pricing/delivery fees/locations, 15px minimum text, approvals, cylinder/financial controls and production NO-GO. Quantity policy defaults are intentionally unconfigured, so calculator may estimate valid capacity quantities but cannot imply fulfilment availability. No real reviews or live store listings are available: retain invitation/availability copy; no fabricated portraits, ratings or services. Verified existing phone/address/Instagram supplied earlier are authoritative seeds; support email is missing and must remain hidden. One generated illustrative cooking hero may be used with an honest caption; product images remain unchanged.
+
+Dependencies are tracked in docs/reports/easygas-homepage-task-register.json and blocker register. Isolated PostgreSQL/Docker unavailable; use isolated PGlite transaction tests and retain independent connection gate as BLOCKED. External messaging remains unconnected. Real field p75 performance and true prior-release rollback are unavailable; no such claim will be made. Independent theme, content, moderation and local QA work can continue.
+
+
+## Closing safety record
+
+Task-owned implementation is listed in `docs/reports/easygas-homepage-file-manifest.json`; no baseline commit is invented. Additive local migrations 034–037 introduce governed editorial settings and a versioned testimonial publication envelope, reuse existing media/auth/approval infrastructure, and leave financial/safety ledgers intact. No dependencies, hosted project, payment connection, external messages or deployment were created. Port 3003/PID 29740 was preserved; owned port 3004 QA servers were stopped. Test data lived only in isolated QA directories/in-memory databases and synthetic publications were withdrawn.
+
+The dependency-aware task register is generated with `npm run tasks:homepage -- --write`. Independent implementation/documentation work is complete; external business/runtime and target-browser checks remain visible in the register and 68-row matrix. The release decision remains NO-GO.

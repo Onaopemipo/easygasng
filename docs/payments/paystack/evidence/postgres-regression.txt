@@ -1,0 +1,22 @@
+✔ ER-PG36: real PostgreSQL duplicate workers/refund approvals, encrypted backup and isolated restore preserve committed effects (1590.656ms)
+✔ ER-PGSEC: migrated private schema works under the restricted runtime role and rejects public ledger access (783.104042ms)
+✔ ER-11: independent PostgreSQL connections cannot spend the same points across simultaneous checkouts (653.566125ms)
+✔ OPS-PG01: independent connections serialize invoice decisions, request replay and vehicle trip ownership (598.436125ms)
+✔ TRK-17: independent PostgreSQL connections serialize final-capacity assignment and duplicate proof (567.347791ms)
+✔ PAY-PG-CONCURRENCY: separate connections post once; aborted posting rolls back wallet, audit and receipt (441.170875ms)
+✔ PM-T47: independent PostgreSQL callers serialize provisional creation and invoice issuance without duplicate business effects (467.717875ms)
+✔ multi-connection PostgreSQL: independent approvals and duplicate activation (586.071333ms)
+✔ PR-03: encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys (753.242666ms)
+✔ PR-04: release audit rejects privileged owners and detects missing RLS and public grants under the actual runtime role (302.531208ms)
+✔ PR-08: supervised worker completes a real maintenance transaction and exits cleanly on SIGTERM (849.075083ms)
+✔ EO-PG: independent PostgreSQL connections serialize duplicate operations and final-slot competition (810.038334ms)
+✔ TECH-T56 independent PostgreSQL connections serialize one paid work authorisation (703.208083ms)
+✔ TM-PG: independent PostgreSQL connections prevent duplicate/stale moderation and consent withdrawal wins publication races (728.839916ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14296.749958

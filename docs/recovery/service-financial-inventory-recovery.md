@@ -1,0 +1,7 @@
+# Financial and inventory recovery
+
+Cancellation, refund request, independent approval and final posting are separate states. Verify credit_requests and immutable wallet/payment references before retry. A pending/unknown outcome remains pending/unknown. Unconnected providers must not be queried or represented as settled. Finance uses existing independently approved credit/refund/reversal workflows; ordinary support/technicians cannot post corrections.
+
+For quoted materials, inspect service_materials state and originating quote. Reserved material can be released; issued material requires physical return/usage reconciliation. Consumed or damaged material is not made sellable merely because a booking failed or was refunded. Duplicate material issue replay returns the prior committed result and cannot deduct twice. Reconcile product, quantity, movement reference, branch and responsible custodian through the existing inventory workflow. Never UPDATE historical movement/ledger rows to erase a discrepancy.
+
+A recoverable database rollback affects only uncommitted work. A committed financial/physical event requires an authorized compensating movement or reversal linked to its original reference. External settlement uncertainty needs provider-level evidence after a provider is explicitly configured; that dependency remains blocked. Tests cover one material issue effect, rollback after outbox failure, quote approval uniqueness and existing wallet/refund/cash regression controls.

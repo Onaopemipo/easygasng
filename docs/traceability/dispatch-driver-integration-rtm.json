@@ -1,0 +1,1347 @@
+{
+  "phase": "Approved Dispatch Centre + existing driver end-to-end integration",
+  "productionDecision": "NO-GO unchanged; automatic assignment disabled; no native build/server provisioning; historical import hold preserved",
+  "requirements": [
+    {
+      "id": "DDI-R00",
+      "requirement": "Visual authority and preservation",
+      "priority": "P1",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "packages/business-rules/src/dispatch-centre.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/order-tracking.tsx"
+      ],
+      "dataSource": "Approved screenshot plus protected navigation/customer/technician/driver source SHA256 baseline",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-AUDIT01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G03",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R01",
+      "requirement": "Repository audit and baseline",
+      "priority": "P1",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "docs/dispatch-driver/01-repository-audit.md",
+        "docs/dispatch-driver/evidence/preserved-files-baseline.json"
+      ],
+      "dataSource": "Existing repository, package scripts, migration registry, baseline test/type/build logs",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-AUDIT01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt",
+        "docs/dispatch-driver/evidence/baseline-tests.txt",
+        "docs/dispatch-driver/evidence/baseline-web-types.txt",
+        "docs/dispatch-driver/evidence/baseline-mobile-types.txt",
+        "docs/dispatch-driver/evidence/baseline-build.txt"
+      ],
+      "acceptanceGate": "DDI-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Audit and443-test pre-edit baseline completed; protected-file hashes and bounded driver-source delta verified.",
+      "testResult": "PASS",
+      "outstandingWork": "Independent launch acceptance is outside audit completion; all prior gates retained."
+    },
+    {
+      "id": "DDI-R02",
+      "requirement": "Shared canonical domain contracts",
+      "priority": "P1",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/lib/dispatch-centre.ts",
+        "packages/business-rules/src/dispatch-centre.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/cylinder-allocation.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Existing orders, attempts, responses, invoices, users and shared business-rule DTO helpers",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-READ04",
+        "DDI-S060"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt",
+        "docs/dispatch-driver/evidence/final-serial-guard-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G05",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R03",
+      "requirement": "Dispatch header, updates and date",
+      "priority": "P1",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "packages/business-rules/src/dispatch-centre.ts"
+      ],
+      "dataSource": "Server observedAt; validated selected date; Africa/Lagos conversion; last successful client read",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-S016"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G10",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R04",
+      "requirement": "Six authoritative KPI cards",
+      "priority": "P1",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "packages/business-rules/src/dispatch-centre.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "All scoped canonical orders/status/delivered_at; current users contact; no latest100/page-derived aggregate",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-KPI01",
+        "DDI-READ01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G06",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R05",
+      "requirement": "Tabs, search, filters and paging",
+      "priority": "P1",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "packages/business-rules/src/dispatch-centre.ts",
+        "apps/web/components/order-tracking.tsx"
+      ],
+      "dataSource": "Scoped orders/users/address, delivery_date/window, actual state, derived priority and stable created_at/id ordering",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-READ04"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G06",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R06",
+      "requirement": "Queue, eligibility and assignment drawer",
+      "priority": "P0",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "packages/business-rules/src/dispatch-centre.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/cylinder-allocation.ts",
+        "apps/web/components/order-tracking.tsx",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Canonical orders/attempt versions; active/available branch users; trip/vehicle, reserved stock/serials, net verified payment and approved COD",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/order-tracking.test.ts",
+        "tests/order-tracking-postgres.test.ts",
+        "tests/dispatch-custody-capacity.test.ts"
+      ],
+      "testIds": [
+        "DDI-S024",
+        "DDI-S031",
+        "DDI-DECLINE01",
+        "DDI-S084",
+        "OPS-T07",
+        "TRK-04",
+        "TRK-17",
+        "DISP-CUSTODY01",
+        "DDI-S060"
+      ],
+      "negativeTests": [
+        "unavailable drivers cannot receive a legacy manual assignment",
+        "unverified payment and revoked COD exception",
+        "cross-branch filters"
+      ],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt",
+        "docs/dispatch-driver/evidence/final-tests.txt",
+        "docs/dispatch-driver/evidence/final-serial-guard-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G07",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R07",
+      "requirement": "Real location/map fallback and drivers",
+      "priority": "P1",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "packages/business-rules/src/dispatch-centre.ts",
+        "packages/business-rules/src/trip-metrics.ts"
+      ],
+      "dataSource": "Consented active matching-branch driver_trips/trip_events with capture/receipt/accuracy; users.driver_last_seen_at",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-CONTACT01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G10",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R08",
+      "requirement": "Actual LPG operations and quick actions",
+      "priority": "P1",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "packages/business-rules/src/dispatch-centre.ts",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/vehicle-manifest-panel.tsx"
+      ],
+      "dataSource": "bulk_lpg_loads/allocations/events and doorstep_execution/cylinder_lines; measured returned mass and held state",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-MASS01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G19",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R09",
+      "requirement": "Existing driver app integration and acknowledgements",
+      "priority": "P0",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/driver-operations.ts",
+        "database/migrations/070_driver_contact.sql",
+        "apps/web/lib/db.ts",
+        "scripts/export-bootstrap.ts",
+        "database/bootstrap.sql"
+      ],
+      "dataSource": "Existing driver identity/restricted session, dispatch_responses and nullable070 foreground contact metadata",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/driver-workspace.test.ts"
+      ],
+      "testIds": [
+        "DDI-CONTACT01",
+        "OPS-T07",
+        "DR-INTEGRATION-01"
+      ],
+      "negativeTests": [
+        "unavailable drivers cannot receive a legacy manual assignment",
+        "unverified payment and revoked COD exception",
+        "cross-branch filters"
+      ],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt",
+        "docs/dispatch-driver/evidence/final-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G08",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R10",
+      "requirement": "Immutable proof/report and encrypted offline behaviour",
+      "priority": "P0",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/DriverPhotoHistory.tsx",
+        "apps/mobile/field-queue.ts",
+        "apps/web/lib/delivery-photos.ts"
+      ],
+      "dataSource": "Canonical private delivery photos, order/attempt binding, durable history; encrypted per-user field queue and retain-all policy",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/operations-completion.test.ts",
+        "tests/dispatch-driver-photos.test.ts"
+      ],
+      "testIds": [
+        "OPS-T04",
+        "OPS-T10",
+        "OPS-T11",
+        "DDI-PHOTO01"
+      ],
+      "negativeTests": [
+        "proof photos are private, append-only, retain historical records and reject invalid image input"
+      ],
+      "evidence": [
+        "docs/dispatch-driver/evidence/targeted-tests.txt",
+        "docs/dispatch-driver/evidence/final-tests.txt",
+        "docs/dispatch-driver/evidence/final-private-photo-tests.txt",
+        "docs/dispatch-driver/evidence/final-dispatch-followup.txt"
+      ],
+      "acceptanceGate": "DDI-G11",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R11",
+      "requirement": "Manual recommendations and safe reassignment",
+      "priority": "P0",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/fleet-constraints.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/cylinder-allocation.ts"
+      ],
+      "dataSource": "Existing orders/driver_trips/vehicles, current gas demand and supplementary physical custody; expiring route estimate records",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/order-tracking.test.ts",
+        "tests/dispatch-custody-capacity.test.ts"
+      ],
+      "testIds": [
+        "DDI-S024",
+        "DDI-S031",
+        "DDI-DECLINE01",
+        "DDI-S084",
+        "TRK-09",
+        "DISP-CUSTODY01",
+        "DDI-S060"
+      ],
+      "negativeTests": [
+        "unavailable drivers cannot receive a legacy manual assignment",
+        "unverified payment and revoked COD exception",
+        "cross-branch filters"
+      ],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt",
+        "docs/dispatch-driver/evidence/final-tests.txt",
+        "docs/dispatch-driver/evidence/final-serial-guard-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G17",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R12",
+      "requirement": "Custody, supplements, single-visit fee and returns",
+      "priority": "P0",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/doorstep-execution.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/cylinder-allocation.ts"
+      ],
+      "dataSource": "Existing branch/vehicle inclusive mass and physical product custody, serials, same-order amendments, customer consent, invoice/payment records",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "BULK-PG01",
+        "DDI-S060"
+      ],
+      "negativeTests": [
+        "rollback preserves canonical reservations and custody history"
+      ],
+      "evidence": [
+        "docs/dispatch-driver/evidence/postgres-tests.txt",
+        "docs/dispatch-driver/evidence/final-tests.txt",
+        "docs/dispatch-driver/evidence/final-serial-guard-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G19",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R13",
+      "requirement": "Trips/fuel provenance and finance boundaries",
+      "priority": "P0",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/invoice-corrections.ts"
+      ],
+      "dataSource": "invoiceBalance over verified_payments and approved refunds, immutable invoices/corrections; trip_events odometer/GPS/fuel receipts",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/operations-completion-postgres.test.ts"
+      ],
+      "testIds": [
+        "DDI-PAY01",
+        "DDI-PAY02",
+        "OPS-T03",
+        "OPS-PG01"
+      ],
+      "negativeTests": [
+        "unavailable drivers cannot receive a legacy manual assignment",
+        "unverified payment and revoked COD exception",
+        "cross-branch filters"
+      ],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt",
+        "docs/dispatch-driver/evidence/final-tests.txt",
+        "docs/dispatch-driver/evidence/final-finance-guard-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G22",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed. Legacy invoice-less payment also uses the same net verified-payment/refund calculation, with no new financial records.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R14",
+      "requirement": "RBAC, branch privacy, realtime and recovery",
+      "priority": "P0",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "packages/business-rules/src/dispatch-centre.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/tracking-stream.ts",
+        "apps/web/lib/cylinder-allocation.ts",
+        "apps/web/components/order-tracking.tsx"
+      ],
+      "dataSource": "Current authenticated actor role/branch/assignment, private schema/RLS, current trip consent/purpose, postcommit outbox",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/order-tracking.test.ts",
+        "tests/dispatch-driver-photos.test.ts"
+      ],
+      "testIds": [
+        "DDI-READ04",
+        "TRK-20",
+        "TRK-20S",
+        "DDI-S060",
+        "DDI-PHOTO01"
+      ],
+      "negativeTests": [
+        "unavailable drivers cannot receive a legacy manual assignment",
+        "unverified payment and revoked COD exception",
+        "cross-branch filters"
+      ],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt",
+        "docs/dispatch-driver/evidence/final-tests.txt",
+        "docs/dispatch-driver/evidence/final-serial-guard-tests.txt",
+        "docs/dispatch-driver/evidence/final-private-photo-tests.txt",
+        "docs/dispatch-driver/evidence/final-dispatch-followup.txt"
+      ],
+      "acceptanceGate": "DDI-G23",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R15",
+      "requirement": "Accessibility, responsive and dark mode",
+      "priority": "P1",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing theme variables and scoped CSS; actual DOM text/font widths at desktop/tablet/phone; keyboard interactions",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/dispatch-driver/evidence/dispatch-final-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G24",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    },
+    {
+      "id": "DDI-R16",
+      "requirement": "Rollback, evidence and independent sign-off",
+      "priority": "P0",
+      "scope": "Full approved dispatch-driver specification; no unrelated module replacement",
+      "uiReference": "Approved desktop Dispatch Centre screenshot; existing driver mobile UI unchanged",
+      "route": "/admin/deliveries; existing /admin/orders,/admin/operations and driver workspace",
+      "implementationFiles": [
+        "docs/dispatch-driver/06-migrations-and-rollback.md",
+        "docs/dispatch-driver/07-test-and-acceptance-evidence.md",
+        "docs/dispatch-driver/09-open-blockers-and-production-gates.md",
+        "apps/web/lib/db.ts",
+        "database/migrations/070_driver_contact.sql",
+        "scripts/export-bootstrap.ts",
+        "database/bootstrap.sql"
+      ],
+      "dataSource": "Pre070 isolated snapshot/restore, additive070 explicit managed migration, local PostgreSQL recovery/role/worker evidence and independent gate register",
+      "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
+      "testFiles": [
+        "tests/production-backup-postgres.test.ts"
+      ],
+      "testIds": [
+        "PR-03",
+        "PR-04"
+      ],
+      "negativeTests": [
+        "rejects overwrite, tampering and wrong keys"
+      ],
+      "evidence": [
+        "docs/dispatch-driver/evidence/postgres-recovery-tests.txt",
+        "docs/dispatch-driver/evidence/final-tests.txt"
+      ],
+      "acceptanceGate": "DDI-G25",
+      "status": "PARTIAL",
+      "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
+      "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "DDI-S001",
+      "requirement": "sidebar unchanged",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-AUDIT01; dispatch-final-tests.txt: sidebar SHA256 preserved"
+    },
+    {
+      "id": "DDI-S002",
+      "requirement": "routes preserved",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "Build and RM-01\u201313 preserve29 route destinations and navigation; all29 independent browser workflows are not certified."
+    },
+    {
+      "id": "DDI-S003",
+      "requirement": "shared auth",
+      "status": "PASS",
+      "testOrManualEvidence": "RM-07,10,11: existing shared authentication/current role/branch/session checks; final-tests.txt"
+    },
+    {
+      "id": "DDI-S004",
+      "requirement": "customer checkout regression",
+      "status": "PASS",
+      "testOrManualEvidence": "Commerce wallet/COD checkout regressions; new-controls-tests.txt"
+    },
+    {
+      "id": "DDI-S005",
+      "requirement": "minimal driver home",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-AUDIT01: driver source identical after removing only heartbeat call"
+    },
+    {
+      "id": "DDI-S006",
+      "requirement": "technician regression",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-AUDIT01: technician workspace SHA256 unchanged"
+    },
+    {
+      "id": "DDI-S007",
+      "requirement": "stock balances retained",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-15/TRK-31/BULK-PG01: canonical stock effects and restored histories preserved; final-tests.txt"
+    },
+    {
+      "id": "DDI-S008",
+      "requirement": "finance balances retained",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T02/TRK-15/PAY-PG-CONCURRENCY: immutable/net financial records and one committed posting; final-tests.txt"
+    },
+    {
+      "id": "DDI-S009",
+      "requirement": "migration imports retained",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "Existing incremental migration and bootstrap regressions pass; actual historical Excel import remains held and unapproved."
+    },
+    {
+      "id": "DDI-S010",
+      "requirement": "no screenshot fixture data",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-READ01/DDI-READ03: counts from canonical isolated records, no screenshot constants"
+    },
+    {
+      "id": "DDI-S011",
+      "requirement": "zero orders",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-READ03: empty date gives zeros, unknown contact explicit"
+    },
+    {
+      "id": "DDI-S012",
+      "requirement": "loading",
+      "status": "PASS",
+      "testOrManualEvidence": "UI-LOAD01: initial AX snapshot shows dashes/loading, not fabricated zero operations"
+    },
+    {
+      "id": "DDI-S013",
+      "requirement": "API failure",
+      "status": "PASS",
+      "testOrManualEvidence": "UI-OUTAGE01: isolated server stopped; Updates unavailable and prior count1 retained; refresh-outage.png"
+    },
+    {
+      "id": "DDI-S014",
+      "requirement": "stale updates",
+      "status": "PASS",
+      "testOrManualEvidence": "UI-OUTAGE01: last-success time retained and refresh recovered after restart"
+    },
+    {
+      "id": "DDI-S015",
+      "requirement": "KPI consistency",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-READ01/DDI-KPI01/DDI-DECLINE01: scoped complete/page-independent/date/exception counts; dispatch-final-tests.txt"
+    },
+    {
+      "id": "DDI-S016",
+      "requirement": "Lagos date boundary",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-S016/DDI-KPI01: Lagos UTC+1 boundary and actual delivery date"
+    },
+    {
+      "id": "DDI-S017",
+      "requirement": "branch filter",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-READ02/DDI-READ04: authorised branch filters"
+    },
+    {
+      "id": "DDI-S018",
+      "requirement": "search scoping",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-READ02/DDI-READ04: literal scoped search and IDOR denial"
+    },
+    {
+      "id": "DDI-S019",
+      "requirement": "pagination",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-READ01:106-record full regression plus261-record capped-readiness follow-up; page53 returns final record and complete totals; final-tests.txt/final-dispatch-followup.txt"
+    },
+    {
+      "id": "DDI-S020",
+      "requirement": "tab/filter persistence",
+      "status": "PASS",
+      "testOrManualEvidence": "UI-FILTER01: search no synthetic match retained across Live tab; search-tab-empty.png"
+    },
+    {
+      "id": "DDI-S021",
+      "requirement": "valid assignment",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T07: eligible active-trip manual assignment commits assigned attempt and acknowledgement; final-tests.txt"
+    },
+    {
+      "id": "DDI-S022",
+      "requirement": "unauthorised branch",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-04/TRK-20: branch mismatch rejected without business effects; final-tests.txt"
+    },
+    {
+      "id": "DDI-S023",
+      "requirement": "inactive branch",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-04: inactive dispatch branch fails with unchanged business effects; final-tests.txt"
+    },
+    {
+      "id": "DDI-S024",
+      "requirement": "unavailable driver",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-S024/DDI-S024B: legacy and enhanced unavailable-driver negatives"
+    },
+    {
+      "id": "DDI-S025",
+      "requirement": "vehicle capacity",
+      "status": "PASS",
+      "testOrManualEvidence": "DISP-CUSTODY01: extra vehicle LPG included in recommendation and final capacity guard; final-tests.txt"
+    },
+    {
+      "id": "DDI-S026",
+      "requirement": "assignment race",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-17: independent PostgreSQL final-slot competition and duplicate proof serialization; final-tests.txt"
+    },
+    {
+      "id": "DDI-S027",
+      "requirement": "authorised override",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "OPS-T07 proves authorised manual selection; no bypass of physical/payment safety is permitted and no distinct unsafe override flow introduced."
+    },
+    {
+      "id": "DDI-S028",
+      "requirement": "unauthorised override",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T07: customer dispatch.assign is rejected; final-tests.txt"
+    },
+    {
+      "id": "DDI-S029",
+      "requirement": "override reason audit",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T07 exact dispatch.routing_basis.detail.reason assertion; final-trip-audit-tests.txt"
+    },
+    {
+      "id": "DDI-S030",
+      "requirement": "reassignment capacity",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-09: reassignment/rescheduling recheck capacity without reservation changes; final-tests.txt"
+    },
+    {
+      "id": "DDI-S031",
+      "requirement": "expired acceptance",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-S031: expired assignment acknowledgement has no response effect"
+    },
+    {
+      "id": "DDI-S032",
+      "requirement": "revoked driver",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-20: revoked/moved session cannot read or mutate prior assignment; final-tests.txt"
+    },
+    {
+      "id": "DDI-S033",
+      "requirement": "accept",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T07: current acknowledged response persisted after escalation; final-tests.txt"
+    },
+    {
+      "id": "DDI-S034",
+      "requirement": "decline",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-DECLINE01: decline appears in Exceptions and repeats retain one response"
+    },
+    {
+      "id": "DDI-S035",
+      "requirement": "decline reason",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-DECLINE01: canonical reason recorded (API source); no fabricated decline event"
+    },
+    {
+      "id": "DDI-S036",
+      "requirement": "status progression",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-11/TRK-15: valid pickup/status/proof-backed handover uses canonical sequence; final-tests.txt"
+    },
+    {
+      "id": "DDI-S037",
+      "requirement": "skipped transition",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-04/DR-BOUNDARY-02: skipped and invented transitions rejected; final-tests.txt"
+    },
+    {
+      "id": "DDI-S038",
+      "requirement": "stale version",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-09/OPS-T07: stale state/assignment version rejected; final-tests.txt"
+    },
+    {
+      "id": "DDI-S039",
+      "requirement": "idempotent status",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-15: stable retry and lost acknowledgement yield one event/business effect; final-tests.txt"
+    },
+    {
+      "id": "DDI-S040",
+      "requirement": "notify after commit",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-18: committed outbox publication retries without duplicate in-app messages; final-tests.txt (external delivery not certified)"
+    },
+    {
+      "id": "DDI-S041",
+      "requirement": "reconnect replay",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "TRK-15 proves backend idempotent recovery; installed-native reconnect replay remains untested."
+    },
+    {
+      "id": "DDI-S042",
+      "requirement": "offline truthfulness",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "UI-OUTAGE01 proves admin stale snapshot; native offline lifecycle acceptance remains untested."
+    },
+    {
+      "id": "DDI-S043",
+      "requirement": "own orders only",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-20: unrelated driver/moved branch cannot read assignment; final-tests.txt"
+    },
+    {
+      "id": "DDI-S044",
+      "requirement": "admin branch scope",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-READ04: moved dispatcher cannot read prior-branch order/candidates"
+    },
+    {
+      "id": "DDI-S045",
+      "requirement": "camera success",
+      "status": "NOT_TESTED",
+      "testOrManualEvidence": "Related canonical regression evidence retained in07; this exact full scenario has not been independently accepted. Device/physical/provider/staging checks remain pending and are not removed."
+    },
+    {
+      "id": "DDI-S046",
+      "requirement": "camera denied",
+      "status": "NOT_TESTED",
+      "testOrManualEvidence": "Related canonical regression evidence retained in07; this exact full scenario has not been independently accepted. Device/physical/provider/staging checks remain pending and are not removed."
+    },
+    {
+      "id": "DDI-S047",
+      "requirement": "invalid file",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T04: invalid/active image input rejected; final-tests.txt"
+    },
+    {
+      "id": "DDI-S048",
+      "requirement": "interrupted upload",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "API proof validation/replay checks pass; real native interrupted upload/object-storage outage acceptance remains open."
+    },
+    {
+      "id": "DDI-S049",
+      "requirement": "same-key photo retry",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T04: repeated same proof returns same ID, one retained photo; final-tests.txt"
+    },
+    {
+      "id": "DDI-S050",
+      "requirement": "order-bound photo",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T04: bound order/attempt/driver photo rejects unrelated customer; final-tests.txt"
+    },
+    {
+      "id": "DDI-S051",
+      "requirement": "historical evidence",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T11: retain-all preserves expired proof bytes and history without widening access; final-tests.txt"
+    },
+    {
+      "id": "DDI-S052",
+      "requirement": "latest evidence pointer",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-PHOTO01: two canonical completed deliveries update customer latest proof; expired authenticated media URL404, foreign/anonymous denied, old bytes/history retained; final-private-photo-tests.txt and final-dispatch-followup.txt"
+    },
+    {
+      "id": "DDI-S053",
+      "requirement": "report fields",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "Existing canonical driver proof/report path retained; full driver report-required-field device acceptance remains open."
+    },
+    {
+      "id": "DDI-S054",
+      "requirement": "proof prerequisite",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "Restricted completion/legacy-denial guards pass; exact installed-native missing-photo completion acceptance remains open."
+    },
+    {
+      "id": "DDI-S055",
+      "requirement": "offline conflict",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "Backend stale/version and encrypted queue controls pass; actual device sync-conflict replay remains open."
+    },
+    {
+      "id": "DDI-S056",
+      "requirement": "logout queue safety",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "Encrypted per-user queue source retained and tamper tests pass; real device logout cleanup/key-access acceptance remains open."
+    },
+    {
+      "id": "DDI-S057",
+      "requirement": "mass conversion",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-MASS01: canonical10000grams; UI explicit /1000kg conversion"
+    },
+    {
+      "id": "DDI-S058",
+      "requirement": "load custody reservation",
+      "status": "PASS",
+      "testOrManualEvidence": "BULK-01/BULK-PG01: loading reserves buffer, independent acknowledgement and duplicate-load serialization; final-tests.txt"
+    },
+    {
+      "id": "DDI-S059",
+      "requirement": "no stock double count",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-MASS01: inclusive branch stock not added to vehicle custody"
+    },
+    {
+      "id": "DDI-S060",
+      "requirement": "serial missing",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-S060 red serial-before.txt \u2192 green final-serial-guard-tests.txt: missing reserved serials block assignment with no attempt/state effects"
+    },
+    {
+      "id": "DDI-S061",
+      "requirement": "inspection missing",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "Existing inspection/custody controls retained; exact independent uninspected-dispatch/physical acceptance remains open."
+    },
+    {
+      "id": "DDI-S062",
+      "requirement": "no reissue before return",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-27/TRK-07: failed held custody cannot be reissued without return; final-tests.txt"
+    },
+    {
+      "id": "DDI-S063",
+      "requirement": "valid return",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-27/BULK-01: authorised measured return reconciles canonical custody; final-tests.txt (physical acceptance still open)"
+    },
+    {
+      "id": "DDI-S064",
+      "requirement": "single delivery fee supplement",
+      "status": "PASS",
+      "testOrManualEvidence": "DOOR-01/DOOR-PRODUCT01: original visit shares one delivery fee and supplement obligation; final-tests.txt"
+    },
+    {
+      "id": "DDI-S065",
+      "requirement": "insufficient vehicle stock",
+      "status": "PASS",
+      "testOrManualEvidence": "DOOR-03: insufficient physical buffer and unsafe ownership reject without custody effects; final-tests.txt"
+    },
+    {
+      "id": "DDI-S066",
+      "requirement": "unpaid supplement",
+      "status": "PASS",
+      "testOrManualEvidence": "BULK-03/DOOR-01: invoice/payment conditions precede actual metered fulfilment; final-tests.txt"
+    },
+    {
+      "id": "DDI-S067",
+      "requirement": "amendment replay",
+      "status": "PASS",
+      "testOrManualEvidence": "DOOR-PG01: duplicate reservation/verification/dispensing serializes; final-tests.txt"
+    },
+    {
+      "id": "DDI-S068",
+      "requirement": "reconciliation mismatch",
+      "status": "PASS",
+      "testOrManualEvidence": "BULK-02: measured return mismatch holds custody/closure without invented adjustment; final-tests.txt"
+    },
+    {
+      "id": "DDI-S069",
+      "requirement": "valid odometer",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T03: measured100\u2192110 odometer retained, estimate separate from actual receipt; final-tests.txt"
+    },
+    {
+      "id": "DDI-S070",
+      "requirement": "negative distance",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T03 exact endOdometer99<start100 rejection; final-trip-audit-tests.txt"
+    },
+    {
+      "id": "DDI-S071",
+      "requirement": "overlapping trip",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-PG01: independent connections serialize vehicle trip ownership; final-tests.txt"
+    },
+    {
+      "id": "DDI-S072",
+      "requirement": "fuel receipt once",
+      "status": "PASS",
+      "testOrManualEvidence": "OPS-T03 retries actual fuel event and asserts one fuel record; final-trip-audit-tests.txt"
+    },
+    {
+      "id": "DDI-S073",
+      "requirement": "redirect not payment",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-PAY01: misleading cached paid status cannot authorise dispatch; provider redirect tests retained"
+    },
+    {
+      "id": "DDI-S074",
+      "requirement": "payment still requires safety",
+      "status": "PASS",
+      "testOrManualEvidence": "Commerce prepaid wallet delivery regression: verified principal permits only canonical pickup/handover, no cash collected; final-finance-guard-tests.txt"
+    },
+    {
+      "id": "DDI-S075",
+      "requirement": "IDOR",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-READ04/TRK-20/OPS-T04: cross-branch order/candidate/private-proof IDOR rejected; final-tests.txt"
+    },
+    {
+      "id": "DDI-S076",
+      "requirement": "subscription branch scope",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-20S/RM-07: authenticated subscription scope/revocation revalidated; final-tests.txt"
+    },
+    {
+      "id": "DDI-S077",
+      "requirement": "expired image URL",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-PHOTO01: two canonical completed deliveries update customer latest proof; expired authenticated media URL404, foreign/anonymous denied, old bytes/history retained; final-private-photo-tests.txt and final-dispatch-followup.txt"
+    },
+    {
+      "id": "DDI-S078",
+      "requirement": "audit retention",
+      "status": "PARTIAL",
+      "testOrManualEvidence": "Existing immutable history/audit and protected-operation tests pass; exact full dispatch audit-field acceptance remains open."
+    },
+    {
+      "id": "DDI-S079",
+      "requirement": "transaction rollback",
+      "status": "PASS",
+      "testOrManualEvidence": "BULK-PG01/DOOR-PG01/MANIFEST-PG01: forced transaction rollback preserves stock/custody; final-tests.txt"
+    },
+    {
+      "id": "DDI-S080",
+      "requirement": "worker replay",
+      "status": "PASS",
+      "testOrManualEvidence": "TRK-18/PR-08: committed notification replay and supervised worker restart retain one effect; final-tests.txt"
+    },
+    {
+      "id": "DDI-S081",
+      "requirement": "native accessibility",
+      "status": "NOT_TESTED",
+      "testOrManualEvidence": "Related canonical regression evidence retained in07; this exact full scenario has not been independently accepted. Device/physical/provider/staging checks remain pending and are not removed."
+    },
+    {
+      "id": "DDI-S082",
+      "requirement": "desktop/tablet responsive",
+      "status": "PASS",
+      "testOrManualEvidence": "UI-RESP01: desktop1561/tablet768/phone390, document width matches viewport; screenshots and ui-verification.json"
+    },
+    {
+      "id": "DDI-S083",
+      "requirement": "dark theme",
+      "status": "PASS",
+      "testOrManualEvidence": "UI-THEME01: light/dark contrast and pagination footer reviewed; screenshots"
+    },
+    {
+      "id": "DDI-S084",
+      "requirement": "production flags safe",
+      "status": "PASS",
+      "testOrManualEvidence": "DDI-S084: production requires both explicit approvals; automatic assignment remains false"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DDI-G01",
+      "status": "PASS",
+      "reason": "Pre-edit audit,443-test baseline, types/build and ownership matrix recorded before source edits."
+    },
+    {
+      "id": "DDI-G02",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G03",
+      "status": "PASS",
+      "reason": "Protected navigation hashes unchanged; existing29-route/navigation tests and build retained. No menu label/group/role/collapse changes."
+    },
+    {
+      "id": "DDI-G04",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G05",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G06",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G07",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G08",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G09",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G10",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G11",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G12",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G13",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G14",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G15",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G16",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G17",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G18",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G19",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G20",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G21",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G22",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G23",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G24",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G25",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    },
+    {
+      "id": "DDI-G26",
+      "status": "OPEN",
+      "reason": "OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption."
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-09",
+      "change": "Approved document and desktop screenshot audited before source edits. Preserve all84 scenarios and26 gates; existing driver design remains authoritative. Baseline checks in progress; no fabricated UI data."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Core Dispatch Centre, scoped read projection, additive070 contact, shared availability/payment/expiry/release guards and declined-assignment exceptions implemented. Driver source adds heartbeat only. Individual manual assignment retained; safe bulk write absent, map provider and native builds deferred; all84 scenarios and26 gates remain. Initial test labels READ/CONTACT/PAY were corrected before acceptance mapping to avoid confusing them with prescribed scenario IDs. Old implicit-availability fixtures now explicitly declare availability; schema-marker fixtures advance70\u219271 without weakening runtime permissions."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Final458/458 tests pass with zero skipped using a fresh isolated PostgreSQL16 container and matching pg_dump/pg_restore tools. Initial17\u219216 restore-tool mismatch logs retained (secrets redacted), then matching-tool restore/role/worker tests pass. Native binaries and hosted rollout remain deferred; no new production approval."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Mapped existing executed canonical regression assertions into exact applicable scenarios instead of labelling already-tested backend behaviour untested. Scenario PASS means bounded test evidence, not independent operational release. Device/physical/staging gaps and all26 gates remain separate."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Final safety audit reproduced missing serial allocation being rejected only at final issue. Extracted that existing canonical guard and reused it at dispatch readiness;53 affected tests pass. No custody/financial history rewritten. Exact assignment reason, negative odometer and duplicate fuel receipt assertions pass12-test follow-up. All84 scenarios and26 gates retained; physical/native/production sign-offs remain open."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Final full460/460 zero-skipped regression passed after shared serial fix. Follow-up18/18 passes private customer-latest/expired-URL/retained-history checks plus261-record counts. Above250 readiness candidates, no incomplete count is published and unnecessary probes are skipped. Manual view-status detail UI exposes actual capture/receipt/accuracy or explicit unknowns. No provider activation, native build, hosted migration or real fulfilment."
+    },
+    {
+      "date": "2026-11-09",
+      "change": "Final read-projection regression reproduced accepted orders being counted ready before canonical preparation. Reused orderTransitions for state eligibility, blocked premature candidate selection and added per-order Review preparation/View details through the existing tracking component scoped by canonical orderId. Defaults preserve legacy driver/history use.18 dispatch/photo follow-ups and final web build/types pass; no operational data or release flags changed."
+    }
+  ],
+  "coverage": {
+    "requirements": 17,
+    "verifiedRequirements": 1,
+    "partialRequirements": 16,
+    "scenarios": 84,
+    "executedScenarioRecords": 69,
+    "gates": 26,
+    "passedGates": 2,
+    "notApplicable": 0,
+    "note": "No blocked/untested requirement or scenario removed. Route existence, source preservation and a green build do not prove complete business acceptance.",
+    "criticalRequirements": 8,
+    "criticalVerified": 0,
+    "criticalPartial": 8,
+    "automatedTests": {
+      "total": 460,
+      "passed": 460,
+      "failed": 0,
+      "skipped": 0,
+      "finalFollowup": {
+        "total": 18,
+        "passed": 18,
+        "failed": 0,
+        "skipped": 0,
+        "note": "Overlaps17 prior dispatch cases; adds1 private-photo API case. Not478 unique tests. Follow-up covers261 matching records and skips readiness probes entirely when no aggregate can be published."
+      },
+      "earlierAffectedRuns": {
+        "finance": 96,
+        "serial": 53,
+        "tripAudit": 12,
+        "note": "All passed; overlapping subsets, not additive unique test counts."
+      }
+    },
+    "routeEvidence": {
+      "/admin/deliveries": "Authenticated local UI, reads, blocked assignment, existing form navigation, desktop/tablet/phone/light/dark/outage recovery",
+      "existing29routes": "Navigation/source preservation and build; not29 independent end-to-end acceptances",
+      "nativeDriver": "Source heartbeat integration and mobile typecheck; no new binary/device acceptance"
+    },
+    "implementationCoverage": "17/17 requirements mapped to actual implementation files;1 audit verified,16 broad requirements partial at complete acceptance",
+    "verificationCoverage": "69/84 bounded passing scenario records;12 partial and3 native/device scenarios untested; all retained",
+    "criticalCoverage": "0/8 P0 requirements fully accepted; all8 retained partial with executed negative evidence",
+    "routeCoverage": "1 affected admin route manually checked plus existing29-route/source/build regressions; native source typechecked only",
+    "partialScenarioRecords": 12,
+    "untestedScenarioRecords": 3
+  }
+}

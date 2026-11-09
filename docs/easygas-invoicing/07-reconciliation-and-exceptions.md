@@ -1,0 +1,7 @@
+# Reconciliation and unresolved exceptions
+
+Payment posting → immutable intent quote → existing verified_payment/wallet_entry is the receipt authority. Fees are recovered processing charges, not extra invoice revenue or wallet value. Existing finance.summary/finance.ledger/paystackReport remain the reconciliation authorities; the library does not introduce balancing journal entries. Exact provider gross/identity/currency/environment mismatch remains under review. A paid invoice is not evidence of merchant settlement.
+
+Preserved exceptions: pending cash and manual bank transfers are not verified receipts; source/report mismatches and pending corrections block relevant service collection/work; approved notes adjust the effective invoice rather than overwriting it; overpayment is a credit balance requiring existing independent reconciliation. Provider full/partial refund/chargeback/settlement confirmation is not implemented or fabricated by this template phase. A purchase-credit refund is not a bank/provider refund.
+
+Legacy optional business identity is absent rather than guessed. Unverified registration/TIN/email/website remain omitted. Unsupported Unicode is explicitly represented; an actual PDF accessibility/tagging/legal acceptance review is still required. Large account library query/load testing, status-filter scaling beyond100candidates and dedicated POS/manual-credit receipt models/resend remain engineering work, not merely credential blockers.

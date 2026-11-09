@@ -1,0 +1,33 @@
+✔ Supabase migration creates an unexposed schema with RLS and a restricted server role (712.330584ms)
+✔ the restricted trusted-server role can run the complete local order-to-cash workflow (791.705625ms)
+✔ the restricted runtime role supports new accounts, catalogue, purchasing, credit, support and maintenance without owner privileges (722.991625ms)
+✔ F,N: operational dashboard and sales inventory must not expose financial metrics or costs (1033.103042ms)
+✔ A–E,M: governed corrections preserve reservations, stale counts fail and movements cannot be altered (830.026959ms)
+✔ G,H,L,N,O: branch tampering, protected exports, suspended accounts and forged permissions fail closed (735.041125ms)
+✔ I,J,P: expenses require independent approval, real payment evidence and append-only reversal (856.607292ms)
+✔ controlled transfers reserve, dispatch, partially receive and quarantine damage without duplicate effects (765.382667ms)
+✔ supplier purchases do not add stock; independently approved partial receipts cannot overreceive (713.382125ms)
+✔ report availability schedules deduplicate, recheck roles and never claim external delivery (717.562291ms)
+✔ K: quarantine release requires current independently documented qualifications; failed qualifications do not change custody (864.547834ms)
+✔ valuation uses an approved method and complete acquisition movements, never selling prices (768.196959ms)
+✔ E: competing corrections cannot apply stale snapshots or lose updates in serialized PGlite (702.973709ms)
+✔ stocktake sessions snapshot categories, generate scoped count sheets, reconcile all counts and reject intervening movements (699.769875ms)
+✔ addresses, preferences and sessions are customer-owned (709.554417ms)
+✔ recovery is non-enumerating, single-use, expires and revokes sessions (77.159375ms)
+✔ verification cannot be forged, reused or consumed for password reset (7.013792ms)
+✔ support persists replies, hides staff notes and rejects cross-customer access (14.806584ms)
+✔ new products remain unpriced and unpublished with approval definitions (5.098542ms)
+✔ supplier purchasing requires independent approval and receives stock once (81.897292ms)
+✔ cylinder inspections quarantine failures and prevent unsafe filling or custody (34.963125ms)
+✔ branch transfers remove source stock and destination receipt is independent and idempotent (145.580917ms)
+✔ refill profiles require owned eligible data and report insufficient history honestly (9.225959ms)
+✔ staff invitation acceptance cannot grant privileges and suspension revokes live sessions (53.531666ms)
+✔ maintenance expires requests, activates scheduled routine values and flags overdue cylinders once (58.235334ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12822.461833

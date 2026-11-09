@@ -1,0 +1,3 @@
+# EasyGas implementation requirements
+
+Every future EasyGas implementation phase must create or update a requirements traceability matrix before claiming completion. Use docs/traceability/README.md. Preserve stable requirement IDs and map each approved requirement to actual implementation files, authoritative data sources, security controls, executed test evidence, acceptance gates, status/reason and outstanding work. Route existence alone is not completion. Keep blocked, defective and untested requirements in coverage denominators. Record scope changes rather than silently dropping requirements. Existing production NO-GO decisions and unrelated work must be preserved unless explicitly authorised otherwise.

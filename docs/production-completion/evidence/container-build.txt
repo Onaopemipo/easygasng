@@ -1,0 +1,128 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 753B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 138B done
+#3 DONE 0.0s
+
+#4 [build  1/10] FROM docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5
+#4 resolve docker.io/library/node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5 done
+#4 DONE 0.1s
+
+#5 [build  2/10] WORKDIR /app
+#5 DONE 0.1s
+
+#6 [internal] load build context
+#6 transferring context: 10.82MB 0.1s done
+#6 DONE 0.1s
+
+#7 [build  3/10] COPY package.json package-lock.json ./
+#7 DONE 0.0s
+
+#8 [build  4/10] COPY apps/web/package.json ./apps/web/package.json
+#8 DONE 0.0s
+
+#9 [build  5/10] RUN npm ci
+#9 25.52 
+#9 25.52 added 63 packages, and audited 65 packages in 25s
+#9 25.52 
+#9 25.52 10 packages are looking for funding
+#9 25.52   run `npm fund` for details
+#9 25.52 
+#9 25.52 found 0 vulnerabilities
+#9 25.52 npm notice
+#9 25.52 npm notice New major version of npm available! 10.9.8 -> 12.2.2
+#9 25.52 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+#9 25.52 npm notice To update run: npm install -g npm@12.2.2
+#9 25.52 npm notice
+#9 DONE 25.8s
+
+#10 [build  6/10] COPY apps/web ./apps/web
+#10 DONE 0.1s
+
+#11 [build  7/10] COPY packages ./packages
+#11 DONE 0.0s
+
+#12 [build  8/10] COPY database ./database
+#12 DONE 0.0s
+
+#13 [build  9/10] COPY scripts ./scripts
+#13 DONE 0.0s
+
+#14 [build 10/10] RUN npm run build
+#14 0.178 
+#14 0.178 > easygas-platform@0.1.0 build
+#14 0.178 > npm run build --workspace apps/web
+#14 0.178 
+#14 0.242 
+#14 0.242 > @easygas/web@0.1.0 build
+#14 0.242 > next build --webpack
+#14 0.242 
+#14 0.430 ▲ Next.js 16.4.3 (webpack)
+#14 0.452 ✓ Running next.config.ts took 22ms
+#14 0.455 Attention: Next.js now collects completely anonymous telemetry regarding usage.
+#14 0.455 This information is used to shape Next.js' roadmap and prioritize features.
+#14 0.455 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+#14 0.455 https://nextjs.org/telemetry
+#14 0.455 
+#14 0.477 
+#14 0.503   Creating an optimized production build ...
+#14 8.620 ✓ Compiled successfully in 6.9s
+#14 8.624   Running TypeScript ...
+#14 14.45   Finished TypeScript in 5.8s ...
+#14 14.46   Collecting page data using 11 workers ...
+#14 15.26   Generating static pages using 11 workers (0/10) ...
+#14 15.31   Generating static pages using 11 workers (2/10) 
+#14 15.90   Generating static pages using 11 workers (4/10) 
+#14 15.90   Generating static pages using 11 workers (7/10) 
+#14 15.90 ✓ Generating static pages using 11 workers (10/10) in 638ms
+#14 16.42   Finalizing page optimization ...
+#14 16.42   Collecting build traces ...
+#14 21.43 
+#14 21.44 Route (app)
+#14 21.44 ┌ ƒ /
+#14 21.44 ├ ○ /_not-found
+#14 21.44 ├ ƒ /[...slug]
+#14 21.44 ├ ○ /activate
+#14 21.44 ├ ƒ /admin/[[...section]]
+#14 21.44 ├ ƒ /api/[action]
+#14 21.44 ├ ƒ /api/business-live
+#14 21.44 ├ ƒ /api/invoices/[orderId]
+#14 21.44 ├ ƒ /api/media
+#14 21.44 ├ ƒ /api/media/[id]
+#14 21.44 ├ ƒ /api/messaging/meta
+#14 21.44 ├ ƒ /api/payments/paystack/[operation]
+#14 21.44 ├ ƒ /api/status
+#14 21.44 ├ ƒ /api/tracking/stream
+#14 21.44 ├ ○ /icon.png
+#14 21.44 ├ ○ /payment-request
+#14 21.44 ├ ○ /payment-return
+#14 21.44 ├ ○ /robots.txt
+#14 21.44 └ ○ /sitemap.xml
+#14 21.44 
+#14 21.44 
+#14 21.44 ○  (Static)   prerendered as static content
+#14 21.44 ƒ  (Dynamic)  server-rendered on demand
+#14 21.44 
+#14 DONE 21.5s
+
+#15 [runtime 3/3] COPY --from=build --chown=node:node /app /app
+#15 DONE 1.1s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 12.1s done
+#16 exporting manifest sha256:b04f3cd4274dda962749353daed15d69537294d9644022dd4f4c9568b4343ec6 done
+#16 exporting config sha256:788a00d24aaf6db693af56f873607978e6f33dbf6f6db00858fdbf468f8a4ebb done
+#16 exporting attestation manifest sha256:689159302c1f75c935abd0cd8e952ef8a81d6e74cd95d38880be877de25f095a done
+#16 exporting manifest list sha256:0e5a23c7986f44ba4eadc0fe904eb82587babaa61ace71ecb0aa01849ba72782 done
+#16 naming to docker.io/library/easygas:local-acceptance-20261106 done
+#16 unpacking to docker.io/library/easygas:local-acceptance-20261106
+#16 unpacking to docker.io/library/easygas:local-acceptance-20261106 3.2s done
+#16 DONE 15.4s

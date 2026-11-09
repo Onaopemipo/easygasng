@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "EasyGas",
+    "slug": "easygas-energy",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "easygas",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.easygasng.customer",
+      "appleTeamId": "RDQ9JJZH7F"
+    },
+    "android": {
+      "package": "com.easygasng.customer"
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Choose photographs to attach to your EasyGas service appointment.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow EasyGas to record GPS during your active consented driver trip, including while internet is unavailable.",
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true,
+          "locationAlwaysAndWhenInUsePermission": "Allow EasyGas to save GPS during an active driver trip when the screen is locked or the app is in the background. Saved points upload after reconnection.",
+          "isAndroidForegroundServiceEnabled": true
+        }
+      ]
+    ],
+    "icon": "./assets/app-icon.png",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "owner": "onaopemipo",
+    "extra": {
+      "eas": {
+        "projectId": "1c2f8055-9c7b-4d6e-bc43-a531544da41b"
+      }
+    }
+  }
+}

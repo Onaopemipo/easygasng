@@ -1,0 +1,1707 @@
+{
+  "phase": "EasyRewards completion continuation",
+  "date": "2026-11-02",
+  "productionDecision": "NO-GO",
+  "scopeChanges": [
+    "Legacy new point-to-wallet conversion deliberately closed per approved task specification; existing outcomes/history preserved. Commerce regression expectation updated and positive verified policy issuance covered in new tests.",
+    "Mandatory partial fulfilment/refunds and reward catalogue/moderation remain incomplete, not silently excluded.",
+    "No actual economics approved; seed examples and isolated test approvals do not activate live behaviour.",
+    "2026-11-02 continuation implements partial financial refunds, catalogue budgets, referral review, service labour earning, consented Smart offers and native parity. Partial physical delivery remains fail-closed and in scope; no live activation authorised.",
+    "Real isolated PostgreSQL concurrency, restricted runtime RLS and encrypted dump/restore executed; no production recovery certification implied."
+  ],
+  "requirements": [
+    {
+      "id": "ER-01",
+      "requirement": "Existing customer IDs/history preserved.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "users.id and sessions.user_id; existing reward_entries history before/after 043",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-01", "ER-36"],
+      "acceptanceGate": "ER-G02",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-02",
+      "requirement": "Existing reward balance reconciles after migration.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "SUM(reward_entries.points) including historical entries/reversals",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-01", "ER-36"],
+      "acceptanceGate": "ER-G02",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-03",
+      "requirement": "Unapproved policy cannot issue/redeem.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "settings loyalty.policy joined to matching immutable setting_versions and activated change_requests; OFF process flags",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-03"],
+      "acceptanceGate": "ER-G03",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-04",
+      "requirement": "Verified paid completed gas order awards correctly.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "orders.status/payment_status, verified_payments coverage, reward_jobs source policy/lines",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Application behaviour verified against persisted sources, independent approvals and transactional controls.",
+      "testResult": "PASS \u2014 executed completion and PostgreSQL tests in the 270-test regression run.",
+      "outstandingWork": "Live economics and final release acceptance remain separate gates.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-04S"],
+      "acceptanceGate": "ER-G05",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-05",
+      "requirement": "Unverified COD awards zero.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "cash_collections independent verified_by/verified_at; verified_payments",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-05"],
+      "acceptanceGate": "ER-G05",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-06",
+      "requirement": "Cancelled/failed delivery awards zero.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "orders.status and immutable reward_jobs eligible enqueue condition",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-06"],
+      "acceptanceGate": "ER-G05",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-07",
+      "requirement": "Duplicate completion/payment event awards once.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "reward_jobs.order_id primary key; reward_entries.reference unique; verified_payments",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-05"],
+      "acceptanceGate": "ER-G05",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-08",
+      "requirement": "Partial fulfilment and decimal rounding correct.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Integer line kobo snapshots; earnedPoints BigInt floor; no authoritative partial quantities",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "PARTIAL",
+      "reason": "Decimal financial allocation and cumulative partial refunds verified. Partial physical delivery remains unsupported and fails closed under existing custody rules.",
+      "testResult": "PARTIAL / NOT_TESTED / BLOCKED \u2014 see reason and executed evidence; not counted complete.",
+      "outstandingWork": "Define, implement and certify partial physical handover/custody before claiming this entire requirement complete.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-08", "ER-14", "ER-30G"],
+      "acceptanceGate": "ER-G05",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-09",
+      "requirement": "Policy change does not rewrite history.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "setting_versions and reward_jobs.snapshot; reward_entry_details.policy_version_id",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-09"],
+      "acceptanceGate": "ER-G05",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-10",
+      "requirement": "Redemption enforces minimum/cap/exclusions.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "reward_order_discounts, policy minimum/cap/categories, customer locked SUM(points)",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-10", "ER-06"],
+      "acceptanceGate": "ER-G06",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-11",
+      "requirement": "Concurrent redemption cannot overspend.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Independent PostgreSQL customer/branch/order locks and unique keys (unexecuted guarded test)",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Application behaviour verified against persisted sources, independent approvals and transactional controls.",
+      "testResult": "PASS \u2014 executed completion and PostgreSQL tests in the 270-test regression run.",
+      "outstandingWork": "Live economics and final release acceptance remain separate gates.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-11", "ER-PGSEC"],
+      "acceptanceGate": "ER-G06",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-12",
+      "requirement": "Duplicate redemption posts once.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "orders(customer_id,idempotency_key), request_hash and discount:<order> unique reference",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-10"],
+      "acceptanceGate": "ER-G06",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-13",
+      "requirement": "Failed checkout releases reservation.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Existing checkout transaction rolls back reward_entries, discounts, order and inventory reservations",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-13"],
+      "acceptanceGate": "ER-G06",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-14",
+      "requirement": "Partial refund clawback correct.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Existing full-refund-only credit_requests; partial line/refund allocations absent",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Application behaviour verified against persisted sources, independent approvals and transactional controls.",
+      "testResult": "PASS \u2014 executed completion and PostgreSQL tests in the 270-test regression run.",
+      "outstandingWork": "Live economics and final release acceptance remain separate gates.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-14", "ER-14Z"],
+      "acceptanceGate": "ER-G07",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-15",
+      "requirement": "Duplicate refund event reverses once.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "credit_requests independent approved full refund; refund:<order> and discount-restore:<order> unique references",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-15", "ER-15F"],
+      "acceptanceGate": "ER-G07",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-16",
+      "requirement": "Already-redeemed points handled by approved policy.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Negative reward_entries sum, operational_incidents reward_reversal_review, independent loyalty.adjustment",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Application behaviour verified against persisted sources, independent approvals and transactional controls.",
+      "testResult": "PASS \u2014 executed completion and PostgreSQL tests in the 270-test regression run.",
+      "outstandingWork": "Live economics and final release acceptance remain separate gates.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-16", "ER-14"],
+      "acceptanceGate": "ER-G07",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-17",
+      "requirement": "Monetary wallet ledger unaffected by points-only actions.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "reward_entries / wallet_entries separation; no new reward_credit issuance",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-10", "ER-15", "ER-21"],
+      "acceptanceGate": "ER-G07",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-18",
+      "requirement": "Referral first qualifying purchase awards once.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "reward_referrals one customer/source/award; frozen job eligibility and actual earliest paid fulfilment milestone",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/rewards-referrals.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-18", "ER-18Q"],
+      "acceptanceGate": "ER-G08",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-19",
+      "requirement": "Self-referral and duplicate referral prevented.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "reward_referrals customer primary key, non-self constraint and source event checks",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Application behaviour verified against persisted sources, independent approvals and transactional controls.",
+      "testResult": "PASS \u2014 executed completion and PostgreSQL tests in the 270-test regression run.",
+      "outstandingWork": "Live economics and final release acceptance remain separate gates.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/rewards-referrals.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-18", "ER-19R"],
+      "acceptanceGate": "ER-G08",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-20",
+      "requirement": "Referral clawback after refund.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "reward_referrals.source_order_id and original owned reward entry; referral-refund:<entry> unique",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/rewards-referrals.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-18"],
+      "acceptanceGate": "ER-G08",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-21",
+      "requirement": "Admin adjustment needs independent approval.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "loyalty.adjustment change_requests/approval_decisions; adjustment:<request> immutable entry",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/rewards-adjustment.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-21"],
+      "acceptanceGate": "ER-G10",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-22",
+      "requirement": "Customer A cannot access Customer B rewards.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Authenticated users.id ownership on summary/outcome and referral privacy projection",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/rewards-referrals.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-22", "ER-18"],
+      "acceptanceGate": "ER-G11",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-23",
+      "requirement": "Cross-branch/tenant access denied.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Actor branch scope, reward_entry_details.branch_id; single installation, no tenant entity",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "PARTIAL",
+      "reason": "Branch and customer ownership negatives pass. Multi-tenant certification is outside the current single-installation architecture.",
+      "testResult": "PARTIAL / NOT_TESTED / BLOCKED \u2014 see reason and executed evidence; not counted complete.",
+      "outstandingWork": "Certify tenant isolation before any multi-tenant rollout.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-22"],
+      "acceptanceGate": "ER-G11",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-24",
+      "requirement": "Direct API policy/balance tampering rejected.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Strict endpoint/policy schemas, customer role checks, shared governance and immutable SQL triggers",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/rewards-adjustment.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-03", "ER-22"],
+      "acceptanceGate": "ER-G11",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-25",
+      "requirement": "Worker crash and retry do not duplicate posting.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "reward_jobs status/attempts/source snapshot; savepoint rollback plus operational enqueue-failure incident",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/refills.ts",
+        ".env.example",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-25", "ER-25Q"],
+      "acceptanceGate": "ER-G05",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-26",
+      "requirement": "Timeout after commit returns original result.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Owned orders(customer_id,idempotency_key) and minimal rewards.checkout-outcome",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-26"],
+      "acceptanceGate": "ER-G06",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-27",
+      "requirement": "Idempotency key reused with different payload rejected.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Parsed checkout request hash and existing redemption key amount comparison",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-26"],
+      "acceptanceGate": "ER-G06",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-28",
+      "requirement": "Customer web UI has real/empty/error states.",
+      "priority": "P1",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "rewards.summary actual ledger, approved policy, pending award event count; no fabricated catalogue",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Web/native functionality implemented and compiled; final browser/device visual and accessibility acceptance not executed.",
+      "testResult": "NOT_TESTED \u2014 visual/device acceptance; build and web/native typechecks PASS.",
+      "outstandingWork": "Execute final responsive light/dark browser and actual native device/accessibility acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql",
+        "apps/web/components/customer-bookings.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": [],
+      "acceptanceGate": "ER-G09",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-29",
+      "requirement": "Existing mobile UI/API compatibility preserved.",
+      "priority": "P1",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Existing wallet additive rewardsInfo/rewardEntries; existing native checkout optional rewardPoints",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Web/native functionality implemented and compiled; final browser/device visual and accessibility acceptance not executed.",
+      "testResult": "NOT_TESTED \u2014 visual/device acceptance; build and web/native typechecks PASS.",
+      "outstandingWork": "Execute final responsive light/dark browser and actual native device/accessibility acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql",
+        "apps/web/components/customer-bookings.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": [],
+      "acceptanceGate": "ER-G09",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-30",
+      "requirement": "Checkout totals, flat delivery fee, inventory remain correct.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "orders total invariant, immutable discount evidence, existing delivery fee/inventory/custody controls",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Application behaviour verified against persisted sources, independent approvals and transactional controls.",
+      "testResult": "PASS \u2014 executed completion and PostgreSQL tests in the 270-test regression run.",
+      "outstandingWork": "Live economics and final release acceptance remain separate gates.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-30G"],
+      "acceptanceGate": "ER-G06",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-31",
+      "requirement": "Recurring order and refill events do not double-award.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Existing recurring/schedule lifecycle; award enqueue only from delivered verified orders",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Application behaviour verified against persisted sources, independent approvals and transactional controls.",
+      "testResult": "PASS \u2014 executed completion and PostgreSQL tests in the 270-test regression run.",
+      "outstandingWork": "Live economics and final release acceptance remain separate gates.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/refills.ts",
+        ".env.example",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-31S", "ER-31P"],
+      "acceptanceGate": "ER-G13",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-32",
+      "requirement": "Liability reconciles with ledger.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Ledger movement kind/legacy attribution; current approved branch valuation version; audited export",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Application behaviour verified against persisted sources, independent approvals and transactional controls.",
+      "testResult": "PASS \u2014 executed completion and PostgreSQL tests in the 270-test regression run.",
+      "outstandingWork": "Live economics and final release acceptance remain separate gates.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-32", "ER-10O"],
+      "acceptanceGate": "ER-G10",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-33",
+      "requirement": "Suspended/session-expired account loses access.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "users.active and live sessions expiration/revocation in existing dispatch auth",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-22"],
+      "acceptanceGate": "ER-G11",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-34",
+      "requirement": "Light/dark accessibility and responsive views.",
+      "priority": "P1",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Existing shared theme surfaces, responsive table container and 15px native typography",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Web/native functionality implemented and compiled; final browser/device visual and accessibility acceptance not executed.",
+      "testResult": "NOT_TESTED \u2014 visual/device acceptance; build and web/native typechecks PASS.",
+      "outstandingWork": "Execute final responsive light/dark browser and actual native device/accessibility acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql",
+        "apps/web/components/customer-bookings.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": [],
+      "acceptanceGate": "ER-G09",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-35",
+      "requirement": "Existing orders/wallet/refund/cylinder/dispatch regressions.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Existing authoritative wallet, approval, inventory, gas/cylinder and tracking regression fixtures",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 full regression plus final focused refinement evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/commerce.test.ts",
+        "tests/order-tracking.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["TRK-01", "TRK-15", "TRK-27", "EO-10"],
+      "acceptanceGate": "ER-G14",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-36",
+      "requirement": "Isolated migration and restore verification.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Actual revision-42 schema/customer history upgraded to 043; encrypted PGlite snapshot/isolated restore",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Application behaviour verified against persisted sources, independent approvals and transactional controls.",
+      "testResult": "PASS \u2014 executed completion and PostgreSQL tests in the 270-test regression run.",
+      "outstandingWork": "Live economics and final release acceptance remain separate gates.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-36", "ER-PG36"],
+      "acceptanceGate": "ER-G12",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-37",
+      "requirement": "Feature flags disable issuance without hiding history.",
+      "priority": "P0",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "EASYGAS_REWARDS_ISSUANCE_ENABLED and EASYGAS_REWARDS_REDEMPTION_ENABLED; ledger reads retained",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/refills.ts",
+        ".env.example",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-37"],
+      "acceptanceGate": "ER-G03",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    },
+    {
+      "id": "ER-38",
+      "requirement": "Referral link exposes no private customer ID.",
+      "priority": "P1",
+      "scope": "Additive EasyRewards extension; preserve existing public commercial NO-GO",
+      "uiReference": "User EasyRewards master prompt; existing application styling and navigation",
+      "route": "/rewards; /checkout; /order-gas; /purchase-credit; /admin/settings; /admin/approvals; /admin/campaigns",
+      "dataSource": "Random reward_referral_codes.code and configured HTTPS APP_URL; no customer/order IDs in public references",
+      "securityControl": "Authenticated customer ownership; branch scope; independent owner/finance approval; strict inputs; immutable source/ledger; unique references and transactional customer locks; technical activation flags OFF",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed regression evidence verifies the application requirement; live activation is a separate gate.",
+      "testResult": "PASS \u2014 mapped executed local tests/regressions; see evidence.",
+      "outstandingWork": "No remaining application item for this requirement; global economics, UI/device and production recovery gates remain.",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-schema.ts",
+        "database/migrations/043_easyrewards.sql",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/rewards-referrals.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/reward-offers.ts",
+        "apps/web/lib/reward-services.ts",
+        "database/migrations/044_rewards_completion.sql",
+        "database/migrations/045_rewards_recovery.sql",
+        "database/migrations/046_rewards_runtime_policy.sql"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-postgres.test.ts",
+        "tests/easyrewards-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": ["docs/testing/easyrewards-completion-final-20261102.txt"],
+      "testIds": ["ER-38", "ER-18"],
+      "acceptanceGate": "ER-G08",
+      "negativeTests": [
+        "unapproved example economics and self approval cannot issue or redeem"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "ER-G01",
+      "requirement": "Preflight / preserved scope",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    },
+    {
+      "id": "ER-G02",
+      "requirement": "Customer model compatibility",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    },
+    {
+      "id": "ER-G03",
+      "requirement": "Approved economics",
+      "status": "BLOCKED",
+      "reason": "No actual approved economics; live flags and default policy remain OFF."
+    },
+    {
+      "id": "ER-G04",
+      "requirement": "Ledger reconciliation",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    },
+    {
+      "id": "ER-G05",
+      "requirement": "Verified earning / idempotency",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    },
+    {
+      "id": "ER-G06",
+      "requirement": "Redemption / concurrency",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    },
+    {
+      "id": "ER-G07",
+      "requirement": "Refunds / clawback",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    },
+    {
+      "id": "ER-G08",
+      "requirement": "Referral eligibility",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    },
+    {
+      "id": "ER-G09",
+      "requirement": "Customer web / native",
+      "status": "NOT_TESTED",
+      "reason": "Source/typecheck implemented; final browser and actual device acceptance not performed."
+    },
+    {
+      "id": "ER-G10",
+      "requirement": "Admin / approvals / reports",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    },
+    {
+      "id": "ER-G11",
+      "requirement": "Security / privacy",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    },
+    {
+      "id": "ER-G12",
+      "requirement": "Migration / recovery",
+      "status": "BLOCKED",
+      "reason": "Isolated PostgreSQL encrypted dump/restore and upgrade passed. Production recovery owners, RPO/RTO acceptance and compatible release artifact remain outstanding."
+    },
+    {
+      "id": "ER-G13",
+      "requirement": "Approved Smart Refill integration",
+      "status": "PASS",
+      "reason": "Actual forecast, consent, quiet-hour, frequency and duplicate-notice tests passed with isolated approved fixtures. Real programme/offers remain OFF pending approval."
+    },
+    {
+      "id": "ER-G14",
+      "requirement": "Automated regressions / build / evidence",
+      "status": "PASS",
+      "reason": "Executed 270-test regression run, including completion scenarios and real PostgreSQL transactions/RLS; production approval remains separate."
+    }
+  ]
+}

@@ -1,0 +1,2085 @@
+{
+  "phase": "Versioned approved invoice/receipt financial documents",
+  "productionDecision": "PARTIAL / NO-GO unchanged. New PDF template default OFF; no hosted rollout, real payment/refund/message/backfill or native build.",
+  "requirements": [
+    {
+      "id": "INV-DOC-01",
+      "requirement": "Preflight repository audit and baseline",
+      "priority": "P1",
+      "scope": "User master specification sections0\u20131; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "docs/easygas-invoicing/01-repository-audit.md",
+        "docs/easygas-invoicing/06-test-evidence.md"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "PM-T11"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json",
+        "docs/easygas-invoicing/evidence/baseline-tests.txt"
+      ],
+      "acceptanceGate": "G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Audit and baseline completed before implementation; prior untracked work and all release holds preserved.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "None for audit-only scope."
+    },
+    {
+      "id": "INV-DOC-02",
+      "requirement": "Discovery matrix and canonical source reuse",
+      "priority": "P0",
+      "scope": "User master specification section2; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "docs/easygas-invoicing/02-route-matrix.md",
+        "apps/web/lib/financial-documents.ts"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G02",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-03",
+      "requirement": "Approved visual hierarchy and versioned PDF/preview components",
+      "priority": "P1",
+      "scope": "User master specification section3; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "packages/business-rules/src/financial-document.ts",
+        "apps/web/lib/invoice-pdf.ts",
+        "apps/web/components/financial-document.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/assets/fonts/NotoSans-Bold.ttf"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G03",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-04",
+      "requirement": "Verified optional business identity and independent settings approval",
+      "priority": "P0",
+      "scope": "User master specification section4; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "apps/web/lib/document-identity.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/components/admin.tsx",
+        "database/migrations/072_document_identity.sql"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G04",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-05",
+      "requirement": "Immutable document contract, states and existing numbering",
+      "priority": "P0",
+      "scope": "User master specification section5; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "apps/web/lib/invoices.ts",
+        "apps/web/lib/service-invoices.ts",
+        "apps/web/lib/payments/documents.ts",
+        "packages/business-rules/src/financial-document.ts"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G06",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-06",
+      "requirement": "Exact principal, fees, totals, tax, discounts and liability semantics",
+      "priority": "P0",
+      "scope": "User master specification section6; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "packages/business-rules/src/financial-document.ts",
+        "packages/business-rules/src/payment-fees.ts",
+        "apps/web/lib/invoice-corrections.ts",
+        "apps/web/lib/payments/documents.ts"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G07",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-07",
+      "requirement": "All A\u2013K end-to-end document entry points",
+      "priority": "P0",
+      "scope": "User master specification section7; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "apps/web/components/order-invoice.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/reconciliation.tsx",
+        "apps/mobile/Invoices.tsx",
+        "docs/easygas-invoicing/02-route-matrix.md"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G11",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-08",
+      "requirement": "Existing route/surface/navigation coverage",
+      "priority": "P1",
+      "scope": "User master specification section8; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "docs/easygas-invoicing/02-route-matrix.md",
+        "apps/web/components/document-library.tsx",
+        "apps/web/lib/financial-documents.ts",
+        "apps/web/app/api/invoices/[orderId]/route.ts"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G02",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-09",
+      "requirement": "Paystack verified posting, webhook and permission integrity",
+      "priority": "P0",
+      "scope": "User master specification section9; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/web/lib/payments/paystack-provider.ts",
+        "apps/web/lib/payments/webhooks.ts",
+        "apps/web/lib/payments/documents.ts",
+        "apps/web/app/api/payments/paystack/[operation]/route.ts"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G09",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-10",
+      "requirement": "Admin search/filter/download/resend and diagnostics",
+      "priority": "P1",
+      "scope": "User master specification section10; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "apps/web/components/document-library.tsx",
+        "apps/web/lib/financial-documents.ts",
+        "apps/web/components/reconciliation.tsx",
+        "apps/web/components/admin.tsx"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G17",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-11",
+      "requirement": "Customer and installed mobile document history/download/share",
+      "priority": "P0",
+      "scope": "User master specification section11; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "apps/mobile/Invoices.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/document-library.tsx",
+        "apps/web/components/order-invoice.tsx"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G16",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-12",
+      "requirement": "Backward compatibility, no backfill and migration safety",
+      "priority": "P0",
+      "scope": "User master specification section12; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "apps/web/lib/invoice-pdf-legacy.ts",
+        "apps/web/lib/invoice-pdf.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/072_document_identity.sql",
+        "database/bootstrap.sql",
+        "scripts/export-bootstrap.ts"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G21",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-13",
+      "requirement": "At least80 explicit scenarios across all8 requested groups",
+      "priority": "P1",
+      "scope": "User master specification section13; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "docs/easygas-invoicing/06-test-evidence.md"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G24",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-14",
+      "requirement": "All26 acceptance gates with actual reviewer/evidence",
+      "priority": "P1",
+      "scope": "User master specification section14; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "docs/easygas-invoicing/09-acceptance-gates.md",
+        "docs/easygas-invoicing/08-deployment-rollback-recovery.md"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G25",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-15",
+      "requirement": "Dependency-ordered incremental execution without activation",
+      "priority": "P0",
+      "scope": "User master specification section15; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "docs/easygas-invoicing/01-repository-audit.md",
+        "docs/easygas-invoicing/08-deployment-rollback-recovery.md",
+        "apps/web/lib/document-identity.ts"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G26",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-16",
+      "requirement": "Rollback and financial recovery preservation",
+      "priority": "P0",
+      "scope": "User master specification section16; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "apps/web/lib/invoice-pdf-legacy.ts",
+        "apps/web/lib/invoice-pdf.ts",
+        "docs/easygas-invoicing/08-deployment-rollback-recovery.md"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G22",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-17",
+      "requirement": "Eleven required reports plus actual code/evidence",
+      "priority": "P1",
+      "scope": "User master specification section17; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "docs/easygas-invoicing/01-repository-audit.md",
+        "docs/easygas-invoicing/02-route-matrix.md",
+        "docs/easygas-invoicing/03-data-contract-and-money-rules.md",
+        "docs/easygas-invoicing/04-document-design-spec.md",
+        "docs/easygas-invoicing/05-security-and-permissions.md",
+        "docs/easygas-invoicing/06-test-evidence.md",
+        "docs/easygas-invoicing/07-reconciliation-and-exceptions.md",
+        "docs/easygas-invoicing/08-deployment-rollback-recovery.md",
+        "docs/easygas-invoicing/09-acceptance-gates.md",
+        "docs/easygas-invoicing/10-requirements-traceability.md",
+        "docs/easygas-invoicing/11-final-implementation-report.md"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G02",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    },
+    {
+      "id": "INV-DOC-18",
+      "requirement": "Definition of done: full financial/platform/operational acceptance",
+      "priority": "P0",
+      "scope": "User master specification section18; all current order/service/receipt/wallet/admin/mobile document paths retained",
+      "uiReference": "Approved_EasyGas_Receipt_Design.png; visual reference only, no sample legal identities/transactions",
+      "route": "/orders, /wallet, /services, /admin/orders, /admin/reconciliation, /admin/settings, /admin/approvals, /api/invoices/[orderId], /api/payments/paystack/[operation], documents.list, native Invoices",
+      "implementationFiles": [
+        "docs/easygas-invoicing/11-final-implementation-report.md",
+        "docs/easygas-invoicing/09-acceptance-gates.md"
+      ],
+      "dataSource": "Existing customer_invoices immutable issued snapshot/sequence; approved invoice_notes; verified_payments/refunds; payment_postings + immutable intent quote; existing users,branches,governed document.identity/website.content. No new financial ledger.",
+      "securityControl": "Authenticated own/role/branch reads; recent independent financial approval; server-verified posting/evidence; immutable history; exact integer kobo; trusted local assets; private/no-store PDFs; sandbox and activation gates preserved.",
+      "testFiles": [
+        "tests/financial-document.test.ts",
+        "tests/financial-document-pdf.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/service-invoices-postgres.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "DOC-IDENTITY-APPROVAL"
+      ],
+      "negativeTests": [
+        "Self approval must never activate legal identity",
+        "DOC-RECEIPT-DENY-"
+      ],
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt",
+        "docs/easygas-invoicing/evidence/application-regression.txt",
+        "docs/easygas-invoicing/evidence/postgres-tests.txt",
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/web-types.txt",
+        "docs/easygas-invoicing/evidence/mobile-types.txt",
+        "docs/easygas-invoicing/evidence/build.txt",
+        "docs/easygas-invoicing/evidence/browser-verification.json",
+        "docs/easygas-invoicing/evidence/pdf-tests.txt",
+        "docs/easygas-invoicing/evidence/pdf-visual-review.json"
+      ],
+      "acceptanceGate": "G25",
+      "status": "PARTIAL",
+      "reason": "Bounded existing-module implementation and local evidence delivered; complete specification acceptance is not met. Missing engineering and provider/legal/device/staging gates remain in denominator.",
+      "testResult": "PASS:92 focused tests,46 application regression tests,3 independent PostgreSQL checks;74 overlapping final followups. Web/native types and web build recorded separately; no native build or live merchant call.",
+      "outstandingWork": "See08 dependency register,09 gate report and80-scenario registry: POS/manual-credit PDF, production-volume status-filter acceptance, document resend/attachments, provider refunds/settlements, native/device/accessibility/volume/staging and stakeholder acceptance remain."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "INV-S001",
+      "group": "baseline",
+      "scenario": "Existing invoice issue/number unchanged",
+      "status": "PASS",
+      "test": "PM-T11",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S002",
+      "group": "baseline",
+      "scenario": "Customer own invoice access",
+      "status": "PASS",
+      "test": "CUI-DATA",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S003",
+      "group": "baseline",
+      "scenario": "Driver restricted APIs unchanged",
+      "status": "PASS",
+      "test": "DR-INTEGRATION-01",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S004",
+      "group": "baseline",
+      "scenario": "Technician summary/jobs scope",
+      "status": "PASS",
+      "test": "TF-DATA",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S005",
+      "group": "baseline",
+      "scenario": "Grouped sidebar29 routes",
+      "status": "PASS",
+      "test": "RM-01\u201305,12,13",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S006",
+      "group": "baseline",
+      "scenario": "Customer read HTTP compatibility",
+      "status": "PASS",
+      "test": "CUI-HTTP",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S007",
+      "group": "baseline",
+      "scenario": "Wallet exact principal/replay",
+      "status": "PASS",
+      "test": "PAY-POST",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S008",
+      "group": "baseline",
+      "scenario": "Service approval/work gates",
+      "status": "PASS",
+      "test": "SINV-06",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S009",
+      "group": "baseline",
+      "scenario": "POS regression",
+      "status": "PASS",
+      "test": "OPS-T03",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S010",
+      "group": "baseline",
+      "scenario": "No financial side effect from document reads",
+      "status": "PASS",
+      "test": "DOC-LIBRARY",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S011",
+      "group": "pdf",
+      "scenario": "A4",
+      "status": "PASS",
+      "test": "DOC-PDF-A4",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S012",
+      "group": "pdf",
+      "scenario": "RECEIPT",
+      "status": "PASS",
+      "test": "DOC-PDF-RECEIPT",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S013",
+      "group": "pdf",
+      "scenario": "LONG-ID",
+      "status": "PASS",
+      "test": "DOC-PDF-LONG-ID",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S014",
+      "group": "pdf",
+      "scenario": "LONG-NAME",
+      "status": "PASS",
+      "test": "DOC-PDF-LONG-NAME",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S015",
+      "group": "pdf",
+      "scenario": "LONG-ADDRESS",
+      "status": "PASS",
+      "test": "DOC-PDF-LONG-ADDRESS",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S016",
+      "group": "pdf",
+      "scenario": "NAIRA",
+      "status": "PASS",
+      "test": "DOC-PDF-NAIRA",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S017",
+      "group": "pdf",
+      "scenario": "OPTIONAL-IDENTITY",
+      "status": "PASS",
+      "test": "DOC-PDF-OPTIONAL-IDENTITY",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S018",
+      "group": "pdf",
+      "scenario": "MULTIPAGE",
+      "status": "PASS",
+      "test": "DOC-PDF-MULTIPAGE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S019",
+      "group": "pdf",
+      "scenario": "LONG-ITEM",
+      "status": "PASS",
+      "test": "DOC-PDF-LONG-ITEM",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S020",
+      "group": "pdf",
+      "scenario": "CREDIT-NOTE",
+      "status": "PASS",
+      "test": "DOC-PDF-CREDIT-NOTE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S021",
+      "group": "pdf",
+      "scenario": "MAX-AMOUNT",
+      "status": "PASS",
+      "test": "DOC-PDF-MAX-AMOUNT",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S022",
+      "group": "pdf",
+      "scenario": "UNICODE",
+      "status": "PASS",
+      "test": "DOC-PDF-UNICODE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S023",
+      "group": "semantics",
+      "scenario": "UNPAID",
+      "status": "PASS",
+      "test": "DOC-STATE-UNPAID",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S024",
+      "group": "semantics",
+      "scenario": "FALSE-PAID-FLAG",
+      "status": "PASS",
+      "test": "DOC-STATE-FALSE-PAID-FLAG",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S025",
+      "group": "semantics",
+      "scenario": "PARTIAL",
+      "status": "PASS",
+      "test": "DOC-STATE-PARTIAL",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S026",
+      "group": "semantics",
+      "scenario": "PAID",
+      "status": "PASS",
+      "test": "DOC-STATE-PAID",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S027",
+      "group": "semantics",
+      "scenario": "ZERO-DUE-UNPAID",
+      "status": "PASS",
+      "test": "DOC-STATE-ZERO-DUE-UNPAID",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S028",
+      "group": "semantics",
+      "scenario": "VOID",
+      "status": "PASS",
+      "test": "DOC-STATE-VOID",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S029",
+      "group": "semantics",
+      "scenario": "UNKNOWN-BALANCE",
+      "status": "PASS",
+      "test": "DOC-STATE-UNKNOWN-BALANCE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S030",
+      "group": "semantics",
+      "scenario": "OVERDUE",
+      "status": "PASS",
+      "test": "DOC-STATE-OVERDUE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S031",
+      "group": "semantics",
+      "scenario": "ADJUSTED",
+      "status": "PASS",
+      "test": "DOC-STATE-ADJUSTED",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S032",
+      "group": "semantics",
+      "scenario": "CREDIT-BALANCE",
+      "status": "PASS",
+      "test": "DOC-STATE-CREDIT-BALANCE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S033",
+      "group": "money",
+      "scenario": "Zero kobo",
+      "status": "PASS",
+      "test": "DOC-MONEY-0",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S034",
+      "group": "money",
+      "scenario": "One kobo",
+      "status": "PASS",
+      "test": "DOC-MONEY-1",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S035",
+      "group": "money",
+      "scenario": "Ninety-nine kobo",
+      "status": "PASS",
+      "test": "DOC-MONEY-99",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S036",
+      "group": "money",
+      "scenario": "Exact whole naira",
+      "status": "PASS",
+      "test": "DOC-MONEY-100",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S037",
+      "group": "money",
+      "scenario": "Receipt two decimal places",
+      "status": "PASS",
+      "test": "DOC-MONEY-700508",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S038",
+      "group": "money",
+      "scenario": "Safe maximum integer formatting",
+      "status": "PASS",
+      "test": "DOC-MONEY-1000000000000",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S039",
+      "group": "money",
+      "scenario": "Fee gross-up minimality/rounding",
+      "status": "PASS",
+      "test": "PAY-FEE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S040",
+      "group": "money",
+      "scenario": "Fee threshold and caps",
+      "status": "PASS",
+      "test": "PAY-FEE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S041",
+      "group": "money",
+      "scenario": "Wallet liability vs processing fee",
+      "status": "PASS",
+      "test": "DOC-RECEIPT",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S042",
+      "group": "money",
+      "scenario": "Partial verified invoice payments",
+      "status": "PASS",
+      "test": "PM-T11",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S043",
+      "group": "money",
+      "scenario": "Overpaid invoice balance",
+      "status": "PASS",
+      "test": "DOC-STATE-CREDIT-BALANCE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S044",
+      "group": "money",
+      "scenario": "Approved tax policy and real tax fields",
+      "status": "NOT_TESTED",
+      "test": "OPEN: actual business/legal policy not supplied",
+      "evidence": [],
+      "reason": "OPEN: actual business/legal policy not supplied"
+    },
+    {
+      "id": "INV-S045",
+      "group": "security",
+      "scenario": "No posting cannot issue receipt",
+      "status": "PASS",
+      "test": "DOC-RECEIPT-DENY-posting",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S046",
+      "group": "security",
+      "scenario": "No wallet/payment ledger ID cannot issue receipt",
+      "status": "PASS",
+      "test": "DOC-RECEIPT-DENY-ledger",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S047",
+      "group": "security",
+      "scenario": "Pending status cannot issue receipt",
+      "status": "PASS",
+      "test": "DOC-RECEIPT-DENY-state",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S048",
+      "group": "security",
+      "scenario": "Wrong environment",
+      "status": "PASS",
+      "test": "DOC-RECEIPT-DENY-environment",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S049",
+      "group": "security",
+      "scenario": "Wrong gross",
+      "status": "PASS",
+      "test": "DOC-RECEIPT-DENY-gross",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S050",
+      "group": "security",
+      "scenario": "Wrong principal",
+      "status": "PASS",
+      "test": "DOC-RECEIPT-DENY-principal",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S051",
+      "group": "security",
+      "scenario": "Nonzero receipt due",
+      "status": "PASS",
+      "test": "DOC-RECEIPT-DENY-due",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S052",
+      "group": "security",
+      "scenario": "Zero verified paid",
+      "status": "PASS",
+      "test": "DOC-RECEIPT-DENY-paid",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S053",
+      "group": "security",
+      "scenario": "Forged signed events/amount/currency",
+      "status": "PASS",
+      "test": "PAY-ZERO-EFFECT",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S054",
+      "group": "security",
+      "scenario": "Raw bytes/timestamp/replay/rotation",
+      "status": "PASS",
+      "test": "PAY-SIGNATURE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S055",
+      "group": "security",
+      "scenario": "Foreign/anonymous/driver document access",
+      "status": "PASS",
+      "test": "INV-PDF01",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S056",
+      "group": "security",
+      "scenario": "Markup/customer injection",
+      "status": "PASS",
+      "test": "DOC-ESCAPE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S057",
+      "group": "workflow",
+      "scenario": "Customer web order invoice preview/library",
+      "status": "PASS",
+      "test": "DOC-LIBRARY",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S058",
+      "group": "workflow",
+      "scenario": "Installed mobile receipt share/download",
+      "status": "NOT_TESTED",
+      "test": "OPEN: native build/device deferred",
+      "evidence": [],
+      "reason": "OPEN: native build/device deferred"
+    },
+    {
+      "id": "INV-S059",
+      "group": "workflow",
+      "scenario": "Phone assisted order document integration",
+      "status": "PARTIAL",
+      "test": "PARTIAL: existing order invoice reuse; dedicated assisted browser flow not exercised",
+      "evidence": [],
+      "reason": "PARTIAL: existing order invoice reuse; dedicated assisted browser flow not exercised"
+    },
+    {
+      "id": "INV-S060",
+      "group": "workflow",
+      "scenario": "POS PDF receipt integration",
+      "status": "NOT_TESTED",
+      "test": "OPEN: canonical verified POS PDF not implemented",
+      "evidence": [],
+      "reason": "OPEN: canonical verified POS PDF not implemented"
+    },
+    {
+      "id": "INV-S061",
+      "group": "workflow",
+      "scenario": "Service quote/report invoice and corrections",
+      "status": "PASS",
+      "test": "SINV-01",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S062",
+      "group": "workflow",
+      "scenario": "Doorstep add-on note/no second delivery charge",
+      "status": "PARTIAL",
+      "test": "PARTIAL: existing invoice note integration retained; physical workflow acceptance open",
+      "evidence": [],
+      "reason": "PARTIAL: existing invoice note integration retained; physical workflow acceptance open"
+    },
+    {
+      "id": "INV-S063",
+      "group": "workflow",
+      "scenario": "Recurring order issued documents",
+      "status": "PARTIAL",
+      "test": "PARTIAL: existing per-order invoice retained; occurrence document acceptance not exercised",
+      "evidence": [],
+      "reason": "PARTIAL: existing per-order invoice retained; occurrence document acceptance not exercised"
+    },
+    {
+      "id": "INV-S064",
+      "group": "workflow",
+      "scenario": "Wallet top-up verified receipt",
+      "status": "PASS",
+      "test": "DOC-POSTING-SNAPSHOT",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S065",
+      "group": "workflow",
+      "scenario": "Provider refund confirmation",
+      "status": "NOT_TESTED",
+      "test": "OPEN: provider refund capability incomplete; no fake confirmation",
+      "evidence": [],
+      "reason": "OPEN: provider refund capability incomplete; no fake confirmation"
+    },
+    {
+      "id": "INV-S066",
+      "group": "workflow",
+      "scenario": "Secure document resend/notification attachments",
+      "status": "NOT_TESTED",
+      "test": "OPEN: dedicated resend/attachment capability incomplete",
+      "evidence": [],
+      "reason": "OPEN: dedicated resend/attachment capability incomplete"
+    },
+    {
+      "id": "INV-S067",
+      "group": "recovery",
+      "scenario": "Independent PostgreSQL posting race/rollback",
+      "status": "PASS",
+      "test": "PAY-PG-CONCURRENCY",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/postgres-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S068",
+      "group": "recovery",
+      "scenario": "Independent PostgreSQL invoice issue/rollback",
+      "status": "PASS",
+      "test": "SINV-PG01",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/postgres-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S069",
+      "group": "recovery",
+      "scenario": "Independent approvals concurrency",
+      "status": "PASS",
+      "test": "multi-connection PostgreSQL",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/postgres-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S070",
+      "group": "recovery",
+      "scenario": "Renderer feature-flag rollback",
+      "status": "PASS",
+      "test": "DOC-ROLLBACK",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S071",
+      "group": "recovery",
+      "scenario": "Later business/customer edits preserve receipt",
+      "status": "PASS",
+      "test": "DOC-POSTING-SNAPSHOT",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S072",
+      "group": "recovery",
+      "scenario": "Provider fee mismatch/uncertain init",
+      "status": "PASS",
+      "test": "PAY-RECOVERY",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S073",
+      "group": "recovery",
+      "scenario": "Actual merchant settlement and partial refund reconciliation",
+      "status": "NOT_TESTED",
+      "test": "OPEN: verified provider outcomes/settlement capability not available",
+      "evidence": [],
+      "reason": "OPEN: verified provider outcomes/settlement capability not available"
+    },
+    {
+      "id": "INV-S074",
+      "group": "recovery",
+      "scenario": "Storage failure/release restore rehearsal",
+      "status": "PARTIAL",
+      "test": "PARTIAL: on-demand PDF no storage worker; staged backup/restore not executed",
+      "evidence": [],
+      "reason": "PARTIAL: on-demand PDF no storage worker; staged backup/restore not executed"
+    },
+    {
+      "id": "INV-S075",
+      "group": "accessibility/performance",
+      "scenario": "Keyboard modal containment/Escape focus",
+      "status": "PASS",
+      "test": "BROWSER-KEYBOARD",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/browser-verification.json"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S076",
+      "group": "accessibility/performance",
+      "scenario": "Tagged PDF/actual screen-reader review",
+      "status": "NOT_TESTED",
+      "test": "OPEN: tagged PDF/assistive review not completed",
+      "evidence": [],
+      "reason": "OPEN: tagged PDF/assistive review not completed"
+    },
+    {
+      "id": "INV-S077",
+      "group": "accessibility/performance",
+      "scenario": "Phone390 responsive preview",
+      "status": "PASS",
+      "test": "BROWSER-PHONE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/browser-verification.json"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S078",
+      "group": "accessibility/performance",
+      "scenario": "Light print palette/contrast review",
+      "status": "PASS",
+      "test": "BROWSER-CONTRAST",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/browser-verification.json"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S079",
+      "group": "accessibility/performance",
+      "scenario": "Bounded PDF generation time/size",
+      "status": "PASS",
+      "test": "DOC-PDF-A4",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    },
+    {
+      "id": "INV-S080",
+      "group": "accessibility/performance",
+      "scenario": "100-row table repeated header/performance",
+      "status": "PASS",
+      "test": "DOC-PDF-MULTIPAGE",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt",
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "reason": "Bounded executed isolated automated/browser evidence; not independent production acceptance."
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "requirement": "Baseline captured; expected unborn/untracked repository documented",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/baseline-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G02",
+      "requirement": "Actual route/schema/source audit",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G03",
+      "requirement": "Approved design visual parity",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/browser-verification.json"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G04",
+      "requirement": "Actual business identity and no fabricated optional legal details",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G05",
+      "requirement": "Invoice versus verified-receipt semantics",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G06",
+      "requirement": "Historical snapshot immutability",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G07",
+      "requirement": "Authoritative money/fees and policy",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G08",
+      "requirement": "Committed verified posting only",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G09",
+      "requirement": "Webhook auth/idempotency",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/postgres-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G10",
+      "requirement": "Wallet principal/liability correctness",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G11",
+      "requirement": "All service/phone/POS/add-on integrations",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G12",
+      "requirement": "Provider refund confirmation and credit notes",
+      "status": "BLOCKED",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G13",
+      "requirement": "Independent approvals",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/postgres-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G14",
+      "requirement": "RBAC/customer/branch isolation",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G15",
+      "requirement": "PDF rendering and full accessibility",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G16",
+      "requirement": "Customer and installed mobile download",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/mobile-types.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G17",
+      "requirement": "Document resend/notification lifecycle",
+      "status": "BLOCKED",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G18",
+      "requirement": "Actual merchant settlement reconciliation",
+      "status": "BLOCKED",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G19",
+      "requirement": "Audit trail",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/targeted-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G20",
+      "requirement": "Existing unique numbering/idempotent issue",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/postgres-tests.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    },
+    {
+      "id": "G21",
+      "requirement": "Staging migration dry run",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/postgres-tests.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G22",
+      "requirement": "Release backup/restore/rollback",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G23",
+      "requirement": "Production performance/security",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/final-followup.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G24",
+      "requirement": "Regression across all installed apps",
+      "status": "PARTIAL",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G25",
+      "requirement": "Business/legal/finance signoff",
+      "status": "BLOCKED",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [],
+      "remainingWork": "See08 dependency register and09 gate report; missing engineering/provider/legal/device/staging acceptance retained."
+    },
+    {
+      "id": "G26",
+      "requirement": "No unapproved live activation",
+      "status": "PASS",
+      "reviewer": "Codex automated/local visual review only; no independent stakeholder signoff",
+      "date": "2026-11-09",
+      "evidence": [
+        "docs/easygas-invoicing/evidence/application-regression.txt"
+      ],
+      "remainingWork": "None for this bounded technical gate; separate production gates remain."
+    }
+  ],
+  "changeLog": [
+    "2026-11-09: audit first; new canonical presentation adapter/versioned renderer and governed optional identity only; preserve existing models/numbering/ledgers. All18 scope rows,80 requested scenarios and26 gates retained.",
+    "Safe scope boundary: existing unfinished provider refund/settlement and resend/POS receipt engineering are explicitly retained, not silently declared complete."
+  ]
+}

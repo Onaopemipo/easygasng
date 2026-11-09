@@ -1,0 +1,33 @@
+✖ ER-PG36: real PostgreSQL duplicate workers/refund approvals, encrypted backup and isolated restore preserve committed effects (2201.3525ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2656.26875
+
+✖ failing tests:
+
+test at tests/easyrewards-postgres-completion.test.ts:1:723
+✖ ER-PG36: real PostgreSQL duplicate workers/refund approvals, encrypted backup and isolated restore preserve committed effects (2201.3525ms)
+  Error: Command failed: /opt/homebrew/opt/postgresql@17/bin/pg_restore --dbname postgresql://<redacted>@127.0.0.1:55439/easygas_test_restore_f0d9a6a6eaaa43f4bc15da62a6a56fae --exit-on-error /var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-rewards-restore-w9Xd41/restored.dump
+  pg_restore: error: could not execute query: ERROR:  unrecognized configuration parameter "transaction_timeout"
+  Command was: SET transaction_timeout = 0;
+  
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/easyrewards-postgres-completion.test.ts:155:7)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    status: 1,
+    signal: null,
+    output: [ null, <Buffer >, <Buffer 70 67 5f 72 65 73 74 6f 72 65 3a 20 65 72 72 6f 72 3a 20 63 6f 75 6c 64 20 6e 6f 74 20 65 78 65 63 75 74 65 20 71 75 65 72 79 3a 20 45 52 52 4f 52 3a ... 103 more bytes> ],
+    pid: 33306,
+    stdout: <Buffer >,
+    stderr: <Buffer 70 67 5f 72 65 73 74 6f 72 65 3a 20 65 72 72 6f 72 3a 20 63 6f 75 6c 64 20 6e 6f 74 20 65 78 65 63 75 74 65 20 71 75 65 72 79 3a 20 45 52 52 4f 52 3a ... 103 more bytes>
+  }

@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-30",
+  "environment": "Isolated local QA databases, background jobs disabled; no business data modified",
+  "websiteDashboardSwitch": {
+    "result": "PASS",
+    "evidence": "Authenticated account menu opened dashboard and Back to Website returned home with the same identity"
+  },
+  "cartContinuity": {
+    "result": "PASS",
+    "evidence": "One published synthetic Gas Hose remained quantity 1 after dashboard/home/cart transitions"
+  },
+  "guestLoginCheckout": {
+    "result": "PASS",
+    "evidence": "Guest Sign in to Checkout reached /login?returnTo=%2Fcheckout; login restored /checkout with the same Gas Hose quantity 1"
+  },
+  "savedLocation": {
+    "result": "PASS",
+    "evidence": "Default QA Home address / Lekki appeared in workspace/public headers and checkout default selected address, phone, street and area"
+  },
+  "checkoutRestrictions": {
+    "result": "PASS",
+    "evidence": "Place Order remained disabled when ordering and payment methods were disabled; no browser order or payment was created"
+  },
+  "crossTabLogout": {
+    "result": "PASS",
+    "evidence": "Sign Out in public tab redirected second protected tab to /login?returnTo=%2Faccount; zero protected dashboard headings remained"
+  },
+  "crossAccount": {
+    "result": "PASS",
+    "evidence": "First QA customer showed 3 orders, NGN8560 and 1250 points; second commercial customer showed 0 orders, NGN0 and 0 points"
+  },
+  "failureIsolation": {
+    "result": "PASS",
+    "evidence": "Temporary HTTP/WebSocket QA proxy returned 503 only for refill.profiles. Order/wallet/reward metrics and all 15 links remained loaded. Screenshot customer-dashboard-failure-20261030.png"
+  },
+  "retryRecovery": {
+    "result": "PASS",
+    "evidence": "After restoring the proxy source, clicking Retry restored the smart refill empty state without page reload; zero remaining card alerts. Screenshot customer-dashboard-recovery-20261030.png"
+  },
+  "keyboardGroups": {
+    "result": "PASS",
+    "evidence": "All four collapsible group buttons closed with Space and reopened with Enter"
+  },
+  "compactLayout": {
+    "result": "PASS",
+    "evidence": "At 1560px, sidebar width and workspace margin both 76px; 15 links retained; preference survived reload"
+  },
+  "mobileDrawer": {
+    "result": "PARTIAL",
+    "evidence": "390px: dialog role, inert background, initial Close navigation focus, Escape closure and focus return verified. Full forward/backward Tab cycle and backdrop checks remain unexecuted"
+  },
+  "responsive": {
+    "desktop1560": "PASS",
+    "mobile390All15Routes": "PASS",
+    "tablet1024": "NOT_TESTED",
+    "reason": "After QA server replacement, viewport overrides did not affect the replacement tab; not reported as passed"
+  },
+  "reducedMotion": {
+    "result": "IMPLEMENTED_UNVERIFIED",
+    "evidence": "Scoped prefers-reduced-motion CSS present; live preference check not executed in this phase"
+  },
+  "screenReader": {
+    "result": "IMPLEMENTED_UNVERIFIED",
+    "evidence": "Browser accessibility tree, semantic labels and landmarks inspected; no dedicated VoiceOver session"
+  },
+  "refillFeedback": {
+    "result": "PASS",
+    "evidence": "Commercial QA account created an owned gas profile, displayed all five choices and persisted Already refilled. UI explicitly showed unverified self-report. Screenshot customer-refill-feedback-20261030.png"
+  },
+  "unfinishedForm": {
+    "result": "PASS",
+    "evidence": "After stable session refresh fix, profile label and selected refill size survived interaction/revalidation and form submission succeeded."
+  }
+}

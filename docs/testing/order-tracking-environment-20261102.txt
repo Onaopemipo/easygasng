@@ -1,0 +1,5 @@
+Multi-connection environment discovery: psql, postgres and pg_ctl unavailable on PATH. Docker client exists; docker info failed because /Users/philipog/.docker/run/docker.sock does not exist (daemon not running). No database credentials printed or production target probed.
+TRK-17 is explicitly skipped/NOT_TESTED unless EASYGAS_ENABLE_LOCAL_PG_TESTS=yes and EASYGAS_TEST_POSTGRES_URL points to a disposable loopback /easygas_test database. Test creates/removes only its uniquely named isolated schema. PGlite results are not independent-connection evidence.
+Lint: repository has no lint script/configuration; lint NOT_TESTED. Prettier checks and TypeScript are recorded separately.
+Supabase CLI unavailable on PATH; no hosted migration list/pull/advisor or cloud mutation executed. Generic PostgreSQL additive migration files and regenerated bootstrap are the local tested path. Supabase changelog markdown fetch failed with unsupported content type; official RLS guidance was read.
+Native compile can be checked locally; no approved iOS/Android device or emulator lifecycle/permission test was run.

@@ -1,0 +1,31 @@
+✔ Supabase migration creates an unexposed schema with RLS and a restricted server role (691.202584ms)
+✔ the restricted trusted-server role can run the complete local order-to-cash workflow (792.071709ms)
+✔ the restricted runtime role supports new accounts, catalogue, purchasing, credit, support and maintenance without owner privileges (755.007375ms)
+✔ direct URL API refuses unauthenticated financial settings (714.386333ms)
+✔ web cookie and mobile bearer requests enforce identical restricted-setting rules (8.277667ms)
+✔ mobile bearer tokens cannot approve fabricated requests or impersonate privileged identities (1.812125ms)
+✔ cross-origin mutation is refused before processing credentials (0.286917ms)
+✔ JSON is mandatory and GET cannot mutate state (0.319375ms)
+✔ native sign-in returns an opaque token, web sign-in keeps it in an HttpOnly cookie (72.885792ms)
+✔ oversized JSON bodies and malformed origin values are refused (0.479083ms)
+✔ aggregate authentication budget persists across identities and resets after its window (25.796667ms)
+✔ G,H: live subscriptions reject forged branch scope, deduplicate committed snapshots and terminate after suspension (10043.307875ms)
+✔ F,N: operational dashboard and sales inventory must not expose financial metrics or costs (988.711417ms)
+✔ A–E,M: governed corrections preserve reservations, stale counts fail and movements cannot be altered (815.019625ms)
+✔ G,H,L,N,O: branch tampering, protected exports, suspended accounts and forged permissions fail closed (772.204792ms)
+✔ I,J,P: expenses require independent approval, real payment evidence and append-only reversal (984.933583ms)
+✔ controlled transfers reserve, dispatch, partially receive and quarantine damage without duplicate effects (805.974916ms)
+✔ supplier purchases do not add stock; independently approved partial receipts cannot overreceive (779.359167ms)
+✔ report availability schedules deduplicate, recheck roles and never claim external delivery (994.901875ms)
+✔ K: quarantine release requires current independently documented qualifications; failed qualifications do not change custody (796.211667ms)
+✔ valuation uses an approved method and complete acquisition movements, never selling prices (801.563042ms)
+✔ E: competing corrections cannot apply stale snapshots or lose updates in serialized PGlite (802.202208ms)
+✔ stocktake sessions snapshot categories, generate scoped count sheets, reconcile all counts and reject intervening movements (778.793833ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23206.405625

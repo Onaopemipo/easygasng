@@ -1,0 +1,21 @@
+# Known limitations — release remains NO-GO
+
+This is a substantial local implementation expansion, not completion of every master requirement. Detailed priorities and next actions are in `reports/easygas-outstanding-work.md`; feature-by-feature evidence is in `reports/easygas-feature-verification.md`. The previous audit remains an immutable historical baseline.
+
+External dependencies intentionally remain: hosted PostgreSQL/HTTPS runtime, approved payment provider, transactional email and other messaging, real staff/qualification/service/pricing/stock inputs, approved legal/safety policies, signed mobile builds and real-device acceptance. Supabase Philip 2 Acc / BytesNGigs remains the selected future destination; no project was created or changed.
+
+Code still incomplete includes full privacy erasure/retention and policy acceptance-version capture; phone OTP/social/biometric/deep-link/push; complete offline dispatch/POS/photo recovery; quote expiry/mid-job disputes, arbitrary partial/cash/provider refunds and cash discrepancy resolution; full holiday/working-hours calendar; service image lifecycle and qualification document storage; bidirectional personalised recommendations and conversion analytics; full B2B credit/contracts/prices; supplier invoice/payable reconciliation; bulk gas mass/stocktake/loss accounting; cylinder exchange/deposit/recall/QR passport; advanced loyalty/referral/tier/expiry and refund clawback policy; physical-cylinder/external-refill/model-feedback forecasting; complete costs/tax/profit/expense reports; multi-branch customer fulfilment; complete governed settings catalogue and protected financial delegation.
+
+Local passing tests cannot establish multi-connection PostgreSQL safety, production recovery, real qualified field operations, accessibility conformance, security certification or native device behaviour. The remaining native toolchain dependency advisories are documented, not hidden. No provider delivery, hosted migration, signed binary, real cash settlement or production activation is claimed.
+
+Deployment, commit, push and live automation were not performed. Do not infer approval from the presence of code, a readiness screen, a successful export or a test fixture.
+
+## Gas pricing, delivery and shared approvals — 30 October 2026
+
+The shared approval lifecycle and gram-based ordering are implemented locally. Production remains NO-GO. Real minimum/maximum gas quantities, increments, precision, physical stock, operational qualification evidence and coverage policies must be supplied and approved. Initial named locations do not establish automatic street-level eligibility: manual coverage confirmation is the default before gas dispatch. No geocoder or polygon certainty is claimed. New customer-cylinder intakes remain quarantined until documented inspection; historical fixed-fill stock is not automatically converted into measured bulk gas.
+
+A local multi-connection PostgreSQL harness is present but skipped because no disposable test database is configured. PGlite results do not verify independent PostgreSQL connection locking. Native type checks and Android/iOS exports do not replace device, signing or store acceptance. Report Excel output is SpreadsheetML XML; PDF uses Print/Save PDF and its actual print destination still needs user acceptance. External payment and messaging providers remain disconnected. The complete scope and evidence are in `docs/reports/easygas-gas-pricing-delivery-implementation.md`.
+
+### Inventory/dashboard/finance extension (30 October 2026)
+
+See `reports/easygas-inventory-dashboard-implementation.md` and security verification. Local inventory/expense/governed stocktake/transfer/reporting/SSE workflows are implemented; independent PostgreSQL concurrency acceptance remains blocked. Costs, valuation method, qualifications, operational stock and supplier lead times/safety stock require actual approved records. Profit and unsupported customer-cohort/reminder attribution remain unavailable. Additional behaviour-based monitoring thresholds and serial-specific generic cylinder transfer are not claimed implemented. Scheduled reports currently deliver private snapshots in app; CSV, Excel XML and browser print/save-PDF are supported, not native XLSX/server PDF. Production remains NO-GO.

@@ -1,0 +1,26 @@
+{
+  "environment": "Isolated synthetic local preview on port 3037; separate PGlite directory; providers and background jobs disabled",
+  "cases": [
+    {
+      "id": "SINV-UI01",
+      "result": "PASS",
+      "observed": "Customer signed in, opened Completed service booking, viewed EGI-0000000001 with verified NGN1200 paid, zero amount due and zero additional delivery charge."
+    },
+    {
+      "id": "SINV-UI02",
+      "result": "PASS",
+      "observed": "Finance opened pending booking; draft preview NGN1200 was non-collectible; issue before recent verification was rejected by the backend."
+    },
+    {
+      "id": "SINV-UI03",
+      "result": "PASS",
+      "observed": "Finance verified the existing synthetic password inside the invoice dialog, then issued EGI-0000000002 and saw the correct original/effective total and NGN1200 amount due."
+    }
+  ],
+  "financeInvoiceText": "EGI-0000000002\n\nVersion 1 · issued\n\nEasyGas Energy Solutions\n\n10a Marina, Onikan, Lagos, Nigeria\n+2347011960720\n\nIssued: 08/11/2026, 11:28:32 (Lagos)\nDue: 2026-11-11\n\nSynthetic Invoice Customer\n\nEGC-AD96761044D84ACF9D41CA81971885C2\nService: EGS-4F1F27F3\n12 Synthetic Avenue, Ikoyi\n\nCooker Servicing — authorised scope, subject to final reconciliation · 1 × ₦1,200\n\nSubtotal: ₦1,200\nAdditional delivery charge: ₦0\nDiscount: ₦0\nOriginal issued total: ₦1,200\nEffective total after approved notes: ₦1,200\nVerified net paid: ₦0\nAmount due: ₦1,200\n\nFinal service reconciliation pending.\n\nIncludes recorded service labour, callout and materials. No additional delivery charge or tax has been added.\n\nDownload invoice PDFPrint / save as PDF\nInvoice notes and payment requests",
+  "screenshots": [
+    "continuation-customer-invoice.png",
+    "continuation-finance-invoice.png"
+  ],
+  "limits": "No real customer/stock/payment data, live messages, mobile build, server deployment or complete all-role browser acceptance."
+}

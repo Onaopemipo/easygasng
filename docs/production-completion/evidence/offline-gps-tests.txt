@@ -1,0 +1,35 @@
+✔ DR-BOUNDARY-01 delivery-only sessions reject legacy cash, sales and stock endpoints (0.570208ms)
+✔ DR-GPS-BOUNDARY: trip GPS authority does not grant fuel, cash or fleet-wide reads (0.127375ms)
+✔ DR-BOUNDARY-02 delivery-only sessions reject skipped or invented order transitions (0.078875ms)
+✔ DR-BOUNDARY-03 canonical delivery reads and guarded completion remain available (0.060375ms)
+✔ DR-COMPAT-01 legacy session policy remains unchanged pending explicit cutover (0.050208ms)
+✔ DR-INTEGRATION-01 restricted canonical session enforces role, availability and legacy completion denial (1143.581708ms)
+✔ GPS-OFF01: offline capture authority expires and rejects off-trip, future and invalid observations (1.385041ms)
+✔ GPS-OFF02: delayed driver GPS sync preserves observed time/history, replays once and cannot grant fuel/finance access (1015.245291ms)
+✔ GPS-OFF03: acknowledged GPS sequence cannot be reused after queue empties or a capture crashes (0.21275ms)
+✔ OPS-T01: phone activation requires possession, preserves identity, expires/revokes, commits failed attempts and rejects replay (1114.306833ms)
+✔ OPS-T02: invoice notes need independent approval, never overwrite originals, invalidate stale requests and reject cross-customer access (793.749583ms)
+✔ OPS-T03: trip capture is account scoped, replay safe, bounded to duty, and reports actual purchases separately (815.077209ms)
+✔ OPS-T04: proof photos are private, append-only, retain historical records and reject invalid image input (813.103542ms)
+✔ OPS-T05: messaging encrypts contents, rechecks consent, quarantines uncertain sends and authenticates/deduplicates callbacks (807.279125ms)
+✔ OPS-T06: GPS rejects impossible jumps and gaps; no distance-derived actual fuel claim (0.249875ms)
+✔ FIELD-GPS-02: fleet summary requires current accurate consented trip evidence and ignores future uploaded fixes (767.473333ms)
+✔ OPS-T07: enhanced dispatch requires a suitable active trip, records acknowledgement and rejects stale versions (775.9915ms)
+✔ OPS-T08: win-back uses true completed delivery timestamps, preserves low-data state and requires marketing consent (880.052125ms)
+✔ OPS-T09: doorstep review preserves original order, rejects driver-as-customer consent and never commits unverified van stock (734.798042ms)
+✔ OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption (8.530292ms)
+✔ OPS-T11: retain-all policy preserves expired proof bytes without widening access (716.3915ms)
+✔ FIELD-RECOVERY-01: interrupted acknowledgement recovers committed receipt without a second mutation (0.613959ms)
+✔ FIELD-RECOVERY-02: changed assignment/version, closed job, cross-account and work authorisation never replay (0.673458ms)
+✔ FIELD-RECOVERY-03: expired credentials stop replay and retain later records; stable fingerprints ignore transport operation keys (7.589458ms)
+✔ FIELD-PHOTO-01: queued photograph version is rechecked in the canonical locked booking before bytes or history change (1190.438458ms)
+✔ FIELD-SCOPE-01: production field roles cannot use legacy tokens to bypass scoped financial and unsafe completion boundaries (971.048208ms)
+✔ FIELD-GPS-01: recent location excludes future, stale, inaccurate, invalid and off-duty evidence regardless of upload order (0.426459ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14417.432792

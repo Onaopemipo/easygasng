@@ -1,0 +1,12 @@
+# Dispatch operating sequence
+
+1. Open the existing Deliveries menu at /admin/deliveries. Choose Lagos date/branch; read last successful polling time. A failed refresh retains the last snapshot with an error; it does not invent a zero or live connection.
+2. Review Ready before driver selection separately from total queue. Open Assign Driver to inspect branch candidates and blockers. An active driver account, declared availability, suitable active trip and capacity are required; physical stock/cylinder/payment conditions must also pass. Enter an auditable reason. Automatic assignment stays OFF.
+3. The driver signs in once using existing identity/authorised access. Existing restricted-session app shows assigned work, acknowledges or declines with a reason, and uses the existing legal status/proof/report workflow. Availability is independent of the foreground heartbeat and captured GPS. Background/offline silence is never an online guarantee.
+4. Use Manifests, LPG, trips & returns for existing vehicle receipts, measured gas loading, meter/qualification checks, returns and discrepancy recovery. These forms preserve independent maker/checker controls. Do not combine vehicle custody with inclusive branch stock to invent extra stock.
+5. Existing trip/fuel records distinguish measured odometer/GPS, estimates and actual receipts. Administrator review does not confer driver fuel-entry or finance privileges. No fuel/earnings cards were added to the approved driver home.
+6. Same-visit additions remain on the canonical order with customer consent, supplementary invoice, required verified payment/approved collection, inspected cylinder/vehicle custody and one eligible delivery fee. Never bypass unpaid supplements or reissue physically held goods.
+7. Review historical order actions in Order tracking & actions. Use persisted operation outcomes after ambiguous network results; never repair stock or payment history by deleting records.
+8. On discrepancy, unsafe cylinder, inactive branch, stale assignment or payment conflict: stop fulfilment; use the existing incident/reconciliation/independent approval process. Preserve photos, queue drafts, events and financial evidence under the retain-all policy.
+
+Testing: local isolated synthetic preview uses port3004. It is separate from the normal local database and hosted Vercel demo. The preview has tracking/field writes disabled. No real order was assigned or delivered during visual checks. Native binaries and server provisioning remain deferred by the user.

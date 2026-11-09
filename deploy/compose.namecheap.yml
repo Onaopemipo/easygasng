@@ -1,0 +1,60 @@
+# Overlay on compose.yml for a dedicated Namecheap VPS. No public DB port.
+services:
+  postgres:
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: easygas
+      POSTGRES_USER: easygas_migrator
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256 --auth-local=scram-sha-256
+    secrets:
+      - postgres_password
+    volumes:
+      - easygas_postgres:/var/lib/postgresql/data
+      - ${EASYGAS_DATABASE_TLS_DIRECTORY:?Set protected database TLS directory}:/etc/easygas/tls:ro
+      - ./postgres-hba.conf:/etc/easygas/pg_hba.conf:ro
+    command: ["postgres", "-c", "ssl=on", "-c", "ssl_cert_file=/etc/easygas/tls/server.crt", "-c", "ssl_key_file=/etc/easygas/tls/server.key", "-c", "ssl_min_protocol_version=TLSv1.2", "-c", "hba_file=/etc/easygas/pg_hba.conf", "-c", "password_encryption=scram-sha-256"]
+    stop_grace_period: 5m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U easygas_migrator -d easygas"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    security_opt: ["no-new-privileges:true"]
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "5" }
+  web:
+    depends_on:
+      postgres: { condition: service_healthy }
+    volumes:
+      - ${EASYGAS_DATABASE_TLS_DIRECTORY:?Set protected database TLS directory}/ca.crt:/run/easygas/ca.crt:ro
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "5" }
+  worker:
+    depends_on:
+      postgres: { condition: service_healthy }
+    volumes:
+      - ${EASYGAS_DATABASE_TLS_DIRECTORY:?Set protected database TLS directory}/ca.crt:/run/easygas/ca.crt:ro
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "5" }
+  migrate:
+    profiles: [maintenance]
+    image: easygas:${EASYGAS_RELEASE_SHA:?Set reviewed release SHA}
+    env_file: ${EASYGAS_MIGRATION_ENV_FILE:?Set protected migration env filename}
+    environment: { NODE_ENV: production, EASYGAS_BACKGROUND_JOBS: "false" }
+    command: ["npm", "run", "db:migrate"]
+    volumes:
+      - ${EASYGAS_DATABASE_TLS_DIRECTORY:?Set protected database TLS directory}/ca.crt:/run/easygas/ca.crt:ro
+    depends_on:
+      postgres: { condition: service_healthy }
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+secrets:
+  postgres_password:
+    file: ${EASYGAS_POSTGRES_PASSWORD_FILE:?Set protected database administrator password file}
+volumes:
+  easygas_postgres:

@@ -1,0 +1,148 @@
+{
+  "phase": "Admin Customer Management",
+  "releaseDecision": "Production NO-GO retained; local implementation",
+  "requirements": [
+    {
+      "id": "CM-REQ001",
+      "requirement": "Reference-inspired Customers screen, metrics, responsive table and preserved sidebar",
+      "priority": "P1",
+      "scope": "Admin Customers phase",
+      "uiReference": "User supplied Customers screen 42cab9e8",
+      "route": "/admin/customers",
+      "dataSource": "users, orders, branches",
+      "securityControl": "Owner/manager only; server branch predicate; strict mutation schema; no email, role, balance or credential editing",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Core browser journeys passed; exhaustive pagination, CSV injection and accessibility matrix not yet automated",
+      "testResult": "PARTIAL: browser checks recorded",
+      "outstandingWork": "Large-list pagination, CSV adversarial fixtures and screen-reader acceptance remain",
+      "implementationFiles": [
+        "apps/web/components/customer-management.tsx",
+        "apps/web/components/customer-management.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/customer-management.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/customer-management-20261030.txt",
+        "docs/testing/customer-management-browser-20261030.md"
+      ],
+      "testIds": [],
+      "acceptanceGate": "CM-G1",
+      "negativeTests": []
+    },
+    {
+      "id": "CM-REQ002",
+      "requirement": "Create customer without staff privileges and edit customer names with branch authorization",
+      "priority": "P0",
+      "scope": "Admin Customers phase",
+      "uiReference": "User supplied Customers screen 42cab9e8",
+      "route": "/admin/customers",
+      "dataSource": "users, sessions, audit_events",
+      "securityControl": "Owner/manager only; server branch predicate; strict mutation schema; no email, role, balance or credential editing",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Dispatch integration test passed",
+      "testResult": "PASS CM-01",
+      "outstandingWork": "None within tested backend scope",
+      "implementationFiles": [
+        "apps/web/lib/customer-management.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "testFiles": [
+        "tests/customer-management.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/customer-management-20261030.txt",
+        "docs/testing/customer-management-browser-20261030.md"
+      ],
+      "testIds": [
+        "CM-01"
+      ],
+      "acceptanceGate": "CM-G2",
+      "negativeTests": [
+        "CM-01"
+      ]
+    },
+    {
+      "id": "CM-REQ003",
+      "requirement": "Branch-scoped customer details, order counts and verified payment totals",
+      "priority": "P0",
+      "scope": "Admin Customers phase",
+      "uiReference": "User supplied Customers screen 42cab9e8",
+      "route": "/admin/customers",
+      "dataSource": "orders, verified_payments; phone from default non-archived account address",
+      "securityControl": "Owner/manager only; server branch predicate; strict mutation schema; no email, role, balance or credential editing",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Dispatch integration test passed",
+      "testResult": "PASS CM-01",
+      "outstandingWork": "None within tested backend scope",
+      "implementationFiles": [
+        "apps/web/lib/customer-management.ts"
+      ],
+      "testFiles": [
+        "tests/customer-management.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/customer-management-20261030.txt",
+        "docs/testing/customer-management-browser-20261030.md"
+      ],
+      "testIds": [
+        "CM-01"
+      ],
+      "acceptanceGate": "CM-G3",
+      "negativeTests": [
+        "CM-01"
+      ]
+    },
+    {
+      "id": "CM-REQ004",
+      "requirement": "Search, filters, sort, selection, pagination, CSV download and support/report links",
+      "priority": "P1",
+      "scope": "Admin Customers phase",
+      "uiReference": "User supplied Customers screen 42cab9e8",
+      "route": "/admin/customers",
+      "dataSource": "authorized customers.manage snapshot; CSV uses filtered/selected rows",
+      "securityControl": "Owner/manager only; server branch predicate; strict mutation schema; no email, role, balance or credential editing",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Core browser journeys passed; exhaustive pagination, CSV injection and accessibility matrix not yet automated",
+      "testResult": "PARTIAL: browser checks recorded",
+      "outstandingWork": "Large-list pagination, CSV adversarial fixtures and screen-reader acceptance remain",
+      "implementationFiles": [
+        "apps/web/components/customer-management.tsx"
+      ],
+      "testFiles": [
+        "tests/customer-management.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/customer-management-20261030.txt",
+        "docs/testing/customer-management-browser-20261030.md"
+      ],
+      "testIds": [],
+      "acceptanceGate": "CM-G4",
+      "negativeTests": []
+    }
+  ],
+  "gates": [
+    {
+      "id": "CM-G1",
+      "status": "PARTIAL",
+      "reason": "Core browser verification passed; expanded acceptance outstanding"
+    },
+    {
+      "id": "CM-G2",
+      "status": "PASS",
+      "reason": "Executed integration checks"
+    },
+    {
+      "id": "CM-G3",
+      "status": "PASS",
+      "reason": "Executed integration checks"
+    },
+    {
+      "id": "CM-G4",
+      "status": "PARTIAL",
+      "reason": "Core browser verification passed; expanded acceptance outstanding"
+    }
+  ]
+}

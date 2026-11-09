@@ -1,0 +1,2 @@
+CREATE TABLE service_bundles(id text PRIMARY KEY,branch_id text NOT NULL REFERENCES branches(id),name text NOT NULL,config jsonb NOT NULL DEFAULT '{"active":false,"products":[],"serviceId":"","serviceDiscountPercent":0,"description":"Draft bundle requires business configuration."}',version integer NOT NULL DEFAULT 1,created_at timestamptz NOT NULL DEFAULT now());
+ALTER TABLE commerce_checkouts ADD COLUMN bundle_snapshot jsonb;

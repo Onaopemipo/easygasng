@@ -1,0 +1,8 @@
+BEGIN;
+SET LOCAL search_path=easygas_private,pg_catalog;
+INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES
+('website.content','Homepage & contact information','Website & Testimonials','Editorial homepage copy and verified public contacts. Prices, stock, coverage and permissions remain controlled by their own authoritative modules.','owner',2,'website_content','["owner","manager"]','["owner"]','["owner","manager"]','[]',true);
+INSERT INTO settings(key,scope,value) VALUES('website.content','lagos','{"heroHeading":"Cooking gas delivered to","heroEmphasis":"your door!","heroSubheading":"More Cooking. Less Worry.","serviceHeading":"Care for your cooking equipment.","heroImage":"/assets/easygas-cooking-hero-v1.webp","phonePrimary":"+2347011960720","phoneSecondary":"+2348021111118","address":"10a Marina, Onikan, Lagos, Nigeria","email":"","instagram":"https://www.instagram.com/easygasng/","linktree":"https://linktr.ee/Easygas"}');
+
+INSERT INTO schema_migrations(version) VALUES ('035');
+COMMIT;

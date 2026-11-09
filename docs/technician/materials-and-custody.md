@@ -1,0 +1,4 @@
+# Materials and custody
+Canonical quote lines reserve materials on customer acceptance. Inventory/service managers issue existing reserved stock; technicians record actual used/damaged counts against issued quantities; authorised store staff reconcile physical returns. Existing inventory movements, nonnegative constraints and operation identities remain authoritative. Independent quote review, current work-phase binding and verified payment are checked before issue/use. Retried operations reuse existing business-operation results; no alternate stock ledger is added.
+
+Technicians cannot adjust inventory or add billable products in this shell. Additional scope requires a revised quote and reauthorisation. Physical return inspection, serial custody and all prior R01–R05 restrictions remain unchanged. Full real-device provisional offline usage and material request/approval presentation remain unfinished.

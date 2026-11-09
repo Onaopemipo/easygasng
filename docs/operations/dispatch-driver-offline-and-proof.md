@@ -1,0 +1,7 @@
+# Dispatch, driver offline and proof operations
+
+Use existing order-tracking, delivery and cylinder-allocation services; [existing proof runbook](dispatch-driver-proof-of-delivery.md) remains authoritative. Ready/assignment changes retain hard branch, active-branch, stock, cylinder eligibility/custody and capacity checks. Manual override cannot bypass R01–R05. PostgreSQL final-capacity assignment and duplicate proof tests passed in an isolated local database.
+
+Current native pending proof uses account-scoped SecureStore; it does not mean delivered until the server accepts. No live GPS or ETA is invented. The expanded encrypted photo/status/GPS event queue, trip identity/sequence, conflict review and background stop controls are not implemented. Dispatch area groups/recommendations, acknowledgement/rejection/timeouts, vehicle/van allocation, at-door amendments, photo evidence/history and mileage/fuel are also outstanding. Do not use the mobile design prototype as operational evidence.
+
+Manual fallback: record a temporary reference with caller/staff/time, actual address, requested items, approved quote and last authoritative state. No dispatch/payment/stock completion until an authorised operator re-enters and reconciles it against server records. Preserve original records and reconcile duplicate attempts before replay. Never restock a failed handover until authorised physical receiving/custody reconciliation.

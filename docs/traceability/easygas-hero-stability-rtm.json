@@ -1,0 +1,47 @@
+{
+  "phase": "Homepage quote layout stability and caption removal",
+  "scopeChanges": [
+    "Visible illustrative caption removed by user request; context retained in accessible image description."
+  ],
+  "releaseDecision": "Local UI correction only; existing production NO-GO preserved",
+  "requirements": [
+    {
+      "id": "HS-01",
+      "requirement": "Remove visible imagery caption and prevent quote recalculation from resizing hero/photo",
+      "priority": "P1",
+      "scope": "Homepage compact gas calculator, shared theme layout",
+      "uiReference": "User screenshot and quantity-induced image shift report",
+      "route": "/",
+      "dataSource": "Existing authoritative gas catalogue, pricing and validation rules",
+      "securityControl": "No change to checkout authority, pricing computation, quantity validation or stock/policy gates",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Measured identical hero/card dimensions across zero, valid and over-capacity quantities on desktop and mobile; caption removed and accessible image description retained",
+      "testResult": "PASS: local browser geometry verification, gas/theme regression and typecheck",
+      "outstandingWork": "Existing production NO-GO unchanged; live ordering still needs approved business policy and stock.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/homepage-task-register.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-hero-stability-tests-20261031.txt",
+        "docs/testing/easygas-hero-stability-browser-20261031.txt",
+        "docs/screenshots/easygas-hero-stable-20261031.png"
+      ],
+      "testIds": ["THEME-CONTRAST"],
+      "acceptanceGate": "HS-G01",
+      "negativeTests": []
+    }
+  ],
+  "gates": [
+    {
+      "id": "HS-G01",
+      "status": "PASS",
+      "description": "Stable desktop/mobile hero dimensions and preserved quantity validation"
+    }
+  ]
+}

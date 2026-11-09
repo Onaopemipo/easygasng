@@ -1,0 +1,12 @@
+# Booking recovery runbook
+
+Use the existing owner/service_manager/qualified technician permissions. Support may capture the reference and symptoms; it must not impersonate customers or assign technicians directly.
+
+1. **Create interrupted:** identify customer and original native request/operation key. Check My Bookings and booking.recover or booking.operation under the original authorized session. COMMITTED means return the saved reference. NOT_FOUND is not proof that a concurrent transaction failed; retry the original unchanged request with the same identity. If availability now conflicts, stop and review the existing booking; do not generate a new request to defeat capacity checks.
+2. **Assignment failed:** service manager reads current booking/slot and verifies current technician role, branch, qualification and availability. Preserve the existing valid assignment if the attempted change rolled back. Replacement work uses existing scheduling/reschedule controls; no arbitrary reassignment endpoint was added.
+3. **Reschedule interrupted:** read current booking version/slot and immutable events. If new slot committed, keep it and recover the result. Otherwise original slot remains valid. Refresh stale versions before a new intentional change. Escalate unexplained overlap to service manager/platform.
+4. **Cancel interrupted:** inspect terminal status and material reservations. A cancelled booking releases eligible capacity, not money. If refund is warranted use the existing reviewed request. Never state refunded until the authoritative approved posting exists.
+5. **Quote decision interrupted:** inspect latest revision and immutable decision. Replay original operation when eligible. Expired/superseded quotation requires a fresh revision; do not alter the original decision or create a new charge manually.
+6. **Completion interrupted:** inspect report existence and actual outcome. If report committed, retrieve it; do not submit replacement evidence. If no report committed, assigned qualified technician may retry original report; required checklist/material/quote controls still apply. Unsafe findings require safety escalation, never successful clearance.
+
+For each incident record reference, actor role, diagnostic ID, current state, attempted operation identity, read-back verification and resolution reason in the existing incident/audit workflow. Stop if financial/custody evidence disagrees; request independent finance/inventory review. No deletion or snapshot overwrite is an operational repair.
