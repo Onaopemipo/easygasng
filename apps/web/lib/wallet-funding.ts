@@ -1,3 +1,4 @@
+import { customerFundingBranch } from "./customer-funding-branch";
 import { z } from "zod";
 import { one, type SQL } from "./db";
 import { allow, AppError, id, type Actor } from "./auth";
@@ -30,16 +31,21 @@ export async function walletFundingAction(
   if (!["wallet.funding", "wallet.transfer.request"].includes(action))
     return undefined;
   allow(user, ["customer", "commercial"]);
-  const branch = user.branch_id;
-  if (!branch) throw new AppError(409, "A customer branch is required.");
-  const bank = walletBank(branch);
-  const enabled = Boolean(await settingValue(tx, "wallet.enabled", branch));
+  const branch = await customerFundingBranch(tx, user);
+  const bank = branch ? walletBank(branch) : null;
+  const enabled = Boolean(
+    branch && (await settingValue(tx, "wallet.enabled", branch)),
+  );
   const maximumKobo = Number(
-    (await settingValue(tx, "wallet.maximum", branch)) ?? 100000000,
+    (branch ? await settingValue(tx, "wallet.maximum", branch) : null) ??
+      100000000,
   );
   if (action === "wallet.funding")
     return {
       bank: enabled ? bank : null,
+      branchId: branch,
+      branchRequired: !branch && !user.branch_id,
+      branchUnavailable: !branch && !!user.branch_id,
       enabled,
       maximumKobo,
       requests: (
@@ -50,6 +56,7 @@ export async function walletFundingAction(
       ).rows,
     };
   if (
+    !branch ||
     !enabled ||
     !bank ||
     !(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true", [

@@ -8,7 +8,7 @@ export async function paystackReport(tx: SQL, user: Actor, input: unknown) {
     .object({
       from: z.iso.datetime(),
       to: z.iso.datetime(),
-      purpose: z.enum(["invoice", "service", "wallet"]).optional(),
+      purpose: z.enum(["invoice", "service", "wallet", "order"]).optional(),
       limit: z.number().int().min(1).max(200).default(100),
     })
     .strict()

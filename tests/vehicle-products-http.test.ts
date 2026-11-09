@@ -1,3 +1,4 @@
+import { localSchemaRevision } from "../apps/web/lib/db";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { NextRequest } from "next/server";
@@ -15,7 +16,7 @@ test("MANIFEST-HTTP01: actual handlers allow scoped driver receipt but reject cu
     version = g.easygasLocalVersion;
   try {
     g.easygasDb = Promise.resolve(f.db);
-    g.easygasLocalVersion = 73;
+    g.easygasLocalVersion = localSchemaRevision;
     process.env.EASYGAS_BACKGROUND_JOBS = "false";
     await f.db.query(
       "UPDATE sessions SET driver_delivery_only=true WHERE user_id=$1",

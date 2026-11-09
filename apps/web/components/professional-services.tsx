@@ -1,4 +1,5 @@
 "use client";
+import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
 import { FormInput } from "./password-input";
 import OrderInvoice from "./order-invoice";
 import { AddressAreaFields } from "./address-area-fields";
@@ -223,7 +224,7 @@ export default function ProfessionalServices({
       active = false;
     };
   }, [user?.id, version, staff, mode]);
-  if (loading) return <Loading />;
+  if (loading) return <Loading page />;
   if (error)
     return (
       <>
@@ -628,12 +629,14 @@ function BookingForm({
           },
         ]}
         send={async (v) => {
+          const phone = bookingPhone(String(v.phone ?? ""));
+          if (!phone) throw new Error(bookingPhoneMessage);
           const request = {
             serviceId: service.id,
             branchId: service.branch_id,
             serviceVersion: service.version,
             slotId: v.slotId,
-            address: { street: v.street, zone: v.zone, phone: v.phone },
+            address: { street: v.street, zone: v.zone, phone },
             equipment: {
               brand: v.brand,
               type: v.type,

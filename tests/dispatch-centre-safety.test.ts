@@ -266,12 +266,14 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
     ),
   );
   // Preserve the original audit baseline. The later approved invoice phase
-  // added immutable descriptive document snapshots, covered by payment posting tests.
-  const approvedInvoiceSnapshotHash =
-    "85164d77454e38825516938640d40dfa379f29cde74e2b5f9054c082273ed5a1";
+  // added immutable descriptive document snapshots. MWEB-03 authorises direct order
+  // card obligations through the same verified ledger. WALLET-FIX01 reuses authoritative
+  // branch context for unassigned customers; original phase baselines remain archived.
+  const approvedCardCheckoutHash =
+    "20781703f0aa90b35e885921e72a69a389789ac32ecba9e6f95f01493ecda145";
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
-      ? approvedInvoiceSnapshotHash : originalHash;
+      ? approvedCardCheckoutHash : originalHash;
     let source = await readFile(file, "utf8");
     if (file === "apps/mobile/DriverWorkspace.tsx")
       source = source.replace('      api("driver.heartbeat", {}),\n', "");

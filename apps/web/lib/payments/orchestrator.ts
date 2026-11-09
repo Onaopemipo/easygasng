@@ -1,3 +1,4 @@
+import { customerFundingBranch } from "../customer-funding-branch";
 import {
   documentIdentity,
   newDocumentTemplateVersion,
@@ -19,8 +20,9 @@ export type PaymentRuntime = {
 };
 const target = z
   .object({
-    purpose: z.enum(["invoice", "service", "wallet"]),
+    purpose: z.enum(["invoice", "service", "wallet", "order"]),
     invoiceId: z.string().uuid().optional(),
+    orderId: z.string().uuid().optional(),
     bookingId: z.string().uuid().optional(),
     amountKobo: z.number().int().positive().max(100000000).optional(),
     requestKey: z.string().uuid(),
@@ -54,11 +56,67 @@ async function obligation(
   d: {
     purpose: string;
     invoiceId?: string;
+    orderId?: string;
     bookingId?: string;
     amountKobo?: number;
   },
   lock = false,
 ) {
+  if (d.purpose !== "order" && d.orderId)
+    throw new AppError(400, "Unexpected order payment target.");
+  if (d.purpose === "order") {
+    if (!d.orderId || d.invoiceId || d.bookingId)
+      throw new AppError(400, "Choose a single card checkout order.");
+    const order = await one(
+      tx,
+      "SELECT * FROM orders WHERE id=$1" + (lock ? " FOR UPDATE" : ""),
+      [d.orderId],
+    );
+    if (!order || order.customer_id !== user.id)
+      throw new AppError(404, "Order not found.");
+    if (
+      order.payment_method !== "card" ||
+      ["cancelled", "failed", "returned", "delivered"].includes(order.status)
+    )
+      throw new AppError(409, "This order is not payable by card.");
+    // Once finance issues an invoice, its corrections and payment workflow govern the balance.
+    if (
+      await one(tx, "SELECT id FROM customer_invoices WHERE order_id=$1", [
+        order.id,
+      ])
+    )
+      throw new AppError(
+        409,
+        "An invoice has been issued. Pay its reviewed balance from My Orders.",
+      );
+    const collected = Number(
+      (await one(
+        tx,
+        "SELECT COALESCE(sum(amount_kobo),0) n FROM verified_payments WHERE order_id=$1",
+        [order.id],
+      ))!.n,
+    );
+    if (collected || order.payment_status === "verified")
+      throw new AppError(
+        409,
+        "This order already has a payment; finance review is required.",
+      );
+    const base = Number(order.total_kobo);
+    if (!Number.isSafeInteger(base) || base <= 0)
+      throw new AppError(409, "Order amount is not payable.");
+    if (d.amountKobo !== undefined && d.amountKobo !== base)
+      throw new AppError(
+        409,
+        "Card checkout requires the full current order amount.",
+      );
+    return {
+      branch: order.branch_id,
+      base,
+      version: `order:${order.id}:${base}`,
+      orderId: order.id,
+      bookingId: null,
+    };
+  }
   if (d.purpose === "invoice") {
     if (!d.invoiceId || d.bookingId)
       throw new AppError(400, "Choose an issued invoice.");
@@ -156,10 +214,11 @@ async function obligation(
   }
   if (d.invoiceId || d.bookingId || !d.amountKobo)
     throw new AppError(400, "Specify the intended wallet funding amount.");
-  if (!user.branch_id)
-    throw new AppError(409, "A branch is required for wallet funding.");
+  const branch = await customerFundingBranch(tx, user);
+  if (!branch)
+    throw new AppError(409, "Set a supported delivery address in account settings before topping up your wallet.");
   return {
-    branch: user.branch_id,
+    branch,
     base: d.amountKobo,
     version: "wallet",
     orderId: null,
@@ -218,8 +277,14 @@ export async function preparePayment(
       tx,
       `SELECT i.* FROM payment_intents i JOIN payment_attempts a ON a.intent_id=i.id
       WHERE i.customer_id=$1 AND i.purpose=$2 AND i.invoice_id IS NOT DISTINCT FROM $3::text AND i.booking_id IS NOT DISTINCT FROM $4::text
-      AND a.state IN ('initializing','awaiting_customer','pending','under_review') ORDER BY i.created_at LIMIT 1`,
-      [u.id, d.purpose, d.invoiceId ?? null, d.bookingId ?? null],
+      AND i.order_id IS NOT DISTINCT FROM $5::text AND a.state IN ('initializing','awaiting_customer','pending','under_review') ORDER BY i.created_at LIMIT 1`,
+      [
+        u.id,
+        d.purpose,
+        d.invoiceId ?? null,
+        d.bookingId ?? null,
+        d.orderId ?? null,
+      ],
     );
     if (unresolved)
       return view(
@@ -231,6 +296,8 @@ export async function preparePayment(
     const o = await obligation(tx, u, d, true),
       { policy: p, version } = await paymentPolicy(tx, o.branch);
     enabled(p);
+    if (d.purpose === "order" && !p.channels.includes("card"))
+      throw new AppError(409, "Card checkout is not enabled.");
     if (
       !(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true", [
         o.branch,
@@ -275,23 +342,29 @@ export async function preparePayment(
       ...quotePaymentFee(base, { ...p.fee!, version }),
       gatewayPolicyVersion: version,
       documentSnapshot: {
-        sourceReference: d.invoiceId
+        sourceReference: d.orderId
           ? (
-              await one(
-                tx,
-                "SELECT invoice_number FROM customer_invoices WHERE id=$1",
-                [d.invoiceId],
-              )
-            )?.invoice_number
-          : d.bookingId
+              await one(tx, "SELECT reference FROM orders WHERE id=$1", [
+                d.orderId,
+              ])
+            )?.reference
+          : d.invoiceId
             ? (
                 await one(
                   tx,
-                  "SELECT reference FROM service_bookings WHERE id=$1",
-                  [d.bookingId],
+                  "SELECT invoice_number FROM customer_invoices WHERE id=$1",
+                  [d.invoiceId],
                 )
-              )?.reference
-            : "",
+              )?.invoice_number
+            : d.bookingId
+              ? (
+                  await one(
+                    tx,
+                    "SELECT reference FROM service_bookings WHERE id=$1",
+                    [d.bookingId],
+                  )
+                )?.reference
+              : "",
         business: await documentIdentity(tx, o.branch),
         customer: {
           name: u.name,
@@ -303,7 +376,7 @@ export async function preparePayment(
         },
         documentTemplateVersion: newDocumentTemplateVersion(),
       },
-      channels: d.purpose === "wallet" ? ["card"] : p.channels,
+      channels: ["wallet", "order"].includes(d.purpose) ? ["card"] : p.channels,
       walletMaximumKobo: p.walletMaximumKobo,
     };
     const iid = id(),
@@ -314,7 +387,7 @@ export async function preparePayment(
       ).toISOString();
     const i = await one(
       tx,
-      "INSERT INTO payment_intents(id,customer_id,branch_id,purpose,invoice_id,booking_id,request_key,request_hash,obligation_version,quote,email_snapshot,expires_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *",
+      "INSERT INTO payment_intents(id,customer_id,branch_id,purpose,invoice_id,booking_id,request_key,request_hash,obligation_version,quote,email_snapshot,expires_at,order_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *",
       [
         iid,
         u.id,
@@ -328,6 +401,7 @@ export async function preparePayment(
         JSON.stringify(quote),
         u.email,
         expires,
+        d.orderId ?? null,
       ],
     );
     const a = await one(
@@ -398,8 +472,8 @@ export async function initializePayment(
       tx,
       `SELECT a.id FROM payment_attempts a JOIN payment_intents p ON p.id=a.intent_id
       WHERE p.customer_id=$1 AND p.purpose=$2 AND p.invoice_id IS NOT DISTINCT FROM $3::text AND p.booking_id IS NOT DISTINCT FROM $4::text
-      AND p.id<>$5 AND a.state IN ('initializing','awaiting_customer','pending','under_review') LIMIT 1`,
-      [u.id, i.purpose, i.invoice_id, i.booking_id, i.id],
+      AND p.order_id IS NOT DISTINCT FROM $6::text AND p.id<>$5 AND a.state IN ('initializing','awaiting_customer','pending','under_review') LIMIT 1`,
+      [u.id, i.purpose, i.invoice_id, i.booking_id, i.id, i.order_id],
     );
     if (competing)
       throw new AppError(
@@ -417,11 +491,14 @@ export async function initializePayment(
       throw new AppError(409, "Review and accept the exact fee quote.");
     const { policy: p } = await paymentPolicy(tx, i.branch_id);
     enabled(p);
+    if (i.purpose === "order" && !p.channels.includes("card"))
+      throw new AppError(409, "Card checkout is not enabled.");
     const o = await obligation(
       tx,
       u,
       {
         purpose: i.purpose,
+        orderId: i.order_id,
         invoiceId: i.invoice_id,
         bookingId: i.booking_id,
         amountKobo: Number(i.quote.baseKobo),
@@ -598,6 +675,7 @@ export async function reconcilePayment(
         user as Actor,
         {
           purpose: i!.purpose,
+          orderId: i!.order_id,
           invoiceId: i!.invoice_id,
           bookingId: i!.booking_id,
           amountKobo: Number(i!.quote.baseKobo),

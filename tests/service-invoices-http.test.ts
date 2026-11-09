@@ -1,3 +1,4 @@
+import { localSchemaRevision } from "../apps/web/lib/db";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { NextRequest } from "next/server";
@@ -23,7 +24,7 @@ test("SINV-HTTP01: real JSON and private PDF handlers work under restricted runt
     const b = await begin(f);
     globals.easygasDb = Promise.resolve(db);
     process.env.EASYGAS_BACKGROUND_JOBS = "false";
-    globals.easygasLocalVersion = 73; // Bootstrap already migrated; runtime deliberately has no schema-creation privilege.
+    globals.easygasLocalVersion = localSchemaRevision; // Bootstrap already migrated; runtime deliberately has no schema-creation privilege.
     await getDb();
     const save = await POST(
       new NextRequest("http://localhost:3003/api/invoice.service.draft.save", {

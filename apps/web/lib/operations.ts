@@ -1,3 +1,5 @@
+import { paystackAvailability } from "./payments/runtime";
+import { gatewayPolicy } from "./payments/policy";
 import { applyRewardDiscount, restoreOrderDiscount } from "./rewards";
 import { fulfilmentReady, beginAttempt } from "./order-tracking";
 import { gasQuote, gasReservation, verifyGasDispatch } from "./gas-delivery";
@@ -66,7 +68,7 @@ export const checkoutSchema = z
       .regex(/^[a-z0-9-]{2,60}$/)
       .optional(),
     rewardPoints: z.number().int().min(1).max(1000000).optional(),
-    paymentMethod: z.enum(["cash_on_delivery", "wallet"]).optional(),
+    paymentMethod: z.enum(["cash_on_delivery", "wallet", "card"]).optional(),
     source: z.enum(["WEB", "MOBILE"]).default("WEB"),
     idempotencyKey: z.string().uuid(),
   })
@@ -172,6 +174,13 @@ export async function checkout(
       "Online ordering is being prepared. Please check back when delivery is enabled.",
     );
   const method = input.paymentMethod ?? "cash_on_delivery";
+  if (method === "card") {
+    allow(user, ["customer", "commercial"]);
+    const policy = gatewayPolicy.safeParse(await settingValue(tx, "payment.gateway", branchId));
+    const availability = await paystackAvailability(tx, branchId);
+    if (!policy.success || !availability.available || !policy.data.channels.includes("card"))
+      throw new AppError(409, "Credit / debit card checkout is currently unavailable.");
+  }
   if (
     method === "wallet" &&
     !(await settingValue(tx, "wallet.enabled", branchId))
@@ -532,7 +541,7 @@ export async function checkout(
     tx,
     customerId,
     "Order placed",
-    `${ref} has been received. ${method === "wallet" ? "Paid using purchase credit." : "Payment is due on delivery."}`,
+    `${ref} has been received. ${method === "wallet" ? "Paid using purchase credit." : method === "card" ? "Card payment is required before dispatch. Complete secure checkout from My Orders." : "Payment is due on delivery."}`,
     orderId,
   );
   return order;

@@ -2,9 +2,10 @@
 import { ActionLoadingIndicator } from "./easygas-loader";
 import React, { useEffect, useRef, useState } from "react";
 import { api, money, Notice } from "./ui";
-async function pay(action: string, input?: unknown) {
+async function pay(action: string, input?: unknown, signal?: AbortSignal) {
   const r = await fetch("/api/payments/paystack/" + action, {
     method: input === undefined ? "GET" : "POST",
+    signal,
     headers: { "Content-Type": "application/json" },
     ...(input === undefined ? {} : { body: JSON.stringify(input) }),
     cache: "no-store",
@@ -13,14 +14,24 @@ async function pay(action: string, input?: unknown) {
   if (!r.ok) throw new Error(d.error ?? "Payment request failed.");
   return d;
 }
+/** Gateway charges are disclosed to the kobo before exact-amount consent. */
+export const paymentMoney = (kobo: number) =>
+  new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(kobo / 100);
 export function HostedPayment({
   purpose,
   invoiceId,
+  orderId,
   bookingId,
   amountKobo,
 }: {
-  purpose: "invoice" | "wallet" | "service";
+  purpose: "invoice" | "wallet" | "service" | "order";
   invoiceId?: string;
+  orderId?: string;
   bookingId?: string;
   amountKobo?: number;
 }) {
@@ -33,13 +44,13 @@ export function HostedPayment({
   const key = useRef<string | null>(null);
   useEffect(() => {
     let live = true;
-    pay("configuration")
+    pay(purpose === "wallet" ? "configuration?purpose=wallet" : "configuration")
       .then((c) => live && setConfig(c))
       .catch(() => {});
     return () => {
       live = false;
     };
-  }, []);
+  }, [purpose]);
   if (!config?.available || (purpose === "wallet" && !config.walletFunding))
     return null;
   async function review() {
@@ -50,6 +61,7 @@ export function HostedPayment({
       const q = await pay("quote", {
         purpose,
         ...(invoiceId ? { invoiceId } : {}),
+        ...(orderId ? { orderId } : {}),
         ...(bookingId ? { bookingId } : {}),
         ...(amountKobo ? { amountKobo } : {}),
         requestKey: key.current,
@@ -120,14 +132,16 @@ export function HostedPayment({
             <dt>
               {purpose === "wallet"
                 ? "Wallet credit amount"
-                : "Invoice / service amount"}
+                : purpose === "order"
+                  ? "Order amount"
+                  : "Invoice / service amount"}
             </dt>
-            <dd>{money(quote.quote.baseKobo)}</dd>
+            <dd>{paymentMoney(quote.quote.baseKobo)}</dd>
             <dt>Payment processing charge</dt>
-            <dd>{money(quote.quote.customerFeeKobo)}</dd>
+            <dd>{paymentMoney(quote.quote.customerFeeKobo)}</dd>
             <dt>Total to pay</dt>
             <dd>
-              <strong>{money(quote.quote.grossKobo)}</strong>
+              <strong>{paymentMoney(quote.quote.grossKobo)}</strong>
             </dd>
           </dl>
           <p>
@@ -165,7 +179,9 @@ export function HostedPayment({
               disabled={busy || !accepted}
               onClick={proceed}
             >
-              {busy && <ActionLoadingIndicator label="Preparing payment checkout" />}
+              {busy && (
+                <ActionLoadingIndicator label="Preparing payment checkout" />
+              )}
               Continue to Paystack sandbox
             </button>
           )}
@@ -181,22 +197,82 @@ export function WalletFunding() {
     [amount, setAmount] = useState(""),
     [error, setError] = useState(""),
     [message, setMessage] = useState(""),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false),
+    [ready, setReady] = useState(false),
+    [review, setReview] = useState(false);
+  const loadController = useRef<AbortController | null>(null),
+    loadRevision = useRef(0);
   async function load() {
-    setFunding(await api("wallet.funding"));
+    const revision = ++loadRevision.current;
+    loadController.current?.abort();
+    const controller = new AbortController();
+    loadController.current = controller;
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    setReady(false);
+    setError("");
+    const [bank, card] = await Promise.allSettled([
+      api("wallet.funding", undefined, { signal: controller.signal }),
+      pay("configuration?purpose=wallet", undefined, controller.signal),
+    ]).finally(() => clearTimeout(timeout));
+    if (revision !== loadRevision.current) return;
+    setFunding(bank.status === "fulfilled" ? bank.value : null);
+    setConfig(card.status === "fulfilled" ? card.value : null);
+    if (bank.status === "rejected" && card.status === "rejected")
+      setError("Payment methods could not be loaded. Please retry.");
+    setReady(true);
   }
   useEffect(() => {
-    load().catch((e) => setError(e.message));
-    pay("configuration")
-      .then(setConfig)
-      .catch(() => {});
+    void load();
+    return () => {
+      loadRevision.current++;
+      loadController.current?.abort();
+    };
   }, []);
-  const parsed = /^\d+(\.\d{1,2})?$/.test(amount)
+  const parsed = /^\d+(\.\d{1,2})?$/.test(amount.trim())
     ? Math.round(Number(amount) * 100)
     : 0;
+  const branchRequired = funding?.branchRequired || config?.branchRequired;
+  const branchUnavailable =
+    funding?.branchUnavailable || config?.branchUnavailable;
+  const available =
+    method === "bank"
+      ? !!funding?.enabled && !!funding?.bank
+      : !!config?.available &&
+        !!config?.walletFunding &&
+        config?.channels?.includes("card");
+  const minimum =
+    method === "card" ? Number(config?.walletMinimumKobo ?? 1) : 1;
+  const maximum = Number(
+    (method === "card" ? config?.walletMaximumKobo : funding?.maximumKobo) ??
+      100000000,
+  );
+  const validAmount =
+    Number.isSafeInteger(parsed) &&
+    parsed >= minimum &&
+    parsed <= maximum &&
+    parsed > 0;
+  const reason = !ready
+    ? "Loading payment methods…"
+    : branchUnavailable
+      ? "Wallet funding is unavailable for your assigned branch. Contact support."
+      : branchRequired
+        ? "Add a supported delivery address to enable wallet top-ups."
+        : !available
+          ? method === "bank"
+            ? funding
+              ? "Bank-transfer funding is unavailable until EasyGas configures its receiving bank account."
+              : "Bank-transfer details could not be loaded. Retry payment methods."
+            : config
+              ? "Card top-up is currently unavailable."
+              : "Card availability could not be checked. Retry payment methods."
+          : !validAmount
+            ? amount
+              ? `Enter an amount between ${paymentMoney(minimum)} and ${paymentMoney(maximum)}.`
+              : "Enter an amount to continue."
+            : "";
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (busy) return;
+    if (busy || !validAmount || !available) return;
     const fd = new FormData(e.currentTarget);
     setBusy(true);
     setError("");
@@ -209,8 +285,9 @@ export function WalletFunding() {
         transferDate: String(fd.get("date")),
       });
       setMessage(
-        `Transfer request ${r.status}. Your wallet is credited only after the business confirms receipt.`,
+        `Transfer request ${r.status}. Your wallet is credited after EasyGas confirms receipt.`,
       );
+      setReview(false);
       await load();
     } catch (e: any) {
       setError(e.message);
@@ -219,119 +296,154 @@ export function WalletFunding() {
     }
   }
   return (
-    <section id="top-up" className="surface stack">
+    <section id="top-up" className="surface stack wallet-funding">
       <h2>Top up your wallet</h2>
       <p>
-        Choose bank transfer for business approval, or card for automatic credit
-        after payment verification.
+        Bank transfers require approval. Card payments are credited after
+        verification.
       </p>
-      {error && <Notice type="error" message={error} />}{" "}
+      {error && <Notice type="error" message={error} />}
       {message && <p role="status">{message}</p>}
-      <label>
-        Payment method
-        <select
-          value={method}
-          onChange={(e) => {
-            setMethod(e.target.value);
-            setError("");
-            setMessage("");
-          }}
-        >
-          <option value="bank">Bank transfer · approval required</option>
-          <option value="card">
-            Credit / debit card · automatic verification
-          </option>
-        </select>
-      </label>
-      <label>
-        Amount (NGN)
-        <input
-          inputMode="decimal"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="Enter top-up amount"
-        />
-      </label>
-      {method === "card" ? (
-        config?.available &&
-        config.walletFunding &&
-        config.channels?.includes("card") ? (
-          parsed > 0 && (
-            <HostedPayment key={parsed} purpose="wallet" amountKobo={parsed} />
-          )
-        ) : (
-          <p>
-            Card top-up is currently unavailable. Payment activation and
-            approved card funding settings are required.
+      <form
+        className="stack"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (ready && available && validAmount) setReview(true);
+        }}
+      >
+        <label>
+          Payment method
+          <select
+            value={method}
+            onChange={(e) => {
+              setMethod(e.target.value);
+              setReview(false);
+              setError("");
+              setMessage("");
+            }}
+          >
+            <option value="bank">Bank transfer · approval required</option>
+            <option value="card">
+              Credit / debit card · automatic verification
+            </option>
+          </select>
+        </label>
+        <label>
+          Amount (NGN)
+          <input
+            inputMode="decimal"
+            value={amount}
+            onChange={(e) => {
+              setAmount(e.target.value);
+              setReview(false);
+            }}
+            placeholder="Enter top-up amount"
+            required
+          />
+        </label>
+        {reason && (
+          <p className="muted" role="status">
+            {reason}
           </p>
-        )
-      ) : funding?.bank ? (
-        <form className="stack" onSubmit={submit}>
-          <dl>
-            <dt>Bank</dt>
-            <dd>{funding.bank.bankName}</dd>
-            <dt>Account name</dt>
-            <dd>{funding.bank.accountName}</dd>
-            <dt>Account number</dt>
-            <dd>{funding.bank.accountNumber}</dd>
-          </dl>
-          <p>
-            Transfer to this account, then submit the exact bank transaction
-            reference. A submitted reference is not proof of payment. No balance
-            is added until owner/finance verifies actual receipt.
-          </p>
-          <label>
-            Sender name
-            <input name="sender" required minLength={2} maxLength={150} />
-          </label>
-          <label>
-            Bank transaction reference
-            <input
-              name="reference"
-              required
-              minLength={5}
-              maxLength={80}
-              pattern="[A-Za-z0-9-]+"
-            />
-          </label>
-          <label>
-            Transfer date
-            <input
-              type="date"
-              name="date"
-              required
-              max={new Date().toISOString().slice(0, 10)}
-            />
-          </label>
+        )}
+        {branchUnavailable && (
+          <a className="text-link" href="/support">
+            Contact support
+          </a>
+        )}
+        {branchRequired && (
+          <a className="text-link" href="/account-settings">
+            Set delivery address
+          </a>
+        )}
+        <div className="service-actions">
           <button
             className="button"
-            disabled={busy || parsed <= 0 || parsed > funding.maximumKobo}
+            type="submit"
+            disabled={!ready || !available || !validAmount || busy}
           >
-            {busy && <ActionLoadingIndicator label="Submitting transfer for approval" />}
-            {busy ? "Submitting…" : "Submit transfer for approval"}
+            Continue
           </button>
-        </form>
-      ) : (
-        <p>
-          Bank-transfer funding is unavailable until EasyGas configures its
-          receiving bank account.
-        </p>
-      )}
-      <h3>Bank-transfer requests</h3>
-      {funding?.requests?.length ? (
-        funding.requests.map((r: any) => (
-          <div className="cart-row" key={r.id}>
-            <span>
-              {r.receipt_reference}
-              <small>
-                {new Date(r.created_at).toLocaleString()} · {r.status}
-              </small>
-            </span>
-            <strong>{money(r.amount_kobo)}</strong>
-          </div>
-        ))
-      ) : (
-        <p>No bank-transfer requests.</p>
+          {ready && (!available || error || branchRequired) && (
+            <button
+              type="button"
+              className="button secondary"
+              onClick={() => void load()}
+            >
+              Retry payment methods
+            </button>
+          )}
+        </div>
+      </form>
+      {review &&
+        available &&
+        validAmount &&
+        (method === "card" ? (
+          <HostedPayment key={parsed} purpose="wallet" amountKobo={parsed} />
+        ) : (
+          <form className="stack" onSubmit={submit}>
+            <dl>
+              <dt>Bank</dt>
+              <dd>{funding.bank.bankName}</dd>
+              <dt>Account name</dt>
+              <dd>{funding.bank.accountName}</dd>
+              <dt>Account number</dt>
+              <dd>{funding.bank.accountNumber}</dd>
+            </dl>
+            <p>
+              Transfer to this account, then submit the exact bank transaction
+              reference. A submitted reference is not proof of payment. No
+              balance is added until owner/finance verifies actual receipt.
+            </p>
+            <label>
+              Sender name
+              <input name="sender" required minLength={2} maxLength={150} />
+            </label>
+            <label>
+              Bank transaction reference
+              <input
+                name="reference"
+                required
+                minLength={5}
+                maxLength={80}
+                pattern="[A-Za-z0-9-]+"
+              />
+            </label>
+            <label>
+              Transfer date
+              <input
+                type="date"
+                name="date"
+                required
+                max={new Date().toISOString().slice(0, 10)}
+              />
+            </label>
+            <button
+              className="button"
+              disabled={busy || parsed <= 0 || parsed > funding.maximumKobo}
+            >
+              {busy && (
+                <ActionLoadingIndicator label="Submitting transfer for approval" />
+              )}
+              {busy ? "Submitting…" : "Submit transfer for approval"}
+            </button>
+          </form>
+        ))}
+      {!!funding?.requests?.length && (
+        <details className="wallet-transfer-history">
+          <summary>Bank-transfer requests ({funding.requests.length})</summary>
+          {funding.requests.map((r: any) => (
+            <div className="cart-row" key={r.id}>
+              <span>
+                {r.receipt_reference}
+                <small>
+                  {new Date(r.created_at).toLocaleString()} · {r.status}
+                </small>
+              </span>
+              <strong>{paymentMoney(r.amount_kobo)}</strong>
+            </div>
+          ))}
+        </details>
       )}
     </section>
   );
@@ -376,7 +488,9 @@ export function PaymentReturn() {
         </p>
       )}
       <button className="button" disabled={!intent || busy} onClick={check}>
-        {busy && <ActionLoadingIndicator label="Verifying payment with provider" />}
+        {busy && (
+          <ActionLoadingIndicator label="Verifying payment with provider" />
+        )}
         Verify payment status
       </button>
       {result?.status === "paid" && (
@@ -398,8 +512,49 @@ export function PaymentReturn() {
           Return to EasyGas mobile app
         </a>
       )}
+      <a href="/checkout">Return to your cart checkout</a>
       <a href="/wallet">View wallet balance</a>
       <a href="/orders">My orders and invoices</a>
     </main>
+  );
+}
+
+/** Display only the existing gateway capability; the backend rechecks branch policy. */
+export function useCardCheckout(identity?: string) {
+  const [available, setAvailable] = useState(false);
+  useEffect(() => {
+    let active = true;
+    setAvailable(false);
+    pay("configuration")
+      .then((c) => {
+        if (active) setAvailable(!!c.available && c.channels?.includes("card"));
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [identity]);
+  return available;
+}
+export function OrderCardPayment({ order }: { order: any }) {
+  if (
+    order?.payment_method !== "card" ||
+    order.payment_status === "verified" ||
+    ["cancelled", "failed", "returned", "delivered"].includes(order.status)
+  )
+    return null;
+  return (
+    <section className="stack order-card-payment">
+      <h3>Complete credit / debit card payment</h3>
+      <p>
+        Your order is unpaid until Paystack verification succeeds. Dispatch
+        remains blocked. Review the processing fee before continuing.
+      </p>
+      <HostedPayment purpose="order" orderId={order.id} />
+      <p>
+        If finance has already issued an invoice, use View invoice to pay its
+        reviewed balance.
+      </p>
+    </section>
   );
 }

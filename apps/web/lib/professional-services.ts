@@ -1,3 +1,4 @@
+import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
 import { serviceDocument } from "../../../packages/business-rules/src/service-document";
 import { serviceMaterialRecoveryAction } from "./service-material-recovery";
 import { serviceSettlementSource } from "./service-settlement-source";
@@ -35,7 +36,11 @@ export const bookingInput = z
       .object({
         street: z.string().min(8).max(250),
         zone: z.string().min(2).max(100),
-        phone: z.string().regex(/^(?:\+234|0)[789][01]\d{8}$/),
+        phone: z.string().transform((value, ctx) => {
+          const phone = bookingPhone(value);
+          if (!phone) { ctx.addIssue({ code: "custom", message: bookingPhoneMessage }); return z.NEVER; }
+          return phone;
+        }),
       })
       .strict(),
     equipment: z

@@ -1,3 +1,5 @@
+import { preparePayment, initializePayment, reconcilePayment } from "../apps/web/lib/payments/orchestrator";
+import { fulfilmentReady } from "../apps/web/lib/order-tracking";
 import { verifiedPickup } from "./helpers/tracking-fixture";
 import { before, test } from "node:test";
 import assert from "node:assert/strict";
@@ -361,4 +363,47 @@ test("prepaid wallet delivery collects no cash and cannot earn from unapproved s
     reason: "Independent test review of delivered order refund",
   });
   assert.equal((await call("customer", "wallet")).points, pointsBefore);
+});
+
+test("MWEB-03-GATE: disabled card checkout cannot reserve stock; enabled sandbox card remains unpaid and cannot dispatch", async () => {
+  const input = {...orderInput(), paymentMethod:"card"};
+  const before = await one(db,"SELECT reserved FROM inventory WHERE branch_id='lagos' AND product_id='hose'");
+  await assert.rejects(() => call("customer","checkout",input),/currently unavailable/);
+  assert.equal((await one(db,"SELECT reserved FROM inventory WHERE branch_id='lagos' AND product_id='hose'"))!.reserved,before!.reserved);
+  const keys=["EASYGAS_PAYSTACK_ENABLED","EASYGAS_PAYSTACK_MODE","EASYGAS_PAYMENT_DATA_CLASS","PAYSTACK_TEST_SECRET_KEY"];
+  const env=keys.map(k=>process.env[k]);
+  const policy=await one(db,"SELECT value FROM settings WHERE key='payment.gateway' AND scope='lagos'");
+  try {
+    Object.assign(process.env,{EASYGAS_PAYSTACK_ENABLED:"true",EASYGAS_PAYSTACK_MODE:"test",EASYGAS_PAYMENT_DATA_CLASS:"synthetic",PAYSTACK_TEST_SECRET_KEY:"sk_test_MockFixtureOnly"});
+    await db.query("UPDATE settings SET value=$1 WHERE key='payment.gateway' AND scope='lagos'",[JSON.stringify({enabled:true,environment:"test",channels:["card"],fee:{version:1,currency:"NGN",percentageBps:150,fixedKobo:0,fixedWaivedBelowKobo:0,capKobo:200000,rounding:"ceil",maximumGrossKobo:100000000,bearer:"customer"},providerAutomaticFees:"off",passThroughApproved:true,merchantApprovalReference:"Synthetic isolated regression approval",quoteLifetimeSeconds:600,walletFunding:false,walletMinimumKobo:100,walletMaximumKobo:10000000,partialInvoices:false})]);
+    await assert.rejects(() => call("owner","checkout",{...input,idempotencyKey:id()}),/permission/);
+    const order=await call("customer","checkout",input);
+    assert.equal(order.payment_method,"card");
+    assert.equal(order.payment_status,"unpaid");
+    assert.equal((await call("customer","checkout",input)).id,order.id);
+    assert.equal(Number((await one(db,"SELECT count(*) n FROM verified_payments WHERE order_id=$1",[order.id]))!.n),0);
+    await assert.rejects(()=>db.transaction(tx=>fulfilmentReady(tx,order)),/payment|Payment|verified/i);
+    const q=await preparePayment(db,tokens.customer,{purpose:"order",orderId:order.id,requestKey:id()});
+    const runtime:any={callbackOrigin:"http://127.0.0.1:3003",provider:{environment:"test",initialize:async()=>({checkoutUrl:"https://checkout.paystack.com/fixture"}),verify:async(reference:string)=>{
+      const row=await one(db,"SELECT a.id,i.email_snapshot,i.quote FROM payment_attempts a JOIN payment_intents i ON i.id=a.intent_id WHERE a.reference=$1",[reference]);
+      return {reference,status:"success",currency:"NGN",environment:"test",amountKobo:row!.quote.grossKobo,attemptId:row!.id,email:row!.email_snapshot,providerId:"MOCK-"+row!.id,feeKobo:row!.quote.estimatedFeeKobo};
+    }}};
+    await initializePayment(db,tokens.customer,{intentId:q.id,acceptedGrossKobo:q.quote.grossKobo,acceptedPolicyVersion:q.quote.gatewayPolicyVersion},runtime);
+    assert.equal((await reconcilePayment(db,q.attempt.reference,runtime)).status,"paid");
+    await db.query("UPDATE users SET driver_available=true WHERE id=$1",[ids.driver]);
+    for(const status of ["accepted","preparing","assigned"])
+      await call("owner","order.transition",{id:order.id,status,...(status==="assigned"?{driverId:ids.driver}:{}),note:"Synthetic verified card delivery regression"});
+    await verifiedPickup(call,order.id);
+    await call("driver","order.transition",{id:order.id,status:"out_for_delivery",note:"Synthetic physical pickup regression"});
+    const code=(await call("customer","orders")).find((o:any)=>o.id===order.id).confirmation_code;
+    await assert.rejects(()=>call("driver","delivery.complete",{handover:true,orderId:order.id,code,collectedKobo:Number(order.total_kobo)}),/cash amount|collected|cash-on-delivery/i);
+    await call("driver","delivery.complete",{handover:true,orderId:order.id,code,collectedKobo:0});
+    await call("driver","delivery.complete",{handover:true,orderId:order.id,code,collectedKobo:0});
+    assert.equal((await one(db,"SELECT status FROM orders WHERE id=$1",[order.id]))!.status,"delivered");
+    assert.equal(Number((await one(db,"SELECT count(*) n FROM cash_collections WHERE order_id=$1",[order.id]))!.n),0);
+
+  } finally {
+    keys.forEach((k,i)=>{if(env[i]===undefined)delete process.env[k];else process.env[k]=env[i];});
+    await db.query("UPDATE settings SET value=$1 WHERE key='payment.gateway' AND scope='lagos'",[JSON.stringify(policy!.value)]);
+  }
 });

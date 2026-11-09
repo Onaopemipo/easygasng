@@ -1,0 +1,96 @@
+{
+  "phase": "Linked request contact repair",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "scope": "Existing customer web service and linked checkout contact repair",
+      "uiReference": "User Confirm linked request error screenshot, 10 November 2026",
+      "route": "/services/[id]; /combined-checkout; checkout.mixed; services.book",
+      "dataSource": "Customer-entered service draft address.phone; original bookingInput and booking transaction",
+      "securityControl": "Strict backend Nigerian phone validation; no invented contact/account mutation; original ownership, availability, quote/payment approvals and idempotent booking retained",
+      "testResult": "PASS \u2014 18/18 scoped contact, commerce and professional-service tests; typecheck passes.",
+      "evidence": [
+        "docs/linked-request-repair/evidence/tests.txt",
+        "docs/linked-request-repair/evidence/types.txt",
+        "docs/linked-request-repair/audit.md"
+      ],
+      "outstandingWork": "Hosted deployment/retest remains pending; production NO-GO and previous provider/device/import/native/server gates remain unchanged.",
+      "id": "LINK-CONTACT01",
+      "requirement": "Normalize equivalent Nigerian phone formatting and return helpful backend validation without weakening booking guards",
+      "priority": "P0",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Shared existing identity normalizer accepts equivalent separators/country prefixes, rejects invalid/foreign contacts and preserves already-valid strings for existing idempotent hashes.",
+      "implementationFiles": [
+        "packages/business-rules/src/booking-contact.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "testFiles": [
+        "tests/linked-request-contact.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "testIds": [
+        "LINK-CONTACT01"
+      ],
+      "negativeTests": [
+        "+447123456789",
+        "0801abc5678"
+      ],
+      "acceptanceGate": "LINK-G01"
+    },
+    {
+      "scope": "Existing customer web service and linked checkout contact repair",
+      "uiReference": "User Confirm linked request error screenshot, 10 November 2026",
+      "route": "/services/[id]; /combined-checkout; checkout.mixed; services.book",
+      "dataSource": "Customer-entered service draft address.phone; original bookingInput and booking transaction",
+      "securityControl": "Strict backend Nigerian phone validation; no invented contact/account mutation; original ownership, availability, quote/payment approvals and idempotent booking retained",
+      "testResult": "PASS \u2014 18/18 scoped contact, commerce and professional-service tests; typecheck passes.",
+      "evidence": [
+        "docs/linked-request-repair/evidence/tests.txt",
+        "docs/linked-request-repair/evidence/types.txt",
+        "docs/linked-request-repair/audit.md"
+      ],
+      "outstandingWork": "Hosted deployment/retest remains pending; production NO-GO and previous provider/device/import/native/server gates remain unchanged.",
+      "id": "LINK-CONTACT02",
+      "requirement": "Validate linked drafts before save/submit and allow correcting existing appointment contact numbers",
+      "priority": "P1",
+      "status": "PARTIAL",
+      "reason": "Editable controlled contact inputs persist corrections in the existing user-scoped draft. Client validates new drafts and all submitted appointments. Source regression passes; browser interaction and hosted retest remain unexecuted.",
+      "implementationFiles": [
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/components/professional-services.tsx"
+      ],
+      "testFiles": [
+        "tests/linked-request-contact.test.ts"
+      ],
+      "testIds": [
+        "LINK-CONTACT02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "LINK-G02"
+    }
+  ],
+  "gates": [
+    {
+      "id": "LINK-G01",
+      "status": "PASS",
+      "scope": "Backend phone validation and existing booking regressions"
+    },
+    {
+      "id": "LINK-G02",
+      "status": "OPEN",
+      "scope": "Browser correction/persistence, successful local linked confirmation and hosted retest"
+    }
+  ],
+  "coverage": {
+    "implemented": "2/2",
+    "verified": "1/2",
+    "criticalVerified": "1/1",
+    "gatePass": "1/2"
+  },
+  "scopeChanges": [
+    "Reuse existing customer identity normalizer; no duplicate system or migration.",
+    "Existing valid phone strings remain unchanged for retry hashes.",
+    "Prior mobile web/wallet fixes and all release/import holds preserved."
+  ]
+}

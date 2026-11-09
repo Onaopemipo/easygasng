@@ -3103,7 +3103,7 @@ function DeliveryCompletion({
             handover: d.handover === "on",
             code: d.code,
             collectedKobo:
-              order.payment_method === "wallet"
+              ["wallet", "card"].includes(order.payment_method)
                 ? 0
                 : Math.round(Number(d.amount) * 100),
           });
@@ -3140,22 +3140,22 @@ function DeliveryCompletion({
         />
       </label>
       <label>
-        {order.payment_method === "wallet"
-          ? "Purchase credit paid — collect no cash"
+        {["wallet", "card"].includes(order.payment_method)
+          ? "Prepaid order — collect no cash"
           : "Cash actually collected (₦)"}
         <FormInput
           name="amount"
           type="number"
           min="0"
           step="0.01"
-          defaultValue={order.payment_method === "wallet" ? 0 : undefined}
-          readOnly={order.payment_method === "wallet"}
+          defaultValue={["wallet", "card"].includes(order.payment_method) ? 0 : undefined}
+          readOnly={["wallet", "card"].includes(order.payment_method)}
           required
         />
       </label>
       {error && <Notice message={error} type="error" />}
       <button className="button full" disabled={busy}>
-        Record Delivery & Cash Collection <Check size={17} />
+        {["wallet", "card"].includes(order.payment_method) ? "Confirm prepaid delivery" : "Record Delivery & Cash Collection"} <Check size={17} />
       </button>
     </form>
   );

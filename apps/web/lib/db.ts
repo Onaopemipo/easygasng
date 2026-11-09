@@ -513,6 +513,7 @@ export async function migrate(db: DB) {
       ["070", "database/migrations/070_driver_contact.sql"],
       ["071", "database/migrations/071_wallet_bank_transfers.sql"],
       ["072", "database/migrations/072_document_identity.sql"],
+      ["073", "database/migrations/073_order_card_payment.sql"],
     ]) {
       if (
         version === "044" &&
@@ -559,6 +560,7 @@ export async function migrate(db: DB) {
     }
   });
 }
+export const localSchemaRevision = 74;
 export async function getDb() {
   const db = await (globalDb.easygasDb ??= createDatabase());
   // Apply local upgrades once after development hot reload, on the existing DB connection.
@@ -566,12 +568,12 @@ export async function getDb() {
   if (
     process.env.NODE_ENV !== "production" &&
     !process.env.DATABASE_URL &&
-    globalDb.easygasLocalVersion !== 73
+    globalDb.easygasLocalVersion !== localSchemaRevision
   ) {
     if (!globalDb.easygasLocalMigration)
       globalDb.easygasLocalMigration = migrate(db)
         .then(() => {
-          globalDb.easygasLocalVersion = 73;
+          globalDb.easygasLocalVersion = localSchemaRevision;
         })
         .finally(() => {
           globalDb.easygasLocalMigration = undefined;

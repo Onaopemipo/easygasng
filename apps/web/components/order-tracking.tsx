@@ -1,4 +1,5 @@
 "use client";
+import { OrderCardPayment } from "./hosted-payment";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { OrderOperations } from "./order-operations";
@@ -108,7 +109,7 @@ export function TrackingDetails({
 }) {
   return (
     <section aria-label="Delivery tracking details">
-      {!staff && <><OrderInvoice orderId={order.id} /><OrderOperations order={order} customer/></>}
+      {!staff && <><OrderCardPayment order={order}/><OrderInvoice orderId={order.id} /><OrderOperations order={order} customer/></>}
       <p>
         <strong>{trackingLabels[order.status] ?? order.status}</strong> ·
         Payment: {order.payment_status}
@@ -385,7 +386,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                         payload.code = values.code;
                         payload.handover = values.handover === "on";
                         payload.collectedKobo =
-                          o.payment_method === "wallet"
+                          ["wallet", "card"].includes(o.payment_method)
                             ? 0
                             : Math.round(Number(values.cash) * 100);
                       } else if (
@@ -512,8 +513,8 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                         />
                       </label>
                       <label>
-                        Cash actually collected (₦)
-                        <input name="cash" type="number" min="0" step="0.01" />
+                        {["wallet", "card"].includes(o.payment_method) ? "Prepaid order — collect no cash" : "Cash actually collected (₦)"}
+                        <input name="cash" type="number" min="0" step="0.01" defaultValue={["wallet", "card"].includes(o.payment_method) ? 0 : undefined} readOnly={["wallet", "card"].includes(o.payment_method)} />
                       </label>
                       <label>
                         <input type="checkbox" name="handover" />I physically

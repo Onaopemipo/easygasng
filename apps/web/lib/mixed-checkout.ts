@@ -130,6 +130,9 @@ export async function mixedCheckoutAction(
       reference: order!.reference,
       totalKobo: order!.total_kobo,
       paymentStatus: order!.payment_status,
+      payment_method: order!.payment_method,
+      payment_status: order!.payment_status,
+      status: order!.status,
     };
   }
   for (const appointment of d.appointments) {

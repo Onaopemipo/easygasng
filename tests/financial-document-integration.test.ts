@@ -1,3 +1,4 @@
+import { localSchemaRevision } from "../apps/web/lib/db";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { NextRequest } from "next/server";
@@ -107,7 +108,7 @@ test("DOC-LIBRARY: authenticated HTTP own/scoped documents, filters, source tota
     version = g.easygasLocalVersion,
     flag = process.env.EASYGAS_DOCUMENT_TEMPLATE_V2;
   g.easygasDb = Promise.resolve(f.db);
-  g.easygasLocalVersion = 73;
+  g.easygasLocalVersion = localSchemaRevision;
   process.env.EASYGAS_DOCUMENT_TEMPLATE_V2 = "true";
   try {
     await f.call("owner", "reauth", { password: "Tracking-fixture-only-123!" });

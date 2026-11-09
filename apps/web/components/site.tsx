@@ -1,7 +1,8 @@
 "use client";
+import { CustomerWallet } from "./customer-wallet";
 import { DocumentLibrary } from "./document-library";
 import { FormInput } from "./password-input";
-import {WalletFunding} from "./hosted-payment";
+import {useCardCheckout, OrderCardPayment} from "./hosted-payment";
 import {
   EasyRewards,
   RewardCheckoutField,
@@ -30,6 +31,7 @@ import {
   customerNavigation,
   protectedCustomerRoutes,
   safeCustomerReturn,
+  customerAuthHref,
   parseShoppingCart,
 } from "../../../packages/business-rules/src/customer-navigation";
 import GasOrder from "./gas-order";
@@ -119,11 +121,14 @@ export default function Site({
     api(pathname === "/" ? "catalogue?view=homepage" : "catalogue")
       .then(setCatalogue)
       .catch((e) => setError(e.message));
+  }, [pathname === "/"]);
+  // Hydrate once per mount, independently of catalogue/navigation refreshes.
+  useEffect(() => {
     try {
       setCart(parseShoppingCart(localStorage.getItem("easygas.cart")));
     } catch {}
     setReady(true);
-  }, [pathname === "/"]);
+  }, []);
   const signingOut = useRef(false);
   const workspace =
     !!user &&
@@ -272,10 +277,10 @@ export default function Site({
   return (
     <Context.Provider value={ctx}>
       {!workspace && <Header />}
-      <CustomerFrame workspace={workspace} user={user} onLogout={signOut}>
+      <CustomerFrame workspace={workspace} user={user} onLogout={signOut} cartCount={cart.reduce((n, i) => n + i.quantity, 0)}>
         <main id="main">
-          {protectedPath && !user ? (
-            <Loading />
+          {!ready || (protectedPath && !user) ? (
+            <Loading page />
           ) : pathname === "/account" && workspace ? (
             <CustomerDashboard user={user} />
           ) : error ? (
@@ -286,7 +291,7 @@ export default function Site({
               </button>
             </div>
           ) : !catalogue ? (
-            <Loading />
+            <Loading page />
           ) : pathname === "/" ? (
             <Home />
           ) : [
@@ -468,9 +473,9 @@ export default function Site({
     </Context.Provider>
   );
 }
-function CustomerFrame({ workspace, user, onLogout, children }: any) {
+function CustomerFrame({ workspace, user, onLogout, children, cartCount }: any) {
   return workspace ? (
-    <CustomerWorkspace key={user.id} user={user} onLogout={onLogout}>
+    <CustomerWorkspace key={user.id} user={user} onLogout={onLogout} cartCount={cartCount}>
       {children}
     </CustomerWorkspace>
   ) : (
@@ -1177,6 +1182,8 @@ function Auth({ register }: { register: boolean }) {
     [busy, setBusy] = useState(false);
   const { setUser, user, toast } = useShop(),
     router = useRouter();
+  const search = useSearchParams();
+  const returnTo = safeCustomerReturn(search.get("returnTo"));
   useEffect(() => {
     if (user)
       router.replace(
@@ -1282,7 +1289,7 @@ function Auth({ register }: { register: boolean }) {
         </button>
         <p className="auth-switch">
           {register ? "Already have an account?" : "New to EasyGas?"}{" "}
-          <Link href={register ? "/login" : "/register"}>
+          <Link href={customerAuthHref(!register, returnTo)}>
             {register ? "Sign in" : "Create an account"}
           </Link>
         </p>
@@ -1300,6 +1307,7 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
     [savedAddresses, setSavedAddresses] = useState<any[]>([]),
     [selectedAddress, setSelectedAddress] = useState<any>(null),
     [key] = useState(() => crypto.randomUUID());
+  const cardEnabled = useCardCheckout(user?.id);
   useEffect(() => {
     try {
       const d = JSON.parse(
@@ -1412,7 +1420,8 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
           Thanks for choosing EasyGas. Your order reference is{" "}
           <strong>{order.reference}</strong>.
         </p>
-        <Notice message="Payment is due on delivery. It has not been marked as paid." />
+        <Notice message={order.payment_status === "verified" ? "Payment is recorded in the verified ledger." : order.payment_method === "card" ? "Your order is awaiting secure card payment." : "Payment is due on delivery. It has not been marked as paid."} />
+        <OrderCardPayment order={order} />
         <Link href="/track" className="button">
           Track your order <ArrowRight size={18} />
         </Link>
@@ -1594,6 +1603,7 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
                   <label>
                     Payment method
                     <select name="paymentMethod" required>
+                      {cardEnabled && <option value="card">Credit / debit card · secure Paystack checkout (sandbox)</option>}
                       {catalogue.codEnabled && (
                         <option value="cash_on_delivery">
                           Cash on delivery — verified after collection
@@ -1606,7 +1616,7 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
                       )}
                     </select>
                   </label>
-                  {!catalogue.codEnabled && !catalogue.walletEnabled && (
+                  {!catalogue.codEnabled && !catalogue.walletEnabled && !cardEnabled && (
                     <Notice message="No payment method is currently enabled." />
                   )}
                   {error && <Notice type="error" message={error} />}
@@ -1616,7 +1626,7 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
                       busy ||
                       !estimateAvailable ||
                       !catalogue.orderingEnabled ||
-                      (!catalogue.codEnabled && !catalogue.walletEnabled)
+                      (!catalogue.codEnabled && !catalogue.walletEnabled && !cardEnabled)
                     }
                   >
                     {busy ? "Placing your order…" : "Place Order"}
@@ -1906,34 +1916,7 @@ function Account({ section }: { section: string }) {
             </Empty>
           )
         ) : section === "/wallet" ? (
-          <>
-            <div className="wallet-card">
-              <Wallet size={35} />
-              <span>EasyGas purchase credit</span>
-              <h2>{money(data.balanceKobo)}</h2>
-              <p>Credit for eligible EasyGas purchases.</p>
-            </div>
-            <Notice message="Top up by bank transfer with business approval, or by card when enabled. Withdrawals and transfers to other wallets are not supported." />
-            <WalletFunding/>
-            <DocumentLibrary initialType="receipt"/>
-            <h2>Recent Transactions</h2>
-            {data.entries.length ? (
-              data.entries.map((e: any) => (
-                <div className="cart-row" key={e.id}>
-                  <Wallet />
-                  <span>
-                    {e.kind}
-                    <small>{e.reference}</small>
-                  </span>
-                  <strong>{money(e.amount_kobo)}</strong>
-                </div>
-              ))
-            ) : (
-              <Empty icon={Wallet} title="A fresh start.">
-                Verified purchase credit transactions will appear here.
-              </Empty>
-            )}
-          </>
+          <CustomerWallet data={data} />
         ) : section === "/rewards" ? (
           <EasyRewards />
         ) : section === "/schedules" ? (

@@ -1,0 +1,26 @@
+✔ MWEB-02: auth switching keeps checkout return and rejects external destinations; carts retain only bounded product quantities (0.870042ms)
+✔ MWEB-03-UI: card payment remains distinct from payment confirmation and never prompts paid, COD or cancelled orders (14.089542ms)
+✔ MWEB-04: route waits use full viewport; page waits and local waits have separate containers (2.446ms)
+✔ PAY-POST: exact principal wallet credit, stable init, authenticated duplicate webhook and ledger immutability (1191.223542ms)
+✔ PAY-ZERO-EFFECT: forged events, wrong amount/currency/environment, cross-customer and driver requests never credit funds (4254.124333ms)
+✔ PAY-RECOVERY: initialization timeout never launches a second charge; fee variance is separate from principal (963.232833ms)
+✔ PAY-RESUME: failed provider states persist without wallet effects (708.72025ms)
+✔ PAY-EXPIRY: prepared quote expiry is visible and cannot initialize (706.320292ms)
+✔ PAY-INVOICE: verified collection allocates principal to existing immutable invoice, never fees or duplicate revenue (771.486ms)
+✔ WALLET-CARD: wallet checkout restricts approved channels to card and rejects transfer-only policy (665.593792ms)
+✔ WALLET-INSTANT: signed webhook verifies and credits card funding without waiting for worker or manual approval (650.75925ms)
+✔ DOC-POSTING-SNAPSHOT: new receipt preserves captured identity and customer despite later changes (663.272833ms)
+✔ MWEB-03: direct card orders retain server totals, ownership, fee consent and exactly-once ledger posting (709.298625ms)
+✔ WALLET-CARD-BRANCH: new unassigned customer can fund once in a single active branch; ambiguous context and forged branch are rejected (685.896417ms)
+✔ WALLET-UI: top-up methods render without inventing a receiving bank or claiming an unverified balance (3.944834ms)
+✔ WALLET-QUIET: default wallet shows balance and transactions without mounting funding or document filters (10.486584ms)
+✔ WALLET-BANK: pending transfer, scoped independent approval, rejection and exactly-once ledger (1158.781917ms)
+✔ WALLET-BRANCH: unassigned customers use authoritative active context without mutating identity; ambiguous and foreign addresses cannot choose funding branch (696.642084ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15214.726958

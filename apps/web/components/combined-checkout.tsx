@@ -1,4 +1,6 @@
 "use client";
+import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
+import { useCardCheckout, OrderCardPayment } from "./hosted-payment";
 import { RewardCheckoutField } from "./easyrewards";
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
@@ -20,6 +22,7 @@ export default function CombinedCheckout({
     [busy, setBusy] = useState(false),
     [result, setResult] = useState<any>(null),
     [key] = useState(() => crypto.randomUUID());
+  const cardEnabled = useCardCheckout(user?.id);
   const storage = "easygas.serviceDrafts." + user?.id;
   useEffect(() => {
     try {
@@ -35,12 +38,13 @@ export default function CombinedCheckout({
         Sign in to continue
       </Link>
     );
-  if (!appointments) return <Loading />;
+  if (!appointments) return <Loading page />;
   if (result)
     return (
       <section className="surface">
         <h1>Your linked request is recorded</h1>
         <p>{result.reference}</p>
+        <OrderCardPayment order={result.order} />
         <p>
           Product delivery and service appointments keep separate completion and
           payment records. A booking request is not a verified payment or safety
@@ -73,6 +77,11 @@ export default function CombinedCheckout({
     setError("");
     const values = Object.fromEntries(new FormData(e.currentTarget));
     try {
+      const validatedAppointments = appointments!.map((a, i) => {
+        const phone = bookingPhone(String(a.request?.address?.phone ?? ""));
+        if (!phone) throw new Error(`${a.name || `Appointment ${i + 1}`}: ${bookingPhoneMessage}`);
+        return { ...a.request, address: { ...a.request.address, phone } };
+      });
       const payload = {
         idempotencyKey: key,
         ...(appointments![0]?.bundleId
@@ -82,14 +91,14 @@ export default function CombinedCheckout({
               bundleTotalKobo: appointments![0].bundleTotalKobo,
             }
           : {}),
-        appointments: appointments!.map((a) => a.request),
+        appointments: validatedAppointments,
         ...(cart.length
           ? {
               products: {
                 items: cart,
                 address: {
                   name: values.name,
-                  phone: values.phone,
+                  phone: bookingPhone(String(values.phone ?? "")) ?? String(values.phone ?? ""),
                   street: values.street,
                   zone: values.zone,
                 },
@@ -166,6 +175,20 @@ export default function CombinedCheckout({
             <div className="surface" key={a.request.idempotencyKey}>
               <h2>{a.name}</h2>
               <p>{a.label}</p>
+              <label>
+                Contact mobile number for {a.name}
+                <input type="tel" autoComplete="tel" value={a.request?.address?.phone ?? ""}
+                  aria-describedby={`appointment-phone-help-${i}`}
+                  onChange={(e) => {
+                    const next = appointments.map((item, j) => j === i ? {
+                      ...item, request: { ...item.request, address: { ...item.request.address, phone: e.target.value } },
+                    } : item);
+                    sessionStorage.setItem(storage, JSON.stringify(next));
+                    setAppointments(next);
+                    setError("");
+                  }} />
+              </label>
+              <p id={`appointment-phone-help-${i}`}>Use a Nigerian mobile number, for example 08012345678 or +2348012345678.</p>
               <p>
                 {a.totalKobo === null
                   ? "A customer-approved quotation is required."
@@ -231,7 +254,8 @@ export default function CombinedCheckout({
               <label>
                 Product payment
                 <select name="paymentMethod">
-                  <option value="cash_on_delivery">Cash on delivery</option>
+                  {cardEnabled && <option value="card">Credit / debit card · Paystack sandbox</option>}
+                  {catalogue.codEnabled && <option value="cash_on_delivery">Cash on delivery</option>}
                   {catalogue.walletEnabled && (
                     <option value="wallet">Verified purchase credit</option>
                   )}

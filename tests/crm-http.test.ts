@@ -1,3 +1,4 @@
+import { localSchemaRevision } from "../apps/web/lib/db";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { NextRequest } from "next/server";
@@ -12,7 +13,7 @@ test("CRM-HTTP01: summary and paged follow-ups use actual authenticated GET hand
     jobs = process.env.EASYGAS_BACKGROUND_JOBS;
   try {
     g.easygasDb = Promise.resolve(f.db);
-    g.easygasLocalVersion = 73;
+    g.easygasLocalVersion = localSchemaRevision;
     process.env.EASYGAS_BACKGROUND_JOBS = "false";
     await f.db.query(
       "INSERT INTO crm_followups(id,customer_id,branch_id,owner_id,next_action,due_at,created_by) VALUES($1,$2,'lagos',$3,'Synthetic HTTP follow-up',now(),$3)",

@@ -1,0 +1,154 @@
+{
+  "phase": "Customer wallet repair",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "scope": "Existing customer web wallet repair; no live activation or duplicate financial system",
+      "uiReference": "Customer wallet screenshots and defect report, 10 November 2026",
+      "route": "/wallet; /api/wallet.funding; /api/payments/paystack/[operation]",
+      "securityControl": "Authenticated ownership, authoritative active funding context, independent bank approval, provider verification and exactly-once ledger posting preserved",
+      "status": "VERIFIED_COMPLETE",
+      "testResult": "PASS \u2014 47 targeted regression checks and 1 real PostgreSQL check; typecheck/build pass; local browser checks pass.",
+      "outstandingWork": "Hosted deployment and hosted customer retest pending. Actual receiving-bank configuration, merchant/provider and physical-device acceptance remain open; production NO-GO unchanged.",
+      "evidence": [
+        "docs/wallet-repair/evidence/regression-tests.txt",
+        "docs/wallet-repair/evidence/postgres-tests.txt",
+        "docs/wallet-repair/evidence/types.txt",
+        "docs/wallet-repair/evidence/build.txt",
+        "docs/wallet-repair/evidence/continuation-browser.json",
+        "docs/wallet-repair/evidence/wallet-desktop.png"
+      ],
+      "id": "WALLET-FIX01",
+      "requirement": "Resolve missing customer funding branch from authoritative context without mutating identity or bypassing financial guards",
+      "priority": "P0",
+      "implementationFiles": [
+        "apps/web/lib/customer-funding-branch.ts",
+        "apps/web/lib/wallet-funding.ts",
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/web/app/api/payments/paystack/[operation]/route.ts"
+      ],
+      "testFiles": [
+        "tests/wallet-topups.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts"
+      ],
+      "testIds": [
+        "WALLET-BRANCH",
+        "WALLET-CARD-BRANCH",
+        "WALLET-CONFIG-SCOPE"
+      ],
+      "negativeTests": [
+        "ambiguous",
+        "foreign addresses"
+      ],
+      "reason": "Assigned active branch, unique owned default-address context or sole active business branch resolves funding. Ambiguous/inactive context fails closed with actionable state; generic payment capability preserved.",
+      "dataSource": "users.branch_id; owned default addresses; active delivery locations/branches; existing receiving-bank settings and wallet ledger",
+      "acceptanceGate": "WALLET-FIX01-LOCAL"
+    },
+    {
+      "scope": "Existing customer web wallet repair; no live activation or duplicate financial system",
+      "uiReference": "Customer wallet screenshots and defect report, 10 November 2026",
+      "route": "/wallet; /api/wallet.funding; /api/payments/paystack/[operation]",
+      "securityControl": "Authenticated ownership, authoritative active funding context, independent bank approval, provider verification and exactly-once ledger posting preserved",
+      "status": "VERIFIED_COMPLETE",
+      "testResult": "PASS \u2014 47 targeted regression checks and 1 real PostgreSQL check; typecheck/build pass; local browser checks pass.",
+      "outstandingWork": "Hosted deployment and hosted customer retest pending. Actual receiving-bank configuration, merchant/provider and physical-device acceptance remain open; production NO-GO unchanged.",
+      "evidence": [
+        "docs/wallet-repair/evidence/regression-tests.txt",
+        "docs/wallet-repair/evidence/postgres-tests.txt",
+        "docs/wallet-repair/evidence/types.txt",
+        "docs/wallet-repair/evidence/build.txt",
+        "docs/wallet-repair/evidence/continuation-browser.json",
+        "docs/wallet-repair/evidence/wallet-desktop.png"
+      ],
+      "id": "WALLET-FIX02",
+      "requirement": "Show a validated Continue action and explicit unavailable/error states for both top-up methods",
+      "priority": "P1",
+      "implementationFiles": [
+        "apps/web/components/hosted-payment.tsx"
+      ],
+      "testFiles": [
+        "tests/wallet-topups-ui.test.ts",
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "WALLET-UI",
+        "WALLET-INSTANT"
+      ],
+      "negativeTests": [],
+      "reason": "Continue reveals transfer instructions/approval form or card fee review; synthetic browser verification covered both. Bounded cancellable loading and Retry avoid indefinite loading. No financial transaction executed in browser.",
+      "dataSource": "Existing wallet funding API; wallet-scoped Paystack capability and server fee quote",
+      "acceptanceGate": "WALLET-FIX02-LOCAL"
+    },
+    {
+      "scope": "Existing customer web wallet repair; no live activation or duplicate financial system",
+      "uiReference": "Customer wallet screenshots and defect report, 10 November 2026",
+      "route": "/wallet; /api/wallet.funding; /api/payments/paystack/[operation]",
+      "securityControl": "Authenticated ownership, authoritative active funding context, independent bank approval, provider verification and exactly-once ledger posting preserved",
+      "status": "VERIFIED_COMPLETE",
+      "testResult": "PASS \u2014 47 targeted regression checks and 1 real PostgreSQL check; typecheck/build pass; local browser checks pass.",
+      "outstandingWork": "Hosted deployment and hosted customer retest pending. Actual receiving-bank configuration, merchant/provider and physical-device acceptance remain open; production NO-GO unchanged.",
+      "evidence": [
+        "docs/wallet-repair/evidence/regression-tests.txt",
+        "docs/wallet-repair/evidence/postgres-tests.txt",
+        "docs/wallet-repair/evidence/types.txt",
+        "docs/wallet-repair/evidence/build.txt",
+        "docs/wallet-repair/evidence/continuation-browser.json",
+        "docs/wallet-repair/evidence/wallet-desktop.png"
+      ],
+      "id": "WALLET-FIX03",
+      "requirement": "Simplify wallet default view with on-demand top-up and separate transaction/document tabs",
+      "priority": "P1",
+      "implementationFiles": [
+        "apps/web/components/customer-wallet.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/wallet-topups-ui.test.ts"
+      ],
+      "testIds": [
+        "WALLET-QUIET"
+      ],
+      "negativeTests": [],
+      "reason": "Default real local wallet shows balance, one primary action and compact history; funding/document filters mount only when requested. Keyboard tab navigation verified.",
+      "dataSource": "Existing wallet summary and immutable entries; original DocumentLibrary",
+      "acceptanceGate": "WALLET-FIX03-LOCAL"
+    }
+  ],
+  "gates": [
+    {
+      "id": "WALLET-FIX01-LOCAL",
+      "status": "PASS",
+      "scope": "Bounded local defect acceptance only"
+    },
+    {
+      "id": "WALLET-FIX02-LOCAL",
+      "status": "PASS",
+      "scope": "Bounded local defect acceptance only"
+    },
+    {
+      "id": "WALLET-FIX03-LOCAL",
+      "status": "PASS",
+      "scope": "Bounded local defect acceptance only"
+    },
+    {
+      "id": "WALLET-RELEASE",
+      "status": "OPEN",
+      "scope": "Hosted deployment/retest, bank settings, merchant and physical-device acceptance"
+    }
+  ],
+  "coverage": {
+    "implemented": "3/3",
+    "locallyVerified": "3/3",
+    "criticalLocallyVerified": "1/1",
+    "routesLocallyCovered": "3/3",
+    "gates": "3/4; release gate remains open"
+  },
+  "scopeChanges": [
+    "Extends previous wallet top-up and MWEB-03 scopes; no prior requirement removed.",
+    "Reviewed orchestrator financial-source hash change recorded in docs/wallet-repair/approved-scope-change.json; original baseline and previous phase evidence preserved.",
+    "No hosted rollout, live activation, native build, VPS deployment or actual historical import."
+  ]
+}

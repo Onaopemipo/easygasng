@@ -706,3 +706,79 @@ test("DOC-POSTING-SNAPSHOT: new receipt preserves captured identity and customer
   assert.equal(saved.principalKobo,20000);
  }finally{if(old===undefined)delete process.env.EASYGAS_DOCUMENT_TEMPLATE_V2;else process.env.EASYGAS_DOCUMENT_TEMPLATE_V2=old;await f.db.close();}
 });
+
+test("MWEB-03: direct card orders retain server totals, ownership, fee consent and exactly-once ledger posting", async () => {
+  const f = await fixture();
+  try {
+    const makeOrder = async () => {
+      const oid = id();
+      await f.db.query(`INSERT INTO orders(id,reference,customer_id,branch_id,delivery_code_hash,delivery_code_expires_at,payment_method,subtotal_kobo,delivery_kobo,total_kobo,address,delivery_date,delivery_window,idempotency_key,request_hash)
+        VALUES($1,$1,$2,'lagos','fixture',now()+interval '1 day','card',100000,500000,600000,'{"street":"Synthetic Road 10","zone":"Lekki"}','2026-12-01','AM',$1,'fixture')`, [oid, f.uid]);
+      return oid;
+    };
+    const oid = await makeOrder();
+    const input = { purpose: "order", orderId: oid, requestKey: id() };
+    await assert.rejects(() => preparePayment(f.db, f.otherToken, input), /not found/);
+    await assert.rejects(() => preparePayment(f.db, f.driverToken, input));
+    await assert.rejects(() => preparePayment(f.db, f.token, {...input, amountKobo: 1}), /full current order amount/);
+    await assert.rejects(() => preparePayment(f.db, f.token, {...input, invoiceId: id()}), /single card checkout order/);
+    const q = await preparePayment(f.db, f.token, input);
+    assert.equal(q.quote.baseKobo, 600000);
+    assert.ok(q.quote.grossKobo > q.quote.baseKobo);
+    assert.deepEqual(q.quote.channels, ["card"]);
+    assert.equal((await preparePayment(f.db, f.token, input)).id, q.id);
+    assert.equal((await one(f.db, "SELECT payment_status FROM orders WHERE id=$1",[oid]))!.payment_status,"unpaid");
+    await assert.rejects(() => initializePayment(f.db, f.token, {intentId:q.id,acceptedGrossKobo:600000,acceptedPolicyVersion:q.quote.gatewayPolicyVersion},f.runtime), /exact fee quote/);
+    await initializePayment(f.db,f.token,{intentId:q.id,acceptedGrossKobo:q.quote.grossKobo,acceptedPolicyVersion:q.quote.gatewayPolicyVersion},f.runtime);
+    // Unresolved attempts are isolated per order, while this order reuses its attempt.
+    assert.equal((await preparePayment(f.db,f.token,{...input,requestKey:id()})).id,q.id);
+    const otherOrder = await makeOrder();
+    assert.notEqual((await preparePayment(f.db,f.token,{purpose:"order",orderId:otherOrder,requestKey:id()})).id,q.id);
+    assert.equal((await reconcilePayment(f.db,q.attempt.reference,f.runtime)).status,"paid");
+    assert.equal((await reconcilePayment(f.db,q.attempt.reference,f.runtime)).status,"paid");
+    assert.equal(Number((await one(f.db,"SELECT sum(amount_kobo) n FROM verified_payments WHERE order_id=$1",[oid]))!.n),600000);
+    assert.equal(Number((await one(f.db,"SELECT count(*) n FROM verified_payments WHERE order_id=$1",[oid]))!.n),1);
+    assert.equal((await one(f.db,"SELECT payment_status FROM orders WHERE id=$1",[oid]))!.payment_status,"verified");
+    await assert.rejects(() => preparePayment(f.db,f.token,{...input,requestKey:id()}),/already has a payment/);
+    const cancelled=await makeOrder();
+    await f.db.query("UPDATE orders SET status='cancelled' WHERE id=$1",[cancelled]);
+    await assert.rejects(() => preparePayment(f.db,f.token,{purpose:"order",orderId:cancelled,requestKey:id()}),/not payable/);
+  } finally { await f.db.close(); }
+});
+
+test("WALLET-CARD-BRANCH: new unassigned customer can fund once in a single active branch; ambiguous context and forged branch are rejected",async()=>{
+ const f=await fixture();try{
+  await f.db.query("UPDATE users SET branch_id=null WHERE id=$1",[f.uid]);
+  const q=await preparePayment(f.db,f.token,{purpose:"wallet",amountKobo:20000,requestKey:id()});
+  await initializePayment(f.db,f.token,{intentId:q.id,acceptedGrossKobo:q.quote.grossKobo,acceptedPolicyVersion:q.quote.gatewayPolicyVersion},f.runtime);
+  assert.equal((await reconcilePayment(f.db,q.attempt.reference,f.runtime)).status,"paid");
+  assert.equal((await reconcilePayment(f.db,q.attempt.reference,f.runtime)).status,"paid");
+  assert.equal(Number((await one(f.db,"SELECT sum(amount_kobo) n FROM wallet_entries WHERE customer_id=$1",[f.uid]))!.n),20000);
+  assert.equal((await one(f.db,"SELECT branch_id FROM users WHERE id=$1",[f.uid]))!.branch_id,null);
+  await f.db.query("INSERT INTO branches(id,name) VALUES('wallet-other-active','Synthetic second branch')");
+  await assert.rejects(()=>preparePayment(f.db,f.token,{purpose:"wallet",amountKobo:20000,requestKey:id()}),/supported delivery address/);
+  await assert.rejects(()=>preparePayment(f.db,f.token,{purpose:"wallet",amountKobo:20000,requestKey:id(),branchId:"lagos"}));
+ }finally{await f.db.close();}
+});
+
+test("WALLET-CONFIG-SCOPE: missing wallet context is reported without disabling existing invoice/order card capability",async()=>{
+ const f=await fixture();const g=globalThis as any;const previous=g.easygasDb,revision=g.easygasLocalVersion;
+ const keys=["EASYGAS_BACKGROUND_JOBS","EASYGAS_PAYSTACK_ENABLED","EASYGAS_PAYSTACK_MODE","EASYGAS_PAYMENT_DATA_CLASS","PAYSTACK_TEST_SECRET_KEY"];
+ const env=keys.map(k=>process.env[k]);
+ try{
+  await f.db.query("UPDATE users SET branch_id=null WHERE id=$1",[f.uid]);
+  await f.db.query("INSERT INTO branches(id,name) VALUES('configuration-other','Synthetic second branch')");
+  const {localSchemaRevision}=await import("../apps/web/lib/db");
+  const {NextRequest}=await import("next/server");
+  const {GET}=await import("../apps/web/app/api/payments/paystack/[operation]/route");
+  g.easygasDb=Promise.resolve(f.db);g.easygasLocalVersion=localSchemaRevision;
+  Object.assign(process.env,{EASYGAS_BACKGROUND_JOBS:"false",EASYGAS_PAYSTACK_ENABLED:"true",EASYGAS_PAYSTACK_MODE:"test",EASYGAS_PAYMENT_DATA_CLASS:"synthetic",PAYSTACK_TEST_SECRET_KEY:"sk_test_SyntheticConfigFixture"});
+  const config=async(query:string)=>{
+   const r=await GET(new NextRequest("http://localhost:3003/api/payments/paystack/configuration"+query,{headers:{authorization:"Bearer "+f.token}}),{params:Promise.resolve({operation:"configuration"})});assert.equal(r.status,200);assert.match(r.headers.get("cache-control")!,/no-store/);return r.json();
+  };
+  const wallet=await config("?purpose=wallet");assert.equal(wallet.available,false);assert.equal(wallet.branchRequired,true);
+  const existing=await config("");assert.equal(existing.available,true);assert.deepEqual(existing.channels,["card"]);
+ }finally{
+  g.easygasDb=previous;g.easygasLocalVersion=revision;keys.forEach((k,i)=>{if(env[i]===undefined)delete process.env[k];else process.env[k]=env[i];});await f.db.close();
+ }
+});

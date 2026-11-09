@@ -1,0 +1,5 @@
+# Linked-request contact audit
+
+The screenshot exposes raw service booking regex validation after a deferred draft submission. The service form saves linked drafts without backend validation; the combined review previously showed no editable appointment phone. Existing strict bookingInput remains authoritative for both direct and mixed checkout. This phase accepts only equivalent Nigerian phone formatting through the existing identity normalizer, preserves valid legacy representations for request hashes, validates before saving new drafts and submitting linked requests, and adds editable persisted draft contact fields. No fabricated number, account mutation, quotation/payment bypass or financial model change is allowed.
+
+Requirements LINK-CONTACT01 (P0): server rejects invalid numbers with helpful text and normalizes equivalent formatting. LINK-CONTACT02 (P1): drafts validate before save/submit and existing invalid drafts can be corrected without removal. Tests, implementation paths and acceptance status are finalized in the phase matrix. Existing production NO-GO and prior work remain.

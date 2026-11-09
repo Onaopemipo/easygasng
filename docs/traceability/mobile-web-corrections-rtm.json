@@ -1,0 +1,243 @@
+{
+  "phase": "Mobile web customer corrections",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "scopeChanges": [
+    "Direct order card payments reuse existing sandbox orchestration via nullable order target; no live activation, invoice renumbering, duplicate ledger or native build.",
+    "MWEB-03 permits customer/commercial direct card checkout only. Existing Paystack financial-source baseline retained; reviewed new hash is recorded separately, with ownership, fee consent, duplicate posting and dispatch/delivery negatives.",
+    "MWEB-04 changes root route wrapper from section to the existing full-screen variant. Section, button and native loaders remain distinct.",
+    "Local schema cache revision is exported for restricted-runtime fixtures, replacing hardcoded previous cache revisions; no permission check or migration safety test was removed.",
+    "Subsequent WALLET-FIX01\u201303 repair extends funding context and wallet UI; reviewed new financial-source hash and evidence live in docs/wallet-repair. Previous card-checkout evidence remains historical and is not overwritten."
+  ],
+  "requirements": [
+    {
+      "id": "MWEB-01",
+      "requirement": "Constrain mobile forms/layouts to device viewport without disabling zoom",
+      "priority": "P1",
+      "scope": "Mobile web; existing customer/operations/financial modules retained",
+      "uiReference": "User mobile web defect report, 10 November2026",
+      "route": "/; /products; /cart; /register; /checkout; /gas-order; /combined-checkout; /account; /orders; /payment-return",
+      "dataSource": "Device viewport and DOM",
+      "securityControl": "Safe return allowlist; prices/stock/ownership/payment amount enforced on backend; verified ledger and dispatch guards retained; no live gateway activation",
+      "status": "PARTIAL",
+      "reason": "Device-width,16px controls and bounded/wrapping layout implemented.320/390px browser checks pass; original physical Safari zoom observation remains unverified.",
+      "testResult": "PASS \u2014592/592 full regression tests; final customer/UI follow-up tests12/12 and3/3; typecheck and production build pass. Physical/provider acceptance remains open.",
+      "outstandingWork": "Physical iPhone Safari/Android acceptance, including focus/keyboard, rotation and the original zoom observation.",
+      "implementationFiles": [
+        "apps/web/app/layout.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-web/audit.md",
+        "docs/mobile-web/evidence/browser.json",
+        "docs/mobile-web/evidence/full-tests.txt",
+        "docs/mobile-web/evidence/ui-tests.txt",
+        "docs/mobile-web/evidence/types.txt",
+        "docs/mobile-web/evidence/build.txt"
+      ],
+      "acceptanceGate": "MWEB-G01"
+    },
+    {
+      "id": "MWEB-02",
+      "requirement": "Retain guest cart and checkout navigation through registration",
+      "priority": "P1",
+      "scope": "Mobile web; existing customer/operations/financial modules retained",
+      "uiReference": "User mobile web defect report, 10 November2026",
+      "route": "/cart; /login; /register; /checkout; /account",
+      "dataSource": "Browser cart product IDs/quantities and authoritative catalogue",
+      "securityControl": "Safe return allowlist; prices/stock/ownership/payment amount enforced on backend; verified ledger and dispatch guards retained; no live gateway activation",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Real isolated local registration returned to checkout with two existing guest cart units, retained across full navigation and exposed from the customer dashboard. Safe return/cart parsing negatives pass.",
+      "testResult": "PASS \u2014592/592 full regression tests; final customer/UI follow-up tests12/12 and3/3; typecheck and production build pass. Scoped acceptance verified.",
+      "outstandingWork": "No remaining scoped cart-registration defect observed. Existing production NO-GO and retention/import constraints remain.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/customer-workspace.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "testFiles": [
+        "tests/mobile-web-corrections.test.ts"
+      ],
+      "testIds": [
+        "MWEB-02"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-web/audit.md",
+        "docs/mobile-web/evidence/browser.json",
+        "docs/mobile-web/evidence/full-tests.txt",
+        "docs/mobile-web/evidence/ui-tests.txt",
+        "docs/mobile-web/evidence/customer-tests.txt",
+        "docs/mobile-web/evidence/types.txt",
+        "docs/mobile-web/evidence/build.txt"
+      ],
+      "acceptanceGate": "MWEB-G02"
+    },
+    {
+      "id": "MWEB-03",
+      "requirement": "Offer gated credit/debit card checkout using the existing verified Paystack ledger",
+      "priority": "P0",
+      "scope": "Mobile web; existing customer/operations/financial modules retained",
+      "uiReference": "User mobile web defect report, 10 November2026",
+      "route": "/checkout; /gas-order; /combined-checkout; /orders; /payment-return; /api/payments/paystack/*",
+      "dataSource": "Owned order records, approved sandbox gateway policy and verified payment ledger",
+      "securityControl": "Safe return allowlist; prices/stock/ownership/payment amount enforced on backend; verified ledger and dispatch guards retained; no live gateway activation",
+      "status": "PARTIAL",
+      "reason": "Direct order card workflow is implemented through the existing sandbox ledger. Mock-provider end-to-end checkout/dispatch/delivery and real PostgreSQL concurrency pass; merchant-hosted sandbox journey is not yet executed.",
+      "testResult": "PASS \u2014592/592 full regression tests; final customer/UI follow-up tests12/12 and3/3; typecheck and production build pass. Physical/provider acceptance remains open.",
+      "outstandingWork": "Official merchant-hosted card journey, fresh combined-checkout/My Orders/payment-return browser acceptance and normal managed migration/deployment. Live activation remains unsupported/OFF; production NO-GO is unchanged.",
+      "implementationFiles": [
+        "database/migrations/073_order_card_payment.sql",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/web/components/hosted-payment.tsx",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/mixed-checkout.ts"
+      ],
+      "testFiles": [
+        "tests/mobile-web-corrections.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/commerce.test.ts",
+        "tests/paystack-postgres.test.ts"
+      ],
+      "testIds": [
+        "MWEB-03",
+        "MWEB-03-GATE",
+        "MWEB-03-UI",
+        "PAY-PG-CONCURRENCY"
+      ],
+      "negativeTests": [
+        "disabled card checkout cannot reserve stock",
+        "ownership, fee consent"
+      ],
+      "evidence": [
+        "docs/mobile-web/audit.md",
+        "docs/mobile-web/evidence/browser.json",
+        "docs/mobile-web/evidence/full-tests.txt",
+        "docs/mobile-web/evidence/ui-tests.txt",
+        "docs/mobile-web/evidence/customer-tests.txt",
+        "docs/mobile-web/approved-scope-change.json",
+        "docs/mobile-web/evidence/types.txt",
+        "docs/mobile-web/evidence/build.txt"
+      ],
+      "acceptanceGate": "MWEB-G03"
+    },
+    {
+      "id": "MWEB-04",
+      "requirement": "Centre route/page loaders while preserving local/action loader placement",
+      "priority": "P1",
+      "scope": "Mobile web; existing customer/operations/financial modules retained",
+      "uiReference": "User mobile web defect report, 10 November2026",
+      "route": "app/loading.tsx; public/customer route and page loading states; existing section/action waits",
+      "dataSource": "Route/page loading state",
+      "securityControl": "Safe return allowlist; prices/stock/ownership/payment amount enforced on backend; verified ledger and dispatch guards retained; no live gateway activation",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual route fallback centre measured at195\u00d7422 on390\u00d7844 viewport. Page waits centre in page space, while section/action loaders remain local; renderer/accessibility/error-priority regressions pass.",
+      "testResult": "PASS \u2014592/592 full regression tests; final customer/UI follow-up tests12/12 and3/3; typecheck and production build pass. Scoped acceptance verified.",
+      "outstandingWork": "Physical-device acceptance remains recorded under MWEB-01; no native build or native loader claim.",
+      "implementationFiles": [
+        "apps/web/components/easygas-loader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/mobile-web-corrections.test.ts",
+        "tests/easygas-loader.test.ts"
+      ],
+      "testIds": [
+        "MWEB-04",
+        "LDR-WRAPPER-page",
+        "LDR-WRAPPER-section",
+        "LDR-WRAPPER-action"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-web/audit.md",
+        "docs/mobile-web/evidence/browser.json",
+        "docs/mobile-web/evidence/full-tests.txt",
+        "docs/mobile-web/evidence/ui-tests.txt",
+        "docs/mobile-web/evidence/types.txt",
+        "docs/mobile-web/evidence/build.txt"
+      ],
+      "acceptanceGate": "MWEB-G04"
+    }
+  ],
+  "gates": [
+    {
+      "id": "MWEB-G01",
+      "requirement": "Constrain mobile forms/layouts to device viewport without disabling zoom",
+      "status": "PARTIAL",
+      "reason": "Device-width,16px controls and bounded/wrapping layout implemented.320/390px browser checks pass; original physical Safari zoom observation remains unverified."
+    },
+    {
+      "id": "MWEB-G02",
+      "requirement": "Retain guest cart and checkout navigation through registration",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Real isolated local registration returned to checkout with two existing guest cart units, retained across full navigation and exposed from the customer dashboard. Safe return/cart parsing negatives pass."
+    },
+    {
+      "id": "MWEB-G03",
+      "requirement": "Offer gated credit/debit card checkout using the existing verified Paystack ledger",
+      "status": "PARTIAL",
+      "reason": "Direct order card workflow is implemented through the existing sandbox ledger. Mock-provider end-to-end checkout/dispatch/delivery and real PostgreSQL concurrency pass; merchant-hosted sandbox journey is not yet executed."
+    },
+    {
+      "id": "MWEB-G04",
+      "requirement": "Centre route/page loaders while preserving local/action loader placement",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual route fallback centre measured at195\u00d7422 on390\u00d7844 viewport. Page waits centre in page space, while section/action loaders remain local; renderer/accessibility/error-priority regressions pass."
+    }
+  ],
+  "coverage": {
+    "implementedAreas": {
+      "numerator": 4,
+      "denominator": 4
+    },
+    "fullyVerifiedRequirements": {
+      "numerator": 2,
+      "denominator": 4
+    },
+    "fullyAcceptedCriticalRequirements": {
+      "numerator": 0,
+      "denominator": 1
+    },
+    "browserRoutesObserved": {
+      "numerator": 8,
+      "denominator": 11
+    },
+    "closedAcceptanceGates": {
+      "numerator": 2,
+      "denominator": 4
+    }
+  },
+  "executedVerification": {
+    "fullRegression": {
+      "tests": 592,
+      "passed": 592,
+      "failed": 0,
+      "skipped": 0
+    },
+    "postReviewCustomerChecks": {
+      "tests": 12,
+      "passed": 12
+    },
+    "postReviewUIChecks": {
+      "tests": 3,
+      "passed": 3
+    },
+    "matrixValidation": {
+      "tests": 2,
+      "passed": 2
+    },
+    "build": "PASS",
+    "typecheck": "PASS",
+    "webProductionDependencyAudit": "0 vulnerabilities",
+    "actualPhone": "NOT EXECUTED",
+    "merchantHostedSandboxJourney": "NOT EXECUTED",
+    "deployment": "NOT PERFORMED"
+  }
+}

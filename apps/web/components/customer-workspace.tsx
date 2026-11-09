@@ -117,10 +117,12 @@ export default function CustomerWorkspace({
   user,
   onLogout,
   children,
+  cartCount = 0,
 }: {
   user: any;
   onLogout: () => Promise<void>;
   children: ReactNode;
+  cartCount?: number;
 }) {
   const path = usePathname(),
     active = customerRoute(path);
@@ -409,6 +411,9 @@ export default function CustomerWorkspace({
           >
             <Bell size={23} />
             {navigation.data?.counts?.notifications > 0 && <span />}
+          </Link>
+          <Link href="/cart" className="customer-cart" aria-label={`Shopping cart, ${cartCount} items`}>
+            <ShoppingCart size={23} /><span className="customer-cart-count">{cartCount}</span>
           </Link>
           <ThemeToggle />
           <CustomerAccountMenu user={user} onLogout={onLogout} />

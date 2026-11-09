@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Flame,
   CookingPot,
@@ -121,8 +121,8 @@ export function Empty({
     </div>
   );
 }
-export function Loading() {
-  return <div className="loading"><SectionLoadingFallback /></div>;
+export function Loading({ page = false }: { page?: boolean } = {}) {
+  return <div className={page ? "loading loading--page" : "loading"}><SectionLoadingFallback /></div>;
 }
 export function Notice({
   message,

@@ -64,7 +64,7 @@ test(
       await migrate(db);
       const uid = id();
       await db.query(
-        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Synthetic PG fixture',$2,$3,'customer','lagos')",
+        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Synthetic PG fixture',$2,$3,'customer',NULL)",
         [uid, uid + "@example.test", hashPassword("Fixture-only-123!")],
       );
       const token = await issueSession(db, uid);
@@ -189,6 +189,21 @@ test(
         ),
         1,
       );
+      // The new order target shares the same real PostgreSQL locking and posting authority.
+      const oid=id();
+      await db.query(`INSERT INTO orders(id,reference,customer_id,branch_id,delivery_code_hash,delivery_code_expires_at,payment_method,subtotal_kobo,delivery_kobo,total_kobo,address,delivery_date,delivery_window,idempotency_key,request_hash)
+        VALUES($1,$1,$2,'lagos','fixture',now()+interval '1 day','card',100000,500000,600000,'{"street":"Synthetic Road 10","zone":"Lekki"}','2026-12-01','AM',$1,'fixture')`,[oid,uid]);
+      const orderKey=id();
+      const quotes=await Promise.all([1,2,3].map(()=>preparePayment(db,token,{purpose:"order",orderId:oid,requestKey:orderKey})));
+      assert.equal(new Set(quotes.map(q=>q.id)).size,1);
+      const oq=quotes[0];
+      await Promise.all([1,2,3].map(()=>initializePayment(db,token,{intentId:oq.id,acceptedGrossKobo:oq.quote.grossKobo,acceptedPolicyVersion:oq.quote.gatewayPolicyVersion},runtime)));
+      const posted=await Promise.all([1,2,3,4].map(()=>reconcilePayment(db,oq.attempt.reference,runtime)));
+      assert.ok(posted.every(r=>r.status==="paid"));
+      assert.equal(posted.filter(r=>!r.replayed).length,1);
+      assert.equal(Number((await one(db,"SELECT count(*) n FROM verified_payments WHERE order_id=$1",[oid]))!.n),1);
+      assert.equal(Number((await one(db,"SELECT sum(amount_kobo) n FROM verified_payments WHERE order_id=$1",[oid]))!.n),600000);
+      assert.equal((await one(db,"SELECT payment_status FROM orders WHERE id=$1",[oid]))!.payment_status,"verified");
     } finally {
       await pool.end();
       await admin.query(`DROP SCHEMA ${schema} CASCADE`);

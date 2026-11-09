@@ -38,7 +38,7 @@ export async function completeDelivery(
       [o.id],
     );
     if (
-      (o.payment_method === "wallet" &&
+      (["wallet", "card"].includes(o.payment_method) &&
         input.collectedKobo === 0 &&
         o.payment_status === "verified") ||
       (collection?.collector_id === user.id &&
@@ -77,7 +77,7 @@ export async function completeDelivery(
     );
   await fulfilmentReady(tx, o);
   await verifyDeliveryCode(tx, user, o, input.code);
-  if (!["cash_on_delivery", "wallet"].includes(o.payment_method))
+  if (!["cash_on_delivery", "wallet", "card"].includes(o.payment_method))
     throw new AppError(
       409,
       "This delivery payment method is not yet supported.",
@@ -85,7 +85,7 @@ export async function completeDelivery(
   if (
     (o.payment_method === "cash_on_delivery" &&
       input.collectedKobo !== Number(o.total_kobo)) ||
-    (o.payment_method === "wallet" &&
+    (["wallet", "card"].includes(o.payment_method) &&
       (input.collectedKobo !== 0 || o.payment_status !== "verified"))
   )
     throw new AppError(
@@ -166,6 +166,7 @@ export async function completeDelivery(
       user.id,
       o.payment_method === "wallet"
         ? "Customer code verified. Paid with purchase credit."
+        : o.payment_method === "card" ? "Customer code verified. Card payment recorded in the verified ledger."
         : "Customer code verified. Cash collection recorded; independent finance reconciliation pending.",
     ],
   );
@@ -192,7 +193,7 @@ export async function completeDelivery(
     tx,
     o.customer_id,
     "Delivery completed",
-    `${o.reference} has been delivered. ${o.payment_method === "wallet" ? "Paid using purchase credit." : "Cash collection has been recorded."}`,
+    `${o.reference} has been delivered. ${o.payment_method === "wallet" ? "Paid using purchase credit." : o.payment_method === "card" ? "Card payment has been verified." : "Cash collection has been recorded."}`,
     o.id,
   );
   return { ok: true };

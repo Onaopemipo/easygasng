@@ -1,3 +1,4 @@
+import { localSchemaRevision } from "../apps/web/lib/db";
 import test from "node:test";
 import assert from "node:assert/strict";
 import sharp from "sharp";
@@ -83,7 +84,7 @@ test("DDI-PHOTO01: customer latest proof follows completed canonical deliveries;
       second.photo.id,
     );
     g.easygasDb = Promise.resolve(f.db);
-    g.easygasLocalVersion = 73;
+    g.easygasLocalVersion = localSchemaRevision;
     process.env.EASYGAS_BACKGROUND_JOBS = "false";
     const request = (photoId: string, token?: string) =>
       media(

@@ -1,3 +1,4 @@
+import { customerFundingBranch } from "../../../../../lib/customer-funding-branch";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError, z } from "zod";
 import { getDb, one } from "../../../../../lib/db";
@@ -30,9 +31,12 @@ async function handle(
         req.headers.get("authorization")?.replace(/^Bearer /i, "") ??
         req.cookies.get("easygas_session")?.value ??
         null;
-      const branch = token ? (await actor(db, token)).branch_id : "lagos";
+      const user = token ? await actor(db, token) : null;
+      const branch = req.nextUrl.searchParams.get("purpose") === "wallet" && user && ["customer", "commercial"].includes(user.role)
+        ? await customerFundingBranch(db, user) : user?.branch_id ?? "lagos";
+      if (!branch) return NextResponse.json({available:false,walletFunding:false,channels:[],branchRequired:!user?.branch_id,branchUnavailable:!!user?.branch_id}, {headers:{"Cache-Control":"private, no-store",Vary:"Cookie, Authorization"}});
       return NextResponse.json(
-        await paystackAvailability(db, branch ?? "lagos"),
+        await paystackAvailability(db, branch),
         {
           headers: {
             "Cache-Control": "private, no-store",

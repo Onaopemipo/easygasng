@@ -236,7 +236,7 @@ export async function driverWorkspace(
     }
     if (
       !(
-        (order.payment_method === "wallet" &&
+        (["wallet", "card"].includes(order.payment_method) &&
           order.payment_status === "verified") ||
         verifiedCash
       )

@@ -63,7 +63,7 @@ export function EasyGasLoader({
   }, []);
   if (process.env.NEXT_PUBLIC_EASYGAS_BRANDED_LOADER === "false")
     return (
-      <span role="status" aria-label={label} className={variant === "inline" ? "eg-loader" : "loading"}
+      <span role="status" aria-label={label} className={variant === "inline" ? "eg-loader" : `loading eg-loader--${variant}`}
         style={variant === "inline" ? { width: loaderDimension(size), height: loaderDimension(size) } : undefined}>
         <LoaderCircle className="spin" aria-hidden="true" />
       </span>
@@ -156,7 +156,7 @@ export function EasyGasLoader({
   );
 }
 export const PageLoadingFallback = () => (
-  <EasyGasLoader size="lg" variant="section" label="Loading page" />
+  <EasyGasLoader size="lg" variant="fullscreen" label="Loading page" />
 );
 export const SectionLoadingFallback = () => (
   <EasyGasLoader variant="section" label="Loading information" />

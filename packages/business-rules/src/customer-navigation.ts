@@ -157,3 +157,8 @@ export function parseShoppingCart(value: string | null) {
     return [];
   }
 }
+
+/** Keep auth switches inside the existing customer flow, including guest checkout. */
+export function customerAuthHref(register: boolean, returnTo: string | null) {
+  return `${register ? "/register" : "/login"}?returnTo=${encodeURIComponent(safeCustomerReturn(returnTo))}`;
+}

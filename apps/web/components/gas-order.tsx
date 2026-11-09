@@ -1,4 +1,5 @@
 "use client";
+import { useCardCheckout, OrderCardPayment } from "./hosted-payment";
 import { RewardCheckoutField } from "./easyrewards";
 import {
   deliveryAreaEvent,
@@ -52,6 +53,12 @@ export default function GasOrder({
     [date, setDate] = useState(""),
     [window, setWindow] = useState(catalogue?.windows?.[0] ?? ""),
     [method, setMethod] = useState("cash_on_delivery");
+  const cardEnabled = useCardCheckout(user?.id);
+  useEffect(() => {
+    if (!catalogue) return;
+    if ((method === "cash_on_delivery" && catalogue.codEnabled) || (method === "wallet" && catalogue.walletEnabled) || (method === "card" && cardEnabled)) return;
+    setMethod(catalogue.codEnabled ? "cash_on_delivery" : catalogue.walletEnabled ? "wallet" : cardEnabled ? "card" : "");
+  }, [catalogue?.codEnabled, catalogue?.walletEnabled, cardEnabled, method]);
   useEffect(() => {
     let live = true;
     const controller = new AbortController();
@@ -211,7 +218,7 @@ export default function GasOrder({
         setError(""); retryCatalogue((value) => value + 1);
       }}>Retry gas catalogue</button>
     </section>
-  ) : <Loading />;
+  ) : <Loading page={!compact} />;
   const physical = items.filter(
     (i) =>
       catalogue.products.find((p: any) => p.id === i.productId)?.category !==
@@ -339,6 +346,7 @@ export default function GasOrder({
           {money(order.total_kobo)} · Payment {order.payment_status}. Your
           cylinder must pass operational inspection before dispatch.
         </p>
+        <OrderCardPayment order={order} />
         <Link href="/orders">View and track your order</Link>
       </section>
     );
@@ -805,7 +813,8 @@ export default function GasOrder({
             {catalogue.walletEnabled && (
               <option value="wallet">Available purchase credit</option>
             )}
-            {!catalogue.codEnabled && !catalogue.walletEnabled && (
+            {cardEnabled && <option value="card">Credit / debit card · Paystack sandbox</option>}
+            {!catalogue.codEnabled && !catalogue.walletEnabled && !cardEnabled && (
               <option value="">No payment arrangement enabled</option>
             )}
           </select>
@@ -833,7 +842,7 @@ export default function GasOrder({
               busy ||
               !configured ||
               !catalogue.orderingEnabled ||
-              (!catalogue.codEnabled && !catalogue.walletEnabled)
+              (!catalogue.codEnabled && !catalogue.walletEnabled && !cardEnabled)
             }
           >
             {busy ? "Checking…" : "Review current quotation"}

@@ -183,3 +183,35 @@ test("WALLET-BANK: pending transfer, scoped independent approval, rejection and 
     await db.close();
   }
 });
+
+test("WALLET-BRANCH: unassigned customers use authoritative active context without mutating identity; ambiguous and foreign addresses cannot choose funding branch",async()=>{
+ const db=await createDatabase("memory://");await migrate(db);
+ const uid=id(),other=id();
+ for(const u of [uid,other]) await db.query("INSERT INTO users(id,name,email,password_hash,role) VALUES($1,'Synthetic unassigned customer',$2,$3,'customer')",[u,u+"@example.test",hashPassword("Wallet-test-only123!")]);
+ const token=await issueSession(db,uid);
+ const call=(action:string,input:any={})=>dispatch(action,token,input,db);
+ try {
+  const first=await call("wallet.funding");assert.equal(first.branchId,"lagos");assert.equal(first.branchRequired,false);
+  const oldBank=process.env.EASYGAS_WALLET_BANK_ACCOUNTS;
+  try {
+    process.env.EASYGAS_WALLET_BANK_ACCOUNTS=JSON.stringify({lagos:{bankName:"Synthetic test bank",accountName:"Synthetic EasyGas",accountNumber:"0000000000"}});
+    await db.query("UPDATE settings SET value='true' WHERE key='wallet.enabled' AND scope='lagos'");
+    const request=await call("wallet.transfer.request",{amountKobo:10000,receiptReference:"SYNTHETIC-UNASSIGNED-01",senderName:"Synthetic customer",transferDate:"2026-01-01"});
+    assert.equal(request.status,"pending");
+    assert.equal(Number((await one(db,"SELECT COALESCE(sum(amount_kobo),0) n FROM wallet_entries WHERE customer_id=$1",[uid]))!.n),0);
+  }finally{if(oldBank===undefined)delete process.env.EASYGAS_WALLET_BANK_ACCOUNTS;else process.env.EASYGAS_WALLET_BANK_ACCOUNTS=oldBank;}
+
+  assert.equal((await one(db,"SELECT branch_id FROM users WHERE id=$1",[uid]))!.branch_id,null);
+  await db.query("INSERT INTO branches(id,name) VALUES('wallet-second','Synthetic second branch')");
+  const ambiguous=await call("wallet.funding");assert.equal(ambiguous.branchRequired,true);assert.equal(ambiguous.bank,null);
+  await assert.rejects(()=>call("wallet.transfer.request",{amountKobo:100000,receiptReference:"TEST-BRANCH",senderName:"Synthetic",transferDate:"2026-01-01"}),/not configured/);
+  const loc=await one(db,"SELECT id,name FROM delivery_locations WHERE branch_id='lagos' AND active=true LIMIT 1");
+  await db.query("INSERT INTO account_addresses(id,customer_id,label,street,zone,phone,location_id,is_default) VALUES($1,$2,'Home','Synthetic address only',$3,'08012345678',$4,true)",[id(),other,loc!.name,loc!.id]);
+  assert.equal((await call("wallet.funding")).branchRequired,true);
+  await db.query("INSERT INTO account_addresses(id,customer_id,label,street,zone,phone,location_id,is_default) VALUES($1,$2,'Home','Synthetic address only',$3,'08012345678',$4,true)",[id(),uid,loc!.name,loc!.id]);
+  assert.equal((await call("wallet.funding")).branchId,"lagos");
+  await db.query("UPDATE branches SET active=false WHERE id='lagos'");
+  await db.query("UPDATE users SET branch_id='lagos' WHERE id=$1",[uid]);
+  const inactive=await call("wallet.funding"); assert.equal(inactive.branchUnavailable,true); assert.equal(inactive.branchRequired,false);
+ }finally{await db.close();}
+});
