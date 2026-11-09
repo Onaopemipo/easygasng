@@ -43,3 +43,11 @@ No automatic data deletion or expiry has been scheduled. When the demonstration 
 ## 9 November inventory badge maintenance
 
 Stable alias updated to `dpl_D8tyZ2BAGZMXp5dFQECzrz1sDKg5` (https://easygas-client-demo-jrtqtcyxh-onaopemipos-projects.vercel.app). Removes counter clearing during refresh; failed counts remain explicitly stale, fresh zero clears the badge and auth/grants remain enforced. Local/cloud build,13/13 checks, hosted access checks and actual browser refresh/navigation passed. Original launch/import/provider holds remain. See [repair traceability](../traceability/inventory-badge-rtm.md).
+
+## Latest redeployment — 9 November 2026
+
+User authorised source push and redeployment. Source repository: https://github.com/Onaopemipo/easygasng (main). Deployment `dpl_yZaERKondML9nt2b8FkMjfV8uXxT` is READY; stable alias unchanged. Cloud compilation and TypeScript checks passed. Before migrations070–072, an encrypted PostgreSQL18 archive of the dedicated demo schema was created privately and authenticated/archive-readability checked (not a restore drill). Migrations applied without changing counts of existing users12, orders2 or wallet entries0. No account reset, financial backfill or seed rerun.
+
+Hosted smoke evidence is in `docs/deployment/evidence/redeploy-20261109-*.txt`. Prior provider configuration was preserved. New invoice-template rollout remains default OFF, so historical documents retain their existing presentation; bank-transfer funding requires verified business bank configuration. These remain explicit acceptance/configuration dependencies. No native build, server provisioning, live payments, automatic assignment or actual Excel import authorised by this deployment. Production NO-GO remains.
+
+GitHub CI runs validation on push. Mobile bundle export is deferred and now requires explicit manual workflow input; mobile source type checks remain automatic. CI completion is separate from the verified Vercel cloud build and hosted smoke checks.

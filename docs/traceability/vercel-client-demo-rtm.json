@@ -188,13 +188,14 @@
     "gitRemote": "https://github.com/Onaopemipo/easygasng.git",
     "deploymentId": "dpl_yZaERKondML9nt2b8FkMjfV8uXxT",
     "url": "https://easygas-client-demo.vercel.app",
-    "status": "PARTIAL",
-    "reason": "Cloud build READY; hosted origin/sign-in/identity/privilege/catalogue/no-index smoke test PASS. Encrypted backup authenticated/archive-readable; migrations070,071,072 applied, users/orders/wallet entry counts preserved. Git push pending.",
+    "status": "VERIFIED_COMPLETE",
+    "reason": "Bounded source push and client-demo redeployment complete; Git remote confirmed initial commit5e5b2e0. Cloud build READY; migrations070\u2013072 applied after authenticated encrypted backup; existing record counts preserved. Hosted origin/auth/privilege/catalogue/no-index and new document/wallet/dispatch endpoint checks pass. No full production acceptance inferred.",
     "evidence": [
       "docs/deployment/evidence/redeploy-20261109-build.txt",
       "docs/deployment/evidence/redeploy-20261109-hosted.txt",
-      "docs/deployment/evidence/redeploy-20261109-migrations.txt"
+      "docs/deployment/evidence/redeploy-20261109-migrations.txt",
+      "docs/deployment/evidence/redeploy-20261109-features.txt"
     ],
-    "outstandingWork": "Git push; original production gates remain. Mobile export explicitly gated to manual authorisation."
+    "outstandingWork": "None for bounded push/deploy. Original production gates, configured bank destination, presentation rollout approval and broader acceptance remain in existing matrices. CI result not claimed."
   }
 }
