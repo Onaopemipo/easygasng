@@ -1,0 +1,58 @@
+{
+  "phase": "CI repair 9 November2026",
+  "productionDecision": "NO-GO unchanged",
+  "requirements": [
+    {
+      "id": "CI-01",
+      "requirement": "Restore Linux web regression execution without weakening business assertions",
+      "implementationFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        ".github/workflows/release-validation.yml"
+      ],
+      "dataSource": "Actual GitHub run42577799260 artifact13655459158 and npm lockfile/advisory records; no business data",
+      "securityControl": "Retain all audit thresholds, test guards, financial invariants and production NO-GO. No native build/export.",
+      "testIds": [
+        "DDI-AUDIT01",
+        "OPS-T10",
+        "ER-PG36",
+        "ER-PGSEC"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/ci-repair/focused.txt",
+        "docs/deployment/evidence/ci-repair/postgres-restore.txt",
+        "docs/deployment/evidence/ci-repair/mobile-audit.txt",
+        "docs/deployment/evidence/ci-repair/mobile-types.txt"
+      ],
+      "acceptanceGate": "Fresh hosted web/native validation jobs pass",
+      "status": "PARTIAL",
+      "reason": "Local focused tests2/2 and real PostgreSQL restore/security2/2 pass; mobile types/config pass and audit0. Hosted rerun pending.",
+      "outstandingWork": "Run complete GitHub validation and record result; do not exclude failures from coverage."
+    },
+    {
+      "id": "CI-02",
+      "requirement": "Remediate mobile dependency advisories while retaining Expo58 and deferred mobile builds",
+      "implementationFiles": [
+        "apps/mobile/package.json",
+        "apps/mobile/package-lock.json"
+      ],
+      "dataSource": "Actual GitHub run42577799260 artifact13655459158 and npm lockfile/advisory records; no business data",
+      "securityControl": "Retain all audit thresholds, test guards, financial invariants and production NO-GO. No native build/export.",
+      "testIds": [
+        "npm audit --omit=dev --audit-level=moderate",
+        "mobile typecheck",
+        "expo config --type public"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/ci-repair/focused.txt",
+        "docs/deployment/evidence/ci-repair/postgres-restore.txt",
+        "docs/deployment/evidence/ci-repair/mobile-audit.txt",
+        "docs/deployment/evidence/ci-repair/mobile-types.txt"
+      ],
+      "acceptanceGate": "Fresh hosted web/native validation jobs pass",
+      "status": "PARTIAL",
+      "reason": "Local focused tests2/2 and real PostgreSQL restore/security2/2 pass; mobile types/config pass and audit0. Hosted rerun pending.",
+      "outstandingWork": "Run complete GitHub validation and record result; do not exclude failures from coverage."
+    }
+  ]
+}

@@ -119,7 +119,7 @@ test(
       );
       // Real pg_dump -> authenticated encryption -> isolated pg_restore. No existing DB is overwritten.
       const bin =
-        process.env.EASYGAS_PG_BIN ?? "/opt/homebrew/opt/postgresql@17/bin";
+        process.env.EASYGAS_PG_BIN ?? "";
       temp = await mkdtemp(path.join(os.tmpdir(), "easygas-rewards-restore-"));
       const dump = path.join(temp, "source.dump"),
         decrypted = path.join(temp, "restored.dump");
