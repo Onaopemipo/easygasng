@@ -12,22 +12,41 @@
       ],
       "dataSource": "Actual GitHub run42577799260 artifact13655459158 and npm lockfile/advisory records; no business data",
       "securityControl": "Retain all audit thresholds, test guards, financial invariants and production NO-GO. No native build/export.",
-      "testIds": [
+      "evidence": [
+        "docs/deployment/evidence/ci-repair/focused.txt",
+        "docs/deployment/evidence/ci-repair/postgres-restore.txt",
+        "docs/deployment/evidence/ci-repair/mobile-audit.txt",
+        "docs/deployment/evidence/ci-repair/mobile-types.txt",
+        "docs/deployment/evidence/ci-repair/traceability.txt"
+      ],
+      "acceptanceGate": "CI-G1",
+      "status": "PARTIAL",
+      "reason": "Original three failures resolved in hosted run42579110993; matrix schema defect caused sole remaining failure. Schema repaired, local complete RTM validation pending; fresh hosted rerun required.",
+      "outstandingWork": "Fresh full hosted validation after correcting matrix schema.",
+      "priority": "P0",
+      "scope": "Existing CI validation only; no operational production release or native build",
+      "uiReference": "GitHub Actions Release validation job results",
+      "route": "GitHub Actions / .github/workflows/release-validation.yml",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "negativeTests": [
+        "OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption"
+      ],
+      "testResult": "PASS: local focused2/2, PostgreSQL2/2, mobile types/config and audit0; hosted second run532/533 with matrix schema defect retained as incomplete.",
+      "validationCommands": [
         "DDI-AUDIT01",
         "OPS-T10",
         "ER-PG36",
         "ER-PGSEC"
       ],
-      "evidence": [
-        "docs/deployment/evidence/ci-repair/focused.txt",
-        "docs/deployment/evidence/ci-repair/postgres-restore.txt",
-        "docs/deployment/evidence/ci-repair/mobile-audit.txt",
-        "docs/deployment/evidence/ci-repair/mobile-types.txt"
-      ],
-      "acceptanceGate": "Fresh hosted web/native validation jobs pass",
-      "status": "PARTIAL",
-      "reason": "Local focused tests2/2 and real PostgreSQL restore/security2/2 pass; mobile types/config pass and audit0. Hosted rerun pending.",
-      "outstandingWork": "Run complete GitHub validation and record result; do not exclude failures from coverage."
+      "testIds": [
+        "DDI-AUDIT01",
+        "OPS-T10"
+      ]
     },
     {
       "id": "CI-02",
@@ -38,21 +57,49 @@
       ],
       "dataSource": "Actual GitHub run42577799260 artifact13655459158 and npm lockfile/advisory records; no business data",
       "securityControl": "Retain all audit thresholds, test guards, financial invariants and production NO-GO. No native build/export.",
-      "testIds": [
-        "npm audit --omit=dev --audit-level=moderate",
-        "mobile typecheck",
-        "expo config --type public"
-      ],
       "evidence": [
         "docs/deployment/evidence/ci-repair/focused.txt",
         "docs/deployment/evidence/ci-repair/postgres-restore.txt",
         "docs/deployment/evidence/ci-repair/mobile-audit.txt",
-        "docs/deployment/evidence/ci-repair/mobile-types.txt"
+        "docs/deployment/evidence/ci-repair/mobile-types.txt",
+        "docs/deployment/evidence/ci-repair/native-github.json"
       ],
-      "acceptanceGate": "Fresh hosted web/native validation jobs pass",
-      "status": "PARTIAL",
-      "reason": "Local focused tests2/2 and real PostgreSQL restore/security2/2 pass; mobile types/config pass and audit0. Hosted rerun pending.",
-      "outstandingWork": "Run complete GitHub validation and record result; do not exclude failures from coverage."
+      "acceptanceGate": "CI-G2",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Hosted native job129033400854 in run42579110993 passed typecheck/audit; export skipped. Local Expo config passes; Expo58 retained; audit0.",
+      "outstandingWork": "No remaining CI gate for mobile dependency repair. Native builds/device acceptance remain deliberately deferred and are not claimed.",
+      "priority": "P1",
+      "scope": "Existing CI validation only; no operational production release or native build",
+      "uiReference": "GitHub Actions Release validation job results",
+      "route": "GitHub Actions / .github/workflows/release-validation.yml",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/easyrewards-postgres-completion.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "negativeTests": [
+        "OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption"
+      ],
+      "testResult": "PASS: hosted mobile source typecheck and dependency audit0; export skipped. Local Expo config passed.",
+      "validationCommands": [
+        "npm audit --omit=dev --audit-level=moderate",
+        "mobile typecheck",
+        "expo config --type public"
+      ],
+      "testIds": []
+    }
+  ],
+  "gates": [
+    {
+      "id": "CI-G1",
+      "status": "OPEN",
+      "requirement": "Fresh hosted web tests/build/types/audit pass"
+    },
+    {
+      "id": "CI-G2",
+      "status": "PASS",
+      "requirement": "Fresh hosted mobile source types/audit pass with export skipped"
     }
   ]
 }
