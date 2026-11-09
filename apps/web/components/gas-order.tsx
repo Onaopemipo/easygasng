@@ -30,6 +30,7 @@ export default function GasOrder({
     [lines, setLines] = useState([{ capacityKg: 12.5, kg: 0 }]),
     [quote, setQuote] = useState<any>(null),
     [error, setError] = useState(""),
+    [catalogueRevision, retryCatalogue] = useState(0),
     [busy, setBusy] = useState(false),
     [order, setOrder] = useState<any>(null),
     [rewardPoints, setRewardPoints] = useState(0),
@@ -52,10 +53,20 @@ export default function GasOrder({
     [window, setWindow] = useState(catalogue?.windows?.[0] ?? ""),
     [method, setMethod] = useState("cash_on_delivery");
   useEffect(() => {
-    api("gas.catalogue")
-      .then(setConfig)
-      .catch((e) => setError(e.message));
-  }, []);
+    let live = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      if (live) {
+        setError("The gas catalogue request timed out. Please retry.");
+        controller.abort();
+      }
+    }, 15000);
+    api("gas.catalogue", undefined, { signal: controller.signal })
+      .then((value) => { if (live) setConfig(value); })
+      .catch((e) => { if (live && !controller.signal.aborted) setError(e.message); })
+      .finally(() => clearTimeout(timeout));
+    return () => { live = false; clearTimeout(timeout); controller.abort(); };
+  }, [catalogueRevision]);
   useEffect(() => {
     const identity = user?.id ?? "guest";
     const apply = (id: string) => {
@@ -193,7 +204,14 @@ export default function GasOrder({
       </span>
     </>
   );
-  if (!config) return <Loading />;
+  if (!config) return error ? (
+    <section>
+      <Notice type="error" message={error} />
+      <button type="button" className="button secondary" onClick={() => {
+        setError(""); retryCatalogue((value) => value + 1);
+      }}>Retry gas catalogue</button>
+    </section>
+  ) : <Loading />;
   const physical = items.filter(
     (i) =>
       catalogue.products.find((p: any) => p.id === i.productId)?.category !==

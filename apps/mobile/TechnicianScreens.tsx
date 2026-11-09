@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useEffect, useRef, useState } from "react";
 import {
   View,
@@ -5,7 +6,6 @@ import {
   Image,
   Switch,
   StyleSheet,
-  ActivityIndicator,
   useWindowDimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -789,7 +789,7 @@ export function TechnicianScreens({
           </Card>
         )}
         {loading && (
-          <ActivityIndicator
+          <EasyGasLoader
             accessibilityLabel="Loading authorised jobs"
             color={colors.primary}
           />

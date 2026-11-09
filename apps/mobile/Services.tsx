@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import { technicianMutation, captureFieldEvent } from "./field-queue";
 import { NativeHostedPayment } from "./HostedPayment";
 import Constants from "expo-constants";
@@ -11,7 +12,6 @@ import * as SecureStore from "expo-secure-store";
 import React, { useEffect, useState, useRef } from "react";
 import {
   StyleSheet,
-  ActivityIndicator,
   Share,
   Image,
   Switch,
@@ -147,7 +147,7 @@ export default function Services({
         Cooker servicing, installations and gas safety checks, with clear
         quotations and documented outcomes.
       </Text>
-      {loading && <ActivityIndicator color="#07592e" />}
+      {loading && <EasyGasLoader color="#07592e" />}
       {error && (
         <>
           <Text accessibilityRole="alert">{error}</Text>

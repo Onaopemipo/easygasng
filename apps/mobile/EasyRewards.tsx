@@ -1,8 +1,8 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useState, useEffect } from "react";
 import {
   
   
-  ActivityIndicator,
   Share,
   useColorScheme,
 } from "react-native";
@@ -93,7 +93,7 @@ export function NativeEasyRewards({
         {button("Retry rewards", () => setVersion((v) => v + 1))}
       </View>
     );
-  if (!data) return <ActivityIndicator accessibilityLabel="Loading rewards" />;
+  if (!data) return <EasyGasLoader accessibilityLabel="Loading rewards" />;
   return (
     <View
       style={{
@@ -377,7 +377,7 @@ export function NativeRewardSelector({
   if (error) return <Text accessibilityRole="alert">{error}</Text>;
   if (!data)
     return (
-      <ActivityIndicator accessibilityLabel="Checking reward availability" />
+      <EasyGasLoader accessibilityLabel="Checking reward availability" />
     );
   if (!data.redemptionEnabled)
     return (

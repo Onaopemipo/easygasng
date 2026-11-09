@@ -1,4 +1,5 @@
 "use client";
+import { SectionLoadingFallback } from "./easygas-loader";
 import React, { useEffect, useRef, useState } from "react";
 import { api, Notice, Modal } from "./ui";
 import { FinancialDocumentPreview } from "./financial-document";
@@ -172,7 +173,7 @@ export function DocumentLibrary({
         </button>
       </form>
       {error && <Notice type="error" message={error} />}{" "}
-      {busy && <p role="status">Loading documents…</p>}
+      {busy && <SectionLoadingFallback />}
       {data && !busy && (
         <>
           <p>{data.total} matching documents</p>

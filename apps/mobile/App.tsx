@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import { stopDriverLocation } from "./driver-location";
 import { NativePaymentReturn } from "./HostedPayment";
 import TechnicianWorkspace from "./TechnicianWorkspace";
@@ -43,7 +44,6 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Image,
   StyleSheet,
-  ActivityIndicator,
   Alert,
   Platform,
   Linking,
@@ -711,7 +711,7 @@ export default function App() {
             </View>
           ) : null}
           {loading || !hydrated ? (
-            <ActivityIndicator color="#087a36" style={{ margin: 20 }} />
+            <EasyGasLoader color="#087a36" style={{ margin: 20 }} />
           ) : null}
           {["gas-order", "combined-checkout", "products", "checkout"].includes(
             screen,

@@ -87,3 +87,5 @@ Approved invoice/receipt documents (9November2026): [matrix](easygas-invoicing-r
 9 November client-demo redeployment: see the [existing VDEMO matrix](vercel-client-demo-rtm.md) and JSON continuation for deployment/push evidence. This advances the hosted rollout only; prior implementation scope denominators and production NO-GO remain unchanged.
 
 CI repair (9November2026): [matrix](ci-repair-rtm.md), [machine mapping](ci-repair-rtm.json). CI-01/02 retain both web regression and mobile dependency gates. Local repair verified; hosted rerun status recorded there. No native build or operational release implied.
+
+Approved central loader (9November2026): [matrix](central-loader-rtm.md), [machine mapping](central-loader-rtm.json), [audit](../loader/00-repository-audit.md).18sections/50scenarios/28gates retained; native/device and broader acceptance remain explicit. NO-GO unchanged; no deployment/native build implied.

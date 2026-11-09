@@ -6,12 +6,12 @@ import {
   Cable,
   Gauge,
   Package,
-  LoaderCircle,
   X,
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { SectionLoadingFallback } from "./easygas-loader";
 export const money = (kobo: number | string | null) =>
   kobo === null
     ? "Pricing soon"
@@ -122,11 +122,7 @@ export function Empty({
   );
 }
 export function Loading() {
-  return (
-    <div className="loading">
-      <LoaderCircle className="spin" /> Loading your information…
-    </div>
-  );
+  return <div className="loading"><SectionLoadingFallback /></div>;
 }
 export function Notice({
   message,

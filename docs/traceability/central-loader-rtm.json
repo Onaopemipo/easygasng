@@ -1,0 +1,1566 @@
+{
+  "phase": "Approved central loader web/mobile",
+  "productionDecision": "NO-GO unchanged; no deploy/native build",
+  "requirements": [
+    {
+      "id": "LDR-R00",
+      "requirement": "Mission and preserved business constraints",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R01",
+      "requirement": "Preflight repository audit",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R02",
+      "requirement": "Approved central visual design",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R03",
+      "requirement": "Typed reusable primitive and local ownership",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R04",
+      "requirement": "Motion and genuine progress",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R05",
+      "requirement": "Web boundaries/accessibility",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R06",
+      "requirement": "Native clients and lifecycle",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R07",
+      "requirement": "Selective loading-state integration",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R08",
+      "requirement": "Themes and responsiveness",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R09",
+      "requirement": "Error and business safety",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R10",
+      "requirement": "Accessibility/performance",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R11",
+      "requirement": "Fifty-case test plan",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R12",
+      "requirement": "Twenty-eight acceptance gates",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R13",
+      "requirement": "Dependency-ordered implementation",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R14",
+      "requirement": "Presentation rollback/recovery",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R15",
+      "requirement": "Required deliverables",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R16",
+      "requirement": "Explicit blocker handling",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    },
+    {
+      "id": "LDR-R17",
+      "requirement": "Final reporting and preservation",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and customer/driver/technician mobile presentation only",
+      "uiReference": "User approved orange-flame/green-orbit loader image",
+      "route": "Existing routes; app/loading.tsx and shared mobile role shell",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css",
+        "apps/web/app/loading.tsx",
+        "docs/loader/00-repository-audit.md",
+        "docs/loader/02-integration-matrix.md",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "docs/loader/05-rollback-and-recovery.md"
+      ],
+      "dataSource": "Actual request-owned loading flags; existing theme preferences. Real caller-supplied progress only, no business data synthesized.",
+      "securityControl": "No API/auth/financial/inventory/queue changes; native builds and production deployment deferred; NO-GO preserved.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "LDR-SSR"
+      ],
+      "negativeTests": [
+        "LDR-UNKNOWN-"
+      ],
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json",
+        "docs/loader/evidence/web-types.txt",
+        "docs/loader/evidence/mobile-types.txt",
+        "docs/loader/evidence/web-build.txt",
+        "docs/loader/evidence/full-regression.txt",
+        "docs/loader/evidence/final-focused.txt",
+        "docs/loader/evidence/mobile-audit.txt",
+        "docs/loader/evidence/web-audit.txt"
+      ],
+      "acceptanceGate": "LDR-G28",
+      "status": "PARTIAL",
+      "reason": "Source implementation and bounded automated/browser verification delivered. Full regression preceded final Feedback/accessibility and GasOrder error-presentation refinements; these received focused/browser and type/build verification. Entire phase remains PARTIAL because actual native target, OS motion, assistive technology, low-end performance and native rollback are not verified.",
+      "testResult": "PASS:584/584 full regression (533baseline+51loader checks),0skip; final67/67 focused including54loader cases plus customer/driver/technician checks; web/mobile types, web build and audits pass; actual component/browser error/retry/timeout proof. No native device acceptance.",
+      "outstandingWork": "Separately authorised native build containing SVG15.16.0; iOS/Android real device/startup/lifecycle/offline/photo acceptance; OS reduce-motion and screen-reader/200percent zoom/low-end performance; native rollback and broader legacy timeout acceptance. No deployment authorised."
+    }
+  ],
+  "gates": [
+    {
+      "id": "LDR-G01",
+      "requirement": "Repository audit",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G02",
+      "requirement": "Baseline recorded",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G03",
+      "requirement": "No overwritten changes",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G04",
+      "requirement": "Faithful flame vector",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G05",
+      "requirement": "Visual match",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G06",
+      "requirement": "Central-only graphic",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G07",
+      "requirement": "Web responsive",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G08",
+      "requirement": "Native responsive",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G09",
+      "requirement": "Light/Dark/System",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G10",
+      "requirement": "Reduced motion",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G11",
+      "requirement": "Real progress only",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G12",
+      "requirement": "No artificial delay",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G13",
+      "requirement": "Errors/timeouts",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G14",
+      "requirement": "No infinite loader",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G15",
+      "requirement": "Animation cleanup",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G16",
+      "requirement": "SSR/hydration",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G17",
+      "requirement": "iOS actual target",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G18",
+      "requirement": "Android actual target",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G19",
+      "requirement": "Admin sidebar",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G20",
+      "requirement": "Role flows",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G21",
+      "requirement": "Payment/wallet/invoices",
+      "status": "PASS",
+      "reason": "Full584/584 regression includes payment/wallet/invoice, stock/custody, dispatch and technician financial/safety guards. Existing business sources/ledgers unchanged; no live provider or physical acceptance implied."
+    },
+    {
+      "id": "LDR-G22",
+      "requirement": "Stock/cylinders/dispatch",
+      "status": "PASS",
+      "reason": "Full584/584 regression includes payment/wallet/invoice, stock/custody, dispatch and technician financial/safety guards. Existing business sources/ledgers unchanged; no live provider or physical acceptance implied."
+    },
+    {
+      "id": "LDR-G23",
+      "requirement": "Offline status truth",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G24",
+      "requirement": "No fake data",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G25",
+      "requirement": "Docs/traceability",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G26",
+      "requirement": "Rollback",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    },
+    {
+      "id": "LDR-G27",
+      "requirement": "No unauthorised deploy",
+      "status": "PASS",
+      "reason": "Bounded source audit, executed component/SSR/browser/build evidence; no production/device readiness inferred."
+    },
+    {
+      "id": "LDR-G28",
+      "requirement": "Changed-area validation",
+      "status": "NOT_VERIFIED",
+      "reason": "Full regressions pending or actual native/assistive/OS/lifecycle/rollback acceptance cannot be inferred from rendering simulation. Legacy pending/error risks noted in audit."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "LDR-S01",
+      "requirement": "Visual match",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S02",
+      "requirement": "Stationary flame",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S03",
+      "requirement": "Smooth arc",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S04",
+      "requirement": "Connected endpoint",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S05",
+      "requirement": "No extra visible text",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S06",
+      "requirement": "No wordmark",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S07",
+      "requirement": "Size variants",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S08",
+      "requirement": "Inline alignment",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S09",
+      "requirement": "Fullscreen alignment",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S10",
+      "requirement": "Dark",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S11",
+      "requirement": "Light",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S12",
+      "requirement": "System",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S13",
+      "requirement": "Indeterminate",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S14",
+      "requirement": "Determinate0",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S15",
+      "requirement": "Determinate50",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S16",
+      "requirement": "Determinate100 only actual",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S17",
+      "requirement": "Clamp invalid",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S18",
+      "requirement": "No fabricated progress",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S19",
+      "requirement": "Reduced motion",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S20",
+      "requirement": "Unmount cleanup",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S21",
+      "requirement": "Background/resume",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S22",
+      "requirement": "No task delay",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S23",
+      "requirement": "SSR hydration",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Bounded browser harness: actual component hydration, keyboard/history and GasOrder failure/retry/15s timeout observed. Not every production route/context."
+    },
+    {
+      "id": "LDR-S24",
+      "requirement": "Route loading",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S25",
+      "requirement": "Suspense",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S26",
+      "requirement": "Inline action",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Executed bounded component geometry/SSR and actual browser theme/layout checks; no native device acceptance implied."
+    },
+    {
+      "id": "LDR-S27",
+      "requirement": "Keyboard focus",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Bounded browser harness: actual component hydration, keyboard/history and GasOrder failure/retry/15s timeout observed. Not every production route/context."
+    },
+    {
+      "id": "LDR-S28",
+      "requirement": "Screen reader",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S29",
+      "requirement": "Back/forward",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Bounded browser harness: actual component hydration, keyboard/history and GasOrder failure/retry/15s timeout observed. Not every production route/context."
+    },
+    {
+      "id": "LDR-S30",
+      "requirement": "Network error",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Bounded browser harness: actual component hydration, keyboard/history and GasOrder failure/retry/15s timeout observed. Not every production route/context."
+    },
+    {
+      "id": "LDR-S31",
+      "requirement": "iOS startup",
+      "status": "NOT_VERIFIED",
+      "evidence": [],
+      "reason": "Map to actual component/business/browser/device evidence; do not infer from route existence"
+    },
+    {
+      "id": "LDR-S32",
+      "requirement": "Android startup",
+      "status": "NOT_VERIFIED",
+      "evidence": [],
+      "reason": "Map to actual component/business/browser/device evidence; do not infer from route existence"
+    },
+    {
+      "id": "LDR-S33",
+      "requirement": "Customer mobile",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S34",
+      "requirement": "Driver mobile",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S35",
+      "requirement": "Technician mobile",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S36",
+      "requirement": "Offline queue",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S37",
+      "requirement": "Online sync",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S38",
+      "requirement": "Camera upload",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S39",
+      "requirement": "Native background",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S40",
+      "requirement": "Safe area/dynamic font",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/loader/evidence/component-tests.txt",
+        "docs/loader/evidence/browser-checks.json"
+      ],
+      "reason": "Code and bounded web/native-host proof present; complete manual/native/OS/context acceptance not executed."
+    },
+    {
+      "id": "LDR-S41",
+      "requirement": "Unified role access",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    },
+    {
+      "id": "LDR-S42",
+      "requirement": "Admin routes/sidebar",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    },
+    {
+      "id": "LDR-S43",
+      "requirement": "Order create",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    },
+    {
+      "id": "LDR-S44",
+      "requirement": "Paystack verification",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    },
+    {
+      "id": "LDR-S45",
+      "requirement": "Wallet exactly-once",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    },
+    {
+      "id": "LDR-S46",
+      "requirement": "Invoice download",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    },
+    {
+      "id": "LDR-S47",
+      "requirement": "Dispatch assignment",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    },
+    {
+      "id": "LDR-S48",
+      "requirement": "Stock/custody",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    },
+    {
+      "id": "LDR-S49",
+      "requirement": "Delivery proof",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    },
+    {
+      "id": "LDR-S50",
+      "requirement": "Technician safety/payment",
+      "status": "PASS",
+      "evidence": [
+        "docs/loader/evidence/full-regression.txt"
+      ],
+      "reason": "Executed automated business/security regression, not native/live-provider/physical acceptance."
+    }
+  ],
+  "executedCounts": {
+    "baselineHosted": {
+      "pass": 533,
+      "fail": 0,
+      "skip": 0
+    },
+    "fullRegression": {
+      "pass": 584,
+      "fail": 0,
+      "skip": 0
+    },
+    "finalFocusedOverlapping": {
+      "pass": 67,
+      "fail": 0,
+      "skip": 0
+    },
+    "loaderCasesInFinalFocused": 54,
+    "nativeHostSimulationIsDeviceAcceptance": false
+  },
+  "changeLog": [
+    "Clean862344a preflight; no user work overwritten.",
+    "Add shared central graphic and compatible SVG15.16.0 dependency; no native build or production deployment.",
+    "Preserve legacy260px web loading region and one native accessibility progress target; errors precede loading.",
+    "Correct identified GasOrder missing-config error concealment with scoped retry/15s abort and cleanup; API contract unchanged.",
+    "Full584 regressions passed; final67focused and browser refinements verified; all50scenarios/28gates retained with explicit native/manual gaps."
+  ]
+}

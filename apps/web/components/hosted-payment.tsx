@@ -1,4 +1,5 @@
 "use client";
+import { ActionLoadingIndicator } from "./easygas-loader";
 import React, { useEffect, useRef, useState } from "react";
 import { api, money, Notice } from "./ui";
 async function pay(action: string, input?: unknown) {
@@ -164,6 +165,7 @@ export function HostedPayment({
               disabled={busy || !accepted}
               onClick={proceed}
             >
+              {busy && <ActionLoadingIndicator label="Preparing payment checkout" />}
               Continue to Paystack sandbox
             </button>
           )}
@@ -305,6 +307,7 @@ export function WalletFunding() {
             className="button"
             disabled={busy || parsed <= 0 || parsed > funding.maximumKobo}
           >
+            {busy && <ActionLoadingIndicator label="Submitting transfer for approval" />}
             {busy ? "Submitting…" : "Submit transfer for approval"}
           </button>
         </form>
@@ -373,6 +376,7 @@ export function PaymentReturn() {
         </p>
       )}
       <button className="button" disabled={!intent || busy} onClick={check}>
+        {busy && <ActionLoadingIndicator label="Verifying payment with provider" />}
         Verify payment status
       </button>
       {result?.status === "paid" && (

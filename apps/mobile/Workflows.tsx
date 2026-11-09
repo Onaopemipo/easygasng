@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import {
   Card as CustomerCard,
   Copy as CustomerCopy,
@@ -5,7 +6,7 @@ import {
 } from "./CustomerUI";
 import * as SecureStore from "expo-secure-store";
 import React, { useState, useEffect, useRef } from "react";
-import { Switch, StyleSheet, ActivityIndicator } from "react-native";
+import { Switch, StyleSheet } from "react-native";
 import { View, Pressable } from "./surfaces";
 import { Text, TextInput } from "./typography";
 import { randomUUID } from "expo-crypto";
@@ -282,7 +283,7 @@ export default function Workflows({
     };
   }, [screen, version]);
   if (error) return <Text style={s.body}>{error}</Text>;
-  if (!data) return <ActivityIndicator color="#087a36" />;
+  if (!data) return <EasyGasLoader color="#087a36" />;
   if (screen === "notifications")
     return (
       <>

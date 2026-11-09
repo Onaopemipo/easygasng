@@ -1,7 +1,8 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import { createContext, useContext } from "react";
 import { customerReadAction } from "../../packages/business-rules/src/customer-mobile";
 import React, { useEffect, useState } from "react";
-import { View, Pressable, ActivityIndicator } from "react-native";
+import { View, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "./typography";
 import { useTheme } from "./theme";
@@ -147,14 +148,12 @@ export function Feedback({
   empty?: string;
 }) {
   const { colors } = useTheme();
-  if (loading)
+  if (loading && !error)
     return (
       <View
-        accessibilityRole="progressbar"
-        accessibilityLabel="Loading customer information"
         style={{ padding: 20 }}
       >
-        <ActivityIndicator color={colors.primary} />
+        <EasyGasLoader accessibilityLabel="Loading customer information" />
       </View>
     );
   if (error)
