@@ -15,7 +15,7 @@
       "status": "UNVERIFIED",
       "reason": "Inline verification implemented; typecheck and existing owner/password regressions passed; interactive browser acceptance pending",
       "testResult": "PASS7 existing owner-auto-approval tests, password visibility suite and web typecheck",
-      "outstandingWork": "Browser verification of incorrect/correct password and preserved draft, hosted deployment pending. Production NO-GO unchanged.",
+      "outstandingWork": "Interactive browser acceptance pending. Deployed to the existing client demo. No settings activated; production NO-GO unchanged.",
       "implementationFiles": [
         "apps/web/components/admin.tsx"
       ],
@@ -28,7 +28,11 @@
       "evidence": [
         "docs/settings-verification/evidence/types.txt",
         "docs/settings-verification/evidence/tests.txt",
-        "docs/settings-verification/evidence/password.txt"
+        "docs/settings-verification/evidence/password.txt",
+        "docs/releases/20261111-settings/tests.txt",
+        "docs/releases/20261111-settings/build.txt",
+        "docs/releases/20261111-settings/hosted.txt",
+        "docs/releases/20261111-settings/release.md"
       ],
       "acceptanceGate": "SET-VERIFY-G01"
     }
@@ -41,6 +45,7 @@
     }
   ],
   "scopeChanges": [
-    "No backend approval, expiry or financial authority changed. Existing implementation phases and holds retained."
+    "No backend approval, expiry or financial authority changed. Existing implementation phases and holds retained.",
+    "Client-demo publication b5e06b6; hosted owner login, reauthentication API and gateway setting read passed. Client controls were not interactively verified."
   ]
 }
