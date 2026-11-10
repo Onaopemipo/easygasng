@@ -12,10 +12,10 @@
       "route": "/admin/settings",
       "dataSource": "settings.value JSON money stored in kobo; hosted gas.price_per_kg180000/version1; existing gas quoting engine unchanged",
       "securityControl": "Read-only display conversion; no mutation, approval bypass or financial-state/schema change",
-      "status": "PARTIAL",
-      "reason": "Local correction and15focused checks pass; rollout/actual hosted UI pending",
-      "testResult": "PASS \u201415focused settings/gas/approval checks; web types/build tracked separately",
-      "outstandingWork": "Hosted rollout and corrected live gas display acceptance",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Scalar renderer corrected; actual hosted owner page shows\u20a61,800.00/version1 with before/after180000kobo unchanged.",
+      "testResult": "PASS \u201415focused tests, web types/build, traceability and actual hosted owner UI; before/after price and version unchanged.",
+      "outstandingWork": "None for bounded display repair. Existing full-app/physical/native/production NO-GO gates remain.",
       "implementationFiles": [
         "apps/web/components/setting-summary.tsx"
       ],
@@ -34,7 +34,12 @@
       "evidence": [
         "docs/settings-money/report.md",
         "docs/settings-money/evidence/tests.txt",
-        "docs/settings-money/evidence/hosted-data.txt"
+        "docs/settings-money/evidence/hosted-data.txt",
+        "docs/settings-money/evidence/types.txt",
+        "docs/settings-money/evidence/build.txt",
+        "docs/settings-money/evidence/deployment.txt",
+        "docs/settings-money/evidence/hosted-data-after.txt",
+        "docs/settings-money/evidence/gas-price-live.png"
       ],
       "acceptanceGate": "SETUP-MONEY-G01"
     }
@@ -42,15 +47,21 @@
   "gates": [
     {
       "id": "SETUP-MONEY-G01",
-      "status": "OPEN",
+      "status": "PASS",
       "scope": "Accurate scalar display locally and on hosted settings page"
     }
   ],
   "coverage": {
     "implemented": "1/1",
-    "verified": "0/1; hosted acceptance pending"
+    "verified": "1/1",
+    "gates": "1/1"
   },
   "scopeChanges": [
     "Presentation-only correction of cleanup regression; canonical stored prices and pending requests unchanged."
-  ]
+  ],
+  "deployment": {
+    "sourceCommit": "0fc8d56",
+    "id": "dpl_Be164Ky3KuEukFCPzMeE893Q2sk9",
+    "url": "https://easygas-client-demo.vercel.app"
+  }
 }
