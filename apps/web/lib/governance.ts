@@ -227,7 +227,7 @@ export function validateValue(d: Row, value: any) {
   if (d.key === "payment.integration" && value === true)
     throw new AppError(
       409,
-      "No verified payment adapter is connected. Activation is unavailable.",
+      "This legacy switch does not enable Paystack. Open Business Settings → Payment Gateway & Fees to configure the Paystack sandbox. Live payment activation remains unavailable.",
     );
 }
 export async function propose(

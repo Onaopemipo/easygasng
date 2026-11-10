@@ -941,7 +941,7 @@ function Settings({
                     <div className="setting-top">
                       <div>
                         <h3>{d.label}</h3>
-                        <p>{d.description}</p>
+                        <p>{d.key === "payment.integration" ? "Legacy integration control. Paystack card payments are configured separately under Payment Gateway & Fees; this value does not show Paystack availability." : d.description}</p>
                       </div>
                       <span className={`risk risk-${d.risk}`}>
                         {
@@ -983,9 +983,18 @@ function Settings({
                         {d.propose_roles.includes(user.role) && (
                           <button
                             className="button secondary"
-                            onClick={() => setEditing(d)}
+                            onClick={() => {
+                              if (d.key === "payment.integration" && d.value !== true) {
+                                const gateway = data.find((setting: any) => setting.key === "payment.gateway");
+                                if (gateway?.propose_roles.includes(user.role)) {
+                                  setCategory(gateway.category);
+                                  setQuery("");
+                                  setEditing(gateway);
+                                } else setActionError("Ask an authorised owner or finance administrator to configure Payment Gateway & Fees.");
+                              } else setEditing(d);
+                            }}
                           >
-                            {d.risk === 1 ? "Edit Setting" : "Propose Change"}
+                            {d.key === "payment.integration" && d.value !== true ? "Configure Paystack" : d.risk === 1 ? "Edit Setting" : "Propose Change"}
                             <ArrowRight size={14} />
                           </button>
                         )}
@@ -1874,6 +1883,7 @@ function SettingForm({
         />
       </label>
       {error && <Notice message={error} type="error" />}
+      <InlinePasswordVerification onVerified={() => setError("")} />
       <Notice
         message={
           s.owner_auto_approval
@@ -1898,6 +1908,49 @@ function SettingForm({
         <ArrowRight size={17} />
       </button>
     </form>
+  );
+}
+function InlinePasswordVerification({ onVerified }: { onVerified: () => void }) {
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [verified, setVerified] = useState(false);
+  useEffect(() => {
+    if (!verified) return;
+    const timer = setTimeout(() => setVerified(false), 5 * 60 * 1000);
+    return () => clearTimeout(timer);
+  }, [verified]);
+  async function verify() {
+    setBusy(true);
+    setError("");
+    try {
+      await api("reauth", { password });
+      setPassword("");
+      setVerified(true);
+      onVerified();
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <section className="surface" aria-label="Verify your password">
+      <h3>Verify your password</h3>
+      {verified ? <p role="status">Password verified. You can now save your changes.</p> : <>
+        <p>Confirm your password here before saving. Your changes will stay in this form.</p>
+        <label>
+          Current password
+          <FormInput type="password" autoComplete="current-password" value={password}
+            onChange={e => setPassword(e.target.value)}
+            onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); if (password && !busy) void verify(); } }} />
+        </label>
+        {error && <Notice message={error} type="error" />}
+        <button type="button" className="button secondary" disabled={busy || !password} onClick={verify}>
+          {busy ? "Verifying…" : "Verify password"}
+        </button>
+      </>}
+    </section>
   );
 }
 function Approvals({

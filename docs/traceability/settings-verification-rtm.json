@@ -1,0 +1,46 @@
+{
+  "phase": "Inline settings password verification",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "SET-VERIFY-R01",
+      "requirement": "Allow password verification inside the settings change form without losing draft values",
+      "priority": "P1",
+      "scope": "SettingForm for new and revised settings requests",
+      "uiReference": "Screenshot showing verification error with no option inside settings overlay",
+      "route": "/admin/settings and settings request revision",
+      "dataSource": "Existing authenticated reauth API; no credentials persisted in form payload or storage",
+      "securityControl": "Existing server password verification and expiry remain authoritative; verification button type button avoids saving; Enter verifies without submitting; password cleared on success; shared reveal control used",
+      "status": "UNVERIFIED",
+      "reason": "Inline verification implemented; typecheck and existing owner/password regressions passed; interactive browser acceptance pending",
+      "testResult": "PASS7 existing owner-auto-approval tests, password visibility suite and web typecheck",
+      "outstandingWork": "Browser verification of incorrect/correct password and preserved draft, hosted deployment pending. Production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/owner-auto-approval.test.ts",
+        "tests/password-visibility.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/settings-verification/evidence/types.txt",
+        "docs/settings-verification/evidence/tests.txt",
+        "docs/settings-verification/evidence/password.txt"
+      ],
+      "acceptanceGate": "SET-VERIFY-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "SET-VERIFY-G01",
+      "scope": "Interactive correct/incorrect password and preserved-draft acceptance",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "No backend approval, expiry or financial authority changed. Existing implementation phases and holds retained."
+  ]
+}

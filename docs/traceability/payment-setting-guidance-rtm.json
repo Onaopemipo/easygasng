@@ -1,0 +1,46 @@
+{
+  "phase": "Legacy payment setting guidance",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "PAY-GUIDE-R01",
+      "requirement": "Replace misleading legacy payment activation flow with guidance to the existing Paystack gateway settings",
+      "priority": "P1",
+      "scope": "Legacy payment.integration card and validation message; sandbox gateway workflow unchanged",
+      "uiReference": "Screenshot No verified payment adapter while enabling Payment integration enabled",
+      "route": "/admin/settings",
+      "dataSource": "Existing setting definitions and payment.gateway; no credentials or merchant configuration modified",
+      "securityControl": "Legacy enabling remains rejected; emergency disable preserved; gateway role/proposal, verification, approval and live activation blockers unchanged",
+      "status": "UNVERIFIED",
+      "reason": "Legacy card links authorised users to Payment Gateway & Fees and explains that legacy value does not indicate Paystack availability; backend message now gives actionable guidance",
+      "testResult": "PASS46 existing platform/owner-auto-approval tests and web typecheck",
+      "outstandingWork": "Browser acceptance and deployment pending. No claim that current sandbox gateway is enabled or fully configured. Production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/governance.ts"
+      ],
+      "testFiles": [
+        "tests/platform.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/payment-setting-guidance/evidence/tests.txt",
+        "docs/payment-setting-guidance/evidence/types.txt"
+      ],
+      "acceptanceGate": "PAY-GUIDE-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "PAY-GUIDE-G01",
+      "scope": "Browser gateway routing and hosted acceptance",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "No payment activation performed. Existing sandbox-only and live-payment safety gates retained. Inline verification work preserved."
+  ]
+}
