@@ -350,6 +350,7 @@ async function validateSlot(
     slot.technician_id,
   ]);
   await eligible(tx, slot.technician_id, branch, config.qualification);
+  if (!(await one(tx,"SELECT id FROM users WHERE id=$1 AND technician_available=true",[slot.technician_id]))) throw new AppError(409,"The technician is not available for new appointments.");
   if (
     Date.parse(slot.ends_at) - Date.parse(slot.starts_at) !==
       config.durationMinutes * 60000 ||
@@ -464,7 +465,7 @@ export async function professionalServiceAction(
     if (!service) return [];
     return (
       await tx.query(
-        "SELECT s.id,s.starts_at,s.ends_at FROM service_slots s JOIN users u ON u.id=s.technician_id JOIN branches b ON b.id=s.branch_id WHERE s.service_id=$1 AND s.branch_id=$2 AND s.blocked=false AND b.active=true AND u.active=true AND u.role='technician' AND u.branch_id=s.branch_id AND s.starts_at>now() AND s.starts_at<now()+interval '60 days' AND EXISTS(SELECT 1 FROM technician_qualifications q JOIN users v ON v.id=q.verified_by WHERE q.user_id=u.id AND q.code=$3 AND q.expires_at>s.ends_at AND v.active=true AND v.role IN ('owner','safety_officer') AND (v.role='owner' OR v.branch_id=s.branch_id)) AND NOT EXISTS(SELECT 1 FROM service_bookings x JOIN service_slots y ON y.id=x.slot_id WHERE x.technician_id=u.id AND x.status NOT IN ('completed','cancelled','failed') AND y.starts_at<s.ends_at AND y.ends_at>s.starts_at) ORDER BY s.starts_at LIMIT 100",
+        "SELECT s.id,s.starts_at,s.ends_at FROM service_slots s JOIN users u ON u.id=s.technician_id JOIN branches b ON b.id=s.branch_id WHERE s.service_id=$1 AND s.branch_id=$2 AND s.blocked=false AND b.active=true AND u.active=true AND u.technician_available=true AND u.role='technician' AND u.branch_id=s.branch_id AND s.starts_at>now() AND s.starts_at<now()+interval '60 days' AND EXISTS(SELECT 1 FROM technician_qualifications q JOIN users v ON v.id=q.verified_by WHERE q.user_id=u.id AND q.code=$3 AND q.expires_at>s.ends_at AND v.active=true AND v.role IN ('owner','safety_officer') AND (v.role='owner' OR v.branch_id=s.branch_id)) AND NOT EXISTS(SELECT 1 FROM service_bookings x JOIN service_slots y ON y.id=x.slot_id WHERE x.technician_id=u.id AND x.status NOT IN ('completed','cancelled','failed') AND y.starts_at<s.ends_at AND y.ends_at>s.starts_at) ORDER BY s.starts_at LIMIT 100",
         [d.serviceId, d.branchId, service.config.qualification],
       )
     ).rows;
@@ -633,6 +634,7 @@ export async function professionalServiceAction(
       [d.serviceId, d.branchId],
     );
     if (!service) throw new AppError(404, "Service not found.");
+    if (!service.config.active || !(await one(tx,"SELECT id FROM branches WHERE id=$1 AND active=true",[d.branchId]))) throw new AppError(409,"This service or branch is not accepting appointments.");
     await eligible(
       tx,
       d.technicianId,
@@ -661,6 +663,11 @@ export async function professionalServiceAction(
         409,
         "Qualification expires before the appointment finishes.",
       );
+    // Serialize availability and bookings on the same canonical technician row.
+    const available = await one(tx, "SELECT technician_available FROM users WHERE id=$1 FOR UPDATE", [d.technicianId]);
+    await eligible(tx, d.technicianId, d.branchId, service.config.qualification);
+    if (!available?.technician_available) throw new AppError(409, "The technician is not available for new appointments.");
+    if (await one(tx, "SELECT id FROM service_slots WHERE technician_id=$1 AND starts_at<$3 AND ends_at>$2 LIMIT 1", [d.technicianId, d.startsAt, d.endsAt])) throw new AppError(409, "This time overlaps an existing appointment or blocked window. Choose another time.");
     const sid = id();
     await tx.query(
       "INSERT INTO service_slots(id,service_id,branch_id,technician_id,starts_at,ends_at,capacity) VALUES ($1,$2,$3,$4,$5,$6,1)",

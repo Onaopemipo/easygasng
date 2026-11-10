@@ -1,3 +1,4 @@
+import {enforceStaffPrivilege} from "./staff-privileges";
 import { sealMessage,openMessage } from "./channel-messaging";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
 import { z } from "zod";
@@ -84,6 +85,7 @@ export async function operationOutcome(tx: SQL, user: Actor, input: unknown) {
       message:
         "No committed result found. Retry the original request with the same operation identity; do not assume a timed-out request failed.",
     };
+  enforceStaffPrivilege(user,result.action);
   return { status: "COMMITTED", ...result, result:readOperationResult(result.result) };
 }
 // Public HTTP mutations must provide an explicit logical identity. Internal mixed

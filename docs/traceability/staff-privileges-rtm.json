@@ -1,0 +1,202 @@
+{
+  "phase": "Individual staff privileges",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "STAFF-PRIV01",
+      "requirement": "Add individual role-default/grant/revoke controls for server-defined staff operation privileges",
+      "priority": "P0",
+      "scope": "25 explicit capability groups; named operations and existing protected-role/field boundaries documented in report; other APIs retain original role checks",
+      "uiReference": "User Staff Management screenshot; Manage Roles & Privileges previously only changed roles",
+      "route": "/admin/staff; /api/staff.privileges; /api/staff.privileges.save",
+      "dataSource": "Canonical users and sessions; staff_privilege_overrides/staff_privilege_versions; immutable audit_events; existing role and branch controls",
+      "securityControl": "Owner/administrator identity and fresh verification; no self-edit; scoped technical administration; protected-role checks; every-request enforcement; immutable audit; locked version and identity-trigger invalidation; no role impersonation",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Final focused tests and real PostgreSQL race pass; actual isolated browser editor, search, password verification, dirty-state prompt and responsive layout checked.",
+      "testResult": "PASS final focused24, real PostgreSQL1, broad625/22skip before final identity hardening, web types/build and local browser verification.",
+      "outstandingWork": "Not pushed/deployed. Existing launch NO-GO and physical-device gates remain. Operations outside the named catalogue retain role-based authority; arbitrary route-level permission authoring is not claimed.",
+      "implementationFiles": [
+        "packages/business-rules/src/staff-privileges.ts",
+        "apps/web/lib/staff-privileges.ts",
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/navigation.ts",
+        "apps/web/lib/business-operation.ts",
+        "apps/web/components/staff-privileges.tsx",
+        "apps/web/components/staff-management.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/api/[action]/route.ts",
+        "database/migrations/075_staff_privileges.sql",
+        "database/bootstrap.sql",
+        "scripts/export-bootstrap.ts",
+        "apps/web/lib/db.ts"
+      ],
+      "testFiles": [
+        "tests/staff-privileges.test.ts",
+        "tests/staff-privileges-postgres.test.ts",
+        "tests/staff-management.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "STAFF-PRIV01",
+        "STAFF-PRIV07",
+        "STAFF-PRIV08"
+      ],
+      "negativeTests": [
+        "reject self escalation",
+        "invalid batches roll back all changes"
+      ],
+      "evidence": [
+        "docs/staff-privileges/audit.md",
+        "docs/staff-privileges/report.md",
+        "docs/staff-privileges/evidence/tests.txt",
+        "docs/staff-privileges/evidence/postgres-tests.txt",
+        "docs/staff-privileges/evidence/types.txt",
+        "docs/staff-privileges/evidence/build.txt",
+        "docs/staff-privileges/evidence/full-tests.txt",
+        "docs/staff-privileges/evidence/desktop.png",
+        "docs/staff-privileges/evidence/mobile.png",
+        "docs/staff-privileges/evidence/unsaved-confirmation.png"
+      ],
+      "acceptanceGate": "STAFF-PRIV-G01"
+    },
+    {
+      "id": "STAFF-PRIV02",
+      "requirement": "Enforce privilege changes on backend requests with fresh administration, scope, audit, transaction and concurrency protection",
+      "priority": "P0",
+      "scope": "25 explicit capability groups; named operations and existing protected-role/field boundaries documented in report; other APIs retain original role checks",
+      "uiReference": "User Staff Management screenshot; Manage Roles & Privileges previously only changed roles",
+      "route": "/admin/staff; /api/staff.privileges; /api/staff.privileges.save",
+      "dataSource": "Canonical users and sessions; staff_privilege_overrides/staff_privilege_versions; immutable audit_events; existing role and branch controls",
+      "securityControl": "Owner/administrator identity and fresh verification; no self-edit; scoped technical administration; protected-role checks; every-request enforcement; immutable audit; locked version and identity-trigger invalidation; no role impersonation",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Final focused tests and real PostgreSQL race pass; actual isolated browser editor, search, password verification, dirty-state prompt and responsive layout checked.",
+      "testResult": "PASS final focused24, real PostgreSQL1, broad625/22skip before final identity hardening, web types/build and local browser verification.",
+      "outstandingWork": "Not pushed/deployed. Existing launch NO-GO and physical-device gates remain. Operations outside the named catalogue retain role-based authority; arbitrary route-level permission authoring is not claimed.",
+      "implementationFiles": [
+        "packages/business-rules/src/staff-privileges.ts",
+        "apps/web/lib/staff-privileges.ts",
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/navigation.ts",
+        "apps/web/lib/business-operation.ts",
+        "apps/web/components/staff-privileges.tsx",
+        "apps/web/components/staff-management.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/api/[action]/route.ts",
+        "database/migrations/075_staff_privileges.sql",
+        "database/bootstrap.sql",
+        "scripts/export-bootstrap.ts",
+        "apps/web/lib/db.ts"
+      ],
+      "testFiles": [
+        "tests/staff-privileges.test.ts",
+        "tests/staff-privileges-postgres.test.ts",
+        "tests/staff-management.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "STAFF-PRIV02",
+        "STAFF-PRIV03",
+        "STAFF-PRIV04",
+        "STAFF-PRIV05",
+        "STAFF-PRIV06",
+        "STAFF-PRIV-PG"
+      ],
+      "negativeTests": [
+        "reject self escalation",
+        "invalid batches roll back all changes"
+      ],
+      "evidence": [
+        "docs/staff-privileges/audit.md",
+        "docs/staff-privileges/report.md",
+        "docs/staff-privileges/evidence/tests.txt",
+        "docs/staff-privileges/evidence/postgres-tests.txt",
+        "docs/staff-privileges/evidence/types.txt",
+        "docs/staff-privileges/evidence/build.txt",
+        "docs/staff-privileges/evidence/full-tests.txt",
+        "docs/staff-privileges/evidence/desktop.png",
+        "docs/staff-privileges/evidence/mobile.png",
+        "docs/staff-privileges/evidence/unsaved-confirmation.png"
+      ],
+      "acceptanceGate": "STAFF-PRIV-G02"
+    },
+    {
+      "id": "STAFF-PRIV-UI01",
+      "requirement": "Integrate usable privilege controls into existing Staff Management while retaining role changes and branded confirmations",
+      "priority": "P1",
+      "scope": "25 explicit capability groups; named operations and existing protected-role/field boundaries documented in report; other APIs retain original role checks",
+      "uiReference": "User Staff Management screenshot; Manage Roles & Privileges previously only changed roles",
+      "route": "/admin/staff; /api/staff.privileges; /api/staff.privileges.save",
+      "dataSource": "Canonical users and sessions; staff_privilege_overrides/staff_privilege_versions; immutable audit_events; existing role and branch controls",
+      "securityControl": "Owner/administrator identity and fresh verification; no self-edit; scoped technical administration; protected-role checks; every-request enforcement; immutable audit; locked version and identity-trigger invalidation; no role impersonation",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Final focused tests and real PostgreSQL race pass; actual isolated browser editor, search, password verification, dirty-state prompt and responsive layout checked.",
+      "testResult": "PASS final focused24, real PostgreSQL1, broad625/22skip before final identity hardening, web types/build and local browser verification.",
+      "outstandingWork": "Not pushed/deployed. Existing launch NO-GO and physical-device gates remain. Operations outside the named catalogue retain role-based authority; arbitrary route-level permission authoring is not claimed.",
+      "implementationFiles": [
+        "packages/business-rules/src/staff-privileges.ts",
+        "apps/web/lib/staff-privileges.ts",
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/navigation.ts",
+        "apps/web/lib/business-operation.ts",
+        "apps/web/components/staff-privileges.tsx",
+        "apps/web/components/staff-management.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/api/[action]/route.ts",
+        "database/migrations/075_staff_privileges.sql",
+        "database/bootstrap.sql",
+        "scripts/export-bootstrap.ts",
+        "apps/web/lib/db.ts"
+      ],
+      "testFiles": [
+        "tests/staff-privileges.test.ts",
+        "tests/staff-privileges-postgres.test.ts",
+        "tests/staff-management.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "STAFF-PRIV01",
+        "STAFF-PRIV05"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/staff-privileges/audit.md",
+        "docs/staff-privileges/report.md",
+        "docs/staff-privileges/evidence/tests.txt",
+        "docs/staff-privileges/evidence/postgres-tests.txt",
+        "docs/staff-privileges/evidence/types.txt",
+        "docs/staff-privileges/evidence/build.txt",
+        "docs/staff-privileges/evidence/full-tests.txt",
+        "docs/staff-privileges/evidence/desktop.png",
+        "docs/staff-privileges/evidence/mobile.png",
+        "docs/staff-privileges/evidence/unsaved-confirmation.png"
+      ],
+      "acceptanceGate": "STAFF-PRIV-G03"
+    }
+  ],
+  "gates": [
+    {
+      "id": "STAFF-PRIV-G01",
+      "scope": "Grant/deny/default operations with identity-bound inheritance",
+      "status": "PASS"
+    },
+    {
+      "id": "STAFF-PRIV-G02",
+      "scope": "Authoritative backend, audit and concurrent version enforcement",
+      "status": "PASS"
+    },
+    {
+      "id": "STAFF-PRIV-G03",
+      "scope": "Staff editor, retained role form and responsive branded interactions",
+      "status": "PASS"
+    }
+  ],
+  "scopeChanges": [
+    "Existing role/branch approval workflow and protected financial/qualification authority retained; individual overrides are a new explicit catalogue, not arbitrary API-authoring or owner impersonation.",
+    "Prior Approval Centre search input restored to shared FormInput and linked-order component source contract retained after earlier formatting; no baseline tests removed.",
+    "No other requirements removed; production NO-GO and existing outstanding work unchanged."
+  ]
+}

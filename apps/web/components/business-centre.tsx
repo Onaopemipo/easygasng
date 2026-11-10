@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { api, Loading, Notice, money, Empty, Modal, ProductArt } from "./ui";
 import { ActionForm } from "./workflows";
@@ -114,6 +114,21 @@ function Table({
     </Empty>
   );
 }
+export function ReportActivityTables({ schedules, deliveries }: { schedules: any[]; deliveries: any[] }) {
+  if (!schedules.length && !deliveries.length)
+    return <Empty title="No scheduled reports yet">Create a report schedule above. Generated reports will appear here when they are ready.</Empty>;
+  return <>
+    <section aria-label="Report schedules">
+      <h3>Report schedules</h3>
+      {schedules.length ? <Table rows={schedules} columns={["id", "report", "frequency", "next_run", "active"]} /> : <p>No report schedules have been created.</p>}
+    </section>
+    <section aria-label="Generated reports">
+      <h3>Generated reports</h3>
+      {deliveries.length ? <Table rows={deliveries} /> : <p>No scheduled reports are ready yet.</p>}
+    </section>
+  </>;
+}
+
 function useBusiness() {
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
@@ -1600,11 +1615,7 @@ export function BusinessCentre({
               ]}
             />
           )}
-          <Table
-            rows={data.schedules}
-            columns={["id", "report", "frequency", "next_run", "active"]}
-          />
-          <Table rows={data.reportDeliveries} />
+          <ReportActivityTables schedules={data.schedules} deliveries={data.reportDeliveries} />
           {data.reportDeliveries
             .filter((d: any) => d.status === "available_in_app")
             .map((d: any) => (

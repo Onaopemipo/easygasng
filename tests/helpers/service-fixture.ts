@@ -87,6 +87,8 @@ export async function fixture(dataDir: string | DB = "memory://") {
     decision: "approve",
     reason: "Independent business approval",
   });
+  // Explicit fixture consent to receive new appointments; no production data is seeded.
+  await db.query("UPDATE users SET technician_available=true WHERE id=$1", [actors.technician.id]);
   const start = new Date(Date.now() + 3 * 86400000);
   const createSlot = (offset = 0) =>
     call("service_manager", "services.slot.create", {

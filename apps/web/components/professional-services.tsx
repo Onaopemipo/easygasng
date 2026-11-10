@@ -1,4 +1,6 @@
 "use client";
+import TechniciansAvailability from "./technicians-availability";
+import { lagosAppointment } from "../../../packages/business-rules/src/technicians-availability";
 import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
 import { FormInput } from "./password-input";
 import OrderInvoice from "./order-invoice";
@@ -37,6 +39,7 @@ export function ServiceForm({
   const [reviewValues, setReviewValues] = useState<Record<string, any> | null>(
     null,
   );
+  const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [message, setMessage] = useState("");
@@ -48,6 +51,7 @@ export function ServiceForm({
     const form = e.currentTarget,
       fd = new FormData(form),
       v: Record<string, any> = {};
+    try {
     for (const f of fields) {
       const raw = String(fd.get(f.name) ?? "");
       v[f.name] =
@@ -55,12 +59,15 @@ export function ServiceForm({
           ? fd.has(f.name)
           : f.type === "number"
             ? Number(raw)
-            : f.type === "datetime-local"
+            : f.type === "datetime-lagos"
+              ? raw ? lagosAppointment(raw) : undefined
+              : f.type === "datetime-local"
               ? raw
                 ? new Date(raw).toISOString()
                 : undefined
               : raw;
     }
+    } catch (err: any) { setError(err.message); setBusy(false); return; }
     if (review && !reviewValues) {
       setReviewValues(v);
       setBusy(false);
@@ -69,6 +76,7 @@ export function ServiceForm({
     try {
       const r = await send(v);
       setMessage(r.id ? "Saved. Reference: " + r.id : "Saved successfully.");
+      setDirty(false);
       done?.();
     } catch (err: any) {
       setError(err.message);
@@ -77,7 +85,7 @@ export function ServiceForm({
     }
   }
   return (
-    <form className="surface workflow-form service-form" onSubmit={save}>
+    <form className="surface workflow-form service-form" data-unsaved={dirty ? "true" : undefined} onChange={() => setDirty(true)} onSubmit={save}>
       <h3>{title}</h3>
       <fieldset
         hidden={!!reviewValues}
@@ -130,7 +138,7 @@ export function ServiceForm({
               ) : (
                 <FormInput
                   name={f.name}
-                  type={f.type ?? "text"}
+                  type={f.type === "datetime-lagos" ? "datetime-local" : (f.type ?? "text")}
                   defaultValue={
                     f.type === "checkbox" ? undefined : (f.value ?? "")
                   }
@@ -189,6 +197,7 @@ export default function ProfessionalServices({
         ].includes(user.role),
     ),
     manager = ["owner", "service_manager"].includes(user?.role);
+  const redesigned = mode === "technicians" && process.env.NEXT_PUBLIC_EASYGAS_TECHNICIANS_UI !== "legacy" && ["owner", "service_manager", "safety_officer", "inventory", "finance"].includes(user?.role);
   const [catalogue, setCatalogue] = useState<any[]>([]),
     [bookings, setBookings] = useState<any[]>([]),
     [workspace, setWorkspace] = useState<any>(null),
@@ -197,6 +206,7 @@ export default function ProfessionalServices({
     [version, setVersion] = useState(0);
   const reload = () => setVersion((n) => n + 1);
   useEffect(() => {
+    if (redesigned) return;
     let active = true;
     setLoading(true);
     setError("");
@@ -223,7 +233,8 @@ export default function ProfessionalServices({
     return () => {
       active = false;
     };
-  }, [user?.id, version, staff, mode]);
+  }, [user?.id, version, staff, mode, redesigned]);
+  if (redesigned) return <TechniciansAvailability user={user} />;
   if (loading) return <Loading page />;
   if (error)
     return (

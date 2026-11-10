@@ -1,0 +1,28 @@
+✔ purchase credit requires independent verification, is append-only and cannot replay funding (1049.814541ms)
+✔ wallet checkout debits once and cancellation restores exact purchase credit once (44.69575ms)
+✔ insufficient wallet funds cannot reserve stock or create a payment (8.018459ms)
+✔ POS uses approved server prices, prevents overselling and verifies cash-up independently (40.468375ms)
+✔ refund credit requires customer consent and cannot exceed the original verified order (48.20125ms)
+✔ new point-to-wallet conversions are closed while historical outcomes remain replayable (8.09025ms)
+✔ concurrent wallet checkouts cannot overdraw the same purchase-credit balance (47.737334ms)
+✔ prepaid wallet delivery collects no cash and cannot earn from unapproved seeded economics (116.714333ms)
+✔ MWEB-03-GATE: disabled card checkout cannot reserve stock; enabled sandbox card remains unpaid and cannot dispatch (94.698084ms)
+✔ CREDIT-SEARCH01: authorised quick search matches names, email, phone and ID, excluding inactive/staff/cross-branch customers (1254.693917ms)
+✔ CREDIT-SELECT01: selected canonical account receives only a pending credit request; wallet and unrelated customers remain unchanged (1020.529167ms)
+✔ CREDIT-HTTP01: financial customer search is authenticated GET with strict validation and no POST mutation (997.294625ms)
+✔ CREDIT-FORM01: real credit form submits selected canonical IDs as hidden fields and never asks staff to copy an ID (146.951292ms)
+✔ service drafts are not sellable; checklist and price activation require independent qualified approval (1814.460583ms)
+✔ booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve (1045.513208ms)
+✔ qualification expiry, stale service versions and out-of-area addresses reject booking without side effects (910.762667ms)
+✔ quotation revisions preserve price history; only latest customer approval reserves materials (962.532291ms)
+✔ approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once (1145.199458ms)
+✔ unsafe inspection cannot become safety clearance or customer-acknowledged success (959.424209ms)
+✔ service deposit uses existing wallet ledger and cancellation refund requires separate finance approval (977.642333ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14105.479083

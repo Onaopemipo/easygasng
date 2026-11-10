@@ -18,6 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { api, Modal, Notice, Loading } from "./ui";
+import StaffPrivileges from "./staff-privileges";
 import { ServiceForm } from "./professional-services";
 const roles = [
   "sales",
@@ -487,7 +488,7 @@ export default function StaffManagement({
                                 Edit Profile
                               </button>
                             )}
-                            {canAccess && p.active && p.id !== user.id && (
+                            {canAccess && p.id !== user.id && (
                               <button onClick={() => action("access", p)}>
                                 Manage Roles &amp; Privileges
                               </button>
@@ -700,8 +701,10 @@ export default function StaffManagement({
             />
           ) : modal === "access" ? (
             <>
+              {["owner","administrator"].includes(user.role)&&<StaffPrivileges target={target} user={user} onSaved={reload}/>}
+              <details className="staff-role-change"><summary>Change role or branch</summary>
               <p>
-                Privileges are assigned through the selected role. Changing a
+                Role defaults are assigned through the selected role. Changing a
                 role replaces the user’s existing role permissions; branch
                 access is limited to the selected branch. Technical
                 qualifications and independent financial approvals remain
@@ -740,6 +743,7 @@ export default function StaffManagement({
                 }}
                 submit="Request Access Change"
               />
+              </details>
             </>
           ) : ["suspend", "reinstate"].includes(modal) ? (
             <>

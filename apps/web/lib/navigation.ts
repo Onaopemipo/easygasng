@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { one, type SQL } from "./db";
 import { AppError, type Actor } from "./auth";
+import {staffPrivileges,isBusinessStaff} from "../../../packages/business-rules/src/staff-privileges";
 import { roleNavigation } from "../../../packages/business-rules/src/admin-navigation";
 export const counterDescriptions: Record<string, string> = {
   orders: "New orders awaiting acceptance",
@@ -38,7 +39,7 @@ export async function navigationAccess(tx: SQL, user: Actor) {
     "SELECT count(*) AS count FROM setting_definitions d JOIN settings s ON s.key=d.key WHERE s.scope=$1 AND d.view_roles @> $2::jsonb",
     [user.branch_id ?? "lagos", JSON.stringify([user.role])],
   );
-  const allowed = groups
+  let allowed = groups
     .flatMap((g) => g.items)
     .filter(
       (i) =>
@@ -46,6 +47,12 @@ export async function navigationAccess(tx: SQL, user: Actor) {
         Number(definitions?.count) > 0,
     )
     .map((i) => i.id);
+  for (const p of staffPrivileges) {
+    const effect=user.privilege_overrides?.[p.id];
+    if(effect==='deny') allowed=allowed.filter(id=>!p.routes?.includes(id));
+    if(effect==='grant'&&p.grantRole&&isBusinessStaff(user.role)&&user.branch_id) allowed.push(...(p.routes??[]));
+  }
+  allowed=[...new Set(allowed)];
   return {
     user: {
       id: user.id,

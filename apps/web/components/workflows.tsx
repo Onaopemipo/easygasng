@@ -1,4 +1,5 @@
 "use client";
+import CreditCustomerSearch, {type CreditCustomer} from "./credit-customer-search";
 import { confirmAction } from "./app-dialog";
 import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
 
@@ -6,7 +7,7 @@ import { FormInput } from "./password-input";
 import { ChannelPreferences } from "./operations-completion";
 import { MailDeliveryControls } from "./mail-delivery";
 import { EasyRewardsReport, SmartRewardOffers } from "./easyrewards";
-import { useState, useEffect, useRef, type FormEvent } from "react";
+import React, { useState, useEffect, useRef, type FormEvent } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AddressAreaFields } from "./address-area-fields";
@@ -1266,18 +1267,14 @@ export function CreditWallet() {
     </div>
   );
 }
-export function CreditManagement() {
-  const { data, error, reload } = useRecords("credits");
-  if (error) return <Notice type="error" message={error} />;
-  if (!data) return <Loading />;
-  return (
-    <div className="workflow-stack">
-      <h1>Credits & refunds</h1>
-      <ActionForm
+export function CustomerCreditRequestForm({customer,onDone}:{customer:CreditCustomer;onDone:()=>void}) {
+  return (<div className="credit-request-form"><ActionForm
+        key={customer.id}
         action="credit.request"
         title="Record cash received for purchase credit"
         fields={[
-          { name: "customerId", label: "Customer account ID" },
+          { name: "customerId", label: "", type:"hidden", value:customer.id },
+          {name:"branchId",label:"",type:"hidden",value:customer.credit_branch_id},
           {
             name: "amountKobo",
             label: "Amount actually received (kobo)",
@@ -1290,10 +1287,23 @@ export function CreditManagement() {
             type: "textarea",
           },
         ]}
-        onDone={reload}
+        onDone={onDone}
         submit="Request independent verification"
-      />
-      {data.map((c: any) => (
+      /></div>);
+}
+export function CreditManagement() {
+  const { data, error, reload } = useRecords("credits");
+  const [selectedCustomer,setSelectedCustomer]=useState<CreditCustomer|null>(null);
+  if (error) return <Notice type="error" message={error} />;
+  if (!data) return <Loading />;
+  return (
+    <div className="workflow-stack">
+      <h1>Credits & refunds</h1>
+      <CreditCustomerSearch selected={selectedCustomer} onSelect={setSelectedCustomer} />
+      {selectedCustomer && selectedCustomer.credit_branch_id ? <CustomerCreditRequestForm key={selectedCustomer.id} customer={selectedCustomer} onDone={reload} /> : selectedCustomer ? <Notice message="This customer needs an authorised branch before purchase credit can be recorded." /> : <p>Select a customer above to record purchase credit.</p>}
+      <h2>{selectedCustomer ? `Credit and refund requests for ${selectedCustomer.name}` : "Credit and refund requests"}</h2>
+      {selectedCustomer && !data.some((c:any)=>c.customer_id===selectedCustomer.id) && <p>No credit or refund requests for this customer.</p>}
+      {data.filter((c:any)=>!selectedCustomer||c.customer_id===selectedCustomer.id).map((c: any) => (
         <section className="surface workflow-form" key={c.id}>
           <h3>
             {c.customer_name} · {money(c.amount_kobo)} ·{" "}

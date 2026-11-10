@@ -36,6 +36,7 @@ import GasOrder from "./GasOrder";
 import CombinedCheckout from "./CombinedCheckout";
 import Onboarding from "./Onboarding";
 import Services from "./Services";
+import TechniciansManagement from "./TechniciansManagement";
 import {
   loadQueue,
   saveQueue,
@@ -1827,6 +1828,8 @@ export default function App() {
               navigate={navigateCustomer}
               logout={logout}
             />
+          ) : screen === "technicians-management" && user && ["owner","service_manager","safety_officer","inventory","finance"].includes(user.role) ? (
+            <TechniciansManagement key={user.id} user={user} api={api} />
           ) : screen === "support" ? (
             <Support
               send={async (data) => {
@@ -1838,6 +1841,7 @@ export default function App() {
               <Text style={s.greeting}>MY ACCOUNT</Text>
               <Text style={s.title}>{user?.name ?? "Your EasyGas"}</Text>
               <Text style={s.body}>{user?.email}</Text>
+              {user && ["owner","service_manager","safety_officer","inventory","finance"].includes(user.role) && button("Technicians & Availability", () => setScreen("technicians-management"))}
               {[
                 ["Appearance", "appearance"],
                 ["Browse Products", "products"],

@@ -1,0 +1,34 @@
+✔ APPROVAL-PAGE01: server pagination covers more than 200 records with stable ordering, filtering, totals and bounded pages (1431.095ms)
+✔ APPROVAL-SCOPE01: pagination and summary enforce branch and view permissions; field roles cannot read requests (949.946875ms)
+✔ APPROVAL-HTTP01: paginated approvals require authentication and are read only over HTTP (692.098708ms)
+✔ CREDIT-SEARCH01: authorised quick search matches names, email, phone and ID, excluding inactive/staff/cross-branch customers (1400.381666ms)
+✔ CREDIT-SELECT01: selected canonical account receives only a pending credit request; wallet and unrelated customers remain unchanged (959.052083ms)
+✔ CREDIT-HTTP01: financial customer search is authenticated GET with strict validation and no POST mutation (964.3595ms)
+✔ CREDIT-FORM01: real credit form submits selected canonical IDs as hidden fields and never asks staff to copy an ID (136.777875ms)
+✔ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (350.343875ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (1.517375ms)
+✔ REPORT-EMPTY01: empty schedule and delivery lists show one helpful state and populated lists retain distinct records (4.840792ms)
+✔ staff invitations are manageable without granting privileges, renew invalidates old links and accepted accounts appear in staff management (1265.10625ms)
+✔ staff edits, suspension, reinstatement and invitation revocation enforce authority, branch and session safeguards (990.983667ms)
+✔ staff management invitation actions run with restricted runtime grants and moved administrators cannot validate old branch invitations (969.703708ms)
+✔ STAFF-PRIV01: per-user grant, deny and role default work end to end without changing roles; existing sessions recheck every request (1285.816916ms)
+✔ STAFF-PRIV02: privilege changes require fresh administrative identity and reject self escalation, forged fields, stale versions and protected-role grants (1035.866042ms)
+✔ STAFF-PRIV03: scoped administrators cannot edit cross-branch users; protected approval, qualification and runtime session boundaries remain intact (962.200333ms)
+✔ STAFF-PRIV04: restricted database runtime can grant, revoke and reset privileges with append-only audited history (899.439875ms)
+✔ STAFF-PRIV05: privilege endpoints require authenticated read/write methods and reject unverified HTTP mutations (1005.05775ms)
+✔ STAFF-PRIV06: invalid batches roll back all changes, cached outcomes obey revocation, and field-only sessions cannot administer privileges (964.471416ms)
+✔ STAFF-PRIV07: role or branch changes invalidate additional grants while explicit revocations remain enforced (951.6555ms)
+✔ STAFF-PRIV08: reverting an identity change cannot silently reactivate an old grant, and identity changes invalidate an open editor revision (947.6885ms)
+✔ TAV-HTTP: directory uses bounded authenticated GET, rejects field access and POST, and enforces branch scope (1261.576ms)
+✔ TAV-READ: scoped authoritative directory includes inactive staff, filters, paging and honest schedule states (1393.12975ms)
+✔ TAV-SCOPE: field technicians and customers cannot use management APIs, branch tampering and invalid filters fail closed (981.029666ms)
+✔ TAV-SCHEDULE: overlap, unavailable technician, self verification, revoked qualifications and booked blocking cannot bypass backend (1014.237333ms)
+✔ TAV-TIME: Lagos conversion is device-independent and rejects invalid dates; navigation and field shell are preserved (1.352541ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25704.877041

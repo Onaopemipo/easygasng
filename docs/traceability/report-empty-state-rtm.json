@@ -1,0 +1,49 @@
+{
+  "phase": "Reports duplicate empty-state correction",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "REPORT-EMPTY01",
+      "requirement": "Show one helpful empty state when report schedules and deliveries are both empty; preserve distinct populated lists and operations",
+      "priority": "P1",
+      "scope": "Reports activity presentation only",
+      "uiReference": "User screenshot duplicate No recorded activity cards",
+      "route": "/admin/reports",
+      "dataSource": "Existing business snapshot schedules and reportDeliveries",
+      "securityControl": "Presentation only; existing report role/branch guards and schedule mutations unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All four collection combinations rendered; actual local authenticated Reports page has one contextual empty state and zero generic duplicates.",
+      "testResult": "PASS rendering regression, web typecheck/build and actual local browser verification.",
+      "outstandingWork": "Not deployed; existing production NO-GO and technician work remain unchanged.",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx"
+      ],
+      "testFiles": [
+        "tests/report-empty-state.test.ts"
+      ],
+      "testIds": [
+        "REPORT-EMPTY01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/report-empty-state/report.md",
+        "docs/report-empty-state/evidence/tests.txt",
+        "docs/report-empty-state/evidence/types.txt",
+        "docs/report-empty-state/evidence/build.txt",
+        "docs/report-empty-state/evidence/reports-cleaned.png"
+      ],
+      "acceptanceGate": "REPORT-EMPTY-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "REPORT-EMPTY-G01",
+      "scope": "Single empty state and preservation of nonempty records",
+      "status": "PASS"
+    }
+  ],
+  "scopeChanges": [
+    "No scope removed from technician phase or prior matrices; production NO-GO retained."
+  ]
+}

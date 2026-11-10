@@ -40,6 +40,18 @@ export async function commerceAction(
       )
     ).rows;
   }
+  if (action === "credit.customers") {
+    allow(user,["owner","finance"]);
+    const d=z.object({q:z.string().trim().min(2).max(100)}).strict().parse(input);
+    if(user.role!=="owner"&&!user.branch_id) throw new AppError(403,"A finance branch assignment is required.");
+    const phone=/^[+0-9 ()-]+$/.test(d.q)?d.q.replace(/[^0-9]/g,"").replace(/^(234|0)/,""):"";
+    return (await tx.query(`SELECT u.id,u.name,u.email,COALESCE(u.contact_phone,(SELECT a.phone FROM account_addresses a WHERE a.customer_id=u.id AND a.archived=false ORDER BY a.is_default DESC,a.created_at DESC,a.id LIMIT 1)) AS contact_phone,u.public_customer_id,u.branch_id,
+      CASE WHEN $2::boolean THEN COALESCE(u.branch_id,$3::text) ELSE $3::text END AS credit_branch_id
+      FROM users u WHERE u.active=true AND u.role IN ('customer','commercial')
+      AND ($2::boolean OR u.branch_id=$3 OR EXISTS(SELECT 1 FROM orders o WHERE o.customer_id=u.id AND o.branch_id=$3))
+      AND (u.name ILIKE '%'||$1||'%' OR u.email ILIKE '%'||$1||'%' OR u.public_customer_id ILIKE '%'||$1||'%' OR u.id=$1 OR regexp_replace(regexp_replace(COALESCE(u.contact_phone,''),'[^0-9]','','g'),'^(234|0)','') LIKE '%'||NULLIF($4::text,'')||'%' OR EXISTS(SELECT 1 FROM account_addresses a WHERE a.customer_id=u.id AND a.archived=false AND regexp_replace(regexp_replace(a.phone,'[^0-9]','','g'),'^(234|0)','') LIKE '%'||NULLIF($4::text,'')||'%'))
+      ORDER BY u.name,u.id LIMIT 10`,[d.q,user.role==="owner",user.branch_id,phone])).rows;
+  }
   if (action === "credit.request") {
     const d = z
       .object({
@@ -59,6 +71,7 @@ export async function commerceAction(
       [d.customerId],
     );
     if (!customer) throw new AppError(404, "Active customer not found.");
+    if(user.role!=="owner" && customer.branch_id!==user.branch_id && !(await one(tx,"SELECT id FROM orders WHERE customer_id=$1 AND branch_id=$2 LIMIT 1",[customer.id,user.branch_id]))) throw new AppError(403,"This customer is outside your authorised branch.");
     const branch = d.branchId ?? user.branch_id ?? "lagos";
     allow(user, ["owner", "finance"], branch);
     if (

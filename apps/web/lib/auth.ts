@@ -44,6 +44,8 @@ export type Actor = {
   session_id: string;
   driver_delivery_only?: boolean;
   technician_service_only?: boolean;
+  privilege_overrides?: Record<string, "grant" | "deny">;
+  operation_grant_role?: string;
 };
 export async function actor(tx: SQL, token: string | null): Promise<Actor> {
   if (!token)
@@ -65,10 +67,11 @@ export async function actor(tx: SQL, token: string | null): Promise<Actor> {
     if (user.role === "driver") user.driver_delivery_only = true;
     if (user.role === "technician") user.technician_service_only = true;
   }
+  user.privilege_overrides = Object.fromEntries((await tx.query("SELECT privilege,effect FROM staff_privilege_overrides WHERE user_id=$1 AND (effect='deny' OR (invalidated_at IS NULL AND role_at_change=$2 AND branch_at_change IS NOT DISTINCT FROM $3))",[user.id,user.role,user.branch_id])).rows.map(r=>[r.privilege,r.effect]));
   return user;
 }
 export function allow(user: Actor, roles: string[], scope?: string) {
-  if (!roles.includes(user.role))
+  if (!roles.includes(user.role) && !(user.operation_grant_role && roles.includes(user.operation_grant_role) && roles.some(r=>r!=="owner")))
     throw new AppError(
       403,
       "Your account does not have permission for this action.",

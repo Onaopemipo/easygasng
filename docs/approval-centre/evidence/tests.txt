@@ -1,0 +1,35 @@
+✔ APPROVAL-PAGE01: server pagination covers more than 200 records with stable ordering, filtering, totals and bounded pages (1252.241292ms)
+✔ APPROVAL-SCOPE01: pagination and summary enforce branch and view permissions; field roles cannot read requests (696.836791ms)
+✔ APPROVAL-HTTP01: paginated approvals require authentication and are read only over HTTP (671.356292ms)
+✔ OWNER-AUTO01: owner submissions auto-apply once with immutable authority proof; staff remain independently reviewed (1147.550916ms)
+✔ OWNER-AUTO02: old pending requests are actionable only by their verified owner; drafts stay inactive until submission (967.825417ms)
+✔ OWNER-AUTO03: scheduling, current authority, stale versions, expiry, self privileges and live-payment blockers survive auto approval (937.782ms)
+✔ OWNER-AUTO04: owner approval does not replace independent qualified safety review or invent safety evidence (898.854208ms)
+✔ OWNER-AUTO05: governed inventory request binds immutable operation before automatic application and never posts twice (883.634875ms)
+✔ OWNER-AUTO06: owner rollback uses the same audited policy and preserves historical versions (888.45525ms)
+✔ OWNER-AUTO-UI: owner apply action and status-specific guidance replace unconditional independent-review messaging (0.429292ms)
+✔ specific compatibility requires independent qualified review and expires with reviewer qualification (1244.377583ms)
+✔ follow-ups require completed work, respect service consent and quiet hours, deduplicate and link rebooking (1077.378667ms)
+✔ policy publication requires independently approved real content and effective date (926.226792ms)
+✔ all new service tables and workflows function under the restricted private-schema server role (957.722458ms)
+✔ incremental Supabase migration upgrades the previous catalogue schema without losing existing records (402.784875ms)
+✔ production gates remain truthful and customer export includes owned service records only (986.084583ms)
+✔ A–C,K: draft, permissions, status injection and independent review share one authoritative workflow (1175.131667ms)
+✔ D,G: distinct dual approval and revisions invalidate prior decisions by revision (970.952ms)
+✔ E,H,J,O: schedule, stale requests, idempotent activation and append-only reversal (914.347209ms)
+✔ F,L,M,N: fee rejection, expired request, revoked approver and governed location lifecycle (894.325791ms)
+✔ I: activation database failure leaves active value intact, records failure, and revalidates a retry (932.015542ms)
+✔ decimal calculator matches confirmed gas quantities and rejects unsafe precision (0.444917ms)
+✔ gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety (992.277042ms)
+✔ delivery fee is once per order in every area; inactive locations retain addresses and flag affected orders (933.377833ms)
+✔ verified gas-cylinder filling and delivery consume bulk stock once and preserve custody restrictions (1068.120417ms)
+✔ gas report exports preserve totals and escape untrusted spreadsheet and HTML text (2.08475ms)
+✔ confirmed cylinder maintenance is an unpublished draft governed by the existing service and safety approvals (930.229625ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24535.264667

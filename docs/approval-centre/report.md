@@ -1,0 +1,9 @@
+# Approval Centre pagination and presentation
+
+Repository audit: `/admin/approvals` already uses the shared `Approvals` component, authenticated `approvals` dispatcher, existing change_requests/setting_definitions/approval_decisions and owner/independent review controls. The previous read capped the list at 200 and the UI filtered the fetched array. Extend this read and component; no replacement approval system, schema or navigation is introduced.
+
+Implemented server-side pages of 10/20/50 with deterministic created_at/id ordering, filtered counts, page clamping, search by request label/key/ID/requester and status/risk filters. Four compact summary cards and quick-filter tabs replace eight large cards. Totals use all authorised records, independently of the list filters. Review modals and permission-derived actions retain existing workflows. The old array response is preserved for existing clients. Requests use the existing bounded read budget. Branch-less nonowners fail closed.
+
+Executed evidence: 27 focused tests pass (pagination, HTTP authentication/validation/read-only contract, branch/view-role denial, owner and independent/safety governance, gas/stock rules). Web typecheck/build pass. Local authenticated browser used existing synthetic demo records only: 19 requests, 10 on page 1 and 9 on page 2; Next/First boundaries, search Gas price yields one record, rows/page selection, mobile viewport verification. No approval or business mutation submitted in browser. Mobile horizontal table scroll stays inside its panel; viewport width390/document375 after fixing a hidden heading that initially escaped its scroll container.
+
+Coverage: two bounded requirements and two gates; prior work and outstanding matrices remain in scope. This change is local, not pushed or deployed. Production NO-GO, live-payment gates and import hold remain unchanged. Physical mobile-device acceptance is not claimed; browser viewport verification is recorded separately.

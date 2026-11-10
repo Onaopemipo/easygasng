@@ -1,0 +1,1727 @@
+{
+  "phase": "Technicians & Availability approved workspace",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "TAV-01",
+      "requirement": "Audit and baseline",
+      "priority": "P1",
+      "scope": "Approved technicians availability specification; all scenarios retained",
+      "uiReference": "Approved_Technicians_Availability_UI.png",
+      "route": "/admin/technicians; existing native staff/field shells",
+      "dataSource": "users, technician_qualifications, service_slots, service_bookings, audit_events",
+      "securityControl": "Server role/branch isolation, independent qualification verification and existing payment/work gates",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Repository/permission/schema/mobile/route audit written before implementation; baseline fully recorded.",
+      "testResult": "PASS baseline607/628,21environment skips,0fail; final634tests/612pass/22environment skips/0fail; scoped21/21, independent PostgreSQL1/1.",
+      "outstandingWork": "None for audit; retained device/build deferrals and full specification gates.",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "packages/business-rules/src/technicians-availability.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/technicians-availability.test.ts",
+        "tests/technicians-availability-http.test.ts",
+        "tests/technicians-availability-postgres.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/technicians-availability/01-repository-audit.md",
+        "docs/technicians-availability/evidence/tests.txt",
+        "docs/technicians-availability/evidence/scoped-tests.txt",
+        "docs/technicians-availability/evidence/postgres.txt",
+        "docs/technicians-availability/evidence/desktop.png",
+        "docs/technicians-availability/evidence/mobile-web.png",
+        "docs/technicians-availability/evidence/final-regression.txt",
+        "docs/technicians-availability/evidence/final-types.txt",
+        "docs/technicians-availability/evidence/final-mobile-types.txt",
+        "docs/technicians-availability/evidence/final-build.txt",
+        "docs/technicians-availability/06-testing-and-evidence.md"
+      ],
+      "acceptanceGate": "TAV-G01",
+      "scenarioIds": []
+    },
+    {
+      "id": "TAV-02",
+      "requirement": "Approved responsive management workspace",
+      "priority": "P1",
+      "scope": "Approved technicians availability specification; all scenarios retained",
+      "uiReference": "Approved_Technicians_Availability_UI.png",
+      "route": "/admin/technicians; existing native staff/field shells",
+      "dataSource": "users, technician_qualifications, service_slots, service_bookings, audit_events",
+      "securityControl": "Server role/branch isolation, independent qualification verification and existing payment/work gates",
+      "status": "PARTIAL",
+      "reason": "Responsive web workspace and dialogs implemented; actual desktop/tablet/mobile browser evidence captured. Sidebar and route definitions unchanged.",
+      "testResult": "PASS scoped21/21, independent PostgreSQL1/1, final612pass/22environment skips/0fail; full-scope acceptance remains PARTIAL.",
+      "outstandingWork": "Complete assistive, native and all visual acceptance scenarios.",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "packages/business-rules/src/technicians-availability.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/technicians-availability.test.ts",
+        "tests/technicians-availability-http.test.ts",
+        "tests/technicians-availability-postgres.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TAV-READ",
+        "TAV-SCOPE",
+        "TAV-SCHEDULE",
+        "TAV-TIME",
+        "TAV-HTTP"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/technicians-availability/01-repository-audit.md",
+        "docs/technicians-availability/evidence/tests.txt",
+        "docs/technicians-availability/evidence/scoped-tests.txt",
+        "docs/technicians-availability/evidence/postgres.txt",
+        "docs/technicians-availability/evidence/desktop.png",
+        "docs/technicians-availability/evidence/mobile-web.png",
+        "docs/technicians-availability/evidence/tablet.png",
+        "docs/technicians-availability/evidence/mobile-dark.png",
+        "docs/technicians-availability/evidence/unsaved-dialog.png",
+        "docs/technicians-availability/evidence/final-regression.txt",
+        "docs/technicians-availability/evidence/final-types.txt",
+        "docs/technicians-availability/evidence/final-mobile-types.txt",
+        "docs/technicians-availability/evidence/final-build.txt",
+        "docs/technicians-availability/06-testing-and-evidence.md"
+      ],
+      "acceptanceGate": "TAV-G05",
+      "scenarioIds": [
+        "TAV-T01",
+        "TAV-T02",
+        "TAV-T03",
+        "TAV-T56",
+        "TAV-T57",
+        "TAV-T58",
+        "TAV-T59",
+        "TAV-T60",
+        "TAV-T61",
+        "TAV-T62"
+      ]
+    },
+    {
+      "id": "TAV-03",
+      "requirement": "Authoritative scoped directory, KPIs and schedule",
+      "priority": "P1",
+      "scope": "Approved technicians availability specification; all scenarios retained",
+      "uiReference": "Approved_Technicians_Availability_UI.png",
+      "route": "/admin/technicians; existing native staff/field shells",
+      "dataSource": "users, technician_qualifications, service_slots, service_bookings, audit_events",
+      "securityControl": "Server role/branch isolation, independent qualification verification and existing payment/work gates",
+      "status": "PARTIAL",
+      "reason": "Authoritative bounded role/branch-scoped GET read model, typed DTO, search/status/qualification/service/date filters and paged schedule implemented.",
+      "testResult": "PASS scoped21/21, independent PostgreSQL1/1, final612pass/22environment skips/0fail; full-scope acceptance remains PARTIAL.",
+      "outstandingWork": "Production-scale query plan/index evidence, fuller conflict/expiry UX and all acceptance.",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "packages/business-rules/src/technicians-availability.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/technicians-availability.test.ts",
+        "tests/technicians-availability-http.test.ts",
+        "tests/technicians-availability-postgres.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TAV-READ",
+        "TAV-SCOPE",
+        "TAV-SCHEDULE",
+        "TAV-TIME",
+        "TAV-HTTP"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/technicians-availability/01-repository-audit.md",
+        "docs/technicians-availability/evidence/tests.txt",
+        "docs/technicians-availability/evidence/scoped-tests.txt",
+        "docs/technicians-availability/evidence/postgres.txt",
+        "docs/technicians-availability/evidence/desktop.png",
+        "docs/technicians-availability/evidence/mobile-web.png",
+        "docs/technicians-availability/evidence/final-regression.txt",
+        "docs/technicians-availability/evidence/final-types.txt",
+        "docs/technicians-availability/evidence/final-mobile-types.txt",
+        "docs/technicians-availability/evidence/final-build.txt",
+        "docs/technicians-availability/06-testing-and-evidence.md"
+      ],
+      "acceptanceGate": "TAV-G06",
+      "scenarioIds": [
+        "TAV-T04",
+        "TAV-T05",
+        "TAV-T06",
+        "TAV-T07",
+        "TAV-T08",
+        "TAV-T09",
+        "TAV-T10",
+        "TAV-T11",
+        "TAV-T12",
+        "TAV-T13",
+        "TAV-T14",
+        "TAV-T15",
+        "TAV-T16"
+      ]
+    },
+    {
+      "id": "TAV-04",
+      "requirement": "Existing identity invitations and edits",
+      "priority": "P1",
+      "scope": "Approved technicians availability specification; all scenarios retained",
+      "uiReference": "Approved_Technicians_Availability_UI.png",
+      "route": "/admin/technicians; existing native staff/field shells",
+      "dataSource": "users, technician_qualifications, service_slots, service_bookings, audit_events",
+      "securityControl": "Server role/branch isolation, independent qualification verification and existing payment/work gates",
+      "status": "PARTIAL",
+      "reason": "Existing staff invite, lookup/access links and name edit reused; no implicit technician role or qualification.",
+      "testResult": "PASS scoped21/21, independent PostgreSQL1/1, final612pass/22environment skips/0fail; full-scope acceptance remains PARTIAL.",
+      "outstandingWork": "Full native existing-account/access integration and staged invitation acceptance.",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "packages/business-rules/src/technicians-availability.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/technicians-availability.test.ts",
+        "tests/technicians-availability-http.test.ts",
+        "tests/technicians-availability-postgres.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TAV-READ",
+        "TAV-SCOPE",
+        "TAV-SCHEDULE",
+        "TAV-TIME",
+        "TAV-HTTP"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/technicians-availability/01-repository-audit.md",
+        "docs/technicians-availability/evidence/tests.txt",
+        "docs/technicians-availability/evidence/scoped-tests.txt",
+        "docs/technicians-availability/evidence/postgres.txt",
+        "docs/technicians-availability/evidence/desktop.png",
+        "docs/technicians-availability/evidence/mobile-web.png",
+        "docs/technicians-availability/evidence/final-regression.txt",
+        "docs/technicians-availability/evidence/final-types.txt",
+        "docs/technicians-availability/evidence/final-mobile-types.txt",
+        "docs/technicians-availability/evidence/final-build.txt",
+        "docs/technicians-availability/06-testing-and-evidence.md"
+      ],
+      "acceptanceGate": "TAV-G07",
+      "scenarioIds": [
+        "TAV-T17",
+        "TAV-T18",
+        "TAV-T19",
+        "TAV-T20",
+        "TAV-T21",
+        "TAV-T22",
+        "TAV-T23"
+      ]
+    },
+    {
+      "id": "TAV-05",
+      "requirement": "Independent qualification verification and revocation",
+      "priority": "P0",
+      "scope": "Approved technicians availability specification; all scenarios retained",
+      "uiReference": "Approved_Technicians_Availability_UI.png",
+      "route": "/admin/technicians; existing native staff/field shells",
+      "dataSource": "users, technician_qualifications, service_slots, service_bookings, audit_events",
+      "securityControl": "Server role/branch isolation, independent qualification verification and existing payment/work gates",
+      "status": "PARTIAL",
+      "reason": "Independent verify/revoke, safety reviewer selection, expiry and evidence privacy preserved in backend and exposed by dialogs.",
+      "testResult": "PASS scoped21/21, independent PostgreSQL1/1, final612pass/22environment skips/0fail; full-scope acceptance remains PARTIAL.",
+      "outstandingWork": "Structured issuer/method/issue-date/media metadata and complete qualification history UI.",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "packages/business-rules/src/technicians-availability.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/technicians-availability.test.ts",
+        "tests/technicians-availability-http.test.ts",
+        "tests/technicians-availability-postgres.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TAV-READ",
+        "TAV-SCOPE",
+        "TAV-SCHEDULE",
+        "TAV-TIME",
+        "TAV-HTTP"
+      ],
+      "negativeTests": [
+        "not available",
+        "independent",
+        "branchId: \"other\""
+      ],
+      "evidence": [
+        "docs/technicians-availability/01-repository-audit.md",
+        "docs/technicians-availability/evidence/tests.txt",
+        "docs/technicians-availability/evidence/scoped-tests.txt",
+        "docs/technicians-availability/evidence/postgres.txt",
+        "docs/technicians-availability/evidence/desktop.png",
+        "docs/technicians-availability/evidence/mobile-web.png",
+        "docs/technicians-availability/evidence/final-regression.txt",
+        "docs/technicians-availability/evidence/final-types.txt",
+        "docs/technicians-availability/evidence/final-mobile-types.txt",
+        "docs/technicians-availability/evidence/final-build.txt",
+        "docs/technicians-availability/06-testing-and-evidence.md"
+      ],
+      "acceptanceGate": "TAV-G08",
+      "scenarioIds": [
+        "TAV-T24",
+        "TAV-T25",
+        "TAV-T26",
+        "TAV-T27",
+        "TAV-T28",
+        "TAV-T29",
+        "TAV-T30"
+      ]
+    },
+    {
+      "id": "TAV-06",
+      "requirement": "Safe scheduling, blocks, weekly hours and exceptions",
+      "priority": "P0",
+      "scope": "Approved technicians availability specification; all scenarios retained",
+      "uiReference": "Approved_Technicians_Availability_UI.png",
+      "route": "/admin/technicians; existing native staff/field shells",
+      "dataSource": "users, technician_qualifications, service_slots, service_bookings, audit_events",
+      "securityControl": "Server role/branch isolation, independent qualification verification and existing payment/work gates",
+      "status": "PARTIAL",
+      "reason": "Creation and reservation require active qualified available technician; technician row lock rejects overlap, allows adjacency; block rejects active booking. Replay and independent PostgreSQL race tested.",
+      "testResult": "PASS scoped21/21, independent PostgreSQL1/1, final612pass/22environment skips/0fail; full-scope acceptance remains PARTIAL.",
+      "outstandingWork": "Weekly hours/breaks/holiday exceptions, edit lifecycle/buffers and recovery acceptance remain engineering work.",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "packages/business-rules/src/technicians-availability.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/technicians-availability.test.ts",
+        "tests/technicians-availability-http.test.ts",
+        "tests/technicians-availability-postgres.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TAV-READ",
+        "TAV-SCOPE",
+        "TAV-SCHEDULE",
+        "TAV-TIME",
+        "TAV-HTTP"
+      ],
+      "negativeTests": [
+        "not available",
+        "independent",
+        "branchId: \"other\""
+      ],
+      "evidence": [
+        "docs/technicians-availability/01-repository-audit.md",
+        "docs/technicians-availability/evidence/tests.txt",
+        "docs/technicians-availability/evidence/scoped-tests.txt",
+        "docs/technicians-availability/evidence/postgres.txt",
+        "docs/technicians-availability/evidence/desktop.png",
+        "docs/technicians-availability/evidence/mobile-web.png",
+        "docs/technicians-availability/evidence/final-regression.txt",
+        "docs/technicians-availability/evidence/final-types.txt",
+        "docs/technicians-availability/evidence/final-mobile-types.txt",
+        "docs/technicians-availability/evidence/final-build.txt",
+        "docs/technicians-availability/06-testing-and-evidence.md"
+      ],
+      "acceptanceGate": "TAV-G09",
+      "scenarioIds": [
+        "TAV-T31",
+        "TAV-T32",
+        "TAV-T33",
+        "TAV-T34",
+        "TAV-T35",
+        "TAV-T36",
+        "TAV-T37",
+        "TAV-T38",
+        "TAV-T39",
+        "TAV-T40",
+        "TAV-T41",
+        "TAV-T42",
+        "TAV-T43",
+        "TAV-T44",
+        "TAV-T45",
+        "TAV-T46",
+        "TAV-T47"
+      ]
+    },
+    {
+      "id": "TAV-07",
+      "requirement": "Native management and field separation",
+      "priority": "P0",
+      "scope": "Approved technicians availability specification; all scenarios retained",
+      "uiReference": "Approved_Technicians_Availability_UI.png",
+      "route": "/admin/technicians; existing native staff/field shells",
+      "dataSource": "users, technician_qualifications, service_slots, service_bookings, audit_events",
+      "securityControl": "Server role/branch isolation, independent qualification verification and existing payment/work gates",
+      "status": "PARTIAL",
+      "reason": "Guarded management destination in existing native staff shell; field four-screen sources and own availability/qualification controls unchanged.",
+      "testResult": "PASS scoped21/21, independent PostgreSQL1/1, final612pass/22environment skips/0fail; full-scope acceptance remains PARTIAL.",
+      "outstandingWork": "Native device runtime, advanced filters/calendar/access integration and full accessibility acceptance; no signed build requested.",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "packages/business-rules/src/technicians-availability.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/technicians-availability.test.ts",
+        "tests/technicians-availability-http.test.ts",
+        "tests/technicians-availability-postgres.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TAV-READ",
+        "TAV-SCOPE",
+        "TAV-SCHEDULE",
+        "TAV-TIME",
+        "TAV-HTTP"
+      ],
+      "negativeTests": [
+        "not available",
+        "independent",
+        "branchId: \"other\""
+      ],
+      "evidence": [
+        "docs/technicians-availability/01-repository-audit.md",
+        "docs/technicians-availability/evidence/tests.txt",
+        "docs/technicians-availability/evidence/scoped-tests.txt",
+        "docs/technicians-availability/evidence/postgres.txt",
+        "docs/technicians-availability/evidence/desktop.png",
+        "docs/technicians-availability/evidence/mobile-web.png",
+        "docs/technicians-availability/evidence/tablet.png",
+        "docs/technicians-availability/evidence/mobile-dark.png",
+        "docs/technicians-availability/evidence/unsaved-dialog.png",
+        "docs/technicians-availability/evidence/final-regression.txt",
+        "docs/technicians-availability/evidence/final-types.txt",
+        "docs/technicians-availability/evidence/final-mobile-types.txt",
+        "docs/technicians-availability/evidence/final-build.txt",
+        "docs/technicians-availability/06-testing-and-evidence.md"
+      ],
+      "acceptanceGate": "TAV-G10",
+      "scenarioIds": [
+        "TAV-T48",
+        "TAV-T49",
+        "TAV-T50",
+        "TAV-T51",
+        "TAV-T52",
+        "TAV-T56",
+        "TAV-T57",
+        "TAV-T58",
+        "TAV-T59",
+        "TAV-T60",
+        "TAV-T61",
+        "TAV-T62",
+        "TAV-T72",
+        "TAV-T73"
+      ]
+    },
+    {
+      "id": "TAV-08",
+      "requirement": "Refresh, notifications and offline conflict handling",
+      "priority": "P1",
+      "scope": "Approved technicians availability specification; all scenarios retained",
+      "uiReference": "Approved_Technicians_Availability_UI.png",
+      "route": "/admin/technicians; existing native staff/field shells",
+      "dataSource": "users, technician_qualifications, service_slots, service_bookings, audit_events",
+      "securityControl": "Server role/branch isolation, independent qualification verification and existing payment/work gates",
+      "status": "PARTIAL",
+      "reason": "Web debounced visible refresh pauses in dialogs; native explicit refresh keeps labelled last records. No offline confirmed mutation queue added.",
+      "testResult": "PASS scoped21/21, independent PostgreSQL1/1, final612pass/22environment skips/0fail; full-scope acceptance remains PARTIAL.",
+      "outstandingWork": "Durable safe drafts/reconnect acceptance, deduplicated scheduling-change notifications and full offline tests.",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "packages/business-rules/src/technicians-availability.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/technicians-availability.test.ts",
+        "tests/technicians-availability-http.test.ts",
+        "tests/technicians-availability-postgres.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TAV-READ",
+        "TAV-SCOPE",
+        "TAV-SCHEDULE",
+        "TAV-TIME",
+        "TAV-HTTP"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/technicians-availability/01-repository-audit.md",
+        "docs/technicians-availability/evidence/tests.txt",
+        "docs/technicians-availability/evidence/scoped-tests.txt",
+        "docs/technicians-availability/evidence/postgres.txt",
+        "docs/technicians-availability/evidence/desktop.png",
+        "docs/technicians-availability/evidence/mobile-web.png",
+        "docs/technicians-availability/evidence/final-regression.txt",
+        "docs/technicians-availability/evidence/final-types.txt",
+        "docs/technicians-availability/evidence/final-mobile-types.txt",
+        "docs/technicians-availability/evidence/final-build.txt",
+        "docs/technicians-availability/06-testing-and-evidence.md"
+      ],
+      "acceptanceGate": "TAV-G11",
+      "scenarioIds": [
+        "TAV-T48",
+        "TAV-T49",
+        "TAV-T50",
+        "TAV-T51",
+        "TAV-T52",
+        "TAV-T53",
+        "TAV-T54",
+        "TAV-T55"
+      ]
+    },
+    {
+      "id": "TAV-09",
+      "requirement": "Security, regressions, accessibility and recovery acceptance",
+      "priority": "P0",
+      "scope": "Approved technicians availability specification; all scenarios retained",
+      "uiReference": "Approved_Technicians_Availability_UI.png",
+      "route": "/admin/technicians; existing native staff/field shells",
+      "dataSource": "users, technician_qualifications, service_slots, service_bookings, audit_events",
+      "securityControl": "Server role/branch isolation, independent qualification verification and existing payment/work gates",
+      "status": "PARTIAL",
+      "reason": "Focused role/branch/qualification/scheduling/HTTP tests and PostgreSQL concurrency execute; existing domain guards retained.",
+      "testResult": "PASS scoped21/21, independent PostgreSQL1/1, final612pass/22environment skips/0fail; full-scope acceptance remains PARTIAL.",
+      "outstandingWork": "Full physical/native/assistive/staging/recovery acceptance and production gate closure remain.",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "packages/business-rules/src/technicians-availability.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/technicians-availability.test.ts",
+        "tests/technicians-availability-http.test.ts",
+        "tests/technicians-availability-postgres.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/technician-work.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "TAV-READ",
+        "TAV-SCOPE",
+        "TAV-SCHEDULE",
+        "TAV-TIME",
+        "TAV-HTTP"
+      ],
+      "negativeTests": [
+        "not available",
+        "independent",
+        "branchId: \"other\""
+      ],
+      "evidence": [
+        "docs/technicians-availability/01-repository-audit.md",
+        "docs/technicians-availability/evidence/tests.txt",
+        "docs/technicians-availability/evidence/scoped-tests.txt",
+        "docs/technicians-availability/evidence/postgres.txt",
+        "docs/technicians-availability/evidence/desktop.png",
+        "docs/technicians-availability/evidence/mobile-web.png",
+        "docs/technicians-availability/evidence/tablet.png",
+        "docs/technicians-availability/evidence/mobile-dark.png",
+        "docs/technicians-availability/evidence/unsaved-dialog.png",
+        "docs/technicians-availability/evidence/final-regression.txt",
+        "docs/technicians-availability/evidence/final-types.txt",
+        "docs/technicians-availability/evidence/final-mobile-types.txt",
+        "docs/technicians-availability/evidence/final-build.txt",
+        "docs/technicians-availability/06-testing-and-evidence.md"
+      ],
+      "acceptanceGate": "TAV-G12",
+      "scenarioIds": [
+        "TAV-T01",
+        "TAV-T02",
+        "TAV-T03",
+        "TAV-T04",
+        "TAV-T05",
+        "TAV-T06",
+        "TAV-T07",
+        "TAV-T08",
+        "TAV-T09",
+        "TAV-T10",
+        "TAV-T11",
+        "TAV-T12",
+        "TAV-T13",
+        "TAV-T14",
+        "TAV-T15",
+        "TAV-T16",
+        "TAV-T17",
+        "TAV-T18",
+        "TAV-T19",
+        "TAV-T20",
+        "TAV-T21",
+        "TAV-T22",
+        "TAV-T23",
+        "TAV-T24",
+        "TAV-T25",
+        "TAV-T26",
+        "TAV-T27",
+        "TAV-T28",
+        "TAV-T29",
+        "TAV-T30",
+        "TAV-T31",
+        "TAV-T32",
+        "TAV-T33",
+        "TAV-T34",
+        "TAV-T35",
+        "TAV-T36",
+        "TAV-T37",
+        "TAV-T38",
+        "TAV-T39",
+        "TAV-T40",
+        "TAV-T41",
+        "TAV-T42",
+        "TAV-T43",
+        "TAV-T44",
+        "TAV-T45",
+        "TAV-T46",
+        "TAV-T47",
+        "TAV-T48",
+        "TAV-T49",
+        "TAV-T50",
+        "TAV-T51",
+        "TAV-T52",
+        "TAV-T53",
+        "TAV-T54",
+        "TAV-T55",
+        "TAV-T56",
+        "TAV-T57",
+        "TAV-T58",
+        "TAV-T59",
+        "TAV-T60",
+        "TAV-T61",
+        "TAV-T62",
+        "TAV-T63",
+        "TAV-T64",
+        "TAV-T65",
+        "TAV-T66",
+        "TAV-T67",
+        "TAV-T68",
+        "TAV-T69",
+        "TAV-T70",
+        "TAV-T71",
+        "TAV-T72",
+        "TAV-T73",
+        "TAV-T74",
+        "TAV-T75",
+        "TAV-T76"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "TAV-T01",
+      "scenario": "current grouped sidebar intact",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T02",
+      "scenario": "existing route intact",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T03",
+      "scenario": "tab links correct",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T04",
+      "scenario": "owner sees permitted branches",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T05",
+      "scenario": "staff limited by scope",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T06",
+      "scenario": "technician cannot access admin APIs",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T07",
+      "scenario": "zero-state KPIs",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T08",
+      "scenario": "KPI count consistency",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T09",
+      "scenario": "stale refresh",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T10",
+      "scenario": "search by name",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T11",
+      "scenario": "search by ID",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T12",
+      "scenario": "filter skills",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T13",
+      "scenario": "filter branch",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T14",
+      "scenario": "filter status",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T15",
+      "scenario": "pagination",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T16",
+      "scenario": "empty state",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-03",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T17",
+      "scenario": "add technician",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-04",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T18",
+      "scenario": "duplicate identity rejection",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-04",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T19",
+      "scenario": "invitation without privilege",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-04",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T20",
+      "scenario": "role-change approval",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-04",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T21",
+      "scenario": "branch-change approval",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-04",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T22",
+      "scenario": "edit permitted fields",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-04",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T23",
+      "scenario": "unauthorised edit rejected",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-04",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T24",
+      "scenario": "qualification code validation",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-05",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T25",
+      "scenario": "independent verifier requirement",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-05",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T26",
+      "scenario": "self-verification rejection",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-05",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T27",
+      "scenario": "expiry validation",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-05",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T28",
+      "scenario": "revoked qualification",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-05",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T29",
+      "scenario": "evidence access control",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-05",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T30",
+      "scenario": "missing qualification assignment rejected",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-05",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T31",
+      "scenario": "appointment create valid",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T32",
+      "scenario": "overlap rejection",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T33",
+      "scenario": "concurrent booking race",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T34",
+      "scenario": "unavailable technician rejection",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T35",
+      "scenario": "blocked slot rejection",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T36",
+      "scenario": "branch mismatch rejection",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T37",
+      "scenario": "service mismatch rejection",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T38",
+      "scenario": "appointment reschedule",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T39",
+      "scenario": "appointment cancellation",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T40",
+      "scenario": "block appointment with reason",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T41",
+      "scenario": "block with existing booking conflict",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T42",
+      "scenario": "unblock audit",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T43",
+      "scenario": "working hours",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T44",
+      "scenario": "breaks",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T45",
+      "scenario": "holidays",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T46",
+      "scenario": "cross-midnight job",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T47",
+      "scenario": "timezone conversion",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-06",
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T48",
+      "scenario": "mobile admin scope",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-07",
+        "TAV-08",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T49",
+      "scenario": "mobile technician own-data scope",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-07",
+        "TAV-08",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T50",
+      "scenario": "offline safe draft",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-07",
+        "TAV-08",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T51",
+      "scenario": "offline approval forbidden",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-07",
+        "TAV-08",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T52",
+      "scenario": "reconnect conflict",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-07",
+        "TAV-08",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T53",
+      "scenario": "real-time update",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-08",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T54",
+      "scenario": "notification dedupe",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-08",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T55",
+      "scenario": "no duplicate submission",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-08",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T56",
+      "scenario": "keyboard modal focus",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-07",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T57",
+      "scenario": "escape/back behaviour",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-07",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T58",
+      "scenario": "mobile keyboard safe area",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-07",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T59",
+      "scenario": "screen-reader labels",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-07",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T60",
+      "scenario": "dark mode",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-07",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T61",
+      "scenario": "reduced motion",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-07",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T62",
+      "scenario": "low bandwidth",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-02",
+        "TAV-07",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T63",
+      "scenario": "audit history",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T64",
+      "scenario": "PII isolation",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    },
+    {
+      "id": "TAV-T65",
+      "scenario": "synthetic demo isolation",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T66",
+      "scenario": "existing service booking regression",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T67",
+      "scenario": "quotation regression",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T68",
+      "scenario": "invoice/payment gate regression",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T69",
+      "scenario": "technician job status regression",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T70",
+      "scenario": "inventory/cylinder safety regression",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T71",
+      "scenario": "web production build",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T72",
+      "scenario": "iOS device",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-07",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T73",
+      "scenario": "Android device",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-07",
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T74",
+      "scenario": "rollback smoke test",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T75",
+      "scenario": "database migration rollback",
+      "status": "UNTESTED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "TAV-T76",
+      "scenario": "no fake records",
+      "status": "PARTIALLY_VERIFIED",
+      "requirementIds": [
+        "TAV-09"
+      ],
+      "evidence": [
+        "docs/technicians-availability/evidence/scoped-tests.txt"
+      ],
+      "reason": "Bounded automated/browser assertion exists; full scenario acceptance not claimed."
+    }
+  ],
+  "gates": [
+    {
+      "id": "TAV-G01",
+      "scope": "repository audit completed",
+      "status": "PASS",
+      "evidence": "Scoped tests, original field sources unchanged, actual grouped-sidebar preview and isolated PostgreSQL concurrency; bounded gate evidence, no commercial release implied."
+    },
+    {
+      "id": "TAV-G02",
+      "scope": "baseline captured",
+      "status": "PASS",
+      "evidence": "Scoped tests, original field sources unchanged, actual grouped-sidebar preview and isolated PostgreSQL concurrency; bounded gate evidence, no commercial release implied."
+    },
+    {
+      "id": "TAV-G03",
+      "scope": "sidebar unchanged",
+      "status": "PASS",
+      "evidence": "Scoped tests, original field sources unchanged, actual grouped-sidebar preview and isolated PostgreSQL concurrency; bounded gate evidence, no commercial release implied."
+    },
+    {
+      "id": "TAV-G04",
+      "scope": "all existing routes work",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G05",
+      "scope": "approved visual layout on desktop",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G06",
+      "scope": "responsive tablet/mobile",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G07",
+      "scope": "actual authorised KPIs",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G08",
+      "scope": "technician directory works",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G09",
+      "scope": "filters/search/pagination work",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G10",
+      "scope": "upcoming schedule correct",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G11",
+      "scope": "add/invite modal works",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G12",
+      "scope": "qualification verification independent",
+      "status": "PASS",
+      "evidence": "Scoped tests, original field sources unchanged, actual grouped-sidebar preview and isolated PostgreSQL concurrency; bounded gate evidence, no commercial release implied."
+    },
+    {
+      "id": "TAV-G13",
+      "scope": "expiry and revocation enforced",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G14",
+      "scope": "availability creation and edit safe",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G15",
+      "scope": "block/unblock audited",
+      "status": "OPEN",
+      "evidence": "Scoped tests, original field sources unchanged, actual grouped-sidebar preview and isolated PostgreSQL concurrency; bounded gate evidence, no commercial release implied.",
+      "reason": "Existing block auditing retained; complete successful block/unblock notification/impact acceptance not evidenced."
+    },
+    {
+      "id": "TAV-G16",
+      "scope": "no concurrent double booking",
+      "status": "PASS",
+      "evidence": "Scoped tests, original field sources unchanged, actual grouped-sidebar preview and isolated PostgreSQL concurrency; bounded gate evidence, no commercial release implied."
+    },
+    {
+      "id": "TAV-G17",
+      "scope": "role and branch isolation",
+      "status": "PASS",
+      "evidence": "Scoped tests, original field sources unchanged, actual grouped-sidebar preview and isolated PostgreSQL concurrency; bounded gate evidence, no commercial release implied."
+    },
+    {
+      "id": "TAV-G18",
+      "scope": "field technician own-data isolation",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G19",
+      "scope": "mobile navigation preserved",
+      "status": "PASS",
+      "evidence": "Scoped tests, original field sources unchanged, actual grouped-sidebar preview and isolated PostgreSQL concurrency; bounded gate evidence, no commercial release implied."
+    },
+    {
+      "id": "TAV-G20",
+      "scope": "existing services/quotes/payment gates preserved",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G21",
+      "scope": "notifications deduplicated",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G22",
+      "scope": "offline failure handling safe",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G23",
+      "scope": "accessibility passed",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G24",
+      "scope": "light/dark modes consistent",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G25",
+      "scope": "security tests passed",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G26",
+      "scope": "data migrations reversible",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G27",
+      "scope": "regression suite passed or documented pre-existing failures",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G28",
+      "scope": "web and applicable mobile builds passed",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G29",
+      "scope": "staging sign-off with real authorised test data",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G30",
+      "scope": "recovery drill evidenced",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G31",
+      "scope": "no synthetic data in production",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    },
+    {
+      "id": "TAV-G32",
+      "scope": "no production deployment without owner authorisation",
+      "status": "OPEN",
+      "reason": "Full scenario-specific acceptance not established; retained in denominator. See open-risks register."
+    }
+  ],
+  "coverage": {
+    "implementedRequirements": "8/9 partial implementation plus1/9 verified audit",
+    "verifiedRequirements": "1/9",
+    "criticalRequirements": "0/4 fully accepted;4 partial",
+    "scenarios": "76/76 retained; none silently excluded",
+    "routes": "existing routes retained; only technicians runtime visually checked",
+    "gates": "7/32 bounded gates; remaining OPEN"
+  },
+  "scopeChanges": [
+    "Native binary builds and infrastructure remain deferred by earlier explicit user instructions. No requirement silently removed.",
+    "Explicit assignment availability now gates NEW appointments/reservations; existing histories/work authorisation remain. Fixture availability is explicit; legacy overlapping-slot regression still exercises competing reservation safety.",
+    "Technical administrator is not granted service safety/qualification management merely because its role name says administrator. Existing staff-management authority remains.",
+    "No schema/data import, hosted rollout, native binary build, automatic assignment or live payment activation."
+  ]
+}

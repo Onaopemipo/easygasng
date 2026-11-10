@@ -18,6 +18,7 @@ const reads = new Set([
   "driver.snapshot",
   "technician.snapshot",
   "technician.jobs",
+  "technicians.workspace",
   "delivery.photos",
   "dispatch.board",
   "dispatch.centre",
@@ -40,6 +41,7 @@ const reads = new Set([
   "tracking.operation",
   "tracking.drivers",
   "booking.recover",
+  "credit.customers",
   "customers.manage",
   "customers.detail",
   "customer.dashboard",
@@ -51,6 +53,7 @@ const reads = new Set([
   "gas.stock",
   "gas.inspections",
   "staff.manage",
+  "staff.privileges",
   "staff.lookup",
   "production.readiness",
   "bundles",
@@ -210,8 +213,11 @@ async function handle(
       throw new AppError(405, "Use POST for this operation.");
     if (
       [
+        "approvals",
+        "credit.customers",
         "admin.search",
         "technician.jobs",
+        "technicians.workspace",
         "technician.snapshot",
         "inventory.workspace",
         "inventory.movements",

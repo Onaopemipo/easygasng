@@ -1,0 +1,49 @@
+{
+  "phase": "Client demo release 20261110",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "DEMO-REL-20261110",
+      "requirement": "Push pending authorised source and deploy the existing isolated Vercel client demo with schema compatibility and hosted smoke verification",
+      "priority": "P1",
+      "scope": "Existing demo only; no native binary or commercial activation",
+      "uiReference": "Current user request Push and deploy",
+      "route": "https://easygas-client-demo.vercel.app",
+      "dataSource": "Existing dedicated demo database; actual Git revision and Vercel deployment metadata",
+      "securityControl": "Dedicated target verification, encrypted backup, additive migration, retained record checks, restricted runtime and authenticated role-denial smoke checks; private files excluded",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Preflight complete; deployment and hosted checks pending.",
+      "testResult": "PASS preflight26 and web/mobile types; hosted acceptance pending.",
+      "outstandingWork": "Complete verified backup/migration, Git push, deployment and hosted checks. Prior production NO-GO remains.",
+      "implementationFiles": [
+        "apps/web/lib/db.ts",
+        "database/migrations/075_staff_privileges.sql",
+        ".vercelignore"
+      ],
+      "testFiles": [
+        "tests/staff-privileges.test.ts",
+        "scripts/check-vercel-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/releases/20261110-demo/report.md",
+        "docs/releases/20261110-demo/evidence/tests.txt",
+        "docs/releases/20261110-demo/evidence/web-types.txt",
+        "docs/releases/20261110-demo/evidence/mobile-types.txt"
+      ],
+      "acceptanceGate": "DEMO-REL-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DEMO-REL-G01",
+      "scope": "Push, compatible demo migration, deployment and hosted verification",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "No map integration or commercial production activation claimed; existing partial technician matrices and prior gates retained."
+  ]
+}

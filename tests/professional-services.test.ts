@@ -64,7 +64,11 @@ test("service drafts are not sellable; checklist and price activation require in
 test("booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve", async () => {
   const f = await fixture();
   try {
-    const second = await f.createSlot(0.5);
+    // Legacy overlapping slots remain possible in historical databases. New creation
+    // rejects overlap; seed the historical shape directly to retain reservation-race coverage.
+    const original = (await f.db.query("SELECT * FROM service_slots LIMIT 1")).rows[0];
+    const second = { id: id() };
+    await f.db.query("INSERT INTO service_slots(id,technician_id,service_id,branch_id,starts_at,ends_at,capacity) VALUES($1,$2,$3,$4,$5,$6,1)", [second.id, original.technician_id, original.service_id, original.branch_id, new Date(+new Date(original.starts_at)+1800000).toISOString(), new Date(+new Date(original.ends_at)+1800000).toISOString()]);
     const input = f.input();
     const results = await Promise.allSettled([
       f.call("customer", "booking.create", input),

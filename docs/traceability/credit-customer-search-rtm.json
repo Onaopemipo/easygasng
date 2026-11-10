@@ -1,0 +1,113 @@
+{
+  "phase": "Credits and refunds customer quick search",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "CREDIT-SEARCH01",
+      "requirement": "Authorised bounded customer quick search and backend branch revalidation",
+      "priority": "P0",
+      "scope": "Existing /admin/credits customer selection; no new refund creation authority",
+      "uiReference": "User screenshot manual Customer account ID field",
+      "route": "/admin/credits; GET /api/credit.customers",
+      "dataSource": "users, account_addresses, orders, existing credit_requests",
+      "securityControl": "owner/finance only; scoped active identities, current backend authority, reauth, independent financial verification and receipt uniqueness",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "20focused domain/HTTP/form/commerce/service checks, web build/types and actual local search/selection/change/mobile UI verified.",
+      "testResult": "PASS20focused tests, current-source web typecheck/build and actual local browser interaction.",
+      "outstandingWork": "Not deployed; existing financial/production acceptance gates and unrelated technician work unchanged.",
+      "implementationFiles": [
+        "apps/web/components/credit-customer-search.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/commerce.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "testFiles": [
+        "tests/credit-customer-search.test.ts",
+        "tests/commerce.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "testIds": [
+        "CREDIT-SEARCH01",
+        "CREDIT-SELECT01",
+        "CREDIT-HTTP01",
+        "CREDIT-FORM01"
+      ],
+      "negativeTests": [
+        "outside your authorised branch",
+        "technician",
+        "password_hash"
+      ],
+      "evidence": [
+        "docs/credit-customer-search/report.md",
+        "docs/credit-customer-search/evidence/tests.txt",
+        "docs/credit-customer-search/evidence/build.txt",
+        "docs/credit-customer-search/evidence/types.txt",
+        "docs/credit-customer-search/evidence/selected-customer.png",
+        "docs/credit-customer-search/evidence/mobile-selected.png"
+      ],
+      "acceptanceGate": "CREDIT-SEARCH-G01"
+    },
+    {
+      "id": "CREDIT-SEARCH02",
+      "requirement": "Explicit customer selection automatically binds credit account/branch and filters existing refund/credit reviews",
+      "priority": "P1",
+      "scope": "Existing /admin/credits customer selection; no new refund creation authority",
+      "uiReference": "User screenshot manual Customer account ID field",
+      "route": "/admin/credits; GET /api/credit.customers",
+      "dataSource": "users, account_addresses, orders, existing credit_requests",
+      "securityControl": "owner/finance only; scoped active identities, current backend authority, reauth, independent financial verification and receipt uniqueness",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "20focused domain/HTTP/form/commerce/service checks, web build/types and actual local search/selection/change/mobile UI verified.",
+      "testResult": "PASS20focused tests, current-source web typecheck/build and actual local browser interaction.",
+      "outstandingWork": "Not deployed; existing financial/production acceptance gates and unrelated technician work unchanged.",
+      "implementationFiles": [
+        "apps/web/components/credit-customer-search.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/commerce.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "testFiles": [
+        "tests/credit-customer-search.test.ts",
+        "tests/commerce.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "testIds": [
+        "CREDIT-SEARCH01",
+        "CREDIT-SELECT01",
+        "CREDIT-HTTP01",
+        "CREDIT-FORM01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/credit-customer-search/report.md",
+        "docs/credit-customer-search/evidence/tests.txt",
+        "docs/credit-customer-search/evidence/build.txt",
+        "docs/credit-customer-search/evidence/types.txt",
+        "docs/credit-customer-search/evidence/selected-customer.png",
+        "docs/credit-customer-search/evidence/mobile-selected.png"
+      ],
+      "acceptanceGate": "CREDIT-SEARCH-G02"
+    }
+  ],
+  "gates": [
+    {
+      "id": "CREDIT-SEARCH-G01",
+      "scope": "Scoped financial search and direct credit-write isolation",
+      "status": "PASS"
+    },
+    {
+      "id": "CREDIT-SEARCH-G02",
+      "scope": "Selected customer details bind credit and scope refund review",
+      "status": "PASS"
+    }
+  ],
+  "scopeChanges": [
+    "Reuses canonical customer identities, existing credit requests and refund decisions; no new refund consent bypass, customer system or financial ledger. Prior unrelated technician/report work preserved."
+  ],
+  "coverage": {
+    "implemented": "2/2 bounded requirements",
+    "verified": "2/2 bounded requirements",
+    "gates": "2/2 bounded gates; commercial production NO-GO retained"
+  }
+}

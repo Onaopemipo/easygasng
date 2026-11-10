@@ -846,13 +846,16 @@ function Settings({
         }
       />
       {data && (
-        <details className="settings-tools"><summary>Gas stock, pricing and delivery tools</summary><GasDeliveryAdmin
-          user={user}
-          settings={data}
-          onEdit={setEditing}
-          refresh={refresh}
-          onRefresh={onChange}
-        /></details>
+        <details className="settings-tools">
+          <summary>Gas stock, pricing and delivery tools</summary>
+          <GasDeliveryAdmin
+            user={user}
+            settings={data}
+            onEdit={setEditing}
+            refresh={refresh}
+            onRefresh={onChange}
+          />
+        </details>
       )}
       {message && <Notice type="success" message={message} />}
       {actionError && <Notice type="error" message={actionError} />}
@@ -872,7 +875,10 @@ function Settings({
               className={c === current ? "active" : ""}
               key={c}
               aria-pressed={c === current && !query}
-              onClick={() => { setCategory(c); setQuery(""); }}
+              onClick={() => {
+                setCategory(c);
+                setQuery("");
+              }}
             >
               <Settings2 size={16} />
               {c}
@@ -905,9 +911,17 @@ function Settings({
                   {user.branchId ?? "Lagos"}
                 </span>
               </div>
-              {query.trim() && !data.some((d: any) => `${d.category} ${d.label} ${d.description}`.toLowerCase().includes(query.toLowerCase())) && (
-                <p className="settings-empty" role="status">No settings match “{query}”. Try another word or choose a category.</p>
-              )}
+              {query.trim() &&
+                !data.some((d: any) =>
+                  `${d.category} ${d.label} ${d.description}`
+                    .toLowerCase()
+                    .includes(query.toLowerCase()),
+                ) && (
+                  <p className="settings-empty" role="status">
+                    No settings match “{query}”. Try another word or choose a
+                    category.
+                  </p>
+                )}
               {data
                 .filter(
                   (d: any) =>
@@ -977,10 +991,10 @@ function Settings({
                       {d.owner_auto_approval
                         ? "Business Owner requests: automatic approval; activation checks remain"
                         : d.risk === 4
-                        ? "Two distinct authorised approvers + identity verification"
-                        : d.risk === 1
-                          ? "Changes take effect immediately"
-                          : "Independent approval required"}
+                          ? "Two distinct authorised approvers + identity verification"
+                          : d.risk === 1
+                            ? "Changes take effect immediately"
+                            : "Independent approval required"}
                     </div>
                   </article>
                 ))}
@@ -998,16 +1012,27 @@ function Settings({
           <SettingForm
             setting={editing}
             onDone={(result) => {
-              setActionError(result?.status === "failed" || result?.status === "superseded" ? (result.failure_reason || "The change could not be activated. Review this request in the Approval Centre.") : "");
+              setActionError(
+                result?.status === "failed" || result?.status === "superseded"
+                  ? result.failure_reason ||
+                      "The change could not be activated. Review this request in the Approval Centre."
+                  : "",
+              );
               setEditing(null);
               setMessage(
-                result?.status === "failed" || result?.status === "superseded" ? ""
-                  : result?.status === "draft" ? "Draft saved. It is not active until submitted."
-                  : result?.awaitingQualifiedReview ? "Owner approval recorded automatically. An independent qualified safety review is still required before activation."
-                  : result?.autoApproved ? (result.status === "scheduled" ? "Automatically approved. It will apply on the selected effective date once activation checks pass." : "Automatically approved and applied. Audit history recorded.")
-                  : editing.risk === 1
-                  ? "Setting saved and audit history recorded."
-                  : "Your request is awaiting independent approval. The current value remains active.",
+                result?.status === "failed" || result?.status === "superseded"
+                  ? ""
+                  : result?.status === "draft"
+                    ? "Draft saved. It is not active until submitted."
+                    : result?.awaitingQualifiedReview
+                      ? "Owner approval recorded automatically. An independent qualified safety review is still required before activation."
+                      : result?.autoApproved
+                        ? result.status === "scheduled"
+                          ? "Automatically approved. It will apply on the selected effective date once activation checks pass."
+                          : "Automatically approved and applied. Audit history recorded."
+                        : editing.risk === 1
+                          ? "Setting saved and audit history recorded."
+                          : "Your request is awaiting independent approval. The current value remains active.",
               );
               onChange();
             }}
@@ -1115,8 +1140,7 @@ function SettingForm({
           reason,
           ...(effectiveAt
             ? {
-                effectiveAt:
-                  effectiveDateInLagos(effectiveAt),
+                effectiveAt: effectiveDateInLagos(effectiveAt),
               }
             : {}),
         });
@@ -1131,8 +1155,7 @@ function SettingForm({
           draft,
           ...(effectiveAt
             ? {
-                effectiveAt:
-                  effectiveDateInLagos(effectiveAt),
+                effectiveAt: effectiveDateInLagos(effectiveAt),
               }
             : {}),
         });
@@ -1512,7 +1535,11 @@ function SettingForm({
           </p>
         </div>
       ) : s.value_type === "payment_gateway" ? (
-        <PaymentGatewayPolicy value={value} setValue={setValue} ownerAutoApproval={s.owner_auto_approval} />
+        <PaymentGatewayPolicy
+          value={value}
+          setValue={setValue}
+          ownerAutoApproval={s.owner_auto_approval}
+        />
       ) : s.value_type === "dispatch_routing" ? (
         <div className="stack">
           <label>
@@ -1816,7 +1843,10 @@ function SettingForm({
           onChange={(e) => setEffectiveAt(e.target.value)}
         />
       </label>
-      <p className="effective-date-help">Optional. Takes effect from the start of the selected day in Lagos, once all required approvals are complete.</p>
+      <p className="effective-date-help">
+        Optional. Takes effect from the start of the selected day in Lagos, once
+        all required approvals are complete.
+      </p>
       {!requestId && (
         <label>
           <FormInput
@@ -1843,8 +1873,8 @@ function SettingForm({
           s.owner_auto_approval
             ? "Business Owner requests are approved automatically. Effective dates, identity verification and activation checks still apply. Saved drafts remain inactive."
             : s.risk === 1
-            ? "This authorised routine change will take effect immediately and create an audit record."
-            : "The current value remains active until all independent approvals have passed and activation succeeds."
+              ? "This authorised routine change will take effect immediately and create an audit record."
+              : "The current value remains active until all independent approvals have passed and activation succeeds."
         }
       />
       <button className="button full" disabled={busy}>
@@ -1857,8 +1887,8 @@ function SettingForm({
               : s.owner_auto_approval
                 ? "Save and apply"
                 : s.risk === 1
-                ? "Save Setting"
-                : "Submit for Approval"}
+                  ? "Save Setting"
+                  : "Submit for Approval"}
         <ArrowRight size={17} />
       </button>
     </form>
@@ -1875,12 +1905,35 @@ function Approvals({
   onChange: () => void;
   verify: () => void;
 }) {
-  const { data, error } = useData("approvals", refresh),
-    [selected, setSelected] = useState<any>(null),
+  const [selected, setSelected] = useState<any>(null),
     [filter, setFilter] = useState("all"),
+    [search, setSearch] = useState(""),
+    [query, setQuery] = useState(""),
+    [page, setPage] = useState(1),
+    [pageSize, setPageSize] = useState(10),
     [reason, setReason] = useState(""),
     [failure, setFailure] = useState(""),
     [busy, setBusy] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setQuery(search);
+      setPage(1);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [search]);
+  const { data: workspace, error } = useData(
+    "approvals?" +
+      new URLSearchParams({
+        view: "paged",
+        page: String(page),
+        pageSize: String(pageSize),
+        q: query,
+        filter,
+      }),
+    refresh,
+  );
+  const data = workspace?.rows,
+    stats = workspace?.summary ?? {};
   async function decide(decision: string) {
     setBusy(true);
     setFailure("");
@@ -1895,19 +1948,12 @@ function Approvals({
       setBusy(false);
     }
   }
-  const list = data?.filter(
-    (r: any) =>
-      filter === "all" ||
-      (filter === "pending" &&
-        ["pending_approval", "partially_approved"].includes(r.status)) ||
-      (filter === "high" && r.risk === 4) ||
-      filter === r.status,
-  );
+  const list = data;
   return (
-    <>
+    <div className="approval-centre">
       <AdminHeading
-        title="Every decision, accounted for."
-        text="Review requested changes, activation status and the complete audit history."
+        title="Approval Centre"
+        text="Review changes, manage decisions and track every approval in one place."
         action={
           <button className="button secondary" onClick={verify}>
             <LockKeyhole size={16} />
@@ -1915,94 +1961,127 @@ function Approvals({
           </button>
         }
       />
-      {data && (
-        <div className="approval-stats">
-          {[
-            [
-              "Awaiting my approval",
-              data.filter((r: any) => r.can_approve || r.can_owner_apply).length,
-            ],
-            [
-              "Partially approved",
-              data.filter((r: any) => r.status === "partially_approved").length,
-            ],
-            [
-              "Scheduled changes",
-              data.filter((r: any) => r.status === "scheduled").length,
-            ],
-            [
-              "Failed activations",
-              data.filter((r: any) => r.status === "failed").length,
-            ],
-            [
-              "Pending review",
-              data.filter((r: any) =>
-                ["pending_approval", "partially_approved"].includes(r.status),
-              ).length,
-            ],
-            [
-              "High risk",
-              data.filter(
-                (r: any) =>
-                  r.risk === 4 &&
-                  ["pending_approval", "partially_approved"].includes(r.status),
-              ).length,
-            ],
-            [
-              "Activated",
-              data.filter((r: any) => r.status === "active").length,
-            ],
-            [
-              "Rejected",
-              data.filter((r: any) => r.status === "rejected").length,
-            ],
-          ].map(([title, value]) => (
-            <div className="surface" key={title}>
-              <span>{title}</span>
-              <h2>{value}</h2>
-            </div>
-          ))}
-        </div>
-      )}
-      <div className="surface">
-        <div className="section-heading">
-          <h2>Change requests</h2>
-          <select
-            className="small-select"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+      <div className="approval-overview" aria-label="Approval summary">
+        {[
+          ["Awaiting review", stats.pending, ClipboardCheck, "pending"],
+          ["Scheduled", stats.scheduled, CalendarDays, "scheduled"],
+          ["Activated", stats.active, ShieldCheck, "active"],
+          ["Needs attention", stats.failed, AlertCircle, "failed"],
+        ].map(([label, count, Icon, status]: any) => (
+          <button
+            key={status}
+            className="surface approval-metric"
+            onClick={() => {
+              setFilter(status);
+              setPage(1);
+            }}
+            aria-pressed={filter === status}
           >
-            <option value="all">All requests</option>
-            <option value="pending">Awaiting review</option>
-            <option value="high">High risk</option>
-            <option value="active">Active</option>
-            <option value="rejected">Rejected</option>
-            <option value="scheduled">Scheduled</option>
-            {[
-              "draft",
-              "changes_requested",
-              "approved",
-              "partially_approved",
-              "applying",
-              "failed",
-              "cancelled",
-              "expired",
-              "superseded",
-              "rolled_back",
-            ].map((s) => (
-              <option key={s} value={s}>
-                {s.replaceAll("_", " ")}
-              </option>
-            ))}
-          </select>
+            <span className={`approval-metric-icon ${status}`}>
+              <Icon size={22} />
+            </span>
+            <span>
+              {label}
+              <strong>{count ?? "—"}</strong>
+            </span>
+          </button>
+        ))}
+      </div>
+      <div className="approval-summary-caption">
+        Totals across your authorised records. Search and filters apply to the
+        request list below.
+      </div>
+      <div className="surface approval-request-panel">
+        <div className="section-heading">
+          <div>
+            <h2>Change requests</h2>
+            <p className="muted">
+              Open a request to review its details and available actions.
+            </p>
+          </div>
+          <label className="approval-search">
+            <Search size={18} />
+            <FormInput
+              type="search"
+              aria-label="Search approval requests"
+              placeholder="Search request, ID or requester…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </label>
+          <label className="approval-status-filter">
+            <span>Status</span>
+            <select
+              className="small-select"
+              value={filter}
+              onChange={(e) => {
+                setFilter(e.target.value);
+                setPage(1);
+              }}
+            >
+              <option value="all">All requests</option>
+              <option value="pending">Awaiting review</option>
+              <option value="high">High risk</option>
+              <option value="active">Active</option>
+              <option value="rejected">Rejected</option>
+              <option value="scheduled">Scheduled</option>
+              {[
+                "draft",
+                "changes_requested",
+                "approved",
+                "partially_approved",
+                "applying",
+                "failed",
+                "cancelled",
+                "expired",
+                "superseded",
+                "rolled_back",
+              ].map((s) => (
+                <option key={s} value={s}>
+                  {s.replaceAll("_", " ")}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
+        <nav
+          className="approval-quick-filters"
+          aria-label="Approval request filters"
+        >
+          {[
+            ["all", "All requests", stats.total],
+            ["pending", "Awaiting review", stats.pending],
+            ["high", "High risk", stats.high],
+            ["active", "Activated", stats.active],
+          ].map(([value, label, count]: any) => (
+            <button
+              key={value}
+              aria-pressed={filter === value}
+              onClick={() => {
+                setFilter(value);
+                setPage(1);
+              }}
+            >
+              {label}
+              <span>{count ?? "—"}</span>
+            </button>
+          ))}
+        </nav>
         {error ? (
           <Notice message={error} type="error" />
         ) : !list ? (
           <Loading />
         ) : !list.length ? (
-          <Empty icon={ClipboardCheck} title="Nothing awaiting your attention.">
-            Submitted changes and their decision histories will appear here.
+          <Empty
+            icon={ClipboardCheck}
+            title={
+              query || filter !== "all"
+                ? "No requests match your filters."
+                : "No change requests yet."
+            }
+          >
+            Try another search or status. Submitted changes and decision
+            histories appear here.
           </Empty>
         ) : (
           <div className="table-scroll">
@@ -2014,7 +2093,9 @@ function Approvals({
                   <th>Risk</th>
                   <th>Status</th>
                   <th>Submitted</th>
-                  <th />
+                  <th>
+                    <span className="sr-only">Actions</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -2044,14 +2125,15 @@ function Approvals({
                     </td>
                     <td>
                       <button
-                        className="text-link"
+                        className="button secondary approval-review-action"
                         onClick={() => {
                           setSelected(r);
                           setReason("");
                           setFailure("");
                         }}
                       >
-                        {r.can_owner_apply ? "Apply request" : "Review"} <ArrowRight size={14} />
+                        {r.can_owner_apply ? "Apply request" : "Review"}{" "}
+                        <ArrowRight size={14} />
                       </button>
                     </td>
                   </tr>
@@ -2060,6 +2142,81 @@ function Approvals({
             </table>
           </div>
         )}
+        <footer
+          className="approval-pagination"
+          aria-label="Approval pagination"
+        >
+          <span role="status">
+            {workspace
+              ? `Showing ${workspace.total ? (workspace.page - 1) * workspace.pageSize + 1 : 0}–${Math.min(workspace.page * workspace.pageSize, workspace.total)} of ${workspace.total} requests`
+              : error
+                ? "Requests unavailable"
+                : "Loading requests…"}
+          </span>
+          <label>
+            Rows per page
+            <select
+              aria-label="Approval rows per page"
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setPage(1);
+              }}
+            >
+              {[10, 20, 50].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </label>
+          <div className="approval-page-buttons">
+            <button
+              className="button secondary"
+              disabled={!workspace || workspace.page <= 1}
+              onClick={() => setPage(1)}
+            >
+              First
+            </button>
+            <button
+              className="button secondary"
+              disabled={!workspace || workspace.page <= 1}
+              onClick={() => setPage(workspace.page - 1)}
+            >
+              Previous
+            </button>
+            <span>
+              Page {workspace?.page ?? page} of{" "}
+              {workspace
+                ? Math.max(1, Math.ceil(workspace.total / workspace.pageSize))
+                : "—"}
+            </span>
+            <button
+              className="button secondary"
+              disabled={
+                !workspace ||
+                workspace.page * workspace.pageSize >= workspace.total
+              }
+              onClick={() => setPage(workspace.page + 1)}
+            >
+              Next
+            </button>
+            <button
+              className="button secondary"
+              disabled={
+                !workspace ||
+                workspace.page * workspace.pageSize >= workspace.total
+              }
+              onClick={() =>
+                setPage(
+                  Math.max(1, Math.ceil(workspace.total / workspace.pageSize)),
+                )
+              }
+            >
+              Last
+            </button>
+          </div>
+        </footer>
       </div>
       {selected && (
         <Modal
@@ -2162,24 +2319,51 @@ function Approvals({
               selected.owner_auto_approval
                 ? "Business Owner requests are approved automatically. Existing pending requests can be applied below. Current authority, effective date and activation checks remain enforced."
                 : selected.risk === 4
-                ? "Two distinct authorised approvers are required, including the specified owner and finance roles. Each must verify their identity."
-                : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
+                  ? "Two distinct authorised approvers are required, including the specified owner and finance roles. Each must verify their identity."
+                  : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
             }
           />
           {selected.can_owner_apply && (
-            <button className="button full" disabled={busy} onClick={async () => {
-              setBusy(true); setFailure("");
-              try {
-                const result = await api("approval.owner_apply", { id: selected.id, reason: "Apply my existing request under Business Owner authority" });
-                if (["failed", "superseded"].includes(result.status)) {
-                  setFailure(result.failure_reason || "This request could not be activated. Review its current status before trying again.");
-                  setSelected({ ...selected, status: result.status, state: result.state, failure_reason: result.failure_reason, can_owner_apply: result.status === "failed" });
-                  onChange();
+            <button
+              className="button full"
+              disabled={busy}
+              onClick={async () => {
+                setBusy(true);
+                setFailure("");
+                try {
+                  const result = await api("approval.owner_apply", {
+                    id: selected.id,
+                    reason:
+                      "Apply my existing request under Business Owner authority",
+                  });
+                  if (["failed", "superseded"].includes(result.status)) {
+                    setFailure(
+                      result.failure_reason ||
+                        "This request could not be activated. Review its current status before trying again.",
+                    );
+                    setSelected({
+                      ...selected,
+                      status: result.status,
+                      state: result.state,
+                      failure_reason: result.failure_reason,
+                      can_owner_apply: result.status === "failed",
+                    });
+                    onChange();
+                  } else {
+                    setSelected(null);
+                    onChange();
+                  }
+                } catch (e: any) {
+                  setFailure(e.message);
+                  if (e.code === "REAUTH_REQUIRED") verify();
+                } finally {
+                  setBusy(false);
                 }
-                else { setSelected(null); onChange(); }
-              } catch (e: any) { setFailure(e.message); if (e.code === "REAUTH_REQUIRED") verify(); }
-              finally { setBusy(false); }
-            }}><Check size={17} />{busy ? "Applying…" : "Apply my request"}</button>
+              }}
+            >
+              <Check size={17} />
+              {busy ? "Applying…" : "Apply my request"}
+            </button>
           )}
           {selected.decisions.length > 0 && (
             <div className="decision-history">
@@ -2349,16 +2533,20 @@ function Approvals({
             <p className="muted">
               {selected.can_owner_apply
                 ? "Use Apply my request above. Verify your identity first if prompted."
-                : selected.owner_auto_approval && selected.requester_id === user.id
+                : selected.owner_auto_approval &&
+                    selected.requester_id === user.id
                   ? `Your owner request is ${selected.status.replaceAll("_", " ")}. Saved drafts must be submitted; qualified safety reviews and activation checks still apply.`
-                  : selected.requester_id === user.id && ["pending_approval", "partially_approved"].includes(selected.status)
+                  : selected.requester_id === user.id &&
+                      ["pending_approval", "partially_approved"].includes(
+                        selected.status,
+                      )
                     ? "Your request must be reviewed by an independent authorised colleague."
                     : `This request is ${selected.status.replaceAll("_", " ")}.`}
             </p>
           )}
         </Modal>
       )}
-    </>
+    </div>
   );
 }
 function Inventory({
@@ -2881,7 +3069,14 @@ function Records({
                     canIssue={["owner", "finance"].includes(user.role)}
                   />
                 )}
-              {section === "orders" && <OrderAdditions order={selected} user={user} onChanged={() => { setSelected(null); onChange(); }} />}
+              {section === "orders" && <OrderAdditions
+                  order={selected}
+                  user={user}
+                  onChanged={() => {
+                    setSelected(null);
+                    onChange();
+                  }}
+                />}
               <OrderOperations order={selected} user={user} />
               <h3>{selected.customer_name}</h3>
               <p>
@@ -3141,10 +3336,9 @@ function DeliveryCompletion({
             version: order.tracking_version,
             handover: d.handover === "on",
             code: d.code,
-            collectedKobo:
-              ["wallet", "card"].includes(order.payment_method)
-                ? 0
-                : Math.round(Number(d.amount) * 100),
+            collectedKobo: ["wallet", "card"].includes(order.payment_method)
+              ? 0
+              : Math.round(Number(d.amount) * 100),
           });
           onDone();
         } catch (e: any) {
@@ -3187,14 +3381,19 @@ function DeliveryCompletion({
           type="number"
           min="0"
           step="0.01"
-          defaultValue={["wallet", "card"].includes(order.payment_method) ? 0 : undefined}
+          defaultValue={
+            ["wallet", "card"].includes(order.payment_method) ? 0 : undefined
+          }
           readOnly={["wallet", "card"].includes(order.payment_method)}
           required
         />
       </label>
       {error && <Notice message={error} type="error" />}
       <button className="button full" disabled={busy}>
-        {["wallet", "card"].includes(order.payment_method) ? "Confirm prepaid delivery" : "Record Delivery & Cash Collection"} <Check size={17} />
+        {["wallet", "card"].includes(order.payment_method)
+          ? "Confirm prepaid delivery"
+          : "Record Delivery & Cash Collection"}{" "}
+        <Check size={17} />
       </button>
     </form>
   );

@@ -515,6 +515,7 @@ export async function migrate(db: DB) {
       ["072", "database/migrations/072_document_identity.sql"],
       ["073", "database/migrations/073_order_card_payment.sql"],
       ["074", "database/migrations/074_order_additions.sql"],
+      ["075", "database/migrations/075_staff_privileges.sql"],
     ]) {
       if (
         version === "044" &&

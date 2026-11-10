@@ -1,0 +1,100 @@
+{
+  "phase": "Approval Centre pagination and modern presentation",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "APPROVAL-PAGE01",
+      "requirement": "Paginate, search and filter authorised approval records without the prior 200-record UI ceiling",
+      "priority": "P0",
+      "scope": "Existing Approval Centre workspace only",
+      "uiReference": "User supplied Approval Centre screenshot",
+      "route": "/admin/approvals",
+      "dataSource": "Authoritative change_requests joined to setting_definitions and requester users; existing decisions and authority checks",
+      "securityControl": "Authenticated staff roles; branch and view_roles enforced before counts and paging; no approval mutation changes; existing safety and owner rules retained",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed focused regression tests and authenticated desktop/mobile viewport browser verification.",
+      "testResult": "PASS 27 tests, web typecheck/build and local browser pagination/search/viewport checks.",
+      "outstandingWork": "Not pushed/deployed; physical-device and production launch gates remain outside this bounded change.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/approval-pagination.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "APPROVAL-PAGE01",
+        "APPROVAL-SCOPE01",
+        "APPROVAL-HTTP01"
+      ],
+      "negativeTests": [
+        "field roles cannot read requests"
+      ],
+      "evidence": [
+        "docs/approval-centre/report.md",
+        "docs/approval-centre/evidence/tests.txt",
+        "docs/approval-centre/evidence/types.txt",
+        "docs/approval-centre/evidence/build.txt",
+        "docs/approval-centre/evidence/desktop.png",
+        "docs/approval-centre/evidence/mobile.png"
+      ],
+      "acceptanceGate": "APPROVAL-G01"
+    },
+    {
+      "id": "APPROVAL-UI01",
+      "requirement": "Modernise the Approval Centre with compact real-data summaries, clear review actions and responsive pagination",
+      "priority": "P1",
+      "scope": "Existing Approval Centre workspace only",
+      "uiReference": "User supplied Approval Centre screenshot",
+      "route": "/admin/approvals",
+      "dataSource": "Authoritative change_requests joined to setting_definitions and requester users; existing decisions and authority checks",
+      "securityControl": "Authenticated staff roles; branch and view_roles enforced before counts and paging; no approval mutation changes; existing safety and owner rules retained",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed focused regression tests and authenticated desktop/mobile viewport browser verification.",
+      "testResult": "PASS 27 tests, web typecheck/build and local browser pagination/search/viewport checks.",
+      "outstandingWork": "Not pushed/deployed; physical-device and production launch gates remain outside this bounded change.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/approval-pagination.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "OWNER-AUTO-UI"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/approval-centre/report.md",
+        "docs/approval-centre/evidence/tests.txt",
+        "docs/approval-centre/evidence/types.txt",
+        "docs/approval-centre/evidence/build.txt",
+        "docs/approval-centre/evidence/desktop.png",
+        "docs/approval-centre/evidence/mobile.png"
+      ],
+      "acceptanceGate": "APPROVAL-G02"
+    }
+  ],
+  "gates": [
+    {
+      "id": "APPROVAL-G01",
+      "scope": "Paged authorised records, truthful counts and unchanged governance",
+      "status": "PASS"
+    },
+    {
+      "id": "APPROVAL-G02",
+      "scope": "Desktop/mobile viewport layout, search and pagination controls",
+      "status": "PASS"
+    }
+  ],
+  "scopeChanges": [
+    "No existing requirements removed; existing legacy approvals array contract retained. Existing grouped navigation and production NO-GO preserved."
+  ]
+}

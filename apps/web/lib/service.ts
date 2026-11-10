@@ -1,3 +1,5 @@
+import {enforceStaffPrivilege, staffPrivilegeAction} from "./staff-privileges";
+import { techniciansWorkspace } from "./technicians-availability";
 import { accountPassword } from "./password-policy";
 import { orderAdditions } from "./order-additions";
 import { financialDocuments } from "./financial-documents";
@@ -307,9 +309,12 @@ export async function dispatch(
         return { token: session, role: existing.role };
       }
       user = await actor(tx, token);
+      enforceStaffPrivilege(user,action);
+
       driverSessionPermission(user, action, input);
 
       technicianSessionPermission(user, action, input);
+      if (["staff.privileges","staff.privileges.save"].includes(action)) return staffPrivilegeAction(tx,user,action,input);
       if (action.startsWith("bulk.")) {
         if (
           action !== "bulk.summary" &&
@@ -334,9 +339,24 @@ export async function dispatch(
         ].includes(action)
       )
         return inventoryWorkspace(tx, user, action, input);
-      if (["dispatch.centre", "dispatch.candidates"].includes(action)) return dispatchCentre(tx,user,action,input);
+      if (["dispatch.centre", "dispatch.candidates"].includes(action))
+        return dispatchCentre(tx, user, action, input);
       if (action === "admin.dashboard") return adminDashboard(tx, user, input);
       if (action === "admin.search") return adminSearch(tx, user, input);
+      if (
+        [
+          "services.slot.create",
+          "services.slot.block",
+          "technician.qualify",
+          "technician.revoke",
+        ].includes(action) &&
+        (input as any)?.operationKey
+      )
+        return businessOperation(tx, user, action, input, (clean) =>
+          professionalServiceAction(tx, action, user, clean),
+        );
+      if (action === "technicians.workspace")
+        return techniciansWorkspace(tx, user, input);
       if (action === "technician.jobs") return technicianJobs(tx, user, input);
       if (action === "technician.availability")
         return requiredBusinessOperation(tx, user, action, input, (clean) =>
@@ -376,7 +396,8 @@ export async function dispatch(
       if (
         ["dispatch.assign", "dispatch.reassign"].includes(action) &&
         (process.env.EASYGAS_TRACKING_MUTATIONS_ENABLED === "false" ||
-          (process.env.NODE_ENV === "production" && process.env.EASYGAS_TRACKING_MUTATIONS_ENABLED !== "true"))
+          (process.env.NODE_ENV === "production" &&
+            process.env.EASYGAS_TRACKING_MUTATIONS_ENABLED !== "true"))
       )
         throw new AppError(503, "Tracking fulfilment writes are disabled.");
 
@@ -514,7 +535,13 @@ export async function dispatch(
         ].includes(action)
       )
         return customerManagement(tx, user, action, input);
-      if (["order.additions", "order.addition.quote", "order.addition.create"].includes(action))
+      if (
+        [
+          "order.additions",
+          "order.addition.quote",
+          "order.addition.create",
+        ].includes(action)
+      )
         return orderAdditions(tx, user, action, input);
       if (
         [
@@ -609,7 +636,8 @@ export async function dispatch(
       if (referralResult !== undefined) return referralResult;
       const rewardsResult = await rewardsAction(tx, action, user, input);
       if (rewardsResult !== undefined) return rewardsResult;
-      if (action === "documents.list") return financialDocuments(tx, user, input);
+      if (action === "documents.list")
+        return financialDocuments(tx, user, input);
       const fundingResult = await walletFundingAction(tx, action, user, input);
       if (fundingResult !== undefined) return fundingResult;
       const commerceResult = await commerceAction(tx, action, user, input);
@@ -1058,11 +1086,17 @@ export async function dispatch(
             "SELECT d.*,s.value,s.version,s.scope,s.changed_at FROM setting_definitions d JOIN settings s ON s.key=d.key WHERE s.scope=$1 ORDER BY d.category,d.label",
             [d.scope],
           )
-        ).rows.filter(
-          (d) =>
-            d.view_roles.includes(user!.role) &&
-            d.value_type !== "inventory_operation",
-        ).map((d) => ({ ...d, owner_auto_approval: user!.role === "owner" && ownerAutoApprovalEnabled() }));
+        ).rows
+          .filter(
+            (d) =>
+              d.view_roles.includes(user!.role) &&
+              d.value_type !== "inventory_operation",
+          )
+          .map((d) => ({
+            ...d,
+            owner_auto_approval:
+              user!.role === "owner" && ownerAutoApprovalEnabled(),
+          }));
       }
       if (action === "setting.propose")
         return propose(
@@ -1140,13 +1174,84 @@ export async function dispatch(
           "service_manager",
           "safety_officer",
         ]);
+        const paged = (input as any)?.view === "paged";
+        const options = paged
+          ? z
+              .object({
+                view: z.literal("paged"),
+                page: z.coerce.number().int().min(1).max(10000).default(1),
+                pageSize: z.coerce
+                  .number()
+                  .int()
+                  .refine((n) => [10, 20, 50].includes(n))
+                  .default(10),
+                q: z.string().trim().max(100).default(""),
+                filter: z
+                  .enum([
+                    "all",
+                    "pending",
+                    "high",
+                    "active",
+                    "rejected",
+                    "scheduled",
+                    "draft",
+                    "changes_requested",
+                    "approved",
+                    "partially_approved",
+                    "applying",
+                    "failed",
+                    "cancelled",
+                    "expired",
+                    "superseded",
+                    "rolled_back",
+                  ])
+                  .default("all"),
+              })
+              .strict()
+              .parse(input)
+          : null;
+        const scopeArgs = [
+          user.role === "owner" ? null : (user.branch_id ?? ""),
+          JSON.stringify([user.role]),
+        ];
+        const base =
+          "FROM change_requests r JOIN setting_definitions d ON d.key=r.key JOIN users u ON u.id=r.requester_id WHERE ($1::text IS NULL OR r.scope=$1) AND d.view_roles @> $2::jsonb";
+        const filtered =
+          base +
+          " AND ($3='all' OR ($3='pending' AND r.status IN ('pending_approval','partially_approved')) OR ($3='high' AND r.risk=4) OR r.status=$3) AND ($4='' OR d.label ILIKE '%'||$4||'%' OR r.key ILIKE '%'||$4||'%' OR u.name ILIKE '%'||$4||'%' OR r.id ILIKE '%'||$4||'%')";
+        const queryArgs = [
+          ...scopeArgs,
+          options?.filter ?? "all",
+          options?.q ?? "",
+        ];
+        const total = options
+          ? Number(
+              (await one(tx, "SELECT count(*)::int n " + filtered, queryArgs))!
+                .n,
+            )
+          : 0;
+        const page = options
+          ? Math.min(
+              options.page,
+              Math.max(1, Math.ceil(total / options.pageSize)),
+            )
+          : 1;
+        const summary = options
+          ? await one(
+              tx,
+              `SELECT count(*)::int total,count(*) FILTER(WHERE r.status IN ('pending_approval','partially_approved'))::int pending,count(*) FILTER(WHERE r.status='partially_approved')::int partial,count(*) FILTER(WHERE r.status='scheduled')::int scheduled,count(*) FILTER(WHERE r.status='failed')::int failed,count(*) FILTER(WHERE r.status='active')::int active,count(*) FILTER(WHERE r.status='rejected')::int rejected,count(*) FILTER(WHERE r.risk=4)::int high ${base}`,
+              scopeArgs,
+            )
+          : null;
         const rows = (
           await tx.query(
-            "SELECT r.*,d.label,d.description,d.value_type,d.minimum,d.maximum,d.category,d.approve_roles,d.view_roles,d.required_roles,u.name AS requester FROM change_requests r JOIN setting_definitions d ON d.key=r.key JOIN users u ON u.id=r.requester_id WHERE ($1::text IS NULL OR r.scope=$1) AND d.view_roles @> $2::jsonb ORDER BY r.created_at DESC LIMIT 200",
-            [
-              user.role === "owner" ? null : user.branch_id,
-              JSON.stringify([user.role]),
-            ],
+            "SELECT r.*,d.label,d.description,d.value_type,d.minimum,d.maximum,d.category,d.approve_roles,d.view_roles,d.required_roles,u.name AS requester " +
+              (options ? filtered : base) +
+              " ORDER BY r.created_at DESC,r.id DESC " +
+              (options ? "LIMIT $5 OFFSET $6" : "LIMIT 200"),
+            options
+              ? [...queryArgs, options.pageSize, (page - 1) * options.pageSize]
+              : scopeArgs,
           )
         ).rows;
         const permitted = rows.filter(
@@ -1178,8 +1283,20 @@ export async function dispatch(
               d?.value_type === "access" &&
               r.proposed_value?.userId === user!.id
             );
-          r.owner_auto_approval = ownerAutoApprovalEnabled() && r.requester_role === "owner";
-          r.can_owner_apply = r.owner_auto_approval && user.role === "owner" && r.requester_id === user.id && ["pending_approval", "partially_approved", "approved", "scheduled", "failed"].includes(r.status) && new Date(r.expires_at).getTime() > Date.now();
+          r.owner_auto_approval =
+            ownerAutoApprovalEnabled() && r.requester_role === "owner";
+          r.can_owner_apply =
+            r.owner_auto_approval &&
+            user.role === "owner" &&
+            r.requester_id === user.id &&
+            [
+              "pending_approval",
+              "partially_approved",
+              "approved",
+              "scheduled",
+              "failed",
+            ].includes(r.status) &&
+            new Date(r.expires_at).getTime() > Date.now();
           r.state = r.status.toUpperCase();
           r.decisions = (
             await tx.query(
@@ -1205,7 +1322,15 @@ export async function dispatch(
           )
             r.can_approve = false;
         }
-        return permitted;
+        return options
+          ? {
+              rows: permitted,
+              total,
+              page,
+              pageSize: options.pageSize,
+              summary,
+            }
+          : permitted;
       }
       if (action === "approval.decide") {
         const d = z

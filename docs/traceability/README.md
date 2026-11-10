@@ -119,3 +119,15 @@ Business Owner automatic approvals (10 November2026): [matrix](owner-auto-approv
 Owner policy rollout accepted: source67d94cc, Vercel dpl_AMwAo4VzXVKn7ewqvCZ7P3g8WXj6 READY. OWNER-AUTO01–03 verified for bounded demo scope;605full passes/20environment skips,40scoped checks,21final followups, separate real PostgreSQL concurrency and actual owner UI/role-denial checks pass. No old pending request was applied by testing; all original production gates/NO-GO remain.
 
 Settings monetary display repair (10 November2026): [matrix](settings-money-rtm.md), [report](../settings-money/report.md). SETUP-MONEY01 corrects the settings cleanup's scalar kobo display; hosted audit confirms180000kobo=₦1,800/kg. No stored price/version change. Rollout/acceptance tracked in matrix; NO-GO preserved.
+
+Technicians & Availability redesign: [matrix](technicians-availability-rtm.md), [audit](../technicians-availability/01-repository-audit.md). Preserve grouped sidebar/routes, independent qualifications and current production NO-GO. Full76 scenarios/32 gates retained.
+
+Reports duplicate empty-state correction: [matrix](report-empty-state-rtm.md). One combined empty state; distinct nonempty schedules/deliveries retained. No production gate change.
+
+Credit/refund customer quick search: [matrix](credit-customer-search-rtm.md). Existing identities, financial verification, refund consent and branch isolation preserved. No launch gate change.
+
+Approval Centre pagination and modern presentation: [matrix](approval-centre-rtm.md), [report](../approval-centre/report.md). Bounded server-side pagination/search/authorisation and responsive workspace verified locally; not deployed. Existing production NO-GO and prior outstanding work preserved.
+
+Individual staff privileges: [matrix](staff-privileges-rtm.md), [report](../staff-privileges/report.md). Explicit per-user grant/deny/default catalogue, current-request backend enforcement, immutable history and scoped administration verified locally. Protected role, qualification and independent approval controls remain; not deployed; production NO-GO unchanged.
+
+Client demo release10November: [matrix](demo-release-20261110-rtm.md), [report](../releases/20261110-demo/report.md). Existing linked demo deployment only; no commercial activation or map implementation.

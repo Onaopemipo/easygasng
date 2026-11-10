@@ -1,0 +1,9 @@
+# API and scheduling contracts
+
+`GET /api/technicians.workspace`: authenticated bounded read; POST rejected; 120 reads/minute per account, existing origin/CSRF protections for mutations. Filters: branchId (empty owner=all, others own branch), q<=100, status all/active/inactive/assigned/available, qualification all/verified/expired/missing, serviceId, strict ISO date, page and schedulePage 1..10000. Directory page20, schedule page10; current verifier candidate list bounded200. Explicit DTO in packages/business-rules/src/technicians-availability.ts.
+
+The read model reuses users, branches, technician_qualifications, service_catalogue, service_slots and service_bookings. Generation timestamp and Africa/Lagos accompany results; failures retain labelled last-confirmed records. Web debounces search and refreshes while visible, pausing scheduled refresh in dialogs. Native supports explicit refresh with retained in-memory last data. Neither creates offline confirmations.
+
+Existing service-slot/qualification mutation names and payloads remain compatible. New clients send existing business-operation idempotency receipts; old clients retain prior natural-reference protection. Slot creation locks the technician row used by booking reservation, rejects any overlapping existing/blocked slot, permits adjacency, verifies service duration, active branch/service, current independent qualification and expiry through slot end. A false technician_available flag rejects NEW slots/reservations and hides them from customer offers; historical slots/assignments are not deleted and existing work still requires its separate authorisation. No account is silently enabled to make the demo bookable.
+
+Working hours/breaks/holidays/overrides and richer schedule-edit contracts are not implemented in this continuation. They remain engineering requirements, not external blockers or silently assumed defaults.
