@@ -71,6 +71,7 @@ import {
   type Actor,
 } from "./auth";
 import {
+  ownerAutoApprovalEnabled,
   audit,
   propose,
   decide,
@@ -1061,7 +1062,7 @@ export async function dispatch(
           (d) =>
             d.view_roles.includes(user!.role) &&
             d.value_type !== "inventory_operation",
-        );
+        ).map((d) => ({ ...d, owner_auto_approval: user!.role === "owner" && ownerAutoApprovalEnabled() }));
       }
       if (action === "setting.propose")
         return propose(
@@ -1177,6 +1178,8 @@ export async function dispatch(
               d?.value_type === "access" &&
               r.proposed_value?.userId === user!.id
             );
+          r.owner_auto_approval = ownerAutoApprovalEnabled() && r.requester_role === "owner";
+          r.can_owner_apply = r.owner_auto_approval && user.role === "owner" && r.requester_id === user.id && ["pending_approval", "partially_approved", "approved", "scheduled", "failed"].includes(r.status) && new Date(r.expires_at).getTime() > Date.now();
           r.state = r.status.toUpperCase();
           r.decisions = (
             await tx.query(

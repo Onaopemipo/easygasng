@@ -9,7 +9,7 @@ import {
   digest,
   type Actor,
 } from "./auth";
-import { propose, decide, audit } from "./governance";
+import { propose, decide, audit, ownerAutoApprovalEnabled, autoApproveOwnerRequest } from "./governance";
 import { grams } from "../../../packages/business-rules/src/gas-pricing";
 import { applyBulkRecovery } from "./bulk-lpg-recovery";
 const reason = z.string().trim().min(5).max(1000),
@@ -197,18 +197,20 @@ export async function requestOperation(
     "INSERT INTO inventory_operations(id,branch_id,kind,reference,payload,requested_by) VALUES($1,$2,$3,$4,$5,$6)",
     [oid, b, kind, ref, JSON.stringify(payload), user.id],
   );
-  const req = await propose(tx, user, {
+  let req = await propose(tx, user, {
     key,
     scope: b,
     value: { operationId: oid },
     version: 1,
     reason: why,
     draft,
-  });
+  }, { deferOwnerActivation: true });
   await tx.query("UPDATE inventory_operations SET request_id=$1 WHERE id=$2", [
     req.id,
     oid,
   ]);
+  if (!draft && ownerAutoApprovalEnabled() && user.role === "owner")
+    req = await autoApproveOwnerRequest(tx, user, req.id) as typeof req;
   await audit(tx, user, "inventory.operation_requested", oid, "success", {
     kind,
     branch: b,
@@ -222,6 +224,8 @@ export async function requestOperation(
     state: req.state,
     message: draft
       ? "Draft saved. Submit it in the Approval Centre."
+      : req.state === "ACTIVE" ? "Automatically approved and applied under Business Owner authority."
+      : req.state === "FAILED" ? "Owner-approved, but activation is blocked. Review the cause in the Approval Centre; no partial stock or money change was applied."
       : "Submitted for independent owner approval. Stock and money are unchanged.",
   };
 }

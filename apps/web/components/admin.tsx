@@ -974,7 +974,9 @@ function Settings({
                     <div className="setting-owner">
                       <LockKeyhole size={12} />
                       Owner: {d.owner_role} ·{" "}
-                      {d.risk === 4
+                      {d.owner_auto_approval
+                        ? "Business Owner requests: automatic approval; activation checks remain"
+                        : d.risk === 4
                         ? "Two distinct authorised approvers + identity verification"
                         : d.risk === 1
                           ? "Changes take effect immediately"
@@ -995,11 +997,15 @@ function Settings({
         >
           <SettingForm
             setting={editing}
-            onDone={() => {
-              setActionError("");
+            onDone={(result) => {
+              setActionError(result?.status === "failed" || result?.status === "superseded" ? (result.failure_reason || "The change could not be activated. Review this request in the Approval Centre.") : "");
               setEditing(null);
               setMessage(
-                editing.risk === 1
+                result?.status === "failed" || result?.status === "superseded" ? ""
+                  : result?.status === "draft" ? "Draft saved. It is not active until submitted."
+                  : result?.awaitingQualifiedReview ? "Owner approval recorded automatically. An independent qualified safety review is still required before activation."
+                  : result?.autoApproved ? (result.status === "scheduled" ? "Automatically approved. It will apply on the selected effective date once activation checks pass." : "Automatically approved and applied. Audit history recorded.")
+                  : editing.risk === 1
                   ? "Setting saved and audit history recorded."
                   : "Your request is awaiting independent approval. The current value remains active.",
               );
@@ -1069,7 +1075,7 @@ function SettingForm({
   returned,
 }: {
   setting: any;
-  onDone: () => void;
+  onDone: (result?: any) => void;
   requestId?: string;
   returned?: boolean;
 }) {
@@ -1101,8 +1107,9 @@ function SettingForm({
     try {
       const proposedValue =
         s.value_type === "money" ? Math.round(Number(value) * 100) : value;
+      let result: any;
       if (requestId)
-        await api(returned ? "approval.revise" : "approval.edit", {
+        result = await api(returned ? "approval.revise" : "approval.edit", {
           id: requestId,
           value: proposedValue,
           reason,
@@ -1114,7 +1121,7 @@ function SettingForm({
             : {}),
         });
       else
-        await api("setting.propose", {
+        result = await api("setting.propose", {
           key: s.key,
           scope: s.scope,
           value:
@@ -1130,7 +1137,7 @@ function SettingForm({
             : {}),
         });
       setDirty(false);
-      onDone();
+      onDone(result);
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -1505,7 +1512,7 @@ function SettingForm({
           </p>
         </div>
       ) : s.value_type === "payment_gateway" ? (
-        <PaymentGatewayPolicy value={value} setValue={setValue} />
+        <PaymentGatewayPolicy value={value} setValue={setValue} ownerAutoApproval={s.owner_auto_approval} />
       ) : s.value_type === "dispatch_routing" ? (
         <div className="stack">
           <label>
@@ -1833,7 +1840,9 @@ function SettingForm({
       {error && <Notice message={error} type="error" />}
       <Notice
         message={
-          s.risk === 1
+          s.owner_auto_approval
+            ? "Business Owner requests are approved automatically. Effective dates, identity verification and activation checks still apply. Saved drafts remain inactive."
+            : s.risk === 1
             ? "This authorised routine change will take effect immediately and create an audit record."
             : "The current value remains active until all independent approvals have passed and activation succeeds."
         }
@@ -1845,7 +1854,9 @@ function SettingForm({
             ? "Save Revised Draft"
             : draft
               ? "Save Draft"
-              : s.risk === 1
+              : s.owner_auto_approval
+                ? "Save and apply"
+                : s.risk === 1
                 ? "Save Setting"
                 : "Submit for Approval"}
         <ArrowRight size={17} />
@@ -1909,7 +1920,7 @@ function Approvals({
           {[
             [
               "Awaiting my approval",
-              data.filter((r: any) => r.can_approve).length,
+              data.filter((r: any) => r.can_approve || r.can_owner_apply).length,
             ],
             [
               "Partially approved",
@@ -2040,7 +2051,7 @@ function Approvals({
                           setFailure("");
                         }}
                       >
-                        Review <ArrowRight size={14} />
+                        {r.can_owner_apply ? "Apply request" : "Review"} <ArrowRight size={14} />
                       </button>
                     </td>
                   </tr>
@@ -2148,11 +2159,24 @@ function Approvals({
           </div>
           <Notice
             message={
-              selected.risk === 4
+              selected.owner_auto_approval
+                ? "Business Owner requests are approved automatically. Existing pending requests can be applied below. Current authority, effective date and activation checks remain enforced."
+                : selected.risk === 4
                 ? "Two distinct authorised approvers are required, including the specified owner and finance roles. Each must verify their identity."
                 : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
             }
           />
+          {selected.can_owner_apply && (
+            <button className="button full" disabled={busy} onClick={async () => {
+              setBusy(true); setFailure("");
+              try {
+                const result = await api("approval.owner_apply", { id: selected.id, reason: "Apply my existing request under Business Owner authority" });
+                if (["failed", "superseded"].includes(result.status)) setFailure(result.failure_reason || "This request could not be activated. Review its current status before trying again.");
+                else { setSelected(null); onChange(); }
+              } catch (e: any) { setFailure(e.message); if (e.code === "REAUTH_REQUIRED") verify(); }
+              finally { setBusy(false); }
+            }}><Check size={17} />{busy ? "Applying…" : "Apply my request"}</button>
+          )}
           {selected.decisions.length > 0 && (
             <div className="decision-history">
               <h3>Review history</h3>

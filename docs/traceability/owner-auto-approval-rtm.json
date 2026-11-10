@@ -1,0 +1,170 @@
+{
+  "phase": "Explicit Business Owner automatic approval policy",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "priority": "P0",
+      "scope": "Business Owner requests in existing governed workflow; technical administrator remains restricted",
+      "uiReference": "User screenshot own pending gas-price request with no approve button; explicit owner automatic approval instruction",
+      "route": "/admin/settings; /admin/approvals; setting.propose/rollback; approval.submit/owner_apply/activate",
+      "dataSource": "Existing settings/change_requests/setting_versions and immutable audit_events; current users/roles and captured request revision",
+      "securityControl": "Server-only explicit opt-in; current owner/requester/revision/base-version-bound immutable authority record; existing role/branch/version/expiry/validation and qualified safety/payment checks retained",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Backend and source behavior verified; cloud/UI rollout acceptance pending.",
+      "testResult": "PASS \u2014 40 scoped regressions,605 full-suite passes/20 environment skips/0failures, web types/build and separate real PostgreSQL concurrency.",
+      "outstandingWork": "Final tests, UI checks, flag-enabled client-demo rollout; production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/approval-workflow.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/payment-gateway-policy.tsx"
+      ],
+      "testFiles": [
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "negativeTests": [
+        "Live must remain blocked",
+        "Self privilege change remains blocked",
+        "Another owner cannot impersonate requester"
+      ],
+      "evidence": [
+        "docs/owner-auto-approval/audit.md",
+        "docs/owner-auto-approval/report.md",
+        "docs/owner-auto-approval/evidence/tests.txt",
+        "docs/owner-auto-approval/evidence/full-tests.txt",
+        "docs/owner-auto-approval/evidence/types.txt",
+        "docs/owner-auto-approval/evidence/build.txt",
+        "docs/owner-auto-approval/evidence/postgres.txt"
+      ],
+      "id": "OWNER-AUTO01",
+      "requirement": "Automatically approve and safely apply authorised Business Owner new, saved-draft and rollback requests",
+      "testIds": [
+        "OWNER-AUTO01",
+        "OWNER-AUTO06"
+      ],
+      "acceptanceGate": "OWNER-AUTO01-G"
+    },
+    {
+      "priority": "P0",
+      "scope": "Business Owner requests in existing governed workflow; technical administrator remains restricted",
+      "uiReference": "User screenshot own pending gas-price request with no approve button; explicit owner automatic approval instruction",
+      "route": "/admin/settings; /admin/approvals; setting.propose/rollback; approval.submit/owner_apply/activate",
+      "dataSource": "Existing settings/change_requests/setting_versions and immutable audit_events; current users/roles and captured request revision",
+      "securityControl": "Server-only explicit opt-in; current owner/requester/revision/base-version-bound immutable authority record; existing role/branch/version/expiry/validation and qualified safety/payment checks retained",
+      "status": "PARTIAL",
+      "reason": "Backend and source behavior verified; cloud/UI rollout acceptance pending.",
+      "testResult": "PASS \u2014 40 scoped regressions,605 full-suite passes/20 environment skips/0failures, web types/build and separate real PostgreSQL concurrency.",
+      "outstandingWork": "Final tests, UI checks, flag-enabled client-demo rollout; production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/approval-workflow.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/payment-gateway-policy.tsx"
+      ],
+      "testFiles": [
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "negativeTests": [
+        "Live must remain blocked",
+        "Self privilege change remains blocked",
+        "Another owner cannot impersonate requester"
+      ],
+      "evidence": [
+        "docs/owner-auto-approval/audit.md",
+        "docs/owner-auto-approval/report.md",
+        "docs/owner-auto-approval/evidence/tests.txt",
+        "docs/owner-auto-approval/evidence/full-tests.txt",
+        "docs/owner-auto-approval/evidence/types.txt",
+        "docs/owner-auto-approval/evidence/build.txt",
+        "docs/owner-auto-approval/evidence/postgres.txt"
+      ],
+      "id": "OWNER-AUTO02",
+      "requirement": "Expose existing own pending request action and truthful owner/staff messaging",
+      "testIds": [
+        "OWNER-AUTO02"
+      ],
+      "acceptanceGate": "OWNER-AUTO02-G"
+    },
+    {
+      "priority": "P0",
+      "scope": "Business Owner requests in existing governed workflow; technical administrator remains restricted",
+      "uiReference": "User screenshot own pending gas-price request with no approve button; explicit owner automatic approval instruction",
+      "route": "/admin/settings; /admin/approvals; setting.propose/rollback; approval.submit/owner_apply/activate",
+      "dataSource": "Existing settings/change_requests/setting_versions and immutable audit_events; current users/roles and captured request revision",
+      "securityControl": "Server-only explicit opt-in; current owner/requester/revision/base-version-bound immutable authority record; existing role/branch/version/expiry/validation and qualified safety/payment checks retained",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Backend and source behavior verified; cloud/UI rollout acceptance pending.",
+      "testResult": "PASS \u2014 40 scoped regressions,605 full-suite passes/20 environment skips/0failures, web types/build and separate real PostgreSQL concurrency.",
+      "outstandingWork": "Final tests, UI checks, flag-enabled client-demo rollout; production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/approval-workflow.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/payment-gateway-policy.tsx"
+      ],
+      "testFiles": [
+        "tests/owner-auto-approval.test.ts",
+        "tests/owner-auto-approval-postgres.test.ts"
+      ],
+      "negativeTests": [
+        "Live must remain blocked",
+        "Self privilege change remains blocked",
+        "Another owner cannot impersonate requester"
+      ],
+      "evidence": [
+        "docs/owner-auto-approval/audit.md",
+        "docs/owner-auto-approval/report.md",
+        "docs/owner-auto-approval/evidence/tests.txt",
+        "docs/owner-auto-approval/evidence/full-tests.txt",
+        "docs/owner-auto-approval/evidence/types.txt",
+        "docs/owner-auto-approval/evidence/build.txt",
+        "docs/owner-auto-approval/evidence/postgres.txt"
+      ],
+      "id": "OWNER-AUTO03",
+      "requirement": "Retain current authority, scheduling, expiry, version, safety and exactly-once inventory controls",
+      "testIds": [
+        "OWNER-AUTO03",
+        "OWNER-AUTO04",
+        "OWNER-AUTO05",
+        "OWNER-AUTO04",
+        "OWNER-AUTO05",
+        "OWNER-AUTO-PG"
+      ],
+      "acceptanceGate": "OWNER-AUTO03-G"
+    }
+  ],
+  "gates": [
+    {
+      "id": "OWNER-AUTO01-G",
+      "status": "PASS",
+      "scope": "Automatically approve and safely apply authorised Business Owner new, saved-draft and rollback requests"
+    },
+    {
+      "id": "OWNER-AUTO02-G",
+      "status": "OPEN",
+      "scope": "Expose existing own pending request action and truthful owner/staff messaging"
+    },
+    {
+      "id": "OWNER-AUTO03-G",
+      "status": "PASS",
+      "scope": "Retain current authority, scheduling, expiry, version, safety and exactly-once inventory controls"
+    }
+  ],
+  "scopeChanges": [
+    "User explicitly supersedes independent business approval for authorised owner-origin requests. This is not technical administrator privilege escalation.",
+    "Qualified independent safety review and downstream customer agreement/payment/stock constraints remain.",
+    "Policy opt-in enabled only for authorised demo rollout; existing installations remain unchanged by default. No mass approval/backfill of pending records."
+  ],
+  "coverage": {
+    "implemented": "3/3",
+    "locallyVerified": "2/3",
+    "gates": "2/3"
+  }
+}

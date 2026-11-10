@@ -243,6 +243,7 @@ export async function propose(
     rollbackOf?: string;
     draft?: boolean;
   },
+  options: { deferOwnerActivation?: boolean } = {},
 ) {
   const d = await definition(tx, user, input.key, input.scope, "propose");
   validateValue(d, input.value);
@@ -341,6 +342,7 @@ export async function propose(
     newState: "PENDING_APPROVAL",
     version: setting.version,
   });
+  if (ownerAutoApprovalEnabled() && user.role === "owner" && !options.deferOwnerActivation) return autoApproveOwnerRequest(tx, user, requestId);
   if (d.risk === 1) {
     await transitionApproval(
       tx,
@@ -350,7 +352,7 @@ export async function propose(
       "Routine change under existing policy",
     );
     await activate(tx, user, requestId, true);
-  } else {
+  } else if (!(ownerAutoApprovalEnabled() && user.role === "owner" && options.deferOwnerActivation)) {
     const users = (
       await tx.query(
         "SELECT id,role FROM users WHERE active=true AND (branch_id=$1 OR role='owner')",
@@ -374,7 +376,51 @@ export async function propose(
   );
   return { id: requestId, ...result, state: result!.status.toUpperCase() };
 }
+export function ownerAutoApprovalEnabled() {
+  return process.env.EASYGAS_OWNER_AUTO_APPROVAL === "true";
+}
+/** Immutable authorisation for this revision; current owner authority is rechecked on every activation. */
+async function ownerRequestAuthorized(tx: SQL, r: Row) {
+  if (!ownerAutoApprovalEnabled() || r.requester_role !== "owner") return false;
+  return Boolean(await one(tx, `SELECT a.id FROM audit_events a JOIN users u ON u.id=a.actor_id
+    WHERE a.action='approval.owner_auto_approved' AND a.target=$1 AND a.actor_id=$2
+    AND a.outcome='success' AND u.active=true AND u.role='owner'
+    AND a.detail->>'revision'=$3 AND a.detail->>'baseVersion'=$4 LIMIT 1`,
+    [r.id, r.requester_id, String(r.revision), String(r.base_version)]));
+}
+export async function autoApproveOwnerRequest(tx: SQL, user: Actor, requestId: string) {
+  if (!ownerAutoApprovalEnabled() || user.role !== "owner")
+    throw new AppError(403, "Automatic approval is available only to the Business Owner under the enabled owner policy.");
+  const r = await one(tx, "SELECT * FROM change_requests WHERE id=$1 FOR UPDATE", [requestId]);
+  if (!r) throw new AppError(404, "Request not found.");
+  if (r.requester_id !== user.id || r.requester_role !== "owner")
+    throw new AppError(403, "Only your own Business Owner requests qualify for automatic approval.");
+  const d = await definition(tx, user, r.key, r.scope, "propose");
+  if (d.additional_verification) recentVerification(user);
+  if (new Date(r.expires_at).getTime() <= Date.now()) throw new AppError(409, "This request has expired. Create a fresh request.");
+  if (r.status === "active") return { id: r.id, status: "active", state: "ACTIVE", autoApproved: true };
+  if (["pending_approval", "partially_approved"].includes(r.status)) {
+    validateValue(d, r.proposed_value);
+    if (d.value_type === "access" && r.proposed_value.userId === user.id)
+      throw new AppError(403, "You cannot approve changes to your own privileges.");
+    if (!(await ownerRequestAuthorized(tx, r))) await audit(tx, user, "approval.owner_auto_approved", r.id, "success", {
+      revision: r.revision, baseVersion: r.base_version, key: r.key,
+      policy: "explicit-business-owner-authority-v1", reason: r.reason,
+    });
+    // Owner authority replaces business approval, never the independent qualified safety review.
+    if (d.value_type === "checklist" && !(await validApprovals(tx, r, d))) {
+      if (r.status !== "partially_approved") await transitionApproval(tx, user, r.id, "partially_approved", "Owner approval recorded; qualified safety review still required");
+      return { id: r.id, status: "partially_approved", state: "PARTIALLY_APPROVED", autoApproved: true, awaitingQualifiedReview: true };
+    }
+    await transitionApproval(tx, user, r.id, "approved", "Automatically approved under Business Owner authority");
+  } else if (!["approved", "scheduled", "failed"].includes(r.status) || !(await ownerRequestAuthorized(tx, r)))
+    throw new AppError(409, "Only an open owner request or an owner-authorised activation can be applied.");
+  const result = await activate(tx, user, r.id);
+  return { id: r.id, ...result, autoApproved: true };
+}
 export async function validApprovals(tx: SQL, r: Row, d: Row) {
+  const ownerAuthorized = await ownerRequestAuthorized(tx, r);
+  if (ownerAuthorized && d.value_type !== "checklist") return true;
   const decisions = (
     await tx.query(
       "SELECT a.*,u.role AS current_role,u.active,u.branch_id FROM approval_decisions a JOIN users u ON u.id=a.approver_id WHERE a.request_id=$1 AND a.revision=$2 AND a.decision='approve'",
@@ -415,6 +461,7 @@ export async function validApprovals(tx: SQL, r: Row, d: Row) {
       continue;
     valid.push(a);
   }
+  if (ownerAuthorized) valid.push({ approver_id: r.requester_id, current_role: "owner" });
   const unique = [...new Map(valid.map((a) => [a.approver_id, a])).values()];
   return (
     unique.length >= (d.risk === 4 ? 2 : 1) &&
