@@ -1,4 +1,6 @@
 "use client";
+import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
+
 import { CustomerWallet } from "./customer-wallet";
 import { DocumentLibrary } from "./document-library";
 import { FormInput } from "./password-input";
@@ -1278,10 +1280,10 @@ function Auth({ register }: { register: boolean }) {
             type="password"
             autoComplete={register ? "new-password" : "current-password"}
             required
-            minLength={12}
+            minLength={PASSWORD_MIN_LENGTH}
           />
         </label>
-        <small>Use at least 12 characters.</small>
+        <small>Use at least {PASSWORD_MIN_LENGTH} characters.</small>
         {error && <Notice type="error" message={error} />}
         <button className="button full" disabled={busy}>
           {busy ? "Please wait…" : register ? "Create Account" : "Sign In"}

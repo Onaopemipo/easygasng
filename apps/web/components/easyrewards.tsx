@@ -1,5 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { friendlyMessage } from "../../../packages/business-rules/src/friendly-message";
+
+import { requestText } from "./app-dialog";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { api, Loading, Notice } from "./ui";
 
@@ -165,6 +168,8 @@ export function EasyRewards() {
   );
 }
 export function EasyRewardsReport() {
+  const lifecycle = useRef<AbortController|null>(null);
+  useEffect(() => { lifecycle.current = new AbortController(); return () => lifecycle.current?.abort(); }, []);
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [revision, setRevision] = useState(0);
@@ -219,8 +224,8 @@ export function EasyRewardsReport() {
                 className="button secondary"
                 key={j.order_id ?? j.booking_id}
                 onClick={async () => {
-                  const reason = window.prompt(
-                    "Reason and evidence for retry after independent review (10+ characters)",
+                  const reason = await requestText(
+                    "Explain what was independently reviewed and why this reward should be retried.", { minimumLength: 10, signal: lifecycle.current?.signal, title: "Retry reviewed reward", confirmLabel: "Request retry" },
                   );
                   if (!reason) return;
                   try {
@@ -529,7 +534,7 @@ function ReferralPanel({ enabled }: { enabled: boolean }) {
       >
         Apply referral code
       </button>
-      {error && <p role="status">{error}</p>}
+      {error && <p role="status">{friendlyMessage(error)}</p>}
     </div>
   );
 }
@@ -557,7 +562,7 @@ export function SmartRewardOffers() {
     <section className="surface workflow-form">
       <h2>Smart Refill offers</h2>
       {error ? (
-        <p role="status">{error}</p>
+        <p role="status">{friendlyMessage(error)}</p>
       ) : offers.length ? (
         offers.map((o) => (
           <p key={o.id}>

@@ -1,3 +1,4 @@
+import { PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from "../packages/business-rules/src/password-policy";
 import "./environment";
 import { createDatabase, migrate, one } from "../apps/web/lib/db";
 import { hashPassword, id } from "../apps/web/lib/auth";
@@ -18,12 +19,12 @@ for (const role of ["owner", "manager", "finance"]) {
   console.log(`\n${role.toUpperCase()} ACCOUNT`);
   const name = (await prompt("Full name: ")).trim(),
     email = (await prompt("Email: ")).trim().toLowerCase(),
-    password = await secret("Password (hidden, at least 12 characters): ");
+    password = await secret(`Password (hidden, at least ${PASSWORD_MIN_LENGTH} characters): `);
   if (
     name.length < 2 ||
     !/^\S+@\S+\.\S+$/.test(email) ||
-    password.length < 12 ||
-    password.length > 128
+    password.length < PASSWORD_MIN_LENGTH ||
+    password.length > PASSWORD_MAX_LENGTH
   )
     throw new Error("Invalid account details. No accounts were created.");
   records.push({

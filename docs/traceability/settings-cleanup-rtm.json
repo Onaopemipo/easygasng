@@ -1,0 +1,140 @@
+{
+  "phase": "Business settings cleanup",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "priority": "P1",
+      "scope": "Existing admin settings presentation only",
+      "uiReference": "User screenshot /admin/settings raw payment configuration",
+      "route": "/admin/settings",
+      "dataSource": "Existing role/branch-filtered settings API; no new business store",
+      "securityControl": "Read-only formatting; existing propose_roles, history, restoration and dual approval retained",
+      "outstandingWork": "Not deployed; full authenticated page and physical/mobile acceptance pending. Production NO-GO and import/retention decisions unchanged.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-summary.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/settings-cleanup.test.ts"
+      ],
+      "negativeTests": [
+        "[object Object]"
+      ],
+      "evidence": [
+        "docs/settings-cleanup/report.md",
+        "docs/settings-cleanup/evidence/tests.txt",
+        "docs/settings-cleanup/evidence/types.txt",
+        "docs/settings-cleanup/evidence/build.txt",
+        "docs/settings-cleanup/evidence/summary-desktop.png"
+      ],
+      "id": "SETUP-01",
+      "requirement": "Replace raw object output with readable payment status, accurate money and expandable complete rules",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual component rendering and desktop disclosure interaction verified without business changes.",
+      "acceptanceGate": "SETUP-G01",
+      "testIds": [
+        "SETUP-01"
+      ],
+      "testResult": "PASS \u2014 5 focused rendering/policy/date tests; web types/build. Desktop summary browser check; full page/mobile acceptance remains open."
+    },
+    {
+      "priority": "P1",
+      "scope": "Existing admin settings presentation only",
+      "uiReference": "User screenshot /admin/settings raw payment configuration",
+      "route": "/admin/settings",
+      "dataSource": "Existing role/branch-filtered settings API; no new business store",
+      "securityControl": "Read-only formatting; existing propose_roles, history, restoration and dual approval retained",
+      "outstandingWork": "Not deployed; full authenticated page and physical/mobile acceptance pending. Production NO-GO and import/retention decisions unchanged.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-summary.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/settings-cleanup.test.ts"
+      ],
+      "negativeTests": [
+        "[object Object]"
+      ],
+      "evidence": [
+        "docs/settings-cleanup/report.md",
+        "docs/settings-cleanup/evidence/tests.txt",
+        "docs/settings-cleanup/evidence/types.txt",
+        "docs/settings-cleanup/evidence/build.txt",
+        "docs/settings-cleanup/evidence/summary-desktop.png"
+      ],
+      "id": "SETUP-02",
+      "requirement": "Reduce page clutter and improve category search while preserving governed actions and responsive layout",
+      "status": "PARTIAL",
+      "reason": "Collapsed tools, cross-category search, error semantics and responsive CSS implemented; source preservation checks pass. Full authenticated/mobile integration remains untested.",
+      "acceptanceGate": "SETUP-G02",
+      "testIds": [
+        "SETUP-02"
+      ],
+      "testResult": "PASS \u2014 5 focused rendering/policy/date tests; web types/build. Desktop summary browser check; full page/mobile acceptance remains open."
+    },
+    {
+      "priority": "P1",
+      "scope": "Existing admin settings presentation only",
+      "uiReference": "User second screenshot: Delivery Locations raw city/name/active/coverage dump",
+      "route": "/admin/settings",
+      "dataSource": "Existing role/branch-filtered settings API; no new business store",
+      "securityControl": "Read-only formatting; existing propose_roles, history, restoration and dual approval retained",
+      "outstandingWork": "Not deployed; full authenticated page and physical/mobile acceptance pending. Production NO-GO and import/retention decisions unchanged.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-summary.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/settings-cleanup.test.ts"
+      ],
+      "negativeTests": [
+        "active: true",
+        "Coverage boundary needs confirmation"
+      ],
+      "evidence": [
+        "docs/settings-cleanup/evidence/tests.txt",
+        "docs/settings-cleanup/evidence/types.txt",
+        "docs/settings-cleanup/evidence/build.txt",
+        "docs/settings-cleanup/evidence/location-desktop.png"
+      ],
+      "id": "SETUP-03",
+      "requirement": "Present delivery locations with readable statuses, area/branch and honest coverage warning, retaining all additional fields",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual component rendering checks archived/hidden and missing/present coverage; local desktop disclosure verified. No inferred approval or configuration mutation.",
+      "acceptanceGate": "SETUP-G03",
+      "testIds": [
+        "SETUP-03"
+      ],
+      "testResult": "PASS \u2014 6 focused tests, web types/build and isolated desktop location component inspection."
+    }
+  ],
+  "gates": [
+    {
+      "id": "SETUP-G01",
+      "status": "PASS",
+      "scope": "Summary rendering and desktop disclosure"
+    },
+    {
+      "id": "SETUP-G02",
+      "status": "OPEN",
+      "scope": "Authenticated full page/mobile integration and hosted rollout"
+    },
+    {
+      "id": "SETUP-G03",
+      "status": "PASS",
+      "scope": "Read-only location summary and honest coverage states"
+    }
+  ],
+  "coverage": {
+    "implemented": "3/3",
+    "locallyVerified": "2/3",
+    "gates": "2/3"
+  },
+  "scopeChanges": [
+    "Presentation only; no payment activation, policy change or approval bypass."
+  ]
+}

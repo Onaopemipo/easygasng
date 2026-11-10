@@ -1,3 +1,6 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
+import { EasyGasAlert } from "./AppAlert";
+import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
 import { EasyGasLoader } from "./EasyGasLoader";
 import { stopDriverLocation } from "./driver-location";
 import { NativePaymentReturn } from "./HostedPayment";
@@ -44,7 +47,6 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Image,
   StyleSheet,
-  Alert,
   Platform,
   Linking,
   StatusBar,
@@ -165,6 +167,7 @@ export default function App() {
   }
   const accountRef = useRef<string | null>(null);
   accountRef.current = user?.id ?? null;
+  useEffect(() => { EasyGasAlert.dismissAll(); }, [user?.id]);
   function navigateCustomer(destination: string) {
     if (
       !user &&
@@ -229,7 +232,7 @@ export default function App() {
         clearPrivateState();
         setScreen("login");
       }
-      throw Object.assign(new Error(body.error ?? "Please try again."), {
+      throw Object.assign(new Error(friendlyMessage(body.error ?? "Please try again.")), {
         status: response.status,
       });
     }
@@ -451,7 +454,7 @@ export default function App() {
           )
         : [...items, { productId: p.id, quantity: 1 }];
     });
-    Alert.alert("Added to your cart", p.name);
+    EasyGasAlert.alert("Added to your cart", p.name);
   }
   const button = (
     label: string,
@@ -705,7 +708,7 @@ export default function App() {
         >
           {error ? (
             <View style={s.notice}>
-              <Text style={s.noticeText}>{error}</Text>
+              <Text style={s.noticeText}>{friendlyMessage(error)}</Text>
               {!catalogue &&
                 button("Retry connection", refreshCatalogue, true, loading)}
             </View>
@@ -866,7 +869,7 @@ export default function App() {
               })}
               {register && (
                 <Text style={s.caption}>
-                  Use at least 12 characters. No role selection is required.
+                  Use at least {PASSWORD_MIN_LENGTH} characters. No role selection is required.
                 </Text>
               )}
               {button(
@@ -1383,7 +1386,7 @@ export default function App() {
                     });
                     setCart([]);
                     setKey(null);
-                    Alert.alert(
+                    EasyGasAlert.alert(
                       "Order received",
                       `${o.reference} · ${paymentMethod === "wallet" ? "Paid using purchase credit" : "Payment due on delivery"}`,
                     );
@@ -1443,9 +1446,9 @@ export default function App() {
                       {button(
                         "Discard this pending record",
                         () =>
-                          Alert.alert(
+                          EasyGasAlert.alert(
                             "Discard pending delivery?",
-                            "The server order will remain unchanged.",
+                            "This removes only the pending update on this device. The server order will not change. Review the delivery before discarding this update.",
                             [
                               { text: "Keep", style: "cancel" },
                               {
@@ -1743,9 +1746,9 @@ export default function App() {
                             const q = await enqueueDelivery(user.id, data);
                             if (accountRef.current === user.id)
                               setPendingDeliveries(q);
-                            Alert.alert(
+                            EasyGasAlert.alert(
                               "Saved for synchronisation",
-                              "This encrypted device record awaits server verification. The order is not yet marked delivered.",
+                              "Your update is saved securely on this device. Connect to the internet to sync it. The delivery remains unconfirmed until EasyGas verifies it.",
                             );
                           }
                         }}
@@ -1965,7 +1968,7 @@ function Support({
             value={message}
             onChangeText={setMessage}
           />
-          {error ? <Text>{error}</Text> : null}
+          {error ? <Text>{friendlyMessage(error)}</Text> : null}
           <Pressable
             style={s.button}
             onPress={async () => {
@@ -2240,7 +2243,7 @@ function NativeDelivery({
           over every item
         </Text>
       </Pressable>
-      {error ? <Text style={s.noticeText}>{error}</Text> : null}
+      {error ? <Text style={s.noticeText}>{friendlyMessage(error)}</Text> : null}
       <Pressable
         style={[s.button, busy && { opacity: 0.5 }]}
         disabled={busy}
@@ -2291,7 +2294,7 @@ function NativeCompatibility({
   return (
     <View>
       <Text style={s.sectionTitle}>Equipment compatibility</Text>
-      {error && <Text accessibilityRole="alert">{error}</Text>}
+      {error && <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>}
       {!rows.length && (
         <Text style={s.body}>
           No independently reviewed match is published. Professional

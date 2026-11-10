@@ -1,3 +1,4 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import {
   Card as CustomerCard,
   Copy as CustomerCopy,
@@ -282,7 +283,7 @@ export default function GasOrder({
             setQuote(null);
           }),
         )}
-      {error && <Text accessibilityRole="alert">{error}</Text>}
+      {error && <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>}
       {appointments.length > 0 && (
         <View>
           {button(

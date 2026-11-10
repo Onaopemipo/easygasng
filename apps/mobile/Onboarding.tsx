@@ -1,3 +1,4 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import React, { useEffect, useState } from "react";
 import {
   AccessibilityInfo,
@@ -191,7 +192,7 @@ export default function Onboarding({ replay = 0 }: { replay?: number }) {
                   accessibilityRole="alert"
                   style={{ color: colors.text, marginTop: 12 }}
                 >
-                  {error}
+                  {friendlyMessage(error)}
                 </Text>
                 <Pressable
                   onPress={() => setVisible(false)}

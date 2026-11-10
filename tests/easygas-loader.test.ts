@@ -48,6 +48,7 @@ vm.runInNewContext(feedbackSource,{module:feedbackModule,exports:feedbackModule.
  if(name==="./typography")return {Text:host("span")};
  if(name==="@expo/vector-icons")return {Ionicons:host("icon")};
  if(name==="react-native")return {View:host("div"),Pressable:host("button")};
+ if(name.includes("friendly-message"))return require("../packages/business-rules/src/friendly-message");
  if(name.includes("customer-mobile"))return require("../packages/business-rules/src/customer-mobile");
  throw Error("Unexpected feedback dependency "+name);
 }});

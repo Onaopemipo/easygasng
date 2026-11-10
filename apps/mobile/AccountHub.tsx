@@ -1,3 +1,4 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { Title } from "./CustomerUI";
 import React, { useEffect, useState } from "react";
 import { View, Pressable } from "react-native";
@@ -107,7 +108,7 @@ export default function AccountHub({
           accessibilityRole="alert"
           style={{ color: colors.muted }}
         >
-          {error}
+          {friendlyMessage(error)}
         </Text>
       ) : null}
       <View

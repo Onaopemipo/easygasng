@@ -1,3 +1,4 @@
+import { PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from "../packages/business-rules/src/password-policy";
 import "./environment";
 import { prompt, secret } from "./prompts";
 import { createDatabase, migrate, one } from "../apps/web/lib/db";
@@ -5,12 +6,12 @@ import { hashPassword, id } from "../apps/web/lib/auth";
 // Password is accepted through stdin only; never pass it in shell arguments.
 const name = await prompt("Owner name: "),
   email = (await prompt("Owner email: ")).trim().toLowerCase();
-const password = await secret("Password (hidden, at least 12 characters): ");
+const password = await secret(`Password (hidden, at least ${PASSWORD_MIN_LENGTH} characters): `);
 if (
   !name.trim() ||
   !/^\S+@\S+\.\S+$/.test(email) ||
-  password.length < 12 ||
-  password.length > 128
+  password.length < PASSWORD_MIN_LENGTH ||
+  password.length > PASSWORD_MAX_LENGTH
 )
   throw new Error("Invalid account details.");
 const db = await createDatabase();

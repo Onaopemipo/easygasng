@@ -1,0 +1,169 @@
+{
+  "phase": "Staff same-delivery supplementary request",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "scope": "Staff-only pre-assignment supplementary requests on an existing customer delivery; one addition per original order",
+      "uiReference": "User request to add a second order under the same delivery fee with a rider departure cutoff",
+      "route": "/admin/orders; order.additions; order.addition.quote; order.addition.create",
+      "securityControl": "Owner/manager/sales branch authority; parent row lock shared with assignment/invoicing/payment preparation; strict input; authoritative prices; immutable addition history; one-per-order limit; existing stock/cylinder/gas/dispatch guards",
+      "testResult": "PASS \u2014 46/46 scoped regressions, 1/1 real PostgreSQL concurrency check, 9/9 final addition follow-ups, web types/build and isolated real-backend browser flow.",
+      "outstandingWork": "Not deployed. Apply migration074 with protected backup and verify the hosted admin modal before rollout. Production operational/provider/device gates, NO-GO, actual-import hold and native/server deferrals remain unchanged.",
+      "evidence": [
+        "docs/order-additions/evidence/regression-tests.txt",
+        "docs/order-additions/evidence/tests.txt",
+        "docs/order-additions/evidence/postgres-tests.txt",
+        "docs/order-additions/evidence/types.txt",
+        "docs/order-additions/evidence/build.txt",
+        "docs/order-additions/evidence/browser.json",
+        "docs/order-additions/evidence/staff-addition.png"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "id": "ADD-01",
+      "requirement": "Only authorised branch staff can add before assignment/loading; reset status must not reopen a departed delivery",
+      "priority": "P0",
+      "reason": "Assignment/status/attempt/allocation and financial-record cutoff enforced by backend on every quote/create. Concurrent real PostgreSQL test verifies serialization against assignment; role/branch negatives pass.",
+      "dataSource": "Original orders, delivery_attempts, bulk_lpg_allocations, customer_invoices, payment_intents, verified_payments and cash_collections",
+      "implementationFiles": [
+        "apps/web/lib/order-additions.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/order-additions.test.ts",
+        "tests/order-additions-postgres.test.ts"
+      ],
+      "testIds": [
+        "ADD-02",
+        "ADD-03",
+        "ADD-06",
+        "ADD-PG"
+      ],
+      "negativeTests": [
+        "cross-branch",
+        "assignment/departure",
+        "status is reset"
+      ],
+      "acceptanceGate": "ADD-G01"
+    },
+    {
+      "scope": "Staff-only pre-assignment supplementary requests on an existing customer delivery; one addition per original order",
+      "uiReference": "User request to add a second order under the same delivery fee with a rider departure cutoff",
+      "route": "/admin/orders; order.additions; order.addition.quote; order.addition.create",
+      "securityControl": "Owner/manager/sales branch authority; parent row lock shared with assignment/invoicing/payment preparation; strict input; authoritative prices; immutable addition history; one-per-order limit; existing stock/cylinder/gas/dispatch guards",
+      "testResult": "PASS \u2014 46/46 scoped regressions, 1/1 real PostgreSQL concurrency check, 9/9 final addition follow-ups, web types/build and isolated real-backend browser flow.",
+      "outstandingWork": "Not deployed. Apply migration074 with protected backup and verify the hosted admin modal before rollout. Production operational/provider/device gates, NO-GO, actual-import hold and native/server deferrals remain unchanged.",
+      "evidence": [
+        "docs/order-additions/evidence/regression-tests.txt",
+        "docs/order-additions/evidence/tests.txt",
+        "docs/order-additions/evidence/postgres-tests.txt",
+        "docs/order-additions/evidence/types.txt",
+        "docs/order-additions/evidence/build.txt",
+        "docs/order-additions/evidence/browser.json",
+        "docs/order-additions/evidence/staff-addition.png"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "id": "ADD-02",
+      "requirement": "Record a replay-safe supplementary request with current prices/reservations and no additional delivery fee on the same fulfilment",
+      "priority": "P0",
+      "reason": "Original customer/address/window/code preserved; audited addition updates existing order lines and total. No second shipment, independent ledger, charge or automatic customer debit. One addition maximum. Paid/invoiced/discounted or prepared-payment orders fail closed. Gas requires fresh inspection.",
+      "dataSource": "Authoritative branch inventory/product categories, gas price/quantity policy/stock, original order fee and total; existing cylinder allocations and immutable stock movements",
+      "implementationFiles": [
+        "apps/web/lib/order-additions.ts",
+        "database/migrations/074_order_additions.sql",
+        "apps/web/lib/db.ts",
+        "database/bootstrap.sql",
+        "scripts/export-bootstrap.ts"
+      ],
+      "testFiles": [
+        "tests/order-additions.test.ts",
+        "tests/order-additions-postgres.test.ts"
+      ],
+      "testIds": [
+        "ADD-01",
+        "ADD-04",
+        "ADD-05",
+        "ADD-07",
+        "ADD-08",
+        "ADD-PG"
+      ],
+      "negativeTests": [
+        "forged financial/address",
+        "late failure",
+        "prepared payment"
+      ],
+      "acceptanceGate": "ADD-G02"
+    },
+    {
+      "scope": "Staff-only pre-assignment supplementary requests on an existing customer delivery; one addition per original order",
+      "uiReference": "User request to add a second order under the same delivery fee with a rider departure cutoff",
+      "route": "/admin/orders; order.additions; order.addition.quote; order.addition.create",
+      "securityControl": "Owner/manager/sales branch authority; parent row lock shared with assignment/invoicing/payment preparation; strict input; authoritative prices; immutable addition history; one-per-order limit; existing stock/cylinder/gas/dispatch guards",
+      "testResult": "PASS \u2014 46/46 scoped regressions, 1/1 real PostgreSQL concurrency check, 9/9 final addition follow-ups, web types/build and isolated real-backend browser flow.",
+      "outstandingWork": "Not deployed. Apply migration074 with protected backup and verify the hosted admin modal before rollout. Production operational/provider/device gates, NO-GO, actual-import hold and native/server deferrals remain unchanged.",
+      "evidence": [
+        "docs/order-additions/evidence/regression-tests.txt",
+        "docs/order-additions/evidence/tests.txt",
+        "docs/order-additions/evidence/postgres-tests.txt",
+        "docs/order-additions/evidence/types.txt",
+        "docs/order-additions/evidence/build.txt",
+        "docs/order-additions/evidence/browser.json",
+        "docs/order-additions/evidence/staff-addition.png"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "id": "ADD-03",
+      "requirement": "Staff order details provide branch-scoped product/gas quote, explicit confirmation, cutoff explanation and addition history",
+      "priority": "P1",
+      "reason": "Actual component completed quote and confirmation through the real isolated dispatch/database, displayed zero extra delivery fee, saved history and removed second-addition control. Admin modal integration mapped; hosted modal remains an explicit rollout gate.",
+      "dataSource": "Authenticated order.additions branch-scoped products/history and authoritative quote/create responses",
+      "implementationFiles": [
+        "apps/web/components/order-additions.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/order-additions.test.ts"
+      ],
+      "testIds": [
+        "ADD-UI"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "ADD-G03"
+    }
+  ],
+  "gates": [
+    {
+      "id": "ADD-G01",
+      "status": "PASS",
+      "scope": "Local staff/branch and dispatch cutoff"
+    },
+    {
+      "id": "ADD-G02",
+      "status": "PASS",
+      "scope": "Local authoritative fee/stock/payment safety and concurrency"
+    },
+    {
+      "id": "ADD-G03",
+      "status": "PASS",
+      "scope": "Isolated real-backend component UI quote/confirm/history"
+    },
+    {
+      "id": "ADD-RELEASE",
+      "status": "OPEN",
+      "scope": "Protected hosted migration074, admin-modal retest and broader existing release gates"
+    }
+  ],
+  "coverage": {
+    "implemented": "3/3",
+    "localVerified": "3/3",
+    "criticalLocalVerified": "2/2",
+    "routeFamiliesLocal": "2/2: admin order details and existing dispatch API",
+    "gates": "3/4; release remains in denominator"
+  },
+  "scopeChanges": [
+    "Existing staff assisted checkout and on-site doorstep flow were audited and retained; neither already supplied this feature.",
+    "A supplementary request has its own immutable audit reference but merges into the original fulfilment; it never creates a free independent shipment.",
+    "Safe limit is one supplementary request before assignment/loading, stricter than departure. Financially committed orders use the established correction process.",
+    "Unpaid card orders can be extended before payment preparation, without any staff-initiated payment; existing customer card verification remains mandatory. No provider flags changed."
+  ]
+}

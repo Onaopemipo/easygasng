@@ -1,4 +1,6 @@
 "use client";
+import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
+
 import { FormInput } from "./password-input";
 import { useEffect, useState, type FormEvent } from "react";
 import { api, Notice, money } from "./ui";
@@ -99,7 +101,7 @@ export default function PhoneCompletion() {
               <FormInput
                 name="password"
                 type="password"
-                minLength={12}
+                minLength={PASSWORD_MIN_LENGTH}
                 maxLength={128}
                 autoComplete="new-password"
                 required

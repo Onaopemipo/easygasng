@@ -1,0 +1,65 @@
+{
+  "phase": "Settings proposal Lagos datetime repair",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "DATE-01",
+      "requirement": "Accept explicit Lagos timezone offsets on new settings proposals while preserving UTC, scheduling bounds and independent approvals",
+      "priority": "P0",
+      "scope": "Existing setting.propose API used by payment/card settings; align with approval edit/revise",
+      "uiReference": "User Invalid ISO datetime report while enabling card payment",
+      "route": "/admin/settings; setting.propose; approval.edit; approval.revise",
+      "dataSource": "Admin effective datetime-local serialized with +01:00, existing request effective_at and authoritative gateway setting",
+      "securityControl": "Explicit timezone required; malformed/naive/out-of-window instants rejected; reauthentication, role/branch controls, versioning and independent approval unchanged; no payment configuration activated",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "UTC-only proposal validation now permits explicit offsets exactly as edit/revise already did. Actual payment-setting requests preserve the chosen instant and remain unactivated; negative scheduling/invalid input tests pass.",
+      "testResult": "PASS \u2014 14/14 date/approval/gas/payment-policy regressions; web typecheck and production build.",
+      "outstandingWork": "Not deployed; hosted form retest remains open. Existing pending feature/password work and production NO-GO are preserved.",
+      "implementationFiles": [
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/settings-datetime.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/paystack-policy.test.ts"
+      ],
+      "testIds": [
+        "DATE-01"
+      ],
+      "negativeTests": [
+        "not-a-date",
+        "2026-11-10T12:00:00"
+      ],
+      "evidence": [
+        "docs/settings-datetime/audit.md",
+        "docs/settings-datetime/evidence/tests.txt",
+        "docs/settings-datetime/evidence/types.txt",
+        "docs/settings-datetime/evidence/build.txt"
+      ],
+      "acceptanceGate": "DATE-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DATE-G01",
+      "status": "PASS",
+      "scope": "Backend explicit-offset/UTC semantics and negative regressions"
+    },
+    {
+      "id": "DATE-RELEASE",
+      "status": "OPEN",
+      "scope": "Hosted deployment and original form retest"
+    }
+  ],
+  "coverage": {
+    "implemented": "1/1",
+    "locallyVerified": "1/1",
+    "criticalLocallyVerified": "1/1",
+    "gates": "1/2; hosted acceptance retained"
+  },
+  "scopeChanges": [
+    "Align existing proposal schema with offset-aware edit/revise; no frontend timezone reinterpretation.",
+    "No card/wallet gateway flag, fee policy, merchant approval, credentials or financial state changed."
+  ]
+}

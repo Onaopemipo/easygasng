@@ -1,3 +1,5 @@
+import { accountPassword } from "./password-policy";
+import { orderAdditions } from "./order-additions";
 import { financialDocuments } from "./financial-documents";
 import { walletFundingAction } from "./wallet-funding";
 import { dispatchCentre } from "./dispatch-centre";
@@ -91,7 +93,7 @@ const credentials = z
       .email()
       .max(200)
       .transform((v) => v.toLowerCase().trim()),
-    password: z.string().min(12).max(128),
+    password: accountPassword,
   })
   .strict();
 export async function dispatch(
@@ -511,6 +513,8 @@ export async function dispatch(
         ].includes(action)
       )
         return customerManagement(tx, user, action, input);
+      if (["order.additions", "order.addition.quote", "order.addition.create"].includes(action))
+        return orderAdditions(tx, user, action, input);
       if (
         [
           "customers.lookup",
@@ -1070,7 +1074,7 @@ export async function dispatch(
               value: z.unknown(),
               version: z.number().int(),
               reason: z.string().max(1000),
-              effectiveAt: z.iso.datetime().optional(),
+              effectiveAt: z.iso.datetime({ offset: true }).optional(),
               rollbackOf: z.string().uuid().optional(),
               draft: z.boolean().optional(),
             })

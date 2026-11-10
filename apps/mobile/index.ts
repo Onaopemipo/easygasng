@@ -1,3 +1,4 @@
+import { AppAlertProvider } from "./AppAlert";
 import "./driver-location";
 import { registerRootComponent } from "expo";
 import App from "./App";
@@ -8,6 +9,6 @@ registerRootComponent(() =>
   React.createElement(
     SafeAreaProvider,
     null,
-    React.createElement(ThemeProvider, null, React.createElement(App)),
+    React.createElement(ThemeProvider, null, React.createElement(React.Fragment, null, React.createElement(App), React.createElement(AppAlertProvider))),
   ),
 );

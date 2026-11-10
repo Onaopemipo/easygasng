@@ -1,0 +1,115 @@
+{
+  "phase": "Date-only effective settings and checkbox alignment",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "priority": "P1",
+      "scope": "Shared web requested effective date and checkbox presentation",
+      "uiReference": "User request: date-only Requested effective date (Africa/Lagos), automatic calendar close and checkbox before label",
+      "route": "/admin/settings shared SettingForm and all shared FormInput date controls; web checkbox labels",
+      "dataSource": "Existing selected business day and setting proposal/edit/revise payloads; no new data store",
+      "securityControl": "Strict day validation; fixed Lagos midnight; blank omitted; backend scheduling limits and independent approvals unchanged; checked/required/disabled semantics retained",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Shared form paths updated; focused tests and actual component browser interaction pass.",
+      "testResult": "PASS \u2014 5 focused date/settings/Paystack regressions, web types/build and isolated date/calendar/checkbox browser checks.",
+      "outstandingWork": "Not deployed; authenticated full-page integration and physical browser/mobile acceptance remain open. Original NO-GO unchanged.",
+      "implementationFiles": [
+        "packages/business-rules/src/effective-date.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/password-input.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/effective-date.test.ts",
+        "tests/settings-datetime.test.ts",
+        "tests/paystack-policy.test.ts"
+      ],
+      "negativeTests": [
+        "2026-02-30",
+        "not-a-date"
+      ],
+      "evidence": [
+        "docs/date-only-settings/report.md",
+        "docs/date-only-settings/evidence/tests.txt",
+        "docs/date-only-settings/evidence/types.txt",
+        "docs/date-only-settings/evidence/build.txt",
+        "docs/date-only-settings/evidence/browser.json",
+        "docs/date-only-settings/evidence/browser-desktop.png"
+      ],
+      "id": "DATE-02",
+      "requirement": "Requested effective date is date-only and serializes to the start of the selected Lagos day across proposal/edit/revise",
+      "testIds": [
+        "DATE-02"
+      ],
+      "acceptanceGate": "DATE-02-LOCAL"
+    },
+    {
+      "priority": "P1",
+      "scope": "Shared web requested effective date and checkbox presentation",
+      "uiReference": "User request: date-only Requested effective date (Africa/Lagos), automatic calendar close and checkbox before label",
+      "route": "/admin/settings shared SettingForm and all shared FormInput date controls; web checkbox labels",
+      "dataSource": "Existing selected business day and setting proposal/edit/revise payloads; no new data store",
+      "securityControl": "Strict day validation; fixed Lagos midnight; blank omitted; backend scheduling limits and independent approvals unchanged; checked/required/disabled semantics retained",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Shared form paths updated; focused tests and actual component browser interaction pass.",
+      "testResult": "PASS \u2014 5 focused date/settings/Paystack regressions, web types/build and isolated date/calendar/checkbox browser checks.",
+      "outstandingWork": "Not deployed; authenticated full-page integration and physical browser/mobile acceptance remain open. Original NO-GO unchanged.",
+      "implementationFiles": [
+        "packages/business-rules/src/effective-date.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/password-input.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/effective-date.test.ts",
+        "tests/settings-datetime.test.ts",
+        "tests/paystack-policy.test.ts"
+      ],
+      "negativeTests": [
+        "2026-02-30",
+        "not-a-date"
+      ],
+      "evidence": [
+        "docs/date-only-settings/report.md",
+        "docs/date-only-settings/evidence/tests.txt",
+        "docs/date-only-settings/evidence/types.txt",
+        "docs/date-only-settings/evidence/build.txt",
+        "docs/date-only-settings/evidence/browser.json",
+        "docs/date-only-settings/evidence/browser-desktop.png"
+      ],
+      "id": "DATE-03",
+      "requirement": "Selecting a valid day closes the calendar; web checkbox controls align before labels",
+      "testIds": [
+        "DATE-03"
+      ],
+      "acceptanceGate": "DATE-03-LOCAL"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DATE-02-LOCAL",
+      "status": "PASS",
+      "scope": "Local shared component, conversion and regressions"
+    },
+    {
+      "id": "DATE-03-LOCAL",
+      "status": "PASS",
+      "scope": "Local shared component, conversion and regressions"
+    },
+    {
+      "id": "DATE-UI-RELEASE",
+      "status": "OPEN",
+      "scope": "Hosted/authenticated full-page and physical browser/device acceptance"
+    }
+  ],
+  "coverage": {
+    "implemented": "2/2",
+    "locallyVerified": "2/2",
+    "gates": "2/3"
+  },
+  "scopeChanges": [
+    "Requested effective date now means Lagos start of day; approval timing and unrelated appointment datetime fields retained.",
+    "Checkbox layout applies web-wide; no native build or deployment."
+  ]
+}

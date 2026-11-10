@@ -1,0 +1,99 @@
+{
+  "phase": "Fresh hosted demo accounts",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "scope": "Fresh synthetic testing identities in the existing isolated Vercel client demo only",
+      "uiReference": "User request for a new set of demo logins",
+      "route": "https://easygas-client-demo.vercel.app/login; /api/login; /api/me; /api/admin.dashboard",
+      "dataSource": "Existing dedicated demo users and auth/session service; private credential manifest outside version control",
+      "securityControl": "Dedicated project/host/database/runtime checks; salted password hashes; no old identity/reset/role mutation; private0600 handover; no qualifications, payments or stock fabricated; customer/commercial admin denial verified",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Thirteen fresh hosted role identities inserted with audit records. All thirteen logins and returned identities verified; customer/commercial admin rejection passed. Existing accounts/orders/wallet/verified-payment counts preserved except thirteen new users.",
+      "testResult": "PASS \u2014 DEMO-LOGIN01 hosted test verifies13/13 new role identities and two admin-denial checks.",
+      "outstandingWork": "No remaining bounded login-handover work. New field staff still require valid assignments and governed qualifications for protected work; no full feature/production acceptance inferred. Existing production NO-GO and pending local changes remain.",
+      "implementationFiles": [
+        "scripts/provision-fresh-demo-accounts.ts",
+        "scripts/check-fresh-demo-accounts.mjs"
+      ],
+      "testFiles": [
+        "scripts/check-fresh-demo-accounts.mjs"
+      ],
+      "testIds": [
+        "DEMO-LOGIN01"
+      ],
+      "negativeTests": [
+        "denied.status"
+      ],
+      "evidence": [
+        "docs/demo-accounts/evidence/provisioning.json",
+        "docs/demo-accounts/evidence/hosted-tests.txt",
+        "docs/demo-accounts/evidence/hosted-results.json",
+        "docs/demo-accounts/evidence/previous-login-audit.json"
+      ],
+      "id": "DEMO-LOGIN01",
+      "requirement": "Create a fresh isolated synthetic role set and private credentials without replacing existing identities or financial history",
+      "priority": "P0",
+      "acceptanceGate": "DLOGIN-G01"
+    },
+    {
+      "scope": "Fresh synthetic testing identities in the existing isolated Vercel client demo only",
+      "uiReference": "User request for a new set of demo logins",
+      "route": "https://easygas-client-demo.vercel.app/login; /api/login; /api/me; /api/admin.dashboard",
+      "dataSource": "Existing dedicated demo users and auth/session service; private credential manifest outside version control",
+      "securityControl": "Dedicated project/host/database/runtime checks; salted password hashes; no old identity/reset/role mutation; private0600 handover; no qualifications, payments or stock fabricated; customer/commercial admin denial verified",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Thirteen fresh hosted role identities inserted with audit records. All thirteen logins and returned identities verified; customer/commercial admin rejection passed. Existing accounts/orders/wallet/verified-payment counts preserved except thirteen new users.",
+      "testResult": "PASS \u2014 DEMO-LOGIN01 hosted test verifies13/13 new role identities and two admin-denial checks.",
+      "outstandingWork": "No remaining bounded login-handover work. New field staff still require valid assignments and governed qualifications for protected work; no full feature/production acceptance inferred. Existing production NO-GO and pending local changes remain.",
+      "implementationFiles": [
+        "scripts/provision-fresh-demo-accounts.ts",
+        "scripts/check-fresh-demo-accounts.mjs"
+      ],
+      "testFiles": [
+        "scripts/check-fresh-demo-accounts.mjs"
+      ],
+      "testIds": [
+        "DEMO-LOGIN01"
+      ],
+      "negativeTests": [
+        "denied.status"
+      ],
+      "evidence": [
+        "docs/demo-accounts/evidence/provisioning.json",
+        "docs/demo-accounts/evidence/hosted-tests.txt",
+        "docs/demo-accounts/evidence/hosted-results.json",
+        "docs/demo-accounts/evidence/previous-login-audit.json"
+      ],
+      "id": "DEMO-LOGIN02",
+      "requirement": "Verify every new hosted login, identity and customer/staff privilege boundary before handover",
+      "priority": "P0",
+      "acceptanceGate": "DLOGIN-G02"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DLOGIN-G01",
+      "status": "PASS",
+      "scope": "Dedicated safe provisioning/private handover"
+    },
+    {
+      "id": "DLOGIN-G02",
+      "status": "PASS",
+      "scope": "13/13 hosted logins and correct identities; customer/commercial admin denial"
+    }
+  ],
+  "coverage": {
+    "implemented": "2/2",
+    "verified": "2/2",
+    "criticalVerified": "2/2",
+    "roleLogins": "13/13",
+    "gates": "2/2 bounded credential handover only"
+  },
+  "scopeChanges": [
+    "User explicitly requests new synthetic accounts; old accounts authenticate in audit and are retained.",
+    "New passwords satisfy the currently deployed12-character minimum and approved forthcoming8-character minimum; no deployment required.",
+    "Native builds, missing provider/business configuration and pending local order-addition/password changes are not activated by account creation."
+  ]
+}

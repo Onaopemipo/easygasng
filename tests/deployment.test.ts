@@ -26,6 +26,8 @@ test("Supabase migration creates an unexposed schema with RLS and a restricted s
       .rows[0].n,
     12,
   );
+  assert.equal((await db.query("SELECT count(*)::int AS n FROM easygas_private.order_additions")).rows[0].n, 0);
+  await assert.rejects(() => db.query("UPDATE easygas_private.order_additions SET reason='forged reason'"), /permission denied/);
   await assert.rejects(
     () => db.query("DELETE FROM easygas_private.users"),
     /permission denied/,

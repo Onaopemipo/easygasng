@@ -1,3 +1,5 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
+import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
 import { EasyGasLoader } from "./EasyGasLoader";
 import {
   Card as CustomerCard,
@@ -282,7 +284,7 @@ export default function Workflows({
       active = false;
     };
   }, [screen, version]);
-  if (error) return <Text style={s.body}>{error}</Text>;
+  if (error) return <Text style={s.body}>{friendlyMessage(error)}</Text>;
   if (!data) return <EasyGasLoader color="#087a36" />;
   if (screen === "notifications")
     return (
@@ -338,7 +340,7 @@ export default function Workflows({
             { name: "token", label: "Secure token" },
             {
               name: "password",
-              label: "New password (at least 12 characters)",
+              label: `New password (at least ${PASSWORD_MIN_LENGTH} characters)`,
               type: "password",
             },
           ]}
@@ -392,7 +394,7 @@ export default function Workflows({
             },
             {
               name: "newPassword",
-              label: "New password (12+ characters)",
+              label: `New password (${PASSWORD_MIN_LENGTH}+ characters)`,
               type: "password",
             },
           ]}

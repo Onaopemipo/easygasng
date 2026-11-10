@@ -6,6 +6,11 @@ import { Eye, EyeOff } from "lucide-react";
 export const FormInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   function FormInput({ type, ...props }, ref) {
     const [visible, setVisible] = useState(false);
+    if (type === "date") return <input ref={ref} type="date" {...props} onChange={(event) => {
+      props.onChange?.(event);
+      // Selecting a complete valid day dismisses the native calendar popover.
+      if (event.currentTarget.value && event.currentTarget.validity.valid) event.currentTarget.blur();
+    }} />;
     if (type !== "password") return <input ref={ref} type={type} {...props} />;
     return (
       <span className="password-control">

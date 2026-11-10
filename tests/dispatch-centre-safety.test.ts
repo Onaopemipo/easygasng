@@ -271,9 +271,10 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   // branch context for unassigned customers; original phase baselines remain archived.
   const approvedCardCheckoutHash =
     "20781703f0aa90b35e885921e72a69a389789ac32ecba9e6f95f01493ecda145";
+  const approvedAlerts = JSON.parse(await readFile("docs/custom-alerts/approved-scope-change.json", "utf8"));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
-      ? approvedCardCheckoutHash : originalHash;
+      ? approvedCardCheckoutHash : approvedAlerts[file]?.approvedHash ?? originalHash;
     let source = await readFile(file, "utf8");
     if (file === "apps/mobile/DriverWorkspace.tsx")
       source = source.replace('      api("driver.heartbeat", {}),\n', "");

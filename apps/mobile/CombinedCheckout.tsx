@@ -1,3 +1,4 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { NativeRewardSelector } from "./EasyRewards";
 import React, { useEffect, useState } from "react";
 import {  Pressable } from "react-native";
@@ -35,7 +36,7 @@ export default function CombinedCheckout({
       .catch(() => setError("The saved appointment drafts could not be read."));
   }, [storage]);
   if (!user) return <Text>Sign in to confirm a linked request.</Text>;
-  if (error) return <Text accessibilityRole="alert">{error}</Text>;
+  if (error) return <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>;
   if (!appointments) return <Text>Loading appointment drafts…</Text>;
   return (
     <View>

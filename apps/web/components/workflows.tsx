@@ -1,9 +1,12 @@
 "use client";
+import { confirmAction } from "./app-dialog";
+import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
+
 import { FormInput } from "./password-input";
 import { ChannelPreferences } from "./operations-completion";
 import { MailDeliveryControls } from "./mail-delivery";
 import { EasyRewardsReport, SmartRewardOffers } from "./easyrewards";
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect, useRef, type FormEvent } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AddressAreaFields } from "./address-area-fields";
@@ -38,14 +41,18 @@ export function ActionForm({
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [success, setSuccess] = useState("");
+  const lifecycle = useRef<AbortController|null>(null);
+  useEffect(() => { lifecycle.current = new AbortController(); return () => lifecycle.current?.abort(); }, []);
   async function send(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (confirm && !window.confirm(confirm)) return;
+    const form = e.currentTarget;
+    if (busy) return;
+    setBusy(true);
+    if (confirm && !(await confirmAction(confirm, { title: title, confirmLabel: submit === "Save" ? title : submit, signal: lifecycle.current?.signal }))) { setBusy(false); return; }
     setBusy(true);
     setError("");
     setSuccess("");
-    const form = e.currentTarget,
-      fd = new FormData(form),
+    const fd = new FormData(form),
       data: Record<string, any> = {};
     for (const f of fields) {
       const raw = fd.get(f.name);
@@ -159,6 +166,7 @@ export function ActionForm({
                   (["number", "money"].includes(f.type ?? "") ? 0 : undefined)
                 }
                 step={f.type === "money" ? "0.01" : f.step}
+                minLength={f.type === "password" ? PASSWORD_MIN_LENGTH : undefined}
                 maxLength={f.type === "password" ? 128 : 1000}
                 autoComplete={
                   f.type === "password" ? "new-password" : undefined
@@ -246,7 +254,7 @@ export function AccountSettings() {
           },
           {
             name: "newPassword",
-            label: "New password (at least 12 characters)",
+            label: `New password (at least ${PASSWORD_MIN_LENGTH} characters)`,
             type: "password",
           },
         ]}
@@ -485,7 +493,7 @@ export function Recovery({
                     ? { name: "token", label: "Secure token", value: token }
                     : {
                         name: "password",
-                        label: "New password (at least 12 characters)",
+                        label: `New password (at least ${PASSWORD_MIN_LENGTH} characters)`,
                         type: "password",
                       }),
                 },

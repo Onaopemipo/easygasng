@@ -1,3 +1,4 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { photoUploader } from "./DriverPhoto";
 import React, { useEffect, useRef, useState } from "react";
 import {   AppState } from "react-native";
@@ -183,7 +184,7 @@ export default function DriverOperations({
         {pending} encrypted records pending sync. GPS is not transmitted while
         offline. Foreground capture stops when this screen or app is left.
       </Text>
-      {error && <Text accessibilityRole="alert">{error}</Text>}
+      {error && <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>}
       {button("Synchronise pending records", sync)}
       {fleet && !trip && (
         <NativeForm

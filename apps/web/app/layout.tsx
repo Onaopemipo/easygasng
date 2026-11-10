@@ -1,3 +1,4 @@
+import { AppDialogProvider } from "../components/app-dialog";
 import { ThemeProvider } from "../components/theme-provider";
 import { themeBootstrapFor } from "../../../packages/business-rules/src/theme";
 import type { Metadata, Viewport } from "next";
@@ -29,7 +30,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ThemeProvider enabled={themeEnabled}>{children}</ThemeProvider>
+        <ThemeProvider enabled={themeEnabled}>{children}<AppDialogProvider /></ThemeProvider>
         {process.env.EASYGAS_CLIENT_DEMO === "true" && (
           <aside
             role="note"

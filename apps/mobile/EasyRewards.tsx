@@ -1,3 +1,4 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useState, useEffect } from "react";
 import {
@@ -89,7 +90,7 @@ export function NativeEasyRewards({
   if (error)
     return (
       <View style={{ backgroundColor: dark ? "#071d16" : "#fff", padding: 12 }}>
-        <Text accessibilityRole="alert">{error}</Text>
+        <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>
         {button("Retry rewards", () => setVersion((v) => v + 1))}
       </View>
     );
@@ -320,7 +321,7 @@ export function NativeSmartOffers({
     <View style={[card, { backgroundColor: dark ? "#071d16" : "#fff" }]}>
       <Text accessibilityRole="header">Smart Refill offers</Text>
       {error ? (
-        <Text accessibilityRole="alert">{error}</Text>
+        <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>
       ) : offers.length ? (
         offers.map((o) => (
           <Pressable
@@ -374,7 +375,7 @@ export function NativeRewardSelector({
       live = false;
     };
   }, []);
-  if (error) return <Text accessibilityRole="alert">{error}</Text>;
+  if (error) return <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>;
   if (!data)
     return (
       <EasyGasLoader accessibilityLabel="Checking reward availability" />

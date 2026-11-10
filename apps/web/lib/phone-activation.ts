@@ -1,3 +1,4 @@
+import { accountPassword } from "./password-policy";
 import {appOrigin} from "./request-origin";
 import { randomBytes, randomInt, createHmac } from "node:crypto";
 import { z } from "zod";
@@ -151,7 +152,7 @@ export async function phoneActivation(
       ? z.object({
           token,
           code: z.string().regex(/^\d{6}$/),
-          password: z.string().min(12).max(128),
+          password: accountPassword,
           termsAccepted: z.literal(true),
         })
       : action === "phone.review"

@@ -1,3 +1,4 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasLoader } from "./EasyGasLoader";
 import { createContext, useContext } from "react";
 import { customerReadAction } from "../../packages/business-rules/src/customer-mobile";
@@ -164,7 +165,7 @@ export function Feedback({
           accessibilityRole="alert"
           style={{ color: colors.error }}
         >
-          {error}
+          {friendlyMessage(error)}
         </Text>
         {retry && <Button label="Try again" onPress={retry} secondary />}
       </Card>

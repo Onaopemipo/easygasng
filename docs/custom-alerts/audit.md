@@ -1,0 +1,5 @@
+# Project alert audit
+
+User requests custom, friendly alerts throughout EasyGas. Audit found web window.confirm in dirty Modal/ActionForm, window.prompt in reviewed-reward retry, window.alert in export, and React Native Alert.alert in customer/driver/technician actions. Extend shared UI and app roots; do not remove backend approval/safety/financial controls. Preserve browser-controlled beforeunload as an explicit platform exception: its text/style cannot be customised. New shared dialog queue must preserve ordering and cancellation, never auto-approve, retain unsaved data on cancellation, and require valid reason input. Map technical validation/network/server internals to helpful text without turning failure/pending into success. Existing inline notices remain appropriate; not every validation needs a disruptive popup.
+
+ALERT-01 web branded alert/confirm/prompt, accessibility/nested modal/async event safety. ALERT-02 shared friendly errors. ALERT-03 native branded customer/driver/technician alerts and safe Android dismissal. All remain in traceability denominator; native runtime/build deferred by user. Unrelated pending work and production NO-GO preserved.

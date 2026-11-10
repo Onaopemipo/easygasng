@@ -1,3 +1,4 @@
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasLoader } from "./EasyGasLoader";
 import { technicianMutation, captureFieldEvent } from "./field-queue";
 import { NativeHostedPayment } from "./HostedPayment";
@@ -150,7 +151,7 @@ export default function Services({
       {loading && <EasyGasLoader color="#07592e" />}
       {error && (
         <>
-          <Text accessibilityRole="alert">{error}</Text>
+          <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>
           <Button text="Try again" press={reload} />
         </>
       )}
@@ -325,7 +326,7 @@ function Booking({
       .then(setSlots)
       .catch((e) => setError(e.message));
   }, [service.id]);
-  if (error) return <Text accessibilityRole="alert">{error}</Text>;
+  if (error) return <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>;
   if (!slots.length)
     return (
       <Text style={s.body}>
@@ -582,7 +583,7 @@ export function Appointment({
           bookingId={b.id}
         />
       )}
-      {error && <Text accessibilityRole="alert">{error}</Text>}
+      {error && <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>}
       {next &&
         ((manager && ["confirmed", "assigned"].includes(next)) ||
           (tech && ["en_route", "in_progress"].includes(next))) && (
@@ -1249,7 +1250,7 @@ function BookingPhotos({
           />
         </>
       )}
-      {error && <Text accessibilityRole="alert">{error}</Text>}
+      {error && <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>}
     </View>
   );
 }

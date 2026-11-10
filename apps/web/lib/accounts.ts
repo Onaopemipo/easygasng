@@ -1,3 +1,4 @@
+import { accountPassword } from "./password-policy";
 import { appOrigin } from "./request-origin";
 import { latestDeliveryPhoto } from "./delivery-photos";
 import { randomBytes } from "node:crypto";
@@ -18,7 +19,7 @@ const email = z
   .email()
   .max(200)
   .transform((v) => v.trim().toLowerCase());
-const password = z.string().min(12).max(128);
+const password = accountPassword;
 export const publicAccountActions = new Set([
   "account.recover",
   "account.reset",

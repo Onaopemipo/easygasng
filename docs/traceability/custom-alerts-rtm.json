@@ -1,0 +1,183 @@
+{
+  "phase": "Custom friendly project alerts",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "scope": "Project-owned web/mobile alert, confirmation, prompt and shared error presentation; no business approval bypass",
+      "uiReference": "User screenshot of native browser unsaved-changes confirmation and instruction to use custom friendly alerts throughout",
+      "route": "Shared web root/Modal/ActionForm; admin settings/export; rewards review; customer/driver/technician native roots",
+      "dataSource": "Existing operation outcomes and unsaved form state; shared in-memory dialog queue; no new business/financial data store",
+      "securityControl": "Explicit confirmation only; cancel/abort/unmount never approves; stale/double response ignored; sequential dialogs; reason minimum retained; backend permissions/payment/safety approvals unchanged; technical internals masked without inferring success",
+      "testResult": "PASS \u2014 23/23 scoped alert/dispatch/date/password regressions; web and native types; web production build; isolated actual-component browser checks.",
+      "outstandingWork": "Not deployed. Native runtime/device acceptance and a new native build remain deferred; hosted page integration retest pending. Browser beforeunload is an unavoidable platform-controlled exception. Existing production NO-GO and other pending scope remain.",
+      "evidence": [
+        "docs/custom-alerts/evidence/tests.txt",
+        "docs/custom-alerts/evidence/web-types.txt",
+        "docs/custom-alerts/evidence/mobile-types.txt",
+        "docs/custom-alerts/evidence/build.txt",
+        "docs/custom-alerts/evidence/browser.json",
+        "docs/custom-alerts/evidence/discard-desktop.png",
+        "docs/custom-alerts/evidence/friendly-date-dark.png",
+        "docs/custom-alerts/evidence/discard-390px-frame.png"
+      ],
+      "id": "ALERT-01",
+      "requirement": "Replace project browser alerts/confirmations/prompts with branded accessible dialogs and safe cancellation",
+      "priority": "P0",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All browser primitive call sites replaced. Actual shared Modal/ActionForm/prompt verified in isolated browser: default safe focus, Escape retains dirty parent/value, explicit discard, entered values survive async confirmation, required reason and focus restoration.390px framed viewport bounds verified; no business operations executed.",
+      "implementationFiles": [
+        "packages/business-rules/src/dialog-queue.ts",
+        "apps/web/components/app-dialog.tsx",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/custom-alerts.test.ts"
+      ],
+      "testIds": [
+        "ALERT-QUEUE",
+        "ALERT-WIRING"
+      ],
+      "negativeTests": [
+        "stale/double clicks",
+        "already aborted",
+        "cancelAll(false)"
+      ],
+      "acceptanceGate": "ALERT-G01"
+    },
+    {
+      "scope": "Project-owned web/mobile alert, confirmation, prompt and shared error presentation; no business approval bypass",
+      "uiReference": "User screenshot of native browser unsaved-changes confirmation and instruction to use custom friendly alerts throughout",
+      "route": "Shared web root/Modal/ActionForm; admin settings/export; rewards review; customer/driver/technician native roots",
+      "dataSource": "Existing operation outcomes and unsaved form state; shared in-memory dialog queue; no new business/financial data store",
+      "securityControl": "Explicit confirmation only; cancel/abort/unmount never approves; stale/double response ignored; sequential dialogs; reason minimum retained; backend permissions/payment/safety approvals unchanged; technical internals masked without inferring success",
+      "testResult": "PASS \u2014 23/23 scoped alert/dispatch/date/password regressions; web and native types; web production build; isolated actual-component browser checks.",
+      "outstandingWork": "Not deployed. Native runtime/device acceptance and a new native build remain deferred; hosted page integration retest pending. Browser beforeunload is an unavoidable platform-controlled exception. Existing production NO-GO and other pending scope remain.",
+      "evidence": [
+        "docs/custom-alerts/evidence/tests.txt",
+        "docs/custom-alerts/evidence/web-types.txt",
+        "docs/custom-alerts/evidence/mobile-types.txt",
+        "docs/custom-alerts/evidence/build.txt",
+        "docs/custom-alerts/evidence/browser.json",
+        "docs/custom-alerts/evidence/discard-desktop.png",
+        "docs/custom-alerts/evidence/friendly-date-dark.png",
+        "docs/custom-alerts/evidence/discard-390px-frame.png"
+      ],
+      "id": "ALERT-02",
+      "requirement": "Present actionable technical validation/network failures while preserving authoritative business and safety explanations",
+      "priority": "P1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Shared narrowly matched formatter used by web errors/notices, native API/shared feedback/direct error text and custom dialogs. Known ISO/format/network/internal errors translated; payment/safety/awaiting-verification messages tested unchanged. Actual friendly datetime alert inspected in dark theme.",
+      "implementationFiles": [
+        "apps/mobile/AccountHub.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/AppAlert.tsx",
+        "apps/mobile/CombinedCheckout.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "apps/mobile/DriverOperations.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/Onboarding.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/web/components/app-dialog.tsx",
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/components/ui.tsx",
+        "packages/business-rules/src/friendly-message.ts"
+      ],
+      "testFiles": [
+        "tests/custom-alerts.test.ts"
+      ],
+      "testIds": [
+        "ALERT-MESSAGE"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "ALERT-G02"
+    },
+    {
+      "scope": "Project-owned web/mobile alert, confirmation, prompt and shared error presentation; no business approval bypass",
+      "uiReference": "User screenshot of native browser unsaved-changes confirmation and instruction to use custom friendly alerts throughout",
+      "route": "Shared web root/Modal/ActionForm; admin settings/export; rewards review; customer/driver/technician native roots",
+      "dataSource": "Existing operation outcomes and unsaved form state; shared in-memory dialog queue; no new business/financial data store",
+      "securityControl": "Explicit confirmation only; cancel/abort/unmount never approves; stale/double response ignored; sequential dialogs; reason minimum retained; backend permissions/payment/safety approvals unchanged; technical internals masked without inferring success",
+      "testResult": "PASS \u2014 23/23 scoped alert/dispatch/date/password regressions; web and native types; web production build; isolated actual-component browser checks.",
+      "outstandingWork": "Not deployed. Native runtime/device acceptance and a new native build remain deferred; hosted page integration retest pending. Browser beforeunload is an unavoidable platform-controlled exception. Existing production NO-GO and other pending scope remain.",
+      "evidence": [
+        "docs/custom-alerts/evidence/tests.txt",
+        "docs/custom-alerts/evidence/web-types.txt",
+        "docs/custom-alerts/evidence/mobile-types.txt",
+        "docs/custom-alerts/evidence/build.txt",
+        "docs/custom-alerts/evidence/browser.json",
+        "docs/custom-alerts/evidence/discard-desktop.png",
+        "docs/custom-alerts/evidence/friendly-date-dark.png",
+        "docs/custom-alerts/evidence/discard-390px-frame.png"
+      ],
+      "id": "ALERT-03",
+      "requirement": "Replace native customer/driver/technician alerts with branded dialogs without losing queued-record or sign-out safeguards",
+      "priority": "P0",
+      "status": "PARTIAL",
+      "reason": "All native Alert.alert call sites replaced by theme-aware custom provider; original callbacks and pending-record truthfulness retained. Cancel/back/account changes resolve without an action, callback failures show friendly errors. Source shared-queue and native typechecks pass, but physical/native runtime is untested and no native build requested.",
+      "implementationFiles": [
+        "packages/business-rules/src/dialog-queue.ts",
+        "apps/mobile/AppAlert.tsx",
+        "apps/mobile/index.ts",
+        "apps/mobile/App.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/TechnicianWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/custom-alerts.test.ts",
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "ALERT-QUEUE",
+        "ALERT-WIRING",
+        "DDI-AUDIT01"
+      ],
+      "negativeTests": [
+        "cancelAll(false)",
+        "abandoned"
+      ],
+      "acceptanceGate": "ALERT-G03"
+    }
+  ],
+  "gates": [
+    {
+      "id": "ALERT-G01",
+      "status": "PASS",
+      "scope": "Web confirmation/prompt and keyboard/responsive actual-component checks"
+    },
+    {
+      "id": "ALERT-G02",
+      "status": "PASS",
+      "scope": "Error semantics and technical masking"
+    },
+    {
+      "id": "ALERT-G03",
+      "status": "OPEN",
+      "scope": "Native iOS/Android runtime, hardware Back, assistive and field-session acceptance"
+    },
+    {
+      "id": "ALERT-RELEASE",
+      "status": "OPEN",
+      "scope": "Hosted rollout/retest; native build remains deferred"
+    }
+  ],
+  "coverage": {
+    "implemented": "3/3",
+    "verified": "2/3",
+    "criticalVerified": "1/2",
+    "gates": "2/4; native and release remain in coverage"
+  },
+  "scopeChanges": [
+    "Browser page-close/refresh beforeunload is retained because browsers prohibit replacing its warning with custom UI; in-app dirty Modal closure is custom.",
+    "Existing inline notices remain inline; custom dialogs are used for attention/confirmation/input, avoiding popup overload.",
+    "Explicit ALERT-03/PW-MIN02 source changes to driver/technician reviewed in docs/custom-alerts/approved-scope-change.json; original dispatch hash baseline is preserved, new exact hashes remain enforced.",
+    "No backend business permissions, financial approvals, provider credentials/flags, offline record semantics, account identities or historical data changed."
+  ]
+}

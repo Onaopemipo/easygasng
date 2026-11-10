@@ -1,0 +1,9 @@
+# Date-only effective settings and checkbox alignment
+
+10 November 2026. The shared SettingForm serves new proposals, edits and returned revisions across Business Settings. Its requested effective date previously required a time and manually appended an offset. It now uses date-only input and the shared strict effectiveDateInLagos conversion: selected day at 00:00 +01:00. An optional blank remains omitted. Invalid calendar days are rejected. Existing backend six-day scheduling bound, independent approvals, activation checks and audit history remain unchanged. Current/past selected days never bypass approval; activation still follows existing governance.
+
+Shared web FormInput date controls call the original onChange and blur after a complete valid selection, dismissing the browser calendar. Other datetime fields used for appointments/trips are unchanged: this request concerns the specifically labelled requested effective date, not operational appointment times. Native apps have no matching requested-date field; no native build made.
+
+Global web checkbox labels with direct checkbox children now render a row, checkbox first even where JSX places text first; wrapped text remains beside the box. Inputs retain native checked, disabled, required and label association semantics. No backend settings or business data were changed.
+
+Executed five focused date/policy/backend regressions, web typecheck and production build. Actual shared FormInput browser fixture checked date-only selected value, calendar dismissal, checked-state interaction, flex positioning and order -1 for both label orders. Screenshot/browser JSON retained. Full authenticated page, physical Safari/Firefox/mobile-device and hosted rollout checks remain open; no deployment performed. Production NO-GO, historical import hold, retain-all instruction and unrelated work preserved.

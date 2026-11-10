@@ -1,5 +1,8 @@
 "use client";
+import { effectiveDateInLagos } from "../../../packages/business-rules/src/effective-date";
+import { appAlert } from "./app-dialog";
 import { FormInput } from "./password-input";
+import SettingSummary, { readableSetting } from "./setting-summary";
 import PaymentGatewayPolicy from "./payment-gateway-policy";
 import InventoryWorkspace from "./inventory-workspace";
 import AdminOverview from "./admin-overview";
@@ -9,6 +12,7 @@ import { OperationsExtensions } from "./operations-completion";
 import { OrderOperations } from "./order-operations";
 import OrderInvoice from "./order-invoice";
 import AssistedOrder from "./assisted-order";
+import OrderAdditions from "./order-additions";
 import { RewardsPolicyFields } from "./rewards-policy-fields";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
 import DispatchTracking from "./order-tracking";
@@ -823,7 +827,8 @@ function Settings({
     [query, setQuery] = useState(""),
     [editing, setEditing] = useState<any>(null),
     [history, setHistory] = useState<any>(null),
-    [message, setMessage] = useState("");
+    [message, setMessage] = useState(""),
+    [actionError, setActionError] = useState("");
   const categories = data
     ? [...new Set<string>(data.map((d: any) => d.category))]
     : [];
@@ -841,15 +846,16 @@ function Settings({
         }
       />
       {data && (
-        <GasDeliveryAdmin
+        <details className="settings-tools"><summary>Gas stock, pricing and delivery tools</summary><GasDeliveryAdmin
           user={user}
           settings={data}
           onEdit={setEditing}
           refresh={refresh}
           onRefresh={onChange}
-        />
+        /></details>
       )}
       {message && <Notice type="success" message={message} />}
+      {actionError && <Notice type="error" message={actionError} />}
       <div className="settings-layout">
         <aside className="settings-nav">
           <div className="input-icon">
@@ -865,7 +871,8 @@ function Settings({
             <button
               className={c === current ? "active" : ""}
               key={c}
-              onClick={() => setCategory(c)}
+              aria-pressed={c === current && !query}
+              onClick={() => { setCategory(c); setQuery(""); }}
             >
               <Settings2 size={16} />
               {c}
@@ -892,17 +899,20 @@ function Settings({
           ) : (
             <>
               <div className="section-heading">
-                <h2>{current}</h2>
+                <h2>{query.trim() ? "Search results" : current}</h2>
                 <span className="branch-badge">
                   <span />
                   {user.branchId ?? "Lagos"}
                 </span>
               </div>
+              {query.trim() && !data.some((d: any) => `${d.category} ${d.label} ${d.description}`.toLowerCase().includes(query.toLowerCase())) && (
+                <p className="settings-empty" role="status">No settings match “{query}”. Try another word or choose a category.</p>
+              )}
               {data
                 .filter(
                   (d: any) =>
-                    d.category === current &&
-                    `${d.label} ${d.description}`
+                    (!query.trim() ? d.category === current : true) &&
+                    `${d.category} ${d.label} ${d.description}`
                       .toLowerCase()
                       .includes(query.toLowerCase()),
                 )
@@ -928,13 +938,14 @@ function Settings({
                     <div className="setting-value-row">
                       <div>
                         <small>ACTIVE VALUE · VERSION {d.version}</small>
-                        <strong>{formatValue(d.value, d.value_type)}</strong>
+                        <SettingSummary value={d.value} type={d.value_type} />
                       </div>
                       <div className="setting-actions">
                         <button
                           className="icon-button"
                           aria-label={`View ${d.label} history`}
                           onClick={async () => {
+                            setActionError("");
                             try {
                               setHistory({
                                 setting: d,
@@ -943,7 +954,7 @@ function Settings({
                                 ),
                               });
                             } catch (e: any) {
-                              setMessage(e.message);
+                              setActionError(e.message);
                             }
                           }}
                         >
@@ -985,6 +996,7 @@ function Settings({
           <SettingForm
             setting={editing}
             onDone={() => {
+              setActionError("");
               setEditing(null);
               setMessage(
                 editing.risk === 1
@@ -1025,7 +1037,7 @@ function Settings({
                       );
                       onChange();
                     } catch (e: any) {
-                      setMessage(e.message);
+                      setActionError(e.message);
                     }
                   }}
                 >
@@ -1047,10 +1059,7 @@ function formatValue(value: any, type?: string) {
   if (value === null) return "Not configured";
   if (type === "money") return money(value);
   if (typeof value === "boolean") return value ? "Enabled" : "Disabled";
-  if (typeof value === "object")
-    return Object.entries(value)
-      .map(([k, v]) => `${k}: ${String(v) || "Not configured"}`)
-      .join(" · ");
+  if (typeof value === "object") return readableSetting(value);
   return String(value);
 }
 function SettingForm({
@@ -1100,9 +1109,7 @@ function SettingForm({
           ...(effectiveAt
             ? {
                 effectiveAt:
-                  (effectiveAt.length === 16
-                    ? effectiveAt + ":00"
-                    : effectiveAt) + "+01:00",
+                  effectiveDateInLagos(effectiveAt),
               }
             : {}),
         });
@@ -1118,9 +1125,7 @@ function SettingForm({
           ...(effectiveAt
             ? {
                 effectiveAt:
-                  (effectiveAt.length === 16
-                    ? effectiveAt + ":00"
-                    : effectiveAt) + "+01:00",
+                  effectiveDateInLagos(effectiveAt),
               }
             : {}),
         });
@@ -1799,11 +1804,12 @@ function SettingForm({
       <label>
         Requested effective date (Africa/Lagos)
         <FormInput
-          type="datetime-local"
+          type="date"
           value={effectiveAt}
           onChange={(e) => setEffectiveAt(e.target.value)}
         />
       </label>
+      <p className="effective-date-help">Optional. Takes effect from the start of the selected day in Lagos, once all required approvals are complete.</p>
       {!requestId && (
         <label>
           <FormInput
@@ -2542,7 +2548,7 @@ function Records({
     try {
       exportRows = await api("finance.export", {});
     } catch (e: any) {
-      window.alert(e.message);
+      await appAlert(e.message, "Export could not be downloaded");
       return;
     }
     const keys =
@@ -2843,6 +2849,7 @@ function Records({
                     canIssue={["owner", "finance"].includes(user.role)}
                   />
                 )}
+              {section === "orders" && <OrderAdditions order={selected} user={user} onChanged={() => { setSelected(null); onChange(); }} />}
               <OrderOperations order={selected} user={user} />
               <h3>{selected.customer_name}</h3>
               <p>

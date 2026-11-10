@@ -1,4 +1,6 @@
 "use client";
+import { confirmAction, appDialogActive } from "./app-dialog";
+import { friendlyMessage } from "../../../packages/business-rules/src/friendly-message";
 import React, { useEffect, useRef } from "react";
 import {
   Flame,
@@ -141,7 +143,7 @@ export function Notice({
       ) : (
         <AlertCircle size={18} />
       )}
-      <span>{message}</span>
+      <span>{type === "error" ? friendlyMessage(message) : message}</span>
     </div>
   );
 }
@@ -155,15 +157,20 @@ export function Modal({
   children: React.ReactNode;
 }) {
   const dialog = useRef<HTMLElement>(null);
-  function close() {
+  const closing = useRef(false);
+  const lifecycle = useRef<AbortController|null>(null);
+  async function close() {
+    if (closing.current || appDialogActive()) return;
+    closing.current = true;
     if (
       dialog.current?.querySelector('[data-unsaved="true"]') &&
-      !window.confirm("Discard your unsaved changes?")
-    )
-      return;
+      !(await confirmAction("Your changes have not been saved. Keep editing to preserve them, or discard them to close this form.", { title: "Discard unsaved changes?", confirmLabel: "Discard changes", cancelLabel: "Keep editing", destructive: true, signal: lifecycle.current?.signal }))
+    ) { closing.current = false; return; }
+    closing.current = false;
     onClose();
   }
   useEffect(() => {
+    lifecycle.current = new AbortController();
     const previous = document.activeElement as HTMLElement | null;
     const targets = () =>
       Array.from(
@@ -173,6 +180,7 @@ export function Modal({
       );
     targets()[0]?.focus();
     const key = (event: KeyboardEvent) => {
+      if (appDialogActive()) return;
       if (event.key === "Escape") {
         event.preventDefault();
         close();
@@ -192,6 +200,7 @@ export function Modal({
     };
     document.addEventListener("keydown", key);
     return () => {
+      lifecycle.current?.abort();
       document.removeEventListener("keydown", key);
       previous?.focus();
     };
@@ -247,7 +256,7 @@ export async function api(
     if (path.startsWith("/admin")) window.location.assign("/login");
   }
   if (!response.ok)
-    throw Object.assign(new Error(result.error ?? "Something went wrong."), {
+    throw Object.assign(new Error(friendlyMessage(result.error ?? "Something went wrong.")), {
       status: response.status,
       code: result.code,
     });

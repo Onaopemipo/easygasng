@@ -1,3 +1,4 @@
+import { EasyGasAlert } from "./AppAlert";
 import { technicianPending, syncTechnicianFieldQueue } from "./field-queue";
 import { photoUploader } from "./DriverPhoto";
 import React, { useState, useEffect, useRef } from "react";
@@ -7,7 +8,6 @@ import {
   Pressable,
   Linking,
   StatusBar,
-  Alert,
   AppState,
   BackHandler,
 } from "react-native";
@@ -155,11 +155,11 @@ export default function TechnicianWorkspace({
     }
   }
   function signout() {
-    Alert.alert(
+    EasyGasAlert.alert(
       "Sign out?",
-      "Unsynced service evidence and encrypted drafts may still need reconciliation. Cancel to review your jobs before signing out.",
+      "Some service photos or reports may not have synced yet. Keep working to review your jobs, or sign out and return with this same account to sync them.",
       [
-        { text: "Cancel", style: "cancel" },
+        { text: "Keep working", style: "cancel" },
         {
           text: "Sign Out",
           style: "destructive",

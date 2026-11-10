@@ -1,3 +1,5 @@
+import { EasyGasAlert } from "./AppAlert";
+import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
 import VehicleManifest from "./VehicleManifest";
 import DriverTripTracking from "./DriverTripTracking";
 import React, { useEffect, useRef, useState } from "react";
@@ -9,7 +11,6 @@ import {
   Switch,
   StatusBar,
   Linking,
-  Alert,
   AppState,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -960,7 +961,7 @@ export default function DriverWorkspace({
               },
               {
                 name: "newPassword",
-                label: "New password (at least12 characters)",
+                label: `New password (at least ${PASSWORD_MIN_LENGTH} characters)`,
                 type: "password",
               },
             ]}
@@ -1031,11 +1032,11 @@ export default function DriverWorkspace({
               label="Sign Out"
               secondary
               onPress={() =>
-                Alert.alert(
+                EasyGasAlert.alert(
                   "Sign out of Driver App?",
                   queue || legacy
-                    ? "Encrypted pending records stay on this device and require the same account to reconcile. No offline delivery is confirmed."
-                    : "Your session will be revoked.",
+                    ? "You have updates waiting to sync. They will stay securely on this device. Sign in with this same account to sync them later. Deliveries remain unconfirmed until EasyGas verifies them."
+                    : "You can sign in again whenever you are ready.",
                   [
                     { text: "Keep working", style: "cancel" },
                     {

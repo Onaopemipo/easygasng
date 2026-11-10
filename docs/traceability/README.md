@@ -97,3 +97,17 @@ Customer wallet repair (10 November 2026): [matrix](wallet-repair-rtm.md) and [r
 Linked-request phone repair (10 November 2026): [matrix](linked-request-contact-rtm.md). Backend formatting/validation verified; editable saved-draft contacts implemented, browser/hosted acceptance remains open. Existing NO-GO and scope preserved.
 
 10 November demo rollout: source508f137 pushed and Vercel READY; migration073 and hosted smoke verified in the existing [VDEMO matrix](vercel-client-demo-rtm.json). Feature acceptance and production NO-GO remain separate.
+
+Staff same-delivery additions (10 November2026): [matrix](order-additions-rtm.md), [audit and operating report](../order-additions/report.md). One supplementary request before assignment/loading, original fulfilment/fee retained; local backend/UI/concurrency verified. Migration074 not deployed; hosted and original production gates remain open.
+
+Account password minimum (10 November2026): [matrix](password-minimum-rtm.md), [report](../password-policy/report.md). Explicit user-approved minimum8 shared across backend, web/mobile and provisioning. Existing credentials/security controls preserved; native/hosted runtime and prior NO-GO remain open.
+
+Fresh hosted demo accounts (10 November2026): [matrix](fresh-demo-accounts-rtm.md), [report](../demo-accounts/report.md).13/13 new synthetic role logins verified, old identities and finance preserved; credentials private/outside Git. Does not advance production or other feature gates.
+
+Settings proposal datetime (10 November2026): [matrix](settings-datetime-rtm.md), [report](../settings-datetime/report.md). New proposals now accept explicit Lagos offsets consistently with edits/revisions;14 regressions/types/build pass. Not deployed; no payment activation or approval bypass.
+
+Custom friendly alerts (10 November2026): [matrix](custom-alerts-rtm.md), [report](../custom-alerts/report.md). Shared web/native dialogs and technical-error guidance added;23 scoped checks/types/build and actual web component/theme/390px-frame checks pass. Native runtime and hosted rollout remain open; browser-controlled beforeunload retained. Prior NO-GO preserved.
+
+Business settings cleanup (10 November2026): [matrix](settings-cleanup-rtm.md), [report](../settings-cleanup/report.md). Readable payment summary, expandable details, collapsed gas tools and cross-category search; 5 focused tests/types/build and isolated desktop summary verification pass. Full authenticated/mobile integration and rollout remain open. No business setting changed; NO-GO preserved.
+
+Date-only settings and checkbox alignment (10 November2026): [matrix](date-only-settings-rtm.md), [report](../date-only-settings/report.md). DATE-02/03 add date-only Lagos start-of-day serialization, calendar dismissal and shared web checkbox alignment. Five focused regressions/types/build and component browser checks pass; hosted/full-page/device acceptance remains open. Existing DATE-01 explicit-offset API compatibility preserved; NO-GO unchanged.
