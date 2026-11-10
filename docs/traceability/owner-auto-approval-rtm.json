@@ -11,9 +11,9 @@
       "dataSource": "Existing settings/change_requests/setting_versions and immutable audit_events; current users/roles and captured request revision",
       "securityControl": "Server-only explicit opt-in; current owner/requester/revision/base-version-bound immutable authority record; existing role/branch/version/expiry/validation and qualified safety/payment checks retained",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Backend and source behavior verified; cloud/UI rollout acceptance pending.",
-      "testResult": "PASS \u2014 40 scoped regressions,605 full-suite passes/20 environment skips/0failures, web types/build and separate real PostgreSQL concurrency.",
-      "outstandingWork": "Final tests, UI checks, flag-enabled client-demo rollout; production NO-GO unchanged.",
+      "reason": "Backend, UI wiring and actual owner browser/read-only hosted acceptance verified. Existing pending request remains unchanged until explicit user action; new owner submissions auto-approve under the enabled demo policy.",
+      "testResult": "PASS \u2014 40 scoped checks;605 full-suite passes/20 environment skips/0failures; separate PostgreSQL concurrency;21 final follow-ups; refreshed web types/build; hosted role/access and actual owner UI.",
+      "outstandingWork": "None for bounded web-demo policy and pending-request action. Existing qualified safety/payment/physical/native/full-business production gates and NO-GO remain; no actual hosted operational request applied by verification. Other installations retain default OFF unless explicitly enabled.",
       "implementationFiles": [
         "apps/web/lib/governance.ts",
         "apps/web/lib/approval-workflow.ts",
@@ -37,7 +37,11 @@
         "docs/owner-auto-approval/evidence/full-tests.txt",
         "docs/owner-auto-approval/evidence/types.txt",
         "docs/owner-auto-approval/evidence/build.txt",
-        "docs/owner-auto-approval/evidence/postgres.txt"
+        "docs/owner-auto-approval/evidence/postgres.txt",
+        "docs/owner-auto-approval/evidence/final-followup-tests.txt",
+        "docs/owner-auto-approval/evidence/hosted.txt",
+        "docs/owner-auto-approval/evidence/deployment-final.txt",
+        "docs/owner-auto-approval/evidence/owner-action-live.png"
       ],
       "id": "OWNER-AUTO01",
       "requirement": "Automatically approve and safely apply authorised Business Owner new, saved-draft and rollback requests",
@@ -54,10 +58,10 @@
       "route": "/admin/settings; /admin/approvals; setting.propose/rollback; approval.submit/owner_apply/activate",
       "dataSource": "Existing settings/change_requests/setting_versions and immutable audit_events; current users/roles and captured request revision",
       "securityControl": "Server-only explicit opt-in; current owner/requester/revision/base-version-bound immutable authority record; existing role/branch/version/expiry/validation and qualified safety/payment checks retained",
-      "status": "PARTIAL",
-      "reason": "Backend and source behavior verified; cloud/UI rollout acceptance pending.",
-      "testResult": "PASS \u2014 40 scoped regressions,605 full-suite passes/20 environment skips/0failures, web types/build and separate real PostgreSQL concurrency.",
-      "outstandingWork": "Final tests, UI checks, flag-enabled client-demo rollout; production NO-GO unchanged.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Backend, UI wiring and actual owner browser/read-only hosted acceptance verified. Existing pending request remains unchanged until explicit user action; new owner submissions auto-approve under the enabled demo policy.",
+      "testResult": "PASS \u2014 40 scoped checks;605 full-suite passes/20 environment skips/0failures; separate PostgreSQL concurrency;21 final follow-ups; refreshed web types/build; hosted role/access and actual owner UI.",
+      "outstandingWork": "None for bounded web-demo policy and pending-request action. Existing qualified safety/payment/physical/native/full-business production gates and NO-GO remain; no actual hosted operational request applied by verification. Other installations retain default OFF unless explicitly enabled.",
       "implementationFiles": [
         "apps/web/lib/governance.ts",
         "apps/web/lib/approval-workflow.ts",
@@ -81,12 +85,17 @@
         "docs/owner-auto-approval/evidence/full-tests.txt",
         "docs/owner-auto-approval/evidence/types.txt",
         "docs/owner-auto-approval/evidence/build.txt",
-        "docs/owner-auto-approval/evidence/postgres.txt"
+        "docs/owner-auto-approval/evidence/postgres.txt",
+        "docs/owner-auto-approval/evidence/final-followup-tests.txt",
+        "docs/owner-auto-approval/evidence/hosted.txt",
+        "docs/owner-auto-approval/evidence/deployment-final.txt",
+        "docs/owner-auto-approval/evidence/owner-action-live.png"
       ],
       "id": "OWNER-AUTO02",
       "requirement": "Expose existing own pending request action and truthful owner/staff messaging",
       "testIds": [
-        "OWNER-AUTO02"
+        "OWNER-AUTO02",
+        "OWNER-AUTO-UI"
       ],
       "acceptanceGate": "OWNER-AUTO02-G"
     },
@@ -98,9 +107,9 @@
       "dataSource": "Existing settings/change_requests/setting_versions and immutable audit_events; current users/roles and captured request revision",
       "securityControl": "Server-only explicit opt-in; current owner/requester/revision/base-version-bound immutable authority record; existing role/branch/version/expiry/validation and qualified safety/payment checks retained",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Backend and source behavior verified; cloud/UI rollout acceptance pending.",
-      "testResult": "PASS \u2014 40 scoped regressions,605 full-suite passes/20 environment skips/0failures, web types/build and separate real PostgreSQL concurrency.",
-      "outstandingWork": "Final tests, UI checks, flag-enabled client-demo rollout; production NO-GO unchanged.",
+      "reason": "Backend, UI wiring and actual owner browser/read-only hosted acceptance verified. Existing pending request remains unchanged until explicit user action; new owner submissions auto-approve under the enabled demo policy.",
+      "testResult": "PASS \u2014 40 scoped checks;605 full-suite passes/20 environment skips/0failures; separate PostgreSQL concurrency;21 final follow-ups; refreshed web types/build; hosted role/access and actual owner UI.",
+      "outstandingWork": "None for bounded web-demo policy and pending-request action. Existing qualified safety/payment/physical/native/full-business production gates and NO-GO remain; no actual hosted operational request applied by verification. Other installations retain default OFF unless explicitly enabled.",
       "implementationFiles": [
         "apps/web/lib/governance.ts",
         "apps/web/lib/approval-workflow.ts",
@@ -125,7 +134,11 @@
         "docs/owner-auto-approval/evidence/full-tests.txt",
         "docs/owner-auto-approval/evidence/types.txt",
         "docs/owner-auto-approval/evidence/build.txt",
-        "docs/owner-auto-approval/evidence/postgres.txt"
+        "docs/owner-auto-approval/evidence/postgres.txt",
+        "docs/owner-auto-approval/evidence/final-followup-tests.txt",
+        "docs/owner-auto-approval/evidence/hosted.txt",
+        "docs/owner-auto-approval/evidence/deployment-final.txt",
+        "docs/owner-auto-approval/evidence/owner-action-live.png"
       ],
       "id": "OWNER-AUTO03",
       "requirement": "Retain current authority, scheduling, expiry, version, safety and exactly-once inventory controls",
@@ -148,7 +161,7 @@
     },
     {
       "id": "OWNER-AUTO02-G",
-      "status": "OPEN",
+      "status": "PASS",
       "scope": "Expose existing own pending request action and truthful owner/staff messaging"
     },
     {
@@ -164,7 +177,14 @@
   ],
   "coverage": {
     "implemented": "3/3",
-    "locallyVerified": "2/3",
-    "gates": "2/3"
+    "verified": "3/3 for bounded web-demo scope",
+    "gates": "3/3"
+  },
+  "deployment": {
+    "sourceCommit": "67d94cc",
+    "id": "dpl_AMwAo4VzXVKn7ewqvCZ7P3g8WXj6",
+    "url": "https://easygas-client-demo.vercel.app",
+    "ownerPolicy": "enabled on linked demo only",
+    "businessMutationPerformed": false
   }
 }
