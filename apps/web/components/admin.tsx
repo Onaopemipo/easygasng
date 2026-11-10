@@ -1907,7 +1907,7 @@ function Approvals({
     <>
       <AdminHeading
         title="Every decision, accounted for."
-        text="Review business changes with independent approvals and a clear history."
+        text="Review requested changes, activation status and the complete audit history."
         action={
           <button className="button secondary" onClick={verify}>
             <LockKeyhole size={16} />
@@ -2171,7 +2171,11 @@ function Approvals({
               setBusy(true); setFailure("");
               try {
                 const result = await api("approval.owner_apply", { id: selected.id, reason: "Apply my existing request under Business Owner authority" });
-                if (["failed", "superseded"].includes(result.status)) setFailure(result.failure_reason || "This request could not be activated. Review its current status before trying again.");
+                if (["failed", "superseded"].includes(result.status)) {
+                  setFailure(result.failure_reason || "This request could not be activated. Review its current status before trying again.");
+                  setSelected({ ...selected, status: result.status, state: result.state, failure_reason: result.failure_reason, can_owner_apply: result.status === "failed" });
+                  onChange();
+                }
                 else { setSelected(null); onChange(); }
               } catch (e: any) { setFailure(e.message); if (e.code === "REAUTH_REQUIRED") verify(); }
               finally { setBusy(false); }
@@ -2343,9 +2347,13 @@ function Approvals({
             </button>
           ) : (
             <p className="muted">
-              {selected.requester_id === user.id
-                ? "Your request must be reviewed by an independent authorised colleague."
-                : `This request is ${selected.status.replaceAll("_", " ")}.`}
+              {selected.can_owner_apply
+                ? "Use Apply my request above. Verify your identity first if prompted."
+                : selected.owner_auto_approval && selected.requester_id === user.id
+                  ? `Your owner request is ${selected.status.replaceAll("_", " ")}. Saved drafts must be submitted; qualified safety reviews and activation checks still apply.`
+                  : selected.requester_id === user.id && ["pending_approval", "partially_approved"].includes(selected.status)
+                    ? "Your request must be reviewed by an independent authorised colleague."
+                    : `This request is ${selected.status.replaceAll("_", " ")}.`}
             </p>
           )}
         </Modal>

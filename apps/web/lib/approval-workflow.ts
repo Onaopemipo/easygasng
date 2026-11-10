@@ -29,6 +29,8 @@ export async function approvalWorkflowAction(
     ].includes(action)
   )
     return undefined;
+  if (action === "approval.owner_apply" && (!ownerAutoApprovalEnabled() || user.role !== "owner"))
+    throw new AppError(403, "Only the Business Owner can apply an owner request under the enabled owner policy.");
   const d = z
     .object({
       id: z.string().uuid(),
