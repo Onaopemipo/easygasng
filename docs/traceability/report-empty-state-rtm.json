@@ -15,7 +15,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "All four collection combinations rendered; actual local authenticated Reports page has one contextual empty state and zero generic duplicates.",
       "testResult": "PASS rendering regression, web typecheck/build and actual local browser verification.",
-      "outstandingWork": "Not deployed; existing production NO-GO and technician work remain unchanged.",
+      "outstandingWork": "Web deployment recorded in docs/releases/20261110-demo/report.md. existing production NO-GO and technician work remain unchanged.",
       "implementationFiles": [
         "apps/web/components/business-centre.tsx"
       ],
@@ -31,7 +31,8 @@
         "docs/report-empty-state/evidence/tests.txt",
         "docs/report-empty-state/evidence/types.txt",
         "docs/report-empty-state/evidence/build.txt",
-        "docs/report-empty-state/evidence/reports-cleaned.png"
+        "docs/report-empty-state/evidence/reports-cleaned.png",
+        "docs/releases/20261110-demo/report.md"
       ],
       "acceptanceGate": "REPORT-EMPTY-G01"
     }
@@ -44,6 +45,7 @@
     }
   ],
   "scopeChanges": [
-    "No scope removed from technician phase or prior matrices; production NO-GO retained."
+    "No scope removed from technician phase or prior matrices; production NO-GO retained.",
+    "10 November: web source deployed to existing isolated demo at c95d7a1; this does not change prior native, physical-device or production launch gates."
   ]
 }

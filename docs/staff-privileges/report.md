@@ -26,3 +26,5 @@ Every privilege change records immutable audit history with actor, target, previ
 ## Release
 
 Local source only; not pushed, deployed or applied to the hosted database. Apply migration075 using the existing migration/maintenance flow before releasing this source. Bootstrap and bootstrap generator include the same migration. No new secrets or live provider activation. Rolling code back leaves the new tables and audit history intact; do not delete privilege history. Prior production NO-GO, native build deferral, import hold and all other phase matrices remain unchanged. Physical-device and production launch acceptance are not claimed.
+
+Deployment update — 10 November 2026: web changes are now pushed and deployed to the existing client demo at source c95d7a1. Earlier local-only statements describe the original verification stage. See [release evidence](../releases/20261110-demo/report.md). Production NO-GO and other outstanding gates remain unchanged.

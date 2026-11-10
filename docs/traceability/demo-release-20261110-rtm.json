@@ -12,26 +12,33 @@
       "route": "https://easygas-client-demo.vercel.app",
       "dataSource": "Existing dedicated demo database; actual Git revision and Vercel deployment metadata",
       "securityControl": "Dedicated target verification, encrypted backup, additive migration, retained record checks, restricted runtime and authenticated role-denial smoke checks; private files excluded",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Preflight complete; deployment and hosted checks pending.",
-      "testResult": "PASS preflight26 and web/mobile types; hosted acceptance pending.",
-      "outstandingWork": "Complete verified backup/migration, Git push, deployment and hosted checks. Prior production NO-GO remains.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source pushed; dedicated backed-up demo migration075 preserves retained record counts; Vercel Ready/alias and authenticated hosted API/browser smoke checks verified.",
+      "testResult": "PASS release preflight26, web/mobile types, hosted DEMO-REL-HTTP01 and actual deployed pagination browser verification.",
+      "outstandingWork": "GitHub Actions Release validation is still running at final recorded check; no CI pass or commercial activation claimed. Native binaries and existing technician/production launch gates remain deferred or outstanding.",
       "implementationFiles": [
         "apps/web/lib/db.ts",
         "database/migrations/075_staff_privileges.sql",
         ".vercelignore"
       ],
       "testFiles": [
-        "tests/staff-privileges.test.ts",
-        "scripts/check-vercel-demo.mjs"
+        "scripts/check-workspace-release.mjs",
+        "tests/staff-privileges.test.ts"
       ],
-      "testIds": [],
+      "testIds": [
+        "DEMO-REL-HTTP01"
+      ],
       "negativeTests": [],
       "evidence": [
         "docs/releases/20261110-demo/report.md",
         "docs/releases/20261110-demo/evidence/tests.txt",
         "docs/releases/20261110-demo/evidence/web-types.txt",
-        "docs/releases/20261110-demo/evidence/mobile-types.txt"
+        "docs/releases/20261110-demo/evidence/mobile-types.txt",
+        "docs/releases/20261110-demo/evidence/migration.txt",
+        "docs/releases/20261110-demo/evidence/hosted-tests.txt",
+        "docs/releases/20261110-demo/evidence/deployment.txt",
+        "docs/releases/20261110-demo/evidence/hosted-approvals.png",
+        "docs/releases/20261110-demo/evidence/ci.txt"
       ],
       "acceptanceGate": "DEMO-REL-G01"
     }
@@ -40,10 +47,13 @@
     {
       "id": "DEMO-REL-G01",
       "scope": "Push, compatible demo migration, deployment and hosted verification",
-      "status": "PENDING"
+      "status": "PASS"
     }
   ],
   "scopeChanges": [
     "No map integration or commercial production activation claimed; existing partial technician matrices and prior gates retained."
-  ]
+  ],
+  "sourceRevision": "c95d7a1f783338b348bcdfb2fe5d4ebf9466f64a",
+  "deploymentId": "dpl_FAAVDRFFFLZZJ8HPTMY2SDZiarNt",
+  "ciStatus": "IN_PROGRESS"
 }

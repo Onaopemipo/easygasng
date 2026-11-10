@@ -131,3 +131,5 @@ Approval Centre pagination and modern presentation: [matrix](approval-centre-rtm
 Individual staff privileges: [matrix](staff-privileges-rtm.md), [report](../staff-privileges/report.md). Explicit per-user grant/deny/default catalogue, current-request backend enforcement, immutable history and scoped administration verified locally. Protected role, qualification and independent approval controls remain; not deployed; production NO-GO unchanged.
 
 Client demo release10November: [matrix](demo-release-20261110-rtm.md), [report](../releases/20261110-demo/report.md). Existing linked demo deployment only; no commercial activation or map implementation.
+
+10 November publication update: pending web phases are deployed to the existing client demo at c95d7a1; migration075 and hosted checks passed. See [release matrix](demo-release-20261110-rtm.md). CI remains in progress at recorded check; native builds, map integration and commercial production NO-GO are not completed by this release.
