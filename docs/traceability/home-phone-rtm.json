@@ -1,0 +1,86 @@
+{
+  "phase": "Homepage phone and How It Works illustration layout",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "HOME-PHONE01",
+      "requirement": "Enlarge the Always With You demo phone and clearly arrange its tagline and4icon labels on desktop/mobile",
+      "priority": "P1",
+      "scope": "Homepage promotional illustration only",
+      "uiReference": "User homepage screenshot and requested tagline/labels",
+      "route": "/",
+      "dataSource": "Existing static AppPromo illustration and account route; no business figures invented",
+      "securityControl": "Existing link, illustration disclosure and native-coming-soon statement retained; no auth/API/business state changes",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "220px phone and two-column menu layout verified in actual local desktop/mobile browser; all labels and full frame fit.",
+      "testResult": "PASS5 existing product UI checks, web typecheck and actual desktop/mobile frame and label bounds.",
+      "outstandingWork": "Hosted rollout and physical-device acceptance remain open; original production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/app/theme.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/home-phone/report.md",
+        "docs/home-phone/evidence/tests.txt",
+        "docs/home-phone/evidence/types.txt",
+        "docs/home-phone/evidence/browser.json",
+        "docs/home-phone/evidence/desktop.png",
+        "docs/home-phone/evidence/mobile.png"
+      ],
+      "acceptanceGate": "HOME-PHONE-G01"
+    },
+    {
+      "id": "HOME-STEPS01",
+      "requirement": "Keep How It Works numbers1\u20134 visible and clear of their icons on desktop/mobile",
+      "priority": "P1",
+      "scope": "Homepage/shared How It Works presentation only",
+      "uiReference": "User report of step-number overlap",
+      "route": "/#how-it-works",
+      "dataSource": "Existing static four-step order and descriptions",
+      "securityControl": "CSS only; no business records, links, authorisation or API changes",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual browser bounds show all4badges physically separated from SVGs at desktop/mobile sizes.",
+      "testResult": "PASS5 existing product UI checks and actual desktop/mobile badge bounds/screenshots.",
+      "outstandingWork": "Hosted rollout and physical-device acceptance remain open; production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/app/theme.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/how-it-works-badges/report.md",
+        "docs/how-it-works-badges/evidence/tests.txt",
+        "docs/how-it-works-badges/evidence/browser.json",
+        "docs/how-it-works-badges/evidence/desktop.png",
+        "docs/how-it-works-badges/evidence/mobile.png"
+      ],
+      "acceptanceGate": "HOME-STEPS-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "HOME-PHONE-G01",
+      "scope": "Local desktop/mobile phone and label containment",
+      "status": "PASS"
+    },
+    {
+      "id": "HOME-STEPS-G01",
+      "scope": "All four badges separate from icon SVGs at desktop/mobile widths",
+      "status": "PASS"
+    }
+  ],
+  "scopeChanges": [
+    "Existing approved illustration role and route retained; no native implementation or production activation. Pending inventory art repair preserved.",
+    "11November: explicit number-badge correction added as HOME-STEPS01 without replacing HOME-PHONE01 or prior scope."
+  ]
+}

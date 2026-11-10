@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { api, Notice, Loading } from "./ui";
 export function ServiceFollowups() {
   const [rows, setRows] = useState<any[]>([]),

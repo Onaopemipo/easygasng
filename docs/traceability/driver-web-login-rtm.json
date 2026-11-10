@@ -1,0 +1,51 @@
+{
+  "phase": "Driver web login 404 repair",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "DR-WEB-R01",
+      "requirement": "Driver web sign-in reaches the existing deliveries workspace without a navigation-check 404 and preserves delivery-only authority",
+      "priority": "P0",
+      "scope": "Driver session navigation reads only",
+      "uiReference": "User screenshot of driver login at /admin returning 404",
+      "route": "/admin \u2192 /admin/deliveries",
+      "dataSource": "Authenticated existing session, user role, active branch and roleNavigation; authorised driver records",
+      "securityControl": "Only navigation and navigation.access added to restricted-session reads; downstream role/branch/privilege checks remain; finance, stock and staff actions denied",
+      "status": "UNVERIFIED",
+      "reason": "Restricted-session navigation allowlist defect fixed; 17 focused tests, typecheck and build pass. Local HTTP sign-in returned 500 twice, preventing browser redirect acceptance.",
+      "testResult": "PASS17 focused tests, web typecheck and web build. HTTP acceptance blocked by preview sign-in 500.",
+      "outstandingWork": "Resolve preview sign-in 500 and rerun actual web sign-in/redirect acceptance; deploy and verify hosted demo. Production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/lib/driver-workspace.ts"
+      ],
+      "testFiles": [
+        "tests/driver-workspace.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "testIds": [
+        "DR-WEB-01"
+      ],
+      "negativeTests": [
+        "DR-WEB-01"
+      ],
+      "evidence": [
+        "docs/driver-web-login/evidence/tests.txt",
+        "docs/driver-web-login/evidence/types.txt",
+        "docs/driver-web-login/evidence/build.txt",
+        "docs/driver-web-login/report.md"
+      ],
+      "acceptanceGate": "DR-WEB-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DR-WEB-G01",
+      "scope": "Local redirect, delivery-page response and delivery-only security regression",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "All prior local work, navigation groups, routes, automatic-assignment restrictions and production holds preserved. No account or business-data reset."
+  ]
+}

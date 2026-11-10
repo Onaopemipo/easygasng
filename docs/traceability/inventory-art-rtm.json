@@ -1,0 +1,50 @@
+{
+  "phase": "Inventory thumbnail containment",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "INV-ART01",
+      "requirement": "Prevent Cooking Gas and Kitchen Starter Kit artwork overlapping inventory product names",
+      "priority": "P1",
+      "scope": "Shared gas illustration and inventory-specific thumbnail layout only",
+      "uiReference": "User inventory screenshot10November2026",
+      "route": "/admin/inventory",
+      "dataSource": "Existing authorised inventory rows and shared ProductArt; names, quantities and ledgers unchanged",
+      "securityControl": "Presentation-only; role/branch guards and all financial/stock actions unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual local desktop/mobile bounds show8px name separation and contained SVGs; other9record thumbnails checked.",
+      "testResult": "PASS5 inventory regressions, web typecheck and actual desktop/mobile bounds/screenshot checks.",
+      "outstandingWork": "Hosted deployment and physical-device acceptance remain open; original production NO-GO and unrelated feature acceptance unchanged.",
+      "implementationFiles": [
+        "apps/web/components/ui.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/inventory-workspace.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/inventory-art/report.md",
+        "docs/inventory-art/evidence/tests.txt",
+        "docs/inventory-art/evidence/types.txt",
+        "docs/inventory-art/evidence/desktop-bounds.json",
+        "docs/inventory-art/evidence/mobile-bounds.json",
+        "docs/inventory-art/evidence/desktop.png",
+        "docs/inventory-art/evidence/corrected-products.png"
+      ],
+      "acceptanceGate": "INV-ART-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "INV-ART-G01",
+      "scope": "Local desktop and mobile thumbnail/name containment",
+      "status": "PASS"
+    }
+  ],
+  "scopeChanges": [
+    "Existing inventory requirements/scenarios remain in scope; no business records or permissions altered."
+  ]
+}

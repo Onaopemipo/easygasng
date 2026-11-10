@@ -53,6 +53,8 @@ export async function navigationAccess(tx: SQL, user: Actor) {
     if(effect==='grant'&&p.grantRole&&isBusinessStaff(user.role)&&user.branch_id) allowed.push(...(p.routes??[]));
   }
   allowed=[...new Set(allowed)];
+  // A grant for another operation must never resurrect an explicitly revoked menu.
+  allowed=allowed.filter(route=>!staffPrivileges.some(p=>user.privilege_overrides?.[p.id]==='deny'&&p.routes?.includes(route)));
   return {
     user: {
       id: user.id,

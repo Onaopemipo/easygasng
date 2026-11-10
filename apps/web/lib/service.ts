@@ -1,3 +1,4 @@
+import { auditHistory } from "./audit-history";
 import {enforceStaffPrivilege, staffPrivilegeAction} from "./staff-privileges";
 import { techniciansWorkspace } from "./technicians-availability";
 import { accountPassword } from "./password-policy";
@@ -1393,14 +1394,7 @@ export async function dispatch(
             .strict()
             .parse(input),
         );
-      if (action === "audit") {
-        allow(user, ["owner", "administrator"]);
-        return (
-          await tx.query(
-            "SELECT a.*,u.name AS actor FROM audit_events a LEFT JOIN users u ON u.id=a.actor_id ORDER BY a.created_at DESC LIMIT 200",
-          )
-        ).rows;
-      }
+      if (action === "audit") return auditHistory(tx, user, input);
       if (action === "customers") {
         allow(user, ["owner", "manager"]);
         return (

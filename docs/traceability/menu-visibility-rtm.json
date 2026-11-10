@@ -1,0 +1,61 @@
+{
+  "phase": "Permission-aware menu visibility",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "MENU-R01",
+      "requirement": "Hide administration menu links denied by roles or individual privileges while preserving backend authorisation",
+      "priority": "P0",
+      "scope": "Administration navigation links and revoked-current-route handling; record-specific action buttons remain outside this bounded phase",
+      "uiReference": "User request to hide menus not permitted by role and privileges",
+      "route": "All /admin navigation destinations",
+      "dataSource": "Authenticated navigation.access/navigation allowed list from existing role, branch and individual overrides",
+      "securityControl": "Server permission checks unchanged; explicit route denials applied after grants; missing access fails closed inside admin context",
+      "status": "UNVERIFIED",
+      "reason": "Implementation and automated acceptance pass; browser and hosted acceptance pending",
+      "testResult": "PASS20 focused tests, web typecheck and build",
+      "outstandingWork": "Browser/hosted acceptance and rollout; exhaustive record-specific action controls audit remains separate. Production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/components/workspace-link.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/navigation.ts"
+      ],
+      "testFiles": [
+        "tests/menu-visibility.test.ts",
+        "tests/navigation.test.ts",
+        "tests/staff-privileges.test.ts"
+      ],
+      "testIds": [
+        "MENU-01",
+        "MENU-02"
+      ],
+      "negativeTests": [
+        "MENU-02"
+      ],
+      "evidence": [
+        "docs/menu-visibility/report.md",
+        "docs/menu-visibility/evidence/tests.txt",
+        "docs/menu-visibility/evidence/types.txt",
+        "docs/menu-visibility/evidence/build.txt"
+      ],
+      "acceptanceGate": "MENU-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "MENU-G01",
+      "scope": "Automated menu filtering/security and build",
+      "status": "PASS"
+    },
+    {
+      "id": "MENU-G02",
+      "scope": "Browser and hosted acceptance",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "Grouped sidebar and existing routes preserved. No business roles, credentials, financial records or grants changed. Previous pending fixes retained.",
+    "Navigation-link filtering implemented; no claim that every record-specific mutation control has been audited."
+  ]
+}

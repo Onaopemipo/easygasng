@@ -3,7 +3,7 @@ import { VehicleManifestPanel } from "./vehicle-manifest-panel";
 import { OperationForm } from "./operations-completion";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import Link from "next/link";
+import Link from "./workspace-link";
 import {
   Box,
   Layers,

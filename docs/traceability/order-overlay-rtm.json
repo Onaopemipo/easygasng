@@ -1,0 +1,46 @@
+{
+  "phase": "Order overlay simplification",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "ORDER-OVERLAY-R01",
+      "requirement": "Simplify the order overlay using a customer-first summary and collapsed secondary forms",
+      "priority": "P1",
+      "scope": "Existing order detail modal presentation only",
+      "uiReference": "User screenshot of cumbersome /admin/orders overlay",
+      "route": "/admin/orders",
+      "dataSource": "Existing selected order, recorded customer/address/window/status/total and existing form APIs",
+      "securityControl": "Existing role checks and authoritative addition cutoffs, inspection, coverage, transition and financial controls preserved; no backend changes",
+      "status": "UNVERIFIED",
+      "reason": "Customer details moved above secondary actions; additions, coverage, inspection and status forms use native keyboard-accessible details/summary sections. Local automated checks pass; visual acceptance pending.",
+      "testResult": "PASS14 existing additions/product UI regression tests and web typecheck",
+      "outstandingWork": "Desktop/mobile browser acceptance and hosted rollout pending; production NO-GO unchanged",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/order-additions.test.ts",
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/order-overlay/evidence/tests.txt",
+        "docs/order-overlay/evidence/types.txt"
+      ],
+      "acceptanceGate": "ORDER-OVERLAY-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "ORDER-OVERLAY-G01",
+      "scope": "Desktop/mobile visual and interaction acceptance",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "Presentation only; no removal of required operational checks or existing financial authority. All prior work retained."
+  ]
+}

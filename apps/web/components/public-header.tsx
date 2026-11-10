@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { usePathname } from "next/navigation";
 import {
   House,

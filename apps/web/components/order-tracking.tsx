@@ -1,7 +1,7 @@
 "use client";
 import { OrderCardPayment } from "./hosted-payment";
 import { useEffect, useState, useRef } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { OrderOperations } from "./order-operations";
 import OrderInvoice from "./order-invoice";
 import { orderTransitions } from "../../../packages/business-rules/src/forecast";

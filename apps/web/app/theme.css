@@ -1741,3 +1741,72 @@ html[data-theme="dark"] { --loader-track:#345b40; --loader-active:#39c660; --loa
 .app-alert {width:min(100%,480px);max-height:calc(100dvh - 40px);overflow:auto;overflow-wrap:anywhere;background:var(--surface,#fff);color:var(--foreground,#10251c);border:1px solid var(--border,#dbe6df);border-radius:24px;padding:28px;box-shadow:0 24px 80px #0004;}
 .app-alert h2 {font-size:24px;margin:12px 0;}.app-alert p {line-height:1.6;}.app-alert-brand {font-weight:800;color:var(--green);font-size:18px;}.app-alert label {display:grid;gap:8px;}.app-alert textarea {width:100%;min-height:110px;font:inherit;}.app-alert-actions {display:flex;flex-wrap:wrap;justify-content:flex-end;gap:12px;margin-top:24px;}.app-alert-actions .button {flex:1 1 160px;}.app-alert .app-alert-destructive {background:#b42318;color:#fff;}.app-alert :focus-visible {outline:3px solid #0b8f48;outline-offset:3px;}
 @media(max-width:600px){.app-alert {padding:22px;}.app-alert input,.app-alert textarea {font-size:16px;}}
+
+/* Inventory row art must fit its thumbnail instead of painting over the name. */
+.iw-product .product-art { flex: 0 0 37px; overflow: hidden; }
+.iw-product .product-art.gas { color: var(--green); }
+.iw-product .kit-art { width: 100%; height: 100%; min-width: 0; gap: 2px; justify-content: center; }
+.iw-product .kit-art svg:first-child { width: 23px; height: 30px; flex: 0 0 23px; }
+.iw-product .kit-art svg + svg { width: 12px; height: 24px; flex: 0 0 12px; }
+
+/* Keep the illustrative homepage phone readable at every banner width. */
+.home-aside .app-promo { min-height: 420px; padding: 32px 300px 32px 32px; }
+.home-aside .phone-mock {
+  width: 220px; height: 366px; right: 36px; top: 24px;
+  padding: 28px 12px 12px; transform: rotate(6deg); color: #07592e;
+}
+.home-aside .phone-notch { left: 50%; transform: translateX(-50%); }
+.home-aside .phone-wordmark { font-size: 26px; line-height: 1.25; margin: 7px 0 5px; }
+.home-aside .phone-wordmark > svg { left: 50%; transform: translateX(-50%); }
+.home-aside .phone-mock > p { font-size: 12px; line-height: 1.4; white-space: normal; margin: 0 0 12px; color: #65765f; }
+.home-aside .phone-tiles { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.home-aside .phone-tiles > div { min-width: 0; min-height: 70px; padding: 10px 4px; gap: 7px; justify-content: center; text-align: center; }
+.home-aside .phone-tiles svg { width: 22px; height: 22px; flex-shrink: 0; }
+.home-aside .phone-tiles small { font-size: 12px; line-height: 1.25; white-space: nowrap; color: #07592e; }
+.home-aside .phone-mock > img { display: block; height: 72px; width: auto; margin: 12px auto 0; }
+@media (max-width: 600px) {
+  .home-aside .app-promo { flex-direction: column; gap: 30px; min-height: 0; padding: 28px 24px 32px; }
+  .home-aside .app-promo-copy { order: -1; width: 100%; }
+  .home-aside .phone-mock { position: relative; top: auto; right: auto; left: auto; flex-shrink: 0; transform: rotate(3deg); }
+}
+
+/* Keep step numbers above the artwork and reserve room for the badge. */
+.how-it-works .step { padding-top: 18px; }
+.how-it-works .step-icon { isolation: isolate; overflow: visible; margin-left: 8px; }
+.how-it-works .step-icon > span {
+  top: -20px; left: -8px; z-index: 2;
+  width: 24px; height: 24px; font-size: 13px; line-height: 1;
+  border-color: var(--page); font-variant-numeric: tabular-nums;
+}
+.how-it-works .step-icon > svg { position: relative; z-index: 0; }
+.audit-history-panel { padding: 20px; min-width: 0; }
+.audit-history .product-toolbar { margin-bottom: 18px; }
+.audit-history .product-toolbar > label:first-child { flex: 3 1 280px; }
+.audit-history .product-toolbar > label:last-of-type { flex: 0 1 150px; }
+.audit-history :is(th,td) { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--line); }
+.audit-history th { background: var(--raised); font-size: .875rem; }
+.audit-history td { font-size: .875rem; vertical-align: top; }
+.audit-history td:last-child { white-space: nowrap; }
+.audit-history .iw-pager { margin-top: 16px; }
+@media(max-width:600px) { .audit-history-panel { padding: 12px; } }
+.orders-assisted-action {
+  margin-block-end: 24px;
+}
+.order-detail-disclosure {
+  margin-block: 16px;
+  border: 1px solid var(--border, #dce7df);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.order-detail-disclosure > summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.order-detail-disclosure[open] > summary {
+  margin-bottom: 16px;
+}
+.order-detail-disclosure > .surface {
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+}

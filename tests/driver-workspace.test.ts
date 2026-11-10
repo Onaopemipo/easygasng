@@ -55,6 +55,8 @@ test("DR-BOUNDARY-02 delivery-only sessions reject skipped or invented order tra
 test("DR-BOUNDARY-03 canonical delivery reads and guarded completion remain available", () => {
   for (const action of [
     "orders",
+    "navigation.access",
+    "navigation",
     "driver.snapshot",
     "driver.complete",
     "dispatch.respond",
@@ -82,6 +84,23 @@ test("DR-COMPAT-01 legacy session policy remains unchanged pending explicit cuto
 
 import { fixture } from "./helpers/order-tracking-fixture";
 import { id } from "../apps/web/lib/auth";
+test("DR-WEB-01: driver web navigation reaches only the authorised deliveries workspace", async () => {
+  const f = await fixture();
+  try {
+    await f.call("driver", "driver.restrict");
+    const access = await f.call("driver", "navigation.access");
+    assert.equal(access.user.role, "driver");
+    assert.deepEqual(access.allowed, ["deliveries"]);
+    const navigation = await f.call("driver", "navigation");
+    assert.deepEqual(navigation.allowed, ["deliveries"]);
+    for (const action of ["audit", "staff.privileges", "settings", "inventory.adjust", "delivery.complete"])
+      await assert.rejects(() => f.call("driver", action), /limited to delivery/);
+    await f.db.query("UPDATE branches SET active=false WHERE id='lagos'");
+    await assert.rejects(() => f.call("driver", "navigation.access"), /active authorised branch/);
+  } finally {
+    await f.db.close?.();
+  }
+});
 test("DR-INTEGRATION-01 restricted canonical session enforces role, availability and legacy completion denial", async () => {
   const f = await fixture();
   try {

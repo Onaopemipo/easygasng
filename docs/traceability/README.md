@@ -137,3 +137,19 @@ Client demo release10November: [matrix](demo-release-20261110-rtm.md), [report](
 Whole-app product UI consolidation (10 November2026): [matrix](product-ui-rtm.md), [route audit](../product-ui/audit.md) and [report](../product-ui/report.md).83 scope rows retained; legacy shared layouts redesigned and approval wording changed to Approve. Full individual role/state/native visual acceptance remains open; production NO-GO unchanged.
 
 Product UI and loader client-demo rollout: [release matrix](ui-loader-release-rtm.md). Includes Approve wording and50% larger/darker loader; existing feature acceptance and production NO-GO remain separate.
+
+Inventory thumbnail overlap repair: [matrix](inventory-art-rtm.md). Cooking Gas and Kitchen Starter Kit artwork contained with8px name spacing; local desktop/mobile verified. Not deployed; prior production NO-GO remains.
+
+Homepage phone preview (11November2026): [matrix](home-phone-rtm.md). Larger220px illustrative phone, centred icons and readable labels/tagline verified locally on desktop/mobile. Not deployed; native deferral and production NO-GO unchanged.
+
+Audit History server pagination (11November2026): [matrix](audit-pagination-rtm.md). Full-history paged search and stable event-time cutoff; owner/administrator-only global read, legacy compatibility and immutable events preserved. Hosted rollout and previous production NO-GO remain separate.
+
+Driver web login 404 repair (11November2026): [matrix](driver-web-login-rtm.md). Restricted-session navigation reads restored without changing role routes or business authority; hosted rollout remains separate.
+
+Permission-aware navigation menus: [matrix](menu-visibility-rtm.md). Shared links hide unavailable modules and revoked routes; automated checks pass, browser/hosted acceptance pending.
+
+Orders assisted-action spacing: [matrix](order-action-spacing-rtm.md). Added 24px separation; visual/hosted acceptance pending.
+
+Order overlay simplification: [matrix](order-overlay-rtm.md). Customer-first summary and collapsed secondary forms; browser/hosted acceptance pending.
+
+11 November web fixes rollout: [release matrix](ui-release-20261111-rtm.md). Existing production NO-GO and source-phase acceptance limitations preserved.

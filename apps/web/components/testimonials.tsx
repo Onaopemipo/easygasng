@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef, type FormEvent } from "react";
 import { ImageUpload } from "./image-upload";
 import { api, Notice, Modal } from "./ui";
-import Link from "next/link";
+import Link from "./workspace-link";
 const labels: Record<string, string> = {
   DRAFT: "Draft",
   PENDING_REVIEW: "Pending review",

@@ -3,7 +3,7 @@ import { friendlyMessage } from "../../../packages/business-rules/src/friendly-m
 
 import { requestText } from "./app-dialog";
 import { useEffect, useState, useRef } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { api, Loading, Notice } from "./ui";
 
 export function EasyRewards() {

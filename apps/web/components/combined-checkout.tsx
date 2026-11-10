@@ -3,7 +3,7 @@ import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-ru
 import { useCardCheckout, OrderCardPayment } from "./hosted-payment";
 import { RewardCheckoutField } from "./easyrewards";
 import { useEffect, useState, type FormEvent } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { AddressAreaFields } from "./address-area-fields";
 import { api, money, Notice, Loading } from "./ui";
 export default function CombinedCheckout({

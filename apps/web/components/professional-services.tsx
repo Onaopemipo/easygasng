@@ -6,7 +6,7 @@ import { FormInput } from "./password-input";
 import OrderInvoice from "./order-invoice";
 import { AddressAreaFields } from "./address-area-fields";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { serviceReportHtml } from "../../../packages/business-rules/src/service-report";
 import { BundleOffers } from "./bundles";
 import { ServiceFollowups } from "./service-followups";

@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { api, Loading, Notice, money, Empty, Modal, ProductArt } from "./ui";
 import { ActionForm } from "./workflows";
 import {

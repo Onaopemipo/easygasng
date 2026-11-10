@@ -6,6 +6,7 @@ import SettingSummary, { readableSetting } from "./setting-summary";
 import PaymentGatewayPolicy from "./payment-gateway-policy";
 import InventoryWorkspace from "./inventory-workspace";
 import AdminOverview from "./admin-overview";
+import AuditHistory from "./audit-history";
 import AdminSearch from "./admin-search";
 
 import { OperationsExtensions } from "./operations-completion";
@@ -52,7 +53,7 @@ import {
   useRef,
   type FormEvent,
 } from "react";
-import Link from "next/link";
+import Link, { WorkspaceAccess } from "./workspace-link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   House,
@@ -145,6 +146,10 @@ export default function Admin({
         setAccess(d);
         setNotifications(d.notifications);
         setError("");
+        if (!d.allowed.includes(section) && d.allowed.length) {
+          const destination = navigationItems.find(n => d.allowed.includes(n.id));
+          if (destination) router.replace(destination.href);
+        }
         if (
           section === "dashboard" &&
           [
@@ -219,6 +224,7 @@ export default function Admin({
     }
   }
   return (
+    <WorkspaceAccess.Provider value={access?.allowed ?? []}>
     <div
       className={`admin-shell workspace-shell ${collapsed ? "sidebar-compact" : ""}`}
     >
@@ -351,10 +357,7 @@ export default function Admin({
           {!user ? (
             <Loading />
           ) : !access?.allowed?.includes(section) ? (
-            <Notice
-              type="error"
-              message="Your account no longer has access to this workspace module."
-            />
+            <p role="status">{access?.allowed?.length ? "Opening your workspace…" : "No workspace menus are assigned. Contact your administrator to arrange access."}</p>
           ) : section === "testimonials" ? (
             <TestimonialManagement />
           ) : section === "policies" ? (
@@ -415,6 +418,8 @@ export default function Admin({
               mode={section === "finance" ? "finance" : "reports"}
               user={user}
             />
+          ) : section === "audit" ? (
+            <AuditHistory refresh={refresh} />
           ) : section === "products" ? (
             <ProductCatalogue user={user} />
           ) : (
@@ -452,6 +457,7 @@ export default function Admin({
         </div>
       )}
     </div>
+    </WorkspaceAccess.Provider>
   );
 }
 function useData(action: string | null, refresh = 0) {
@@ -2841,7 +2847,9 @@ function Records({
       {message && <Notice message={message} />}
       {section === "orders" &&
         ["owner", "manager", "sales"].includes(user.role) && (
-          <AssistedOrder user={user} onCreated={onChange} />
+          <div className="orders-assisted-action">
+            <AssistedOrder user={user} onCreated={onChange} />
+          </div>
         )}
       {section === "finance" && (
         <CashReconciliation refresh={refresh} onChange={onChange} />
@@ -3062,22 +3070,6 @@ function Records({
                 </span>
                 <strong>{money(selected.total_kobo)}</strong>
               </div>
-              {section === "orders" &&
-                ["owner", "finance", "manager"].includes(user.role) && (
-                  <OrderInvoice
-                    orderId={selected.id}
-                    canIssue={["owner", "finance"].includes(user.role)}
-                  />
-                )}
-              {section === "orders" && <OrderAdditions
-                  order={selected}
-                  user={user}
-                  onChanged={() => {
-                    setSelected(null);
-                    onChange();
-                  }}
-                />}
-              <OrderOperations order={selected} user={user} />
               <h3>{selected.customer_name}</h3>
               <p>
                 {selected.address.street}, {selected.address.zone}
@@ -3087,11 +3079,32 @@ function Records({
               <p>
                 {selected.delivery_date} · {selected.delivery_window}
               </p>
+              {section === "orders" &&
+                ["owner", "finance", "manager"].includes(user.role) && (
+                  <OrderInvoice
+                    orderId={selected.id}
+                    canIssue={["owner", "finance"].includes(user.role)}
+                  />
+                )}
+              {section === "orders" && ["owner", "manager", "sales"].includes(user.role) && <details className="order-detail-disclosure">
+                <summary>Add items to this delivery</summary>
+              {section === "orders" && <OrderAdditions
+                  order={selected}
+                  user={user}
+                  onChanged={() => {
+                    setSelected(null);
+                    onChange();
+                  }}
+                />}
+              </details>}
+              <OrderOperations order={selected} user={user} />
               {selected.operational_review && (
                 <Notice type="error" message={selected.operational_review} />
               )}
               {(selected.gas_lines ?? []).length > 0 &&
                 ["owner", "manager", "dispatcher"].includes(user.role) && (
+                  <details className="order-detail-disclosure">
+                    <summary>Confirm delivery coverage</summary>
                   <ActionForm
                     action="delivery.coverage.confirm"
                     title="Confirm actual address coverage"
@@ -3113,6 +3126,7 @@ function Records({
                       onChange();
                     }}
                   />
+                  </details>
                 )}
               {(selected.gas_lines ?? []).map((g: any) => (
                 <section className="surface" key={g.id}>
@@ -3129,6 +3143,8 @@ function Records({
                     ["placed", "confirmed", "preparing"].includes(
                       selected.status,
                     ) && (
+                      <details className="order-detail-disclosure">
+                        <summary>Record cylinder inspection</summary>
                       <ActionForm
                         action="gas.inspection.record"
                         title="Record verified cylinder filling eligibility"
@@ -3157,6 +3173,7 @@ function Records({
                           onChange();
                         }}
                       />
+                      </details>
                     )}
                 </section>
               ))}
@@ -3171,7 +3188,7 @@ function Records({
                 </div>
               ))}
               <Notice
-                message={`Payment remains ${selected.payment_status}. No payment or delivery confirmation is fabricated.`}
+                message={`Payment: ${selected.payment_status.replaceAll("_", " ")}.`}
               />
               {selected.status === "out_for_delivery" && (
                 <DeliveryCompletion
@@ -3182,6 +3199,8 @@ function Records({
                   }}
                 />
               )}
+              <details className="order-detail-disclosure">
+                <summary>Update order status</summary>
               <form
                 onSubmit={async (e) => {
                   e.preventDefault();
@@ -3245,6 +3264,7 @@ function Records({
                   Update Order <ArrowRight size={17} />
                 </button>
               </form>
+              </details>
             </>
           )}
         </Modal>

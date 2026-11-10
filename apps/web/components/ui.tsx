@@ -12,7 +12,7 @@ import {
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { SectionLoadingFallback } from "./easygas-loader";
 export const money = (kobo: number | string | null) =>
   kobo === null
@@ -48,6 +48,8 @@ export function ProductArt({
           alt={product.name}
           style={{ width: "100%", height: "100%", objectFit: "contain" }}
         />
+      ) : product.asset === "gas" ? (
+        <Flame size={large ? 100 : 66} strokeWidth={1.6} aria-label="Cooking gas" />
       ) : product.asset === "cylinder" ? (
         <img
           src="/assets/cylinder-illustration.png"

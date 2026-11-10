@@ -61,7 +61,7 @@ import {
   useContext,
   type FormEvent,
 } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Search,

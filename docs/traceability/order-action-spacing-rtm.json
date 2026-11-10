@@ -1,0 +1,42 @@
+{
+  "phase": "Orders assisted-action spacing",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "ORDER-SPACE-R01",
+      "requirement": "Separate Create phone-assisted order from the following orders section with clear spacing",
+      "priority": "P2",
+      "scope": "Orders page action layout only",
+      "uiReference": "User reported button touching the orders section",
+      "route": "/admin/orders",
+      "dataSource": "Existing orders and assisted-order controls unchanged; no new business data",
+      "securityControl": "Existing owner/manager/sales visibility and backend authorisation unchanged",
+      "status": "UNVERIFIED",
+      "reason": "Added a dedicated action wrapper with 24px bottom spacing; visual acceptance pending",
+      "testResult": "Web typecheck executed; see evidence log",
+      "outstandingWork": "Browser visual verification and hosted rollout pending; production NO-GO unchanged",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/order-action-spacing/evidence/types.txt"
+      ],
+      "acceptanceGate": "ORDER-SPACE-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "ORDER-SPACE-G01",
+      "scope": "Visual desktop/mobile spacing acceptance",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "All existing work and production holds preserved. Reversible CSS/layout change only; no new tests added for a static margin."
+  ]
+}

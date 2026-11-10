@@ -6,6 +6,9 @@ import { completeDelivery } from "./delivery";
 import { invoiceBalance } from "./invoice-corrections";
 const allowed = new Set([
   "me",
+  // The web shell still applies role/branch navigation checks to these reads.
+  "navigation.access",
+  "navigation",
   "orders",
   "logout",
   "reauth",

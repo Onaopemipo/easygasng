@@ -8,7 +8,7 @@ import { ChannelPreferences } from "./operations-completion";
 import { MailDeliveryControls } from "./mail-delivery";
 import { EasyRewardsReport, SmartRewardOffers } from "./easyrewards";
 import React, { useState, useEffect, useRef, type FormEvent } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { useSearchParams } from "next/navigation";
 import { AddressAreaFields } from "./address-area-fields";
 import { api, Notice, Loading, Empty, money } from "./ui";

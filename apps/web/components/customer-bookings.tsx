@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import {
   ArrowRight,
   CalendarDays,

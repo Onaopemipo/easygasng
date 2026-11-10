@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { Search, X } from "lucide-react";
 export default function AdminSearch({ identity }: { identity: string }) {
   const [q, setQ] = useState(""),

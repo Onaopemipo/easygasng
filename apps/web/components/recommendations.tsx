@@ -1,7 +1,7 @@
 "use client";
 import {ProductHeading} from "./product-workspace";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "./workspace-link";
 import { api, Notice } from "./ui";
 import { ServiceForm } from "./professional-services";
 export function Recommendations({ productId }: { productId?: string }) {

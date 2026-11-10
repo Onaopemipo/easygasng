@@ -1,0 +1,52 @@
+{
+  "phase": "11 November web fixes client-demo release",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "UI-REL-1111-R01",
+      "requirement": "Push and deploy the approved pending interface, navigation and audit-pagination fixes to the client demo",
+      "priority": "P1",
+      "scope": "Existing Vercel client demo only; no native build or live payment activation",
+      "uiReference": "User Push and deploy request",
+      "route": "Existing web routes",
+      "dataSource": "Existing demo business records and authenticated navigation; no synthetic records created by deployment",
+      "securityControl": "Existing role/privilege, delivery cutoff, financial, safety and release holds retained; no migration or credentials changed",
+      "status": "UNVERIFIED",
+      "reason": "45 focused regression tests, build and typecheck passed; publishing and hosted verification pending",
+      "testResult": "PASS45 focused tests, web build and typecheck",
+      "outstandingWork": "Publish and verify hosted release; browser acceptance remains open where recorded in source phase matrices. Production NO-GO unchanged.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/workspace-link.tsx",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/audit-history.ts",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/menu-visibility.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/audit-pagination.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/releases/20261111-ui-fixes/tests.txt",
+        "docs/releases/20261111-ui-fixes/build.txt",
+        "docs/releases/20261111-ui-fixes/types.txt"
+      ],
+      "acceptanceGate": "UI-REL-1111-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "UI-REL-1111-G01",
+      "scope": "Git publication and Vercel Ready deployment with hosted HTTP acceptance",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "Includes pending inventory art, homepage phone and step badges, audit pagination, driver navigation repair, menu filtering, assisted-order spacing and order-overlay simplification.",
+    "All source phase IDs and pending/untested requirements remain; deployment does not imply full production acceptance."
+  ]
+}

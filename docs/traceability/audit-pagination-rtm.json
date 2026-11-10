@@ -1,0 +1,139 @@
+{
+  "phase": "Audit History server pagination",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "AUDIT-PAGE-R01",
+      "requirement": "Page the complete audit history with bounded literal search, deterministic ordering and a browsing cutoff",
+      "priority": "P1",
+      "scope": "Existing Audit History route and read API only",
+      "uiReference": "User request Paginate Audit History",
+      "route": "/admin/audit",
+      "dataSource": "Existing immutable audit_events LEFT JOIN users for current actor name; same global owner/administrator scope",
+      "securityControl": "Existing session and owner/administrator allowlist retained; parameterised literal search, bounded query schema and read-only selects; no log update/delete",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local backend/read-only authority tests and actual cursor page, row-size, empty-search and mobile browser checks passed.",
+      "testResult": "PASS2 dedicated backend tests,24 focused regressions, web typecheck/build and actual local browser pagination.",
+      "outstandingWork": "Hosted rollout and broader physical-device/assistive acceptance remain open; production NO-GO unchanged",
+      "implementationFiles": [
+        "apps/web/lib/audit-history.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/components/audit-history.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/audit-pagination.test.ts"
+      ],
+      "testIds": [
+        "AUDIT-PAGE01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/audit-pagination/report.md",
+        "docs/audit-pagination/evidence/tests.txt",
+        "docs/audit-pagination/evidence/types.txt",
+        "docs/audit-pagination/evidence/regression.txt",
+        "docs/audit-pagination/evidence/build.txt",
+        "docs/audit-pagination/evidence/browser.json",
+        "docs/audit-pagination/evidence/desktop.png",
+        "docs/audit-pagination/evidence/mobile.png"
+      ],
+      "acceptanceGate": "AUDIT-PAGE-G01"
+    },
+    {
+      "id": "AUDIT-PAGE-R02",
+      "requirement": "Provide accessible responsive page, row-size, search and refresh controls",
+      "priority": "P1",
+      "scope": "Existing Audit History route and read API only",
+      "uiReference": "User request Paginate Audit History",
+      "route": "/admin/audit",
+      "dataSource": "Existing immutable audit_events LEFT JOIN users for current actor name; same global owner/administrator scope",
+      "securityControl": "Existing session and owner/administrator allowlist retained; parameterised literal search, bounded query schema and read-only selects; no log update/delete",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local backend/read-only authority tests and actual cursor page, row-size, empty-search and mobile browser checks passed.",
+      "testResult": "PASS2 dedicated backend tests,24 focused regressions, web typecheck/build and actual local browser pagination.",
+      "outstandingWork": "Hosted rollout and broader physical-device/assistive acceptance remain open; production NO-GO unchanged",
+      "implementationFiles": [
+        "apps/web/lib/audit-history.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/components/audit-history.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/audit-pagination.test.ts"
+      ],
+      "testIds": [
+        "AUDIT-PAGE01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/audit-pagination/report.md",
+        "docs/audit-pagination/evidence/tests.txt",
+        "docs/audit-pagination/evidence/types.txt",
+        "docs/audit-pagination/evidence/regression.txt",
+        "docs/audit-pagination/evidence/build.txt",
+        "docs/audit-pagination/evidence/browser.json",
+        "docs/audit-pagination/evidence/desktop.png",
+        "docs/audit-pagination/evidence/mobile.png"
+      ],
+      "acceptanceGate": "AUDIT-PAGE-G01"
+    },
+    {
+      "id": "AUDIT-PAGE-R03",
+      "requirement": "Preserve global owner/administrator-only audit reads, legacy callers and append-only event records",
+      "priority": "P0",
+      "scope": "Existing Audit History route and read API only",
+      "uiReference": "User request Paginate Audit History",
+      "route": "/admin/audit",
+      "dataSource": "Existing immutable audit_events LEFT JOIN users for current actor name; same global owner/administrator scope",
+      "securityControl": "Existing session and owner/administrator allowlist retained; parameterised literal search, bounded query schema and read-only selects; no log update/delete",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local backend/read-only authority tests and actual cursor page, row-size, empty-search and mobile browser checks passed.",
+      "testResult": "PASS2 dedicated backend tests,24 focused regressions, web typecheck/build and actual local browser pagination.",
+      "outstandingWork": "Hosted rollout and broader physical-device/assistive acceptance remain open; production NO-GO unchanged",
+      "implementationFiles": [
+        "apps/web/lib/audit-history.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/components/audit-history.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/audit-pagination.test.ts"
+      ],
+      "testIds": [
+        "AUDIT-PAGE02"
+      ],
+      "negativeTests": [
+        "AUDIT-PAGE02"
+      ],
+      "evidence": [
+        "docs/audit-pagination/report.md",
+        "docs/audit-pagination/evidence/tests.txt",
+        "docs/audit-pagination/evidence/types.txt",
+        "docs/audit-pagination/evidence/regression.txt",
+        "docs/audit-pagination/evidence/build.txt",
+        "docs/audit-pagination/evidence/browser.json",
+        "docs/audit-pagination/evidence/desktop.png",
+        "docs/audit-pagination/evidence/mobile.png"
+      ],
+      "acceptanceGate": "AUDIT-PAGE-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "AUDIT-PAGE-G01",
+      "scope": "Local server/UI pagination, legacy compatibility and authorisation/read-only regressions",
+      "status": "PASS"
+    }
+  ],
+  "scopeChanges": [
+    "Existing global read scope retained, not widened or silently replaced with branch scoping.",
+    "An observed concurrent-insert duplicate required a fixed event-time browsing cutoff; no persistent transaction snapshot claimed.",
+    "All previous requirement IDs, production NO-GO, retain-all/import holds and pending visual repairs remain.",
+    "Fixed event-time cutoff alone reproduced a late-commit duplicate in the real preview. Added precise cursor navigation and regression coverage; final browser pages have zero overlap."
+  ]
+}
