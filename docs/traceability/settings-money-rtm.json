@@ -1,0 +1,56 @@
+{
+  "phase": "Settings kobo-to-naira display repair",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "SETUP-MONEY01",
+      "requirement": "Render authoritative scalar money settings from kobo as naira exactly once without changing stored prices or non-money values",
+      "priority": "P1",
+      "scope": "Existing settings overview scalar money presentation",
+      "uiReference": "User screenshot gas ACTIVE VALUE VERSION1 incorrectly shows \u20a6180,000.00",
+      "route": "/admin/settings",
+      "dataSource": "settings.value JSON money stored in kobo; hosted gas.price_per_kg180000/version1; existing gas quoting engine unchanged",
+      "securityControl": "Read-only display conversion; no mutation, approval bypass or financial-state/schema change",
+      "status": "PARTIAL",
+      "reason": "Local correction and15focused checks pass; rollout/actual hosted UI pending",
+      "testResult": "PASS \u201415focused settings/gas/approval checks; web types/build tracked separately",
+      "outstandingWork": "Hosted rollout and corrected live gas display acceptance",
+      "implementationFiles": [
+        "apps/web/components/setting-summary.tsx"
+      ],
+      "testFiles": [
+        "tests/settings-money.test.ts",
+        "tests/settings-cleanup.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "testIds": [
+        "SETUP-MONEY01"
+      ],
+      "negativeTests": [
+        "\u20a6180,000.00",
+        "\u20a618.00"
+      ],
+      "evidence": [
+        "docs/settings-money/report.md",
+        "docs/settings-money/evidence/tests.txt",
+        "docs/settings-money/evidence/hosted-data.txt"
+      ],
+      "acceptanceGate": "SETUP-MONEY-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "SETUP-MONEY-G01",
+      "status": "OPEN",
+      "scope": "Accurate scalar display locally and on hosted settings page"
+    }
+  ],
+  "coverage": {
+    "implemented": "1/1",
+    "verified": "0/1; hosted acceptance pending"
+  },
+  "scopeChanges": [
+    "Presentation-only correction of cleanup regression; canonical stored prices and pending requests unchanged."
+  ]
+}

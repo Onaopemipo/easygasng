@@ -65,5 +65,5 @@ export default function SettingSummary({ value, type }: { value: any; type?: str
     }
     return <Fields value={value} />;
   }
-  return <strong>{type === "money" && typeof value === "number" ? new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN" }).format(value) : readableSetting(value)}</strong>;
+  return <strong>{type === "money" && typeof value === "number" ? naira(value) : readableSetting(value)}</strong>;
 }
