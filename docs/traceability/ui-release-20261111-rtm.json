@@ -12,10 +12,10 @@
       "route": "Existing web routes",
       "dataSource": "Existing demo business records and authenticated navigation; no synthetic records created by deployment",
       "securityControl": "Existing role/privilege, delivery cutoff, financial, safety and release holds retained; no migration or credentials changed",
-      "status": "UNVERIFIED",
-      "reason": "45 focused regression tests, build and typecheck passed; publishing and hosted verification pending",
-      "testResult": "PASS45 focused tests, web build and typecheck",
-      "outstandingWork": "Publish and verify hosted release; browser acceptance remains open where recorded in source phase matrices. Production NO-GO unchanged.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Commit df86fac pushed to main; Vercel deployment dpl_DE8QvaXYJS2BRmEhLE21cvYoYmWD Ready and aliased to the existing client demo. Hosted role/session/route and pagination checks passed.",
+      "testResult": "PASS45 focused regressions, web build/typecheck, traceability and hosted UI-REL-1111-HTTP01 checks",
+      "outstandingWork": "GitHub Release validation run42842305344 in progress at final check. Browser/physical-device and source-phase visual acceptance remain open where recorded. Production NO-GO unchanged.",
       "implementationFiles": [
         "apps/web/components/admin.tsx",
         "apps/web/components/workspace-link.tsx",
@@ -33,7 +33,11 @@
       "evidence": [
         "docs/releases/20261111-ui-fixes/tests.txt",
         "docs/releases/20261111-ui-fixes/build.txt",
-        "docs/releases/20261111-ui-fixes/types.txt"
+        "docs/releases/20261111-ui-fixes/types.txt",
+        "docs/releases/20261111-ui-fixes/deployment.txt",
+        "docs/releases/20261111-ui-fixes/hosted.txt",
+        "docs/releases/20261111-ui-fixes/hosted.json",
+        "docs/releases/20261111-ui-fixes/ci.json"
       ],
       "acceptanceGate": "UI-REL-1111-G01"
     }
@@ -42,7 +46,7 @@
     {
       "id": "UI-REL-1111-G01",
       "scope": "Git publication and Vercel Ready deployment with hosted HTTP acceptance",
-      "status": "PENDING"
+      "status": "PASS"
     }
   ],
   "scopeChanges": [

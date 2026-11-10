@@ -13,9 +13,9 @@
       "dataSource": "Authenticated existing session, user role, active branch and roleNavigation; authorised driver records",
       "securityControl": "Only navigation and navigation.access added to restricted-session reads; downstream role/branch/privilege checks remain; finance, stock and staff actions denied",
       "status": "UNVERIFIED",
-      "reason": "Restricted-session navigation allowlist defect fixed; 17 focused tests, typecheck and build pass. Local HTTP sign-in returned 500 twice, preventing browser redirect acceptance.",
-      "testResult": "PASS17 focused tests, web typecheck and web build. HTTP acceptance blocked by preview sign-in 500.",
-      "outstandingWork": "Resolve preview sign-in 500 and rerun actual web sign-in/redirect acceptance; deploy and verify hosted demo. Production NO-GO unchanged.",
+      "reason": "Restricted navigation defect repaired and deployed at df86fac. Hosted existing driver sign-in, /admin redirect, Deliveries read and Staff denial pass. Local preview 500 did not reproduce on hosted release; full browser visual acceptance remains pending.",
+      "testResult": "PASS17 focused tests, build/typecheck and hosted driver redirect/delivery access/staff denial",
+      "outstandingWork": "Full actual-browser/physical-device acceptance pending. Production NO-GO unchanged.",
       "implementationFiles": [
         "apps/web/lib/driver-workspace.ts"
       ],
@@ -33,7 +33,8 @@
         "docs/driver-web-login/evidence/tests.txt",
         "docs/driver-web-login/evidence/types.txt",
         "docs/driver-web-login/evidence/build.txt",
-        "docs/driver-web-login/report.md"
+        "docs/driver-web-login/report.md",
+        "docs/releases/20261111-ui-fixes/hosted.json"
       ],
       "acceptanceGate": "DR-WEB-G01"
     }

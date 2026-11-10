@@ -153,3 +153,5 @@ Orders assisted-action spacing: [matrix](order-action-spacing-rtm.md). Added 24p
 Order overlay simplification: [matrix](order-overlay-rtm.md). Customer-first summary and collapsed secondary forms; browser/hosted acceptance pending.
 
 11 November web fixes rollout: [release matrix](ui-release-20261111-rtm.md). Existing production NO-GO and source-phase acceptance limitations preserved.
+
+11 November publication update: pending web fixes deployed at df86fac. Vercel Ready and hosted driver routing/denial, owner Orders and audit pagination checks pass. [Release evidence](ui-release-20261111-rtm.md); CI still running at recorded check. Earlier visual/physical-device acceptance gaps remain separate.

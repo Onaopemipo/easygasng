@@ -1,0 +1,24 @@
+{
+  "id": "UI-REL-1111-HTTP01",
+  "base": "https://easygas-client-demo.vercel.app",
+  "results": [
+    {
+      "role": "driver",
+      "login": 200,
+      "allowed": [
+        "deliveries"
+      ],
+      "redirect": "/admin/deliveries",
+      "deliveries": 200,
+      "staffDenied": 404
+    },
+    {
+      "role": "owner",
+      "login": 200,
+      "auditPageSize": 10,
+      "auditRows": 10,
+      "orders": 200
+    }
+  ],
+  "home": 200
+}
