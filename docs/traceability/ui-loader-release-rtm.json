@@ -12,10 +12,10 @@
       "route": "https://easygas-client-demo.vercel.app",
       "dataSource": "Git source revision, Vercel metadata and existing scoped demo records",
       "securityControl": "Existing auth, role, payment, stock and approval guards retained; private data excluded from uploads; no migration or settings changes",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Preflight68pass; publication and hosted acceptance pending",
-      "testResult": "PASS local focused68 and build/mobile types; hosted verification pending",
-      "outstandingWork": "Push, deploy and hosted smoke; full role/state/native acceptance remains tracked in existing feature matrices",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source pushed, Vercel Ready with stable demo alias, hosted authenticated smoke and actual mobile/desktop UI checks passed.",
+      "testResult": "PASS preflight68, web build, mobile types, hosted DEMO-REL-HTTP01 and deployed loader/UI checks.",
+      "outstandingWork": "GitHub release validation in progress at recorded check. Full role/state/native acceptance and all original production gates remain open.",
       "implementationFiles": [
         "apps/web/app/product-ui.css",
         "apps/web/components/admin.tsx",
@@ -29,14 +29,22 @@
       ],
       "testIds": [
         "PRODUCT-UI04",
-        "LDR-SIZE-lg"
+        "LDR-SIZE-lg",
+        "DEMO-REL-HTTP01"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/releases/20261110-ui-loader/report.md",
         "docs/releases/20261110-ui-loader/evidence/preflight.txt",
         "docs/releases/20261110-ui-loader/evidence/build.txt",
-        "docs/releases/20261110-ui-loader/evidence/mobile-types.txt"
+        "docs/releases/20261110-ui-loader/evidence/mobile-types.txt",
+        "docs/releases/20261110-ui-loader/evidence/deployment.txt",
+        "docs/releases/20261110-ui-loader/evidence/inspect.txt",
+        "docs/releases/20261110-ui-loader/evidence/hosted-tests.txt",
+        "docs/releases/20261110-ui-loader/evidence/hosted-ui.txt",
+        "docs/releases/20261110-ui-loader/evidence/hosted-support.png",
+        "docs/releases/20261110-ui-loader/evidence/hosted-support-mobile.png",
+        "docs/releases/20261110-ui-loader/evidence/ci.json"
       ],
       "acceptanceGate": "UI-LDR-REL-G01"
     }
@@ -45,10 +53,13 @@
     {
       "id": "UI-LDR-REL-G01",
       "scope": "Git push, demo Ready and hosted verification",
-      "status": "PENDING"
+      "status": "PASS"
     }
   ],
   "scopeChanges": [
     "All existing route/native acceptance denominators retained. Production NO-GO and prior holds unchanged."
-  ]
+  ],
+  "sourceRevision": "54700039ef5a67f2696605ca5b52b43b6bdf6e31",
+  "deploymentId": "dpl_3XXM4GHH7hexEtNyQ2WsnarPc5Zh",
+  "ciStatus": "IN_PROGRESS"
 }

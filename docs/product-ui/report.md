@@ -19,3 +19,5 @@ Approval row and owner-action buttons now read **Approve**, with **Approving…*
 The demo has no support tickets or bundles in this scope. Populated conversations, bundle configurations and all alternative role/modal states have not been visually accepted in this phase. Individual per-route visual acceptance stays open in the matrix; no 100% whole-app verification claim is made. Existing refresh warnings were observed when remote demo database responses exceeded the navigation timeout; count freshness warnings are preserved, not hidden.
 
 No database/schema, financial value, stock, map provider, business request, permission or payment configuration was changed. No push/deployment is implied. Production **NO-GO**, retain-all policy, import hold and native-build deferral remain in effect.
+
+User-authorised rollout: source5470003 is deployed to the existing client demo; [release evidence](../releases/20261110-ui-loader/report.md). Individual acceptance gaps above remain in scope.
