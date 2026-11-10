@@ -4,6 +4,7 @@ import { themeBootstrapFor } from "../../../packages/business-rules/src/theme";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./theme.css";
+import "./product-ui.css";
 export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };
 export const metadata: Metadata = {
   ...(process.env.EASYGAS_CLIENT_DEMO === "true"

@@ -2132,7 +2132,7 @@ function Approvals({
                           setFailure("");
                         }}
                       >
-                        {r.can_owner_apply ? "Apply request" : "Review"}{" "}
+                        {r.can_owner_apply ? "Approve" : "Review"}{" "}
                         <ArrowRight size={14} />
                       </button>
                     </td>
@@ -2362,7 +2362,7 @@ function Approvals({
               }}
             >
               <Check size={17} />
-              {busy ? "Applying…" : "Apply my request"}
+              {busy ? "Approving…" : "Approve"}
             </button>
           )}
           {selected.decisions.length > 0 && (
@@ -2532,7 +2532,7 @@ function Approvals({
           ) : (
             <p className="muted">
               {selected.can_owner_apply
-                ? "Use Apply my request above. Verify your identity first if prompted."
+                ? "Use Approve above. Verify your identity first if prompted."
                 : selected.owner_auto_approval &&
                     selected.requester_id === user.id
                   ? `Your owner request is ${selected.status.replaceAll("_", " ")}. Saved drafts must be submitted; qualified safety reviews and activation checks still apply.`

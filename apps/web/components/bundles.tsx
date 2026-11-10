@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import {ProductHeading} from "./product-workspace";
+import React, { useEffect, useState } from "react";
 import { api, Notice, money } from "./ui";
 import { ServiceForm } from "./professional-services";
 export function BundleOffers({ select }: { select: (b: any) => void }) {
@@ -54,8 +55,8 @@ export default function BundleAdmin({ user }: { user: any }) {
       .catch((e) => setError(e.message));
   }, [version]);
   return (
-    <section>
-      <h1>Product & service bundles</h1>
+    <section className="product-workspace governed-workspace">
+      <ProductHeading eyebrow="PRODUCTS & STOCK" title="Product & service bundles" description="Manage product and service packages with clear, separately governed charges." />
       <p>
         Products retain their approved individual prices. A configured
         percentage reduces only the fixed service labour price. Call-out,

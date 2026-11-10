@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import {ProductHeading} from "./product-workspace";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { api, Notice } from "./ui";
 import { ServiceForm } from "./professional-services";
@@ -65,8 +66,8 @@ export default function RecommendationAdmin({ user }: { user: any }) {
       .catch((e) => setError(e.message));
   }, [version]);
   return (
-    <section>
-      <h1>Product & service recommendations</h1>
+    <section className="product-workspace governed-workspace">
+      <ProductHeading eyebrow="GROWTH & ENGAGEMENT" title="Product & service recommendations" description="Manage relevant service suggestions and review their performance." />
       <p>
         Rules require independent review. Suggestions never add paid items
         automatically or assert unverified compatibility. Completed appointments

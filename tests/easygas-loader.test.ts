@@ -6,7 +6,7 @@ import { EasyGasLoader, PageLoadingFallback, SectionLoadingFallback, ActionLoadi
 import { loaderSizes, loaderDimension, loaderProgress, loaderGeometry, loaderDesign } from "../packages/business-rules/src/loader-design";
 const render=(props:any={})=>renderToStaticMarkup(React.createElement(EasyGasLoader,props));
 for(const [size,dimension] of Object.entries(loaderSizes)) test(`LDR-SIZE-${size}: bounded ${dimension}px graphic`,()=>assert.match(render({size}),new RegExp(`--loader-size:${dimension}px`)));
-for(const [input,expected] of [[-1,16],[16,16],[24,24],[48,48],[120,120],[999,120],[NaN,48],[Infinity,48]] as const) test(`LDR-DIM-${input}: validates numeric dimensions`,()=>assert.equal(loaderDimension(input),expected));
+for(const [input,expected] of [[-1,24],[16,24],[24,36],[48,72],[120,180],[999,180],[NaN,72],[Infinity,72]] as const) test(`LDR-DIM-${input}: validates numeric dimensions`,()=>assert.equal(loaderDimension(input),expected));
 for(const [input,expected] of [[undefined,0],[NaN,0],[Infinity,0],[-1,0],[0,0],[.5,.5],[1,1],[4,1]] as const) test(`LDR-PROGRESS-${input}: no timer-generated progress`,()=>assert.equal(loaderProgress(input),expected));
 test("LDR-MONOTONIC: a request never regresses unless its operation identity resets",()=>{assert.equal(loaderProgress(.2,.7),.7);assert.equal(loaderProgress(.2),.2);assert.equal(loaderProgress(NaN,.7),.7);assert.equal(loaderProgress(.2,NaN),.2);});
 for(const value of [0,.25,.5,.75,1]) test(`LDR-ENDPOINT-${value}: marker remains on the arc endpoint`,()=>{const g=loaderGeometry(value);assert.ok(Math.abs(Math.hypot(g.x-50,g.y-50)-loaderDesign.radius)<1e-10);assert.ok(Math.abs(g.dash-g.circumference*value)<1e-10);});

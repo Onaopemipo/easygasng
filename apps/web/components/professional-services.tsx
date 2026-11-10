@@ -85,7 +85,7 @@ export function ServiceForm({
     }
   }
   return (
-    <form className="surface workflow-form service-form" data-unsaved={dirty ? "true" : undefined} onChange={() => setDirty(true)} onSubmit={save}>
+    <form className="surface workflow-form service-form product-form" data-unsaved={dirty ? "true" : undefined} onChange={() => setDirty(true)} onSubmit={save}>
       <h3>{title}</h3>
       <fieldset
         hidden={!!reviewValues}
@@ -113,7 +113,7 @@ export function ServiceForm({
               )}
             />
           ) : (
-            <label key={f.name}>
+            <label key={f.name} data-field-type={f.type ?? "text"}>
               {f.label}
               {f.options ? (
                 <select
@@ -247,12 +247,14 @@ export default function ProfessionalServices({
     );
   const service = catalogue.find((s) => s.id === serviceId);
   return (
-    <div className="service-workspace">
+    <div className="service-workspace product-workspace">
       <div className="page-heading">
-        <span className="eyebrow">CARE FOR YOUR KITCHEN</span>
+        <span className="eyebrow">{staff ? "DELIVERY & SERVICES" : "CARE FOR YOUR KITCHEN"}</span>
         <h1>
           {mode === "catalogue"
-            ? "Service bookings"
+            ? (staff ? "Manage services" : "Professional services")
+            : mode === "quotations"
+              ? "Service quotations"
             : mode === "technicians"
               ? "Technicians & availability"
               : mode === "incidents"
@@ -260,8 +262,11 @@ export default function ProfessionalServices({
                 : "Service bookings"}
         </h1>
         <p>
-          From cooker servicing and installations to gas safety checks, EasyGas
-          helps you keep your cooking equipment properly maintained.
+          {staff
+            ? mode === "incidents" ? "Review incidents, follow up on evidence and manage authorised responses."
+              : mode === "quotations" ? "Review service quotations and their approval and payment status."
+              : "Manage service bookings, catalogue and assigned work using authorised business records."
+            : "Book installation, maintenance and safety services for your kitchen."}
         </p>
       </div>
       {mode === "catalogue" && !serviceId && (

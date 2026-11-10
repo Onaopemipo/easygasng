@@ -1,4 +1,6 @@
 "use client";
+import React from "react";
+import {ProductHeading} from "./product-workspace";
 import {DocumentLibrary} from "./document-library";
 import PaystackReconciliation from "./paystack-reconciliation";
 import { useEffect, useState } from "react";
@@ -21,8 +23,8 @@ export default function Reconciliation() {
   if (error) return <Notice type="error" message={error} />;
   if (!data) return <Loading />;
   return (
-    <section>
-      <h1>Financial reconciliation</h1>
+    <section className="product-workspace reconciliation-workspace">
+      <ProductHeading eyebrow="FINANCE & PERFORMANCE" title="Financial reconciliation" description="Review verified revenue, purchase-credit liabilities and the payment ledger." />
       <DocumentLibrary/>
       <div className="service-grid">
         {[

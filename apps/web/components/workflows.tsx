@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AddressAreaFields } from "./address-area-fields";
 import { api, Notice, Loading, Empty, money } from "./ui";
+import { ProductHeading, filterSupportTickets } from "./product-workspace";
 type Field = {
   name: string;
   label: string;
@@ -108,7 +109,7 @@ export function ActionForm({
     }
   }
   return (
-    <form className="surface workflow-form" onSubmit={send}>
+    <form className="surface workflow-form product-form" onSubmit={send}>
       <h3>{title}</h3>
       {fields.map((f) =>
         action === "address.save" && f.name === "locationId" ? null : action ===
@@ -123,7 +124,7 @@ export function ActionForm({
             ).map((o) => ({ id: o.value, name: o.label }))}
           />
         ) : (
-          <label key={f.name}>
+          <label key={f.name} data-field-type={f.type ?? "text"}>
             {f.type !== "hidden" && f.label}
             {f.options ? (
               <select
@@ -210,8 +211,8 @@ export function AccountSettings() {
   if (error) return <Notice type="error" message={error} />;
   if (!data) return <Loading />;
   return (
-    <div className="workflow-stack">
-      <h1>Account & privacy</h1>
+    <div className="workflow-stack product-workspace">
+      <ProductHeading eyebrow="YOUR ACCOUNT" title="Account & privacy" description="Manage your personal information, security and privacy preferences." />
       <Link href="/account">Back to your account</Link>
       <ActionForm
         action="account.update"
@@ -510,12 +511,20 @@ export function SupportDesk({ staff = false }: { staff?: boolean }) {
   const orderId = useSearchParams().get("orderId") ?? "";
   const { data, error, reload } = useRecords("support.list");
   const [selected, setSelected] = useState<string | null>(null);
+  const [supportSearch, setSupportSearch] = useState("");
+  const [supportStatus, setSupportStatus] = useState("all");
   if (error) return <Notice type="error" message={error} />;
   if (!data) return <Loading />;
   const ticket = data.find((t: any) => t.id === selected);
+  const visibleTickets = filterSupportTickets(data, supportSearch, supportStatus);
   return (
-    <div className="workflow-stack">
-      <h1>{staff ? "Support desk" : "Your support conversations"}</h1>
+    <div className="workflow-stack product-workspace support-workspace">
+      <ProductHeading eyebrow={staff ? "CUSTOMER EXPERIENCE" : "HELP & SUPPORT"} title={staff ? "Support desk" : "Your support conversations"} description="Keep every conversation and update in one place. Select a request to view its history and reply." />
+      <div className="product-toolbar" role="search" aria-label="Find support requests">
+        <label>Search requests<FormInput type="search" value={supportSearch} onChange={e => setSupportSearch(e.target.value)} placeholder="Subject or customer name" /></label>
+        <label>Status<select value={supportStatus} onChange={e => setSupportStatus(e.target.value)}><option value="all">All statuses</option>{["open", "in_progress", "resolved", "closed"].map(status => <option key={status} value={status}>{status.replaceAll("_", " ")}</option>)}</select></label>
+        <span className="product-result-count" role="status">{visibleTickets.length} of {data.length} requests</span>
+      </div>
       {!staff && (
         <ActionForm
           action="support.create"
@@ -543,12 +552,13 @@ export function SupportDesk({ staff = false }: { staff?: boolean }) {
           submit="Send request"
         />
       )}
-      <div className="workflow-grid">
-        <section>
-          {data.length ? (
-            data.map((t: any) => (
+      <div className={`support-layout ${!visibleTickets.length && !ticket ? "is-empty" : ""}`}>
+        <section className="support-request-list" aria-label="Support requests">
+          {visibleTickets.length ? (
+            visibleTickets.map((t: any) => (
               <button
-                className="surface ticket-select"
+                className={`surface ticket-select ${selected === t.id ? "is-selected" : ""}`}
+                aria-pressed={selected === t.id}
                 key={t.id}
                 onClick={() => setSelected(t.id)}
               >
@@ -561,13 +571,14 @@ export function SupportDesk({ staff = false }: { staff?: boolean }) {
               </button>
             ))
           ) : (
-            <Empty title="No support requests">
-              Your conversations will appear here.
+            <Empty title={data.length ? "No matching requests" : "No support requests"}>
+              {data.length ? "Try another search or choose a different status." : "Your conversations will appear here."}
             </Empty>
           )}
         </section>
+        {!ticket && visibleTickets.length > 0 && <section className="surface support-placeholder"><Empty title="Select a conversation">Choose a request to see its messages and available actions.</Empty></section>}
         {ticket && (
-          <section className="surface workflow-form">
+          <section className="surface workflow-form support-conversation">
             <h2>{ticket.subject}</h2>
             <p>{ticket.message}</p>
             {ticket.messages.map((m: any) => (
@@ -646,7 +657,7 @@ export function RefillProfiles({
       {embedded ? (
         <h2>Your cooking gas profiles</h2>
       ) : (
-        <h1>Your cooking gas profiles</h1>
+        <ProductHeading eyebrow="YOUR KITCHEN" title="Cooking gas profiles" description="Manage refill profiles and review estimates based on your verified deliveries." />
       )}
       <SmartRewardOffers />
       <p>
@@ -772,12 +783,9 @@ export function OperationsWorkspace({
 }) {
   const [tab, setTab] = useState("purchasing");
   return (
-    <div className="workflow-stack">
-      <div className="page-heading">
-        <span className="eyebrow">BUSINESS OPERATIONS</span>
-        <h1>Run your business</h1>
-      </div>
-      <div className="workflow-tabs">
+    <div className="workflow-stack product-workspace operations-workspace">
+      <ProductHeading eyebrow="BUSINESS OPERATIONS" title="Operations centre" description="Manage purchasing, catalogue and branch operations from one workspace." />
+      <div className="workflow-tabs product-switcher" role="group" aria-label="Operations workspace">
         {[
           "purchasing",
           "catalogue",
@@ -791,6 +799,7 @@ export function OperationsWorkspace({
           <button
             key={t}
             className={`button ${tab === t ? "" : "secondary"}`}
+            aria-pressed={tab === t}
             onClick={() => setTab(t)}
           >
             {t[0].toUpperCase() + t.slice(1)}
@@ -1209,8 +1218,8 @@ export function CreditWallet() {
   if (error) return <Notice type="error" message={error} />;
   if (!wallet || !program || !credits) return <Loading />;
   return (
-    <div className="workflow-stack">
-      <h1>Purchase credit & rewards</h1>
+    <div className="workflow-stack product-workspace">
+      <ProductHeading eyebrow="CUSTOMER CREDIT" title="Purchase credit & rewards" description="View purchase credit and manage your eligible rewards." />
       <div className="workflow-grid">
         <section className="surface workflow-form">
           <h2>{money(wallet.balanceKobo)}</h2>
@@ -1297,8 +1306,8 @@ export function CreditManagement() {
   if (error) return <Notice type="error" message={error} />;
   if (!data) return <Loading />;
   return (
-    <div className="workflow-stack">
-      <h1>Credits & refunds</h1>
+    <div className="workflow-stack product-workspace">
+      <ProductHeading eyebrow="FINANCE" title="Credits & refunds" description="Find a customer, record purchase credit and review refunds." />
       <CreditCustomerSearch selected={selectedCustomer} onSelect={setSelectedCustomer} />
       {selectedCustomer && selectedCustomer.credit_branch_id ? <CustomerCreditRequestForm key={selectedCustomer.id} customer={selectedCustomer} onDone={reload} /> : selectedCustomer ? <Notice message="This customer needs an authorised branch before purchase credit can be recorded." /> : <p>Select a customer above to record purchase credit.</p>}
       <h2>{selectedCustomer ? `Credit and refund requests for ${selectedCustomer.name}` : "Credit and refund requests"}</h2>
@@ -1403,8 +1412,8 @@ export function PointOfSale() {
     }
   }
   return (
-    <div className="workflow-stack">
-      <h1>Retail point of sale</h1>
+    <div className="workflow-stack product-workspace">
+      <ProductHeading eyebrow="SALES" title="Retail point of sale" description="Record an in-person sale and its payment using the existing stock records." />
       <p>
         Cash sales reduce available stock immediately. Revenue is verified
         through independent shift cash-up.
@@ -1424,7 +1433,7 @@ export function PointOfSale() {
         onDone={reload}
       />
       {open.length > 0 && (
-        <form className="surface workflow-form" onSubmit={sell}>
+        <form className="surface workflow-form product-form" onSubmit={sell}>
           <h2>Record cash sale</h2>
           <label>
             Open shift
@@ -1535,8 +1544,8 @@ export function RecurringOrders() {
   if (error) return <Notice type="error" message={error} />;
   if (!plans || !authorisations || !catalogue) return <Loading />;
   return (
-    <div className="workflow-stack">
-      <h1>Authorised recurring orders</h1>
+    <div className="workflow-stack product-workspace">
+      <ProductHeading eyebrow="ORDER SCHEDULES" title="Authorised recurring orders" description="Review recurring orders and their customer authorisations." />
       <p>
         Create a <Link href="/schedules">refill plan</Link> first. Authorisation
         permits recurring cash-on-delivery orders within your maximum total. It
@@ -1650,14 +1659,15 @@ export function Campaigns() {
   if (error) return <Notice type="error" message={error} />;
   if (!data) return <Loading />;
   return (
-    <div className="workflow-stack">
-      <h1>Customer campaigns</h1>
-      <EasyRewardsReport />
+    <div className="workflow-stack product-workspace campaigns-workspace">
+      <ProductHeading eyebrow="GROWTH & ENGAGEMENT" title="Customer campaigns" description="Create relevant messages, review delivery and manage approved campaigns." />
+      <details className="surface product-disclosure"><summary>Rewards reconciliation</summary><div className="product-disclosure-body"><EasyRewardsReport /></div></details>
       <p>
         In-app messages only. Recipients must have opted into marketing and have
         an order in the branch. Delivery rechecks consent, active accounts and
         Lagos quiet hours.
       </p>
+      <details className="surface product-disclosure"><summary>Create a campaign</summary>
       <ActionForm
         action="campaign.create"
         title="Draft a campaign"
@@ -1677,8 +1687,11 @@ export function Campaigns() {
         ]}
         onDone={reload}
       />
+      </details>
+      <h2 className="product-section-title">Campaign history <span className="product-result-count">{data.length} campaigns</span></h2>
+      {data.length === 0 && <Empty title="No campaigns yet">Create your first draft above. Only eligible, opted-in customers receive approved messages.</Empty>}
       {data.map((c: any) => (
-        <section className="surface workflow-form" key={c.id}>
+        <section className="surface workflow-form campaign-card" key={c.id}>
           <h3>
             {c.title} · {c.status}
           </h3>
@@ -1857,11 +1870,12 @@ export function NotificationInbox() {
   if (error) return <Notice type="error" message={error} />;
   if (!data) return <Loading />;
   return (
-    <div className="workflow-stack">
-      <h1>Your notifications</h1>
+    <div className="workflow-stack product-workspace notification-workspace">
+      <ProductHeading eyebrow="YOUR UPDATES" title="Notifications" description="Order updates, support replies and reminders, together in one inbox." />
+      <p className="product-result-count">{data.notifications.filter((n: any) => !n.read_at).length} unread · {data.notifications.length} total</p>
       {data.notifications.length ? (
         data.notifications.map((n: any) => (
-          <article className="surface workflow-form" key={n.id}>
+          <article className={`surface workflow-form notification-card ${n.read_at ? "" : "is-unread"}`} key={n.id}>
             <h3>
               {n.title}
               {n.read_at ? "" : " · Unread"}

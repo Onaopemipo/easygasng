@@ -1954,7 +1954,7 @@ function Account({ section }: { section: string }) {
                 )}
               </div>
             ))}
-            <form className="surface" onSubmit={createSchedule}>
+            <form className="surface product-form" onSubmit={createSchedule}>
               <h2>Plan your next refill</h2>
               <label>
                 Gas refill

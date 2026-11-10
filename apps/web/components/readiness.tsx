@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import {ProductHeading} from "./product-workspace";
+import React, { useEffect, useState } from "react";
 import { api, Loading, Notice } from "./ui";
 export default function Readiness() {
   const [data, setData] = useState<any>(null),
@@ -27,8 +28,8 @@ export default function Readiness() {
     );
   if (!data) return <Loading />;
   return (
-    <section>
-      <h1>Production readiness · {data.recommendation}</h1>
+    <section className="product-workspace readiness-workspace">
+      <ProductHeading eyebrow="LAUNCH READINESS" title={`Production readiness · ${data.recommendation}`} description="Review launch gates, their supporting evidence and outstanding work." />
       <p>
         Automated checks and remaining evidence requirements. These checks do
         not authorise deployment or certify safety, compliance or financial
@@ -36,7 +37,7 @@ export default function Readiness() {
       </p>
       <p>Checked {new Date(data.checkedAt).toLocaleString()}</p>
       {data.gates.map((g: any) => (
-        <article className="surface" key={g.id}>
+        <article className="surface readiness-gate" key={g.id} data-status={g.status}>
           <h2>
             {g.id}. {g.name} · {g.status}
           </h2>

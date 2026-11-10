@@ -1,5 +1,5 @@
 // Presentation only. No request, payment, queue or business-state ownership.
-export const loaderSizes = { xs: 20, sm: 32, md: 48, lg: 80, xl: 120 } as const;
+export const loaderSizes = { xs: 30, sm: 48, md: 72, lg: 120, xl: 180 } as const;
 export type LoaderSize = keyof typeof loaderSizes;
 export type LoaderMode = "indeterminate" | "determinate";
 export type LoaderVariant = "inline" | "section" | "overlay" | "fullscreen";
@@ -11,16 +11,16 @@ export const loaderDesign = {
     "M50 30 C46 39 35 45 35 55 C35 64 41 69 47 71 C42 64 44 59 50 53 C56 59 58 64 53 71 C59 69 65 64 65 55 C65 45 54 38 50 30 Z",
   light: {
     track: "#d9f9cc",
-    active: "#16c600",
-    end: "#b6ff00",
+    active: "#109b00",
+    end: "#70c900",
     disc: "#ffffff",
     halo: "#99ef68",
     orange: "#ff7900",
   },
   dark: {
     track: "#345b40",
-    active: "#65ef83",
-    end: "#b6ff00",
+    active: "#39c660",
+    end: "#87d931",
     disc: "#102b22",
     halo: "#65ef83",
     orange: "#ff7900",
@@ -28,7 +28,7 @@ export const loaderDesign = {
 } as const;
 export function loaderDimension(size: LoaderSize | number = "md") {
   return typeof size === "number" && Number.isFinite(size)
-    ? Math.min(120, Math.max(16, size))
+    ? Math.min(120, Math.max(16, size)) * 1.5
     : (loaderSizes[size as LoaderSize] ?? loaderSizes.md);
 }
 export function loaderProgress(value: number | undefined, previous = 0) {

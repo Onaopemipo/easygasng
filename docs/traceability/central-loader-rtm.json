@@ -920,6 +920,42 @@
       "reason": "Requested source pushed; existing Vercel stable alias READY; hosted role isolation/auth/catalogue and loader CSS validated. Does not close native/production acceptance.",
       "testResult": "PASS:Vercel build/TypeScript and VDEMO-HTTP01 hosted suite1/1, loader CSS and reduced-motion/theme token presence. GitHub full CI run42590228787 still in progress, not claimed complete.",
       "outstandingWork": "None for bounded push/demo deployment. Existing native/manual/production acceptance holds remain."
+    },
+    {
+      "id": "LDR-RESIZE01",
+      "requirement": "Increase shared custom loader dimensions50% and darken the cycling green gradient",
+      "priority": "P1",
+      "scope": "Web and native shared presentation tokens",
+      "uiReference": "User instruction10November2026",
+      "route": "Shared loader in all existing routes",
+      "implementationFiles": [
+        "packages/business-rules/src/loader-design.ts",
+        "apps/web/app/theme.css",
+        "apps/web/components/easygas-loader.tsx",
+        "apps/mobile/EasyGasLoader.tsx"
+      ],
+      "dataSource": "Shared bounded loader dimensions and theme palettes; no business data",
+      "securityControl": "No request ownership, API, authority or financial changes; actual progress and accessibility guards preserved",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Shared tokens scaled1.5\u00d7, existing numeric-bound tests updated, both platform host checks and types pass; actual web preview measures120px.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts"
+      ],
+      "testIds": [
+        "LDR-SIZE-lg",
+        "LDR-NATIVE-SIZE-lg"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/loader/evidence/resize-20261110/tests.txt",
+        "docs/loader/evidence/resize-20261110/web-types.txt",
+        "docs/loader/evidence/resize-20261110/mobile-types.txt",
+        "docs/loader/evidence/resize-20261110/report.md",
+        "docs/loader/evidence/resize-20261110/preview.png"
+      ],
+      "acceptanceGate": "LDR-RESIZE-G01",
+      "testResult": "PASS54 loader cases, web/mobile typechecks and browser120px/darker-colour inspection.",
+      "outstandingWork": "Native device visual acceptance and deployment remain outside this bounded local revision; previous production NO-GO and original phase gaps remain."
     }
   ],
   "gates": [
@@ -1096,6 +1132,11 @@
       "requirement": "User-authorised Git push and existing Vercel client-demo deployment, with hosted checks",
       "status": "PASS",
       "reason": "Remote source push confirmed, Vercel READY, public loader CSS and hosted auth/privilege/catalogue/no-index smoke checks pass."
+    },
+    {
+      "id": "LDR-RESIZE-G01",
+      "scope": "Bounded size/palette revision, existing loader checks and web/mobile types",
+      "status": "PASS"
     }
   ],
   "scenarios": [
@@ -1605,7 +1646,8 @@
     "Preserve legacy260px web loading region and one native accessibility progress target; errors precede loading.",
     "Correct identified GasOrder missing-config error concealment with scoped retry/15s abort and cleanup; API contract unchanged.",
     "Full584 regressions passed; final67focused and browser refinements verified; all50scenarios/28gates retained with explicit native/manual gaps.",
-    "Later user instruction explicitly authorised push and demo deployment: source5b9deae, Vercel dpl_55FRjAMWJLcGhneF1eCEnDzx7Djh READY. Added bounded LDR-PUBLISH-01/G1 without removing original requirements/scenarios/gates. No mobile build or production activation."
+    "Later user instruction explicitly authorised push and demo deployment: source5b9deae, Vercel dpl_55FRjAMWJLcGhneF1eCEnDzx7Djh READY. Added bounded LDR-PUBLISH-01/G1 without removing original requirements/scenarios/gates. No mobile build or production activation.",
+    "10November2026: explicit user revision enlarges every named/numeric loader50% and darkens light/dark orbit gradients. LDR-RESIZE01 added; all prior requirement/scenario/gate IDs retained. No deployment/native build."
   ],
   "deployment": {
     "sourceCommit": "5b9deaef30e99d8e539a5a5abdc395cee27cde38",

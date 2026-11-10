@@ -58,7 +58,7 @@ export default function PhoneCompletion() {
   }
   return (
     <main
-      className="container stack"
+      className="container stack product-workspace"
       style={{ maxWidth: 640, padding: "48px 20px" }}
     >
       <h1>Complete your EasyGas account</h1>
@@ -70,7 +70,7 @@ export default function PhoneCompletion() {
       <button className="button" onClick={request} disabled={!token || busy}>
         Request phone verification code
       </button>
-      <form className="panel stack" onSubmit={review}>
+      <form className="panel stack product-form" onSubmit={review}>
         <label>
           Six-digit code
           <FormInput
@@ -95,7 +95,7 @@ export default function PhoneCompletion() {
           <p>
             {order.address.street}, {order.address.zone}
           </p>
-          <form onSubmit={complete} className="stack">
+          <form onSubmit={complete} className="stack product-form">
             <label>
               Create a password
               <FormInput

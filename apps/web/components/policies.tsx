@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
+import {ProductHeading} from "./product-workspace";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { api, Notice, Loading } from "./ui";
 import { ServiceForm } from "./professional-services";
@@ -71,8 +72,8 @@ export default function PolicyAdmin({ user }: { user: any }) {
       .catch((e) => setError(e.message));
   }, [version]);
   return (
-    <section>
-      <h1>Customer policy publication</h1>
+    <section className="product-workspace governed-workspace">
+      <ProductHeading eyebrow="ADMINISTRATION & CONTROL" title="Customer policy publication" description="Manage policy versions and review publication requests." />
       <p>
         Use business-reviewed text. Publishing a document does not establish
         legal, financial or LPG certification. An independent owner must approve

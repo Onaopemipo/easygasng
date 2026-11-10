@@ -1,0 +1,54 @@
+{
+  "phase": "Product UI and loader client-demo release",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "UI-LDR-REL01",
+      "requirement": "Push pending UI and loader source and deploy the existing client demo, then verify hosted behaviour",
+      "priority": "P1",
+      "scope": "Existing isolated Vercel demo; no native binary or commercial activation",
+      "uiReference": "User push and deploy request",
+      "route": "https://easygas-client-demo.vercel.app",
+      "dataSource": "Git source revision, Vercel metadata and existing scoped demo records",
+      "securityControl": "Existing auth, role, payment, stock and approval guards retained; private data excluded from uploads; no migration or settings changes",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Preflight68pass; publication and hosted acceptance pending",
+      "testResult": "PASS local focused68 and build/mobile types; hosted verification pending",
+      "outstandingWork": "Push, deploy and hosted smoke; full role/state/native acceptance remains tracked in existing feature matrices",
+      "implementationFiles": [
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx",
+        "packages/business-rules/src/loader-design.ts",
+        ".vercelignore"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts",
+        "tests/easygas-loader.test.ts",
+        "scripts/check-workspace-release.mjs"
+      ],
+      "testIds": [
+        "PRODUCT-UI04",
+        "LDR-SIZE-lg"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/releases/20261110-ui-loader/report.md",
+        "docs/releases/20261110-ui-loader/evidence/preflight.txt",
+        "docs/releases/20261110-ui-loader/evidence/build.txt",
+        "docs/releases/20261110-ui-loader/evidence/mobile-types.txt"
+      ],
+      "acceptanceGate": "UI-LDR-REL-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "UI-LDR-REL-G01",
+      "scope": "Git push, demo Ready and hosted verification",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "All existing route/native acceptance denominators retained. Production NO-GO and prior holds unchanged."
+  ]
+}

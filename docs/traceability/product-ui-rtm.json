@@ -1,0 +1,3009 @@
+{
+  "phase": "Whole-app product UI audit and consolidation",
+  "date": "2026-11-10",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "PRODUCT-AUDIT01",
+      "requirement": "Inventory all web routes and native product shells with an explicit disposition",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "all routes",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Every registered web route and native shell is indexed with an explicit retain/redesign disposition; coverage test passes.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Audit inventory complete; individual screen-state acceptance remains separately tracked and production NO-GO unchanged.",
+      "implementationFiles": [
+        "docs/product-ui/component-inventory.json",
+        "docs/product-ui/audit.md"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-AUDIT01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G03"
+    },
+    {
+      "id": "PRODUCT-FORM01",
+      "requirement": "Consistent responsive operational forms, labels and keyboard focus",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "shared operational forms",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "PARTIAL",
+      "reason": "Shared forms implemented and rendering/desktop/mobile layout verified. Broad role/state and assistive acceptance remains outstanding.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-APPROVE01",
+      "requirement": "Approval action buttons use Approve instead of Apply",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/approvals",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Requested labels changed; existing owner approval and negative-authority regressions pass. Conditional button source covered without mutating demo requests.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Hosted rollout and eligible-request visual acceptance remain separate; no request approved during testing.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI04"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G01"
+    },
+    {
+      "id": "PRODUCT-ADMIN-DASHBOARD",
+      "requirement": "Dashboard retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin",
+      "dataSource": "business.snapshot through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-ORDERS",
+      "requirement": "Orders retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/orders",
+      "dataSource": "orders through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing record workspace heading, scoped search, table and operational actions; shared control treatment refreshed.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-POS",
+      "requirement": "Retail POS retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/pos",
+      "dataSource": "pos through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-CUSTOMERS",
+      "requirement": "Customers retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/customers",
+      "dataSource": "customers through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/customer-management.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-SUPPORT",
+      "requirement": "Support Desk retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/support",
+      "dataSource": "support.list through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-PRODUCTS",
+      "requirement": "Products retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/products",
+      "dataSource": "products.manage through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/product-catalogue.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-INVENTORY",
+      "requirement": "Inventory retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/inventory",
+      "dataSource": "business.snapshot through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-CYLINDERS",
+      "requirement": "Cylinders retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/cylinders",
+      "dataSource": "cylinders through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing record workspace heading, scoped search, table and operational actions; shared control treatment refreshed.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-BUNDLES",
+      "requirement": "Product & Service Bundles retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/bundles",
+      "dataSource": "bundles.manage through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/bundles.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-DELIVERIES",
+      "requirement": "Deliveries retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/deliveries",
+      "dataSource": "orders through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-BOOKINGS",
+      "requirement": "Service Bookings retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/bookings",
+      "dataSource": "bookings through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-SERVICES",
+      "requirement": "Professional Services retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/services",
+      "dataSource": "services.manage through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-TECHNICIANS",
+      "requirement": "Technicians retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/technicians",
+      "dataSource": "services.manage through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-QUOTATIONS",
+      "requirement": "Quotations retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/quotations",
+      "dataSource": "bookings through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-FINANCE",
+      "requirement": "Wallet & Payments retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/finance",
+      "dataSource": "business.snapshot through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-RECONCILIATION",
+      "requirement": "Financial Reconciliation retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/reconciliation",
+      "dataSource": "finance.summary through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/reconciliation.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-CREDITS",
+      "requirement": "Credits & Refunds retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/credits",
+      "dataSource": "credits through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-REPORTS",
+      "requirement": "Reports & Analytics retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/reports",
+      "dataSource": "business.snapshot through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-CAMPAIGNS",
+      "requirement": "Campaigns retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/campaigns",
+      "dataSource": "campaigns through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-RECOMMENDATIONS",
+      "requirement": "Recommendations retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/recommendations",
+      "dataSource": "recommendations.manage through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/recommendations.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-TESTIMONIALS",
+      "requirement": "Customer Testimonials retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/testimonials",
+      "dataSource": "testimonials.manage through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/testimonials.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-STAFF",
+      "requirement": "Staff Management retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/staff",
+      "dataSource": "staff.manage through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/staff-management.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-APPROVALS",
+      "requirement": "Approval Centre retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/approvals",
+      "dataSource": "approvals through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-SETTINGS",
+      "requirement": "Settings retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/settings",
+      "dataSource": "settings through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing dedicated product workspace; source audit found established hierarchy, scoped navigation and responsive layout.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/setting-summary.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-OPERATIONS",
+      "requirement": "Operations Centre retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/operations",
+      "dataSource": "purchasing through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-INCIDENTS",
+      "requirement": "Operational Incidents retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/incidents",
+      "dataSource": "incidents through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-POLICIES",
+      "requirement": "Customer Policies retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/policies",
+      "dataSource": "policies.manage through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/policies.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-AUDIT",
+      "requirement": "Audit History retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/audit",
+      "dataSource": "audit through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing record workspace heading, scoped search, table and operational actions; shared control treatment refreshed.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-ADMIN-READINESS",
+      "requirement": "Launch Readiness retains a coherent product layout",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/admin/readiness",
+      "dataSource": "production.readiness through existing authenticated dispatcher",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Redesign shared operational forms and workspace presentation; all original actions retained.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/readiness.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-GAS-ORDER",
+      "requirement": "/gas-order UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/gas-order",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established dedicated responsive customer workspace.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-POLICIES",
+      "requirement": "/policies UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/policies",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-REFUND",
+      "requirement": "/refund UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/refund",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-CANCELLATION",
+      "requirement": "/cancellation UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/cancellation",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-SERVICE-TERMS",
+      "requirement": "/service-terms UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/service-terms",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-WARRANTY",
+      "requirement": "/warranty UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/warranty",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-CREDIT-TERMS",
+      "requirement": "/credit-terms UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/credit-terms",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-LOYALTY-TERMS",
+      "requirement": "/loyalty-terms UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/loyalty-terms",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-SERVICES",
+      "requirement": "/services UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/services",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-BOOKINGS",
+      "requirement": "/bookings UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/bookings",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established dedicated responsive customer workspace.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-COMBINED-CHECKOUT",
+      "requirement": "/combined-checkout UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/combined-checkout",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established dedicated responsive customer workspace.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-NOTIFICATIONS",
+      "requirement": "/notifications UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/notifications",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Apply shared operational form hierarchy and readable workspace headings.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-RECURRING",
+      "requirement": "/recurring UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/recurring",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Apply shared operational form hierarchy and readable workspace headings.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-PURCHASE-CREDIT",
+      "requirement": "/purchase-credit UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/purchase-credit",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Apply shared operational form hierarchy and readable workspace headings.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-ACCOUNT-SETTINGS",
+      "requirement": "/account-settings UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/account-settings",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Apply shared operational form hierarchy and readable workspace headings.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-SUPPORT",
+      "requirement": "/support UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/support",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Apply shared operational form hierarchy and readable workspace headings.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-CONSUMPTION",
+      "requirement": "/consumption UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/consumption",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Apply shared operational form hierarchy and readable workspace headings.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-FORGOT-PASSWORD",
+      "requirement": "/forgot-password UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/forgot-password",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-RESET-PASSWORD",
+      "requirement": "/reset-password UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/reset-password",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-VERIFY-EMAIL",
+      "requirement": "/verify-email UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/verify-email",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-ACCEPT-INVITATION",
+      "requirement": "/accept-invitation UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/accept-invitation",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-PRODUCTS",
+      "requirement": "/products UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/products",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-HOW-IT-WORKS",
+      "requirement": "/how-it-works UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/how-it-works",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-ABOUT",
+      "requirement": "/about UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/about",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-BUSINESS",
+      "requirement": "/business UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/business",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-HELP",
+      "requirement": "/help UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/help",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-ACCOUNT",
+      "requirement": "/account UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/account",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established dedicated responsive customer workspace.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-LOGIN",
+      "requirement": "/login UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/login",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-REGISTER",
+      "requirement": "/register UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/register",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-CART",
+      "requirement": "/cart UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/cart",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-CHECKOUT",
+      "requirement": "/checkout UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/checkout",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-TRACK",
+      "requirement": "/track UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/track",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established dedicated responsive customer workspace.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-ORDERS",
+      "requirement": "/orders UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/orders",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-WALLET",
+      "requirement": "/wallet UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/wallet",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established dedicated responsive customer workspace.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/customer-wallet.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-REWARDS",
+      "requirement": "/rewards UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/rewards",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing branded catalogue, account/recovery or checkout layout; preserve cart, authentication and payment states.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-SCHEDULES",
+      "requirement": "/schedules UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/schedules",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing customer order/refill cards and account shell; refill-plan form adopts shared product layout. Actual rendering is in site.tsx, not only workflow helpers.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-REFILL",
+      "requirement": "/refill UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/refill",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain existing customer order/refill cards and account shell; refill-plan form adopts shared product layout. Actual rendering is in site.tsx, not only workflow helpers.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-PRIVACY",
+      "requirement": "/privacy UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/privacy",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-TERMS",
+      "requirement": "/terms UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/terms",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-DELIVERY",
+      "requirement": "/delivery UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/delivery",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-CONTACT",
+      "requirement": "/contact UI audit and appropriate presentation",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/contact",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain intentional branded marketing/legal layout; product dashboard furniture would obscure the page purpose.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/product-ui.css"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-HOME",
+      "requirement": "/ purpose-appropriate responsive UI",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established branded purpose-specific layout; shared service forms refreshed where present.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-PRODUCTS-DETAIL",
+      "requirement": "/products/:id purpose-appropriate responsive UI",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/products/:id",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established branded purpose-specific layout; shared service forms refreshed where present.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-SERVICES-DETAIL",
+      "requirement": "/services/:id purpose-appropriate responsive UI",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/services/:id",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established branded purpose-specific layout; shared service forms refreshed where present.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-ACTIVATE",
+      "requirement": "/activate purpose-appropriate responsive UI",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/activate",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established branded purpose-specific layout; shared service forms refreshed where present.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/phone-completion.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-PAYMENT-RETURN",
+      "requirement": "/payment-return purpose-appropriate responsive UI",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/payment-return",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established branded purpose-specific layout; shared service forms refreshed where present.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/hosted-payment.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-WEB-PAYMENT-REQUEST",
+      "requirement": "/payment-request purpose-appropriate responsive UI",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "/payment-request",
+      "dataSource": "Existing authorised route API records; no synthetic counts added",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Retain established branded purpose-specific layout; shared service forms refreshed where present.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/web/components/payment-request.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-NATIVE-CUSTOMERHOME",
+      "requirement": "Audit native CustomerHome surface and preserve approved field design",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "native:CustomerHome",
+      "dataSource": "Existing authenticated mobile API and approved reference designs",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Approved native product shell retained. Native source audit only; user deferred mobile builds. Runtime visual acceptance remains open.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/mobile/CustomerHome.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-NATIVE-TECHNICIANWORKSPACE",
+      "requirement": "Audit native TechnicianWorkspace surface and preserve approved field design",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "native:TechnicianWorkspace",
+      "dataSource": "Existing authenticated mobile API and approved reference designs",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Approved native product shell retained. Native source audit only; user deferred mobile builds. Runtime visual acceptance remains open.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-NATIVE-DRIVERWORKSPACE",
+      "requirement": "Audit native DriverWorkspace surface and preserve approved field design",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "native:DriverWorkspace",
+      "dataSource": "Existing authenticated mobile API and approved reference designs",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Approved native product shell retained. Native source audit only; user deferred mobile builds. Runtime visual acceptance remains open.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
+      "id": "PRODUCT-NATIVE-APP",
+      "requirement": "Audit native App surface and preserve approved field design",
+      "priority": "P1",
+      "scope": "Product UI audit and presentation",
+      "uiReference": "User request: consistent modern SaaS product UI; existing EasyGas approved designs retained",
+      "route": "native:App",
+      "dataSource": "Existing authenticated mobile API and approved reference designs",
+      "securityControl": "Existing server role, branch, assignment, payment, approval and eligibility checks remain unchanged",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Approved native product shell retained. Native source audit only; user deferred mobile builds. Runtime visual acceptance remains open.",
+      "testResult": "PASS broad regression632,23environment skips,0fail; focused component and API regressions passed. Individual route/state visual acceptance remains open.",
+      "outstandingWork": "Per-state, role and physical-device visual acceptance remains in scope; no deployment or native binary build in this phase",
+      "implementationFiles": [
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/product-ui/audit.md",
+        "docs/product-ui/report.md",
+        "docs/product-ui/evidence/tests.txt",
+        "docs/product-ui/evidence/regression.txt",
+        "docs/product-ui/evidence/browser.txt",
+        "docs/product-ui/evidence/types.txt",
+        "docs/product-ui/evidence/build.txt"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    }
+  ],
+  "gates": [
+    {
+      "id": "PRODUCT-UI-G01",
+      "scope": "Approve wording and unchanged authority checks",
+      "status": "PASS"
+    },
+    {
+      "id": "PRODUCT-UI-G02",
+      "scope": "All route and state visual acceptance",
+      "status": "PENDING"
+    },
+    {
+      "id": "PRODUCT-UI-G03",
+      "scope": "Complete source route inventory without dropping unverified requirements",
+      "status": "PASS"
+    }
+  ],
+  "scopeChanges": [
+    "All existing requirement IDs and production NO-GO, retain-all and Excel import hold preserved.",
+    "Marketing/legal layouts and approved native shells are audited for purpose, not forcibly converted into administration dashboards. Native binary builds remain deferred.",
+    "Every indexed route remains in the denominator; source audit and shared CSS do not establish full visual acceptance."
+  ]
+}

@@ -29,7 +29,7 @@ export default function PaymentRequest() {
   }, []);
   return (
     <main
-      className="container stack"
+      className="container stack product-workspace"
       style={{ maxWidth: 640, padding: "48px 20px" }}
     >
       <h1>Invoice payment request</h1>

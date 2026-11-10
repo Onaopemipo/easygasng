@@ -7,3 +7,7 @@ Final bounded evidence:584full regressions,67overlapping final focused tests (54
 ## Authorised push and demo rollout
 
 Later user request “push and deploy” authorises this client-demo rollout. Added LDR-PUBLISH-01 and LDR-PUBLISH-G1 (VERIFIED_COMPLETE/PASS); original18sections,50scenarios and28gates remain. Source5b9deae pushed to main; Vercel deployment dpl_55FRjAMWJLcGhneF1eCEnDzx7Djh READY at https://easygas-client-demo.vercel.app. Build/TypeScript and hosted loader CSS/auth/role/catalogue/no-index checks PASS. Evidence in docs/loader/evidence/deployment. No migrations/config changes, native build or live activation. Full GitHub CI run42590228787 remains in progress at handover, not claimed passed. Original native/manual gates and production NO-GO remain.
+
+## Size and colour revision —10November2026
+
+LDR-RESIZE01 / LDR-RESIZE-G01: VERIFIED_COMPLETE/PASS for bounded local shared size/palette change. All loader sizes increase50%; orbit greens darkened in both themes.54 existing loader checks, web/mobile types and actual web120px preview pass. [Evidence](../loader/evidence/resize-20261110/report.md). No deployment/mobile build; original partial scope and production NO-GO remain.

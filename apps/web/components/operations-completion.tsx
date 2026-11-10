@@ -70,10 +70,10 @@ export function OperationForm({
     }
   }
   return (
-    <form className="panel stack" onSubmit={submit}>
+    <form className="panel stack product-form" onSubmit={submit}>
       <h3>{title}</h3>
       {fields.map((f) => (
-        <label key={f.name}>
+        <label key={f.name} data-field-type={f.type ?? "text"}>
           {f.label}
           {f.options ? (
             <select

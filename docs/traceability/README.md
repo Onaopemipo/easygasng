@@ -133,3 +133,7 @@ Individual staff privileges: [matrix](staff-privileges-rtm.md), [report](../staf
 Client demo release10November: [matrix](demo-release-20261110-rtm.md), [report](../releases/20261110-demo/report.md). Existing linked demo deployment only; no commercial activation or map implementation.
 
 10 November publication update: pending web phases are deployed to the existing client demo at c95d7a1; migration075 and hosted checks passed. See [release matrix](demo-release-20261110-rtm.md). CI remains in progress at recorded check; native builds, map integration and commercial production NO-GO are not completed by this release.
+
+Whole-app product UI consolidation (10 November2026): [matrix](product-ui-rtm.md), [route audit](../product-ui/audit.md) and [report](../product-ui/report.md).83 scope rows retained; legacy shared layouts redesigned and approval wording changed to Approve. Full individual role/state/native visual acceptance remains open; production NO-GO unchanged.
+
+Product UI and loader client-demo rollout: [release matrix](ui-loader-release-rtm.md). Includes Approve wording and50% larger/darker loader; existing feature acceptance and production NO-GO remain separate.
