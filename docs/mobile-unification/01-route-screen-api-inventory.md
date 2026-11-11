@@ -1,0 +1,23 @@
+# Route and screen source inventory
+
+- `apps/mobile/App.tsx`
+- `apps/mobile/DriverWorkspace.tsx`
+- `apps/mobile/TechnicianWorkspace.tsx`
+- `apps/mobile/Workflows.tsx`
+- `apps/web/app/[...slug]/page.tsx`
+- `apps/web/app/activate/page.tsx`
+- `apps/web/app/admin/[[...section]]/page.tsx`
+- `apps/web/app/admin/layout.tsx`
+- `apps/web/app/api/[action]/route.ts`
+- `apps/web/app/api/business-live/route.ts`
+- `apps/web/app/api/invoices/[orderId]/route.ts`
+- `apps/web/app/api/media/[id]/route.ts`
+- `apps/web/app/api/media/route.ts`
+- `apps/web/app/api/messaging/meta/route.ts`
+- `apps/web/app/api/payments/paystack/[operation]/route.ts`
+- `apps/web/app/api/status/route.ts`
+- `apps/web/app/api/tracking/stream/route.ts`
+- `apps/web/app/layout.tsx`
+- `apps/web/app/page.tsx`
+- `apps/web/app/payment-request/page.tsx`
+- `apps/web/app/payment-return/page.tsx`

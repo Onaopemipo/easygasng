@@ -59,7 +59,7 @@ export default function PhoneCompletion() {
   return (
     <main
       className="container stack product-workspace"
-      style={{ maxWidth: 640, padding: "48px 20px" }}
+      style={{ padding: "48px 20px" }}
     >
       <h1>Complete your EasyGas account</h1>
       <p>

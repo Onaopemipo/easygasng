@@ -173,3 +173,5 @@ Support Desk continuation: [matrix](support-desk-rtm.md). Full request and messa
 Finance workspace redesign: [traceability matrix](finance-redesign-rtm.md). Responsive web presentation and expense intake delivered locally. Period analytics, native implementation and full acceptance remain open.
 
 Credits & Refunds: [traceability matrix](../credits-refunds/traceability.md). Scoped web workspace and existing approval flows. Provider, native and release acceptance remain open.
+
+Full-width web layouts: [matrix](full-width-web-rtm.md) and [JSON](full-width-web-rtm.json).

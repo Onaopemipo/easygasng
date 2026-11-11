@@ -321,9 +321,8 @@ export function TechnicianScreens({
     [loading, setLoading] = useState(false),
     [revision, setRevision] = useState(0);
   const generation = useRef(0);
-  const picker = page === "photo-picker" || page === "report-picker",
-    history = page === "history",
-    listPage = page === "jobs" || history || picker,
+  const history = page === "history",
+    listPage = page === "jobs" || history,
     period = technicianRange(range),
     summary = profile.summary ?? {},
     p = profile.profile ?? {},
@@ -344,14 +343,11 @@ export function TechnicianScreens({
     const timer = setTimeout(async () => {
       try {
         const params = new URLSearchParams({
-          filter: history ? "past" : picker ? "in_progress" : filter,
+          filter: history ? "past" : filter,
           page: String(index),
           ...(q ? { q } : {}),
           ...(location ? { location } : {}),
           ...(history ? { from: period.from, to: period.to } : {}),
-          ...(picker
-            ? { intent: page === "photo-picker" ? "photo" : "report" }
-            : {}),
         });
         const r = await api("technician.jobs?" + params);
         if (live && current === generation.current) {
@@ -385,14 +381,7 @@ export function TechnicianScreens({
   ]);
   async function choose(job: any) {
     try {
-      await openJob(
-        job.id,
-        page === "photo-picker"
-          ? "Proof of Service"
-          : page === "report-picker"
-            ? "Service Report"
-            : undefined,
-      );
+      await openJob(job.id);
     } catch (e: any) {
       setError(e.message);
     }
@@ -564,16 +553,6 @@ export function TechnicianScreens({
           />
         </View>
         <Button label="View My Jobs" onPress={() => navigate("jobs", "all")} />
-        <ActionRow
-          label="Take Service Photo"
-          icon="camera-outline"
-          onPress={() => navigate("photo-picker")}
-        />
-        <ActionRow
-          label="Create Service Report"
-          icon="document-text-outline"
-          onPress={() => navigate("report-picker")}
-        />
         <Copy>
           My Jobs includes current and past assigned records. Last confirmed
           sync:{" "}
@@ -594,22 +573,8 @@ export function TechnicianScreens({
     return (
       <>
         <Hero
-          title={
-            history
-              ? "Service History"
-              : picker
-                ? page === "photo-picker"
-                  ? "Choose Photo Job"
-                  : "Choose Report Job"
-                : "My Jobs"
-          }
-          subtitle={
-            history
-              ? "Your completed and past service jobs"
-              : picker
-                ? "Select an authorised in-progress assignment"
-                : "View and manage your assigned service jobs"
-          }
+          title={history ? "Service History" : "My Jobs"}
+          subtitle={history ? "Your completed and past service jobs" : "View and manage your assigned service jobs"}
         />
         {history && (
           <>
@@ -806,12 +771,8 @@ export function TechnicianScreens({
         )}
         {!loading && !error && data?.rows.length === 0 && (
           <Card>
-            <Title>{picker ? "No eligible job" : "No matching jobs"}</Title>
-            <Copy>
-              {picker
-                ? "Complete the assigned assessment, quotation approvals and verified payment conditions before using chargeable-work proof or report. Open the job for its existing assessment workflow."
-                : "Only your actual authorised assignments appear here. Operations manages assignments; no example jobs are added."}
-            </Copy>
+            <Title>No matching jobs</Title>
+            <Copy>Only your authorised assignments appear here.</Copy>
             <Button
               label="View My Jobs"
               secondary

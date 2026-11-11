@@ -1,0 +1,334 @@
+{
+  "requirements": [
+    {
+      "id": "OWN-001",
+      "requirement": "Business Overview",
+      "priority": "high",
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/mobile/OwnerOverview.tsx",
+        "apps/web/components/admin-overview.tsx"
+      ],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Dashboard and appearance baseline passed 9 tests",
+      "outstanding": "Complete web and native reference journey and verify signed-in behavior"
+    },
+    {
+      "id": "OWN-002",
+      "requirement": "Operations Summary",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    },
+    {
+      "id": "OWN-003",
+      "requirement": "Approval Centre",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    },
+    {
+      "id": "OWN-004",
+      "requirement": "Financial Summary",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    },
+    {
+      "id": "OWN-005",
+      "requirement": "Business Controls",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    },
+    {
+      "id": "OWN-006",
+      "requirement": "Branch Performance",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    },
+    {
+      "id": "OWN-007",
+      "requirement": "Approval Detail",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    },
+    {
+      "id": "OWN-008",
+      "requirement": "Reports & Analytics",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    },
+    {
+      "id": "OWN-009",
+      "requirement": "Organisation Profile",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    },
+    {
+      "id": "OWN-010",
+      "requirement": "Roles & Access",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    },
+    {
+      "id": "OWN-011",
+      "requirement": "Audit History",
+      "priority": "high",
+      "status": "NOT_IMPLEMENTED",
+      "implementation": [],
+      "authoritativeSource": "Existing owner APIs and committed records",
+      "securityControls": "Existing server role and branch checks and governed approvals",
+      "evidence": "Pending screen-level acceptance",
+      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "requirement": "repository audit complete",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G02",
+      "requirement": "baseline test evidence",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G03",
+      "requirement": "owner roles and permissions verified",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G04",
+      "requirement": "per-user grants/revocations verified",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G05",
+      "requirement": "branch and record scoping enforced server-side",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G06",
+      "requirement": "existing web grouped sidebar preserved",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G07",
+      "requirement": "web routes/deep links preserved",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G08",
+      "requirement": "existing mobile navigation preserved outside owner workspace",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G09",
+      "requirement": "shared sign-in/session safety",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G10",
+      "requirement": "OWN-001 real dashboard",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G11",
+      "requirement": "OWN-002 operations",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G12",
+      "requirement": "OWN-003 approval queue",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G13",
+      "requirement": "OWN-004 financial summary",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G14",
+      "requirement": "OWN-005 controls",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G15",
+      "requirement": "OWN-006 branch performance",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G16",
+      "requirement": "OWN-007 independent approval details",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G17",
+      "requirement": "OWN-008 reports/exports",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G18",
+      "requirement": "OWN-009 organisation settings",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G19",
+      "requirement": "OWN-010 roles/access",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G20",
+      "requirement": "OWN-011 immutable audit",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G21",
+      "requirement": "zero/unavailable distinction",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G22",
+      "requirement": "no fabricated figures",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G23",
+      "requirement": "Paystack and wallet ledger non-regression",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G24",
+      "requirement": "refunds and independent approvals",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G25",
+      "requirement": "stock/cylinder custody R01\u2013R05",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G26",
+      "requirement": "reconciliation REC-01",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G27",
+      "requirement": "no self-approval bypass",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G28",
+      "requirement": "offline/stale/permission change",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G29",
+      "requirement": "accessibility and touch targets",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G30",
+      "requirement": "light/dark/system",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G31",
+      "requirement": "mobile builds and responsive web",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G32",
+      "requirement": "cross-role E2E tests",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G33",
+      "requirement": "regression and security tests",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G34",
+      "requirement": "migrations backward-compatible",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G35",
+      "requirement": "backup/restore tested",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G36",
+      "requirement": "feature flag and rollback rehearsed",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G37",
+      "requirement": "approved visual fidelity",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G38",
+      "requirement": "full traceability matrix",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G39",
+      "requirement": "monitoring and alerts",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "G40",
+      "requirement": "explicit release GO/NO-GO",
+      "status": "UNVERIFIED"
+    }
+  ],
+  "verifiedCoverage": "0/11",
+  "changeLog": [
+    "Added a verified net receipts summary to the existing web dashboard and a read-only mobile overview."
+  ]
+}

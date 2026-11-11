@@ -1,3 +1,7 @@
+import { FinanceOverview } from "./FinanceOverview";
+import { SalesCustomerLookup } from "./SalesCustomerLookup";
+import { OwnerOverview } from "./OwnerOverview";
+
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasAlert } from "./AppAlert";
 import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
@@ -82,6 +86,7 @@ export default function App() {
     [wallet, setWallet] = useState<any>(null),
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
+    [loginError, setLoginError] = useState(""),
     [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
     [name, setName] = useState(""),
@@ -392,6 +397,7 @@ export default function App() {
   async function login() {
     setLoading(true);
     setError("");
+    setLoginError("");
     try {
       const result = await api(
         technicianShell
@@ -423,7 +429,7 @@ export default function App() {
         setScreen(destination.screen);
       } else setScreen("home");
     } catch (e: any) {
-      setError(e.message);
+      setLoginError(e.message);
     } finally {
       setLoading(false);
     }
@@ -549,7 +555,7 @@ export default function App() {
         setPassword={setPassword}
         submit={login}
         busy={loading}
-        error={error}
+        error={loginError || error}
         recover={driverRecover}
         setRecover={setDriverRecover}
         api={api}
@@ -576,7 +582,7 @@ export default function App() {
         setPassword={setPassword}
         submit={login}
         busy={loading || !hydrated}
-        error={user ? "This app requires a verified driver account." : error}
+        error={user ? "This app requires a verified driver account." : loginError || error}
         recover={driverRecover}
         setRecover={setDriverRecover}
         api={api}
@@ -584,7 +590,21 @@ export default function App() {
       />
     );
   const customerView = !user || ["customer", "commercial"].includes(user.role);
+  const staffHomeTitles: Record<string, string> = {
+    sales: "Sales Workspace",
+    inventory: "Stock Operations",
+    dispatcher: "Dispatch Centre",
+    service_manager: "Service Operations",
+    safety_officer: "Safety & Compliance",
+    manager: "Branch Dashboard",
+    finance: "Finance Overview",
+    administrator: "Administration",
+    admin: "Administration",
+    owner: "Business Overview",
+  };
   const headerTitle: Record<string, string> = {
+    "sales-customers": "Customers",
+    "retail-pos": "Retail POS",
     "gas-order": "Order Gas",
     checkout: "Checkout",
     orders: orderFilter ? "Track Order" : "Orders",
@@ -850,7 +870,10 @@ export default function App() {
                   phoneLogin
                     ? "Use email instead"
                     : "Use activated phone number",
-                  () => setPhoneLogin((v) => !v),
+                  () => {
+                    setLoginError("");
+                    setPhoneLogin((v) => !v);
+                  },
                   true,
                 )}
               {field(
@@ -875,6 +898,13 @@ export default function App() {
                   Use at least {PASSWORD_MIN_LENGTH} characters. No role selection is required.
                 </Text>
               )}
+              {loginError ? (
+                <View style={s.notice}>
+                  <Text accessibilityRole="alert" style={s.noticeText}>
+                    {friendlyMessage(loginError)}
+                  </Text>
+                </View>
+              ) : null}
               {button(
                 register ? "Create Account" : "Sign In",
                 login,
@@ -885,7 +915,10 @@ export default function App() {
                 register
                   ? "Already a member? Sign in"
                   : "New to EasyGas? Create an account",
-                () => setRegister(!register),
+                () => {
+                  setLoginError("");
+                  setRegister(!register);
+                },
                 true,
               )}
               {button("Forgot password?", () => setScreen("recovery"), true)}
@@ -954,128 +987,19 @@ export default function App() {
             />
           ) : screen === "home" ? (
             <>
-              {button("Order cooking gas", () => setScreen("gas-order"))}
-              {catalogue?.gas && (
-                <Text>
-                  {currency(catalogue.gas.priceKobo)}/kg · Flat delivery{" "}
-                  {currency(catalogue.gas.deliveryKobo)}
-                </Text>
+              <Text style={s.title}>{staffHomeTitles[user?.role] ?? "Staff Workspace"}</Text>
+              {(user?.role === "owner" || user?.role === "manager") && (
+                <OwnerOverview key={user.id} api={api} branchManager={user.role === "manager"} />
               )}
-              {button(
-                "Professional Gas Services",
-                () => setScreen("services"),
-                true,
-              )}
-              {user &&
-                button(
-                  user.role === "technician"
-                    ? "Assigned Appointments"
-                    : "My Service Bookings",
-                  () => setScreen("bookings"),
-                  true,
-                )}
-              <Text style={s.greeting}>
-                {user ? "Good to see you," : "Good energy starts here."}
-              </Text>
-              <Text style={s.title}>
-                {user
-                  ? `${user.name.split(" ")[0]}!`
-                  : "More Cooking. Less Worry."}
-              </Text>
-              {driver ? (
-                <>
-                  <View style={s.card}>
-                    <Text style={s.sectionTitle}>Your deliveries</Text>
-                    <Text style={s.body}>
-                      View only the orders assigned to you. Delivery events are
-                      validated by the same server as the business dashboard.
-                    </Text>
-                    {button("View Assigned Deliveries", () =>
-                      setScreen("orders"),
-                    )}
-                  </View>
-                </>
-              ) : (
-                <>
-                  <View style={s.refillCard}>
-                    <Text style={s.sectionTitle}>
-                      Find your cooking rhythm.
-                    </Text>
-                    <Text style={s.body}>
-                      Your refill estimate uses verified purchase history. View
-                      your cooking profile for its current estimate.
-                    </Text>
-                    <Text style={s.caption}>
-                      Estimates are never sensor measurements.
-                    </Text>
-                  </View>
-                  {button("Order Gas", () => setScreen("gas-order"))}
-                  <View style={s.shortcuts}>
-                    {[
-                      ["Orders", "orders"],
-                      ["Wallet", "wallet"],
-                      ["Rewards", "rewards"],
-                      ["Support", "conversations"],
-                    ].map(([title, dest]) => (
-                      <Pressable
-                        style={s.shortcut}
-                        key={dest}
-                        onPress={() =>
-                          setScreen(
-                            user || dest === "appearance" ? dest : "login",
-                          )
-                        }
-                      >
-                        <Text style={s.shortcutIcon}>
-                          {dest === "orders"
-                            ? "▣"
-                            : dest === "wallet"
-                              ? "▰"
-                              : dest === "rewards"
-                                ? "✦"
-                                : "?"}
-                        </Text>
-                        <Text style={s.caption}>{title}</Text>
-                      </Pressable>
-                    ))}
-                  </View>
-                  <View style={s.planCard}>
-                    <Text style={s.sectionTitle}>Plan your refills</Text>
-                    <Text style={s.body}>
-                      Preferred dates, without automatic charges.
-                    </Text>
-                    {button(
-                      "Manage refill plans",
-                      () => setScreen(user ? "plans" : "login"),
-                      true,
-                    )}
-                    {button(
-                      "View cooking profiles",
-                      () => setScreen(user ? "consumption" : "login"),
-                      true,
-                    )}
-                  </View>
-                  <Text style={s.sectionTitle}>Popular Products</Text>
-                  <View style={s.productGrid}>
-                    {products.slice(0, 3).map((p: any) => (
-                      <Pressable
-                        style={s.miniProduct}
-                        key={p.id}
-                        onPress={() => {
-                          setDetail(p);
-                          setScreen("detail");
-                        }}
-                      >
-                        {art(p)}
-                        <Text style={s.productName}>{p.name}</Text>
-                        <Text style={s.productPrice}>
-                          {currency(p.price_kobo)}
-                        </Text>
-                      </Pressable>
-                    ))}
-                  </View>
-                </>
-              )}
+
+              <Text style={s.body}>{user?.name}</Text>
+              {user?.role === "finance" && <FinanceOverview key={user.id} api={api} />}
+              {user?.role === "sales" && button("Find a customer", () => setScreen("sales-customers"), true)}
+              {canOpenRetailPos(user?.role) &&
+                button("Retail POS", () => setScreen("retail-pos"))}
+              {user && ["owner", "service_manager", "safety_officer", "inventory", "finance"].includes(user.role) &&
+                button("Technicians & Availability", () => setScreen("technicians-management"))}
+              {button("Account", () => setScreen("more"), true)}
             </>
           ) : screen === "products" ? (
             <>
@@ -1832,6 +1756,8 @@ export default function App() {
             />
           ) : screen === "technicians-management" && user && ["owner","service_manager","safety_officer","inventory","finance"].includes(user.role) ? (
             <TechniciansManagement key={user.id} user={user} api={api} />
+          ) : screen === "sales-customers" && user?.role === "sales" ? (
+            <SalesCustomerLookup key={user.id} api={api} />
           ) : screen === "retail-pos" && canOpenRetailPos(user?.role) ? (
             <RetailPos key={user.id} api={api} />
           ) : screen === "support" || screen === "conversations" ? (
@@ -1860,7 +1786,7 @@ export default function App() {
                 ["Refill plans", "plans"],
                 ["Recurring orders", "recurring"],
                 ["Credit & redemption", "credit"],
-              ].map(([text, dest]) => (
+              ].filter(([, dest]) => customerView || dest === "appearance").map(([text, dest]) => (
                 <Pressable
                   style={s.menuItem}
                   key={dest}
@@ -1878,13 +1804,10 @@ export default function App() {
         </ScrollView>
       </ScreenTitleContext.Provider>
       <View style={s.bottomNav}>
-        {(driver || (user && !["customer", "commercial"].includes(user.role))
+        {(user?.role === "sales" ? [["Home", "home"], ["Customers", "sales-customers"], ["POS", "retail-pos"], ["Account", "more"]] : driver || (user && !["customer", "commercial"].includes(user.role))
           ? [
               ["Home", "home"],
-              ["Products", "products"],
-              [driver ? "Deliveries" : "Orders", "orders"],
-              ["Cart", "cart"],
-              ["More", "more"],
+              ["Account", "more"],
             ]
           : [
               ["Home", "home"],

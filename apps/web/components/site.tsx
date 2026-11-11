@@ -2262,7 +2262,7 @@ function ContentPage({ path }: { path: string }) {
       </div>
     );
   return (
-    <div className="container page narrow">
+    <div className="container page">
       <span className="eyebrow">EASYGAS ENERGY SOLUTIONS</span>
       <h1>
         {path === "/privacy" ? "Privacy information" : "Terms of service"}

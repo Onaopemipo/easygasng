@@ -473,7 +473,7 @@ export function Recovery({
     window.history.replaceState({}, "", window.location.pathname);
   }, []);
   return (
-    <div className="container page narrow workflow-stack">
+    <div className="container page workflow-stack">
       <h1>
         {mode === "recover"
           ? "Recover your account"

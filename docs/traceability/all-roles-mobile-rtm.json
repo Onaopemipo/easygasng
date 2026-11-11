@@ -1,0 +1,301 @@
+{
+  "requirements": [
+    {
+      "id": "MROLE-01",
+      "requirement": "Shared sign-in routes field roles to their existing workspaces",
+      "implementation": "Existing native role routing and dedicated sign-in feedback",
+      "evidence": "Mobile typecheck",
+      "outstanding": "Simulator and hosted field login acceptance",
+      "status": "PARTIAL",
+      "priority": "high",
+      "route": "Native sign-in and role workspace",
+      "files": [
+        "apps/mobile/App.tsx"
+      ],
+      "authoritativeSource": "Authenticated user role returned by /api/me and existing business APIs",
+      "securityControls": "Existing backend authorization remains authoritative",
+      "acceptanceGate": "Shared sign-in routes field roles to their existing workspaces"
+    },
+    {
+      "id": "MROLE-02",
+      "requirement": "Staff workspace uses role-specific navigation",
+      "implementation": "Role landing titles, staff navigation, existing POS and technician management entry points",
+      "evidence": "Mobile typecheck",
+      "outstanding": "Effective per-user privileges and full workflows for each staff role",
+      "status": "PARTIAL",
+      "priority": "high",
+      "route": "Native sign-in and role workspace",
+      "files": [
+        "apps/mobile/App.tsx"
+      ],
+      "authoritativeSource": "Authenticated user role returned by /api/me and existing business APIs",
+      "securityControls": "Existing backend authorization remains authoritative",
+      "acceptanceGate": "Staff workspace uses role-specific navigation"
+    },
+    {
+      "id": "MROLE-03",
+      "requirement": "Complete reference journeys, offline recovery, exactly-once effects, security and rollback",
+      "implementation": "Existing backend and field workflows are reused",
+      "evidence": "Source inspection",
+      "outstanding": "Full specification, end-to-end evidence and rollback drill",
+      "status": "PARTIAL",
+      "priority": "high",
+      "route": "Native sign-in and role workspace",
+      "files": [
+        "apps/mobile/App.tsx"
+      ],
+      "authoritativeSource": "Authenticated user role returned by /api/me and existing business APIs",
+      "securityControls": "Existing backend authorization remains authoritative",
+      "acceptanceGate": "Complete reference journeys, offline recovery, exactly-once effects, security and rollback"
+    }
+  ],
+  "verifiedCoverage": "0/3",
+  "changeLog": [
+    "Added staff role landing titles and role-specific navigation.",
+    "Reconciled the recovered package and recorded all 40 acceptance gates."
+  ],
+  "specification": "EasyGas_All_Roles_Web_Mobile_Master_Codex_Prompt.md",
+  "acceptanceGates": [
+    {
+      "id": "G01",
+      "requirement": "Audit complete",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G02",
+      "requirement": "role definitions verified",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G03",
+      "requirement": "per-user privilege precedence verified",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G04",
+      "requirement": "branch/ownership isolation",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G05",
+      "requirement": "web routes/sidebar preserved",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G06",
+      "requirement": "shared login/session expiry",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G07",
+      "requirement": "customer order end-to-end",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G08",
+      "requirement": "assisted order/profile once",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G09",
+      "requirement": "Paystack verified payment",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G10",
+      "requirement": "wallet liability",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G11",
+      "requirement": "invoice vs receipt",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G12",
+      "requirement": "driver strict delivery-only nav",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G13",
+      "requirement": "driver exact-item verification",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G14",
+      "requirement": "immutable photo evidence",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G15",
+      "requirement": "delivery exceptions",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G16",
+      "requirement": "offline sync integrity",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G17",
+      "requirement": "real-time stale GPS",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G18",
+      "requirement": "technician qualification gate",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G19",
+      "requirement": "service quotation/payment gates",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G20",
+      "requirement": "stock no-oversell",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G21",
+      "requirement": "cylinder custody R01\u2013R05",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G22",
+      "requirement": "REC-01 reconciliation",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G23",
+      "requirement": "dispatch capacity and assignment",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G24",
+      "requirement": "POS till reconciliation",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G25",
+      "requirement": "refunds/credits independent approvals",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G26",
+      "requirement": "exactly-once ledger effects",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G27",
+      "requirement": "owner/admin separation",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G28",
+      "requirement": "role changes/revocations",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G29",
+      "requirement": "safety officer independence",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G30",
+      "requirement": "accessible iOS/Android",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G31",
+      "requirement": "dark/light/system",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G32",
+      "requirement": "real-data-only metrics",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G33",
+      "requirement": "regression suites green or documented pre-existing failures",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G34",
+      "requirement": "backups and tested restore",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G35",
+      "requirement": "monitoring/alerts",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G36",
+      "requirement": "feature-flag rollback",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G37",
+      "requirement": "approved UI fidelity",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G38",
+      "requirement": "handoff docs and traceability",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G39",
+      "requirement": "mobile builds",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    },
+    {
+      "id": "G40",
+      "requirement": "launch readiness explicit NO-GO/GO signed off",
+      "status": "BLOCKED",
+      "outstanding": "Gate-level evidence incomplete"
+    }
+  ],
+  "gateCoverage": "0/40"
+}

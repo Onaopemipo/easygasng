@@ -368,7 +368,6 @@ export function BusinessCentre({
         </div>
         <div className="finance-actions">
           <button className="button secondary" onClick={reload}>Refresh records</button>
-          {mode === "finance" && financeWrite && <button className="button" onClick={() => setRecordExpense(true)}>Record expense</button>}
         </div>
       </section>
       <div className="business-live" role="status">
@@ -1239,7 +1238,7 @@ export function BusinessCentre({
             />
           ) : (
             <>
-              <FinanceOverview data={data} />
+              <FinanceOverview data={data} onRecordExpense={() => setRecordExpense(true)} />
               {user.role === "owner" && (
                 <details className="surface">
                   <summary>Manage expense categories</summary>
@@ -1866,7 +1865,7 @@ const financeMoney = new Intl.NumberFormat("en-NG", {
   currency: "NGN",
 });
 
-function FinanceOverview({ data }: { data: any }) {
+function FinanceOverview({ data, onRecordExpense }: { data: any; onRecordExpense: () => void }) {
   const finance = data.finance;
   const breakdown = new Map<string, number>();
   const recorded = finance.recordedExpensesKobo;
@@ -1902,6 +1901,10 @@ function FinanceOverview({ data }: { data: any }) {
               <meter aria-label={category} min={0} max={recorded} value={amount} />
             </li>)}
           </ul>}
+      </section>
+      <section className="surface finance-quick-actions">
+        <h2>Quick actions</h2>
+        <button className="button" onClick={onRecordExpense}>Record expense</button>
       </section>
     </div>
     <FinanceCards data={{ finance: Object.fromEntries(

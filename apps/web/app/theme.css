@@ -1138,7 +1138,6 @@ html[data-theme="dark"] .site-footer .footer-bottom {
   z-index: 40;
 }
 .public-header-upper {
-  max-width: 1600px;
   margin: auto;
   min-height: 112px;
   padding: 18px 32px;
@@ -1216,7 +1215,6 @@ html[data-theme="dark"] .site-footer .footer-bottom {
   color: #fff;
 }
 .public-desktop-navigation {
-  max-width: 1500px;
   min-height: 72px;
   margin: auto;
   display: flex;
@@ -1715,7 +1713,7 @@ html[data-theme="dark"] { --loader-track:#345b40; --loader-active:#39c660; --loa
 .customer-cart { position: relative; display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; }
 .customer-cart-count { font-size: 15px; font-weight: 700; min-width: 20px; text-align: center; }
 /* Wallet: one primary action and one history view at a time. */
-.customer-wallet { max-width: 1040px; margin-inline: auto; }
+.customer-wallet { min-width: 0; }
 .customer-wallet .wallet-summary {display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 30px;min-height:0;margin:0;}
 .customer-wallet .wallet-summary h2 {margin:5px 0;font-size:36px;}
 .customer-wallet .wallet-summary p {margin:0;}
@@ -1841,3 +1839,17 @@ html[data-theme="dark"] { --loader-track:#345b40; --loader-active:#39c660; --loa
 .quick-order.compact-gas .gas-estimate { min-block-size: 44px; font-size: .83rem; margin: 7px 0 0; }
 .compact-gas .compact-gas-submit { display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 999px; margin: 4px 0 0; gap: 10px; }
 .compact-gas-services { display: grid; place-items: center; min-height: 44px; font-weight: 600; }
+
+.ac-owner-receipts {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  margin-block-end: 1rem;
+  background: linear-gradient(120deg, #005b35, #067447);
+  color: #fff;
+  text-decoration: none;
+}
+.ac-owner-receipts strong {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}

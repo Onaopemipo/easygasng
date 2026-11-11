@@ -268,7 +268,7 @@ export default function AdminOverview({ user }: { user: any }) {
       <section className="ac-welcome">
         <div>
           <p className="ac-eyebrow">YOUR EASYGAS OPERATIONS</p>
-          <h1>Hello, {user.name?.split(" ")[0] ?? "there"}</h1>
+          <h1>{user.role === "manager" ? "Branch Dashboard" : `Hello, ${user.name?.split(" ")[0] ?? "there"}`}</h1>
           <p>Here’s what’s happening across your authorised workspace.</p>
         </div>
         <div className="ac-period">
@@ -348,8 +348,15 @@ export default function AdminOverview({ user }: { user: any }) {
         <p>No dashboard snapshot available. Retry refresh.</p>
       ) : (
         <>
+          {user.role === "owner" && allowed("finance") && (
+            <Link href="/admin/finance" className="ac-owner-receipts">
+              <span>Verified net receipts</span>
+              <strong>{data?.revenue == null ? "Unavailable" : money(data.revenue)}</strong>
+              <span>{data?.scope.from} – {data?.scope.to}</span>
+            </Link>
+          )}
           <section className="ac-kpis" aria-label="Workspace metrics">
-            {cards.map(([label, value, Icon, route, colour, note]: any) => {
+            {cards.filter(([, , , route]) => !(user.role === "owner" && allowed("finance") && route === "finance")).map(([label, value, Icon, route, colour, note]: any) => {
               const content = (
                 <>
                   <span className="ac-kpi-icon">

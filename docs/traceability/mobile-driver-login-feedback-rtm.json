@@ -1,0 +1,34 @@
+{
+  "requirements": [
+    {
+      "id": "DRIVER-LOGIN-UI-01",
+      "requirement": "Show authentication errors inside the mobile form",
+      "priority": "high",
+      "route": "Native Sign In",
+      "implementation": "apps/mobile/App.tsx",
+      "authoritativeSource": "Authentication API error",
+      "securityControl": "Existing authentication controls",
+      "evidence": "Mobile typecheck passed",
+      "gate": "Accessible inline error above Sign In",
+      "outstanding": "Simulator visual check",
+      "status": "IMPLEMENTED_UNVERIFIED"
+    },
+    {
+      "id": "DRIVER-LOGIN-ENV-01",
+      "requirement": "Authenticate a local driver",
+      "priority": "high",
+      "route": "Native Sign In",
+      "implementation": "apps/web/lib/service.ts",
+      "authoritativeSource": "Isolated local demo account database",
+      "securityControl": "Driver role checked at sign-in",
+      "evidence": "Wrong password returned 401. Native login and session checked.",
+      "gate": "Valid driver reaches home",
+      "outstanding": "Installed app sign-in",
+      "status": "IMPLEMENTED_UNVERIFIED"
+    }
+  ],
+  "coverage": {
+    "implemented": "2/2",
+    "deviceVerified": "0/2"
+  }
+}

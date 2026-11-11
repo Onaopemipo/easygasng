@@ -303,8 +303,6 @@ export default function TechnicianWorkspace({
                       skills: "Skills & Services",
                       preferences: "Notification Preferences",
                       appearance: "Appearance",
-                      "photo-picker": "Take Service Photo",
-                      "report-picker": "Create Service Report",
                     } as Record<string, string>
                   )[page] ?? "Help & Support");
   return (
