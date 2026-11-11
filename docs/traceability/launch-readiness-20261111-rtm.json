@@ -1,0 +1,224 @@
+{
+  "phase": "Production acceptance continuation",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "priority": "P1",
+      "scope": "Full production readiness scope; no synthetic-demo production substitution",
+      "uiReference": "11 November six-area production request",
+      "testIds": [],
+      "negativeTests": [],
+      "id": "LAUNCH-1111-HOST",
+      "requirement": "Production hosting and recovery",
+      "relatedRequirements": "E2E-09 / PR-R09",
+      "route": "Production deploy and /api/status",
+      "dataSource": "Reviewed source, issued migrations and database/worker health",
+      "securityControl": "Verified TLS, restricted database role, internal rehearsal network and isolated restore",
+      "status": "PARTIAL",
+      "reason": "VPS is not provisioned. Actual domain/TLS, off-host backup restore, load and rollback acceptance remain.",
+      "testResult": "Local container isolation, release preflight and isolated Compose rehearsal passed.",
+      "outstandingWork": "VPS is not provisioned. Actual domain/TLS, off-host backup restore, load and rollback acceptance remain.",
+      "implementationFiles": [
+        "apps/web/lib/release-checks.ts",
+        "deploy/compose.namecheap.yml",
+        "scripts/compose-rehearsal.sh",
+        "deploy/NAMECHEAP-VPS.md"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/production-backup-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/releases/20261111-readiness/preflight.txt",
+        "docs/releases/20261111-readiness/container.txt",
+        "docs/releases/20261111-readiness/compose.txt"
+      ],
+      "acceptanceGate": "LAUNCH-1111-G-HOST"
+    },
+    {
+      "priority": "P1",
+      "scope": "Full production readiness scope; no synthetic-demo production substitution",
+      "uiReference": "11 November six-area production request",
+      "testIds": [],
+      "negativeTests": [],
+      "id": "LAUNCH-1111-PAY",
+      "requirement": "Live payment acceptance",
+      "relatedRequirements": "PAY-R01\u201317 / wallet top-up matrix",
+      "route": "Paystack checkout, webhook, wallet and reconciliation",
+      "dataSource": "Existing sandbox policy, transaction intents and immutable ledger",
+      "securityControl": "Live keys and live runtime rejected; test and real money stay separated",
+      "status": "PARTIAL",
+      "reason": "Live merchant account is unavailable. Live support, channel/fee approval, webhook/settlement/refund acceptance remain.",
+      "testResult": "Existing sandbox fixture coverage; no live payment or merchant account tested.",
+      "outstandingWork": "Live merchant account is unavailable. Live support, channel/fee approval, webhook/settlement/refund acceptance remain.",
+      "implementationFiles": [
+        "apps/web/lib/payments/runtime.ts",
+        "apps/web/lib/payments/policy.ts",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "testFiles": [
+        "tests/paystack-policy.test.ts",
+        "tests/paystack-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/releases/20261111-readiness/launch-gates.md"
+      ],
+      "acceptanceGate": "LAUNCH-1111-G-PAY"
+    },
+    {
+      "priority": "P1",
+      "scope": "Full production readiness scope; no synthetic-demo production substitution",
+      "uiReference": "11 November six-area production request",
+      "testIds": [],
+      "negativeTests": [],
+      "id": "LAUNCH-1111-OPS",
+      "requirement": "Operational acceptance",
+      "relatedRequirements": "E2E-01\u201304 / E2E-06",
+      "route": "Orders, dispatch, bookings and finance workspaces",
+      "dataSource": "Existing orders, bookings, custody and ledger records",
+      "securityControl": "Assignment, qualification, branch and finance approval controls preserved",
+      "status": "PARTIAL",
+      "reason": "Complete role-based browser and physical handover/cylinder/safety/finance sign-off.",
+      "testResult": "Synthetic operational fixture coverage; demo settings browser smoke only.",
+      "outstandingWork": "Complete role-based browser and physical handover/cylinder/safety/finance sign-off.",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "testFiles": [
+        "tests/service-booking-postgres.test.ts",
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "evidence": [
+        "docs/releases/20261111-readiness/demo-browser.txt"
+      ],
+      "acceptanceGate": "LAUNCH-1111-G-OPS"
+    },
+    {
+      "priority": "P1",
+      "scope": "Full production readiness scope; no synthetic-demo production substitution",
+      "uiReference": "11 November six-area production request",
+      "testIds": [],
+      "negativeTests": [],
+      "id": "LAUNCH-1111-CHANNEL",
+      "requirement": "Messaging and routing acceptance",
+      "relatedRequirements": "E2E-03/05 / PR-R05",
+      "route": "Transactional worker, channels and route planning",
+      "dataSource": "Existing outbox, providers and route evidence",
+      "securityControl": "Provider switches, sender verification, retry and consent controls remain",
+      "status": "PARTIAL",
+      "reason": "No SMTP, SMS/WhatsApp or road routing accounts available. Real acceptance and outbound activation remain.",
+      "testResult": "Local worker heartbeat verified; no external delivery or route provider call.",
+      "outstandingWork": "No SMTP, SMS/WhatsApp or road routing accounts available. Real acceptance and outbound activation remain.",
+      "implementationFiles": [
+        "scripts/worker.ts",
+        "apps/web/lib/channel-messaging.ts",
+        "apps/web/lib/dispatch-routing.ts"
+      ],
+      "testFiles": [
+        "tests/dispatch-routing.test.ts",
+        "tests/production-backup-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/releases/20261111-readiness/compose.txt"
+      ],
+      "acceptanceGate": "LAUNCH-1111-G-CHANNEL"
+    },
+    {
+      "priority": "P1",
+      "scope": "Full production readiness scope; no synthetic-demo production substitution",
+      "uiReference": "11 November six-area production request",
+      "testIds": [],
+      "negativeTests": [],
+      "id": "LAUNCH-1111-DATA",
+      "requirement": "Reconcile and approve historical import",
+      "relatedRequirements": "E2E-07/08 / Excel matrix",
+      "route": "Historical workbook preview and approved import path",
+      "dataSource": "Approved workbook, matched customer IDs, reconciled ledger/stock/fees",
+      "securityControl": "Import hold and retain-all decision preserved",
+      "status": "BLOCKED",
+      "reason": "Latest authorised reconciled workbook and customer approval not supplied; no records imported.",
+      "testResult": "Existing synthetic preview tests only; no production workbook acceptance.",
+      "outstandingWork": "Latest authorised reconciled workbook and customer approval not supplied; no records imported.",
+      "implementationFiles": [
+        "deploy/NAMECHEAP-VPS.md"
+      ],
+      "testFiles": [
+        "tests/excel-preview.test.ts"
+      ],
+      "evidence": [
+        "docs/releases/20261111-readiness/launch-gates.md"
+      ],
+      "acceptanceGate": "LAUNCH-1111-G-DATA"
+    },
+    {
+      "priority": "P1",
+      "scope": "Full production readiness scope; no synthetic-demo production substitution",
+      "uiReference": "11 November six-area production request",
+      "testIds": [],
+      "negativeTests": [],
+      "id": "LAUNCH-1111-RELEASE",
+      "requirement": "Mobile and final release qualification",
+      "relatedRequirements": "E2E-10/11 / PR-R08/10/14",
+      "route": "GitHub release validation, web and signed iOS/Android",
+      "dataSource": "Reviewed Git commit, CI evidence, demo UI and signed-device acceptance",
+      "securityControl": "CI threshold maintained; no native distribution or production cutover",
+      "status": "PARTIAL",
+      "reason": "Hosted CI rerun, remaining role/browser journeys, signing/device acceptance and independent approval remain.",
+      "testResult": "Local repaired PostgreSQL booking case, clean mobile audit and typecheck, hosted settings UI desktop/390px passed.",
+      "outstandingWork": "Hosted CI rerun, remaining role/browser journeys, signing/device acceptance and independent approval remain.",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "apps/mobile/package-lock.json",
+        "tests/service-booking-postgres.test.ts",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/releases/20261111-readiness/demo-browser.txt"
+      ],
+      "acceptanceGate": "LAUNCH-1111-G-RELEASE"
+    }
+  ],
+  "gates": [
+    {
+      "id": "LAUNCH-1111-G-HOST",
+      "scope": "Production hosting and recovery",
+      "status": "PENDING"
+    },
+    {
+      "id": "LAUNCH-1111-G-PAY",
+      "scope": "Live payment acceptance",
+      "status": "PENDING"
+    },
+    {
+      "id": "LAUNCH-1111-G-OPS",
+      "scope": "Operational acceptance",
+      "status": "PENDING"
+    },
+    {
+      "id": "LAUNCH-1111-G-CHANNEL",
+      "scope": "Messaging and routing acceptance",
+      "status": "PENDING"
+    },
+    {
+      "id": "LAUNCH-1111-G-DATA",
+      "scope": "Reconcile and approve historical import",
+      "status": "PENDING"
+    },
+    {
+      "id": "LAUNCH-1111-G-RELEASE",
+      "scope": "Mobile and final release qualification",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "Six launch gates mapped to existing requirements without dropping any prior IDs or gates.",
+    "User confirmed Namecheap VPS and provider/live merchant accounts are not yet available. No purchase, remote infrastructure write, live payment, provider activation, historical import or mobile distribution.",
+    "The existing synthetic demo was used for interactive Settings verification only; no business setting was submitted."
+  ]
+}

@@ -20,7 +20,7 @@ Store these outside the repository, with protected directory permissions:
 - `EASYGAS_DATABASE_TLS_DIRECTORY`: `server.crt`, `server.key`, `ca.crt`. Certificate must have SAN `DNS:postgres`, trusted by the provided CA. Private key readable only by the PostgreSQL container UID (verify the image UID before assigning host ownership); no broad chmod. Keep CA signing key outside the mounted directory. Rotate before expiry.
 - Persist message encryption and backup keys under separately controlled recovery custody. Do not regenerate keys on every deployment.
 
-Use a real reviewed 40-character commit SHA. This repository currently has no committed baseline; an arbitrary SHA must not be invented to bypass the release check. Pin reviewed container image digests during release qualification.
+Use a real reviewed 40-character commit SHA. Use the actual reviewed commit; a syntactically valid SHA alone does not establish review or approval. Pin reviewed container image digests during release qualification.
 
 ## Reviewed initial deployment sequence
 
@@ -36,3 +36,7 @@ Commands are operational steps requiring the actual host and inputs; none are cl
 ## Mobile ownership
 
 Existing Zuri Tales local config and authenticated EAS identity identify Expo owner `onaopemipo`; its iOS project uses Apple team `RDQ9JJZH7F`. EasyGas is configured for that owner/team, with its own `com.easygasng.customer` identifiers. This is not evidence that App Store Connect/Google Play entries or signing profiles for EasyGas exist. Do not reuse another app's EAS project ID, bundle ID or service account contents. A valid HTTPS API, native identifier registration, credentials and signed-device acceptance are still needed before store submission.
+
+## Local rehearsal
+
+Build a local acceptance image with `docker build -f deploy/Dockerfile -t easygas:local-acceptance-release .`, then run `bash scripts/compose-rehearsal.sh easygas:local-acceptance-release`. The rehearsal uses the production Compose files with a temporary override: no published ports, an internal-only network, synthetic credentials and a temporary PostgreSQL certificate. It runs migrations and checks the restricted runtime, hostname-verified TLS, web readiness and worker heartbeat. It removes only the newly created rehearsal containers and volumes. It does not validate production DNS, remote backups, SMTP delivery, load or rollback.

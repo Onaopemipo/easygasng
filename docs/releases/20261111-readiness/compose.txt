@@ -1,0 +1,102 @@
+Network eg-readiness-f5vcoh_default Creating
+ Network eg-readiness-f5vcoh_default Created
+ Volume eg-readiness-f5vcoh_easygas_postgres Creating
+ Volume eg-readiness-f5vcoh_easygas_postgres Created
+ Volume eg-readiness-f5vcoh_test_tls Creating
+ Volume eg-readiness-f5vcoh_test_tls Created
+ Container eg-readiness-f5vcoh-postgres-1 Creating
+ Container eg-readiness-f5vcoh-postgres-1 Created
+ Container eg-readiness-f5vcoh-postgres-1 Starting
+ Container eg-readiness-f5vcoh-postgres-1 Started
+ Container eg-readiness-f5vcoh-postgres-1 Waiting
+ Container eg-readiness-f5vcoh-postgres-1 Healthy
+ Container eg-readiness-f5vcoh-migrate-run-160cc5be5d49 Creating
+ Container eg-readiness-f5vcoh-migrate-run-160cc5be5d49 Created
+
+> easygas-platform@0.1.0 db:migrate
+> node --import tsx scripts/migrate.ts
+
+Database migrations applied.
+ Container eg-readiness-f5vcoh-web-run-f75ff20005fc Creating
+ Container eg-readiness-f5vcoh-web-run-f75ff20005fc Created
+
+> easygas-platform@0.1.0 release:check
+> node --import tsx scripts/release-check.ts
+
+{
+  "technicalChecksPassed": true,
+  "releaseDecision": "NO-GO until business, operational and release acceptance gates are signed",
+  "checks": [
+    {
+      "id": "origin",
+      "ok": true,
+      "detail": "Use the canonical public HTTPS origin without credentials, path or query."
+    },
+    {
+      "id": "database",
+      "ok": true,
+      "detail": "Production requires a dedicated PostgreSQL database."
+    },
+    {
+      "id": "database-tls",
+      "ok": true,
+      "detail": "Require certificate and hostname verification (sslmode=verify-full); never disable TLS verification."
+    },
+    {
+      "id": "worker",
+      "ok": true,
+      "detail": "Use one supervised external worker; disable the in-process timer."
+    },
+    {
+      "id": "preview",
+      "ok": true,
+      "detail": "Do not release a QA or client demo build."
+    },
+    {
+      "id": "release",
+      "ok": true,
+      "detail": "Supply the reviewed 40-character Git revision as EASYGAS_RELEASE_SHA."
+    },
+    {
+      "id": "transactional-mail",
+      "ok": true,
+      "detail": "Configure an approved authenticated TLS SMTP sender and verify actual recovery delivery before launch."
+    },
+    {
+      "id": "private-schema",
+      "ok": true,
+      "detail": "Every private table requires RLS and no PUBLIC table/schema grants."
+    },
+    {
+      "id": "schema",
+      "ok": true,
+      "detail": "All required migrations present."
+    },
+    {
+      "id": "runtime-role",
+      "ok": true,
+      "detail": "Runtime must not own tables, create schema objects, bypass RLS or administer roles/databases."
+    },
+    {
+      "id": "connection-tls",
+      "ok": true,
+      "detail": "The current database connection must use TLS; certificate verification is checked separately."
+    }
+  ]
+}
+ Container eg-readiness-f5vcoh-postgres-1 Running
+ Container eg-readiness-f5vcoh-worker-1 Creating
+ Container eg-readiness-f5vcoh-web-1 Creating
+ Container eg-readiness-f5vcoh-web-1 Created
+ Container eg-readiness-f5vcoh-worker-1 Created
+ Container eg-readiness-f5vcoh-postgres-1 Waiting
+ Container eg-readiness-f5vcoh-postgres-1 Waiting
+ Container eg-readiness-f5vcoh-postgres-1 Healthy
+ Container eg-readiness-f5vcoh-worker-1 Starting
+ Container eg-readiness-f5vcoh-postgres-1 Healthy
+ Container eg-readiness-f5vcoh-web-1 Starting
+ Container eg-readiness-f5vcoh-web-1 Started
+ Container eg-readiness-f5vcoh-worker-1 Started
+Application readiness probe failed.
+Application, schema and worker are ready.
+COMPOSE-READINESS-01 PASS: TLS, migrations, restricted role, web and worker on isolated network

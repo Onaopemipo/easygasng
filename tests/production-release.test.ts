@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readdirSync } from "node:fs";
 import {
   environmentChecks,
   operationalHealth,
@@ -35,6 +36,7 @@ test("PR-01: release configuration fails closed for missing origin, insecure TLS
     { EASYGAS_BACKGROUND_JOBS: "true" },
     { EASYGAS_RELEASE_SHA: "main" },
     { EASYGAS_PREVIEW: "true" },
+    { EASYGAS_CLIENT_DEMO: "true" },
   ]) {
     assert.ok(environmentChecks({ ...good, ...change }).some((c) => !c.ok));
   }
@@ -45,6 +47,13 @@ test("PR-01: release configuration fails closed for missing origin, insecure TLS
     }),
   );
   assert.ok(!serialized.includes("do-not-log"));
+});
+test("PR-SCHEMA-01: release checks cover every shipped SQL migration", () => {
+  const versions = readdirSync(new URL("../database/migrations/", import.meta.url))
+    .flatMap(file => file.match(/^(\d{3})_.*\.sql$/)?.[1] ?? [])
+    .sort();
+  for (const version of new Set(versions))
+    assert.ok(requiredSchemaVersions.includes(version), `Missing release check for migration ${version}`);
 });
 test("PR-02: readiness rejects missing migrations, absent/stale worker and future heartbeat", async () => {
   const f = await fixture();
@@ -89,7 +98,7 @@ test("PR-02: readiness rejects missing migrations, absent/stale worker and futur
     assert.equal(await operationalHealth(f.db, now), true);
     assert.equal(await operationalHealth(f.db, now + 300001), false);
     assert.equal(await operationalHealth(f.db, now - 60001), false);
-    await f.db.query("DELETE FROM schema_migrations WHERE version='046'");
+    await f.db.query("DELETE FROM schema_migrations WHERE version='075'");
     assert.equal(await operationalHealth(f.db, now), false);
   } finally {
     await f.db.close?.();

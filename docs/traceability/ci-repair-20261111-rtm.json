@@ -1,0 +1,68 @@
+{
+  "phase": "Release CI repair",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "priority": "P1",
+      "scope": "Release validation only",
+      "uiReference": "GitHub Actions run 42926443699 screenshot",
+      "route": "GitHub Actions release-validation",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "outstandingWork": "Push and rerun full hosted CI; production NO-GO remains.",
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "CI-1111-G01",
+      "id": "CI-1111-R01",
+      "requirement": "Preserve booking concurrency coverage under current availability rules",
+      "dataSource": "Hosted CI artifact and isolated PostgreSQL fixture",
+      "securityControl": "Assert overlapping slot creation is rejected; inject historical overlap only in disposable test schema; runtime unchanged",
+      "reason": "CI stopped on invalid fixture setup before the race",
+      "testResult": "PASS isolated real PostgreSQL concurrency test",
+      "implementationFiles": [
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "testFiles": [
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "evidence": [
+        "docs/releases/20261111-ci-repair/postgres.txt"
+      ]
+    },
+    {
+      "priority": "P1",
+      "scope": "Release validation only",
+      "uiReference": "GitHub Actions run 42926443699 screenshot",
+      "route": "GitHub Actions release-validation",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "outstandingWork": "Push and rerun full hosted CI; production NO-GO remains.",
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "CI-1111-G01",
+      "id": "CI-1111-R02",
+      "requirement": "Remediate native dependency audit failure without lowering threshold",
+      "dataSource": "Hosted native npm audit and npm registry lockfile",
+      "securityControl": "Patch node-forge within existing semver range; moderate audit gate retained",
+      "reason": "CI reported vulnerable node-forge 1.4.2; lockfile updated to 1.4.3",
+      "testResult": "PASS clean dependency install, mobile typecheck and moderate npm audit (zero vulnerabilities)",
+      "implementationFiles": [
+        "apps/mobile/package-lock.json"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/releases/20261111-ci-repair/report.md",
+        "docs/releases/20261111-ci-repair/native-audit.txt"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "CI-1111-G01",
+      "scope": "Full hosted web and native workflow",
+      "status": "PENDING"
+    }
+  ],
+  "scopeChanges": [
+    "No release gate, application behaviour, native build or deployment changed."
+  ]
+}

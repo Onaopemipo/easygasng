@@ -159,3 +159,7 @@ Order overlay simplification: [matrix](order-overlay-rtm.md). Customer-first sum
 Inline settings verification: [matrix](settings-verification-rtm.md). Password verification available inside the change form; interactive/hosted acceptance pending.
 
 Legacy payment setting guidance: [matrix](payment-setting-guidance-rtm.md). Configure Paystack through Payment Gateway & Fees; no activation performed. Browser/hosted acceptance pending.
+
+11 November release CI repair: [matrix](ci-repair-20261111-rtm.md). Booking test fixture and native dependency audit addressed; hosted rerun pending.
+
+11 November production acceptance: [six-gate matrix](launch-readiness-20261111-rtm.md). Local image and isolated Compose with TLS/restricted role/worker passed; hosted demo Settings browser verified. No production gate waived.

@@ -1,6 +1,6 @@
 import { databaseTlsConfigured } from "./database-tls";
 import { type SQL } from "./db";
-export const requiredSchemaVersions = Array.from({ length: 69 }, (_, i) =>
+export const requiredSchemaVersions = Array.from({ length: 75 }, (_, i) =>
   String(i + 1).padStart(3, "0"),
 ).filter((v) => v !== "026");
 // 026 was never issued; 027 is the next historical migration.
@@ -48,7 +48,11 @@ export function environmentChecks(env: NodeJS.ProcessEnv): ReleaseCheck[] {
     env.EASYGAS_BACKGROUND_JOBS === "false",
     "Use one supervised external worker; disable the in-process timer.",
   );
-  add("preview", env.EASYGAS_PREVIEW !== "true", "Do not release a QA build.");
+  add(
+    "preview",
+    env.EASYGAS_PREVIEW !== "true" && env.EASYGAS_CLIENT_DEMO !== "true",
+    "Do not release a QA or client demo build.",
+  );
   add(
     "release",
     /^[a-f0-9]{40}$/i.test(env.EASYGAS_RELEASE_SHA ?? ""),
