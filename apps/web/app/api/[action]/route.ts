@@ -90,6 +90,8 @@ const reads = new Set([
   "jobs",
   "account.profile",
   "support.list",
+  "support.detail",
+  "support.sla.policy",
   "purchasing",
   "branches",
   "transfers",

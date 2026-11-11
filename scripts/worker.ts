@@ -1,3 +1,4 @@
+import { escalateSupportSla } from "../apps/web/lib/support-desk";
 import { paystackRuntime } from "../apps/web/lib/payments/runtime";
 import { processPaystackInbox } from "../apps/web/lib/payments/webhooks";
 import { escalateUnacknowledgedDispatch } from "../apps/web/lib/dispatch-escalation";
@@ -56,6 +57,7 @@ try {
       console.log(
         JSON.stringify({ job: result.id, status: "completed", ...result }),
       );
+      await db.transaction((tx) => escalateSupportSla(tx, { ...operator, session_id: "operator-maintenance", verified_at: null } as Actor));
       await db.transaction((tx) =>
         escalateUnacknowledgedDispatch(tx, {
           ...operator,

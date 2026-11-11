@@ -20,14 +20,14 @@ export function ProductHeading({
 }
 
 export function filterSupportTickets<
-  T extends { subject?: string; customer_name?: string; status: string },
+  T extends { id?: string; subject?: string; customer_name?: string; status: string },
 >(records: T[], search: string, status: string): T[] {
   const query = search.trim().toLocaleLowerCase();
   return records.filter(
     (ticket) =>
       (status === "all" || ticket.status === status) &&
       (!query ||
-        `${ticket.subject ?? ""} ${ticket.customer_name ?? ""}`
+        `${ticket.subject ?? ""} ${ticket.customer_name ?? ""} ${ticket.id ?? ""}`
           .toLocaleLowerCase()
           .includes(query)),
   );

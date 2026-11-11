@@ -220,7 +220,7 @@ export const staffPrivileges: readonly Privilege[] = [
     description: "View branch support requests.",
     roles: ["owner", "manager", "sales"],
     grantRole: "sales",
-    actions: ["support.list"],
+    actions: ["support.list", "support.detail"],
     routes: ["support"],
   },
   {
@@ -230,7 +230,7 @@ export const staffPrivileges: readonly Privilege[] = [
     description: "Reply to and update accessible support requests.",
     roles: ["owner", "manager", "sales"],
     grantRole: "sales",
-    actions: ["support.reply", "support.update"],
+    actions: ["support.reply", "support.update", "support.attachment", "support.sla.enroll", "support.sla.save", "support.sla.policy", "support.sla.scan"],
   },
   {
     id: "reports.view",

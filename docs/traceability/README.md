@@ -159,3 +159,5 @@ Order overlay simplification: [matrix](order-overlay-rtm.md). Customer-first sum
 Inline settings verification: [matrix](settings-verification-rtm.md). Password verification available inside the change form; interactive/hosted acceptance pending.
 
 Legacy payment setting guidance: [matrix](payment-setting-guidance-rtm.md). Configure Paystack through Payment Gateway & Fees; no activation performed. Browser/hosted acceptance pending.
+
+Support Desk continuation: [matrix](support-desk-rtm.md). Full request and message pagination, private images, configured SLA tracking and foreground updates. Production NO-GO and the original acceptance gates remain in scope.

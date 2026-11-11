@@ -1,0 +1,884 @@
+{
+  "phase": "Support Desk completion and client demo release",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "SUPPORT-R01",
+      "requirement": "Approved workspace, contextual intake and conversation views",
+      "priority": "P1",
+      "scope": "Existing authenticated workspace and approved roles",
+      "uiReference": "User supplied approved screenshot",
+      "route": "/admin/support, /support, /help; existing mobile support",
+      "dataSource": "Scoped support.list, support_requests and support_messages",
+      "securityControl": "No sidebar or field-role change; no zeros before success",
+      "status": "PARTIAL",
+      "reason": "Desktop and 390px conversation, intake and full pagination verified. Native release acceptance remains separate.",
+      "testResult": "PASS isolated web empty, popup, staff create and populated conversation",
+      "outstandingWork": "Native physical-device, full scenario acceptance, staging rollback and release approval remain open.",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/service.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/ContextSheet.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [
+        "tests/workflows.test.ts",
+        "tests/product-ui.test.ts",
+        "tests/navigation.test.ts",
+        "tests/order-tracking.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/support-desk/evidence/baseline.txt",
+        "docs/support-desk/evidence/regression.txt",
+        "docs/support-desk/evidence/native-types.txt",
+        "docs/support-desk/evidence/web-types.txt",
+        "docs/support-desk/evidence/build.txt",
+        "docs/support-desk/evidence/browser.json",
+        "docs/support-desk/evidence/empty.png",
+        "docs/support-desk/evidence/inbox.png",
+        "docs/support-desk/evidence/completion-full-suite.txt"
+      ],
+      "acceptanceGate": "SUPPORT-G04"
+    },
+    {
+      "id": "SUPPORT-R02",
+      "requirement": "Scoped support intake and private notes",
+      "priority": "P0",
+      "scope": "Existing authenticated workspace and approved roles",
+      "uiReference": "User supplied approved screenshot",
+      "route": "support.create, support.list, support.reply, support.update",
+      "dataSource": "Canonical customers, orders and audit history",
+      "securityControl": "Current role, support management override, owner/branch/customer scope and internal-note filters",
+      "status": "PARTIAL",
+      "reason": "Legacy statuses remain. Scoped details, staff-only notes/images, reply replay protection and version checks verified.",
+      "testResult": "PASS SUPPORT-DESK01, TRK-02 and existing notes/ownership regressions",
+      "outstandingWork": "Native physical-device, full scenario acceptance, staging rollback and release approval remain open.",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/service.ts",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/ContextSheet.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [
+        "tests/workflows.test.ts",
+        "tests/product-ui.test.ts",
+        "tests/navigation.test.ts",
+        "tests/order-tracking.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "SUPPORT-DESK01"
+      ],
+      "evidence": [
+        "docs/support-desk/evidence/baseline.txt",
+        "docs/support-desk/evidence/regression.txt",
+        "docs/support-desk/evidence/native-types.txt",
+        "docs/support-desk/evidence/web-types.txt",
+        "docs/support-desk/evidence/build.txt",
+        "docs/support-desk/evidence/browser.json",
+        "docs/support-desk/evidence/empty.png",
+        "docs/support-desk/evidence/inbox.png"
+      ],
+      "acceptanceGate": "SUPPORT-G28"
+    },
+    {
+      "scope": "Existing authenticated Support Desk; client demo and mobile source",
+      "uiReference": "Approved Support Desk design and current workspace",
+      "testFiles": [
+        "tests/support-completion.test.ts"
+      ],
+      "evidence": [
+        "docs/support-desk/evidence/completion-focused.txt",
+        "docs/support-desk/evidence/completion-browser.txt"
+      ],
+      "id": "SUPPORT-R03",
+      "requirement": "Full request search and request/message pagination",
+      "priority": "P0",
+      "route": "support.list?view=paged, support.detail",
+      "dataSource": "support_requests, support_messages and canonical customer identities",
+      "securityControl": "Scoped predicates, bounded deterministic pages, no private notes in customer totals or data",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All pages and older matches verified; selected thread loaded independently.",
+      "testResult": "PASS SUPPORT-C01 and SUPPORT-C02 and browser page navigation",
+      "outstandingWork": "Large-scale performance acceptance is separate.",
+      "implementationFiles": [
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/support-desk.ts",
+        "apps/web/components/workflows.tsx",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "testIds": [
+        "SUPPORT-C01",
+        "SUPPORT-C02"
+      ],
+      "negativeTests": [
+        "SUPPORT-C01",
+        "SUPPORT-C02"
+      ],
+      "acceptanceGate": "SUPPORT-G05"
+    },
+    {
+      "scope": "Existing authenticated Support Desk; client demo and mobile source",
+      "uiReference": "Approved Support Desk design and current workspace",
+      "testFiles": [
+        "tests/support-completion.test.ts"
+      ],
+      "evidence": [
+        "docs/support-desk/evidence/completion-focused.txt",
+        "docs/support-desk/evidence/completion-browser.txt"
+      ],
+      "id": "SUPPORT-R04",
+      "requirement": "Private request image attachments",
+      "priority": "P0",
+      "route": "/api/media and /api/media/{id}",
+      "dataSource": "support_attachments and owning support request",
+      "securityControl": "Origin/session check, branch/customer scope, staff-only filter, bounded decoded WebP, immutable evidence and hash replay",
+      "status": "PARTIAL",
+      "reason": "Upload, preview, abuse rejection and PostgreSQL retry verified; native device acceptance and broader formats remain.",
+      "testResult": "PASS SUPPORT-C03, SUPPORT-C05 and browser staff-only upload",
+      "outstandingWork": "Installed-device acceptance, other formats and any approved scanner.",
+      "implementationFiles": [
+        "database/migrations/076_support_completion.sql",
+        "apps/web/app/api/media/route.ts",
+        "apps/web/app/api/media/[id]/route.ts",
+        "apps/web/lib/support-desk.ts",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "testIds": [
+        "SUPPORT-C03",
+        "SUPPORT-C05"
+      ],
+      "negativeTests": [
+        "SUPPORT-C03",
+        "SUPPORT-C05"
+      ],
+      "acceptanceGate": "SUPPORT-G13"
+    },
+    {
+      "scope": "Existing authenticated Support Desk; client demo and mobile source",
+      "uiReference": "Approved Support Desk design and current workspace",
+      "testFiles": [
+        "tests/support-completion.test.ts"
+      ],
+      "evidence": [
+        "docs/support-desk/evidence/completion-focused.txt",
+        "docs/support-desk/evidence/completion-browser.txt"
+      ],
+      "id": "SUPPORT-R05",
+      "requirement": "Policy-driven SLA tracking and overdue escalation",
+      "priority": "P0",
+      "route": "support.sla.policy, support.sla.save, support.sla.enroll, support.sla.scan",
+      "dataSource": "Branch policy and per-request deadline snapshots, first reply/resolution timestamps and in-app notices",
+      "securityControl": "Verified owner or scoped manager edits, server-calculated dates, audited and deduplicated notices",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Lagos working windows, policy snapshots, overdue and late states, and one-time notice verified.",
+      "testResult": "PASS SUPPORT-C04 and browser verified policy save and enrollment",
+      "outstandingWork": "Business supplies targets; scheduled worker hosting is a separate gate.",
+      "implementationFiles": [
+        "apps/web/lib/support-desk.ts",
+        "apps/web/lib/support-sla.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/components/support-controls.tsx",
+        "scripts/worker.ts"
+      ],
+      "testIds": [
+        "SUPPORT-C04"
+      ],
+      "negativeTests": [
+        "SUPPORT-C04"
+      ],
+      "acceptanceGate": "SUPPORT-G19"
+    },
+    {
+      "scope": "Existing authenticated Support Desk; client demo and mobile source",
+      "uiReference": "Approved Support Desk design and current workspace",
+      "testFiles": [
+        "tests/support-completion.test.ts"
+      ],
+      "evidence": [
+        "docs/support-desk/evidence/completion-focused.txt",
+        "docs/support-desk/evidence/completion-browser.txt"
+      ],
+      "id": "SUPPORT-R06",
+      "requirement": "Foreground conversation and inbox updates",
+      "priority": "P1",
+      "route": "/admin/support, /support and customer mobile inbox",
+      "dataSource": "Fresh authorized list/detail responses every 15 seconds",
+      "securityControl": "No anonymous subscription, hidden/app-background pause, error state and permission revocation handling",
+      "status": "PARTIAL",
+      "reason": "Browser receives a reply and image without reload; native source builds.",
+      "testResult": "PASS SUPPORT-C06 two authenticated sessions",
+      "outstandingWork": "Mobile reconnect and physical device acceptance, stress testing.",
+      "implementationFiles": [
+        "apps/web/components/support-controls.tsx",
+        "apps/mobile/Workflows.tsx",
+        "packages/business-rules/src/support-refresh.ts"
+      ],
+      "testIds": [
+        "SUPPORT-C02"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "SUPPORT-G14"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "SUPPORT-T01",
+      "scope": "route/auth/sidebar; browser and filter states",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T02",
+      "scope": "route/auth/sidebar; browser and filter states",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T03",
+      "scope": "route/auth/sidebar; browser and filter states",
+      "status": "PASS",
+      "evidence": "Isolated browser empty/populated"
+    },
+    {
+      "id": "SUPPORT-T04",
+      "scope": "route/auth/sidebar; browser and filter states",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T05",
+      "scope": "route/auth/sidebar; browser and filter states",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T06",
+      "scope": "route/auth/sidebar; browser and filter states",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T07",
+      "scope": "route/auth/sidebar; browser and filter states",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T08",
+      "scope": "route/auth/sidebar; browser and filter states",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T09",
+      "scope": "intake, identity and retry",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T10",
+      "scope": "intake, identity and retry",
+      "status": "PASS",
+      "evidence": "SUPPORT-DESK01 staff intake"
+    },
+    {
+      "id": "SUPPORT-T11",
+      "scope": "intake, identity and retry",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T12",
+      "scope": "intake, identity and retry",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T13",
+      "scope": "intake, identity and retry",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T14",
+      "scope": "intake, identity and retry",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T15",
+      "scope": "intake, identity and retry",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T16",
+      "scope": "intake, identity and retry",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T17",
+      "scope": "thread, replies, notes and ordering",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T18",
+      "scope": "thread, replies, notes and ordering",
+      "status": "PASS",
+      "evidence": "Existing private-note regression"
+    },
+    {
+      "id": "SUPPORT-T19",
+      "scope": "thread, replies, notes and ordering",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T20",
+      "scope": "thread, replies, notes and ordering",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T21",
+      "scope": "thread, replies, notes and ordering",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T22",
+      "scope": "thread, replies, notes and ordering",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T23",
+      "scope": "thread, replies, notes and ordering",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T24",
+      "scope": "thread, replies, notes and ordering",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T25",
+      "scope": "attachment security and retention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T26",
+      "scope": "attachment security and retention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T27",
+      "scope": "attachment security and retention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T28",
+      "scope": "attachment security and retention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T29",
+      "scope": "attachment security and retention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T30",
+      "scope": "attachment security and retention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T31",
+      "scope": "attachment security and retention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T32",
+      "scope": "attachment security and retention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T33",
+      "scope": "status, assignment and SLA",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T34",
+      "scope": "status, assignment and SLA",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T35",
+      "scope": "status, assignment and SLA",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T36",
+      "scope": "status, assignment and SLA",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T37",
+      "scope": "status, assignment and SLA",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T38",
+      "scope": "status, assignment and SLA",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T39",
+      "scope": "status, assignment and SLA",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T40",
+      "scope": "status, assignment and SLA",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T41",
+      "scope": "roles, ownership and request security",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T42",
+      "scope": "roles, ownership and request security",
+      "status": "PASS",
+      "evidence": "Existing cross-customer denial"
+    },
+    {
+      "id": "SUPPORT-T43",
+      "scope": "roles, ownership and request security",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T44",
+      "scope": "roles, ownership and request security",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T45",
+      "scope": "roles, ownership and request security",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T46",
+      "scope": "roles, ownership and request security",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T47",
+      "scope": "roles, ownership and request security",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T48",
+      "scope": "roles, ownership and request security",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T49",
+      "scope": "notifications and channels",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T50",
+      "scope": "notifications and channels",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T51",
+      "scope": "notifications and channels",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T52",
+      "scope": "notifications and channels",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T53",
+      "scope": "notifications and channels",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T54",
+      "scope": "notifications and channels",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T55",
+      "scope": "notifications and channels",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T56",
+      "scope": "notifications and channels",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T57",
+      "scope": "linked records and mobile",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T58",
+      "scope": "linked records and mobile",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T59",
+      "scope": "linked records and mobile",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T60",
+      "scope": "linked records and mobile",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T61",
+      "scope": "linked records and mobile",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T62",
+      "scope": "linked records and mobile",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T63",
+      "scope": "linked records and mobile",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T64",
+      "scope": "linked records and mobile",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T65",
+      "scope": "metrics, accessibility and performance",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T66",
+      "scope": "metrics, accessibility and performance",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T67",
+      "scope": "metrics, accessibility and performance",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T68",
+      "scope": "metrics, accessibility and performance",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T69",
+      "scope": "metrics, accessibility and performance",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T70",
+      "scope": "metrics, accessibility and performance",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T71",
+      "scope": "metrics, accessibility and performance",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T72",
+      "scope": "metrics, accessibility and performance",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T73",
+      "scope": "compatibility, rollback and release",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T74",
+      "scope": "compatibility, rollback and release",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T75",
+      "scope": "compatibility, rollback and release",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T76",
+      "scope": "compatibility, rollback and release",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T77",
+      "scope": "compatibility, rollback and release",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T78",
+      "scope": "compatibility, rollback and release",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T79",
+      "scope": "compatibility, rollback and release",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "SUPPORT-T80",
+      "scope": "compatibility, rollback and release",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    }
+  ],
+  "gates": [
+    {
+      "id": "SUPPORT-G01",
+      "scope": "Audit",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G02",
+      "scope": "Existing routes",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G03",
+      "scope": "Grouped sidebar retained",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G04",
+      "scope": "Retained master brief gate 4",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G05",
+      "scope": "Authoritative scoped counts",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G06",
+      "scope": "Existing customer reuse",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G07",
+      "scope": "Retained master brief gate 7",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G08",
+      "scope": "Retained master brief gate 8",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G09",
+      "scope": "Internal note isolation",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G10",
+      "scope": "Retained master brief gate 10",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G11",
+      "scope": "Branch isolation negatives",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G12",
+      "scope": "Ownership negatives",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G13",
+      "scope": "Private image access and file validation",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G14",
+      "scope": "Retained master brief gate 14",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G15",
+      "scope": "Retained master brief gate 15",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G16",
+      "scope": "Retained master brief gate 16",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G17",
+      "scope": "Retained master brief gate 17",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G18",
+      "scope": "Retained master brief gate 18",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G19",
+      "scope": "Lagos SLA tracking, approved configuration and deduplicated escalation",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G20",
+      "scope": "Retained master brief gate 20",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G21",
+      "scope": "Retained master brief gate 21",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G22",
+      "scope": "Retained master brief gate 22",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G23",
+      "scope": "Additive migration and restricted fresh bootstrap",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G24",
+      "scope": "Retained master brief gate 24",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G25",
+      "scope": "Retained master brief gate 25",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G26",
+      "scope": "Retained master brief gate 26",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G27",
+      "scope": "Retained master brief gate 27",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G28",
+      "scope": "Focused security regression",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G29",
+      "scope": "Full local regression with real PostgreSQL integration",
+      "status": "PASS"
+    },
+    {
+      "id": "SUPPORT-G30",
+      "scope": "Retained master brief gate 30",
+      "status": "PENDING"
+    },
+    {
+      "id": "SUPPORT-G31",
+      "scope": "Retained master brief gate 31",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "SUPPORT-G32",
+      "scope": "Retained master brief gate 32",
+      "status": "BLOCKED"
+    }
+  ],
+  "scopeChanges": [
+    "Additive reads and guarded flows; no migrations, production deployment, external delivery or live payment.",
+    "Prior compact order work and grouped navigation preserved. All master scenarios and gates retained.",
+    "User authorized private attachments, SLA tracking, foreground live updates, full pagination, tests and a client demo deployment. Retained original status and all 80 scenarios and 32 gates. No live payment or external provider changes."
+  ]
+}

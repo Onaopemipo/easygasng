@@ -1,3 +1,4 @@
+import { attachSupportImage } from "../../../lib/support-desk";
 import { attachServicePhoto } from "../../../lib/service-photos";
 import { attachDeliveryPhoto, photoOrder } from "../../../lib/delivery-photos";
 import { assertRequestOrigin } from "../../../lib/request-origin";
@@ -45,6 +46,7 @@ export async function POST(req: NextRequest) {
       body: Buffer.concat(chunks),
     }).formData();
     const file = form.get("image"),
+      requestId = String(form.get("requestId") ?? ""),
       orderId = String(form.get("orderId") ?? ""),
       testimonialId = String(form.get("testimonialId") ?? ""),
       productId = String(form.get("productId") ?? ""),
@@ -54,7 +56,8 @@ export async function POST(req: NextRequest) {
       alt = String(form.get("alt") ?? "").trim();
     if (
       !(file instanceof File) ||
-      Number(Boolean(orderId)) +
+      Number(Boolean(requestId)) +
+        Number(Boolean(orderId)) +
         Number(Boolean(testimonialId)) +
         Number(Boolean(productId)) +
         Number(Boolean(bookingId)) +
@@ -67,6 +70,12 @@ export async function POST(req: NextRequest) {
         400,
         "Choose one product or booking, an image and a descriptive label.",
       );
+    if (requestId) {
+      if (!['image/png','image/jpeg','image/webp'].includes(file.type)) throw new AppError(415, "Choose a PNG, JPEG or WebP image.");
+      if (file.size > 3 * 1024 * 1024) throw new AppError(413, "Choose an image under 3 MB.");
+      const result = await db.transaction(async tx => attachSupportImage(tx, await actor(tx, token), { requestId, alt, internal: form.get("internal") === "true", bytes: new Uint8Array(await file.arrayBuffer()) }));
+      return NextResponse.json(result, { headers: { "Cache-Control": "private, no-store" } });
+    }
     if (orderId) {
       await photoOrder(db, await actor(db, token), orderId, true);
       const data = await prepareImage(new Uint8Array(await file.arrayBuffer()));

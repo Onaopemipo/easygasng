@@ -64,8 +64,16 @@ test(
         f.call("customer", "booking.create", request),
       ]);
       assert.equal(results[0].id, results[1].id);
-      const slot = await f.createSlot(3),
-        overlap = await f.createSlot(3.5);
+      const slot = await f.createSlot(3);
+      await assert.rejects(() => f.createSlot(3.5), /overlaps an existing appointment/);
+      // Simulate an overlapping slot retained from before availability validation.
+      const overlap = { id: id() };
+      await db.query(
+        `INSERT INTO service_slots(id,service_id,branch_id,technician_id,starts_at,ends_at,capacity)
+         SELECT $1,service_id,branch_id,technician_id,starts_at+interval '30 minutes',ends_at+interval '30 minutes',1
+         FROM service_slots WHERE id=$2`,
+        [overlap.id, slot.id],
+      );
       const race = await Promise.allSettled([
         f.call("customer", "booking.create", {
           ...f.input(slot.id),

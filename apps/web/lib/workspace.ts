@@ -1,3 +1,6 @@
+import { createHash } from "node:crypto";
+import { supportAdvancedAction } from "./support-desk";
+import { isBusinessStaff } from "../../../packages/business-rules/src/staff-privileges";
 import { inventoryQualification } from "./inventory-business";
 import { z } from "zod";
 import { type SQL, one } from "./db";
@@ -26,13 +29,45 @@ export async function workspaceAction(
   user: Actor,
   input: unknown,
 ): Promise<any> {
+  if (action.startsWith("support.") && !["support.list", "support.reply", "support.update"].includes(action)) {
+    const result = await supportAdvancedAction(tx, user, action, input);
+    if (result !== undefined) return result;
+  }
   if (action === "support.list") {
     const customer = ["customer", "commercial"].includes(user.role);
     if (!customer) allow(user, ["owner", "manager", "sales"]);
+    const query = z.object({ view: z.enum(["inbox", "paged"]).optional(), page: z.coerce.number().int().min(1).max(1000000).default(1), search: z.string().trim().max(100).default(""), status: z.enum(["all", "open", "in_progress", "resolved", "closed"]).default("all"), days: z.coerce.number().int().min(0).max(3650).default(0), sla: z.enum(["all", "overdue"]).default("all") }).strict().parse(input);
+    const manage = user.privilege_overrides?.["support.manage"];
+    const canManage = !customer && manage !== "deny" && (
+      ["owner", "manager", "sales"].includes(user.role) ||
+      (manage === "grant" && isBusinessStaff(user.role) && Boolean(user.branch_id))
+    );
+    const inbox = Boolean(query.view);
+    const scope = customer ? "s.customer_id=$1" : user.role === "owner" ? "true" : "s.branch_id=$1";
+    const params = customer ? [user.id] : user.role === "owner" ? [] : [user.branch_id];
+    if (query.view === "paged") {
+      const values: any[] = [...params];
+      const where = [scope];
+      if (query.search) { values.push(query.search); where.push(`(strpos(lower(s.subject),lower($${values.length}))>0 OR strpos(lower(u.name),lower($${values.length}))>0 OR strpos(lower(s.id),lower($${values.length}))>0)`); }
+      if (query.status !== "all") { values.push(query.status); where.push(`s.status=$${values.length}`); }
+      if (query.days) { values.push(query.days); where.push(`s.updated_at>=now()-($${values.length}::integer * interval '1 day')`); }
+      if (query.sla === "overdue") {
+        if (customer) throw new AppError(403, "SLA filtering is for support staff.");
+        where.push("s.status IN ('open','in_progress') AND ((s.first_response_at IS NULL AND s.response_due_at < now()) OR (s.resolved_at IS NULL AND s.resolution_due_at < now()))");
+      }
+      const predicate = where.join(" AND ");
+      const total = Number((await one(tx, `SELECT count(*) AS n FROM support_requests s JOIN users u ON u.id=s.customer_id WHERE ${predicate}`, values))?.n);
+      const pages = Math.max(1, Math.ceil(total / 20));
+      const page = Math.min(query.page, pages);
+      values.push((page - 1) * 20);
+      const rows = (await tx.query(`SELECT s.id,s.subject,s.status,s.updated_at,s.version,u.name AS customer_name,a.name AS assignee,s.response_due_at,s.resolution_due_at,s.first_response_at,s.resolved_at,(s.status IN ('open','in_progress') AND ((s.first_response_at IS NULL AND COALESCE(s.response_due_at < now(),false)) OR (s.resolved_at IS NULL AND COALESCE(s.resolution_due_at < now(),false)))) AS sla_overdue FROM support_requests s JOIN users u ON u.id=s.customer_id LEFT JOIN users a ON a.id=s.assignee_id WHERE ${predicate} ORDER BY s.updated_at DESC,s.id DESC LIMIT 20 OFFSET $${values.length}`, values)).rows;
+      const totals = await one(tx, `SELECT count(*) AS total,count(*) FILTER(WHERE status='open') AS open,count(*) FILTER(WHERE status='in_progress') AS in_progress,count(*) FILTER(WHERE status='resolved') AS resolved,count(*) FILTER(WHERE status='closed') AS closed FROM support_requests s WHERE ${scope}`, params);
+      return { rows, total, page, pages, pageSize: 20, canManage, canConfigureSla: ["owner", "manager"].includes(user.role) && user.privilege_overrides?.["support.manage"] !== "deny", branch: user.branch_id, totals: Object.fromEntries(Object.entries(totals ?? {}).map(([key,value]) => [key,Number(value)])), syncedAt: new Date().toISOString() };
+    }
     const rows = (
       await tx.query(
-        `SELECT s.*,u.name AS customer_name,a.name AS assignee FROM support_requests s JOIN users u ON u.id=s.customer_id LEFT JOIN users a ON a.id=s.assignee_id WHERE ${customer ? "s.customer_id=$1" : user.role === "owner" ? "true" : "s.branch_id=$1"} ORDER BY s.updated_at DESC LIMIT 100`,
-        customer ? [user.id] : user.role === "owner" ? [] : [user.branch_id],
+        `SELECT s.id,s.customer_id,s.subject,s.message,s.status,s.created_at,s.branch_id,s.assignee_id,s.updated_at,s.order_id,u.name AS customer_name,a.name AS assignee FROM support_requests s JOIN users u ON u.id=s.customer_id LEFT JOIN users a ON a.id=s.assignee_id WHERE ${scope} ORDER BY s.updated_at DESC,s.id DESC LIMIT 100`,
+        params,
       )
     ).rows;
     for (const row of rows)
@@ -42,7 +77,14 @@ export async function workspaceAction(
           [row.id],
         )
       ).rows;
-    return rows;
+    if (!inbox) return rows;
+    const totals = await one(tx,
+      `SELECT count(*) AS total, count(*) FILTER (WHERE status='open') AS open,
+              count(*) FILTER (WHERE status='in_progress') AS in_progress,
+              count(*) FILTER (WHERE status='resolved') AS resolved,
+              count(*) FILTER (WHERE status='closed') AS closed
+       FROM support_requests s WHERE ${scope}`, params);
+    return { rows, canManage, totals: Object.fromEntries(Object.entries(totals ?? {}).map(([key, value]) => [key, Number(value)])) };
   }
   if (action === "support.reply") {
     const d = z
@@ -50,21 +92,30 @@ export async function workspaceAction(
           id: uuid,
           body: reason,
           internal: z.boolean().default(false),
+          operationId: z.string().uuid().optional(),
         })
         .strict()
         .parse(input),
       t = await ticket(tx, user, d.id);
+    const fingerprint = createHash("sha256").update(JSON.stringify([d.body,d.internal])).digest("hex");
+    if (d.operationId) {
+      const prior = await one(tx, "SELECT fingerprint FROM support_reply_operations WHERE request_id=$1 AND author_id=$2 AND operation_id=$3", [t.id,user.id,d.operationId]);
+      if (prior) {
+        if (prior.fingerprint !== fingerprint) throw new AppError(409, "This reply was already sent with different content. Start a new reply.");
+        return { ok: true, replay: true };
+      }
+    }
     if (d.internal && ["customer", "commercial"].includes(user.role))
       throw new AppError(403, "Internal notes are for staff.");
     if (t.status === "closed")
       throw new AppError(409, "Reopen the request before replying.");
+    const messageId = id();
     await tx.query(
       "INSERT INTO support_messages(id,request_id,author_id,body,internal) VALUES ($1,$2,$3,$4,$5)",
-      [id(), t.id, user.id, d.body, d.internal],
+      [messageId, t.id, user.id, d.body, d.internal],
     );
-    await tx.query("UPDATE support_requests SET updated_at=now() WHERE id=$1", [
-      t.id,
-    ]);
+    if (d.operationId) await tx.query("INSERT INTO support_reply_operations(request_id,author_id,operation_id,fingerprint,message_id) VALUES($1,$2,$3,$4,$5)", [t.id,user.id,d.operationId,fingerprint,messageId]);
+    await tx.query("UPDATE support_requests SET updated_at=now(),version=version+1,first_response_at=CASE WHEN $2::boolean THEN COALESCE(first_response_at,now()) ELSE first_response_at END WHERE id=$1", [t.id,!d.internal && user.id !== t.customer_id]);
     if (!d.internal && user.id !== t.customer_id)
       await notify(
         tx,
@@ -87,10 +138,12 @@ export async function workspaceAction(
           id: uuid,
           status: z.enum(["open", "in_progress", "resolved", "closed"]),
           assigneeId: uuid.optional(),
+          version: z.number().int().positive().optional(),
         })
         .strict()
         .parse(input),
       t = await ticket(tx, user, d.id);
+    if (d.version !== undefined && d.version !== Number(t.version)) throw new AppError(409, "This request changed. Refresh and review it before saving.");
     allow(user, ["owner", "manager", "sales"], t.branch_id);
     if (
       d.assigneeId &&
@@ -105,7 +158,7 @@ export async function workspaceAction(
         "Choose an active support staff member in this branch.",
       );
     await tx.query(
-      "UPDATE support_requests SET status=$1,assignee_id=COALESCE($2,assignee_id),updated_at=now() WHERE id=$3",
+      "UPDATE support_requests SET status=$1,assignee_id=COALESCE($2,assignee_id),updated_at=now(),version=version+1,resolved_at=CASE WHEN $1 IN ('resolved','closed') THEN COALESCE(resolved_at,now()) ELSE NULL END WHERE id=$3",
       [d.status, d.assigneeId ?? null, t.id],
     );
     await audit(tx, user, "support.status_changed", t.id, "success", {

@@ -1,3 +1,4 @@
+import { supportTicket, isSupportCustomer } from "../../../../lib/support-desk";
 import { photoOrder } from "../../../../lib/delivery-photos";
 import { testimonialPhotoPublished } from "../../../../lib/testimonials";
 import { NextRequest, NextResponse } from "next/server";
@@ -14,6 +15,14 @@ export async function GET(
     if (!/^[a-f0-9-]{36}$/.test(id))
       throw new AppError(404, "Image not found.");
     const db = await getDb();
+    const support = await one(db, "SELECT * FROM support_attachments WHERE id=$1", [id]);
+    if (support) {
+      const token = req.headers.get("authorization")?.replace(/^Bearer /, "") ?? req.cookies.get("easygas_session")?.value ?? null;
+      const user = await actor(db, token);
+      await supportTicket(db, user, support.request_id);
+      if (support.internal && isSupportCustomer(user)) throw new AppError(404, "Image not found.");
+      return new NextResponse(new Uint8Array(imageBytes(support)), { headers: { "Content-Type": "image/webp", "Cache-Control": "private, no-store", "X-Content-Type-Options": "nosniff", "Content-Security-Policy": "default-src 'none'; sandbox" } });
+    }
     const photo = await one(
       db,
       "SELECT * FROM delivery_photos WHERE id=$1 AND retain_until>now()",
