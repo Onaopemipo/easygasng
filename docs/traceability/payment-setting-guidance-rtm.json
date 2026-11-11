@@ -15,7 +15,7 @@
       "status": "UNVERIFIED",
       "reason": "Legacy card links authorised users to Payment Gateway & Fees and explains that legacy value does not indicate Paystack availability; backend message now gives actionable guidance",
       "testResult": "PASS46 existing platform/owner-auto-approval tests and web typecheck",
-      "outstandingWork": "Interactive browser acceptance pending. Deployed to the existing client demo. No settings activated; production NO-GO unchanged.",
+      "outstandingWork": "Bounded demo browser check passed. Wrong-password, broader role/device acceptance and production qualification remain open as applicable.",
       "implementationFiles": [
         "apps/web/components/admin.tsx",
         "apps/web/lib/governance.ts"
@@ -32,7 +32,8 @@
         "docs/releases/20261111-settings/tests.txt",
         "docs/releases/20261111-settings/build.txt",
         "docs/releases/20261111-settings/hosted.txt",
-        "docs/releases/20261111-settings/release.md"
+        "docs/releases/20261111-settings/release.md",
+        "docs/releases/20261111-readiness/demo-browser.txt"
       ],
       "acceptanceGate": "PAY-GUIDE-G01"
     }
@@ -46,6 +47,7 @@
   ],
   "scopeChanges": [
     "No payment activation performed. Existing sandbox-only and live-payment safety gates retained. Inline verification work preserved.",
-    "Client-demo publication b5e06b6; hosted owner login, reauthentication API and gateway setting read passed. Client controls were not interactively verified."
+    "Client-demo publication b5e06b6; hosted owner login, reauthentication API and gateway setting read passed. Client controls were not interactively verified.",
+    "Demo owner interactive path verified: Configure Paystack opens the gateway form; correct password verification preserves unsaved reason; layout fits 390px. No settings were submitted."
   ]
 }

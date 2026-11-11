@@ -17,3 +17,17 @@ historical imports or a production traffic cutover.
 Do first: qualify the local candidate, provision the VPS, and establish
 production-like staging. Do not put real records, providers or transactions on
 the synthetic demo. Use an approved secure secret store for credentials.
+
+## Recorded verification
+
+- Local release preflight: 4 passed. Image isolation, TLS Compose rehearsal,
+  restricted database role, migrations through 075 and worker readiness passed.
+- Full local PostgreSQL-enabled regression: 662 passed, no failures or skips,
+  including encrypted restore and its negative cases, worker shutdown, payment
+  fixtures, operational custody, and the previously failing booking race.
+- Mobile clean install, typecheck and moderate audit passed with zero
+  vulnerabilities. Hosted native passed; hosted web remains in progress at the
+  recorded check for [run 42929663881](https://github.com/Onaopemipo/easygasng/actions/runs/42929663881)
+  on candidate 40d6990.
+- Demo Settings: desktop verification and draft preservation observed; 390px
+  viewport layout checked. No setting was submitted.

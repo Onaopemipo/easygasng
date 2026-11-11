@@ -15,7 +15,7 @@
       "status": "UNVERIFIED",
       "reason": "Inline verification implemented; typecheck and existing owner/password regressions passed; interactive browser acceptance pending",
       "testResult": "PASS7 existing owner-auto-approval tests, password visibility suite and web typecheck",
-      "outstandingWork": "Interactive browser acceptance pending. Deployed to the existing client demo. No settings activated; production NO-GO unchanged.",
+      "outstandingWork": "Bounded demo browser check passed. Wrong-password, broader role/device acceptance and production qualification remain open as applicable.",
       "implementationFiles": [
         "apps/web/components/admin.tsx"
       ],
@@ -32,7 +32,8 @@
         "docs/releases/20261111-settings/tests.txt",
         "docs/releases/20261111-settings/build.txt",
         "docs/releases/20261111-settings/hosted.txt",
-        "docs/releases/20261111-settings/release.md"
+        "docs/releases/20261111-settings/release.md",
+        "docs/releases/20261111-readiness/demo-browser.txt"
       ],
       "acceptanceGate": "SET-VERIFY-G01"
     }
@@ -46,6 +47,7 @@
   ],
   "scopeChanges": [
     "No backend approval, expiry or financial authority changed. Existing implementation phases and holds retained.",
-    "Client-demo publication b5e06b6; hosted owner login, reauthentication API and gateway setting read passed. Client controls were not interactively verified."
+    "Client-demo publication b5e06b6; hosted owner login, reauthentication API and gateway setting read passed. Client controls were not interactively verified.",
+    "Demo owner interactive path verified: Configure Paystack opens the gateway form; correct password verification preserves unsaved reason; layout fits 390px. No settings were submitted."
   ]
 }

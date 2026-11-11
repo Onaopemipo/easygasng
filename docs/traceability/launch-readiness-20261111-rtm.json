@@ -17,7 +17,7 @@
       "securityControl": "Verified TLS, restricted database role, internal rehearsal network and isolated restore",
       "status": "PARTIAL",
       "reason": "VPS is not provisioned. Actual domain/TLS, off-host backup restore, load and rollback acceptance remain.",
-      "testResult": "Local container isolation, release preflight and isolated Compose rehearsal passed.",
+      "testResult": "Local container isolation, release preflight and isolated Compose rehearsal passed. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped. Encrypted restore, wrong-key/tamper/overwrite negatives and graceful worker shutdown passed.",
       "outstandingWork": "VPS is not provisioned. Actual domain/TLS, off-host backup restore, load and rollback acceptance remain.",
       "implementationFiles": [
         "apps/web/lib/release-checks.ts",
@@ -32,7 +32,8 @@
       "evidence": [
         "docs/releases/20261111-readiness/preflight.txt",
         "docs/releases/20261111-readiness/container.txt",
-        "docs/releases/20261111-readiness/compose.txt"
+        "docs/releases/20261111-readiness/compose.txt",
+        "docs/releases/20261111-readiness/regression.txt"
       ],
       "acceptanceGate": "LAUNCH-1111-G-HOST"
     },
@@ -50,7 +51,7 @@
       "securityControl": "Live keys and live runtime rejected; test and real money stay separated",
       "status": "PARTIAL",
       "reason": "Live merchant account is unavailable. Live support, channel/fee approval, webhook/settlement/refund acceptance remain.",
-      "testResult": "Existing sandbox fixture coverage; no live payment or merchant account tested.",
+      "testResult": "Existing sandbox fixture coverage; no live payment or merchant account tested. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped.",
       "outstandingWork": "Live merchant account is unavailable. Live support, channel/fee approval, webhook/settlement/refund acceptance remain.",
       "implementationFiles": [
         "apps/web/lib/payments/runtime.ts",
@@ -62,7 +63,8 @@
         "tests/paystack-postgres.test.ts"
       ],
       "evidence": [
-        "docs/releases/20261111-readiness/launch-gates.md"
+        "docs/releases/20261111-readiness/launch-gates.md",
+        "docs/releases/20261111-readiness/regression.txt"
       ],
       "acceptanceGate": "LAUNCH-1111-G-PAY"
     },
@@ -80,7 +82,7 @@
       "securityControl": "Assignment, qualification, branch and finance approval controls preserved",
       "status": "PARTIAL",
       "reason": "Complete role-based browser and physical handover/cylinder/safety/finance sign-off.",
-      "testResult": "Synthetic operational fixture coverage; demo settings browser smoke only.",
+      "testResult": "Synthetic operational fixture coverage; demo settings browser smoke only. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped.",
       "outstandingWork": "Complete role-based browser and physical handover/cylinder/safety/finance sign-off.",
       "implementationFiles": [
         "apps/web/lib/service.ts",
@@ -91,7 +93,8 @@
         "tests/dispatch-centre-safety.test.ts"
       ],
       "evidence": [
-        "docs/releases/20261111-readiness/demo-browser.txt"
+        "docs/releases/20261111-readiness/demo-browser.txt",
+        "docs/releases/20261111-readiness/regression.txt"
       ],
       "acceptanceGate": "LAUNCH-1111-G-OPS"
     },
@@ -109,7 +112,7 @@
       "securityControl": "Provider switches, sender verification, retry and consent controls remain",
       "status": "PARTIAL",
       "reason": "No SMTP, SMS/WhatsApp or road routing accounts available. Real acceptance and outbound activation remain.",
-      "testResult": "Local worker heartbeat verified; no external delivery or route provider call.",
+      "testResult": "Local worker heartbeat verified; no external delivery or route provider call. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped.",
       "outstandingWork": "No SMTP, SMS/WhatsApp or road routing accounts available. Real acceptance and outbound activation remain.",
       "implementationFiles": [
         "scripts/worker.ts",
@@ -121,7 +124,8 @@
         "tests/production-backup-postgres.test.ts"
       ],
       "evidence": [
-        "docs/releases/20261111-readiness/compose.txt"
+        "docs/releases/20261111-readiness/compose.txt",
+        "docs/releases/20261111-readiness/regression.txt"
       ],
       "acceptanceGate": "LAUNCH-1111-G-CHANNEL"
     },
@@ -139,16 +143,19 @@
       "securityControl": "Import hold and retain-all decision preserved",
       "status": "BLOCKED",
       "reason": "Latest authorised reconciled workbook and customer approval not supplied; no records imported.",
-      "testResult": "Existing synthetic preview tests only; no production workbook acceptance.",
+      "testResult": "Existing synthetic preview tests only; no production workbook acceptance. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped.",
       "outstandingWork": "Latest authorised reconciled workbook and customer approval not supplied; no records imported.",
       "implementationFiles": [
-        "deploy/NAMECHEAP-VPS.md"
+        "scripts/easygas_excel_preview.py",
+        "scripts/excel_independent_check.py",
+        "docs/operations/record-retention.md"
       ],
       "testFiles": [
         "tests/excel-preview.test.ts"
       ],
       "evidence": [
-        "docs/releases/20261111-readiness/launch-gates.md"
+        "docs/releases/20261111-readiness/launch-gates.md",
+        "docs/releases/20261111-readiness/regression.txt"
       ],
       "acceptanceGate": "LAUNCH-1111-G-DATA"
     },
@@ -166,7 +173,7 @@
       "securityControl": "CI threshold maintained; no native distribution or production cutover",
       "status": "PARTIAL",
       "reason": "Hosted CI rerun, remaining role/browser journeys, signing/device acceptance and independent approval remain.",
-      "testResult": "Local repaired PostgreSQL booking case, clean mobile audit and typecheck, hosted settings UI desktop/390px passed.",
+      "testResult": "Local repaired PostgreSQL booking case, clean mobile audit and typecheck, hosted settings UI desktop/390px passed. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped. Hosted native passed; hosted web still running on run 42929663881.",
       "outstandingWork": "Hosted CI rerun, remaining role/browser journeys, signing/device acceptance and independent approval remain.",
       "implementationFiles": [
         ".github/workflows/release-validation.yml",
@@ -179,7 +186,8 @@
         "tests/service-booking-postgres.test.ts"
       ],
       "evidence": [
-        "docs/releases/20261111-readiness/demo-browser.txt"
+        "docs/releases/20261111-readiness/demo-browser.txt",
+        "docs/releases/20261111-readiness/regression.txt"
       ],
       "acceptanceGate": "LAUNCH-1111-G-RELEASE"
     }
