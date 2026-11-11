@@ -14,3 +14,4 @@ evidence/. Signed-device and full acceptance remain pending.
 - `SUPPORT-C07` verified native bearer requests against the isolated HTTP server. Both mobile bundles exported and types passed. Simulator UI could not be inspected, and signed physical-device acceptance remains open.
 - Web build, web and mobile types, and production dependency audits passed. The native lockfile carries the existing node-forge patch. The existing service-booking concurrency test uses an explicitly seeded legacy overlap after verifying the normal API rejects overlap.
 - Full release regression suite: 667 passed, zero failures or skips. See [suite totals](evidence/completion-full-suite.txt).
+- Deployed to the client demo after a verified encrypted backup and additive migration. Hosted scope, attachments and SLA policy read checks passed. See [deployment evidence](evidence/completion-deployment.txt).

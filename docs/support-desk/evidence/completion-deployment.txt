@@ -1,0 +1,12 @@
+Support Desk client-demo deployment, 11 November 2026 (Australia/Brisbane).
+Source: f463ee3aa78f57682ec4aedb85ad13707fdb2d32, pushed to GitHub main.
+Vercel deployment: dpl_Co4WtE6AtgvKsnfYsccPoqMBwtN5, Ready and promoted to https://easygas-client-demo.vercel.app.
+Rollback deployment: dpl_9MWdMA3dt2F4fPXvSCbjT131M4Ai. Leave additive schema and retained records in place if rolling back the application.
+PASS encrypted pre-076 backup authenticated and readable. No hosted restore was performed.
+PASS migration 076 applied; preserved 26 users, 2 orders, 0 wallet entries, 0 support requests and 0 support messages present before migration. Actual restricted runtime could read new tables and could not update attachment bytes.
+PASS Vercel candidate home/noindex and unauthenticated support API 401 before promotion.
+PASS client demo, noindex, anonymous denial, staff/customer paged inbox and sync timestamps.
+PASS synthetic hosted intake, full search/detail, idempotent staff note, authenticated private image, cross-customer denial and scoped SLA policy read. Labelled QA fixture is retained.
+PASS temporary Vercel verification credential revoked; stable client demo remains HTTP 200.
+GitHub release validation: https://github.com/Onaopemipo/easygasng/actions/runs/42939904999. Native job passed. Web CI was in progress at handoff; local full PostgreSQL suite and Vercel build passed.
+SLA targets require business configuration. Automatic scans require the worker; the demo offers a manual scan. Production and signed device gates remain open.
