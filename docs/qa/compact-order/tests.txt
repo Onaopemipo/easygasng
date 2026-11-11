@@ -1,0 +1,31 @@
+✔ COMPACT-STEP01: steppers follow backend increments and precision without filling the cylinder (0.698875ms)
+✔ COMPACT-MONEY01: fractional naira are displayed without rounding away kobo (14.926125ms)
+✔ ADD-01: staff addition reserves current stock once on the original order with unchanged delivery fee and immutable history (1298.303541ms)
+✔ ADD-02: customer, driver and cross-branch staff cannot quote or create additions (771.57275ms)
+✔ ADD-03: assignment/departure cutoff rejects stale quotes and preserves quantities (790.902792ms)
+✔ ADD-04: stale prices, insufficient stock, paid orders and forged financial/address fields cannot alter the order (745.260834ms)
+✔ ADD-05: gas additions use configured pricing and reservations and require fresh inspection before dispatch (775.206042ms)
+✔ ADD-UI: staff detail exposes quote/confirmation and history without customer or driver controls (1.282625ms)
+✔ ADD-06: invoicing, loading and any prior delivery attempt close additions even if a status is reset (802.425625ms)
+✔ ADD-07: late failure rolls back added quantities, reservations, totals and history together (862.985334ms)
+✔ ADD-08: unprepared unpaid card order can be extended without creating a charge, but any prepared payment closes additions (775.995584ms)
+✔ A–C,K: draft, permissions, status injection and independent review share one authoritative workflow (1131.083834ms)
+✔ D,G: distinct dual approval and revisions invalidate prior decisions by revision (1011.947334ms)
+✔ E,H,J,O: schedule, stale requests, idempotent activation and append-only reversal (954.603167ms)
+✔ F,L,M,N: fee rejection, expired request, revoked approver and governed location lifecycle (931.42ms)
+✔ I: activation database failure leaves active value intact, records failure, and revalidates a retry (906.128208ms)
+✔ decimal calculator matches confirmed gas quantities and rejects unsafe precision (0.397167ms)
+✔ gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety (923.526ms)
+✔ delivery fee is once per order in every area; inactive locations retain addresses and flag affected orders (906.862042ms)
+✔ verified gas-cylinder filling and delivery consume bulk stock once and preserve custody restrictions (1043.153542ms)
+✔ gas report exports preserve totals and escape untrusted spreadsheet and HTML text (1.793834ms)
+✔ confirmed cylinder maintenance is an unpublished draft governed by the existing service and safety approvals (848.457125ms)
+✔ COMPACT-QUOTE01: selected location gates a read-only fractional quote without reserving stock (842.704ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17510.816458

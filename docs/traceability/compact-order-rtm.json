@@ -1,0 +1,792 @@
+{
+  "phase": "Compact gas order widget web and mobile",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "priority": "P1",
+      "scope": "Existing customer ordering only",
+      "uiReference": "Approved_Compact_Order_Gas_UI.png",
+      "route": "/ and /gas-order; native customer GasOrder",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/theme.css",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/gas-pricing.ts"
+      ],
+      "testFiles": [
+        "tests/compact-gas-quantity.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/order-additions.test.ts",
+        "tests/order-additions-postgres.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/qa/compact-order/baseline.txt",
+        "docs/qa/compact-order/tests.txt",
+        "docs/qa/compact-order/pg.txt",
+        "docs/qa/compact-order/web.txt",
+        "docs/qa/compact-order/mobile.txt",
+        "docs/qa/compact-order/build.txt",
+        "docs/qa/compact-order/browser.json",
+        "docs/qa/compact-order/desktop.png",
+        "docs/qa/compact-order/mobile-dark.png"
+      ],
+      "outstandingWork": "Full scenario coverage, physical native and assistive acceptance, staging rollback, UAT and release approval remain open.",
+      "id": "COMPACT-R01",
+      "requirement": "Compact screenshot-led web form and preserved guest handoff",
+      "dataSource": "Backend catalogue, location-scoped quote and existing session draft",
+      "securityControl": "Advisory quote before existing checkout; no order creation in widget",
+      "status": "PARTIAL",
+      "reason": "Browser layout and guest draft verified; cross-browser and assistive acceptance remain",
+      "testResult": "PASS bounded Chromium layout, dark theme and handoff",
+      "acceptanceGate": "COMPACT-G05"
+    },
+    {
+      "priority": "P1",
+      "scope": "Existing customer ordering only",
+      "uiReference": "Approved_Compact_Order_Gas_UI.png",
+      "route": "/ and /gas-order; native customer GasOrder",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/theme.css",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/gas-pricing.ts"
+      ],
+      "testFiles": [
+        "tests/compact-gas-quantity.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/order-additions.test.ts",
+        "tests/order-additions-postgres.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/qa/compact-order/baseline.txt",
+        "docs/qa/compact-order/tests.txt",
+        "docs/qa/compact-order/pg.txt",
+        "docs/qa/compact-order/web.txt",
+        "docs/qa/compact-order/mobile.txt",
+        "docs/qa/compact-order/build.txt",
+        "docs/qa/compact-order/browser.json",
+        "docs/qa/compact-order/desktop.png",
+        "docs/qa/compact-order/mobile-dark.png"
+      ],
+      "outstandingWork": "Full scenario coverage, physical native and assistive acceptance, staging rollback, UAT and release approval remain open.",
+      "id": "COMPACT-R02",
+      "requirement": "Compact native customer ordering and existing review/checkout",
+      "dataSource": "Same catalogue and quote, saved address and canonical checkout",
+      "securityControl": "Customer screen only; server checkout authoritative",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Native source and typecheck complete; physical runtime not tested and native draft persistence remains open",
+      "testResult": "PASS native typecheck",
+      "acceptanceGate": "COMPACT-G06"
+    },
+    {
+      "priority": "P0",
+      "scope": "Existing customer ordering only",
+      "uiReference": "Approved_Compact_Order_Gas_UI.png",
+      "route": "/ and /gas-order; native customer GasOrder",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/theme.css",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/gas-pricing.ts"
+      ],
+      "testFiles": [
+        "tests/compact-gas-quantity.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/order-additions.test.ts",
+        "tests/order-additions-postgres.test.ts"
+      ],
+      "testIds": [
+        "COMPACT-QUOTE01",
+        "COMPACT-STEP01",
+        "COMPACT-MONEY01"
+      ],
+      "negativeTests": [
+        "COMPACT-QUOTE01",
+        "COMPACT-STEP01"
+      ],
+      "evidence": [
+        "docs/qa/compact-order/baseline.txt",
+        "docs/qa/compact-order/tests.txt",
+        "docs/qa/compact-order/pg.txt",
+        "docs/qa/compact-order/web.txt",
+        "docs/qa/compact-order/mobile.txt",
+        "docs/qa/compact-order/build.txt",
+        "docs/qa/compact-order/browser.json",
+        "docs/qa/compact-order/desktop.png",
+        "docs/qa/compact-order/mobile-dark.png"
+      ],
+      "outstandingWork": "Full scenario coverage, physical native and assistive acceptance, staging rollback, UAT and release approval remain open.",
+      "id": "COMPACT-R03",
+      "requirement": "Use configured prices, flat fee, permitted quantity and active location without reserving from quote",
+      "dataSource": "Gas settings, delivery areas and gas_stock; shared gasLine",
+      "securityControl": "Parameterised location/branch/stock reads; checkout retains existing locks",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded backend and shared quantity invariants passed",
+      "testResult": "PASS focused tests including read-only quote and exact kobo",
+      "acceptanceGate": "COMPACT-G11"
+    },
+    {
+      "priority": "P0",
+      "scope": "Existing customer ordering only",
+      "uiReference": "Approved_Compact_Order_Gas_UI.png",
+      "route": "/ and /gas-order; native customer GasOrder",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/theme.css",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/gas-pricing.ts"
+      ],
+      "testFiles": [
+        "tests/compact-gas-quantity.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/order-additions.test.ts",
+        "tests/order-additions-postgres.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ADD-02"
+      ],
+      "evidence": [
+        "docs/qa/compact-order/baseline.txt",
+        "docs/qa/compact-order/tests.txt",
+        "docs/qa/compact-order/pg.txt",
+        "docs/qa/compact-order/web.txt",
+        "docs/qa/compact-order/mobile.txt",
+        "docs/qa/compact-order/build.txt",
+        "docs/qa/compact-order/browser.json",
+        "docs/qa/compact-order/desktop.png",
+        "docs/qa/compact-order/mobile-dark.png"
+      ],
+      "outstandingWork": "Full scenario coverage, physical native and assistive acceptance, staging rollback, UAT and release approval remain open.",
+      "id": "COMPACT-R04",
+      "requirement": "Preserve checkout, portals and single fee for eligible additions",
+      "dataSource": "Existing orders, pricing snapshots and same-delivery flow",
+      "securityControl": "No changes to addition fee/cutoff, payment, custody, role or approval logic",
+      "status": "PARTIAL",
+      "reason": "Targeted safety and concurrency regressions passed; full cross-role journeys remain",
+      "testResult": "PASS existing checkout and ADD-01/02/03/04/05/PG",
+      "acceptanceGate": "COMPACT-G26"
+    },
+    {
+      "priority": "P1",
+      "scope": "Existing customer ordering only",
+      "uiReference": "Approved_Compact_Order_Gas_UI.png",
+      "route": "/ and /gas-order; native customer GasOrder",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/theme.css",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/gas-pricing.ts"
+      ],
+      "testFiles": [
+        "tests/compact-gas-quantity.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/order-additions.test.ts",
+        "tests/order-additions-postgres.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/qa/compact-order/baseline.txt",
+        "docs/qa/compact-order/tests.txt",
+        "docs/qa/compact-order/pg.txt",
+        "docs/qa/compact-order/web.txt",
+        "docs/qa/compact-order/mobile.txt",
+        "docs/qa/compact-order/build.txt",
+        "docs/qa/compact-order/browser.json",
+        "docs/qa/compact-order/desktop.png",
+        "docs/qa/compact-order/mobile-dark.png"
+      ],
+      "outstandingWork": "Full scenario coverage, physical native and assistive acceptance, staging rollback, UAT and release approval remain open.",
+      "id": "COMPACT-R05",
+      "requirement": "Retain all scenarios, rollback and production gates",
+      "dataSource": "Approved brief and existing production readiness records",
+      "securityControl": "No activation, deployment or native export",
+      "status": "PARTIAL",
+      "reason": "Bounded evidence recorded; full acceptance remains open",
+      "testResult": "PASS traceability and focused regression",
+      "acceptanceGate": "COMPACT-G32"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "T01",
+      "scope": "current backend price",
+      "status": "PASS",
+      "evidence": "Browser"
+    },
+    {
+      "id": "T02",
+      "scope": "price refresh",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T03",
+      "scope": "historic snapshot",
+      "status": "PASS",
+      "evidence": "Checkout snapshots"
+    },
+    {
+      "id": "T04",
+      "scope": "backend delivery fee",
+      "status": "PASS",
+      "evidence": "COMPACT-QUOTE01"
+    },
+    {
+      "id": "T05",
+      "scope": "single fee",
+      "status": "PASS",
+      "evidence": "Checkout snapshots and ADD-01"
+    },
+    {
+      "id": "T06",
+      "scope": "unsupported area",
+      "status": "PASS",
+      "evidence": "COMPACT-QUOTE01"
+    },
+    {
+      "id": "T07",
+      "scope": "disabled area",
+      "status": "PASS",
+      "evidence": "COMPACT-QUOTE01"
+    },
+    {
+      "id": "T08",
+      "scope": "new admin area",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T09",
+      "scope": "guest flow",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T10",
+      "scope": "default address",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T11",
+      "scope": "editable address",
+      "status": "PASS",
+      "evidence": "Browser"
+    },
+    {
+      "id": "T12",
+      "scope": "missing address",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T13",
+      "scope": "area suggestion",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T14",
+      "scope": "invalid area",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T15",
+      "scope": "catalogue capacity",
+      "status": "PASS",
+      "evidence": "Browser"
+    },
+    {
+      "id": "T16",
+      "scope": "fractional kg",
+      "status": "PASS",
+      "evidence": "Browser and COMPACT-STEP01"
+    },
+    {
+      "id": "T17",
+      "scope": "minimum",
+      "status": "PASS",
+      "evidence": "COMPACT-STEP01"
+    },
+    {
+      "id": "T18",
+      "scope": "over capacity",
+      "status": "PASS",
+      "evidence": "COMPACT-STEP01"
+    },
+    {
+      "id": "T19",
+      "scope": "nonnumeric",
+      "status": "PASS",
+      "evidence": "COMPACT-STEP01"
+    },
+    {
+      "id": "T20",
+      "scope": "negative",
+      "status": "PASS",
+      "evidence": "COMPACT-STEP01"
+    },
+    {
+      "id": "T21",
+      "scope": "excess decimals",
+      "status": "PASS",
+      "evidence": "COMPACT-STEP01"
+    },
+    {
+      "id": "T22",
+      "scope": "stepper bounds",
+      "status": "PASS",
+      "evidence": "COMPACT-STEP01"
+    },
+    {
+      "id": "T23",
+      "scope": "capacity switch",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T24",
+      "scope": "stock shortage",
+      "status": "PASS",
+      "evidence": "COMPACT-QUOTE01"
+    },
+    {
+      "id": "T25",
+      "scope": "inactive branch",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T26",
+      "scope": "concurrent reservation",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T27",
+      "scope": "expiry",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T28",
+      "scope": "stale pricing",
+      "status": "PASS",
+      "evidence": "Stale price checkout regression"
+    },
+    {
+      "id": "T29",
+      "scope": "idempotency",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T30",
+      "scope": "double tap",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T31",
+      "scope": "timeout retry",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T32",
+      "scope": "mobile offline",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T33",
+      "scope": "native draft restore",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T34",
+      "scope": "session expiry",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T35",
+      "scope": "guest profile link",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T36",
+      "scope": "wallet spending",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T37",
+      "scope": "top-up fee",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T38",
+      "scope": "Paystack fee display",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T39",
+      "scope": "failed payment",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T40",
+      "scope": "verified payment only",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T41",
+      "scope": "duplicate webhook",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T42",
+      "scope": "invoice receipt consistency",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T43",
+      "scope": "rewards",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T44",
+      "scope": "multi-cylinder",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T45",
+      "scope": "same-delivery addition fee",
+      "status": "PASS",
+      "evidence": "ADD-01 and ADD-PG"
+    },
+    {
+      "id": "T46",
+      "scope": "custody block",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T47",
+      "scope": "dispatch eligibility",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T48",
+      "scope": "tracking",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T49",
+      "scope": "area edit permissions",
+      "status": "PASS",
+      "evidence": "Governed location lifecycle"
+    },
+    {
+      "id": "T50",
+      "scope": "price audit",
+      "status": "PASS",
+      "evidence": "Shared approval regressions"
+    },
+    {
+      "id": "T51",
+      "scope": "light theme",
+      "status": "PASS",
+      "evidence": "Browser"
+    },
+    {
+      "id": "T52",
+      "scope": "dark theme",
+      "status": "PASS",
+      "evidence": "Browser"
+    },
+    {
+      "id": "T53",
+      "scope": "system theme",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T54",
+      "scope": "360px",
+      "status": "PASS",
+      "evidence": "360px measurements"
+    },
+    {
+      "id": "T55",
+      "scope": "desktop",
+      "status": "PASS",
+      "evidence": "1440/1280/1024 measurements"
+    },
+    {
+      "id": "T56",
+      "scope": "keyboard",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T57",
+      "scope": "screen reader",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T58",
+      "scope": "reduced motion",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T59",
+      "scope": "no synthetic production data",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    },
+    {
+      "id": "T60",
+      "scope": "cross-role regression",
+      "status": "NOT_TESTED",
+      "evidence": "No new execution evidence; retained in denominator."
+    }
+  ],
+  "gates": [
+    {
+      "id": "COMPACT-G01",
+      "scope": "preflight",
+      "status": "PASS",
+      "evidence": "Repository/route audit"
+    },
+    {
+      "id": "COMPACT-G02",
+      "scope": "baseline",
+      "status": "PASS",
+      "evidence": "20 baseline tests; no local before screenshot"
+    },
+    {
+      "id": "COMPACT-G03",
+      "scope": "approved design",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G04",
+      "scope": "navigation preserved",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G05",
+      "scope": "responsive web",
+      "status": "PASS",
+      "evidence": "Chromium at six viewport widths"
+    },
+    {
+      "id": "COMPACT-G06",
+      "scope": "native runtime",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G07",
+      "scope": "authoritative price",
+      "status": "PASS",
+      "evidence": "Browser and COMPACT-QUOTE01"
+    },
+    {
+      "id": "COMPACT-G08",
+      "scope": "authoritative fee",
+      "status": "PASS",
+      "evidence": "COMPACT-QUOTE01 and single fee regression"
+    },
+    {
+      "id": "COMPACT-G09",
+      "scope": "editable areas",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G10",
+      "scope": "quantity validation",
+      "status": "PASS",
+      "evidence": "COMPACT-STEP01"
+    },
+    {
+      "id": "COMPACT-G11",
+      "scope": "authoritative quote",
+      "status": "PASS",
+      "evidence": "COMPACT-QUOTE01 and existing stale quote regression"
+    },
+    {
+      "id": "COMPACT-G12",
+      "scope": "fee disclosure",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G13",
+      "scope": "payment verification",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G14",
+      "scope": "exactly once",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G15",
+      "scope": "stock safety",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G16",
+      "scope": "branch permissions",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G17",
+      "scope": "guest assisted",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G18",
+      "scope": "wallet rewards",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G19",
+      "scope": "documents",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G20",
+      "scope": "dispatch tracking",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G21",
+      "scope": "address",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G22",
+      "scope": "accessibility",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G23",
+      "scope": "themes",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G24",
+      "scope": "error offline",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G25",
+      "scope": "migration safety",
+      "status": "PASS",
+      "evidence": "No migration"
+    },
+    {
+      "id": "COMPACT-G26",
+      "scope": "regression",
+      "status": "PASS",
+      "evidence": "23 focused tests, real PostgreSQL ADD-PG, build and types"
+    },
+    {
+      "id": "COMPACT-G27",
+      "scope": "rollback rehearsal",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G28",
+      "scope": "no fake data",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G29",
+      "scope": "security review",
+      "status": "PENDING",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G30",
+      "scope": "traceability",
+      "status": "PASS",
+      "evidence": "Matrix, acceptance and rollback records"
+    },
+    {
+      "id": "COMPACT-G31",
+      "scope": "stakeholder UAT",
+      "status": "BLOCKED",
+      "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COMPACT-G32",
+      "scope": "production approval",
+      "status": "BLOCKED",
+      "evidence": "Full gate not closed."
+    }
+  ],
+  "scopeChanges": [
+    "Only the compact homepage and customer native ordering UI redesigned; backend pricing and one-fee policy unchanged.",
+    "Optional read-only quote checks; no schema changes.",
+    "No deployment or mobile build; all 60 scenarios and 32 gates retained."
+  ]
+}

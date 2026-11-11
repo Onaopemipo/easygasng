@@ -100,7 +100,7 @@ import {
   CheckCircle2,
   Smartphone,
 } from "lucide-react";
-import { Logo, ProductArt, money, Empty, Loading, Notice, api } from "./ui";
+import { Logo, ProductArt, money, Empty, Loading, Notice, Modal, api } from "./ui";
 type CartItem = { productId: string; quantity: number };
 const Context = createContext<any>(null);
 const useShop = () => useContext(Context);
@@ -2059,7 +2059,7 @@ function Account({ section }: { section: string }) {
 }
 function ContentPage({ path }: { path: string }) {
   const [sent, setSent] = useState(false),
-    [error, setError] = useState("");
+    [supportOpen, setSupportOpen] = useState(false);
   const { catalogue, user } = useShop();
   const faqs = [
     [
@@ -2083,18 +2083,6 @@ function ContentPage({ path }: { path: string }) {
       "Only payment methods approved and enabled by the business appear at checkout. A successful screen does not count as verification of payment.",
     ],
   ];
-  async function support(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    try {
-      await api(
-        "support.create",
-        Object.fromEntries(new FormData(e.currentTarget)),
-      );
-      setSent(true);
-    } catch (e: any) {
-      setError(e.message);
-    }
-  }
   if (path === "/how-it-works")
     return (
       <div className="container page">
@@ -2226,46 +2214,19 @@ function ContentPage({ path }: { path: string }) {
               </details>
             ))}
           </section>
-          <form className="surface" onSubmit={support}>
+          <section className="surface">
             <Headphones size={30} className="green" />
             <h2>Talk to our team</h2>
-            {sent ? (
-              <Notice
-                type="success"
-                message="Your support request has been saved. You can follow up with the business from your account."
-              />
-            ) : (
-              <>
-                <label>
-                  Subject
-                  <FormInput
-                    name="subject"
-                    minLength={5}
-                    maxLength={100}
-                    required
-                  />
-                </label>
-                <label>
-                  How can we help?
-                  <textarea
-                    name="message"
-                    minLength={10}
-                    maxLength={2000}
-                    required
-                  />
-                </label>
-                {error && <Notice type="error" message={error} />}
-                <button disabled={!user} className="button full">
-                  Send Support Request <ArrowRight size={17} />
-                </button>
-                {!user && (
-                  <p className="muted">
-                    <Link href="/login">Sign in</Link> to send a request.
-                  </p>
-                )}
-              </>
-            )}
-          </form>
+            {sent && <Notice type="success" message="Your support request has been saved. You can follow up from your account." />}
+            {user ? <button className="button" onClick={() => setSupportOpen(true)}>New support request</button> :
+              <p><Link href="/login">Sign in</Link> to send a request.</p>}
+          </section>
+          {supportOpen && user && <Modal title="New support request" onClose={() => setSupportOpen(false)}>
+            <ActionForm contextual action="support.create" title="Request details" submit="Send request"
+              fields={[{ name: "subject", label: "Subject" }, { name: "message", label: "How can we help?", type: "textarea" }]}
+              onDone={() => { setSent(true); setSupportOpen(false); }} />
+          </Modal>}
+
         </div>
       </div>
     );

@@ -55,3 +55,50 @@ export function gasLine(
     throw new Error("Gas amount is outside supported limits.");
   return { grams: quantity, capacityGrams, subtotalKobo: kobo };
 }
+
+// Move along the same integer-gram grid enforced by gasLine.
+export function nextGasQuantity(
+  current: string | number,
+  direction: -1 | 1,
+  capacityKg: number,
+  policy?: GasPolicy,
+): number | null {
+  if (
+    !policy?.minimumKg ||
+    !policy.maximumKg ||
+    !policy.incrementKg ||
+    !Number.isInteger(policy.precision) ||
+    policy.precision! < 0 ||
+    policy.precision! > 3 ||
+    !policy.capacitiesKg.includes(capacityKg)
+  )
+    return null;
+  const increment = grams(policy.incrementKg);
+  const precision = 10 ** (3 - policy.precision!);
+  let a = increment,
+    b = precision;
+  while (b) [a, b] = [b, a % b];
+  const step = (increment / a) * precision;
+  const min = Math.ceil(grams(policy.minimumKg) / step) * step;
+  const max =
+    Math.floor(Math.min(grams(capacityKg), grams(policy.maximumKg)) / step) *
+    step;
+  let mass = 0;
+  try {
+    mass = grams(current);
+  } catch {}
+  const next =
+    direction === 1
+      ? Math.max(min, (Math.floor(mass / step) + 1) * step)
+      : Math.min(max, (Math.ceil(mass / step) - 1) * step);
+  return next >= min && next <= max ? next / 1000 : null;
+}
+
+export function gasMoney(kobo: number | string) {
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: Number(kobo) % 100 === 0 ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(Number(kobo) / 100);
+}

@@ -33,6 +33,41 @@ export async function commerceAction(
   if (action === "credits") {
     const customer = ["customer", "commercial"].includes(user.role);
     if (!customer) allow(user, ["owner", "finance"]);
+    if (typeof input === "object" && input !== null && "view" in input) {
+      allow(user, ["owner", "finance"]);
+      const filters = z.object({
+        view: z.literal("workspace"),
+        tab: z.enum(["all", "credits", "refunds", "pending", "completed"]).default("all"),
+        q: z.string().trim().max(100).default(""),
+        page: z.coerce.number().int().min(1).max(1000000).default(1),
+      }).strict().parse(input);
+      return one(tx, `
+        WITH scoped AS (
+          SELECT c.*, u.name AS customer_name, o.reference AS order_reference,
+                 c.status='pending' AND c.requested_by<>$3 AS can_decide
+          FROM credit_requests c JOIN users u ON u.id=c.customer_id
+          LEFT JOIN orders o ON o.id=c.order_id
+          WHERE ($1::boolean OR c.branch_id=$2)
+        ), filtered AS (
+          SELECT * FROM scoped
+          WHERE ($4='all' OR ($4='credits' AND kind<>'refund') OR ($4='refunds' AND kind='refund')
+            OR ($4='pending' AND status='pending') OR ($4='completed' AND status='approved'))
+          AND ($5='' OR strpos(lower(concat_ws(' ',customer_name,order_reference,receipt_reference,id)),lower($5))>0)
+        ), page_rows AS (
+          SELECT * FROM filtered ORDER BY created_at DESC,id DESC LIMIT 20 OFFSET $6
+        )
+        SELECT (SELECT count(*)::int FROM filtered) AS total,
+          (SELECT COALESCE(jsonb_agg((to_jsonb(p) || jsonb_build_object('amount_kobo',p.amount_kobo::text)) ORDER BY created_at DESC,id DESC),'[]') FROM page_rows p) AS rows,
+          (SELECT jsonb_build_object(
+            'all',count(*),'credits',count(*) FILTER (WHERE kind<>'refund'),
+            'refunds',count(*) FILTER (WHERE kind='refund'),
+            'pending',count(*) FILTER (WHERE status='pending'),
+            'completed',count(*) FILTER (WHERE status='approved'),
+            'creditsKobo',COALESCE(sum(amount_kobo) FILTER (WHERE kind<>'refund' AND status='approved'),0)::text,
+            'refundsKobo',COALESCE(sum(amount_kobo) FILTER (WHERE kind='refund' AND status='approved'),0)::text
+          ) FROM scoped) AS summary`,
+        [user.role === "owner", user.branch_id, user.id, filters.tab, filters.q, (filters.page-1)*20]);
+    }
     return (
       await tx.query(
         `SELECT c.*,u.name AS customer_name,o.reference AS order_reference FROM credit_requests c JOIN users u ON u.id=c.customer_id LEFT JOIN orders o ON o.id=c.order_id WHERE ${customer ? "c.customer_id=$1" : user.role === "owner" ? "true" : "c.branch_id=$1"} ORDER BY c.created_at DESC LIMIT 100`,
@@ -402,11 +437,32 @@ export async function commerceAction(
   }
   if (action === "pos") {
     allow(user, ["owner", "manager", "sales", "finance"]);
+    const canSell = ["owner", "manager", "sales"].includes(user.role);
+    const ownShift = await one(tx,
+      "SELECT s.*,b.name AS branch_name,b.active AS branch_active,s.opening_kobo+(SELECT COALESCE(sum(total_kobo),0) FROM pos_sales WHERE shift_id=s.id) AS cash_in_till_kobo FROM pos_shifts s JOIN branches b ON b.id=s.branch_id WHERE s.cashier_id=$1 AND s.status='open' ORDER BY s.created_at DESC LIMIT 1",
+      [user.id]);
+    const branches = canSell ? (await tx.query(
+      "SELECT id,name FROM branches WHERE active=true AND ($1::boolean OR id=$2) ORDER BY name",
+      [user.role === "owner", user.branch_id])).rows : [];
+    const saleScope = user.role === "owner" ? "true" : user.role === "sales" ? "sh.cashier_id=$1" : "sh.branch_id=$1";
+    const params = user.role === "owner" ? [] : [user.role === "sales" ? user.id : user.branch_id];
+    const today = await one(tx,
+      `WITH sales_today AS (
+        SELECT s.id,s.total_kobo FROM pos_sales s JOIN pos_shifts sh ON sh.id=s.shift_id
+        WHERE ${saleScope}
+          AND s.created_at >= (date_trunc('day',now() AT TIME ZONE 'Africa/Lagos') AT TIME ZONE 'Africa/Lagos')
+          AND s.created_at < ((date_trunc('day',now() AT TIME ZONE 'Africa/Lagos') + interval '1 day') AT TIME ZONE 'Africa/Lagos')
+      )
+      SELECT (SELECT COALESCE(sum(total_kobo),0) FROM sales_today) AS sales_kobo,
+             (SELECT count(*) FROM sales_today) AS receipts,
+             (SELECT COALESCE(sum(i.quantity),0) FROM pos_items i JOIN sales_today s ON s.id=i.sale_id) AS units`,
+      params);
     return {
+      today, branches, ownShift, canSell, canVerify: ["owner", "finance"].includes(user.role), actorId: user.id,
       products: (
         await tx.query(
           "SELECT p.*,i.price_kobo,i.published,i.quantity-i.reserved AS available FROM products p JOIN inventory i ON i.product_id=p.id WHERE i.branch_id=$1 AND p.category<>'Gas refills' ORDER BY p.name",
-          [user.branch_id ?? "lagos"],
+          [ownShift?.branch_id ?? user.branch_id ?? "lagos"],
         )
       ).rows,
       shifts: (
@@ -419,7 +475,7 @@ export async function commerceAction(
       ).rows,
       sales: (
         await tx.query(
-          `SELECT s.*,sh.branch_id,sh.cashier_id FROM pos_sales s JOIN pos_shifts sh ON sh.id=s.shift_id WHERE ${user.role === "owner" ? "true" : user.role === "sales" ? "sh.cashier_id=$1" : "sh.branch_id=$1"} ORDER BY s.created_at DESC LIMIT 100`,
+          `SELECT s.*,sh.branch_id,sh.cashier_id,sh.status AS shift_status,u.name AS cashier FROM pos_sales s JOIN pos_shifts sh ON sh.id=s.shift_id JOIN users u ON u.id=sh.cashier_id WHERE ${user.role === "owner" ? "true" : user.role === "sales" ? "sh.cashier_id=$1" : "sh.branch_id=$1"} ORDER BY s.created_at DESC LIMIT 100`,
           user.role === "owner"
             ? []
             : [user.role === "sales" ? user.id : user.branch_id],
@@ -436,6 +492,10 @@ export async function commerceAction(
       .strict()
       .parse(input);
     allow(user, ["owner", "manager", "sales"], d.branchId);
+    if (!(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true FOR UPDATE", [d.branchId])))
+      throw new AppError(409, "This branch is not accepting till shifts.");
+    // Serialize duplicate opens for this cashier even across authorised branches.
+    await tx.query("SELECT id FROM users WHERE id=$1 FOR UPDATE", [user.id]);
     if (
       await one(
         tx,
@@ -495,9 +555,8 @@ export async function commerceAction(
         );
       return prior;
     }
-    await tx.query("SELECT id FROM branches WHERE id=$1 FOR UPDATE", [
-      shift.branch_id,
-    ]);
+    if (!(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true FOR UPDATE", [shift.branch_id])))
+      throw new AppError(409, "This branch is not accepting sales.");
     if (shift.status !== "open")
       throw new AppError(409, "This shift is closed.");
     if (new Set(d.items.map((i) => i.productId)).size !== d.items.length)
@@ -592,8 +651,12 @@ export async function commerceAction(
     ]);
     if (!s || s.cashier_id !== user.id)
       throw new AppError(404, "Your shift was not found.");
-    if (s.status !== "open")
+    allow(user, ["owner", "manager", "sales"], s.branch_id);
+    if (s.status !== "open") {
+      if (Number(s.counted_kobo) === d.countedKobo && s.note === d.note)
+        return { ok: true, expectedKobo: Number(s.expected_kobo), varianceKobo: d.countedKobo - Number(s.expected_kobo) };
       throw new AppError(409, "This shift was already submitted.");
+    }
     const total = Number(
         (await one(
           tx,

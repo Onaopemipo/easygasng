@@ -1,6 +1,6 @@
 import { databaseTlsConfigured } from "./database-tls";
 import { type SQL } from "./db";
-export const requiredSchemaVersions = Array.from({ length: 75 }, (_, i) =>
+export const requiredSchemaVersions = Array.from({ length: 76 }, (_, i) =>
   String(i + 1).padStart(3, "0"),
 ).filter((v) => v !== "026");
 // 026 was never issued; 027 is the next historical migration.

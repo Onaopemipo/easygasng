@@ -4,16 +4,21 @@ import {
   Copy as CustomerCopy,
   Title as CustomerTitle,
 } from "./CustomerUI";
-import { Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { AppState } from "react-native";
 import { useTheme } from "./theme";
 import { NativeRewardSelector } from "./EasyRewards";
 import * as SecureStore from "expo-secure-store";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { View, Pressable } from "./surfaces";
 import { Text, TextInput } from "./typography";
 import { NativeForm } from "./Workflows";
-import { gasLine } from "../../packages/business-rules/src/gas-pricing";
+import {
+  gasLine,
+  nextGasQuantity,
+  gasMoney as money,
+} from "../../packages/business-rules/src/gas-pricing";
 import { randomUUID } from "expo-crypto";
 export default function GasOrder({
   api,
@@ -22,6 +27,7 @@ export default function GasOrder({
   cart,
   done,
   onPlaced,
+  viewServices,
 }: {
   api: (a: string, d?: any) => Promise<any>;
   catalogue: any;
@@ -29,6 +35,7 @@ export default function GasOrder({
   cart: any[];
   done: () => void;
   onPlaced: () => void;
+  viewServices: () => void;
 }) {
   const { colors } = useTheme();
   const [quantityText, setQuantityText] = useState<Record<number, string>>({});
@@ -44,11 +51,47 @@ export default function GasOrder({
     [locationId, setLocationId] = useState(""),
     [saved, setSaved] = useState<any[]>([]),
     [picked, setPicked] = useState<any>(null);
+  const [picker, setPicker] = useState<string | null>(null);
+  const [street, setStreet] = useState("");
+  const [catalogueRevision, refreshCatalogue] = useState(0);
+  const [pricingBranch, setPricingBranch] = useState<string | null>(null);
+  const [loadingQuote, setLoadingQuote] = useState(false);
+  const quoteLock = useRef(false);
+  const selectedBranch = config?.locations?.find(
+    (l: any) => l.id === locationId,
+  )?.branch_id;
+  const requestedBranch = selectedBranch ?? "lagos";
   useEffect(() => {
-    api("gas.catalogue")
-      .then(setConfig)
-      .catch((e) => setError(e.message));
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state === "active") refreshCatalogue((n) => n + 1);
+    });
+    return () => subscription.remove();
   }, []);
+  useEffect(() => {
+    let live = true;
+    setPricingBranch(null);
+    setQuote(null);
+    api("gas.catalogue?branchId=" + encodeURIComponent(requestedBranch))
+      .then((value) => {
+        if (!live) return;
+        setConfig(value);
+        setPricingBranch(requestedBranch);
+        setLines((current) =>
+          current.map((line) => {
+            const capacities = value.policy?.capacitiesKg ?? [];
+            return capacities.length && !capacities.includes(line.capacityKg)
+              ? { ...line, capacityKg: capacities[0] }
+              : line;
+          }),
+        );
+      })
+      .catch((e) => {
+        if (live) setError(e.message);
+      });
+    return () => {
+      live = false;
+    };
+  }, [requestedBranch, catalogueRevision]);
   useEffect(() => {
     if (user)
       SecureStore.getItemAsync("easygas.serviceDrafts." + user.id)
@@ -62,11 +105,42 @@ export default function GasOrder({
   useEffect(() => {
     if (user)
       api("account.profile")
-        .then((p) => setSaved(p.addresses))
+        .then((p) => {
+          setSaved(p.addresses);
+          const primary = p.addresses.find(
+            (a: any) => a.is_default && a.location_available,
+          );
+          if (primary) {
+            setPicked((current: any) => current ?? primary);
+            setStreet((current) => current || primary.street);
+            setLocationId((current) => current || primary.location_id);
+          }
+        })
         .catch(() => {});
   }, [user]);
-  const money = (n: number) => `₦${(n / 100).toLocaleString("en-NG")}`;
-  if (!config) return <Text>Loading gas prices…</Text>;
+  if (!config)
+    return error ? (
+      <View>
+        <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => {
+            setError("");
+            refreshCatalogue((n) => n + 1);
+          }}
+        >
+          <Text>Retry gas prices</Text>
+        </Pressable>
+      </View>
+    ) : (
+      <Text>Loading gas prices…</Text>
+    );
+  const capacities: number[] = config.policy?.capacitiesKg ?? [];
+  const pricingReady = pricingBranch === requestedBranch;
+  const feeReady =
+    Number.isSafeInteger(config.deliveryKobo) &&
+    config.deliveryKobo >= 0 &&
+    config.feeVersion != null;
   const physical = cart.filter(
     (i) =>
       catalogue.products.find((p: any) => p.id === i.productId)?.category !==
@@ -85,34 +159,56 @@ export default function GasOrder({
   const ready =
     config.policy &&
     ["minimumKg", "maximumKg", "incrementKg", "precision"].every(
-      (k) => config.policy[k] !== null,
+      (k) => config.policy[k] != null,
     );
   let subtotal = 0,
     quantityError = "";
   try {
     subtotal = lines.reduce(
-      (n, l) =>
+      (n, l, i) =>
         n +
-        gasLine(l.kg, l.capacityKg, config.priceKobo, config.policy)
-          .subtotalKobo,
+        gasLine(
+          quantityText[i] ?? l.kg,
+          l.capacityKg,
+          config.priceKobo,
+          config.policy,
+        ).subtotalKobo,
       0,
     );
   } catch (e: any) {
     quantityError = e.message;
   }
-  const button = (label: string, press: () => void) => (
-    <Pressable style={s.button} onPress={press}>
-      <Text style={{ color: "white" }}>{label}</Text>
+  const button = (
+    label: string,
+    press: () => void,
+    disabled = false,
+    full = false,
+  ) => (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ disabled: disabled || loadingQuote }}
+      disabled={disabled || loadingQuote}
+      style={[
+        s.button,
+        {
+          backgroundColor: colors.button,
+          opacity: disabled || loadingQuote ? 0.55 : 1,
+        },
+        full && s.primaryButton,
+      ]}
+      onPress={press}
+    >
+      <Text preserveColor style={{ color: colors.onButton }}>
+        {label}
+      </Text>
     </Pressable>
   );
   const update = (i: number, key: string, value: number, raw?: string) => {
     if (key === "kg")
       setQuantityText((current) => ({
         ...current,
-        [i]: raw ?? String(Number(value.toFixed(3))),
+        [i]: raw ?? String(value),
       }));
-    if (key === "kg" && Number.isFinite(value))
-      value = Number(value.toFixed(3));
     setLines(lines.map((l, n) => (n === i ? { ...l, [key]: value } : l)));
     setQuote(null);
   };
@@ -129,205 +225,349 @@ export default function GasOrder({
     );
   return (
     <View>
-      <CustomerTitle>Order Gas</CustomerTitle>
-      <Text>
-        {money(config.priceKobo)}/kg · Flat delivery{" "}
-        {money(config.deliveryKobo)}
-      </Text>
-      <Text>
-        Home delivery across{" "}
-        {config.locations.map((l: any) => l.name).join(", ")}.
-      </Text>
-      {!ready && (
-        <Text>
-          Gas quantity limits await business configuration. Ordering remains
-          unavailable.
-        </Text>
-      )}
-      {lines.map((l, i) => (
-        <View style={s.card} key={i}>
-          <Text>Cylinder {i + 1} capacity</Text>
-          <View style={s.row}>
-            {config.policy.capacitiesKg.map((c: number) => (
+      <View
+        style={[
+          s.card,
+          { backgroundColor: colors.surface, borderColor: colors.border },
+        ]}
+      >
+        <View style={s.row}>
+          <Ionicons name="flame-outline" size={26} color={colors.primary} />
+          <View style={{ flex: 1 }}>
+            <CustomerTitle>Order the gas you need</CustomerTitle>
+            <CustomerCopy>Quick, secure and home delivery</CustomerCopy>
+          </View>
+        </View>
+        <View style={[s.priceStrip, { backgroundColor: colors.elevated }]}>
+          <View style={s.priceCell}>
+            <Ionicons
+              name="pricetag-outline"
+              size={18}
+              color={colors.primary}
+            />
+            <View style={{ flex: 1 }}>
+              <Text>
+                {pricingReady && config.priceKobo > 0
+                  ? money(config.priceKobo) + "/kg"
+                  : "Unavailable"}
+              </Text>
+              <CustomerCopy>Gas price</CustomerCopy>
+            </View>
+          </View>
+          <View style={s.priceCell}>
+            <Ionicons name="car-outline" size={18} color={colors.primary} />
+            <View style={{ flex: 1 }}>
+              <Text>
+                {pricingReady && feeReady
+                  ? money(config.deliveryKobo)
+                  : "Unavailable"}
+              </Text>
+              <CustomerCopy>Flat delivery</CustomerCopy>
+            </View>
+          </View>
+        </View>
+        {!ready && (
+          <Text>Ordering opens once gas quantity limits are configured.</Text>
+        )}
+        {lines.map((l, i) => {
+          const label =
+            lines.length > 1
+              ? `Cylinder ${i + 1} capacity`
+              : "Cylinder capacity";
+          const field = `capacity-${i}`;
+          const raw = quantityText[i] ?? (l.kg ? String(l.kg) : "");
+          return (
+            <View key={i} style={{ gap: 5, marginBottom: 10 }}>
+              <Text>{label}</Text>
               <Pressable
-                key={c}
-                accessibilityRole="radio"
-                accessibilityState={{ selected: l.capacityKg === c }}
+                accessibilityRole="button"
+                accessibilityLabel={`${label}, ${l.capacityKg} kg`}
+                accessibilityState={{ expanded: picker === field }}
+                disabled={loadingQuote || !capacities.length}
                 style={[
-                  s.choice,
-                  {
-                    flexBasis: "21%",
-                    flexGrow: 1,
-                    alignItems: "center",
-                    borderRadius: 14,
-                    borderColor:
-                      l.capacityKg === c ? colors.primary : colors.border,
-                    backgroundColor:
-                      l.capacityKg === c ? colors.accent : colors.surface,
-                  },
+                  s.control,
+                  { backgroundColor: colors.input, borderColor: colors.border },
                 ]}
-                onPress={() => update(i, "capacityKg", c)}
+                onPress={() => setPicker(picker === field ? null : field)}
               >
-                <Image
-                  source={require("./assets/cylinder-illustration.png")}
-                  resizeMode="contain"
-                  style={{ width: 42, height: 64 }}
-                  accessible={false}
-                />
-                <Text
-                  preserveColor
-                  style={{
-                    color: l.capacityKg === c ? colors.onAccent : colors.text,
-                    fontWeight: "700",
-                  }}
-                >
-                  {c} kg {l.capacityKg === c ? "✓" : ""}
+                <Text style={{ flex: 1 }}>
+                  {capacities.length ? l.capacityKg + " kg" : "Unavailable"}
                 </Text>
+                <Ionicons
+                  name="chevron-down"
+                  size={18}
+                  color={colors.primary}
+                />
               </Pressable>
+              {picker === field &&
+                capacities.map((c) => (
+                  <Pressable
+                    key={c}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected: l.capacityKg === c }}
+                    disabled={loadingQuote}
+                    style={[
+                      s.control,
+                      {
+                        borderColor: colors.border,
+                        backgroundColor:
+                          l.capacityKg === c ? colors.elevated : colors.surface,
+                      },
+                    ]}
+                    onPress={() => {
+                      update(i, "capacityKg", c);
+                      setPicker(null);
+                    }}
+                  >
+                    <Text>{c} kg</Text>
+                  </Pressable>
+                ))}
+              <Text>Gas quantity (kg)</Text>
+              <View
+                style={[
+                  s.stepper,
+                  { borderColor: colors.border, backgroundColor: colors.input },
+                ]}
+              >
+                {([-1, 0, 1] as const).map((direction) => {
+                  if (direction === 0)
+                    return (
+                      <TextInput
+                        key={0}
+                        accessibilityLabel={`Cylinder ${i + 1} gas kilograms`}
+                        style={s.quantity}
+                        keyboardType="decimal-pad"
+                        editable={!loadingQuote}
+                        maxLength={12}
+                        placeholder="0"
+                        value={raw}
+                        onChangeText={(v) => update(i, "kg", Number(v), v)}
+                      />
+                    );
+                  const next = nextGasQuantity(
+                    raw,
+                    direction,
+                    l.capacityKg,
+                    config.policy,
+                  );
+                  return (
+                    <Pressable
+                      key={direction}
+                      accessibilityRole="button"
+                      accessibilityLabel={
+                        direction < 0
+                          ? "Decrease gas quantity"
+                          : "Increase gas quantity"
+                      }
+                      disabled={loadingQuote || next === null}
+                      style={[
+                        s.stepButton,
+                        { opacity: next === null ? 0.4 : 1 },
+                      ]}
+                      onPress={() => next !== null && update(i, "kg", next)}
+                    >
+                      <Text>{direction < 0 ? "−" : "+"}</Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+              {lines.length > 1 &&
+                button("Remove cylinder", () => {
+                  setLines(lines.filter((_, n) => n !== i));
+                  setQuantityText(
+                    Object.fromEntries(
+                      Object.entries(quantityText)
+                        .filter(([n]) => Number(n) !== i)
+                        .map(([n, v]) => [
+                          Number(n) > i ? Number(n) - 1 : Number(n),
+                          v,
+                        ]),
+                    ),
+                  );
+                  setQuote(null);
+                  setPicker(null);
+                })}
+            </View>
+          );
+        })}
+        {capacities.length > 0 &&
+          lines.length < 20 &&
+          button("Add another cylinder", () => {
+            setLines([...lines, { capacityKg: capacities[0], kg: 0 }]);
+            setQuote(null);
+          })}
+        <Text>Delivery location</Text>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Delivery location"
+          accessibilityState={{ expanded: picker === "location" }}
+          disabled={loadingQuote}
+          style={[
+            s.control,
+            { borderColor: colors.border, backgroundColor: colors.input },
+          ]}
+          onPress={() => setPicker(picker === "location" ? null : "location")}
+        >
+          <Ionicons name="location-outline" size={18} color={colors.primary} />
+          <Text style={{ flex: 1 }}>
+            {config.locations.find((l: any) => l.id === locationId)?.name ??
+              "Select location"}
+          </Text>
+          <Ionicons name="chevron-down" size={18} color={colors.primary} />
+        </Pressable>
+        {picker === "location" &&
+          config.locations.map((l: any) => (
+            <Pressable
+              key={l.id}
+              accessibilityRole="radio"
+              accessibilityState={{ selected: l.id === locationId }}
+              disabled={loadingQuote}
+              style={[
+                s.control,
+                { borderColor: colors.border, backgroundColor: colors.surface },
+              ]}
+              onPress={() => {
+                setLocationId(l.id);
+                setQuote(null);
+                setPicker(null);
+              }}
+            >
+              <Text>{l.name}</Text>
+            </Pressable>
+          ))}
+        <Text>House address</Text>
+        <TextInput
+          accessibilityLabel="House address"
+          editable={!loadingQuote}
+          value={street}
+          maxLength={250}
+          style={[
+            s.control,
+            { borderColor: colors.border, backgroundColor: colors.input },
+          ]}
+          placeholder="House number, street, estate, area"
+          onChangeText={(value) => {
+            setStreet(value);
+            setQuote(null);
+          }}
+        />
+        {saved
+          .filter((a) => a.location_available)
+          .map((a) =>
+            button(`Use ${a.label}`, () => {
+              setPicked(a);
+              setStreet(a.street);
+              setLocationId(a.location_id);
+              setQuote(null);
+            }),
+          )}
+        <CustomerCard accent>
+          <CustomerTitle>Estimated Total</CustomerTitle>
+          {!pricingReady || !feeReady ? (
+            <CustomerCopy>Current pricing unavailable.</CustomerCopy>
+          ) : quantityError ? (
+            <CustomerCopy>{quantityError}</CustomerCopy>
+          ) : (
+            <>
+              <CustomerCopy>
+                Gas {money(subtotal)} · Products {money(extra)}
+              </CustomerCopy>
+              <CustomerCopy>
+                Delivery {money(config.deliveryKobo)} — charged once for this
+                visit
+              </CustomerCopy>
+              <CustomerTitle>
+                {money(subtotal + extra + config.deliveryKobo)}
+              </CustomerTitle>
+            </>
+          )}
+          <CustomerCopy>
+            The server confirms current pricing, availability and cylinder
+            eligibility before creating an order.
+          </CustomerCopy>
+        </CustomerCard>
+        <Text>
+          Address coverage must be confirmed before dispatch. New cylinders and
+          installation cost extra. Nominal capacity does not establish safe
+          filling eligibility.
+        </Text>
+        {error && (
+          <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>
+        )}
+        {error &&
+          !pricingReady &&
+          button("Retry gas prices", () => {
+            setError("");
+            refreshCatalogue((n) => n + 1);
+          })}
+        {appointments.length > 0 && (
+          <View>
+            {button(
+              includeAppointments
+                ? "Exclude my staged services"
+                : "Include my staged services",
+              () => {
+                setIncludeAppointments(!includeAppointments);
+                setQuote(null);
+              },
+            )}
+            {appointments.map((a, i) => (
+              <Text key={i}>
+                {a.name} ·{" "}
+                {a.totalKobo === null
+                  ? "Quotation required"
+                  : money(a.totalKobo ?? 0)}{" "}
+                · Service charges are separate.
+              </Text>
             ))}
           </View>
-          <Text>Requested gas (kg)</Text>
-          <TextInput
-            accessibilityLabel={`Cylinder ${i + 1} gas kilograms`}
-            style={s.input}
-            keyboardType="decimal-pad"
-            value={quantityText[i] ?? (l.kg ? String(l.kg) : "")}
-            onChangeText={(v) => update(i, "kg", Number(v), v)}
-          />
-          <View style={s.row}>
-            {button("−", () =>
-              update(
-                i,
-                "kg",
-                Math.max(0, l.kg - (config.policy.incrementKg ?? 1)),
-              ),
-            )}
-            {button("+", () =>
-              update(
-                i,
-                "kg",
-                Math.min(l.capacityKg, l.kg + (config.policy.incrementKg ?? 1)),
-              ),
-            )}
-          </View>
-          {config.policy.capacitiesKg
-            .filter((c: number) => c <= l.capacityKg)
-            .map((c: number) => button(`${c} kg`, () => update(i, "kg", c)))}
-          {lines.length > 1 &&
-            button("Remove cylinder", () => {
-              setLines(lines.filter((_, n) => n !== i));
-              setQuantityText({});
-              setQuote(null);
-            })}
-        </View>
-      ))}
-      {lines.length < 20 &&
-        button("Add another cylinder", () => {
-          setLines([
-            ...lines,
-            { capacityKg: config.policy.capacitiesKg[0], kg: 0 },
-          ]);
-          setQuote(null);
-        })}
-      <CustomerCard accent>
-        <CustomerTitle>Estimated Total</CustomerTitle>
-        {quantityError ? (
-          <CustomerCopy>{quantityError}</CustomerCopy>
-        ) : (
-          <>
-            <CustomerCopy>
-              Gas {money(subtotal)} · Products {money(extra)}
-            </CustomerCopy>
-            <CustomerCopy>
-              Delivery {money(config.deliveryKobo)} — charged once for this
-              visit
-            </CustomerCopy>
-            <CustomerTitle>
-              {money(subtotal + extra + config.deliveryKobo)}
-            </CustomerTitle>
-          </>
         )}
-        <CustomerCopy>
-          The server confirms current pricing, availability and cylinder
-          eligibility before creating an order.
-        </CustomerCopy>
-      </CustomerCard>
-      <Text>
-        Address coverage must be confirmed before dispatch. New cylinders and
-        installation cost extra. Nominal capacity does not establish safe
-        filling eligibility.
-      </Text>
-      <Text>Delivery location</Text>
-      <View style={s.row}>
-        {config.locations.map((l: any) => (
-          <Pressable
-            key={l.id}
-            style={s.choice}
-            onPress={() => {
-              setLocationId(l.id);
+        {button(
+          loadingQuote ? "Checking quote…" : "Order Gas Now",
+          async () => {
+            if (quoteLock.current) return;
+            quoteLock.current = true;
+            setLoadingQuote(true);
+            setError("");
+            try {
+              setQuote(
+                await api("gas.quote", {
+                  lines,
+                  items: physical,
+                  branchId: selectedBranch,
+                  locationId,
+                }),
+              );
+            } catch (e: any) {
               setQuote(null);
-            }}
+              setError(e.message);
+            } finally {
+              quoteLock.current = false;
+              setLoadingQuote(false);
+            }
+          },
+          !ready ||
+            !pricingReady ||
+            !feeReady ||
+            !!quantityError ||
+            !selectedBranch ||
+            street.trim().length < 8,
+          true,
+        )}
+        <Pressable
+          accessibilityRole="link"
+          disabled={loadingQuote}
+          onPress={viewServices}
+          style={s.serviceLink}
+        >
+          <Text
+            preserveColor
+            style={{ color: colors.primary, fontWeight: "700" }}
           >
-            <Text>
-              {l.name} {locationId === l.id ? "✓" : ""}
-            </Text>
-          </Pressable>
-        ))}
+            View Our Services
+          </Text>
+        </Pressable>
       </View>
-      {saved
-        .filter((a) => a.location_available)
-        .map((a) =>
-          button(`Use ${a.label}`, () => {
-            setPicked(a);
-            setLocationId(a.location_id);
-            setQuote(null);
-          }),
-        )}
-      {error && <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>}
-      {appointments.length > 0 && (
-        <View>
-          {button(
-            includeAppointments
-              ? "Exclude my staged services"
-              : "Include my staged services",
-            () => {
-              setIncludeAppointments(!includeAppointments);
-              setQuote(null);
-            },
-          )}
-          {appointments.map((a, i) => (
-            <Text key={i}>
-              {a.name} ·{" "}
-              {a.totalKobo === null
-                ? "Quotation required"
-                : money(a.totalKobo ?? 0)}{" "}
-              · Service charges are separate.
-            </Text>
-          ))}
-        </View>
-      )}
-      {ready &&
-        !quantityError &&
-        locationId &&
-        button("Review current quotation", async () => {
-          setError("");
-          try {
-            setQuote(
-              await api("gas.quote", {
-                lines,
-                items: physical,
-                branchId: config.locations.find((l: any) => l.id === locationId)
-                  ?.branch_id,
-              }),
-            );
-          } catch (e: any) {
-            setQuote(null);
-            setError(e.message);
-            api("gas.catalogue")
-              .then(setConfig)
-              .catch(() => {});
-          }
-        })}
       {quote && user && (
         <NativeRewardSelector api={api} onChange={setRewardSelection} />
       )}
@@ -401,7 +641,7 @@ export default function GasOrder({
             {
               name: "address.street",
               label: "Street address",
-              value: picked?.street,
+              value: street.trim(),
             },
             {
               name: "address.building",
@@ -449,15 +689,19 @@ export default function GasOrder({
         />
       )}
       <Text style={s.title}>Cylinder size guide</Text>
-      {config.policy.capacitiesKg.map((c: number) => (
-        <Text key={c}>
-          {c} kg: gas {money(gasLine(c, c, config.priceKobo).subtotalKobo)} ·
-          with delivery{" "}
-          {money(
-            gasLine(c, c, config.priceKobo).subtotalKobo + config.deliveryKobo,
-          )}
-        </Text>
-      ))}
+      {pricingReady &&
+        feeReady &&
+        config.priceKobo > 0 &&
+        capacities.map((c: number) => (
+          <Text key={c}>
+            {c} kg: gas {money(gasLine(c, c, config.priceKobo).subtotalKobo)} ·
+            with delivery{" "}
+            {money(
+              gasLine(c, c, config.priceKobo).subtotalKobo +
+                config.deliveryKobo,
+            )}
+          </Text>
+        ))}
     </View>
   );
 }
@@ -466,21 +710,54 @@ const s = StyleSheet.create({
   card: {
     padding: 16,
     borderWidth: 1,
-    borderColor: "#dce7d9",
+
     borderRadius: 16,
     marginVertical: 12,
   },
   row: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-  choice: { padding: 10, backgroundColor: "#edf5e9", borderRadius: 10 },
-  input: {
+  priceStrip: {
+    flexDirection: "row",
+    borderRadius: 12,
+    padding: 9,
+    marginVertical: 12,
+    gap: 8,
+  },
+  priceCell: { flex: 1, flexDirection: "row", alignItems: "center", gap: 5 },
+  control: {
+    minHeight: 44,
     borderWidth: 1,
-    borderColor: "#ccd8c8",
-    padding: 12,
     borderRadius: 10,
-    marginVertical: 8,
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 7,
+    marginBottom: 5,
+  },
+  stepper: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  stepButton: {
+    width: 44,
+    minHeight: 44,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  quantity: { flex: 1, minHeight: 44, textAlign: "center" },
+  primaryButton: {
+    alignSelf: "stretch",
+    alignItems: "center",
+    borderRadius: 999,
+    minHeight: 46,
+  },
+  serviceLink: {
+    minHeight: 44,
+    alignItems: "center",
+    justifyContent: "center",
   },
   button: {
-    backgroundColor: "#07592e",
     padding: 14,
     borderRadius: 12,
     marginVertical: 6,

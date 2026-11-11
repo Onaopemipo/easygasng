@@ -202,6 +202,7 @@ export function BusinessCentre({
   inventoryTab?: string;
 }) {
   const { data, error, live, updated, reload } = useBusiness(),
+    [recordExpense, setRecordExpense] = useState(false),
     [tab, setTab] = useState(inventoryTab ?? "stock"),
     [search, setSearch] = useState(""),
     [category, setCategory] = useState(""),
@@ -335,6 +336,7 @@ export function BusinessCentre({
       type: "textarea",
     },
   ];
+
   const inventoryWrite = data.permissions.inventoryWrite,
     financeWrite = data.permissions.financeWrite;
   const reports = Object.keys(labels).filter(
@@ -345,7 +347,7 @@ export function BusinessCentre({
       (k !== "refills" || ["owner", "manager"].includes(user.role)),
   );
   return (
-    <div className="business-centre">
+    <div className={mode === "finance" ? "business-centre finance-workspace" : "business-centre"}>
       <section className="business-heading">
         <div>
           <p className="eyebrow">EASYGAS BUSINESS</p>
@@ -364,9 +366,10 @@ export function BusinessCentre({
               : "Committed business records, with access matched to your role and branch."}
           </p>
         </div>
-        <button className="button secondary" onClick={reload}>
-          Refresh records
-        </button>
+        <div className="finance-actions">
+          <button className="button secondary" onClick={reload}>Refresh records</button>
+          {mode === "finance" && financeWrite && <button className="button" onClick={() => setRecordExpense(true)}>Record expense</button>}
+        </div>
       </section>
       <div className="business-live" role="status">
         <span className="status-dot" />
@@ -1236,7 +1239,7 @@ export function BusinessCentre({
             />
           ) : (
             <>
-              <FinanceCards data={data} />
+              <FinanceOverview data={data} />
               {user.role === "owner" && (
                 <details className="surface">
                   <summary>Manage expense categories</summary>
@@ -1267,10 +1270,11 @@ export function BusinessCentre({
               )}
               <Notice message="Approval does not pay an expense. Recording and actual payment evidence are separate. No payment provider is connected. Procurement expenses may overlap with stock costs; profit remains unavailable." />
               <div className="business-grid">
+                {recordExpense && <Modal title="Record expense" onClose={() => setRecordExpense(false)}>
                 <ActionForm
                   action="expense.create"
                   title="Submit expense for independent approval"
-                  onDone={reload}
+                  onDone={() => { setRecordExpense(false); reload(); }}
                   fields={[
                     { name: "branchId", label: "Branch", value: branchId },
                     {
@@ -1309,6 +1313,7 @@ export function BusinessCentre({
                     },
                   ]}
                 />
+                </Modal>}
                 <section className="surface">
                   <h2>Expense controls</h2>
                   <p>
@@ -1847,4 +1852,60 @@ function FinanceCards({ data }: { data: any }) {
       ))}
     </div>
   );
+}
+
+const financePrimary = [
+  ["verifiedCompletedRevenueKobo", "Total revenue"],
+  ["grossProfitKobo", "Gross profit"],
+  ["recordedExpensesKobo", "Total expenses"],
+  ["netProfitKobo", "Net profit"],
+] as const;
+
+const financeMoney = new Intl.NumberFormat("en-NG", {
+  style: "currency",
+  currency: "NGN",
+});
+
+function FinanceOverview({ data }: { data: any }) {
+  const finance = data.finance;
+  const breakdown = new Map<string, number>();
+  const recorded = finance.recordedExpensesKobo;
+  if (recorded != null && data.completeness.expenses) {
+    for (const expense of data.expenses) {
+      if (!["recorded", "paid"].includes(expense.status)) continue;
+      breakdown.set(expense.category, (breakdown.get(expense.category) ?? 0) + Number(expense.amount_kobo));
+    }
+  }
+  const categories = [...breakdown].sort((a, b) => b[1] - a[1]);
+  const reconciles = recorded != null && categories.reduce((total, [, amount]) => total + amount, 0) === recorded;
+  const format = (value: number | null | undefined) =>
+    value == null ? "Unavailable" : financeMoney.format(value / 100);
+  return <>
+    <div className="finance-primary">
+      {financePrimary.map(([key, label]) => <article className="surface finance-metric" key={key}>
+        <span>{label}</span>
+        <strong>{format(finance[key])}</strong>
+      </article>)}
+    </div>
+    <div className="finance-panels">
+      <section className="surface">
+        <h2>Revenue trend</h2>
+        <p>Period series unavailable in this overview.</p>
+        <Link href="/admin/reports">Open dated revenue reports →</Link>
+      </section>
+      <section className="surface">
+        <h2>Expenses breakdown</h2>
+        {!reconciles ? <p>Expense breakdown unavailable.</p> : recorded === 0 ? <p>No recorded expenses.</p> :
+          <ul className="finance-breakdown">
+            {categories.map(([category, amount]) => <li key={category}>
+              <span>{category}</span><strong>{format(amount)}</strong>
+              <meter aria-label={category} min={0} max={recorded} value={amount} />
+            </li>)}
+          </ul>}
+      </section>
+    </div>
+    <FinanceCards data={{ finance: Object.fromEntries(
+      Object.entries(finance).filter(([key]) => !financePrimary.some(([primary]) => primary === key)),
+    ) }} />
+  </>;
 }

@@ -1,0 +1,5 @@
+# Support operations
+
+Use Support Desk to search the full request history, reply, attach an image or add an internal note. Select Staff only for an image that should be visible only to staff. Use the page controls to browse older requests and messages. The latest conversation page refreshes in the foreground. A failed refresh retains the last successful view while the session is still authorized.
+
+To set targets, an owner or branch manager opens SLA policy, selects an active branch, specifies approved response and resolution minutes and working hours, then verifies their password. Only new requests inherit new policy values. To enroll an older active request, open it and select Apply branch SLA. Use the Overdue filter to find requests needing attention. Check overdue requests runs a manual pass. A supervised worker performs this automatically when configured. The Vercel client demo has no scheduled worker, so use the manual action there. Repeating a pass will not resend the same overdue notice.

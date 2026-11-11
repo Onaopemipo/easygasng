@@ -502,8 +502,19 @@ export async function gasQuote(
   lines: { capacityKg: number; kg: number }[],
   branch = "lagos",
   items: { productId: string; quantity: number }[] = [],
+  locationId?: string,
 ) {
   const c = await gasCatalogue(tx, branch);
+  if (locationId !== undefined) {
+    const location = c.locations.find(l => l.id === locationId && l.branch_id === branch);
+    if (!location) throw new AppError(400, "Choose an active supported delivery location.");
+    if (typeof location.coverage !== "string" || location.coverage.trim().length < 10)
+      throw new AppError(409, "Delivery coverage for this area is awaiting confirmation.");
+    const delivery = await one(tx, "SELECT value FROM settings WHERE key='delivery.enabled' AND scope=$1", [branch]);
+    if (delivery?.value !== true) throw new AppError(409, "Online delivery is not available in this area yet.");
+    if (c.feeVersion == null || !Number.isSafeInteger(c.deliveryKobo) || c.deliveryKobo < 0)
+      throw new AppError(409, "Delivery pricing is unavailable.");
+  }
   let subtotal = 0;
   const calculated = lines.map((l) => {
     try {
@@ -516,6 +527,12 @@ export async function gasQuote(
   });
   if (!Number.isSafeInteger(subtotal + c.deliveryKobo))
     throw new AppError(400, "Total exceeds supported limits.");
+  // Advisory only: checkout still atomically reserves stock under its existing locks.
+  if (locationId !== undefined) {
+    const requested = calculated.reduce((mass, line) => mass + line.grams, 0);
+    if (!(await one(tx, "SELECT branch_id FROM gas_stock WHERE branch_id=$1 AND grams-reserved_grams >= $2", [branch, requested])))
+      throw new AppError(409, "Insufficient verified gas stock for this order.");
+  }
   let physicalSubtotalKobo = 0;
   const physicalLines = [];
   for (const item of items) {

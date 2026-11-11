@@ -43,7 +43,8 @@ import {
   enqueueDelivery,
   type PendingDelivery,
 } from "./offline";
-import Workflows, { NativeForm } from "./Workflows";
+import Workflows, { NativeForm, MobileSupportInbox } from "./Workflows";
+import RetailPos, { canOpenRetailPos } from "./RetailPos";
 import React, { useState, useEffect, useRef } from "react";
 import {
   Image,
@@ -215,14 +216,15 @@ export default function App() {
       __DEV__,
       Constants.expoConfig?.extra?.easygasRuntime === "local-demo",
     );
+    const multipart = data instanceof FormData;
     const response = await fetch(`${origin}/api/${action}`, {
       method: data === undefined ? "GET" : "POST",
       headers: {
-        "Content-Type": "application/json",
+        ...(multipart ? {} : { "Content-Type": "application/json" }),
         "x-easygas-client": "native",
         ...(session ? { Authorization: `Bearer ${session}` } : {}),
       },
-      ...(data === undefined ? {} : { body: JSON.stringify(data) }),
+      ...(data === undefined ? {} : { body: multipart ? data : JSON.stringify(data) }),
     });
     const body = await response.json();
     if (!response.ok) {
@@ -730,6 +732,7 @@ export default function App() {
             </View>
           ) : screen === "gas-order" ? (
             <GasOrder
+              viewServices={() => setScreen("services")}
               onPlaced={() => setCart([])}
               api={api}
               catalogue={catalogue}
@@ -791,7 +794,6 @@ export default function App() {
             )
           ) : [
               "profile",
-              "conversations",
               "consumption",
               "credit",
               "plans",
@@ -1830,17 +1832,16 @@ export default function App() {
             />
           ) : screen === "technicians-management" && user && ["owner","service_manager","safety_officer","inventory","finance"].includes(user.role) ? (
             <TechniciansManagement key={user.id} user={user} api={api} />
-          ) : screen === "support" ? (
-            <Support
-              send={async (data) => {
-                await api("support.create", data);
-              }}
-            />
+          ) : screen === "retail-pos" && canOpenRetailPos(user?.role) ? (
+            <RetailPos key={user.id} api={api} />
+          ) : screen === "support" || screen === "conversations" ? (
+            user ? <MobileSupportInbox key={user.id} api={api} imageSource={id => ({ uri: `${origin}/api/media/${id}`, headers: { Authorization: `Bearer ${token}` }, cache: "reload" })} /> : <Text>Sign in to contact support.</Text>
           ) : (
             <>
               <Text style={s.greeting}>MY ACCOUNT</Text>
               <Text style={s.title}>{user?.name ?? "Your EasyGas"}</Text>
               <Text style={s.body}>{user?.email}</Text>
+              {canOpenRetailPos(user?.role) && button("Retail POS", () => setScreen("retail-pos"))}
               {user && ["owner","service_manager","safety_officer","inventory","finance"].includes(user.role) && button("Technicians & Availability", () => setScreen("technicians-management"))}
               {[
                 ["Appearance", "appearance"],
@@ -1937,58 +1938,6 @@ export default function App() {
         ))}
       </View>
     </SafeAreaView>
-  );
-}
-function Support({
-  send,
-}: {
-  send: (data: { subject: string; message: string }) => Promise<void>;
-}) {
-  const [subject, setSubject] = useState(""),
-    [message, setMessage] = useState(""),
-    [error, setError] = useState(""),
-    [sent, setSent] = useState(false);
-  return (
-    <>
-      <Text style={s.title}>Here to help.</Text>
-      {sent ? (
-        <View style={s.card}>
-          <Text style={s.body}>Your support request has been saved.</Text>
-        </View>
-      ) : (
-        <>
-          <Text style={s.label}>Subject</Text>
-          <TextInput
-            style={s.input}
-            accessibilityLabel="Subject"
-            value={subject}
-            onChangeText={setSubject}
-          />
-          <Text style={s.label}>How can we help?</Text>
-          <TextInput
-            style={[s.input, { height: 130, textAlignVertical: "top" }]}
-            multiline
-            accessibilityLabel="Support message"
-            value={message}
-            onChangeText={setMessage}
-          />
-          {error ? <Text>{friendlyMessage(error)}</Text> : null}
-          <Pressable
-            style={s.button}
-            onPress={async () => {
-              try {
-                await send({ subject, message });
-                setSent(true);
-              } catch (e: any) {
-                setError(e.message);
-              }
-            }}
-          >
-            <Text style={s.buttonText}>Send Support Request</Text>
-          </Pressable>
-        </>
-      )}
-    </>
   );
 }
 const s = StyleSheet.create({

@@ -832,3 +832,32 @@ test("confirmed cylinder maintenance is an unpublished draft governed by the exi
     await f.db.close?.();
   }
 });
+
+test("COMPACT-QUOTE01: selected location gates a read-only fractional quote without reserving stock", async () => {
+  const f = await fixture();
+  try {
+    const location = await one(f.db, "SELECT id FROM delivery_locations WHERE branch_id='lagos' AND active=true AND visible=true LIMIT 1");
+    assert.ok(location);
+    await f.db.query("UPDATE delivery_locations SET coverage='Confirmed synthetic coverage boundary' WHERE id=$1", [location.id]);
+    await f.db.query("UPDATE settings SET value='true' WHERE key='delivery.enabled' AND scope='lagos'");
+    await f.db.query("UPDATE settings SET value=$1 WHERE key='gas.quantity_policy' AND scope='lagos'", [
+      JSON.stringify({ minimumKg: .5, maximumKg: 50, incrementKg: .5, precision: 1, capacitiesKg: [6, 12.5] }),
+    ]);
+    await f.db.query("UPDATE settings SET value='182900' WHERE key='gas.price_per_kg' AND scope='lagos'");
+    await f.db.query("UPDATE settings SET value='510000' WHERE key='delivery.fee' AND scope='lagos'");
+    await f.db.query("UPDATE gas_stock SET grams=10000,reserved_grams=0 WHERE branch_id='lagos'");
+    const input = { locationId: location.id, branchId: "lagos", lines: [{ capacityKg: 12.5, kg: 2.5 }] };
+    const quote = (body = input) => dispatch("gas.quote", null, body, f.db);
+    const result = await quote();
+    assert.equal(result.subtotalKobo, 457250);
+    assert.equal(result.deliveryKobo, 510000);
+    assert.equal(Number((await one(f.db, "SELECT reserved_grams FROM gas_stock WHERE branch_id='lagos'"))?.reserved_grams), 0);
+    await assert.rejects(() => quote({ ...input, branchId: "wrong-branch" }), /active supported/);
+    await f.db.query("UPDATE gas_stock SET reserved_grams=9000 WHERE branch_id='lagos'");
+    await assert.rejects(() => quote(), /Insufficient verified gas stock/);
+    await f.db.query("UPDATE delivery_locations SET active=false WHERE id=$1", [location.id]);
+    await assert.rejects(() => quote(), /active supported/);
+  } finally {
+    await f.db.close?.();
+  }
+});

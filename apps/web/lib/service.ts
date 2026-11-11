@@ -1,3 +1,4 @@
+import { enrollSupportSla } from "./support-desk";
 import { auditHistory } from "./audit-history";
 import {enforceStaffPrivilege, staffPrivilegeAction} from "./staff-privileges";
 import { techniciansWorkspace } from "./technicians-availability";
@@ -145,6 +146,7 @@ export async function dispatch(
         const d = z
           .object({
             branchId: z.string().optional(),
+            locationId: z.string().min(1).max(100).optional(),
             items: z
               .array(
                 z
@@ -170,7 +172,7 @@ export async function dispatch(
           })
           .strict()
           .parse(input);
-        return gasQuote(tx, d.lines, d.branchId, d.items);
+        return gasQuote(tx, d.lines, d.branchId, d.items, d.locationId);
       }
       if (action === "gas.catalogue") {
         const d = z
@@ -1041,27 +1043,44 @@ export async function dispatch(
         const d = z
           .object({
             orderId: z.string().uuid().optional(),
-            subject: z.string().min(5).max(100),
-            message: z.string().min(10).max(2000),
+            customerRef: z.string().trim().min(1).max(100).optional(),
+            subject: z.string().trim().min(5).max(100),
+            message: z.string().trim().min(10).max(2000),
           })
           .strict()
           .parse(input);
         let branch = user.branch_id ?? "lagos";
+        let customerId = user.id;
+        if (d.customerRef) {
+          enforceStaffPrivilege(user, "support.update");
+          allow(user, ["owner", "manager", "sales"]);
+          const customer = await one(tx,
+            "SELECT id,branch_id FROM users WHERE (public_customer_id=$1 OR id=$1) AND active=true AND role IN ('customer','commercial') AND ($2::boolean OR branch_id=$3)",
+            [d.customerRef, user.role === "owner", user.branch_id]);
+          if (!customer?.branch_id)
+            throw new AppError(404, "No active customer with that reference is available in your workspace.");
+          customerId = customer.id;
+          branch = customer.branch_id;
+        }
         if (d.orderId) {
           const order = await one(
             tx,
             "SELECT branch_id FROM orders WHERE id=$1 AND customer_id=$2",
-            [d.orderId, user.id],
+            [d.orderId, customerId],
           );
           if (!order)
             throw new AppError(404, "Order unavailable for this account.");
+          if (d.customerRef) allow(user, ["owner", "manager", "sales"], order.branch_id);
           branch = order.branch_id;
         }
+        const requestId = id();
         await tx.query(
           "INSERT INTO support_requests(id,customer_id,subject,message,branch_id,order_id) VALUES($1,$2,$3,$4,$5,$6)",
-          [id(), user.id, d.subject, d.message, branch, d.orderId ?? null],
+          [requestId, customerId, d.subject, d.message, branch, d.orderId ?? null],
         );
-        return { ok: true };
+        await enrollSupportSla(tx, requestId, branch, new Date());
+        await audit(tx, user, "support.created", requestId, "success", { branch, assisted: Boolean(d.customerRef) });
+        return { ok: true, id: requestId };
       }
       if (action === "settings") {
         const d = z.object({ scope: scopeSchema }).strict().parse(input);

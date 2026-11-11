@@ -1,3 +1,4 @@
+import { escalateSupportSla } from "./support-desk";
 import { publishTrackingNotifications } from "./order-tracking";
 import { recordFailure } from "./observability";
 import { type DB, one } from "./db";
@@ -23,6 +24,7 @@ export function startMaintenance(db: DB) {
       );
       if (owner) {
         const { runJobs } = await import("./refills");
+        await db.transaction(tx => escalateSupportSla(tx, { ...owner, verified_at: null, session_id: "background-maintenance" } as Actor));
         await db.transaction((tx) =>
           runJobs(tx, {
             ...owner,

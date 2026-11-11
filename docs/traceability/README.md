@@ -163,3 +163,13 @@ Legacy payment setting guidance: [matrix](payment-setting-guidance-rtm.md). Conf
 11 November release CI repair: [matrix](ci-repair-20261111-rtm.md). Booking test fixture and native dependency audit addressed; hosted rerun pending.
 
 11 November production acceptance: [six-gate matrix](launch-readiness-20261111-rtm.md). Local image and isolated Compose with TLS/restricted role/worker passed; hosted demo Settings browser verified. No production gate waived.
+
+Compact ordering: [matrix](compact-order-rtm.md). Local web handoff, shared quote and quantity rules verified; native source typechecked, native device and production release gates remain open.
+
+Support Desk and Retail POS: [support matrix](support-desk-rtm.md), [POS matrix](pos-rtm.md). Existing sidebar and roles preserved; bounded browser, focused regression and isolated POS PostgreSQL evidence recorded. Native physical, provider and production gates remain open.
+
+Support Desk continuation: [matrix](support-desk-rtm.md). Full request and message pagination, private images, configured SLA tracking and foreground updates. Production NO-GO and the original acceptance gates remain in scope.
+
+Finance workspace redesign: [traceability matrix](finance-redesign-rtm.md). Responsive web presentation and expense intake delivered locally. Period analytics, native implementation and full acceptance remain open.
+
+Credits & Refunds: [traceability matrix](../credits-refunds/traceability.md). Scoped web workspace and existing approval flows. Provider, native and release acceptance remain open.

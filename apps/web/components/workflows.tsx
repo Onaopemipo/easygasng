@@ -11,8 +11,12 @@ import React, { useState, useEffect, useRef, type FormEvent } from "react";
 import Link from "./workspace-link";
 import { useSearchParams } from "next/navigation";
 import { AddressAreaFields } from "./address-area-fields";
-import { api, Notice, Loading, Empty, money } from "./ui";
-import { ProductHeading, filterSupportTickets } from "./product-workspace";
+import { api, Notice, Loading, Empty, money, Modal } from "./ui";
+import { nairaToKobo } from "../../../packages/business-rules/src/pos-money";
+import { gasMoney } from "../../../packages/business-rules/src/gas-pricing";
+import { ShoppingCart, ReceiptText, Layers, LockKeyhole, Store, BarChart3, Headset, MessageSquare, Clock, Hourglass, CircleCheck, Search, Plus, CalendarDays, ArrowLeft } from "lucide-react";
+import { ProductHeading } from "./product-workspace";
+import { SupportAttachmentForm, SupportPagination, SupportSlaForm, useSupportRecords } from "./support-controls";
 type Field = {
   name: string;
   label: string;
@@ -31,6 +35,7 @@ export function ActionForm({
   onResult,
   submit = "Save",
   confirm,
+  contextual = false,
 }: {
   action: string;
   title: string;
@@ -39,10 +44,12 @@ export function ActionForm({
   onResult?: (result: any) => void;
   submit?: string;
   confirm?: string;
+  contextual?: boolean;
 }) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [success, setSuccess] = useState("");
+  const [dirty, setDirty] = useState(false);
   const lifecycle = useRef<AbortController|null>(null);
   useEffect(() => { lifecycle.current = new AbortController(); return () => lifecycle.current?.abort(); }, []);
   async function send(e: FormEvent<HTMLFormElement>) {
@@ -65,6 +72,8 @@ export function ActionForm({
       )
         continue;
       if (f.type === "checkbox") data[f.name] = raw === "on";
+      else if (f.type === "boolean-hidden") data[f.name] = raw === "true";
+      else if (f.type === "number-hidden") data[f.name] = Number(raw);
       else if (f.type === "datetime-local") {
         const date = new Date(String(raw));
         if (!Number.isFinite(date.getTime())) {
@@ -73,6 +82,9 @@ export function ActionForm({
           return;
         }
         data[f.name] = date.toISOString();
+      } else if (f.type === "naira") {
+        try { data[f.name] = nairaToKobo(raw); }
+        catch (error) { setError((error as Error).message); setBusy(false); return; }
       } else if (f.type === "money")
         data[f.name] = Math.round(Number(raw) * 100);
       else if (f.type === "number") data[f.name] = Number(raw);
@@ -101,6 +113,7 @@ export function ActionForm({
         window.location.assign("/login");
         return;
       }
+      setDirty(false);
       onDone?.();
     } catch (e: any) {
       setError(e.message);
@@ -109,8 +122,8 @@ export function ActionForm({
     }
   }
   return (
-    <form className="surface workflow-form product-form" onSubmit={send}>
-      <h3>{title}</h3>
+    <form className={`surface workflow-form product-form ${contextual ? "support-dialog-form" : ""}`} onSubmit={send} onChange={contextual ? () => setDirty(true) : undefined} data-unsaved={contextual && dirty ? "true" : undefined}>
+      {!contextual && <h3>{title}</h3>}
       {fields.map((f) =>
         action === "address.save" && f.name === "locationId" ? null : action ===
             "address.save" && f.name === "street" ? (
@@ -125,7 +138,7 @@ export function ActionForm({
           />
         ) : (
           <label key={f.name} data-field-type={f.type ?? "text"}>
-            {f.type !== "hidden" && f.label}
+            {!["hidden", "boolean-hidden", "number-hidden"].includes(f.type ?? "") && f.label}
             {f.options ? (
               <select
                 name={f.name}
@@ -152,10 +165,11 @@ export function ActionForm({
                 type={
                   ["nullable-number", "money"].includes(f.type ?? "")
                     ? "number"
-                    : f.type === "nullable"
+                    : ["nullable", "naira"].includes(f.type ?? "")
                       ? "text"
-                      : (f.type ?? "text")
+                      : ["boolean-hidden", "number-hidden"].includes(f.type ?? "") ? "hidden" : (f.type ?? "text")
                 }
+                inputMode={f.type === "naira" ? "decimal" : undefined}
                 defaultValue={
                   f.type === "checkbox" ? undefined : (f.value ?? "")
                 }
@@ -507,141 +521,183 @@ export function Recovery({
     </div>
   );
 }
+const supportStatuses = [
+  ["all", "All requests", MessageSquare],
+  ["open", "Open", Clock],
+  ["in_progress", "In progress", Hourglass],
+  ["resolved", "Resolved", CircleCheck],
+] as const;
+const supportDate = new Intl.DateTimeFormat("en-NG", {
+  dateStyle: "medium", timeStyle: "short", timeZone: "Africa/Lagos",
+});
 export function SupportDesk({ staff = false }: { staff?: boolean }) {
   const orderId = useSearchParams().get("orderId") ?? "";
-  const { data, error, reload } = useRecords("support.list");
   const [selected, setSelected] = useState<string | null>(null);
-  const [supportSearch, setSupportSearch] = useState("");
-  const [supportStatus, setSupportStatus] = useState("all");
-  if (error) return <Notice type="error" message={error} />;
-  if (!data) return <Loading />;
-  const ticket = data.find((t: any) => t.id === selected);
-  const visibleTickets = filterSupportTickets(data, supportSearch, supportStatus);
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("all");
+  const [days, setDays] = useState("");
+  const [page, setPage] = useState(1);
+  const [messagePage, setMessagePage] = useState<number | "latest">("latest");
+  const [sla, setSla] = useState("all");
+  const [revision, refresh] = useState(0);
+  const [form, setForm] = useState<"new" | "reply" | "note" | "manage" | "attachment" | "sla" | null>(null);
+  const [feedback, setFeedback] = useState("");
+  const [actionError, setActionError] = useState("");
+  const [operationId, setOperationId] = useState("");
+  const [editVersion, setEditVersion] = useState(0);
+  const filters = new URLSearchParams({ view: "paged", search, status, days: days || "0", page: String(page), sla });
+  const { data, error, pending } = useSupportRecords(`support.list?${filters}`, revision, true);
+  const thread = useSupportRecords(selected ? `support.detail?id=${selected}&page=${messagePage}` : null, revision);
+  const ticket = thread.data;
+  const rows = data?.rows ?? [];
+  const canAct = !staff || data?.canManage === true;
+  const reload = () => refresh(v => v + 1);
+  const resetList = () => { setSelected(null); setPage(1); };
+  const openThread = (id: string) => { setSelected(id); setMessagePage("latest"); setActionError(""); };
+  const done = () => {
+    setFeedback(form === "new" ? "Request created." : form === "manage" ? "Request updated." : form === "note" ? "Internal note saved." : form === "attachment" ? "Image attached." : form === "sla" ? "SLA policy saved." : "Reply sent.");
+    if (form === "reply" || form === "note") setMessagePage("latest");
+    setForm(null);
+    reload();
+  };
+  async function slaAction(enroll: boolean) {
+    setActionError("");
+    try {
+      const result = await api(enroll ? "support.sla.enroll" : "support.sla.scan", enroll ? { id: ticket.id, version: ticket.version } : {});
+      setFeedback(enroll ? "SLA targets applied." : `Checked ${result.checked} newly overdue requests.`);
+      reload();
+    } catch (e) { setActionError((e as Error).message); }
+  }
+  const title = form === "new" ? "New support request" : form === "manage" ? "Manage request" : form === "note" ? "Add internal note" : form === "attachment" ? "Attach image" : form === "sla" ? "Support SLA policy" : "Reply to request";
+  const newButton = (label: string, secondary = false) =>
+    <button className={`button ${secondary ? "secondary" : ""}`} type="button" onClick={() => setForm("new")}><Plus size={18} aria-hidden="true" />{label}</button>;
   return (
-    <div className="workflow-stack product-workspace support-workspace">
-      <ProductHeading eyebrow={staff ? "CUSTOMER EXPERIENCE" : "HELP & SUPPORT"} title={staff ? "Support desk" : "Your support conversations"} description="Keep every conversation and update in one place. Select a request to view its history and reply." />
-      <div className="product-toolbar" role="search" aria-label="Find support requests">
-        <label>Search requests<FormInput type="search" value={supportSearch} onChange={e => setSupportSearch(e.target.value)} placeholder="Subject or customer name" /></label>
-        <label>Status<select value={supportStatus} onChange={e => setSupportStatus(e.target.value)}><option value="all">All statuses</option>{["open", "in_progress", "resolved", "closed"].map(status => <option key={status} value={status}>{status.replaceAll("_", " ")}</option>)}</select></label>
-        <span className="product-result-count" role="status">{visibleTickets.length} of {data.length} requests</span>
-      </div>
-      {!staff && (
-        <ActionForm
-          action="support.create"
-          title="New support request"
-          key={orderId}
-          fields={[
-            ...(orderId
-              ? [
-                  {
-                    name: "orderId",
-                    label: "Order",
-                    type: "hidden",
-                    value: orderId,
-                  },
-                ]
-              : []),
-            {
-              name: "subject",
-              label: "Subject",
-              value: orderId ? "Order delivery support" : "",
-            },
-            { name: "message", label: "How can we help?", type: "textarea" },
-          ]}
-          onDone={reload}
-          submit="Send request"
-        />
-      )}
-      <div className={`support-layout ${!visibleTickets.length && !ticket ? "is-empty" : ""}`}>
-        <section className="support-request-list" aria-label="Support requests">
-          {visibleTickets.length ? (
-            visibleTickets.map((t: any) => (
-              <button
-                className={`surface ticket-select ${selected === t.id ? "is-selected" : ""}`}
-                aria-pressed={selected === t.id}
-                key={t.id}
-                onClick={() => setSelected(t.id)}
-              >
-                <strong>{t.subject}</strong>
-                <span>
-                  {staff ? t.customer_name : ""} ·{" "}
-                  {t.status.replaceAll("_", " ")}
-                </span>
-                <small>{new Date(t.updated_at).toLocaleString()}</small>
-              </button>
-            ))
-          ) : (
-            <Empty title={data.length ? "No matching requests" : "No support requests"}>
-              {data.length ? "Try another search or choose a different status." : "Your conversations will appear here."}
-            </Empty>
-          )}
+    <div className="workflow-stack product-workspace support-workspace support-desk">
+      <header className="support-hero">
+        <span className="support-hero-icon"><Headset aria-hidden="true" size={42} /></span>
+        <div><span className="eyebrow">{staff ? "Customer experience" : "Help & support"}</span>
+          <h1>{staff ? "Support Desk" : "Your support conversations"}</h1>
+          <p>Keep every conversation and update in one place. Manage requests, track progress and reply faster.</p>
+        </div>
+      </header>
+      {actionError && <Notice type="error" message={actionError} />}
+      {feedback && <p role="status" className="support-feedback">{feedback}</p>}
+      {error && <div><Notice type="error" message={error} /><button className="button secondary" onClick={reload}>Retry requests</button></div>}
+      {!data && !error && <Loading />}
+      {data && <>
+        <section className="support-metrics" aria-label="Support request totals">
+          {supportStatuses.map(([key, label, Icon]) => <article className="surface support-metric" key={key}>
+            <span className={`support-metric-icon is-${key}`}><Icon size={25} aria-hidden="true" /></span>
+            <div><span>{key === "all" ? "Total requests" : label}</span><strong>{data.totals[key === "all" ? "total" : key]}</strong></div>
+          </article>)}
         </section>
-        {!ticket && visibleTickets.length > 0 && <section className="surface support-placeholder"><Empty title="Select a conversation">Choose a request to see its messages and available actions.</Empty></section>}
-        {ticket && (
-          <section className="surface workflow-form support-conversation">
-            <h2>{ticket.subject}</h2>
-            <p>{ticket.message}</p>
-            {ticket.messages.map((m: any) => (
-              <div
-                key={m.id}
-                className={`support-message ${m.internal ? "internal" : ""}`}
-              >
-                <strong>
-                  {m.author}
-                  {m.internal ? " · Internal note" : ""}
-                </strong>
-                <p>{m.body}</p>
-                <small>{new Date(m.created_at).toLocaleString()}</small>
-              </div>
-            ))}
-            {ticket.status !== "closed" && (
-              <ActionForm
-                key={ticket.id}
-                action="support.reply"
-                title="Reply"
-                fields={[
-                  { name: "id", label: "", type: "hidden", value: ticket.id },
-                  { name: "body", label: "Message", type: "textarea" },
-                  ...(staff
-                    ? [
-                        {
-                          name: "internal",
-                          label: "Internal staff note",
-                          type: "checkbox",
-                        },
-                      ]
-                    : []),
-                ]}
-                onDone={reload}
-                submit="Send reply"
-              />
-            )}
-            {staff && (
-              <ActionForm
-                action="support.update"
-                title="Manage request"
-                fields={[
-                  { name: "id", label: "", type: "hidden", value: ticket.id },
-                  {
-                    name: "status",
-                    label: "Status",
-                    value: ticket.status,
-                    options: ["open", "in_progress", "resolved", "closed"].map(
-                      (value) => ({ value, label: value.replaceAll("_", " ") }),
-                    ),
-                  },
-                  {
-                    name: "assigneeId",
-                    label: "Assign to staff account ID (optional)",
-                    required: false,
-                  },
-                ]}
-                onDone={reload}
-              />
-            )}
-          </section>
-        )}
-      </div>
+        <section className="surface support-inbox" aria-label="Support inbox">
+          <div className="support-inbox-top">
+            <div className="support-status-controls" role="group" aria-label="Filter by request status">
+              {supportStatuses.map(([key, label, Icon]) =>
+                <button type="button" key={key} className={`support-status-control ${status === key ? "is-active" : ""}`}
+                  aria-pressed={status === key} onClick={() => { setStatus(key); resetList(); }}>
+                  <Icon size={17} aria-hidden="true" />{label} ({data.totals[key === "all" ? "total" : key]})
+                </button>)}
+            </div>
+            {canAct && newButton("New request")}
+          </div>
+          <div className="support-filters" role="search" aria-label="Find support requests">
+            <label className="support-search"><Search size={18} aria-hidden="true" /><FormInput aria-label="Search requests" type="search" maxLength={100} value={search}
+              placeholder="Search by subject, customer or request ID…" onChange={e => { setSearch(e.target.value); resetList(); }} /></label>
+            <select aria-label="Request status" value={status} onChange={e => { setStatus(e.target.value); resetList(); }}>
+              <option value="all">All statuses</option>
+              {supportStatuses.slice(1).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
+              <option value="closed">Closed</option>
+            </select>
+            <label className="support-search"><CalendarDays size={18} aria-hidden="true" />
+              <select aria-label="Last activity date" value={days} onChange={e => { setDays(e.target.value); resetList(); }}>
+                <option value="">All time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option>
+              </select>
+            </label>
+          </div>
+          <div className="support-list-limit">
+            {staff && <label>Service level <select aria-label="Service level" value={sla} onChange={e => { setSla(e.target.value); resetList(); }}><option value="all">All requests</option><option value="overdue">Overdue</option></select></label>}
+            <span>{error ? "Updates paused · Showing last successful refresh" : `Auto-refreshes every 15 seconds · Last synced ${supportDate.format(new Date(data.syncedAt))} WAT`}</span>
+            {data.canConfigureSla && staff && <div className="support-thread-actions"><button className="button secondary" onClick={() => setForm("sla")}>SLA policy</button><button className="button secondary" onClick={() => void slaAction(false)}>Check overdue requests</button></div>}
+          </div>
+          {pending ? <Loading /> : (rows.length || selected) ? (
+            <div className={`support-layout ${selected ? "has-selection" : ""}`}>
+              <section className="support-request-list" aria-label="Support requests">
+                {rows.map((t: any) => <button type="button" className={`surface ticket-select ${selected === t.id ? "is-selected" : ""}`}
+                  aria-pressed={selected === t.id} key={t.id} onClick={() => openThread(t.id)}>
+                  <strong>{t.subject}</strong><span>{staff && t.customer_name ? t.customer_name + " · " : ""}{t.status.replaceAll("_", " ")}</span>
+                  {staff && t.sla_overdue && <small>Overdue SLA</small>}{staff && t.assignee && <small>Assigned to {t.assignee}</small>}<small>{supportDate.format(new Date(t.updated_at))} WAT</small>
+                </button>)}
+                <SupportPagination page={data.page} pages={data.pages} label="Request pages" change={p => { setSelected(null); setPage(p); }} />
+              </section>
+              {selected && !ticket ? <section className="surface support-conversation"><button className="button secondary" onClick={() => setSelected(null)}>Back to requests</button>{thread.error ? <Notice type="error" message={thread.error} /> : <Loading />}</section> : !ticket ? <section className="support-placeholder"><Empty title="Select a conversation">Choose a request to see its messages.</Empty></section> :
+                <section className="surface support-conversation" aria-label="Request conversation">
+                  <button type="button" className="button secondary support-back" onClick={() => setSelected(null)}><ArrowLeft size={16} />Back to requests</button>
+                  <header className="support-thread-header"><div><h2>{ticket.subject}</h2>
+                    <p>{staff && ticket.customer_name ? ticket.customer_name + " · " : ""}{ticket.status.replaceAll("_", " ")}</p>
+                    <small>Request ID: {ticket.id}</small>
+                  </div>{staff && canAct && <button type="button" className="button secondary" onClick={() => { setEditVersion(ticket.version); setForm("manage"); }}>Manage request</button>}</header>
+                  {thread.error && <Notice type="error" message="Conversation updates paused. Showing the last successful refresh." />}
+                  {staff && <div className="support-sla-summary">
+                    {ticket.response_due_at ? <><span>First response: {ticket.sla.response} · {supportDate.format(new Date(ticket.response_due_at))} WAT</span><span>Resolution: {ticket.sla.resolution} · {supportDate.format(new Date(ticket.resolution_due_at))} WAT</span></> : <span>SLA targets unconfigured for this request</span>}
+                    {!ticket.response_due_at && data.canConfigureSla && !["resolved", "closed"].includes(ticket.status) && <button type="button" className="button secondary" onClick={() => void slaAction(true)}>Apply branch SLA</button>}
+                  </div>}
+                  <div className="support-thread" aria-live="polite">
+                    <div className="support-message"><strong>Original request</strong><p>{ticket.message}</p></div>
+                    {ticket.messages.map((m: any) => <div key={m.id} className={`support-message ${m.internal ? "internal" : ""}`}>
+                      <strong>{m.author}{m.internal ? " · Internal note" : ""}</strong><p>{m.body}</p><small>{supportDate.format(new Date(m.created_at))} WAT</small>
+                    </div>)}
+                  </div>
+                  <SupportPagination page={ticket.messagePage} pages={ticket.messagePages} label="Message pages" change={p => setMessagePage(p === ticket.messagePages ? "latest" : p)} />
+                  {ticket.attachments.length > 0 && <section className="support-attachments" aria-label="Request attachments">
+                    {ticket.attachments.map((attachment: any) => <a key={attachment.id} href={`/api/media/${attachment.id}`} target="_blank" rel="noreferrer">
+                      {/* Authenticated image URLs must bypass the shared Next image cache. */}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={`/api/media/${attachment.id}`} loading="lazy" alt={attachment.alt} />
+                      <span>{attachment.alt}{attachment.internal ? " · Staff only" : ""}</span>
+                    </a>)}
+                  </section>}
+                  {canAct && ticket.status !== "closed" && <div className="support-thread-actions">
+                    <button type="button" className="button" onClick={() => { setOperationId(crypto.randomUUID()); setForm("reply"); }}>Reply</button>
+                    <button type="button" className="button secondary" onClick={() => setForm("attachment")}>Attach image</button>
+                    {staff && <button type="button" className="button secondary" onClick={() => { setOperationId(crypto.randomUUID()); setForm("note"); }}>Add internal note</button>}
+                  </div>}
+                </section>}
+            </div>
+          ) : <div className="support-empty">
+            <span className="support-empty-icon"><Headset size={48} aria-hidden="true" /></span>
+            <h2>{data.totals.total ? "No matching requests" : "No support requests yet"}</h2>
+            <p>{data.totals.total ? "Try another search, status or date range." : "Customer conversations and requests will appear here."}</p>
+            {data.totals.total
+              ? <button className="button secondary" onClick={() => { setStatus("all"); setSearch(""); setDays(""); setSla("all"); resetList(); }}>Clear filters</button>
+              : canAct ? newButton("Create a Support Request", true) : null}
+          </div>}
+        </section>
+      </>}
+      {form && (form === "new" || form === "sla" || ticket) && <Modal title={title} onClose={() => setForm(null)}>
+        {form === "note" && <p>Only authorised support staff can see this note.</p>}
+        {form === "sla" ? <SupportSlaForm branch={data?.branch} done={done} /> : form === "attachment" ? <SupportAttachmentForm requestId={ticket.id} staff={staff} done={done} /> : <ActionForm contextual key={`${form}:${ticket?.id ?? orderId}`} title={title} onDone={done}
+          action={form === "new" ? "support.create" : form === "manage" ? "support.update" : "support.reply"}
+          onResult={result => { if (form === "new" && result.id) openThread(result.id); }}
+          submit={form === "new" ? "Send request" : form === "note" ? "Save note" : form === "reply" ? "Send reply" : "Save changes"}
+          fields={form === "new" ? [
+            ...(staff ? [{ name: "customerRef", label: "Existing customer ID" }] : []),
+            ...(!staff && orderId ? [{ name: "orderId", label: "Order", type: "hidden", value: orderId }] : []),
+            { name: "subject", label: "Subject", value: !staff && orderId ? "Order delivery support" : "" },
+            { name: "message", label: "How can we help?", type: "textarea" },
+          ] : form === "manage" ? [
+            { name: "id", label: "", type: "hidden", value: ticket.id },
+            { name: "version", label: "", type: "number-hidden", value: editVersion },
+            { name: "status", label: "Status", value: ticket.status, options: [...supportStatuses.slice(1).map(([value, label]) => ({ value, label })), { value: "closed", label: "Closed" }] },
+            { name: "assigneeId", label: "Assign to staff account ID (optional)", required: false },
+          ] : [
+            { name: "id", label: "", type: "hidden", value: ticket.id },
+            { name: "operationId", label: "", type: "hidden", value: operationId },
+            { name: "body", label: form === "note" ? "Internal note" : "Message", type: "textarea" },
+            ...(form === "note" ? [{ name: "internal", label: "", type: "boolean-hidden", value: "true" }] : []),
+          ]} />}
+      </Modal>}
     </div>
   );
 }
@@ -1301,18 +1357,65 @@ export function CustomerCreditRequestForm({customer,onDone}:{customer:CreditCust
       /></div>);
 }
 export function CreditManagement() {
-  const { data, error, reload } = useRecords("credits");
-  const [selectedCustomer,setSelectedCustomer]=useState<CreditCustomer|null>(null);
-  if (error) return <Notice type="error" message={error} />;
-  if (!data) return <Loading />;
+  const [selectedCustomer, setSelectedCustomer] = useState<CreditCustomer | null>(null);
+  const [dialog, setDialog] = useState<"credit" | "refund" | null>(null);
+  const [tab, setTab] = useState("all");
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [revision, setRevision] = useState(0);
+  const query = new URLSearchParams({ view: "workspace", tab, q: search, page: String(page) });
+  const { data, error, pending } = useSupportRecords("credits?" + query, revision, true);
+  const reload = () => setRevision(value => value + 1);
+  const c = pending ? undefined : data?.rows.find((row: any) => row.id === selectedId);
+  const tabs = [["all", "All requests"], ["credits", "Credits"], ["refunds", "Refunds"], ["pending", "Pending"], ["completed", "Completed"]];
+  const amount = (kobo: string) => {
+    const value = BigInt(kobo);
+    return `₦${(value / 100n).toLocaleString("en-NG")}.${String(value % 100n).padStart(2, "0")}`;
+  };
   return (
     <div className="workflow-stack product-workspace">
-      <ProductHeading eyebrow="FINANCE" title="Credits & refunds" description="Find a customer, record purchase credit and review refunds." />
-      <CreditCustomerSearch selected={selectedCustomer} onSelect={setSelectedCustomer} />
-      {selectedCustomer && selectedCustomer.credit_branch_id ? <CustomerCreditRequestForm key={selectedCustomer.id} customer={selectedCustomer} onDone={reload} /> : selectedCustomer ? <Notice message="This customer needs an authorised branch before purchase credit can be recorded." /> : <p>Select a customer above to record purchase credit.</p>}
-      <h2>{selectedCustomer ? `Credit and refund requests for ${selectedCustomer.name}` : "Credit and refund requests"}</h2>
-      {selectedCustomer && !data.some((c:any)=>c.customer_id===selectedCustomer.id) && <p>No credit or refund requests for this customer.</p>}
-      {data.filter((c:any)=>!selectedCustomer||c.customer_id===selectedCustomer.id).map((c: any) => (
+      <ProductHeading eyebrow="FINANCE" title="Credits & Refunds" description="Find a customer, record purchase credit and review refund requests." />
+      {error && <Notice type="error" message={error} />}
+      {!data && !error && <Loading />}
+      {data && <div className="finance-primary">
+        {[
+          ["Total credits", amount(data.summary.creditsKobo)],
+          ["Refunds credited to wallets", amount(data.summary.refundsKobo)],
+          ["Pending requests", data.summary.pending],
+          ["Completed approvals", data.summary.completed],
+        ].map(([label, value]) => <article className="surface finance-metric" key={label}><span>{label}</span><strong>{value}</strong></article>)}
+      </div>}
+      <div className="finance-panels">
+        <section className="surface"><h2>Find a customer</h2><CreditCustomerSearch selected={selectedCustomer} onSelect={setSelectedCustomer} /></section>
+        <section className="surface"><h2>Quick actions</h2><div className="finance-actions">
+          <button className="button" disabled={!selectedCustomer?.credit_branch_id} onClick={() => setDialog("credit")}>Record credit</button>
+          <button className="button secondary" onClick={() => setDialog("refund")}>Review refunds</button>
+        </div>{!selectedCustomer?.credit_branch_id && <p>Select a customer with an authorised branch to record credit.</p>}</section>
+      </div>
+      <section className="surface support-inbox">
+        <div className="support-status-controls" role="group" aria-label="Request status">
+          {tabs.map(([key, label]) => <button type="button" key={key} className={`support-status-control ${key === tab ? "is-active" : ""}`} aria-pressed={key === tab} onClick={() => { setTab(key); setPage(1); }}>{label}{data ? ` (${data.summary[key]})` : ""}</button>)}
+        </div>
+        <label>Search requests<FormInput type="search" maxLength={100} value={search} placeholder="Customer, reference or request ID" onChange={event => { setSearch(event.target.value); setPage(1); }} /></label>
+        {pending && data ? <Loading /> : data && <>
+          {data.rows.length ? <div className="workflow-stack">
+            {data.rows.map((row: any) => <button type="button" className="button secondary" key={row.id} onClick={() => setSelectedId(row.id)}>
+              {row.customer_name} · {amount(String(row.amount_kobo))} · {row.kind.replaceAll("_", " ")} · {row.status === "approved" ? "Credited to wallet" : row.status}
+            </button>)}
+          </div> : <Empty title={data.summary.all ? "No matching requests" : "No credit or refund requests yet"}>Requests appear here when they are submitted for verification.</Empty>}
+          <SupportPagination page={page} pages={Math.max(page, Math.ceil(data.total / 20))} change={setPage} label="Request pages" />
+        </>}
+      </section>
+      {dialog === "credit" && selectedCustomer && <Modal title="Record purchase credit" onClose={() => setDialog(null)}>
+        <ActionForm contextual action="reauth" title="Verify identity" fields={[{ name: "password", label: "Your password", type: "password" }]} submit="Verify identity" />
+        <CustomerCreditRequestForm customer={selectedCustomer} onDone={() => { setDialog(null); reload(); }} />
+      </Modal>}
+      {dialog === "refund" && <Modal title="Review refund requests" onClose={() => setDialog(null)}>
+        <p>Customers can request eligible refunds from their orders. Approved purchase-credit refunds post to the wallet. Provider-funded refunds require the provider workflow.</p>
+        <button className="button" onClick={() => { setTab("refunds"); setPage(1); setDialog(null); }}>Show refund requests</button>
+      </Modal>}
+      {c && <Modal title="Request details" onClose={() => setSelectedId(null)}>
         <section className="surface workflow-form" key={c.id}>
           <h3>
             {c.customer_name} · {money(c.amount_kobo)} ·{" "}
@@ -1347,8 +1450,9 @@ export function CreditManagement() {
                 : "Full service review; approval reverses service rewards"}
             </p>
           )}
-          {c.status === "pending" && (
-            <ActionForm
+          {c.can_decide && <>
+            <ActionForm contextual action="reauth" title="Verify identity" fields={[{ name: "password", label: "Your password", type: "password" }]} submit="Verify identity" />
+            <ActionForm contextual
               action="credit.decide"
               title="Finance decision"
               fields={[
@@ -1367,173 +1471,155 @@ export function CreditManagement() {
                   type: "textarea",
                 },
               ]}
-              onDone={reload}
+              onDone={() => { setSelectedId(null); reload(); }}
             />
-          )}
+          </>}
         </section>
-      ))}
+      </Modal>}
     </div>
   );
 }
 export function PointOfSale() {
-  const { data, error, reload } = useRecords("pos"),
-    { data: unusedCatalogue } = useRecords("catalogue");
-  const [receipt, setReceipt] = useState<any>(null),
-    [saleKey, setSaleKey] = useState(() => crypto.randomUUID()),
-    [saleError, setSaleError] = useState(""),
-    [busy, setBusy] = useState(false);
-  if (error) return <Notice type="error" message={error} />;
-  if (!data) return <Loading />;
-  const open = data.shifts.filter((s: any) => s.status === "open");
+  const { data, error, reload } = useRecords("pos");
+  const [form, setForm] = useState<"sale" | "close" | "reports" | "verify" | "receipt" | null>(null);
+  const [active, setActive] = useState<any>(null);
+  const [receipt, setReceipt] = useState<any>(null);
+  const [saleKey, setSaleKey] = useState(() => crypto.randomUUID());
+  const [saleError, setSaleError] = useState("");
+  const [lines, setLines] = useState([{ productId: "", quantity: "1" }]);
+  const [query, setQuery] = useState("");
+  const [busy, setBusy] = useState(false);
+  const committing = useRef(false);
+  const receipts = useRef<HTMLElement>(null);
+  if (!data) return error ? <><Notice type="error" message={error} /><button className="button secondary" onClick={reload}>Retry POS</button></> : <Loading />;
+  const shift = data.ownShift;
+  const canRecord = data.canSell && shift?.branch_active === true;
+  const products = data.products.filter((p: any) => p.published && !p.archived && Number(p.available) > 0 && Number(p.price_kobo) > 0);
+  const startSale = () => { setSaleError(""); setForm("sale"); };
+  const closeForm = () => { if (!committing.current) setForm(null); };
   async function sell(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (committing.current || !canRecord) return;
+    const tender = new FormData(e.currentTarget).get("tender");
+    committing.current = true;
     setBusy(true);
     setSaleError("");
-    const f = new FormData(e.currentTarget);
     try {
       const r = await api("pos.sale", {
-        shiftId: f.get("shiftId"),
-        items: [
-          {
-            productId: f.get("productId"),
-            quantity: Number(f.get("quantity")),
-          },
-        ],
-        tenderedKobo: Number(f.get("tenderedKobo")),
+        shiftId: shift.id,
+        items: lines.map(line => ({ productId: line.productId, quantity: Number(line.quantity) })),
+        tenderedKobo: nairaToKobo(tender),
         idempotencyKey: saleKey,
       });
       setReceipt(r);
       setSaleKey(crypto.randomUUID());
+      setLines([{ productId: "", quantity: "1" }]);
+      setForm(null);
       reload();
     } catch (e: any) {
       setSaleError(e.message);
     } finally {
+      committing.current = false;
       setBusy(false);
     }
   }
-  return (
-    <div className="workflow-stack product-workspace">
-      <ProductHeading eyebrow="SALES" title="Retail point of sale" description="Record an in-person sale and its payment using the existing stock records." />
-      <p>
-        Cash sales reduce available stock immediately. Revenue is verified
-        through independent shift cash-up.
-      </p>
-      <ActionForm
-        action="pos.open"
-        title="Open your till shift"
-        fields={[
-          { name: "branchId", label: "Branch ID", value: "lagos" },
-          {
-            name: "openingKobo",
-            label: "Opening cash float (kobo)",
-            type: "number",
-            value: 0,
-          },
-        ]}
-        onDone={reload}
-      />
-      {open.length > 0 && (
-        <form className="surface workflow-form product-form" onSubmit={sell}>
-          <h2>Record cash sale</h2>
-          <label>
-            Open shift
-            <select name="shiftId" required>
-              {open.map((s: any) => (
-                <option value={s.id} key={s.id}>
-                  {s.cashier} · {s.branch_id}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Product
-            <select name="productId" required>
-              {data.products
-                .filter((p: any) => p.published && p.available > 0)
-                .map((p: any) => (
-                  <option value={p.id} key={p.id}>
-                    {p.name} · {money(p.price_kobo)}
-                  </option>
-                ))}
-            </select>
-          </label>
-          <label>
-            Quantity
-            <FormInput
-              name="quantity"
-              type="number"
-              min={1}
-              max={100}
-              defaultValue={1}
-              required
-            />
-          </label>
-          <label>
-            Cash tendered (kobo)
-            <FormInput name="tenderedKobo" type="number" min={1} required />
-          </label>
-          {saleError && <Notice type="error" message={saleError} />}
-          <button className="button" disabled={busy}>
-            {busy ? "Recording…" : "Record sale"}
-          </button>
-          {receipt && (
-            <Notice
-              type="success"
-              message={`${receipt.reference} · total ${money(receipt.total_kobo)} · change ${money(receipt.change_kobo ?? Number(receipt.tendered_kobo) - Number(receipt.total_kobo))}`}
-            />
-          )}
-        </form>
-      )}
-      {data.shifts.map((s: any) => (
-        <section className="surface workflow-form" key={s.id}>
-          <h3>
-            {s.cashier} · {s.status}
-          </h3>
-          <small>Shift ID: {s.id}</small>
-          <p>
-            Opening: {money(s.opening_kobo)}
-            {s.expected_kobo !== null
-              ? ` · Expected: ${money(s.expected_kobo)} · Counted: ${money(s.counted_kobo)}`
-              : ""}
-          </p>
-          {s.status === "open" && (
-            <ActionForm
-              action="pos.close"
-              title="Submit cash-up"
-              fields={[
-                { name: "shiftId", label: "", type: "hidden", value: s.id },
-                {
-                  name: "countedKobo",
-                  label: "Total counted cash including float (kobo)",
-                  type: "number",
-                },
-                { name: "note", label: "Cash-up note", type: "textarea" },
-              ]}
-              onDone={reload}
-            />
-          )}{" "}
-          {s.status === "submitted" && (
-            <ActionForm
-              action="pos.verify"
-              title="Independent finance verification"
-              fields={[
-                { name: "shiftId", label: "", type: "hidden", value: s.id },
-              ]}
-              onDone={reload}
-              submit="Verify reconciled shift"
-            />
-          )}
-        </section>
-      ))}
-      <h2>Recent receipts</h2>
-      {data.sales.map((s: any) => (
-        <p key={s.id}>
-          {s.reference} · {money(s.total_kobo)} ·{" "}
-          {new Date(s.created_at).toLocaleString()}
-        </p>
-      ))}
+  const estimate = lines.reduce((total, line) => total + Number(products.find((p: any) => p.id === line.productId)?.price_kobo ?? 0) * Number(line.quantity), 0);
+  const visible = data.sales.filter((r: any) => `${r.reference} ${r.cashier} ${r.branch_id}`.toLowerCase().includes(query.trim().toLowerCase()));
+  const metrics = [
+    ["Today’s sales", gasMoney(data.today.sales_kobo), ShoppingCart],
+    ["Receipts today", String(data.today.receipts), ReceiptText],
+    ["Stock impact", `${data.today.units} units`, Layers],
+    ["Your till", shift ? (canRecord ? "Open" : "Branch inactive") : "Closed", LockKeyhole],
+  ] as const;
+  return <div className="workflow-stack product-workspace support-desk pos-workspace">
+    <header className="support-hero"><span className="support-hero-icon"><Store size={42} aria-hidden="true" /></span>
+      <div><span className="eyebrow">Sales</span><h1>Retail Point of Sale</h1><p>Record in-person cash sales, review receipts and submit your till for cash-up.</p></div>
+    </header>
+    {error && <Notice type="error" message={error} />}
+    <section className="support-metrics" aria-label="POS metrics for today in Lagos">
+      {metrics.map(([label, value, Icon]) => <article className="surface support-metric" key={label}>
+        <span className="support-metric-icon"><Icon size={24} aria-hidden="true" /></span><div><span>{label}</span><strong>{value}</strong></div>
+      </article>)}
+    </section>
+    <p className="support-list-limit">Today uses Africa/Lagos time. Cash collections are not verified revenue until cash-up.</p>
+    {receipt && <Notice type="success" message={`Receipt ${receipt.reference} · Total ${gasMoney(receipt.total_kobo)} · Change ${gasMoney(receipt.change_kobo ?? Number(receipt.tendered_kobo) - Number(receipt.total_kobo))}`} />}
+    <div className="pos-top-grid">
+      <section className="surface pos-panel">
+        <h2><Store size={21} aria-hidden="true" />{shift ? "Your active till" : "Open your till shift"}</h2>
+        {shift ? <>
+          <p>{shift.branch_name} · Opened {supportDate.format(new Date(shift.created_at))} WAT</p>
+          <dl><dt>Opening float</dt><dd>{gasMoney(shift.opening_kobo)}</dd><dt>Expected cash including float</dt><dd>{gasMoney(shift.cash_in_till_kobo)}</dd></dl>
+          {!canRecord && <p>Sales are unavailable for this till. Submit the counted cash to close it.</p>}
+        </> : data.canSell && data.branches.length ? <ActionForm contextual action="pos.open" title="Open your till shift" submit="Open Till & Start Selling" onDone={reload}
+          fields={[
+            { name: "branchId", label: "Branch", value: data.branches.length === 1 ? data.branches[0].id : "", options: data.branches.map((b: any) => ({ value: b.id, label: b.name })) },
+            { name: "openingKobo", label: "Opening cash float (₦)", type: "naira", value: "0" },
+          ]} /> : <p>{data.canSell ? "No active branch is available for your till." : "Your role can review receipts and cash-up records."}</p>}
+      </section>
+      <section className="surface pos-panel"><h2>Quick actions</h2>
+        <div className="pos-quick-grid">
+          <button className="button secondary" disabled={!canRecord || !products.length} onClick={startSale}><ShoppingCart size={18} />New sale</button>
+          <button className="button secondary" onClick={() => receipts.current?.focus()}><ReceiptText size={18} />View receipts</button>
+          <button className="button secondary" disabled={!shift || !data.canSell} onClick={() => setForm("close")}><LockKeyhole size={18} />Close till</button>
+          <button className="button secondary" onClick={() => setForm("reports")}><BarChart3 size={18} />Till reports</button>
+        </div>
+        {!canRecord ? <p>Open an authorised active till to record cash sales.</p> : !products.length && <p>No published, priced products with available stock.</p>}
+      </section>
     </div>
-  );
+    <section className="surface pos-panel" ref={receipts} tabIndex={-1} aria-label="Recent receipts">
+      <h2>Recent receipts</h2>
+      {data.sales.length > 0 && <FormInput type="search" aria-label="Search receipts" placeholder="Search receipt, cashier or branch" value={query} onChange={e => setQuery(e.target.value)} />}
+      {!visible.length ? <div className="support-empty">
+        <span className="support-empty-icon"><ReceiptText size={40} /></span>
+        <h2>{data.sales.length ? "No matching receipts" : "No recent receipts"}</h2>
+        <p>{data.sales.length ? "Try another search." : "Recorded cash sale receipts will appear here."}</p>
+        {canRecord && products.length > 0 && !data.sales.length && <button className="button secondary" onClick={startSale}>Record a sale</button>}
+      </div> : <div className="pos-receipts">{visible.map((r: any) => <button type="button" className="surface ticket-select" key={r.id} onClick={() => { setActive(r); setForm("receipt"); }}>
+        <strong>{r.reference}</strong><span>{supportDate.format(new Date(r.created_at))} WAT · {r.cashier}</span><span>Cash · {r.shift_status === "verified" ? "Cash-up verified" : "Collected"}</span><strong>{gasMoney(r.total_kobo)}</strong>
+      </button>)}</div>}
+    </section>
+    {form === "sale" && <Modal title="New cash sale" onClose={closeForm}>
+      <form className="surface workflow-form product-form support-dialog-form" onSubmit={sell}>
+        {lines.map((line, i) => <fieldset key={i} disabled={busy}>
+          <legend>Item {i + 1}</legend>
+          <label>Product<select required value={line.productId} onChange={e => setLines(lines.map((l, n) => n === i ? { ...l, productId: e.target.value } : l))}>
+            <option value="">Choose a product</option>{products.map((p: any) => <option key={p.id} value={p.id}>{p.name} · {gasMoney(p.price_kobo)}</option>)}
+          </select></label>
+          <label>Quantity<FormInput required type="number" min={1} max={100} value={line.quantity} onChange={e => setLines(lines.map((l,n) => n === i ? { ...l, quantity: e.target.value } : l))} /></label>
+          {lines.length > 1 && <button type="button" className="button secondary" onClick={() => setLines(lines.filter((_, n) => n !== i))}>Remove item</button>}
+        </fieldset>)}
+        {lines.length < 30 && <button type="button" className="button secondary" disabled={busy} onClick={() => setLines([...lines, { productId: "", quantity: "1" }])}>Add item</button>}
+        <p aria-live="polite">Estimated total: {gasMoney(estimate)}. The server confirms prices and stock.</p>
+        <label>Cash tendered (₦)<FormInput required name="tender" inputMode="decimal" disabled={busy} /></label>
+        {saleError && <Notice type="error" message={saleError} />}
+        <button className="button" disabled={busy}>{busy ? "Recording…" : "Record cash sale"}</button>
+      </form>
+    </Modal>}
+    {form === "close" && shift && <Modal title="Close till" onClose={closeForm}>
+      <p>Expected cash including float: {gasMoney(shift.cash_in_till_kobo)}. Enter the actual count for independent verification.</p>
+      <ActionForm contextual action="pos.close" title="Close till" submit="Submit cash-up" onDone={() => { setForm(null); reload(); }}
+        fields={[{ name: "shiftId", label: "", type: "hidden", value: shift.id }, { name: "countedKobo", label: "Counted cash (₦)", type: "naira" }, { name: "note", label: "Cash-up note", type: "textarea" }]} />
+    </Modal>}
+    {form === "reports" && <Modal title="Till reports" onClose={closeForm}>
+      {!data.shifts.length && <p>No till shifts recorded.</p>}
+      {data.shifts.map((s: any) => <section className="surface workflow-form" key={s.id}>
+        <h3>{s.cashier} · {s.branch_id} · {s.status}</h3>
+        <p>Opening float: {gasMoney(s.opening_kobo)}{s.expected_kobo != null ? ` · Expected ${gasMoney(s.expected_kobo)} · Counted ${gasMoney(s.counted_kobo)} · Variance ${gasMoney(Number(s.counted_kobo) - Number(s.expected_kobo))}` : ""}</p>
+        {data.canVerify && s.status === "submitted" && s.cashier_id !== data.actorId &&
+          <button className="button secondary" onClick={() => { setActive(s); setForm("verify"); }}>Verify cash-up</button>}
+      </section>)}
+    </Modal>}
+    {form === "verify" && active && <Modal title="Independent cash-up verification" onClose={closeForm}>
+      <ActionForm contextual action="reauth" title="Verify identity" fields={[{ name: "password", label: "Your password", type: "password" }]} submit="Verify identity" />
+      <ActionForm contextual action="pos.verify" title="Verify cash-up" fields={[{ name: "shiftId", label: "", type: "hidden", value: active.id }]} submit="Verify reconciled shift"
+        onDone={() => { setForm("reports"); reload(); }} />
+    </Modal>}
+    {form === "receipt" && active && <Modal title={active.reference} onClose={closeForm}>
+      <p>{active.cashier} · {active.branch_id} · {supportDate.format(new Date(active.created_at))} WAT</p>
+      <p>Cash {active.shift_status === "verified" ? "cash-up verified" : "collected; cash-up not yet verified"}</p>
+      <dl><dt>Total</dt><dd>{gasMoney(active.total_kobo)}</dd><dt>Tendered</dt><dd>{gasMoney(active.tendered_kobo)}</dd><dt>Change</dt><dd>{gasMoney(Number(active.tendered_kobo) - Number(active.total_kobo))}</dd></dl>
+    </Modal>}
+  </div>;
 }
 export function RecurringOrders() {
   const { data: plans, error, reload } = useRecords("schedules"),

@@ -5,6 +5,7 @@ import { before, test } from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate, one, type DB } from "../apps/web/lib/db";
 import { dispatch } from "../apps/web/lib/service";
+import { nairaToKobo } from "../packages/business-rules/src/pos-money";
 import { id, hashPassword, issueSession } from "../apps/web/lib/auth";
 let db: DB;
 const tokens: Record<string, string> = {},
@@ -148,6 +149,8 @@ test("POS uses approved server prices, prevents overselling and verifies cash-up
     branchId: "lagos",
     openingKobo: 100000,
   });
+  await assert.rejects(() => call("sales", "pos.open", { branchId: "lagos", openingKobo: 0 }), /Close your current shift/);
+  await assert.rejects(() => call("driver", "pos"), /permission|delivery/i);
   const input = {
     shiftId: shift.id,
     items: [{ productId: "hose", quantity: 2 }],
@@ -157,6 +160,19 @@ test("POS uses approved server prices, prevents overselling and verifies cash-up
   const sale = await call("sales", "pos.sale", input);
   assert.equal(sale.total_kobo, 1500000);
   assert.equal(sale.change_kobo, 500000);
+  const summary = await call("sales", "pos");
+  assert.equal(Number(summary.today.sales_kobo), 1500000);
+  assert.equal(Number(summary.today.receipts), 1);
+  assert.equal(Number(summary.today.units), 2);
+  assert.equal(Number(summary.ownShift.cash_in_till_kobo), 1600000);
+  assert.equal((await call("manager", "pos")).ownShift, undefined);
+  await assert.rejects(() => call("manager", "pos.sale", input), /Only the shift cashier/);
+  await db.query("UPDATE branches SET active=false WHERE id='lagos'");
+  try {
+    await assert.rejects(() => call("sales", "pos.sale", { ...input, idempotencyKey: id() }), /not accepting sales/);
+  } finally {
+    await db.query("UPDATE branches SET active=true WHERE id='lagos'");
+  }
   const repeated = await call("sales", "pos.sale", input);
   assert.equal(repeated.id, sale.id);
   await assert.rejects(
@@ -172,11 +188,14 @@ test("POS uses approved server prices, prevents overselling and verifies cash-up
       }),
     /insufficient stock/,
   );
-  await call("sales", "pos.close", {
+  const cashUp = {
     shiftId: shift.id,
     countedKobo: 1600000,
     note: "Test cash counted including opening float",
-  });
+  };
+  const closed = await call("sales", "pos.close", cashUp);
+  assert.deepEqual(await call("sales", "pos.close", cashUp), closed);
+  await assert.rejects(() => call("sales", "pos.close", { ...cashUp, countedKobo: 1 }), /already submitted/);
   await assert.rejects(
     () => call("sales", "pos.sale", { ...input, idempotencyKey: id() }),
     /closed/,
@@ -406,4 +425,31 @@ test("MWEB-03-GATE: disabled card checkout cannot reserve stock; enabled sandbox
     keys.forEach((k,i)=>{if(env[i]===undefined)delete process.env[k];else process.env[k]=env[i];});
     await db.query("UPDATE settings SET value=$1 WHERE key='payment.gateway' AND scope='lagos'",[JSON.stringify(policy!.value)]);
   }
+});
+
+test("POS-MONEY01: naira input is converted exactly and rejects excess precision and exponents", () => {
+  assert.equal(nairaToKobo("1.01"), 101);
+  assert.equal(nairaToKobo("0"), 0);
+  for (const amount of ["", "1.001", "-1", "1e3", "10000001"])
+    assert.throws(() => nairaToKobo(amount));
+});
+
+test("credits workspace pages the full scoped history and hides maker decisions", async () => {
+  await db.query("INSERT INTO branches(id,name) VALUES ('credits-other','Other credit branch')");
+  await db.query(`INSERT INTO credit_requests(id,branch_id,customer_id,amount_kobo,kind,requested_by,reason,receipt_reference)
+    SELECT gen_random_uuid()::text, 'lagos', $1, 100, 'cash_funding', $2, 'Synthetic evidence', 'CREDIT-PAGE-' || n
+    FROM generate_series(1,25) n`, [ids.customer, ids.finance]);
+  await db.query(`INSERT INTO credit_requests(id,branch_id,customer_id,amount_kobo,kind,requested_by,reason,receipt_reference)
+    VALUES($1,'credits-other',$2,100,'cash_funding',$3,'Synthetic evidence','CREDIT-PAGE-OTHER')`, [id(), ids.customer, ids.finance]);
+  const input = { view: "workspace", q: "CREDIT-PAGE-", tab: "pending" };
+  const first = await call("finance", "credits", input);
+  const second = await call("finance", "credits", { ...input, page: 2 });
+  assert.equal(first.total, 25);
+  assert.equal(first.rows.length, 20);
+  assert.equal(second.rows.length, 5);
+  assert.equal(new Set([...first.rows, ...second.rows].map(row => row.id)).size, 25);
+  assert.ok(first.rows.every(row => !row.can_decide && row.amount_kobo === "100"));
+  assert.ok((await call("owner", "credits", input)).rows.every(row => row.can_decide));
+  await assert.rejects(call("customer", "credits", input), /permission/);
+  assert.ok(Array.isArray(await call("customer", "credits")));
 });

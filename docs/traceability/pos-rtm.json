@@ -1,0 +1,766 @@
+{
+  "phase": "POS workspace continuation",
+  "date": "2026-11-11",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "POS-R01",
+      "requirement": "Approved POS workspace and authorised native staff controls",
+      "priority": "P1",
+      "scope": "Existing authenticated workspace and approved roles",
+      "uiReference": "User supplied approved screenshot",
+      "route": "/admin/pos and staff account Retail POS",
+      "dataSource": "Committed POS records and scoped Lagos-day aggregates",
+      "securityControl": "Existing role and branch checks; no exposure to field or customer screens",
+      "status": "PARTIAL",
+      "reason": "Web verified on isolated Chromium; native source typechecked, runtime and broader reports unverified.",
+      "testResult": "PASS closed till, exact float and 390px cash-up modal",
+      "outstandingWork": "Native physical-device, full scenario acceptance, staging rollback and release approval remain open.",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/lib/commerce.ts",
+        "apps/mobile/RetailPos.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/ContextSheet.tsx",
+        "packages/business-rules/src/pos-money.ts"
+      ],
+      "testFiles": [
+        "tests/commerce.test.ts",
+        "tests/retail-pos-postgres.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/pos/evidence/baseline.txt",
+        "docs/pos/evidence/regression.txt",
+        "docs/pos/evidence/native-types.txt",
+        "docs/pos/evidence/web-types.txt",
+        "docs/pos/evidence/build.txt",
+        "docs/pos/evidence/browser.json",
+        "docs/pos/evidence/closed.png",
+        "docs/pos/evidence/cash-up-390.png",
+        "docs/pos/evidence/postgres.txt"
+      ],
+      "acceptanceGate": "POS-G04"
+    },
+    {
+      "id": "POS-R02",
+      "requirement": "Cash sales, single stock deduction and reconciled till",
+      "priority": "P0",
+      "scope": "Existing authenticated workspace and approved roles",
+      "uiReference": "User supplied approved screenshot",
+      "route": "pos.open, pos.sale, pos.close, pos.verify",
+      "dataSource": "Canonical pos_shifts, pos_sales, pos_items and stock movements",
+      "securityControl": "Branch active check, cashier/shift locks, replay protection and independent cash-up",
+      "status": "PARTIAL",
+      "reason": "Cash-only coverage; live Paystack/wallet POS, refunds, LPG and expanded reporting remain open.",
+      "testResult": "PASS POS-PG01 and existing tender, stock, actor and cash-up regressions",
+      "outstandingWork": "Native physical-device, full scenario acceptance, staging rollback and release approval remain open.",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/app/product-ui.css",
+        "apps/web/lib/commerce.ts",
+        "apps/mobile/RetailPos.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/ContextSheet.tsx",
+        "packages/business-rules/src/pos-money.ts"
+      ],
+      "testFiles": [
+        "tests/commerce.test.ts",
+        "tests/retail-pos-postgres.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "POS uses approved server prices",
+        "POS-PG01"
+      ],
+      "evidence": [
+        "docs/pos/evidence/baseline.txt",
+        "docs/pos/evidence/regression.txt",
+        "docs/pos/evidence/native-types.txt",
+        "docs/pos/evidence/web-types.txt",
+        "docs/pos/evidence/build.txt",
+        "docs/pos/evidence/browser.json",
+        "docs/pos/evidence/closed.png",
+        "docs/pos/evidence/cash-up-390.png",
+        "docs/pos/evidence/postgres.txt"
+      ],
+      "acceptanceGate": "POS-G09"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "POS-T01",
+      "scope": "Existing POS route/sidebar unchanged",
+      "status": "PASS",
+      "evidence": "Isolated web"
+    },
+    {
+      "id": "POS-T02",
+      "scope": "all grouped navigation links work",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T03",
+      "scope": "role-gated staff mobile access",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T04",
+      "scope": "no customer/driver/technician POS privilege",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T05",
+      "scope": "branch scope",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T06",
+      "scope": "inactive branch rejection",
+      "status": "PASS",
+      "evidence": "Commerce inactive branch test"
+    },
+    {
+      "id": "POS-T07",
+      "scope": "open shift normal",
+      "status": "PASS",
+      "evidence": "Browser/PG"
+    },
+    {
+      "id": "POS-T08",
+      "scope": "duplicate open rejected",
+      "status": "PASS",
+      "evidence": "POS-PG01"
+    },
+    {
+      "id": "POS-T09",
+      "scope": "invalid float rejected",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T10",
+      "scope": "NGN/kobo conversion",
+      "status": "PASS",
+      "evidence": "POS-MONEY01"
+    },
+    {
+      "id": "POS-T11",
+      "scope": "till open permissions",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T12",
+      "scope": "close shift normal",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T13",
+      "scope": "duplicate close idempotency",
+      "status": "PASS",
+      "evidence": "POS-PG01"
+    },
+    {
+      "id": "POS-T14",
+      "scope": "independent approval",
+      "status": "PASS",
+      "evidence": "Commerce verification"
+    },
+    {
+      "id": "POS-T15",
+      "scope": "variance recording",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T16",
+      "scope": "cash-only totals",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T17",
+      "scope": "Paystack-only totals",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T18",
+      "scope": "wallet-only totals",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T19",
+      "scope": "unsupported split payment blocked",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T20",
+      "scope": "customer lookup",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T21",
+      "scope": "duplicate customer prevention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T22",
+      "scope": "SKU search",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T23",
+      "scope": "barcode if supported",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T24",
+      "scope": "mixed cart",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T25",
+      "scope": "LPG fractional kg",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T26",
+      "scope": "cylinder capacity",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T27",
+      "scope": "serialised cylinder custody",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T28",
+      "scope": "no stock oversell",
+      "status": "PASS",
+      "evidence": "Commerce oversell"
+    },
+    {
+      "id": "POS-T29",
+      "scope": "concurrent sales",
+      "status": "PASS",
+      "evidence": "POS-PG01"
+    },
+    {
+      "id": "POS-T30",
+      "scope": "price change mid-cart",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T31",
+      "scope": "discount permission",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T32",
+      "scope": "product inactive",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T33",
+      "scope": "item out of stock",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T34",
+      "scope": "receipt numbering",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T35",
+      "scope": "no paid receipt before verification",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T36",
+      "scope": "cash tender/change",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T37",
+      "scope": "insufficient tender",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T38",
+      "scope": "Paystack fee gross-up",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T39",
+      "scope": "fee disclosure",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T40",
+      "scope": "webhook signature",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T41",
+      "scope": "webhook replay",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T42",
+      "scope": "webhook duplicate",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T43",
+      "scope": "delayed webhook",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T44",
+      "scope": "reversed payment",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T45",
+      "scope": "wallet balance/atomic debit",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T46",
+      "scope": "duplicate wallet debit prevention",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T47",
+      "scope": "cancelled sale releases reservation",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T48",
+      "scope": "return quantity cap",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T49",
+      "scope": "partial refund cap",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T50",
+      "scope": "independent refund approval",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T51",
+      "scope": "damaged return held",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T52",
+      "scope": "cash-up calculation",
+      "status": "PASS",
+      "evidence": "Commerce and POS-PG01"
+    },
+    {
+      "id": "POS-T53",
+      "scope": "Paystack excluded from physical cash",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T54",
+      "scope": "wallet top-up excluded from sales",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T55",
+      "scope": "refunds reflected in reports",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T56",
+      "scope": "branch-specific reporting",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T57",
+      "scope": "receipt search/filter",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T58",
+      "scope": "CSV/PDF permissions",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T59",
+      "scope": "dark mode",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T60",
+      "scope": "mobile safe area",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T61",
+      "scope": "keyboard avoidance",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T62",
+      "scope": "screen reader",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T63",
+      "scope": "offline draft",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T64",
+      "scope": "offline commit blocked",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T65",
+      "scope": "reconnect recovery",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T66",
+      "scope": "modal cancel/draft",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T67",
+      "scope": "duplicate taps",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T68",
+      "scope": "API backward compatibility",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T69",
+      "scope": "migration forward",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T70",
+      "scope": "migration rollback strategy",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T71",
+      "scope": "sandbox segregation",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T72",
+      "scope": "audit log completeness",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T73",
+      "scope": "sensitive-data redaction",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T74",
+      "scope": "no fake production data",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T75",
+      "scope": "existing customer order regression",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T76",
+      "scope": "inventory regression",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T77",
+      "scope": "dispatch regression",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T78",
+      "scope": "technician regression",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T79",
+      "scope": "Paystack reconciliation regression",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T80",
+      "scope": "invoice/receipt regression",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T81",
+      "scope": "app builds",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T82",
+      "scope": "web build",
+      "status": "PASS",
+      "evidence": "Web build"
+    },
+    {
+      "id": "POS-T83",
+      "scope": "actual device smoke tests",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    },
+    {
+      "id": "POS-T84",
+      "scope": "end-to-end shift-to-sale-to-close reconciliation",
+      "status": "NOT_TESTED",
+      "evidence": "No new complete acceptance for this scenario; remains in denominator."
+    }
+  ],
+  "gates": [
+    {
+      "id": "POS-G01",
+      "scope": "Repository audit",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G02",
+      "scope": "Nine baseline tests",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G03",
+      "scope": "Existing navigation preserved",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G04",
+      "scope": "Retained master brief gate 4",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G05",
+      "scope": "Retained master brief gate 5",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G06",
+      "scope": "Role and branch tests",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G07",
+      "scope": "Open till and concurrent open guard",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G08",
+      "scope": "Existing close and exact replay",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G09",
+      "scope": "POS-PG01",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G10",
+      "scope": "Retained master brief gate 10",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G11",
+      "scope": "Retained master brief gate 11",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G12",
+      "scope": "Retained master brief gate 12",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G13",
+      "scope": "Retained master brief gate 13",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G14",
+      "scope": "Independent PostgreSQL connections",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G15",
+      "scope": "Retained master brief gate 15",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G16",
+      "scope": "Retained master brief gate 16",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G17",
+      "scope": "Lagos-day metrics and till checks",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G18",
+      "scope": "Retained master brief gate 18",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G19",
+      "scope": "Retained master brief gate 19",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G20",
+      "scope": "Retained master brief gate 20",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G21",
+      "scope": "Retained master brief gate 21",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G22",
+      "scope": "Exact duplicate sale and cash-up protection",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G23",
+      "scope": "Retained master brief gate 23",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G24",
+      "scope": "Retained master brief gate 24",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G25",
+      "scope": "Retained master brief gate 25",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G26",
+      "scope": "No migration; additive response",
+      "status": "PASS"
+    },
+    {
+      "id": "POS-G27",
+      "scope": "Retained master brief gate 27",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G28",
+      "scope": "Retained master brief gate 28",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G29",
+      "scope": "Retained master brief gate 29",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G30",
+      "scope": "Retained master brief gate 30",
+      "status": "PENDING"
+    },
+    {
+      "id": "POS-G31",
+      "scope": "Retained master brief gate 31",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "POS-G32",
+      "scope": "Retained master brief gate 32",
+      "status": "BLOCKED"
+    }
+  ],
+  "scopeChanges": [
+    "Additive reads and guarded flows; no migrations, production deployment, external delivery or live payment.",
+    "Prior compact order work and grouped navigation preserved. All master scenarios and gates retained."
+  ]
+}

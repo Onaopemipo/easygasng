@@ -1810,3 +1810,34 @@ html[data-theme="dark"] { --loader-track:#345b40; --loader-active:#39c660; --loa
   border: 0;
   box-shadow: none;
 }
+
+.quick-order.compact-gas {
+  background: var(--surface);
+  color: var(--foreground);
+  padding: clamp(16px, 2vw, 24px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  width: 100%;
+  min-width: 0;
+}
+.compact-gas-heading { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.compact-gas-heading h2 { margin: 0; font-size: clamp(1.15rem, 2vw, 1.45rem); line-height: 1.15; }
+.compact-gas-heading p { margin: 4px 0 0; font-size: .9rem; }
+.compact-gas-mark { display: grid; place-items: center; flex: 0 0 48px; height: 48px; border-radius: 12px; background: #087c24; color: white; }
+.compact-gas-prices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--accent); border-radius: 12px; padding: 9px 4px; }
+.compact-gas-prices > div { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 4px; }
+.compact-gas-prices > div + div { border-inline-start: 1px solid var(--border); }
+.compact-gas-prices svg, .compact-gas-control svg { color: var(--primary); flex: 0 0 19px; width: 19px; }
+.compact-gas-prices strong, .compact-gas-prices small { display: block; overflow-wrap: anywhere; }
+.compact-gas-prices small { font-size: .8rem; }
+.compact-gas fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.compact-gas label { display: block; margin: 11px 0 4px; font-weight: 600; }
+.compact-gas-control { display: flex; align-items: center; gap: 9px; border: 1px solid var(--border); border-radius: 10px; padding-inline: 11px; background: var(--field, var(--surface)); }
+.compact-gas-control :is(input, select) { border: 0; margin: 0; padding-inline: 0; min-height: 44px; min-width: 0; width: 100%; background: transparent; }
+.compact-gas :is(input, select, button, a):focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.compact-gas-stepper { border: 1px solid var(--border); border-radius: 10px; gap: 0; }
+.compact-gas-stepper input { flex: 1; min-width: 0; border: 0; background: transparent; }
+.compact-gas-stepper button { border-radius: 9px; }
+.quick-order.compact-gas .gas-estimate { min-block-size: 44px; font-size: .83rem; margin: 7px 0 0; }
+.compact-gas .compact-gas-submit { display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 999px; margin: 4px 0 0; gap: 10px; }
+.compact-gas-services { display: grid; place-items: center; min-height: 44px; font-weight: 600; }

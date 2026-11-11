@@ -8,16 +8,19 @@ import {
 } from "./CustomerUI";
 import * as SecureStore from "expo-secure-store";
 import React, { useState, useEffect, useRef } from "react";
-import { Switch, StyleSheet } from "react-native";
+import { AppState, Image, Switch, StyleSheet, type ImageURISource } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { SUPPORT_REFRESH_MS } from "../../packages/business-rules/src/support-refresh";
 import { View, Pressable } from "./surfaces";
 import { Text, TextInput } from "./typography";
+import { ContextSheet } from "./ContextSheet";
 import { randomUUID } from "expo-crypto";
 type API = (action: string, data?: any) => Promise<any>;
 type Field = {
   name: string;
   label: string;
   value?: any;
-  type?: "number" | "password" | "checkbox" | "text" | "hidden";
+  type?: "number" | "password" | "checkbox" | "text" | "hidden" | "textarea";
   options?: { value: string; label: string }[];
 };
 export function NativeForm({
@@ -33,7 +36,7 @@ export function NativeForm({
   action: string;
   title: string;
   fields: Field[];
-  onDone?: () => void;
+  onDone?: (result?: any) => void;
   draftKey?: string;
   recordVersion?: number;
 }) {
@@ -143,6 +146,7 @@ export function NativeForm({
               <TextInput
                 accessibilityLabel={f.label}
                 style={s.input}
+                multiline={f.type === "textarea"}
                 editable={draftReady}
                 secureTextEntry={f.type === "password"}
                 keyboardType={f.type === "number" ? "numeric" : "default"}
@@ -216,7 +220,7 @@ export function NativeForm({
             if (draftKey) await SecureStore.deleteItemAsync(draftKey);
             if (mounted.current) {
               setMessage(r.message ?? "Saved successfully.");
-              onDone?.();
+              onDone?.(r);
             }
           } catch (e: any) {
             if (mounted.current) setMessage(e.message);
@@ -248,7 +252,6 @@ export default function Workflows({
     const load = async () => {
       if (screen === "notifications") return api("me");
       if (screen === "profile") return api("account.profile");
-      if (screen === "conversations") return api("support.list");
       if (screen === "consumption")
         return {
           profiles: await api("refill.profiles"),
@@ -284,7 +287,7 @@ export default function Workflows({
       active = false;
     };
   }, [screen, version]);
-  if (error) return <Text style={s.body}>{friendlyMessage(error)}</Text>;
+  if (error) return <View><Text accessibilityRole="alert" style={s.body}>{friendlyMessage(error)}</Text><Pressable accessibilityRole="button" style={s.button} onPress={reload}><Text style={s.buttonText}>Retry</Text></Pressable></View>;
   if (!data) return <EasyGasLoader color="#087a36" />;
   if (screen === "notifications")
     return (
@@ -568,53 +571,6 @@ export default function Workflows({
           ]}
           onDone={reload}
         />
-      </>
-    );
-  if (screen === "conversations")
-    return (
-      <>
-        <Text style={s.title}>Support conversations</Text>
-        <NativeForm
-          api={api}
-          action="support.create"
-          title="New request"
-          fields={[
-            { name: "subject", label: "Subject" },
-            { name: "message", label: "Message" },
-          ]}
-          onDone={reload}
-        />
-        {data.map((t: any) => (
-          <View style={s.card} key={t.id}>
-            <Text style={s.heading}>
-              {t.subject} · {t.status}
-            </Text>
-            <Text style={s.body}>{t.message}</Text>
-            {t.messages.map((m: any) => (
-              <View key={m.id} style={s.message}>
-                <Text>{m.author}</Text>
-                <Text style={s.body}>{m.body}</Text>
-              </View>
-            ))}
-            {t.status !== "closed" && (
-              <NativeForm
-                api={api}
-                action="support.reply"
-                title="Reply"
-                fields={[
-                  {
-                    name: "id",
-                    type: "hidden",
-                    label: "Request reference",
-                    value: t.id,
-                  },
-                  { name: "body", label: "Message" },
-                ]}
-                onDone={reload}
-              />
-            )}
-          </View>
-        ))}
       </>
     );
   if (screen === "consumption")
@@ -907,6 +863,131 @@ export default function Workflows({
     </>
   );
 }
+function useMobileSupport(api: API, action: string | null, revision: number) {
+  const latestApi = useRef(api);
+  latestApi.current = api;
+  const [snapshot, setSnapshot] = useState<{ action: string; data?: any; error?: string }>();
+  useEffect(() => {
+    if (!action) return;
+    let active = true;
+    let busy = false;
+    let timer: ReturnType<typeof setTimeout>;
+    async function load() {
+      if (!active || busy || (AppState.currentState && AppState.currentState !== "active")) return;
+      clearTimeout(timer);
+      busy = true;
+      try {
+        const data = await latestApi.current(action!);
+        if (active) setSnapshot({ action: action!, data });
+      } catch (e) {
+        if (active) setSnapshot(prior => ({ action: action!, data: prior?.action === action && ![401,403,404].includes((e as {status?: number}).status ?? 0) ? prior?.data : undefined, error: (e as Error).message }));
+      } finally {
+        busy = false;
+        if (active) timer = setTimeout(load, SUPPORT_REFRESH_MS);
+      }
+    }
+    const listener = AppState.addEventListener("change", state => { if (state === "active") void load(); });
+    void load();
+    return () => { active = false; clearTimeout(timer); listener.remove(); };
+  }, [action, revision]);
+  return snapshot?.action === action ? snapshot : { data: undefined, error: undefined };
+}
+export function MobileSupportInbox({ api, imageSource }: { api: API; imageSource: (id: string) => ImageURISource }) {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [sheet, setSheet] = useState<"new" | "reply" | "image" | null>(null);
+  const [feedback, setFeedback] = useState("");
+  const [page, setPage] = useState(1);
+  const [messagePage, setMessagePage] = useState<number | "latest">("latest");
+  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("");
+  const [revision, setRevision] = useState(0);
+  const [operationId, setOperationId] = useState("");
+  const list = useMobileSupport(api, selected ? null : `support.list?view=paged&page=${page}&search=${encodeURIComponent(query)}`, revision);
+  const detail = useMobileSupport(api, selected ? `support.detail?id=${selected}&page=${messagePage}` : null, revision);
+  const ticket = detail.data;
+  const current = selected ? detail : list;
+  const reload = () => setRevision(v => v + 1);
+  const open = (id: string) => { setMessagePage("latest"); setSelected(id); };
+  const action = (label: string, onPress: () => void, disabled = false) =>
+    <Pressable accessibilityRole="button" accessibilityState={{disabled}} disabled={disabled} style={[s.button, { minHeight: 44, opacity: disabled ? .55 : 1 }]} onPress={onPress}><Text style={s.buttonText}>{label}</Text></Pressable>;
+  const pagination = (current: number, pages: number, change: (p: number) => void) => pages > 1 && <View>
+    <Text>Page {current} of {pages}</Text>
+    {action("Previous page", () => change(current - 1), current === 1)}
+    {action("Next page", () => change(current + 1), current === pages)}
+  </View>;
+  return <>
+    <Text accessibilityRole="header" style={s.title}>{ticket?.subject ?? "Support conversations"}</Text>
+    {feedback ? <Text accessibilityLiveRegion="polite">{feedback}</Text> : null}
+    {current.error ? <><Text accessibilityRole="alert">{current.data ? "Updates paused. Showing the last successful refresh." : current.error}</Text>{action("Retry", reload)}</> : null}
+    {current.data && <Text>Auto-refreshes every 15 seconds</Text>}
+    {selected && action("Back to requests", () => setSelected(null))}
+    {selected ? ticket ? <>
+      <Text>{ticket.status.replaceAll("_", " ")}</Text>
+      <Text style={s.body}>{ticket.message}</Text>
+      {ticket.messages.map((m: any) => <View key={m.id} style={s.message}><Text>{m.author}</Text><Text style={s.body}>{m.body}</Text></View>)}
+      {pagination(ticket.messagePage, ticket.messagePages, p => setMessagePage(p === ticket.messagePages ? "latest" : p))}
+      {ticket.attachments.map((attachment: any) => <View key={attachment.id} style={s.card}>
+        <Image source={imageSource(attachment.id)} accessibilityLabel={attachment.alt} resizeMode="contain" style={{width: "100%", height: 160}} /><Text>{attachment.alt}</Text>
+      </View>)}
+      {ticket.status !== "closed" && <>{action("Reply", () => { setOperationId(randomUUID()); setSheet("reply"); })}{action("Attach image", () => setSheet("image"))}</>}
+    </> : !detail.error && <EasyGasLoader /> : <>
+      <TextInput accessibilityLabel="Search support requests" placeholder="Search by subject or request ID" maxLength={100} value={search} onChangeText={setSearch} style={s.input} />
+      {action("Search", () => { setQuery(search); setPage(1); })}
+      {action("New request", () => setSheet("new"))}
+      {!list.data && !list.error && <EasyGasLoader />}
+      {list.data?.rows.length === 0 && <CustomerCard><CustomerTitle>{query ? "No matching requests" : "No support requests yet"}</CustomerTitle><CustomerCopy>{query ? "Try another subject or request ID." : "Your conversations will appear here."}</CustomerCopy></CustomerCard>}
+      {list.data?.rows.map((row: any) => <Pressable key={row.id} accessibilityRole="button" style={s.card} onPress={() => open(row.id)}>
+        <Text style={s.heading}>{row.subject}</Text><Text>{row.status.replaceAll("_", " ")}</Text>
+      </Pressable>)}
+      {list.data && pagination(list.data.page, list.data.pages, setPage)}
+    </>}
+    {sheet && (sheet === "new" || ticket) && <ContextSheet title={sheet === "new" ? "New support request" : sheet === "image" ? "Attach image" : "Reply to request"} onClose={() => setSheet(null)}>
+      {sheet === "image" ? <MobileSupportAttachment api={api} requestId={ticket.id} done={() => { setFeedback("Image attached."); setSheet(null); reload(); }} /> : <NativeForm api={api} action={sheet === "new" ? "support.create" : "support.reply"} title={sheet === "new" ? "Request details" : "Message"}
+        fields={sheet === "new" ? [{ name: "subject", label: "Subject" }, { name: "message", label: "How can we help?", type: "textarea" }] :
+          [{ name: "id", label: "", type: "hidden", value: ticket.id }, { name: "operationId", label: "", type: "hidden", value: operationId }, { name: "body", label: "Message", type: "textarea" }]}
+        onDone={result => { if (sheet === "new" && result?.id) open(result.id); else setMessagePage("latest"); setFeedback(sheet === "new" ? "Request created." : "Reply sent."); setSheet(null); reload(); }} />}
+    </ContextSheet>}
+  </>;
+}
+function MobileSupportAttachment({ api, requestId, done }: { api: API; requestId: string; done: () => void }) {
+  const [file, setFile] = useState<ImagePicker.ImagePickerAsset>();
+  const [alt, setAlt] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  async function choose() {
+    setError("");
+    try {
+      const selected = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ["images"], allowsMultipleSelection: false });
+      if (selected.canceled) return;
+      const image = selected.assets[0];
+      if ((image.fileSize ?? 0) > 3 * 1024 * 1024 || !["image/png", "image/jpeg", "image/webp"].includes(image.mimeType ?? "image/jpeg")) throw new Error("Choose a PNG, JPEG or WebP image under 3 MB.");
+      setFile(image);
+    } catch (e) { setError((e as Error).message); }
+  }
+  async function upload() {
+    if (!file || busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      const form = new FormData();
+      form.append("requestId", requestId);
+      form.append("alt", alt.trim());
+      form.append("image", file.file ?? ({ uri: file.uri, name: file.fileName ?? "support-image.jpg", type: file.mimeType ?? "image/jpeg" } as any));
+      await api("media", form);
+      done();
+    } catch (e) { setError((e as Error).message); }
+    finally { setBusy(false); }
+  }
+  return <View>
+    <Text>PNG, JPEG or WebP, up to 3 MB.</Text>
+    <Pressable accessibilityRole="button" disabled={busy} style={s.button} onPress={() => void choose()}><Text style={s.buttonText}>{file ? "Choose a different image" : "Choose image"}</Text></Pressable>
+    {file && <Image source={{uri: file.uri}} accessibilityLabel="Selected image preview" resizeMode="contain" style={{width: "100%", height: 160}} />}
+    <TextInput accessibilityLabel="Image description" placeholder="Describe the image" maxLength={250} value={alt} onChangeText={setAlt} style={s.input} />
+    {error ? <Text accessibilityRole="alert">{error}</Text> : null}
+    <Pressable accessibilityRole="button" disabled={!file || alt.trim().length < 3 || busy} style={s.button} onPress={() => void upload()}><Text style={s.buttonText}>{busy ? "Uploading…" : "Attach image"}</Text></Pressable>
+  </View>;
+}
+
 const s = StyleSheet.create({
   title: {
     fontSize: 25,

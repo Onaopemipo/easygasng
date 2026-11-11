@@ -1,0 +1,28 @@
+✔ ADD-01: staff addition reserves current stock once on the original order with unchanged delivery fee and immutable history (1501.554917ms)
+✔ ADD-02: customer, driver and cross-branch staff cannot quote or create additions (902.362417ms)
+✔ ADD-03: assignment/departure cutoff rejects stale quotes and preserves quantities (900.153834ms)
+✔ ADD-04: stale prices, insufficient stock, paid orders and forged financial/address fields cannot alter the order (892.662708ms)
+✔ ADD-05: gas additions use configured pricing and reservations and require fresh inspection before dispatch (1040.955208ms)
+✔ ADD-UI: staff detail exposes quote/confirmation and history without customer or driver controls (2.432959ms)
+✔ ADD-06: invoicing, loading and any prior delivery attempt close additions even if a status is reset (856.278292ms)
+✔ ADD-07: late failure rolls back added quantities, reservations, totals and history together (794.738792ms)
+✔ ADD-08: unprepared unpaid card order can be extended without creating a charge, but any prepared payment closes additions (792.871041ms)
+✔ A–C,K: draft, permissions, status injection and independent review share one authoritative workflow (1621.730875ms)
+✔ D,G: distinct dual approval and revisions invalidate prior decisions by revision (1106.586708ms)
+✔ E,H,J,O: schedule, stale requests, idempotent activation and append-only reversal (1033.648084ms)
+✔ F,L,M,N: fee rejection, expired request, revoked approver and governed location lifecycle (1244.093542ms)
+✔ I: activation database failure leaves active value intact, records failure, and revalidates a retry (966.452ms)
+✔ decimal calculator matches confirmed gas quantities and rejects unsafe precision (0.459584ms)
+✔ gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety (1032.060125ms)
+✔ delivery fee is once per order in every area; inactive locations retain addresses and flag affected orders (955.481459ms)
+✔ verified gas-cylinder filling and delivery consume bulk stock once and preserve custody restrictions (1050.16525ms)
+✔ gas report exports preserve totals and escape untrusted spreadsheet and HTML text (1.635625ms)
+✔ confirmed cylinder maintenance is an unpublished draft governed by the existing service and safety approvals (928.088666ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10540.135875

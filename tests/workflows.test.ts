@@ -527,3 +527,30 @@ test("catalogue branch browsing enforces current user scope", async () => {
   });
   assert.ok(ownerCatalogue.products.length > 0);
 });
+
+test("SUPPORT-DESK01: staff intake reuses scoped customer identity and inbox totals preserve private notes", async () => {
+  const staffId = id();
+  await db.query("INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Desk fixture agent',$2,$3,'sales','lagos')", [staffId, staffId + "@workflow.test", hashPassword(password)]);
+  const staffToken = await issueSession(db, staffId);
+  const staffCall = (action: string, data: any) => dispatch(action, staffToken, data, db);
+  const payload = { customerRef: ids.customer, subject: "Customer requested support", message: "Synthetic request entered by an authorised staff member." };
+  await assert.rejects(() => call("customer", "support.create", payload), /permission|authorised/i);
+  await db.query("INSERT INTO branches(id,name) VALUES('support-foreign','Foreign test branch')");
+  await db.query("UPDATE users SET branch_id='support-foreign' WHERE id=$1", [ids.other]);
+  await assert.rejects(() => staffCall("support.create", { ...payload, customerRef: ids.other }), /No active customer/);
+  const created = await staffCall("support.create", payload);
+  await staffCall("support.reply", { id: created.id, body: "Synthetic note never shown to customers", internal: true });
+  const own = await call("customer", "support.list", { view: "inbox" });
+  assert.equal(own.rows.find((r: any) => r.id === created.id).messages.length, 0);
+  assert.equal(own.totals.total, own.rows.length);
+  assert.equal(own.totals.open, 1);
+  assert.equal((await call("other", "support.list", { view: "inbox" })).totals.total, 0);
+  const staff = await staffCall("support.list", { view: "inbox" });
+  assert.equal(staff.rows.find((r: any) => r.id === created.id).messages.length, 1);
+  assert.equal(staff.canManage, true);
+  await db.query("INSERT INTO support_requests(id,customer_id,subject,message,branch_id) SELECT 'fixture-support-'||n,$1,'Fixture backlog','Synthetic backlog for count validation','lagos' FROM generate_series(1,101) n", [ids.customer]);
+  const backlog = await call("customer", "support.list", { view: "inbox" });
+  assert.equal(backlog.rows.length, 100);
+  assert.equal(backlog.totals.total, own.totals.total + 101);
+  assert.ok(await one(db, "SELECT actor_id FROM audit_events WHERE target=$1 AND action='support.created' AND actor_id=$2", [created.id, staffId]));
+});
