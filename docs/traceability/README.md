@@ -199,3 +199,5 @@ Form contrast audit: [matrix](form-contrast-rtm.md) and [browser and simulator e
 Public website width (13 November): [matrix](public-width-1440-rtm.md) and [QA](../public-width-1440/02-qa-results.md). All eight public destinations use the scoped 1440px outer width. Local browser checks cover nine viewport widths. Positive cart, checkout and booking browser journeys remain unverified. Production NO-GO remains.
 
 Hosted demo readiness repair: [traceability](demo-readiness-rtm.md). The synthetic demo reports scoped schema readiness. Commercial production readiness still requires a recent maintenance heartbeat.
+
+Smart Refill demo CI repair: [matrix](smart-refill-ci-repair-rtm.md). Repairs the inherited legacy matrix schema and protected source checks on the isolated demo branch. Production remains NO-GO.

@@ -1,6 +1,6 @@
 # Rollback and release
 
-**Public commercial production remains NO-GO.** Local verification does not activate rewards or alter production settings. No deployment or signing for public distribution occurred.
+**Public commercial production remains NO-GO.** Local verification does not activate rewards or alter production settings. The later [client demo rollout](07-demo-deployment.md) did not change the public production decision. No signing for public distribution occurred.
 
 Roll back the scoped Smart Refill source changes or redeploy the previously accepted artifacts. Preserve preceding shared work on the profile workspace, customer routes, native entry points and theme. There is no migration or backfill to reverse. Retain committed profiles, feedback, verified refill and order records, offer/consent history, notifications, audit, stock and payment records.
 

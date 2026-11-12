@@ -6,7 +6,7 @@ Baseline `54b1b15`. Production remains **NO-GO**.
 - 70 scenarios · 7 PARTIAL, 63 PASS
 - 30 gates · 1 BLOCKED, 9 PARTIAL, 20 PASS
 
-[Source, API and evidence mapping](smart-refill-redesign-rtm.json) · [Test results](../smart-refill-redesign/04-test-results.md) · [Rollback](../smart-refill-redesign/05-rollback-and-release.md)
+[Source, API and evidence mapping](smart-refill-redesign-rtm.json) · [Test results](../smart-refill-redesign/04-test-results.md) · [Rollback](../smart-refill-redesign/05-rollback-and-release.md) · [Demo rollout](../smart-refill-redesign/07-demo-deployment.md)
 
 | Requirement | Scope | Gate | Result | Outstanding work |
 | --- | --- | --- | --- | --- |

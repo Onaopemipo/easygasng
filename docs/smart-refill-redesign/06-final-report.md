@@ -12,4 +12,4 @@ The dedicated Smart Refill view uses the approved layout and existing EasyGas ar
 
 The full regression passed all 699 checks. The standard minified Android release still crashes at startup in WorkManager. Local Android smoke verification used an unminified APK. Seven scenarios remain partially verified. See [commands, results and screenshots](04-test-results.md) and the [requirements and gates](../traceability/smart-refill-redesign-rtm.md).
 
-Public commercial production remains **NO-GO**. Deployment and distribution did not occur. See [rollback and release](05-rollback-and-release.md).
+Public commercial production remains **NO-GO**. The later [client demo rollout](07-demo-deployment.md) has separate release and hosted evidence. Native distribution did not occur. See [rollback and release](05-rollback-and-release.md).
