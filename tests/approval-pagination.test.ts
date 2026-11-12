@@ -99,6 +99,12 @@ test("APPROVAL-SCOPE01: pagination and summary enforce branch and view permissio
     assert.equal(r.total, 1);
     assert.equal(r.summary.total, 1);
     assert.equal(r.rows[0].id, "visible");
+    const ownerScoped = await dispatch("approvals", tokens.owner, { view: "paged", branchId: "lagos" }, db);
+    assert.equal(ownerScoped.total, 2);
+    assert.equal(ownerScoped.summary.total, 2);
+    assert.ok(ownerScoped.rows.every((row: any) => row.scope === "lagos"));
+    await assert.rejects(() => dispatch("approvals", tokens.finance, { view: "paged", branchId: "other" }, db), /branch/i);
+    await assert.rejects(() => dispatch("approvals", tokens.owner, { view: "paged", branchId: "nonexistent" }, db), /branch/i);
     for (const role of ["customer", "technician"])
       await assert.rejects(
         () => dispatch("approvals", tokens[role], { view: "paged" }, db),

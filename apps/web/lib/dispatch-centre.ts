@@ -281,55 +281,69 @@ export async function dispatchCentre(
       ],
     };
   }
-  const drivers = (
+  const driverRows = (
     await tx.query(
       `SELECT u.id,u.name,u.branch_id,u.driver_available,u.driver_last_seen_at,
-    (SELECT count(*) FROM orders o WHERE o.driver_id=u.id AND o.branch_id=u.branch_id AND o.status IN ('assigned','out_for_delivery')) active_stops
-    FROM users u WHERE u.role='driver' AND u.active=true AND ($1::boolean OR u.branch_id=$2) AND ($3='' OR u.branch_id=$3) ORDER BY u.name,u.id`,
+        stops.active_stops,point.payload,point.recorded_at,point.created_at AS received_at
+      FROM users u JOIN branches b ON b.id=u.branch_id AND b.active
+      CROSS JOIN LATERAL (
+        SELECT count(*) active_stops FROM orders o
+        WHERE o.driver_id=u.id AND o.branch_id=u.branch_id AND o.status IN ('assigned','out_for_delivery')
+      ) stops
+      LEFT JOIN driver_trips t ON stops.active_stops>0 AND t.driver_id=u.id AND t.branch_id=u.branch_id
+        AND t.ended_at IS NULL AND t.location_consent
+      LEFT JOIN LATERAL (
+        SELECT e.payload,e.recorded_at,e.created_at FROM trip_events e
+        WHERE e.trip_id=t.id AND e.actor_id=u.id AND e.kind='gps' AND e.recorded_at>=t.started_at
+        ORDER BY e.recorded_at DESC,e.sequence DESC LIMIT 1
+      ) point ON true
+      WHERE u.role='driver' AND u.active AND ($1::boolean OR u.branch_id=$2) AND ($3='' OR u.branch_id=$3)
+      ORDER BY u.name,u.id`,
       [user.role === "owner", user.branch_id, d.branch],
     )
   ).rows;
-  for (const driver of drivers)
-    driver.contact = driverContact(
-      driver.driver_last_seen_at
-        ? new Date(driver.driver_last_seen_at).toISOString()
-        : null,
-    );
   let locationReads = 0;
-  for (const driver of drivers) {
-    driver.location = { status: "unavailable", lastKnown: null, live: false };
-    if (Number(driver.active_stops) === 0) continue;
-    const trip = await one(
-      tx,
-      "SELECT id,location_consent FROM driver_trips WHERE driver_id=$1 AND branch_id=$2 AND ended_at IS NULL",
-      [driver.id, driver.branch_id],
-    );
-    if (!trip?.location_consent) continue;
-    const point = await one(
-      tx,
-      "SELECT payload,recorded_at,created_at FROM trip_events WHERE trip_id=$1 AND kind='gps' ORDER BY recorded_at DESC,sequence DESC LIMIT 1",
-      [trip.id],
-    );
-    if (!point) continue;
-    const evidence = tripLocationEvidence(
-      [
-        {
-          ...point.payload,
-          recordedAt: new Date(point.recorded_at).toISOString(),
-          receivedAt: new Date(point.created_at).toISOString(),
+  const now = Date.now();
+  const drivers = driverRows.map(
+    ({ payload, recorded_at, received_at, ...driver }) => {
+      const contact = driverContact(
+        driver.driver_last_seen_at
+          ? new Date(driver.driver_last_seen_at).toISOString()
+          : null,
+      );
+      const evidence = tripLocationEvidence(
+        recorded_at
+          ? [
+              {
+                ...payload,
+                recordedAt: new Date(recorded_at).toISOString(),
+                receivedAt: new Date(received_at).toISOString(),
+              },
+            ]
+          : [],
+        now,
+        true,
+        false,
+      );
+      if (evidence.lastKnown) locationReads++;
+      return {
+        id: driver.id,
+        name: driver.name,
+        branch_id: driver.branch_id,
+        driver_available: driver.driver_available,
+        driver_last_seen_at: driver.driver_last_seen_at,
+        active_stops: driver.active_stops,
+        contact,
+        location: {
+          status: evidence.lastKnown?.delayedUpload
+            ? "last_known_only"
+            : evidence.status,
+          lastKnown: evidence.lastKnown,
+          live: false,
         },
-      ],
-      Date.now(),
-      true,
-      false,
-    );
-    driver.location = {
-      status: evidence.status,
-      lastKnown: evidence.lastKnown,
-      live: false,
-    };
-    locationReads++;
-  }
+      };
+    },
+  );
   if (locationReads)
     await audit(
       tx,

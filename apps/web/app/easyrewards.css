@@ -1,0 +1,349 @@
+.easyrewards-workspace {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.easyrewards-workspace :is(h1, h2, h3, p) {
+  margin: 0;
+}
+.easyrewards-workspace h2 {
+  font-size: 1.22rem;
+  line-height: 1.3;
+}
+.easyrewards-workspace p {
+  color: var(--muted);
+}
+.easyrewards-hero {
+  min-height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 28px 16px 4px;
+  border-radius: 18px;
+  background: radial-gradient(
+    ellipse at right bottom,
+    color-mix(in srgb, var(--primary) 16%, transparent),
+    transparent 64%
+  );
+}
+.easyrewards-hero h1 {
+  font-size: clamp(2rem, 3.3vw, 2.85rem);
+  line-height: 1.06;
+  margin-block: 6px 10px;
+}
+.easyrewards-workspace .easyrewards-eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.07em;
+  font-weight: 800;
+  color: var(--primary);
+}
+.easyrewards-hero-icon,
+.easyrewards-balance-icon,
+.easyrewards-no-offers > svg,
+.easyrewards-empty > span {
+  color: var(--primary);
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  flex: none;
+  border-radius: 18px;
+}
+.easyrewards-hero-icon {
+  width: 110px;
+  height: 100px;
+  transform: rotate(8deg);
+  color: var(--primary);
+}
+.easyrewards-card {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 19px;
+  background: var(--surface);
+  padding: 22px;
+  box-shadow: 0 4px 16px #10251c07;
+}
+.easyrewards-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1fr);
+  align-items: center;
+  padding: 10px;
+}
+.easyrewards-balance {
+  background: var(--accent);
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+.easyrewards-balance-icon {
+  width: 60px;
+  height: 60px;
+  background: color-mix(in srgb, var(--primary) 12%, var(--accent));
+}
+.easyrewards-points {
+  display: block;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.easyrewards-pending {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-top: 4px !important;
+  font-size: 0.86rem;
+}
+.easyrewards-capabilities {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  text-align: center;
+}
+.easyrewards-capabilities > div {
+  padding: 8px;
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 4px;
+}
+.easyrewards-capabilities > div + div {
+  border-inline-start: 1px solid var(--border);
+}
+.easyrewards-capabilities svg,
+.easyrewards-section-title svg,
+.easyrewards-status-list svg {
+  color: var(--primary);
+  flex: none;
+}
+.easyrewards-capabilities span,
+.easyrewards-capabilities a,
+.easyrewards-text-button {
+  font-size: 0.86rem;
+}
+.easyrewards-capabilities span {
+  color: var(--muted);
+}
+.easyrewards-text-button {
+  background: transparent;
+  color: var(--primary);
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  min-height: 44px;
+  text-decoration: underline;
+}
+.easyrewards-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  gap: 18px;
+}
+.easyrewards-columns > section {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+.easyrewards-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.easyrewards-status-list,
+.easyrewards-offers,
+.easyrewards-entries {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+.easyrewards-status-list li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.easyrewards-status-list svg {
+  width: 17px;
+  height: 17px;
+  margin-top: 3px;
+}
+.easyrewards-policy summary {
+  cursor: pointer;
+  width: fit-content;
+  font-weight: 650;
+}
+.easyrewards-policy p {
+  margin-top: 8px;
+}
+.easyrewards-no-offers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.easyrewards-no-offers > svg {
+  width: 62px;
+  height: 62px;
+  padding: 15px;
+}
+.easyrewards-offers li {
+  display: grid;
+  gap: 5px;
+  border-bottom: 1px solid var(--border);
+  padding-block: 7px 12px;
+  overflow-wrap: anywhere;
+}
+.easyrewards-offers a {
+  justify-self: start;
+  white-space: normal;
+}
+.easyrewards-help {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 5px;
+  font-weight: 650;
+}
+.easyrewards-history {
+  padding: 0;
+  overflow: hidden;
+}
+.easyrewards-history > header {
+  padding: 15px 22px;
+  border-bottom: 1px solid var(--border);
+}
+.easyrewards-history > header p {
+  padding-inline-start: 34px;
+}
+.easyrewards-empty {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  text-align: center;
+  padding: 16px 14px 24px;
+}
+.easyrewards-empty > span {
+  width: 54px;
+  height: 54px;
+  margin-bottom: 3px;
+}
+.easyrewards-entries li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.easyrewards-entries li > strong {
+  text-align: end;
+}
+.easyrewards-entries li a + a {
+  margin-inline-start: 8px;
+}
+.easyrewards-history-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-inline: 22px;
+}
+.easyrewards-history-footer:not(:empty) {
+  padding-block: 10px;
+}
+.easyrewards-recovery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.easyrewards-referral-form {
+  display: grid;
+  gap: 12px;
+  overflow-wrap: anywhere;
+}
+.easyrewards-referral-form label {
+  display: grid;
+  gap: 5px;
+}
+@media (max-width: 880px) {
+  .easyrewards-summary,
+  .easyrewards-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .easyrewards-capabilities {
+    margin-top: 8px;
+  }
+}
+@media (max-width: 600px) {
+  .easyrewards-workspace {
+    gap: 13px;
+  }
+  .easyrewards-hero {
+    padding: 10px 0;
+    min-height: 0;
+  }
+  .easyrewards-hero-icon {
+    width: 58px;
+    height: 58px;
+    margin-inline-end: 5px;
+  }
+  .easyrewards-hero-icon svg {
+    width: 36px;
+  }
+  .easyrewards-card {
+    padding: 14px;
+  }
+  .easyrewards-summary {
+    padding: 7px;
+  }
+  .easyrewards-balance {
+    padding: 13px;
+    gap: 10px;
+  }
+  .easyrewards-balance-icon {
+    width: 42px;
+    height: 42px;
+  }
+  .easyrewards-balance-icon svg {
+    width: 25px;
+  }
+  .easyrewards-capabilities > div {
+    padding-inline: 4px;
+  }
+  .easyrewards-capabilities strong {
+    font-size: 0.87rem;
+  }
+  .easyrewards-capabilities span,
+  .easyrewards-capabilities a,
+  .easyrewards-text-button {
+    font-size: 0.78rem;
+    overflow-wrap: anywhere;
+  }
+  .easyrewards-history {
+    padding: 0;
+  }
+  .easyrewards-history > header,
+  .easyrewards-entries li,
+  .easyrewards-history-footer {
+    padding-inline: 14px;
+  }
+  .easyrewards-history > header p {
+    padding-inline-start: 0;
+  }
+  .easyrewards-sheet {
+    align-items: flex-end;
+    padding: 0;
+  }
+  body:has(.client-demo-notice) .easyrewards-sheet {
+    padding-bottom: 76px;
+  }
+  .easyrewards-sheet .modal {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: min(90dvh, calc(100dvh - 76px));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}

@@ -1,0 +1,59 @@
+--------- beginning of crash
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: FATAL EXCEPTION: main
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: Process: com.easygasng.customer.local, PID: 6791
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: java.lang.RuntimeException: Unable to get provider androidx.startup.InitializationProvider
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.app.ActivityThread.installProvider(ActivityThread.java:9240)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.app.ActivityThread.installContentProviders(ActivityThread.java:8726)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:8350)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleBindApplication(ActivityThread.java:0)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2776)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.os.Handler.dispatchMessageImpl(Handler.java:142)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:126)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:295)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:398)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:9572)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:842)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: Caused by: lg: java.lang.RuntimeException: Failed to create an instance of class androidx.work.impl.WorkDatabase.canonicalName
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at l10.y(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:104)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at l10.x(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:86)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at androidx.startup.InitializationProvider.onCreate(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:57)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.content.ContentProvider.attachInfo(ContentProvider.java:2694)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.content.ContentProvider.attachInfo(ContentProvider.java:2663)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at android.app.ActivityThread.installProvider(ActivityThread.java:9237)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	... 12 more
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: Caused by: java.lang.RuntimeException: Failed to create an instance of class androidx.work.impl.WorkDatabase.canonicalName
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at kq3.p(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:1088)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at androidx.work.WorkManagerInitializer.create(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:88)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	at l10.y(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:90)
+11-12 07:43:39.254  6791  6791 E AndroidRuntime: 	... 17 more
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: FATAL EXCEPTION: main
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: Process: com.easygasng.customer.local, PID: 7000
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: java.lang.RuntimeException: Unable to get provider androidx.startup.InitializationProvider
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.app.ActivityThread.installProvider(ActivityThread.java:9240)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.app.ActivityThread.installContentProviders(ActivityThread.java:8726)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:8350)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleBindApplication(ActivityThread.java:0)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2776)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.os.Handler.dispatchMessageImpl(Handler.java:142)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:126)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:295)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:398)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:9572)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:842)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: Caused by: lg: java.lang.RuntimeException: Failed to create an instance of class androidx.work.impl.WorkDatabase.canonicalName
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at l10.y(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:104)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at l10.x(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:86)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at androidx.startup.InitializationProvider.onCreate(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:57)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.content.ContentProvider.attachInfo(ContentProvider.java:2694)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.content.ContentProvider.attachInfo(ContentProvider.java:2663)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at android.app.ActivityThread.installProvider(ActivityThread.java:9237)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	... 12 more
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: Caused by: java.lang.RuntimeException: Failed to create an instance of class androidx.work.impl.WorkDatabase.canonicalName
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at kq3.p(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:1088)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at androidx.work.WorkManagerInitializer.create(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:88)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	at l10.y(r8-map-id-138e9410a216de3f0dda53296e43e99f4c2053e2b3efc6a447ad47ed3f8bf968:90)
+11-12 07:46:19.621  7000  7000 E AndroidRuntime: 	... 17 more

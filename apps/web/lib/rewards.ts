@@ -274,7 +274,8 @@ export async function rewardsAction(
     z.object({}).strict().parse(input);
     allow(user, ["customer", "commercial"]);
     const balance = await rewardBalance(tx, user.id);
-    const policy = await approvedRewardPolicy(tx, user.branch_id ?? "lagos");
+    const branch = user.branch_id ?? "lagos";
+    const policy = await approvedRewardPolicy(tx, branch);
     const entries = (
       await tx.query(
         `SELECT e.id,e.points,CASE WHEN d.kind IN ('referral','reversed') THEN d.kind ELSE e.reference END AS reference,e.created_at,d.kind,CASE WHEN b.customer_id=e.customer_id THEN d.booking_id ELSE NULL END AS booking_id,b.reference AS booking_reference,CASE WHEN o.customer_id=e.customer_id THEN d.order_id ELSE NULL END AS order_id,o.reference AS order_reference
@@ -305,6 +306,10 @@ export async function rewardsAction(
         !!policy?.policy.redemptionEnabled &&
         process.env.EASYGAS_REWARDS_REDEMPTION_ENABLED === "true" &&
         balance >= 0,
+      referralEnabled:
+        !!policy?.policy.referralEnabled &&
+        process.env.EASYGAS_REWARDS_ISSUANCE_ENABLED === "true" &&
+        !!(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true", [branch])),
       policy: policy ? { version: policy.version, ...policy.policy } : null,
       catalogue: await availableRewardOffers(tx, user),
       referral: null,

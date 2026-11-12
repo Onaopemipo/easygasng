@@ -1,0 +1,712 @@
+{
+  "phase": "Notifications redesign",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "NOTIF-001",
+      "requirement": "Actual unread badge count from authoritative server, not truncated preview list.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/lib/notification-inbox.ts",
+        "apps/web/lib/navigation.ts"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G09"
+    },
+    {
+      "id": "NOTIF-002",
+      "requirement": "Compact accessible desktop tray, open/close, outside click, Escape, focus return, z-index, scrolling.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/notifications-tray.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G11"
+    },
+    {
+      "id": "NOTIF-003",
+      "requirement": "Responsive mobile web drawer and no page overflow.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/notifications-tray.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G12"
+    },
+    {
+      "id": "NOTIF-004",
+      "requirement": "Native iOS/Android notifications with preserved role-specific navigation.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Native source and typecheck verified; run signed-in iOS and Android acceptance.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Native source and typecheck verified; run signed-in iOS and Android acceptance.",
+      "implementationFiles": [
+        "apps/mobile/CustomerNotifications.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/TechnicianWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G13"
+    },
+    {
+      "id": "NOTIF-005",
+      "requirement": "Server-backed list with real titles, bodies, timestamps, read state, correct user scope.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recipient filtering, stable page boundaries and notification-only read scope exercised in the local integration fixture.",
+      "testResult": "PASS \u2014 local integration fixture",
+      "outstandingWork": "None for the bounded requirement",
+      "implementationFiles": [
+        "apps/web/lib/notification-inbox.ts"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G04"
+    },
+    {
+      "id": "NOTIF-006",
+      "requirement": "Reliable All/Unread filters; Approvals/System only with verified category metadata.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "All and Unread are implemented; approval and system taxonomy has no persisted event metadata.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "All and Unread are implemented; approval and system taxonomy has no persisted event metadata.",
+      "implementationFiles": [
+        "apps/web/lib/notification-inbox.ts",
+        "apps/web/components/notifications-tray.tsx",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G10"
+    },
+    {
+      "id": "NOTIF-007",
+      "requirement": "Single mark-as-read using existing API, per-item loading, server confirmation and retry.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/lib/accounts.ts",
+        "apps/web/components/notifications-tray.tsx",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G06"
+    },
+    {
+      "id": "NOTIF-008",
+      "requirement": "Optional bulk mark-read with authenticated user-scoped atomic/idempotent implementation and tests; otherwise omit.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Single-transaction update and cross-recipient isolation passed; verify independent connections and native interactions.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Single-transaction update and cross-recipient isolation passed; verify independent connections and native interactions.",
+      "implementationFiles": [
+        "apps/web/lib/notification-inbox.ts",
+        "apps/web/components/notifications-tray.tsx",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G07"
+    },
+    {
+      "id": "NOTIF-009",
+      "requirement": "Real pagination/cursor or bounded preview + verified View all; never invent total/page count.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recipient filtering, stable page boundaries and notification-only read scope exercised in the local integration fixture.",
+      "testResult": "PASS \u2014 local integration fixture",
+      "outstandingWork": "None for the bounded requirement",
+      "implementationFiles": [
+        "apps/web/lib/notification-inbox.ts",
+        "apps/web/components/notifications-tray.tsx",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G08"
+    },
+    {
+      "id": "NOTIF-010",
+      "requirement": "Notification-specific contextual deep links with destination permission revalidation.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Admin order links retain branch/role checks; approval-specific destination and full link acceptance remain open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Admin order links retain branch/role checks; approval-specific destination and full link acceptance remain open.",
+      "implementationFiles": [
+        "apps/web/lib/notification-inbox.ts",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G19"
+    },
+    {
+      "id": "NOTIF-011",
+      "requirement": "No read action changes approval status, eligibility, activation, finance or inventory.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Mutation SQL updates notification read state only; approval-specific before/after test remains open.",
+      "testResult": "Focused suite passed; direct linked approval scenario not executed.",
+      "outstandingWork": "Execute linked approval before/after acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/notification-inbox.ts",
+        "apps/web/lib/accounts.ts"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G20"
+    },
+    {
+      "id": "NOTIF-012",
+      "requirement": "Consistent counts/read states after refresh, navigation, cross-device reads and sign-in.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/lib/notification-inbox.ts",
+        "apps/web/components/notifications-tray.tsx",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G09"
+    },
+    {
+      "id": "NOTIF-013",
+      "requirement": "Loading, empty, filtered-empty, unavailable, stale, offline, revoked, denied, timeout and retry.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/notifications-tray.tsx",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G17"
+    },
+    {
+      "id": "NOTIF-014",
+      "requirement": "Last confirmed refresh for stale data; online-only sensitive changes.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/notifications-tray.tsx",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G17"
+    },
+    {
+      "id": "NOTIF-015",
+      "requirement": "Existing polling/foreground refresh preserved; avoid duplicate subscriptions and race conditions.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/notifications-tray.tsx",
+        "apps/mobile/CustomerNotifications.tsx",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G17"
+    },
+    {
+      "id": "NOTIF-016",
+      "requirement": "Light/dark/system, WCAG AA contrast, visible focus, keyboard/screen reader, reduced motion.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Implementation and bounded local checks recorded; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/notifications-tray.tsx",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G16"
+    },
+    {
+      "id": "NOTIF-017",
+      "requirement": "Preserve existing routes, sidebar, approval, Paystack, refunds, wallets, POS, stock, custody, support and mobile workflows.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Final PostgreSQL-enabled regression passed 676 tests, with zero failures or skips. Native device and hosted acceptance remain open.",
+      "testResult": "PASS \u2014 final PostgreSQL-enabled regression",
+      "outstandingWork": "Complete native device and hosted acceptance.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt",
+        "docs/notifications-redesign/evidence/full-regression.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G24"
+    },
+    {
+      "id": "NOTIF-018",
+      "requirement": "Traceability, tests, visual evidence, rollback, explicit GO/NO-GO and complete implementation report.",
+      "priority": "P1",
+      "scope": "Web and native notification centre",
+      "uiReference": "Approved Notification Tray and Web Mobile Concept",
+      "route": "Admin bell and native notification screens",
+      "dataSource": "Recipient-scoped notifications table and authenticated navigation access",
+      "securityControl": "Active session, recipient predicates and existing destination permissions",
+      "status": "PARTIAL",
+      "reason": "Audit, evidence and rollback recorded. Native, accessibility and release acceptance remain open.",
+      "testResult": "See focused and browser evidence; unexecuted cases remain open.",
+      "outstandingWork": "Audit, evidence and rollback recorded. Native, accessibility and release acceptance remain open.",
+      "implementationFiles": [
+        "docs/notifications-redesign/05-rollback-release.md"
+      ],
+      "testFiles": [
+        "tests/notification-inbox.test.ts"
+      ],
+      "evidence": [
+        "docs/notifications-redesign/tests.txt"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE"
+      ],
+      "negativeTests": [
+        "NOTIF-SCOPE"
+      ],
+      "acceptanceGate": "G26"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "description": "audit completed",
+      "status": "PASS"
+    },
+    {
+      "id": "G02",
+      "description": "RTM created",
+      "status": "PASS"
+    },
+    {
+      "id": "G03",
+      "description": "real data",
+      "status": "PASS"
+    },
+    {
+      "id": "G04",
+      "description": "server user scope",
+      "status": "PASS"
+    },
+    {
+      "id": "G05",
+      "description": "role/branch scope",
+      "status": "OPEN"
+    },
+    {
+      "id": "G06",
+      "description": "read idempotency",
+      "status": "PASS"
+    },
+    {
+      "id": "G07",
+      "description": "optional bulk safety",
+      "status": "OPEN"
+    },
+    {
+      "id": "G08",
+      "description": "correct pagination",
+      "status": "PASS"
+    },
+    {
+      "id": "G09",
+      "description": "accurate unread counts",
+      "status": "OPEN"
+    },
+    {
+      "id": "G10",
+      "description": "verified categories",
+      "status": "OPEN"
+    },
+    {
+      "id": "G11",
+      "description": "compact desktop",
+      "status": "PASS"
+    },
+    {
+      "id": "G12",
+      "description": "mobile web",
+      "status": "PASS"
+    },
+    {
+      "id": "G13",
+      "description": "iOS",
+      "status": "OPEN"
+    },
+    {
+      "id": "G14",
+      "description": "Android",
+      "status": "OPEN"
+    },
+    {
+      "id": "G15",
+      "description": "themes",
+      "status": "OPEN"
+    },
+    {
+      "id": "G16",
+      "description": "accessibility",
+      "status": "OPEN"
+    },
+    {
+      "id": "G17",
+      "description": "stale/offline",
+      "status": "OPEN"
+    },
+    {
+      "id": "G18",
+      "description": "auth revocation",
+      "status": "OPEN"
+    },
+    {
+      "id": "G19",
+      "description": "authorised links",
+      "status": "OPEN"
+    },
+    {
+      "id": "G20",
+      "description": "approval independence",
+      "status": "OPEN"
+    },
+    {
+      "id": "G21",
+      "description": "finance non-regression",
+      "status": "OPEN"
+    },
+    {
+      "id": "G22",
+      "description": "custody non-regression",
+      "status": "OPEN"
+    },
+    {
+      "id": "G23",
+      "description": "security negative tests",
+      "status": "OPEN"
+    },
+    {
+      "id": "G24",
+      "description": "regression tests",
+      "status": "PASS"
+    },
+    {
+      "id": "G25",
+      "description": "screenshots",
+      "status": "OPEN"
+    },
+    {
+      "id": "G26",
+      "description": "RTM validation",
+      "status": "PASS"
+    },
+    {
+      "id": "G27",
+      "description": "rollback",
+      "status": "PASS"
+    },
+    {
+      "id": "G28",
+      "description": "explicit GO/NO-GO",
+      "status": "PASS"
+    }
+  ]
+}

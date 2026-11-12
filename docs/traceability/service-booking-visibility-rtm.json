@@ -30,6 +30,38 @@
       ],
       "negativeTests": [],
       "acceptanceGate": "SBV-G01"
+    },
+    {
+      "id": "SBV-002",
+      "requirement": "Public Services browsing works with a restricted signed-in session",
+      "priority": "P1",
+      "scope": "Public catalogue and service detail",
+      "uiReference": "Reported technician restriction on /services",
+      "route": "/services; /services/[id]; /admin/services",
+      "dataSource": "Active services from services.catalogue",
+      "securityControl": "Public catalogue reads only; services.manage retains existing server session restrictions and customer booking keeps existing API checks.",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Scoped public page data loading implemented; API boundary verified locally.",
+      "testResult": "PASS \u2014 14 targeted tests including restricted catalogue and management denial.",
+      "outstandingWork": "Verify the signed-in browser flow on the client demo after deployment.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/technician-session.ts"
+      ],
+      "testFiles": [
+        "tests/technician-work.test.ts"
+      ],
+      "evidence": [
+        "docs/reports/service-booking-visibility/restricted-session-tests.txt"
+      ],
+      "testIds": [
+        "SBV-002"
+      ],
+      "negativeTests": [
+        "SBV-002"
+      ],
+      "acceptanceGate": "SBV-G02"
     }
   ],
   "gates": [
@@ -37,10 +69,16 @@
       "id": "SBV-G01",
       "status": "PASS",
       "description": "Customer discovery visible; active-service controls preserved"
+    },
+    {
+      "id": "SBV-G02",
+      "status": "OPEN",
+      "description": "Verify public catalogue with owner and restricted technician sessions on the client demo."
     }
   ],
   "productionDecision": "NO-GO unchanged",
   "scopeChanges": [
-    "Services navigation label clarified to Book a Service; route and position preserved"
+    "Services navigation label clarified to Book a Service; route and position preserved",
+    "Separate public catalogue reads from staff management requests on the storefront."
   ]
 }

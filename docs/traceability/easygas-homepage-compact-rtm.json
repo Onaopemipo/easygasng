@@ -1,0 +1,824 @@
+{
+  "phase": "Compact EasyGas homepage",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "HOME-001",
+      "requirement": "Header",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Public navigation and current session",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/public-header.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G04"
+    },
+    {
+      "id": "HOME-002",
+      "requirement": "Hero",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Governed website content and original cooking asset",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css",
+        "apps/web/public/assets/easygas-cooking-hero-v1.webp"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G03"
+    },
+    {
+      "id": "HOME-003",
+      "requirement": "Quick order",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Active branch gas and quote APIs",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G07"
+    },
+    {
+      "id": "HOME-004",
+      "requirement": "Benefits",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Existing EasyGas service benefits",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G16"
+    },
+    {
+      "id": "HOME-005",
+      "requirement": "Services",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Active service catalogue and published media",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G10"
+    },
+    {
+      "id": "HOME-006",
+      "requirement": "Products",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Published catalogue, prices and stock",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G09"
+    },
+    {
+      "id": "HOME-007",
+      "requirement": "Account",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Existing customer workspace",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G11"
+    },
+    {
+      "id": "HOME-008",
+      "requirement": "Rewards",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Existing rewards policy",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G11"
+    },
+    {
+      "id": "HOME-009",
+      "requirement": "How It Works",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Existing storefront order journey",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G13"
+    },
+    {
+      "id": "HOME-010",
+      "requirement": "Testimonials",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Moderated and consented customer testimonials",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/testimonials.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G12"
+    },
+    {
+      "id": "HOME-011",
+      "requirement": "Coverage",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Active delivery_locations with confirmed coverage",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G07"
+    },
+    {
+      "id": "HOME-012",
+      "requirement": "Footer",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Governed website contact records and existing route links",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G15"
+    },
+    {
+      "id": "HOME-013",
+      "requirement": "Demo warning",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "EASYGAS_CLIENT_DEMO environment switch",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/app/layout.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G14"
+    },
+    {
+      "id": "HOME-014",
+      "requirement": "Dynamic gas price",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Active gas.price_per_kg setting and quote",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser amounts matched active branch API data and the quote regression used changed synthetic prices.",
+      "testResult": "PASS \u2014 active amounts in browser and quote suite",
+      "outstandingWork": "None for active amount rendering",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [
+        "COMPACT-QUOTE01"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "G05"
+    },
+    {
+      "id": "HOME-015",
+      "requirement": "Dynamic delivery fee",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Active delivery.fee setting and quote",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser amounts matched active branch API data and the quote regression used changed synthetic prices.",
+      "testResult": "PASS \u2014 active amounts in browser and quote suite",
+      "outstandingWork": "None for active amount rendering",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [
+        "COMPACT-QUOTE01"
+      ],
+      "negativeTests": [],
+      "acceptanceGate": "G06"
+    },
+    {
+      "id": "HOME-016",
+      "requirement": "Checkout/Paystack safeguards",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Existing checkout, payment and ledger records",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G08"
+    },
+    {
+      "id": "HOME-017",
+      "requirement": "Light/Dark/System web",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Persisted web appearance and OS preference",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/theme-provider.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G20"
+    },
+    {
+      "id": "HOME-018",
+      "requirement": "Light/Dark/System native",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Persisted Expo appearance and OS preference",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Native source, types and bundles verified. Installed iOS and Android appearance still requires interactive testing.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Native source, types and bundles verified. Installed iOS and Android appearance still requires interactive testing.",
+      "implementationFiles": [
+        "apps/mobile/CustomerHome.tsx",
+        "apps/mobile/theme.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G18"
+    },
+    {
+      "id": "HOME-019",
+      "requirement": "Responsive compactness",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Responsive browser layout",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G17"
+    },
+    {
+      "id": "HOME-020",
+      "requirement": "Accessibility",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Existing semantic controls and theme tokens",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/app/homepage.css",
+        "apps/web/components/public-header.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G21"
+    },
+    {
+      "id": "HOME-021",
+      "requirement": "Role/session preservation",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Current authenticated role and route permissions",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/web/lib/auth.ts"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G22"
+    },
+    {
+      "id": "HOME-022",
+      "requirement": "Loading/offline/stale",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Existing catalogue and quote responses",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G17"
+    },
+    {
+      "id": "HOME-023",
+      "requirement": "Financial/inventory non-regression",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Existing financial records, reservations and custody",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G23"
+    },
+    {
+      "id": "HOME-024",
+      "requirement": "Tests/evidence",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Recorded local test output",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Local tests and browser checks recorded. The 60-scenario register includes unexecuted cases.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Local tests and browser checks recorded. The 60-scenario register includes unexecuted cases.",
+      "implementationFiles": [
+        "docs/homepage-compact/report.md"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G24"
+    },
+    {
+      "id": "HOME-025",
+      "requirement": "Rollback/GO-NO-GO",
+      "priority": "P1",
+      "scope": "Existing storefront and native customer Home",
+      "uiReference": "Approved compact homepage layout",
+      "route": "Public /, linked storefront routes and native customer Home",
+      "dataSource": "Code-only changes and existing launch gates",
+      "securityControl": "Existing server-side scope, consent, inventory, approval and payment controls retained",
+      "status": "PARTIAL",
+      "reason": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "testResult": "See recorded build, browser and regression evidence",
+      "outstandingWork": "Existing contracts and compact presentation are mapped. See scenario register for remaining acceptance.",
+      "implementationFiles": [
+        "docs/homepage-compact/report.md"
+      ],
+      "testFiles": [],
+      "evidence": [
+        "docs/homepage-compact/evidence/targeted-tests.txt",
+        "docs/homepage-compact/evidence/browser.txt",
+        "docs/homepage-compact/evidence/full-regression.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "acceptanceGate": "G25"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "description": "repository audit complete",
+      "status": "PASS"
+    },
+    {
+      "id": "G02",
+      "description": "existing content/links intact",
+      "status": "OPEN"
+    },
+    {
+      "id": "G03",
+      "description": "original imagery retained",
+      "status": "PASS"
+    },
+    {
+      "id": "G04",
+      "description": "header controls accessible",
+      "status": "OPEN"
+    },
+    {
+      "id": "G05",
+      "description": "dynamic price",
+      "status": "PASS"
+    },
+    {
+      "id": "G06",
+      "description": "dynamic delivery fee",
+      "status": "PASS"
+    },
+    {
+      "id": "G07",
+      "description": "server quote/coverage/stock",
+      "status": "OPEN"
+    },
+    {
+      "id": "G08",
+      "description": "no duplicate payment/ledger",
+      "status": "OPEN"
+    },
+    {
+      "id": "G09",
+      "description": "products and cart",
+      "status": "OPEN"
+    },
+    {
+      "id": "G10",
+      "description": "services",
+      "status": "OPEN"
+    },
+    {
+      "id": "G11",
+      "description": "account/rewards",
+      "status": "OPEN"
+    },
+    {
+      "id": "G12",
+      "description": "testimonials truthful",
+      "status": "OPEN"
+    },
+    {
+      "id": "G13",
+      "description": "how-it-works anchor",
+      "status": "PASS"
+    },
+    {
+      "id": "G14",
+      "description": "demo banner",
+      "status": "PASS"
+    },
+    {
+      "id": "G15",
+      "description": "footer links",
+      "status": "OPEN"
+    },
+    {
+      "id": "G16",
+      "description": "desktop visual QA",
+      "status": "PASS"
+    },
+    {
+      "id": "G17",
+      "description": "mobile web QA",
+      "status": "PASS"
+    },
+    {
+      "id": "G18",
+      "description": "native iOS",
+      "status": "OPEN"
+    },
+    {
+      "id": "G19",
+      "description": "native Android",
+      "status": "OPEN"
+    },
+    {
+      "id": "G20",
+      "description": "theme persistence",
+      "status": "OPEN"
+    },
+    {
+      "id": "G21",
+      "description": "accessibility",
+      "status": "OPEN"
+    },
+    {
+      "id": "G22",
+      "description": "security negative tests",
+      "status": "OPEN"
+    },
+    {
+      "id": "G23",
+      "description": "full regressions",
+      "status": "PASS"
+    },
+    {
+      "id": "G24",
+      "description": "RTM validation",
+      "status": "PASS"
+    },
+    {
+      "id": "G25",
+      "description": "rollback",
+      "status": "PASS"
+    },
+    {
+      "id": "G26",
+      "description": "production release decision. ",
+      "status": "PASS"
+    }
+  ]
+}

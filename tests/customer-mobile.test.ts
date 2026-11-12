@@ -96,6 +96,9 @@ test("CUI-SCOPE: onboarding is preserved and later authorised driver-GPS launch 
   );
   assert.deepEqual(Object.keys(laterPhase.changes), ["apps/mobile/app.json"]);
   assert.equal(laterPhase.requirement, "GPS-R01");
+  const mapsPhase = JSON.parse(await readFile("docs/live-rider-tracking/native-config-change.json", "utf8"));
+  assert.equal(mapsPhase.requirement, "LRT-009");
+  assert.deepEqual(Object.keys(mapsPhase.changes), ["apps/mobile/app.config.js"]);
   const alerts = JSON.parse(await readFile("docs/custom-alerts/approved-scope-change.json", "utf8"));
   assert.deepEqual(alerts["apps/mobile/Onboarding.tsx"].requirements, ["ALERT-03"]);
   for (const line of manifest.trim().split("\n")) {
@@ -105,7 +108,7 @@ test("CUI-SCOPE: onboarding is preserved and later authorised driver-GPS launch 
       createHash("sha256")
         .update(await readFile(path))
         .digest("hex"),
-      laterPhase.changes[path]?.sha256 ?? (path === "apps/mobile/Onboarding.tsx" ? alerts[path].approvedHash : hash),
+      mapsPhase.changes[path]?.sha256 ?? laterPhase.changes[path]?.sha256 ?? (path === "apps/mobile/Onboarding.tsx" ? alerts[path].approvedHash : hash),
       path,
     );
   }

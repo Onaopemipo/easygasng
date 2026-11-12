@@ -1,3 +1,4 @@
+import CustomerNotifications from "./CustomerNotifications";
 import { EasyGasAlert } from "./AppAlert";
 import { technicianPending, syncTechnicianFieldQueue } from "./field-queue";
 import { photoUploader } from "./DriverPhoto";
@@ -56,7 +57,6 @@ export default function TechnicianWorkspace({
     [stage, setStage] = useState("details"),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [notifications, setNotifications] = useState<any[]>([]),
     [stamp, setStamp] = useState("");
   const [connected, setConnected] = useState(false);
   const [pending, setPending] = useState<any[]>([]),
@@ -188,9 +188,8 @@ export default function TechnicianWorkspace({
     await loadPending().catch((e) => setQueueMessage(e.message));
     const generation = ++refreshGeneration.current;
     try {
-      const [s, me, detail] = await Promise.all([
+      const [s, detail] = await Promise.all([
         api("technician.snapshot"),
-        api("me"),
         selected
           ? api("bookings?id=" + encodeURIComponent(selected))
           : Promise.resolve(null),
@@ -198,7 +197,6 @@ export default function TechnicianWorkspace({
       if (!alive.current || generation !== refreshGeneration.current) return;
       if (detail) setBookings(detail);
       setProfile(s);
-      setNotifications(me.notifications);
       setStamp(new Date().toISOString());
       setConnected(true);
       setError("");
@@ -207,7 +205,6 @@ export default function TechnicianWorkspace({
       if ([401, 403].includes(e.status)) {
         setBookings([]);
         setProfile(null);
-        setNotifications([]);
       }
       setConnected(false);
       throw e;
@@ -617,35 +614,13 @@ export default function TechnicianWorkspace({
             entryRange={entryRange}
           />
         ) : page === "notifications" ? (
-          <>
-            {notifications.map((n) => (
-              <Card key={n.id}>
-                <Title>{n.title}</Title>
-                <Copy>{n.body}</Copy>
-                <Copy>{lagos(n.created_at)}</Copy>
-                {bookings.some((b) => b.id === n.related_id) && (
-                  <Button
-                    label="Open Assigned Job"
-                    onPress={() =>
-                      open(bookings.find((b) => b.id === n.related_id))
-                    }
-                  />
-                )}{" "}
-                {!n.read_at && (
-                  <Button
-                    label="Mark Read"
-                    secondary
-                    onPress={() =>
-                      api("notifications.read", { id: n.id })
-                        .then(refresh)
-                        .catch((e) => setError(e.message))
-                    }
-                  />
-                )}
-              </Card>
-            ))}
-            {!notifications.length && <Copy>No notifications yet.</Copy>}
-          </>
+          <CustomerNotifications
+            api={api}
+            relatedAction={(id) => {
+              const assigned = bookings.find((booking) => booking.id === id);
+              return assigned ? { label: "Open assigned job", open: () => open(assigned) } : undefined;
+            }}
+          />
         ) : page === "password" ? (
           <NativeForm
             api={api}

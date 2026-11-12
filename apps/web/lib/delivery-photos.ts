@@ -131,13 +131,13 @@ export async function deliveryPhotoHistory(
   user: Actor,
   input: unknown,
 ) {
-  const d = z.object({ orderId: z.string().uuid() }).strict().parse(input);
+  const d = z.object({ orderId: z.string().uuid(), attemptId: z.string().uuid().optional() }).strict().parse(input);
   await photoOrder(tx, user, d.orderId);
   return {
     photos: (
       await tx.query(
-        "SELECT id,order_id,alt,captured_at,created_at,retain_until FROM delivery_photos WHERE order_id=$1 AND retain_until>now() ORDER BY created_at DESC,id DESC",
-        [d.orderId],
+        "SELECT id,order_id,alt,captured_at,created_at,retain_until FROM delivery_photos WHERE order_id=$1 AND ($2::text IS NULL OR attempt_id=$2) AND retain_until>now() ORDER BY created_at DESC,id DESC",
+        [d.orderId, d.attemptId ?? null],
       )
     ).rows,
   };

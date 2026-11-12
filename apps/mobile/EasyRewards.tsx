@@ -1,12 +1,23 @@
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasLoader } from "./EasyGasLoader";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { AppState, Share, StyleSheet, useColorScheme } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { gasMoney } from "../../packages/business-rules/src/gas-pricing";
+import { lagosDay } from "../../packages/business-rules/src/customer-mobile";
 import {
-  
-  
-  Share,
-  useColorScheme,
-} from "react-native";
+  canSelectReward,
+  formatRewardCount,
+  rewardCapabilities,
+  rewardDateTime,
+  rewardDelta,
+  rewardEntryTitle,
+  type RewardOffer,
+  type RewardsSummary,
+} from "../../packages/business-rules/src/rewards-overview";
+import { Button, Card, Copy, Feedback, Title } from "./CustomerUI";
+import { ContextSheet } from "./ContextSheet";
+import { useTheme } from "./theme";
 import { View, Pressable } from "./surfaces";
 import { Text as BaseText, TextInput as BaseInput } from "./typography";
 function Text(props: React.ComponentProps<typeof BaseText>) {
@@ -50,158 +61,418 @@ export function NativeEasyRewards({
   api,
   onOffer,
   onOrder,
+  onBookings,
+  onProducts,
+  onHelp,
 }: {
-  onOrder?: (id: string) => void;
   api: API;
-  onOffer: (offer: any) => void;
+  onOffer: (offer: RewardOffer) => void;
+  onOrder: (id: string) => void;
+  onBookings: () => void;
+  onProducts: () => void;
+  onHelp: () => void;
 }) {
-  const dark = useColorScheme() === "dark";
-  const [data, setData] = useState<any>(null),
-    [error, setError] = useState(""),
-    [version, setVersion] = useState(0),
-    [code, setCode] = useState(""),
-    [referral, setReferral] = useState<any>(null),
-    [busy, setBusy] = useState(false);
+  const { colors } = useTheme();
+  const [data, setData] = useState<RewardsSummary | null>(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [checkedAt, setCheckedAt] = useState("");
+  const [version, setVersion] = useState(0);
+  const [referring, setReferring] = useState(false);
+  const [visible, setVisible] = useState(6);
+  const refresh = () => setVersion((value) => value + 1);
+
   useEffect(() => {
     let live = true;
-    setError("");
-    setData(null);
+    setLoading(true);
     api("rewards.summary")
-      .then((r) => {
-        if (live) setData(r);
+      .then((result) => {
+        if (!live) return;
+        setData(result);
+        setCheckedAt(new Date().toISOString());
+        setError("");
       })
-      .catch((e) => {
-        if (live) setError(e.message);
+      .catch((failure) => {
+        if (!live) return;
+        if ([401, 403].includes(failure.status)) setData(null);
+        setReferring(false);
+        setError(
+          failure.status === 401
+            ? "Sign in to view your rewards."
+            : failure.status === 403
+              ? "This account can’t view EasyRewards."
+              : failure.status
+                ? failure.message
+                : "Couldn’t connect to EasyRewards. Check your connection and try again.",
+        );
+      })
+      .finally(() => {
+        if (live) setLoading(false);
       });
     return () => {
       live = false;
     };
   }, [version]);
-  const button = (title: string, fn: () => void) => (
-    <Pressable
-      accessibilityRole="button"
-      disabled={busy}
-      style={card}
-      onPress={fn}
-    >
-      <Text>{title}</Text>
-    </Pressable>
-  );
-  if (error)
-    return (
-      <View style={{ backgroundColor: dark ? "#071d16" : "#fff", padding: 12 }}>
-        <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>
-        {button("Retry rewards", () => setVersion((v) => v + 1))}
-      </View>
-    );
-  if (!data) return <EasyGasLoader accessibilityLabel="Loading rewards" />;
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state === "active") refresh();
+    });
+    return () => subscription.remove();
+  }, []);
+
+  const capabilities = data ? rewardCapabilities(data) : null;
+  const canAct = !error && !loading;
   return (
-    <View
-      style={{
-        backgroundColor: dark ? "#071d16" : "#fff",
-        padding: 12,
-        borderRadius: 12,
-      }}
-    >
-      <Text accessibilityRole="header">
-        EasyRewards · {data.availablePoints} available points
-      </Text>
-      <Text>
-        Points are separate from purchase credit.{" "}
-        {data.earningEnabled
-          ? "Earning is enabled for eligible verified, fulfilled purchases."
-          : "Earning is disabled; history is preserved."}
-      </Text>
-      {data.restricted && (
-        <Text accessibilityRole="alert">
-          Point spending is restricted pending finance review.
-        </Text>
-      )}
-      <Text>{data.pendingAwards} award events await processing.</Text>
-      <Text>
-        {data.policy
-          ? `Approved policy ${data.policy.version}; minimum ${data.policy.minimumPoints} points; maximum ${data.policy.maximumDiscountBps / 100}% of eligible product spend.`
-          : "No approved policy."}
-      </Text>
-      <Text accessibilityRole="header">Reward offers</Text>
-      {data.catalogue.length ? (
-        data.catalogue.map((o: any) => (
-          <View key={o.id} style={card}>
-            <Text>
-              {o.title} · {o.points} points
-            </Text>
-            <Text>
-              {o.description} · expires{" "}
-              {new Date(o.expiresAt).toLocaleDateString()}
-            </Text>
-            {button("Choose products for this offer", () => onOffer(o))}
-          </View>
-        ))
-      ) : (
-        <Text>No approved eligible offers are available.</Text>
-      )}
-      <Text accessibilityRole="header">Referral programme</Text>
-      {data.policy?.referralEnabled && data.earningEnabled ? (
-        <View>
-          {button("Get my referral code", async () => {
-            setBusy(true);
-            try {
-              setReferral(await api("rewards.referral", {}));
-            } catch (e: any) {
-              setError(e.message);
-            } finally {
-              setBusy(false);
-            }
-          })}
-          {referral && <Text selectable>{referral.code}</Text>}
-          {referral?.shareUrl &&
-            button("Share referral link", () => {
-              Share.share({ message: referral.shareUrl });
-            })}
-          <Text>
-            Enter a referral before your first purchase. No reward is earned
-            until verified fulfilment.
-          </Text>
-          <TextInput
-            accessibilityLabel="Referral code received"
-            value={code}
-            onChangeText={setCode}
-            maxLength={32}
-          />
-          {button("Apply referral code", async () => {
-            setBusy(true);
-            try {
-              await api("rewards.referral.attribute", { code });
-              setCode("");
-              setVersion((v) => v + 1);
-            } catch (e: any) {
-              setError(e.message);
-            } finally {
-              setBusy(false);
-            }
-          })}
+    <View style={overviewStyles.stack}>
+      <View style={[overviewStyles.hero, { backgroundColor: colors.elevated }]}>
+        <View style={overviewStyles.grow}>
+          <BaseText
+            preserveColor
+            style={{ color: colors.primary, fontWeight: "800" }}
+          >
+            YOUR EASYGAS
+          </BaseText>
+          <Title>EasyRewards</Title>
+          <Copy>
+            {capabilities?.earning
+              ? "Earn points on eligible purchases and see your rewards activity."
+              : "View your points, programme status and rewards activity."}
+          </Copy>
         </View>
-      ) : (
-        <Text>Referral bonuses are disabled.</Text>
+        <Ionicons
+          name="gift-outline"
+          size={35}
+          color={colors.primary}
+          accessible={false}
+        />
+      </View>
+      {error && (
+        <Feedback
+          error={
+            data ? `${error} Last checked ${rewardDateTime(checkedAt)}.` : error
+          }
+          retry={refresh}
+        />
       )}
-      <Text accessibilityRole="header">Points history</Text>
-      {data.entries.length ? (
-        data.entries.map((e: any) => (
-          <View style={card} key={e.id}>
-            <Text>
-              {e.points} points · {e.kind ?? "Historical transaction"} ·{" "}
-              {new Date(e.created_at).toLocaleDateString()}
-            </Text>
-            <Text>{e.order_reference ?? ""}</Text>
-          </View>
-        ))
-      ) : (
-        <Text>No points transactions yet.</Text>
+      {!data && loading && (
+        <EasyGasLoader accessibilityLabel="Loading rewards" />
       )}
-      {button("Refresh history", () => setVersion((v) => v + 1))}
+      {data && capabilities && (
+        <>
+          <Card accent>
+            <BaseText accessibilityRole="header" style={overviewStyles.heading}>
+              Your EasyGas points
+            </BaseText>
+            <BaseText style={overviewStyles.points}>
+              {formatRewardCount(data.availablePoints)}
+            </BaseText>
+            <Copy>Available points · separate from purchase credit</Copy>
+            <Copy>
+              Pending award events · {formatRewardCount(data.pendingAwards)}
+            </Copy>
+          </Card>
+          {data.restricted && (
+            <Feedback error="Your points need finance review following a reversal. Further spending is restricted. Contact support." />
+          )}
+          <Card>
+            <BaseText accessibilityRole="header" style={overviewStyles.heading}>
+              Your programme
+            </BaseText>
+            <Copy>
+              {capabilities.earning && data.policy
+                ? `One point per ${gasMoney(data.policy.spendPerPointKobo)} of eligible verified, completed purchases.`
+                : "Reward earning is currently disabled. Your existing history is available."}
+            </Copy>
+            <Copy>
+              {capabilities.redemption && data.policy
+                ? `Redeem from ${data.policy.minimumPoints} points, up to ${data.policy.maximumDiscountBps / 100}% of eligible product spend. Delivery fees are excluded.`
+                : "Checkout reward discounts are currently unavailable."}
+            </Copy>
+            {canAct &&
+              data.policy &&
+              canSelectReward(data, data.policy.minimumPoints) && (
+                <Button
+                  label="Shop eligible products"
+                  secondary
+                  onPress={onProducts}
+                />
+              )}
+            <Copy>
+              {data.policy
+                ? `Approved policy version ${data.policy.version}. Eligible categories: ${data.policy.eligibleCategories.join(", ")}.`
+                : "No EasyRewards policy has been independently approved."}
+            </Copy>
+            <Copy>
+              No active expiry or tiers. Pending awards appear in your balance
+              after posting.
+            </Copy>
+          </Card>
+          <Card>
+            <BaseText accessibilityRole="header" style={overviewStyles.heading}>
+              Rewards &amp; referrals
+            </BaseText>
+            {!canAct ? (
+              <Copy>Refresh to check current offers.</Copy>
+            ) : data.catalogue.length ? (
+              data.catalogue.map((offer) => (
+                <View
+                  key={offer.id}
+                  style={[overviewStyles.entry, { borderColor: colors.border }]}
+                >
+                  <BaseText style={overviewStyles.heading}>
+                    {offer.title}
+                  </BaseText>
+                  <Copy>{offer.description}</Copy>
+                  <Copy>
+                    {formatRewardCount(offer.points)} points · Expires{" "}
+                    {lagosDay(offer.expiresAt)}
+                  </Copy>
+                  {canSelectReward(data, offer.points) ? (
+                    <Button
+                      label="Choose products for this offer"
+                      secondary
+                      onPress={() => onOffer(offer)}
+                    />
+                  ) : (
+                    <Copy>
+                      {capabilities.redemption
+                        ? "More points are required to use this offer."
+                        : "Offer redemption is currently unavailable."}
+                    </Copy>
+                  )}
+                </View>
+              ))
+            ) : (
+              <Copy>
+                No approved offers are available for your current account.
+              </Copy>
+            )}
+            {capabilities.referral ? (
+              <Button
+                label="Manage referrals"
+                secondary
+                disabled={!canAct}
+                onPress={() => setReferring(true)}
+              />
+            ) : (
+              <Copy>Referral bonuses are currently disabled.</Copy>
+            )}
+            <Button label="Ask about your points" secondary onPress={onHelp} />
+          </Card>
+          <Card>
+            <BaseText accessibilityRole="header" style={overviewStyles.heading}>
+              Points history
+            </BaseText>
+            {!data.entries.length ? (
+              <Copy>No points transactions yet.</Copy>
+            ) : (
+              <>
+                {data.entries.slice(0, visible).map((entry) => (
+                  <View
+                    key={entry.id}
+                    style={[
+                      overviewStyles.entry,
+                      { borderColor: colors.border },
+                    ]}
+                  >
+                    <BaseText style={overviewStyles.heading}>
+                      {rewardEntryTitle(entry.kind)} ·{" "}
+                      {rewardDelta(entry.points)}
+                    </BaseText>
+                    <Copy>{rewardDateTime(entry.created_at)}</Copy>
+                    {entry.order_id && (
+                      <Button
+                        secondary
+                        label={entry.order_reference ?? "View order"}
+                        onPress={() => onOrder(entry.order_id!)}
+                      />
+                    )}
+                    {entry.booking_id && (
+                      <Button
+                        secondary
+                        label={
+                          entry.booking_reference
+                            ? `Service bookings · ${entry.booking_reference}`
+                            : "View service bookings"
+                        }
+                        onPress={onBookings}
+                      />
+                    )}
+                  </View>
+                ))}
+                {data.entries.length === data.historyLimit && (
+                  <Copy>
+                    History shows the most recent {data.historyLimit} entries.
+                    Contact support for an older statement.
+                  </Copy>
+                )}
+                {visible < data.entries.length && (
+                  <Button
+                    secondary
+                    label="Show older entries"
+                    onPress={() => setVisible((count) => count + 20)}
+                  />
+                )}
+              </>
+            )}
+            {!error && (
+              <Button
+                secondary
+                label={loading ? "Refreshing…" : "Refresh rewards"}
+                disabled={loading}
+                onPress={refresh}
+              />
+            )}
+          </Card>
+          {referring && !error && capabilities.referral && (
+            <NativeReferralSheet
+              api={api}
+              refreshing={loading}
+              close={() => setReferring(false)}
+            />
+          )}
+        </>
+      )}
     </View>
   );
 }
+
+function NativeReferralSheet({
+  api,
+  refreshing,
+  close,
+}: {
+  api: API;
+  refreshing: boolean;
+  close: () => void;
+}) {
+  const { colors } = useTheme();
+  const [code, setCode] = useState("");
+  const [result, setResult] = useState<{
+    enabled: boolean;
+    code: string | null;
+    shareUrl: string | null;
+  } | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const pending = useRef(false);
+  const disabled = busy || refreshing;
+  async function submit(
+    action: "rewards.referral" | "rewards.referral.attribute",
+  ) {
+    if (refreshing || pending.current) return;
+    pending.current = true;
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      if (action === "rewards.referral") {
+        const referral = await api(action, {});
+        setResult(referral);
+        if (!referral.enabled)
+          setError("Referral bonuses are currently disabled.");
+      } else {
+        await api(action, { code });
+        setCode("");
+        setMessage(
+          "Referral recorded. Points can post after a qualifying purchase is completed and verified.",
+        );
+      }
+    } catch (failure) {
+      setError(friendlyMessage((failure as Error).message));
+    } finally {
+      pending.current = false;
+      setBusy(false);
+    }
+  }
+  return (
+    <ContextSheet
+      title="Manage referrals"
+      onClose={() => {
+        if (!pending.current) close();
+      }}
+    >
+      <View style={overviewStyles.stack}>
+        <Copy>
+          Referral rewards require the referred customer’s first eligible
+          verified purchase. Apply a code before your first qualifying purchase.
+        </Copy>
+        <Button
+          secondary
+          label="Get my referral code"
+          disabled={disabled}
+          onPress={() => submit("rewards.referral")}
+        />
+        {result?.code && (
+          <BaseText selectable>Your code: {result.code}</BaseText>
+        )}
+        {result?.shareUrl && (
+          <Button
+            secondary
+            label="Share referral link"
+            disabled={disabled}
+            onPress={() => {
+              void Share.share({ message: result.shareUrl! }).catch(() =>
+                setError("Couldn’t share the referral link. Please try again."),
+              );
+            }}
+          />
+        )}
+        <BaseText>Referral code received</BaseText>
+        <BaseInput
+          accessibilityLabel="Referral code received"
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={code}
+          maxLength={32}
+          onChangeText={(value) => setCode(value.trim())}
+          editable={!disabled}
+          style={{
+            minHeight: 48,
+            padding: 12,
+            borderWidth: 1,
+            borderRadius: 12,
+            borderColor: colors.border,
+            backgroundColor: colors.input,
+          }}
+        />
+        <Button
+          label={busy ? "Working…" : "Apply referral code"}
+          disabled={disabled || !/^[a-f0-9]{32}$/.test(code)}
+          onPress={() => submit("rewards.referral.attribute")}
+        />
+        {error && (
+          <BaseText
+            preserveColor
+            accessibilityRole="alert"
+            style={{ color: colors.error }}
+          >
+            {error}
+          </BaseText>
+        )}
+        {message && (
+          <BaseText accessibilityLiveRegion="polite">{message}</BaseText>
+        )}
+      </View>
+    </ContextSheet>
+  );
+}
+
+const overviewStyles = StyleSheet.create({
+  stack: { gap: 12 },
+  hero: {
+    flexDirection: "row",
+    gap: 12,
+    alignItems: "center",
+    padding: 16,
+    borderRadius: 18,
+  },
+  grow: { flex: 1, minWidth: 0 },
+  heading: { fontSize: 18, fontWeight: "700" },
+  points: { fontSize: 34, fontWeight: "800" },
+  entry: { borderTopWidth: 1, paddingTop: 10, gap: 6 },
+});
 export function NativePartialRefund({
   api,
   orderId,
@@ -375,11 +646,10 @@ export function NativeRewardSelector({
       live = false;
     };
   }, []);
-  if (error) return <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>;
+  if (error)
+    return <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>;
   if (!data)
-    return (
-      <EasyGasLoader accessibilityLabel="Checking reward availability" />
-    );
+    return <EasyGasLoader accessibilityLabel="Checking reward availability" />;
   if (!data.redemptionEnabled)
     return (
       <Text>Reward discounts are disabled. History remains available.</Text>

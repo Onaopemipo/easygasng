@@ -1,3 +1,4 @@
+import { deliveryCoveragePending, hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
 import { z } from "zod";
 import { bulkReservation } from "./bulk-lpg-reservation";
 import { one, type SQL } from "./db";
@@ -508,8 +509,8 @@ export async function gasQuote(
   if (locationId !== undefined) {
     const location = c.locations.find(l => l.id === locationId && l.branch_id === branch);
     if (!location) throw new AppError(400, "Choose an active supported delivery location.");
-    if (typeof location.coverage !== "string" || location.coverage.trim().length < 10)
-      throw new AppError(409, "Delivery coverage for this area is awaiting confirmation.");
+    if (!hasConfirmedDeliveryCoverage(location.coverage))
+      throw new AppError(409, deliveryCoveragePending, "DELIVERY_COVERAGE_PENDING");
     const delivery = await one(tx, "SELECT value FROM settings WHERE key='delivery.enabled' AND scope=$1", [branch]);
     if (delivery?.value !== true) throw new AppError(409, "Online delivery is not available in this area yet.");
     if (c.feeVersion == null || !Number.isSafeInteger(c.deliveryKobo) || c.deliveryKobo < 0)

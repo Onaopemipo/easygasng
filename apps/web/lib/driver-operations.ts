@@ -14,6 +14,7 @@ import {
   tripMetrics,
 } from "../../../packages/business-rules/src/trip-metrics";
 import { canonicalRequest } from "./business-operation";
+import { implausibleRiderSegment } from "../../../packages/business-rules/src/rider-location";
 import { transitionOrder } from "./operations";
 import { fulfilmentReady, beginAttempt } from "./order-tracking";
 const uid = z.string().uuid();
@@ -473,6 +474,16 @@ export async function driverOperations(
   if (!t) throw new AppError(404, "Trip not found.");
   allow(user, ["driver"], t.branch_id);
   if (t.driver_id !== user.id) throw new AppError(404, "Trip not found.");
+  if (action === "trip.location.revoke") {
+    if (t.location_consent && !t.ended_at) {
+      await tx.query(
+        "UPDATE driver_trips SET location_consent=false,version=version+1 WHERE id=$1",
+        [t.id],
+      );
+      await audit(tx, user, action, t.id);
+    }
+    return { ok: true, stopLocation: true };
+  }
   if (action === "trip.end") {
     if (d.endOdometer === undefined || d.endOdometer < Number(t.start_odometer))
       throw new AppError(400, "End odometer must be at least the start.");
@@ -561,6 +572,24 @@ export async function driverOperations(
         })
         .strict()
         .parse(e.payload);
+      if (payload.accuracy <= 100) {
+        const nearby = await tx.query(
+          `(SELECT recorded_at,payload FROM trip_events
+            WHERE trip_id=$1 AND actor_id=$2 AND kind='gps' AND recorded_at BETWEEN $3::timestamptz-interval '5 minutes' AND $3::timestamptz
+              AND (payload->>'accuracy')::numeric BETWEEN 0 AND 100
+            ORDER BY recorded_at DESC,sequence DESC LIMIT 1)
+           UNION ALL
+           (SELECT recorded_at,payload FROM trip_events
+            WHERE trip_id=$1 AND actor_id=$2 AND kind='gps' AND recorded_at>$3::timestamptz AND recorded_at<=$3::timestamptz+interval '5 minutes'
+              AND (payload->>'accuracy')::numeric BETWEEN 0 AND 100
+            ORDER BY recorded_at,sequence LIMIT 1)`,
+          [t.id, user.id, e.recordedAt],
+        );
+        if (nearby.rows.some((point) => implausibleRiderSegment(
+          { ...point.payload, recordedAt: new Date(point.recorded_at).toISOString() },
+          { ...payload, recordedAt: e.recordedAt },
+        ))) throw new AppError(409, "This GPS observation needs review because it conflicts with nearby recorded locations.");
+      }
     } else if (e.kind === "fuel")
       payload = z
         .object({

@@ -11,7 +11,7 @@ type Snapshot = {
   operations: { deliveries: number | null } | null;
 };
 
-export function OwnerOverview({ api, branchManager = false }: { api: (action: string) => Promise<Snapshot>; branchManager?: boolean }) {
+export function OwnerOverview({ api, branchManager = false, operationsOnly = false }: { api: (action: string) => Promise<Snapshot>; branchManager?: boolean; operationsOnly?: boolean }) {
   const { colors } = useTheme();
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [loading, setLoading] = useState(true);
@@ -33,9 +33,9 @@ export function OwnerOverview({ api, branchManager = false }: { api: (action: st
   const count = (value?: number | null) => value == null ? "Unavailable" : value.toLocaleString("en-NG");
   const metrics = [
     ["Orders", snapshot?.orders?.count],
-    ...(branchManager ? [["Active deliveries", snapshot?.operations?.deliveries] as const] : []),
+    ...(branchManager || operationsOnly ? [["Active deliveries", snapshot?.operations?.deliveries] as const] : []),
     ["Service bookings", snapshot?.services],
-    ["Customers who ordered", snapshot?.customers],
+    ...(operationsOnly ? [] : [["Customers who ordered", snapshot?.customers] as const]),
     ["Open incidents", snapshot?.incidents],
   ] as const;
 
@@ -51,12 +51,12 @@ export function OwnerOverview({ api, branchManager = false }: { api: (action: st
         </Pressable>
       ) : (
         <>
-          <View style={{ backgroundColor: "#005B35", padding: 20, borderRadius: 16 }}>
+          {operationsOnly ? <Text style={{ color: colors.text, fontSize: 24, fontWeight: "700" }}>Operations Summary</Text> : <View style={{ backgroundColor: "#005B35", padding: 20, borderRadius: 16 }}>
             <Text style={{ color: "#fff" }}>{branchManager ? "Assigned branch · Orders this month" : "Verified net receipts this month"}</Text>
             <Text style={{ color: "#fff", fontSize: 28, fontWeight: "700" }}>
               {branchManager ? count(snapshot?.orders?.count) : snapshot?.revenue == null ? "Unavailable" : (snapshot.revenue / 100).toLocaleString("en-NG", { style: "currency", currency: "NGN" })}
             </Text>
-          </View>
+          </View>}
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12 }}>
             {metrics.filter(([label]) => !branchManager || label !== "Orders").map(([label, value]) => (
               <View key={label} style={{ flexGrow: 1, flexBasis: "45%", borderColor: colors.border, borderWidth: 1, borderRadius: 12, padding: 12 }}>

@@ -31,6 +31,10 @@ export function NativeForm({
   onDone,
   draftKey,
   recordVersion,
+  review,
+  prepareReview,
+  reviewKey,
+  disabled = false,
 }: {
   api: API;
   action: string;
@@ -39,6 +43,10 @@ export function NativeForm({
   onDone?: (result?: any) => void;
   draftKey?: string;
   recordVersion?: number;
+  review?: (values: Record<string, any>) => React.ReactNode;
+  prepareReview?: (values: Record<string, any>) => Promise<void>;
+  reviewKey?: string;
+  disabled?: boolean;
 }) {
   const [values, setValues] = useState<Record<string, any>>(() =>
       Object.fromEntries(
@@ -50,6 +58,13 @@ export function NativeForm({
     ),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
+  const [reviewed, setReviewed] = useState<Record<string, any> | null>(null);
+  const submitting = useRef(false);
+  const currentReviewKey = useRef(reviewKey);
+  currentReviewKey.current = reviewKey;
+  useEffect(() => {
+    setReviewed(null);
+  }, [reviewKey]);
   const [draftReady, setDraftReady] = useState(!draftKey),
     [draftConflict, setDraftConflict] = useState(false);
   useEffect(() => {
@@ -106,57 +121,73 @@ export function NativeForm({
   return (
     <View style={s.card}>
       <Text style={s.heading}>{title}</Text>
-      {fields
-        .filter((f) => f.type !== "hidden")
-        .map((f) => (
-          <View key={f.name}>
-            <Text style={s.label}>{f.label}</Text>
-            {f.options ? (
-              <View>
-                {f.options.map((o) => (
-                  <Pressable
-                    key={o.value}
-                    style={[
-                      s.button,
-                      {
-                        backgroundColor:
-                          values[f.name] === o.value ? "#087a36" : "#edf6e9",
-                      },
-                    ]}
-                    onPress={() => setValues({ ...values, [f.name]: o.value })}
-                  >
-                    <Text
-                      style={{
-                        color: values[f.name] === o.value ? "white" : "#07592e",
-                      }}
+      {!reviewed &&
+        fields
+          .filter((f) => f.type !== "hidden")
+          .map((f) => (
+            <View key={f.name}>
+              <Text style={s.label}>{f.label}</Text>
+              {f.options ? (
+                <View>
+                  {f.options.map((o) => (
+                    <Pressable
+                      key={o.value}
+                      style={[
+                        s.button,
+                        {
+                          backgroundColor:
+                            values[f.name] === o.value ? "#087a36" : "#edf6e9",
+                        },
+                      ]}
+                      onPress={() =>
+                        setValues({ ...values, [f.name]: o.value })
+                      }
                     >
-                      {o.label}
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
-            ) : f.type === "checkbox" ? (
-              <Switch
-                accessibilityLabel={f.label}
-                disabled={!draftReady}
-                value={Boolean(values[f.name])}
-                onValueChange={(v) => setValues({ ...values, [f.name]: v })}
-              />
-            ) : (
-              <TextInput
-                accessibilityLabel={f.label}
-                style={s.input}
-                multiline={f.type === "textarea"}
-                editable={draftReady}
-                secureTextEntry={f.type === "password"}
-                keyboardType={f.type === "number" ? "numeric" : "default"}
-                autoCapitalize="none"
-                value={String(values[f.name] ?? "")}
-                onChangeText={(v) => setValues({ ...values, [f.name]: v })}
-              />
-            )}
-          </View>
-        ))}
+                      <Text
+                        style={{
+                          color:
+                            values[f.name] === o.value ? "white" : "#07592e",
+                        }}
+                      >
+                        {o.label}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+              ) : f.type === "checkbox" ? (
+                <Switch
+                  accessibilityLabel={f.label}
+                  disabled={!draftReady}
+                  value={Boolean(values[f.name])}
+                  onValueChange={(v) => setValues({ ...values, [f.name]: v })}
+                />
+              ) : (
+                <TextInput
+                  accessibilityLabel={f.label}
+                  style={s.input}
+                  multiline={f.type === "textarea"}
+                  editable={draftReady}
+                  secureTextEntry={f.type === "password"}
+                  keyboardType={f.type === "number" ? "numeric" : "default"}
+                  autoCapitalize="none"
+                  value={String(values[f.name] ?? "")}
+                  onChangeText={(v) => setValues({ ...values, [f.name]: v })}
+                />
+              )}
+            </View>
+          ))}
+      {reviewed && review && (
+        <View style={{ gap: 8 }}>
+          {review(reviewed)}
+          <Pressable
+            accessibilityRole="button"
+            style={s.button}
+            onPress={() => setReviewed(null)}
+          >
+            <Text style={s.buttonText}>Back to details</Text>
+          </Pressable>
+        </View>
+      )}
       {message ? (
         <Text accessibilityRole="alert" style={s.body}>
           {message}
@@ -178,9 +209,12 @@ export function NativeForm({
         </Pressable>
       )}
       <Pressable
-        style={s.button}
-        disabled={busy || !draftReady || draftConflict}
+        accessibilityRole="button"
+        style={[s.button, disabled && { opacity: 0.5 }]}
+        disabled={disabled || busy || !draftReady || draftConflict}
         onPress={async () => {
+          if (submitting.current || disabled) return;
+          submitting.current = true;
           setBusy(true);
           setMessage("");
           try {
@@ -193,6 +227,13 @@ export function NativeForm({
                 data.address[key.slice(8)] = data[key];
                 delete data[key];
               }
+            if (review && !reviewed) {
+              await prepareReview?.(data);
+              if (mounted.current && currentReviewKey.current === reviewKey)
+                setReviewed(data);
+              return;
+            }
+            if (reviewed) Object.assign(data, reviewed);
             if (
               [
                 "booking.",
@@ -225,11 +266,22 @@ export function NativeForm({
           } catch (e: any) {
             if (mounted.current) setMessage(e.message);
           } finally {
+            submitting.current = false;
             if (mounted.current) setBusy(false);
           }
         }}
       >
-        <Text style={s.buttonText}>{busy ? "Saving…" : "Continue"}</Text>
+        <Text style={s.buttonText}>
+          {busy
+            ? review && !reviewed
+              ? "Checking…"
+              : "Saving…"
+            : review
+              ? reviewed
+                ? "Confirm booking request"
+                : "Review booking"
+              : "Continue"}
+        </Text>
       </Pressable>
     </View>
   );
@@ -252,11 +304,6 @@ export default function Workflows({
     const load = async () => {
       if (screen === "notifications") return api("me");
       if (screen === "profile") return api("account.profile");
-      if (screen === "consumption")
-        return {
-          profiles: await api("refill.profiles"),
-          catalogue: await api("catalogue"),
-        };
       if (screen === "credit")
         return {
           wallet: await api("wallet"),
@@ -568,83 +615,6 @@ export default function Workflows({
               ],
             },
             { name: "reason", label: "Reason and details" },
-          ]}
-          onDone={reload}
-        />
-      </>
-    );
-  if (screen === "consumption")
-    return (
-      <>
-        <Text style={s.title}>Cooking gas profiles</Text>
-        <Text style={s.body}>
-          Estimates use verified single-cylinder purchases. They are not sensor
-          readings.
-        </Text>
-        {data.profiles.map((p: any) => (
-          <View style={s.card} key={p.id}>
-            <Text style={s.heading}>
-              {p.label} · {p.product_name}
-            </Text>
-            <Text style={s.body}>{p.forecast.reason}</Text>
-            {p.forecast.available && (
-              <Text>
-                {p.forecast.estimatedPercent}% estimated remaining ·{" "}
-                {p.forecast.daysLeft} days
-              </Text>
-            )}
-            <NativeForm
-              api={api}
-              action="refill.feedback"
-              title="Update your gas supply"
-              fields={[
-                {
-                  name: "profileId",
-                  type: "hidden",
-                  label: "Profile reference",
-                  value: p.id,
-                },
-                {
-                  name: "state",
-                  label: "Current gas supply",
-                  value: "low",
-                  options: [
-                    { value: "still_available", label: "Still available" },
-                    { value: "low", label: "Running low" },
-                    { value: "empty", label: "Empty" },
-                  ],
-                },
-              ]}
-              onDone={reload}
-            />
-          </View>
-        ))}
-        <NativeForm
-          api={api}
-          action="refill.profile.create"
-          title="Add cooking profile"
-          fields={[
-            {
-              name: "productId",
-              label: "Refill size",
-              value: "refill-6",
-              options: data.catalogue.products
-                .filter((p: any) => p.category === "Gas refills")
-                .map((p: any) => ({ value: p.id, label: p.name })),
-            },
-            { name: "label", label: "Profile name" },
-            {
-              name: "householdSize",
-              label: "People served",
-              type: "number",
-              value: 1,
-            },
-            {
-              name: "cookingDays",
-              label: "Cooking days per week",
-              type: "number",
-              value: 7,
-            },
           ]}
           onDone={reload}
         />

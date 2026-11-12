@@ -1,0 +1,86 @@
+{
+  "kind": "source-fixture-preflight",
+  "not_full_repository_tests": true,
+  "checks": [
+    {
+      "check": "Phase 2C exact-anchor install",
+      "result": "PASS",
+      "detail": "Phase 2C owner web/native UI additions installed; originals backed up as *.phase2c.bak\nNext: npm run typecheck && npm test && npm run build; run native typecheck and device tests.\nDo not commit the .phase2c.bak copies. Review diff and remove backups after validation."
+    },
+    {
+      "check": "Phase 2D exact-anchor install",
+      "result": "PASS",
+      "detail": "Phase 2D applied. Backups: *.phase2d.bak. No server or database changes.\nReview diff, remove .bak before commit; run native typecheck, tests and device acceptance."
+    },
+    {
+      "check": "Repeated installation fails closed",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Owner-only navigation",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Owner profile and notification routes",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "No unrelated customer navigation deletion",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Permission refresh and revocation",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Offline sensitive approval disabled",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Existing reauth/approval API reused",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Profile password session revocation contract",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Notification read API reused",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Foreground permission revalidation",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "Stable API reference prevents effect re-trigger",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "No new server/business mutations",
+      "result": "PASS",
+      "detail": ""
+    },
+    {
+      "check": "TSX transpile syntax",
+      "result": "PASS",
+      "detail": "PASS TSX syntax: OwnerGovernanceWorkspace.tsx\nPASS TSX syntax: OwnerSupportWorkspace.tsx\nPASS TSX syntax: owner-governance-links.tsx\n"
+    },
+    {
+      "check": "Changed source anchor fails without modification",
+      "result": "PASS",
+      "detail": ""
+    }
+  ]
+}

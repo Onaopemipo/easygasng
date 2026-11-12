@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AppState } from "react-native";
+import { randomUUID } from "expo-crypto";
 import { Card, Copy, Button, Feedback, type CustomerAPI } from "./CustomerUI";
 import { NativeForm } from "./Workflows";
 import {
@@ -140,30 +141,50 @@ export default function DriverTripTracking({
       )}
       {trip && (
         <>
-          <Button
-            label={
-              lease
-                ? "Renew authorised GPS recording"
-                : "Enable offline/background GPS"
-            }
-            onPress={async () => {
-              try {
-                const current = await api("driver.location");
-                await startDriverLocation(userId, current.trip);
-                await refresh();
-              } catch (e: any) {
-                setMessage(e.message);
-              }
-            }}
-          />
-          <Button
-            label="Stop GPS recording"
-            secondary
-            onPress={async () => {
-              await stopDriverLocation();
-              setLease(null);
-            }}
-          />
+          {trip.location_consent && (
+            <>
+              <Button
+                label={
+                  lease
+                    ? "Renew authorised GPS recording"
+                    : "Enable offline/background GPS"
+                }
+                onPress={async () => {
+                  try {
+                    const current = await api("driver.location");
+                    await startDriverLocation(userId, current.trip);
+                    await refresh();
+                  } catch (e: any) {
+                    setMessage(e.message);
+                  }
+                }}
+              />
+              <Button
+                label="Stop GPS and withdraw trip consent"
+                secondary
+                onPress={async () => {
+                  try {
+                    await stopDriverLocation();
+                    setLease(null);
+                    await api("trip.location.revoke", {
+                      tripId: trip.id,
+                      operationKey: randomUUID(),
+                    });
+                    setData((previous: any) => ({
+                      ...previous,
+                      trip: { ...trip, location_consent: false },
+                    }));
+                    await refresh();
+                  } catch {
+                    setMessage(
+                      "Couldn’t confirm withdrawal. Reconnect and try again to stop sharing the last recorded location.",
+                    );
+                  }
+                }}
+              />
+            </>
+          )}
+          {!trip.location_consent && <Copy>GPS is off for this trip.</Copy>}
           <NativeForm
             title="End trip after synchronising GPS"
             action="trip.end"
@@ -171,7 +192,9 @@ export default function DriverTripTracking({
               await stopDriverLocation();
               if (
                 (await fieldQueue(userId, true)).some(
-                  (e) => e.tripId === trip.id,
+                  (e) =>
+                    e.tripId === trip.id &&
+                    (e.kind !== "gps" || trip.location_consent),
                 )
               )
                 throw new Error(

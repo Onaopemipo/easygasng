@@ -1,0 +1,7 @@
+# Data, API and permissions
+
+The existing `trip.sync` and `trip_events` remain the GPS write path and record of evidence. `trip.location.revoke` uses the same authenticated idempotent action router, locks the driver’s own trip, records withdrawal and prevents further GPS events. Ending a trip still requires physical custody reconciliation. Withdrawal preserves existing evidence.
+
+Authenticated `orders` and `/api/tracking/stream` expose the minimum observation for the customer or commercial account that owns the eligible order. The projection requires an active branch, active assigned driver in that branch, latest picked-up or arrived attempt, and a matching open consented driver trip already started at pickup. It suppresses sharing when another delivery is concurrently out with the same driver, since the schema does not identify the next active destination. This conservative stop rule can leave legitimate deliveries without a map. It also suppresses stale, late, future, inaccurate and invalid coordinates. No trip history, vehicle metadata or ETA is added to the customer payload.
+
+Dispatch uses the existing `dispatch.centre` route, effective per-user `dispatch.manage` access and branch-scoped active fleet. Its committed snapshot includes at most one point per driver from a consented active trip with active stops. Only valid observations are returned, and the audit records the purpose and count. Response caching is disabled for orders, dispatch and SSE. No database migration was needed.

@@ -1,0 +1,125 @@
+.gas-order.gas-order-workspace {
+  max-width: 1320px;
+  margin-inline: auto;
+}
+
+.gas-order-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 22px;
+  margin-bottom: 16px;
+  border-radius: 18px;
+  background: var(--accent);
+}
+
+.gas-order-heading h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
+.gas-order-heading p { margin: 6px 0 0; }
+.gas-order-heading img { width: 78px; height: 96px; object-fit: contain; }
+
+.gas-order form.gas-order-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.gas-order .gas-order-editor,
+.gas-order .gas-order-summary {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(14px, 2vw, 24px);
+  border-radius: 18px;
+}
+
+.gas-order-step + .gas-order-step,
+.gas-order-editor > .gas-order-step:not(:first-child) {
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.gas-order-step h2,
+.gas-order-summary h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+}
+
+.gas-order-step h2 span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #fff;
+  background: #08683e;
+}
+
+.gas-order .gas-cylinder-line { padding: 12px; margin: 0 0 10px; min-width: 0; }
+.gas-cylinder-line p { margin: 0 0 6px; }
+.gas-capacity-tiles { display: flex; flex-wrap: wrap; gap: 7px; }
+.gas-capacity-tiles button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--foreground);
+}
+.gas-capacity-tiles img { object-fit: contain; }
+.gas-order button[aria-pressed="true"] {
+  border-color: var(--primary);
+  background: var(--accent);
+  color: var(--foreground);
+}
+.gas-quantity-actions { flex-wrap: wrap; }
+.gas-order .gas-cylinder-line input[type="number"] { max-width: 240px; }
+.gas-address-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 12px; }
+.gas-order .gas-address-grid :is(input, select, textarea) { min-width: 0; width: 100%; font-size: 1rem; }
+.gas-delivery-details, .gas-size-guide { margin-top: 12px; }
+.gas-order details > summary { cursor: pointer; padding-block: 10px; font-weight: 700; }
+
+.gas-order-summary dl { margin: 0 0 12px; }
+.gas-order-summary dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.gas-order-summary dd { margin: 0; font-weight: 700; text-align: end; }
+.gas-order-summary dl > .gas-summary-total { padding: 10px; margin-top: 8px; background: var(--accent); border-radius: 10px; }
+.gas-order-summary > .button { width: 100%; }
+.gas-order-confirmation { margin-top: 14px; overflow-wrap: anywhere; }
+.gas-order-confirmation .button-row { flex-wrap: wrap; gap: 6px; }
+.gas-order-confirmation .button-row button { padding-inline: 9px; min-height: 44px; }
+.gas-order :is(button, input, textarea, select, summary, a):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (min-width: 900px) and (min-height: 850px) {
+  .gas-order-summary { position: sticky; top: 14px; }
+  .gas-order-summary:has(.gas-order-confirmation) { position: static; }
+}
+@media (max-width: 899px) {
+  .gas-order form.gas-order-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+}
+@media (max-width: 550px) {
+  .gas-order-heading { padding: 12px; gap: 8px; }
+  .gas-order-heading img { width: 48px; height: 64px; }
+  .gas-address-grid { grid-template-columns: minmax(0, 1fr); }
+}
+body:has(.gas-order-workspace) .client-demo-notice {
+  position: static !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding-top: max(6px, env(safe-area-inset-top)) !important;
+}

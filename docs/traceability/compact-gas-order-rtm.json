@@ -1,0 +1,1024 @@
+{
+  "phase": "Compact gas order redesign",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "CGO-001",
+      "requirement": "GAS-001 \u2014 Compact Order Gas entry: desktop web `/gas-order`.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/gas-order.css"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G04"
+    },
+    {
+      "id": "CGO-002",
+      "requirement": "GAS-002 \u2014 Compact Order Gas entry: mobile web `/gas-order`.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/app/gas-order.css"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G05"
+    },
+    {
+      "id": "CGO-003",
+      "requirement": "GAS-003 \u2014 Native customer Order Gas: iOS and Android.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Both native bundles and type checks passed; installed-device interaction remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Both native bundles and type checks passed; installed-device interaction remains open.",
+      "implementationFiles": [
+        "apps/mobile/GasOrder.tsx"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G06"
+    },
+    {
+      "id": "CGO-004",
+      "requirement": "GAS-004 \u2014 Multi-cylinder editor, optional cylinder guidance and advanced quantities.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "packages/business-rules/src/gas-pricing.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G14"
+    },
+    {
+      "id": "CGO-005",
+      "requirement": "GAS-005 \u2014 Delivery details and address selection (progressive disclosure).",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G16"
+    },
+    {
+      "id": "CGO-006",
+      "requirement": "GAS-006 \u2014 Review & Confirm: authoritative quotation, fees, payment method, delivery schedule, rewards and consents.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G24"
+    },
+    {
+      "id": "CGO-007",
+      "requirement": "GAS-007 \u2014 Order placement/loading/success, reference, status and tracking.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G25"
+    },
+    {
+      "id": "CGO-008",
+      "requirement": "GAS-008 \u2014 Shared loading, empty, invalid, unavailable, stale, offline, permission and retry states.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G27"
+    },
+    {
+      "id": "CGO-009",
+      "requirement": "Existing public route `/gas-order`, homepage quick order (`compact`), product/cart entry points, mobile customer Order Gas.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G08"
+    },
+    {
+      "id": "CGO-010",
+      "requirement": "Cylinder capacity selection, valid decimal kg, increment/decrement, preset buttons, multiple cylinders and removal.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G15"
+    },
+    {
+      "id": "CGO-011",
+      "requirement": "Active branch and delivery area selection, address inference, supported coverage and branch switch.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G16"
+    },
+    {
+      "id": "CGO-012",
+      "requirement": "Saved addresses, default address, new address, recipient name, phone, building, estate/landmark and directions.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/accounts.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G17"
+    },
+    {
+      "id": "CGO-013",
+      "requirement": "Delivery date and time window, capacity, availability and address evidence.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G18"
+    },
+    {
+      "id": "CGO-014",
+      "requirement": "Dynamic gas price/kg, branch-specific delivery fee, version checks and gas pricing policy.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Active values and idempotent checkout exercised in isolated tests.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "None for bounded regression",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [
+        "COMPACT-QUOTE01",
+        "COVERAGE-01"
+      ],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G10"
+    },
+    {
+      "id": "CGO-015",
+      "requirement": "Physical products, gas refills, cart quantities and single delivery fee.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G19"
+    },
+    {
+      "id": "CGO-016",
+      "requirement": "Staged service bookings, mixed checkout, quotation/service dependencies.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G20"
+    },
+    {
+      "id": "CGO-017",
+      "requirement": "Rewards/points/offers, credits and wallet restrictions.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G21"
+    },
+    {
+      "id": "CGO-018",
+      "requirement": "COD, wallet, approved Paystack/card arrangements, payment redirects, callback verification and receipts.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G22"
+    },
+    {
+      "id": "CGO-019",
+      "requirement": "Review quote, itemised totals, quote revalidation, quote expiry, user consent and final checkout.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G23"
+    },
+    {
+      "id": "CGO-020",
+      "requirement": "Idempotency, exactly-once reservations, cancellation and safe recovery after network interruption.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Active values and idempotent checkout exercised in isolated tests.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "None for bounded regression",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [
+        "COMPACT-QUOTE01",
+        "COVERAGE-01"
+      ],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G25"
+    },
+    {
+      "id": "CGO-021",
+      "requirement": "Stock availability, capacity limits, cylinder custody, inspection, fill allowance and dispatch constraints.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G26"
+    },
+    {
+      "id": "CGO-022",
+      "requirement": "Authentication and guest sign-in continuation, phone completion and account profile.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/auth.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G22"
+    },
+    {
+      "id": "CGO-023",
+      "requirement": "Loading/error/empty/invalid/unavailable/offline/stale states and accurate backend messaging.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G27"
+    },
+    {
+      "id": "CGO-024",
+      "requirement": "Order confirmation, tracking, history, notifications and invoice/receipt links.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G25"
+    },
+    {
+      "id": "CGO-025",
+      "requirement": "Dark/light/system, navigation/search/cart, customer help and footer.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/app/gas-order.css",
+        "apps/web/components/public-header.tsx",
+        "apps/mobile/theme.tsx"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G09"
+    },
+    {
+      "id": "CGO-026",
+      "requirement": "Current feature flags, sandbox/payment-test notices, environment guards and production NO-GO.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/app/layout.tsx",
+        "apps/web/app/gas-order.css"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G30"
+    },
+    {
+      "id": "CGO-027",
+      "requirement": "Existing role-based admin/staff ordering and payment-link flows: must not be affected by customer UI redesign.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G02"
+    },
+    {
+      "id": "CGO-028",
+      "requirement": "Accessibility, responsive layouts, translations/localisation where existing, and reduced motion.",
+      "priority": "P1",
+      "scope": "Existing gas-order flows",
+      "uiReference": "Approved compact gas order",
+      "route": "/gas-order; existing native customer Order Gas and linked routes",
+      "dataSource": "Active branch gas catalogue, server quote, checkout, and existing customer records",
+      "securityControl": "Existing session, delivery, approval, payment and reservation guards",
+      "status": "PARTIAL",
+      "reason": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "testResult": "PASS \u2014 full local regression and bounded browser checks",
+      "outstandingWork": "Mapped and exercised in local regression or browser checks; full scenario acceptance remains open.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/app/gas-order.css"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/compact-gas-order/evidence/full-regression.txt",
+        "docs/compact-gas-order/evidence/browser.txt"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "G28"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "description": "repository audit",
+      "status": "PASS"
+    },
+    {
+      "id": "G02",
+      "description": "baseline preserved",
+      "status": "OPEN"
+    },
+    {
+      "id": "G03",
+      "description": "traceability matrix",
+      "status": "PASS"
+    },
+    {
+      "id": "G04",
+      "description": "desktop approved layout",
+      "status": "PASS"
+    },
+    {
+      "id": "G05",
+      "description": "mobile web",
+      "status": "PASS"
+    },
+    {
+      "id": "G06",
+      "description": "native iOS",
+      "status": "OPEN"
+    },
+    {
+      "id": "G07",
+      "description": "native Android",
+      "status": "OPEN"
+    },
+    {
+      "id": "G08",
+      "description": "original header/navigation",
+      "status": "OPEN"
+    },
+    {
+      "id": "G09",
+      "description": "light/dark/system",
+      "status": "PASS"
+    },
+    {
+      "id": "G10",
+      "description": "backend price",
+      "status": "PASS"
+    },
+    {
+      "id": "G11",
+      "description": "backend fee",
+      "status": "PASS"
+    },
+    {
+      "id": "G12",
+      "description": "branch/version refresh",
+      "status": "OPEN"
+    },
+    {
+      "id": "G13",
+      "description": "cylinder guidance and safety",
+      "status": "OPEN"
+    },
+    {
+      "id": "G14",
+      "description": "decimal quantity",
+      "status": "PASS"
+    },
+    {
+      "id": "G15",
+      "description": "multiple cylinders",
+      "status": "PASS"
+    },
+    {
+      "id": "G16",
+      "description": "address/coverage",
+      "status": "PASS"
+    },
+    {
+      "id": "G17",
+      "description": "saved addresses",
+      "status": "OPEN"
+    },
+    {
+      "id": "G18",
+      "description": "delivery schedule",
+      "status": "OPEN"
+    },
+    {
+      "id": "G19",
+      "description": "physical items",
+      "status": "OPEN"
+    },
+    {
+      "id": "G20",
+      "description": "staged service appointments",
+      "status": "OPEN"
+    },
+    {
+      "id": "G21",
+      "description": "reward/wallet",
+      "status": "OPEN"
+    },
+    {
+      "id": "G22",
+      "description": "COD/Paystack safeguards",
+      "status": "OPEN"
+    },
+    {
+      "id": "G23",
+      "description": "authoritative quote",
+      "status": "PASS"
+    },
+    {
+      "id": "G24",
+      "description": "review/edit/confirmation",
+      "status": "OPEN"
+    },
+    {
+      "id": "G25",
+      "description": "idempotency and exactly-once",
+      "status": "PASS"
+    },
+    {
+      "id": "G26",
+      "description": "stock/cylinder custody",
+      "status": "OPEN"
+    },
+    {
+      "id": "G27",
+      "description": "loading/stale/offline/errors",
+      "status": "OPEN"
+    },
+    {
+      "id": "G28",
+      "description": "accessibility",
+      "status": "OPEN"
+    },
+    {
+      "id": "G29",
+      "description": "full regression and rollback",
+      "status": "PASS"
+    },
+    {
+      "id": "G30",
+      "description": "production GO/NO-GO explicitly documented",
+      "status": "PASS"
+    }
+  ]
+}

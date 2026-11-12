@@ -1,0 +1,2272 @@
+{
+  "phase": "EasyRewards redesign",
+  "baseline": "54b1b15",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "ER-001",
+      "requirement": "Show actual available points and pending awards",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "rewards.summary posted balance and queues",
+      "securityControl": "Customer-scoped reads",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/web/lib/rewards.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards-redesign.test.ts"
+      ],
+      "testIds": [
+        "ERD-T10",
+        "ERD-T11"
+      ],
+      "negativeTests": [
+        "ERD-T10",
+        "ERD-T11"
+      ],
+      "scenarios": [
+        "T08",
+        "T09",
+        "T10",
+        "T11",
+        "T12"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Show actual available points and pending awards",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G05"
+    },
+    {
+      "id": "ER-002",
+      "requirement": "Show approved policy and effective programme flags",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Versioned branch policy and process flags",
+      "securityControl": "Independent owner and finance approval",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/web/lib/rewards.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-redesign.test.ts"
+      ],
+      "testIds": [
+        "ER-03",
+        "ER-37",
+        "ERD-T18"
+      ],
+      "negativeTests": [
+        "ER-03",
+        "ER-37",
+        "ERD-T18"
+      ],
+      "scenarios": [
+        "T13",
+        "T14",
+        "T15",
+        "T16",
+        "T17",
+        "T18",
+        "T19",
+        "T20",
+        "T21",
+        "T22"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Show approved policy and effective programme flags",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G08"
+    },
+    {
+      "id": "ER-003",
+      "requirement": "Show eligible offers and retain checkout handoff",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Scoped catalogue and checkout quote",
+      "securityControl": "Existing validity, consent, points and budget checks",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/web/lib/reward-offers.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards-completion.test.ts"
+      ],
+      "testIds": [
+        "ER-10O"
+      ],
+      "negativeTests": [
+        "ER-10O"
+      ],
+      "scenarios": [
+        "T27",
+        "T28",
+        "T29",
+        "T30",
+        "T31"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Show eligible offers and retain checkout handoff",
+      "outstandingWork": "Complete the native offer checkout. The web offer applied the approved discount and posted one deduction.",
+      "acceptanceGate": "G12"
+    },
+    {
+      "id": "ER-004",
+      "requirement": "Use governed referral code, sharing and attribution",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Existing referral actions and HTTPS public origin",
+      "securityControl": "Same branch, anti-abuse, and qualifying purchase rules",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/web/lib/rewards-referrals.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards-redesign.test.ts",
+        "tests/easyrewards.test.ts"
+      ],
+      "testIds": [
+        "ERD-T18",
+        "ER-18",
+        "ER-38"
+      ],
+      "negativeTests": [
+        "ERD-T18",
+        "ER-18",
+        "ER-38"
+      ],
+      "scenarios": [
+        "T17",
+        "T18",
+        "T32",
+        "T33",
+        "T34",
+        "T35",
+        "T36",
+        "T37",
+        "T52"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Use governed referral code, sharing and attribution",
+      "outstandingWork": "Verify enabled referral sheet and repeated taps on native. The web sheet and repeated click passed.",
+      "acceptanceGate": "G11"
+    },
+    {
+      "id": "ER-005",
+      "requirement": "Present signed and limited points history and owned references",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Ledger, orders and service bookings",
+      "securityControl": "Customer-scoped joins and existing detail routes",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "packages/business-rules/src/rewards-overview.ts",
+        "apps/web/lib/rewards.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards-redesign.test.ts",
+        "tests/easyrewards-completion.test.ts"
+      ],
+      "testIds": [
+        "ERD-T46",
+        "ERD-T11",
+        "ER-04S"
+      ],
+      "negativeTests": [
+        "ERD-T46",
+        "ERD-T11",
+        "ER-04S"
+      ],
+      "scenarios": [
+        "T42",
+        "T43",
+        "T44",
+        "T45",
+        "T46"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Present signed and limited points history and owned references",
+      "outstandingWork": "Exercise booking navigation from a rendered row and native order navigation. Web order navigation passed.",
+      "acceptanceGate": "G13"
+    },
+    {
+      "id": "ER-006",
+      "requirement": "Provide factual programme and support help",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Approved policy and existing support destinations",
+      "securityControl": "Action availability tied to confirmed server data",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T19",
+        "T20",
+        "T21",
+        "T22"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Provide factual programme and support help",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G23"
+    },
+    {
+      "id": "ER-007",
+      "requirement": "Deliver native EasyRewards parity",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Shared summary DTO and Expo customer routing",
+      "securityControl": "Scoped key remount, server mutation confirmation",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T06",
+        "T07",
+        "T56",
+        "T57",
+        "T59"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/native-types.txt",
+        "docs/easyrewards-redesign/evidence/native-export.txt",
+        "docs/easyrewards-redesign/evidence/ios.txt",
+        "docs/easyrewards-redesign/evidence/android.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Deliver native EasyRewards parity",
+      "outstandingWork": "Complete platform accessibility, enabled actions and offline/reconnect acceptance.",
+      "acceptanceGate": "G19"
+    },
+    {
+      "id": "ER-008",
+      "requirement": "Reuse appearance settings and theme tokens",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Existing preference stores and theme context",
+      "securityControl": "Single theme preference per existing platform",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/web/app/easyrewards.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T05"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/native-types.txt",
+        "docs/easyrewards-redesign/evidence/ios-dark.txt",
+        "docs/easyrewards-redesign/evidence/android-large.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Reuse appearance settings and theme tokens",
+      "outstandingWork": "Complete the full native appearance preference and contrast matrix. Explicit iOS dark and Android dark rendered correctly.",
+      "acceptanceGate": "G21"
+    },
+    {
+      "id": "ER-009",
+      "requirement": "Keep the customer shell and canonical navigation",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Existing customer router, header and account hub",
+      "securityControl": "Existing sign-in gate and protected destinations",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/components/site.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T06",
+        "T07",
+        "T44",
+        "T45"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Keep the customer shell and canonical navigation",
+      "outstandingWork": "Complete booking navigation and individual header interaction checks. Web order navigation passed.",
+      "acceptanceGate": "G25"
+    },
+    {
+      "id": "ER-010",
+      "requirement": "Keep server authoritative over points, roles and branch",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Authoritative session and rewards dispatch",
+      "securityControl": "Strict request shape, role, ownership and current session checks",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards-redesign.test.ts",
+        "tests/easyrewards.test.ts"
+      ],
+      "testIds": [
+        "ERD-T46",
+        "ER-22"
+      ],
+      "negativeTests": [
+        "ERD-T46",
+        "ER-22"
+      ],
+      "scenarios": [
+        "T47",
+        "T48",
+        "T49"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Keep server authoritative over points, roles and branch",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G16"
+    },
+    {
+      "id": "ER-011",
+      "requirement": "Maintain compact desktop hierarchy",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Approved screenshot and current design tokens",
+      "securityControl": "Actions reflect scoped API eligibility",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/app/easyrewards.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T55"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Maintain compact desktop hierarchy",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G17"
+    },
+    {
+      "id": "ER-012",
+      "requirement": "Keep mobile web layout within the viewport",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Responsive customer shell and media queries",
+      "securityControl": "Existing contextual modal and scoped controls",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/app/easyrewards.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T53",
+        "T54"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Keep mobile web layout within the viewport",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G18"
+    },
+    {
+      "id": "ER-013",
+      "requirement": "Keep keyboard, touch and assistive-technology semantics",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Semantic web controls and native UI primitives",
+      "securityControl": "Visible and labelled actions and text status",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/CustomerUI.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T56",
+        "T57",
+        "T58",
+        "T59"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt",
+        "docs/easyrewards-redesign/evidence/native-types.txt",
+        "docs/easyrewards-redesign/evidence/ios-large.txt",
+        "docs/easyrewards-redesign/evidence/android-large.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Keep keyboard, touch and assistive-technology semantics",
+      "outstandingWork": "Verify VoiceOver and TalkBack. Larger text passed on both simulators.",
+      "acceptanceGate": "G22"
+    },
+    {
+      "id": "ER-014",
+      "requirement": "Distinguish unavailable, empty, zero and loading",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Backend response, connectivity and ledger",
+      "securityControl": "No fallback financial or reward data",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "packages/business-rules/src/rewards-overview.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards-redesign.test.ts"
+      ],
+      "testIds": [
+        "ERD-T10"
+      ],
+      "negativeTests": [],
+      "scenarios": [
+        "T08",
+        "T10",
+        "T27",
+        "T42",
+        "T51"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Distinguish unavailable, empty, zero and loading",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G07"
+    },
+    {
+      "id": "ER-015",
+      "requirement": "Preserve point and purchase-credit separation",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "Existing EasyRewards APIs and linked workflows",
+      "dataSource": "Rewards ledger and separate monetary wallet",
+      "securityControl": "No wallet or credit mutation from rewards summary",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts"
+      ],
+      "testIds": [
+        "ER-13",
+        "ER-32"
+      ],
+      "negativeTests": [
+        "ER-13",
+        "ER-32"
+      ],
+      "scenarios": [
+        "T60",
+        "T61"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Preserve point and purchase-credit separation",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G15"
+    },
+    {
+      "id": "ER-016",
+      "requirement": "Block spending on restricted balances",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Posted point ledger and restricted flag",
+      "securityControl": "Server enforces spend restriction",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "packages/business-rules/src/rewards-overview.ts",
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [
+        "tests/easyrewards-redesign.test.ts",
+        "tests/easyrewards.test.ts"
+      ],
+      "testIds": [
+        "ERD-T10",
+        "ER-16"
+      ],
+      "negativeTests": [
+        "ERD-T10",
+        "ER-16"
+      ],
+      "scenarios": [
+        "T25",
+        "T26"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Block spending on restricted balances",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G10"
+    },
+    {
+      "id": "ER-017",
+      "requirement": "Keep maximum reward discount and delivery exclusion",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "Existing EasyRewards APIs and linked workflows",
+      "dataSource": "Approved policy and immutable checkout calculation",
+      "securityControl": "Commit validates scoped items, cap and fee exclusion",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-completion.test.ts"
+      ],
+      "testIds": [
+        "ER-10",
+        "ER-30G"
+      ],
+      "negativeTests": [
+        "ER-10",
+        "ER-30G"
+      ],
+      "scenarios": [
+        "T22",
+        "T23",
+        "T24"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Keep maximum reward discount and delivery exclusion",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G26"
+    },
+    {
+      "id": "ER-018",
+      "requirement": "Enforce verified purchase and service earning",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Verified payments, delivered orders and acknowledged services",
+      "securityControl": "Unverified, failed and cancelled fulfilment do not qualify",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/reward-services.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-completion.test.ts"
+      ],
+      "testIds": [
+        "ER-05",
+        "ER-06",
+        "ER-04S"
+      ],
+      "negativeTests": [
+        "ER-05",
+        "ER-06",
+        "ER-04S"
+      ],
+      "scenarios": [
+        "T14",
+        "T35",
+        "T62"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Enforce verified purchase and service earning",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G09"
+    },
+    {
+      "id": "ER-019",
+      "requirement": "Keep approved Smart Refill offers, consent and budget",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Verified refill records, consent and approved campaigns",
+      "securityControl": "Consent withdrawal removes offers",
+      "implementationFiles": [
+        "apps/mobile/EasyRewards.tsx",
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/lib/reward-offers.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards-completion.test.ts"
+      ],
+      "testIds": [
+        "ER-10O",
+        "ER-31S",
+        "ER-31P"
+      ],
+      "negativeTests": [
+        "ER-10O",
+        "ER-31S",
+        "ER-31P"
+      ],
+      "scenarios": [
+        "T28",
+        "T29",
+        "T30",
+        "T31"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Keep approved Smart Refill offers, consent and budget",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G12"
+    },
+    {
+      "id": "ER-020",
+      "requirement": "Recover after web offline or server failure",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Last confirmed result and API status",
+      "securityControl": "Stale UI disables actions and expires sessions",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [
+        "tests/easyrewards-redesign.test.ts"
+      ],
+      "testIds": [
+        "ERD-T46"
+      ],
+      "negativeTests": [],
+      "scenarios": [
+        "T49",
+        "T50",
+        "T51"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Recover after web offline or server failure",
+      "outstandingWork": "Verify native offline/reconnect on installed builds.",
+      "acceptanceGate": "G24"
+    },
+    {
+      "id": "ER-021",
+      "requirement": "Avoid duplicate submission effects",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Existing server idempotency and form in-flight guard",
+      "securityControl": "Server revalidates eligibility and rejects duplicate attribution",
+      "implementationFiles": [
+        "apps/web/components/easyrewards.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-referrals.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts"
+      ],
+      "testIds": [
+        "ER-10",
+        "ER-18"
+      ],
+      "negativeTests": [
+        "ER-10",
+        "ER-18"
+      ],
+      "scenarios": [
+        "T36",
+        "T41",
+        "T52"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Avoid duplicate submission effects",
+      "outstandingWork": "Exercise repeated taps in rendered native referral UI. Web repeated clicks and server deduplication passed.",
+      "acceptanceGate": "G13"
+    },
+    {
+      "id": "ER-022",
+      "requirement": "Preserve exact refunds, reversals and cancellation restoration",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "Existing EasyRewards APIs and linked workflows",
+      "dataSource": "Existing immutable ledger and refund rules",
+      "securityControl": "Approved verified source and idempotent posting",
+      "implementationFiles": [
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/rewards.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-completion.test.ts"
+      ],
+      "testIds": [
+        "ER-10",
+        "ER-15",
+        "ER-14",
+        "ER-14Z"
+      ],
+      "negativeTests": [
+        "ER-10",
+        "ER-15",
+        "ER-14",
+        "ER-14Z"
+      ],
+      "scenarios": [
+        "T38",
+        "T39",
+        "T40",
+        "T41"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Preserve exact refunds, reversals and cancellation restoration",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G14"
+    },
+    {
+      "id": "ER-023",
+      "requirement": "Preserve immutable historical and audit evidence",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Ledger migration, scope and reporting",
+      "securityControl": "Append-only storage and scoped reconciliation",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/rewards-adjustment.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards.test.ts",
+        "tests/easyrewards-redesign.test.ts"
+      ],
+      "testIds": [
+        "ER-01",
+        "ER-21",
+        "ERD-T46"
+      ],
+      "negativeTests": [
+        "ER-01",
+        "ER-21",
+        "ERD-T46"
+      ],
+      "scenarios": [
+        "T41",
+        "T46",
+        "T47",
+        "T64"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Preserve immutable historical and audit evidence",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G13"
+    },
+    {
+      "id": "ER-024",
+      "requirement": "Preserve Paystack and checkout safeguards",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "Existing EasyRewards APIs and linked workflows",
+      "dataSource": "Paystack test-mode integration and checkout records",
+      "securityControl": "Provider verification, amount matching and idempotency",
+      "implementationFiles": [
+        "apps/web/lib/rewards.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts",
+        "tests/easyrewards.test.ts"
+      ],
+      "testIds": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT",
+        "ER-13"
+      ],
+      "negativeTests": [
+        "PAY-POST",
+        "PAY-ZERO-EFFECT",
+        "ER-13"
+      ],
+      "scenarios": [
+        "T61"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/cross-feature-regression.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Preserve Paystack and checkout safeguards",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G26"
+    },
+    {
+      "id": "ER-025",
+      "requirement": "Preserve booking, stock and cylinder custody",
+      "priority": "P0",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "Existing EasyRewards APIs and linked workflows",
+      "dataSource": "Existing service and custody records",
+      "securityControl": "Qualification, branch, stock and custody checks",
+      "implementationFiles": [
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "testFiles": [
+        "tests/professional-services.test.ts",
+        "tests/doorstep-cylinders.test.ts",
+        "tests/easyrewards-completion.test.ts"
+      ],
+      "testIds": [
+        "DOOR-MULTI01",
+        "ER-04S"
+      ],
+      "negativeTests": [
+        "booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve",
+        "DOOR-MULTI01",
+        "ER-04S"
+      ],
+      "scenarios": [
+        "T62",
+        "T63"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/cross-feature-regression.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Preserve booking, stock and cylinder custody",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G27"
+    },
+    {
+      "id": "ER-026",
+      "requirement": "Verify iOS Simulator and iOS accessibility",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "/rewards and native customer EasyRewards",
+      "dataSource": "Installed Expo iOS build and existing API",
+      "securityControl": "Real sign-in and customer role before reading data",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T06",
+        "T07",
+        "T56",
+        "T59"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/native-types.txt",
+        "docs/easyrewards-redesign/evidence/native-export.txt",
+        "docs/easyrewards-redesign/evidence/ios.txt",
+        "docs/easyrewards-redesign/evidence/ios-large.txt",
+        "docs/easyrewards-redesign/evidence/ios-dark.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Verify iOS Simulator and iOS accessibility",
+      "outstandingWork": "Verify VoiceOver. Installed sign-in, entry, empty history, dark appearance and larger text passed.",
+      "acceptanceGate": "G19"
+    },
+    {
+      "id": "ER-027",
+      "requirement": "Verify Android emulator and Android accessibility",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "Existing EasyRewards APIs and linked workflows",
+      "dataSource": "Installed Expo Android build and existing API",
+      "securityControl": "Real sign-in and customer role before reading data",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T06",
+        "T07",
+        "T57",
+        "T59"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/native-types.txt",
+        "docs/easyrewards-redesign/evidence/native-export.txt",
+        "docs/easyrewards-redesign/evidence/android.txt",
+        "docs/easyrewards-redesign/evidence/android-large.txt",
+        "docs/easyrewards-redesign/evidence/android-minified-launch.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Verify Android emulator and Android accessibility",
+      "outstandingWork": "Verify TalkBack and resolve the inherited AndroidX WorkManager crash in the minified APK. The unminified local build passed navigation, dark appearance and larger text.",
+      "acceptanceGate": "G20"
+    },
+    {
+      "id": "ER-028",
+      "requirement": "Audit repository and baseline before changes",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "Existing EasyRewards APIs and linked workflows",
+      "dataSource": "Existing repository and isolated runtime",
+      "securityControl": "No production records modified",
+      "implementationFiles": [
+        "docs/easyrewards-redesign/00-repository-audit.md",
+        "docs/easyrewards-redesign/01-api-permissions-map.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T01",
+        "T65"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Audit repository and baseline before changes",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G01"
+    },
+    {
+      "id": "ER-029",
+      "requirement": "Record executed tests and evidence",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "Existing EasyRewards APIs and linked workflows",
+      "dataSource": "Browser, automated tests and native validation",
+      "securityControl": "Record failures and unexecuted scenarios",
+      "implementationFiles": [
+        "docs/easyrewards-redesign/04-test-results.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T65"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt",
+        "docs/easyrewards-redesign/evidence/cross-feature-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The implementation and evidence cover part of this requirement.",
+      "testResult": "PARTIAL Record executed tests and evidence",
+      "outstandingWork": "Complete device accessibility, browser enabled actions and cross-device error journeys.",
+      "acceptanceGate": "G28"
+    },
+    {
+      "id": "ER-030",
+      "requirement": "Record rollback and release decision",
+      "priority": "P1",
+      "scope": "EasyRewards redesign",
+      "uiReference": "Regenerated brief and approved EasyRewards screenshot",
+      "route": "Existing EasyRewards APIs and linked workflows",
+      "dataSource": "Existing release controls and source baseline",
+      "securityControl": "Production NO-GO and all release controls stay in force",
+      "implementationFiles": [
+        "docs/easyrewards-redesign/05-rollback-and-release.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "scenarios": [
+        "T65"
+      ],
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recorded evidence covers the cases listed for this requirement.",
+      "testResult": "PASS Record rollback and release decision",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G30"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "T01",
+      "scenario": "web route",
+      "requirements": [
+        "ER-009",
+        "ER-028"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T02",
+      "scenario": "direct refresh",
+      "requirements": [
+        "ER-009"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T03",
+      "scenario": "existing sidebar",
+      "requirements": [
+        "ER-009"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T04",
+      "scenario": "header/cart/search/location",
+      "requirements": [
+        "ER-009"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/native-types.txt",
+        "docs/easyrewards-redesign/evidence/native-export.txt"
+      ],
+      "notes": "Customer shell rendered. Header controls were not individually exercised."
+    },
+    {
+      "id": "T05",
+      "scenario": "Light/Dark/System",
+      "requirements": [
+        "ER-008"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/ios-dark.txt",
+        "docs/easyrewards-redesign/evidence/android-large.txt"
+      ],
+      "notes": "System dark on reload and initial light passed on web. Native theme interaction pending."
+    },
+    {
+      "id": "T06",
+      "scenario": "native entry",
+      "requirements": [
+        "ER-007",
+        "ER-009",
+        "ER-026",
+        "ER-027"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/ios.txt",
+        "docs/easyrewards-redesign/evidence/android.txt"
+      ],
+      "notes": "Passed signed-in entry on iPhone 17 Pro and unminified Pixel 8."
+    },
+    {
+      "id": "T07",
+      "scenario": "native navigation",
+      "requirements": [
+        "ER-007",
+        "ER-009",
+        "ER-026",
+        "ER-027"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/ios.txt",
+        "docs/easyrewards-redesign/evidence/android.txt"
+      ],
+      "notes": "Passed account entry on both platforms and Android hardware back."
+    },
+    {
+      "id": "T08",
+      "scenario": "real zero points",
+      "requirements": [
+        "ER-001",
+        "ER-014"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T09",
+      "scenario": "nonzero balance",
+      "requirements": [
+        "ER-001"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T10",
+      "scenario": "missing balance",
+      "requirements": [
+        "ER-001",
+        "ER-014"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/focused.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T11",
+      "scenario": "pending award count",
+      "requirements": [
+        "ER-001"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/focused.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T12",
+      "scenario": "pending not available",
+      "requirements": [
+        "ER-001"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/focused.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T13",
+      "scenario": "programme disabled",
+      "requirements": [
+        "ER-002"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T14",
+      "scenario": "earning enabled with policy",
+      "requirements": [
+        "ER-002",
+        "ER-018"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T15",
+      "scenario": "redemption disabled",
+      "requirements": [
+        "ER-002"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T16",
+      "scenario": "redemption enabled with policy+flag",
+      "requirements": [
+        "ER-002"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T17",
+      "scenario": "referral disabled",
+      "requirements": [
+        "ER-002",
+        "ER-004"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T18",
+      "scenario": "referral enabled",
+      "requirements": [
+        "ER-002",
+        "ER-004"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt"
+      ],
+      "notes": "Backend policy and enabled web sheet passed. Native enabled sheet remains open."
+    },
+    {
+      "id": "T19",
+      "scenario": "no policy approved",
+      "requirements": [
+        "ER-002",
+        "ER-006"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T20",
+      "scenario": "approved policy version",
+      "requirements": [
+        "ER-002",
+        "ER-006"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T21",
+      "scenario": "no expiry/tier fabrication",
+      "requirements": [
+        "ER-002",
+        "ER-006"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T22",
+      "scenario": "real redemption minimum",
+      "requirements": [
+        "ER-002",
+        "ER-006",
+        "ER-017"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T23",
+      "scenario": "max discount",
+      "requirements": [
+        "ER-017"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T24",
+      "scenario": "delivery excluded",
+      "requirements": [
+        "ER-017"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T25",
+      "scenario": "restricted balance",
+      "requirements": [
+        "ER-016"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T26",
+      "scenario": "finance review",
+      "requirements": [
+        "ER-016"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T27",
+      "scenario": "no offers",
+      "requirements": [
+        "ER-003",
+        "ER-014"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T28",
+      "scenario": "eligible offer",
+      "requirements": [
+        "ER-003",
+        "ER-019"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt"
+      ],
+      "notes": "Eligible web offer, checkout and ledger readback passed. Native checkout remains open."
+    },
+    {
+      "id": "T29",
+      "scenario": "expired offer hidden",
+      "requirements": [
+        "ER-003",
+        "ER-019"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T30",
+      "scenario": "budget exhausted",
+      "requirements": [
+        "ER-003",
+        "ER-019"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T31",
+      "scenario": "per-customer offer limit",
+      "requirements": [
+        "ER-003",
+        "ER-019"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T32",
+      "scenario": "referral code generation",
+      "requirements": [
+        "ER-004"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt"
+      ],
+      "notes": "Web code generation and policy tests passed. Native enabled flow remains open."
+    },
+    {
+      "id": "T33",
+      "scenario": "HTTPS link requirement",
+      "requirements": [
+        "ER-004"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T34",
+      "scenario": "self-referral denied",
+      "requirements": [
+        "ER-004"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T35",
+      "scenario": "first verified fulfilment",
+      "requirements": [
+        "ER-004",
+        "ER-018"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T36",
+      "scenario": "repeat purchase no duplicate bonus",
+      "requirements": [
+        "ER-004",
+        "ER-021"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T37",
+      "scenario": "cross-branch referral",
+      "requirements": [
+        "ER-004"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T38",
+      "scenario": "refund reversal",
+      "requirements": [
+        "ER-022"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T39",
+      "scenario": "cancellation restoration",
+      "requirements": [
+        "ER-022"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T40",
+      "scenario": "partial refund existing rules",
+      "requirements": [
+        "ER-022"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T41",
+      "scenario": "idempotent ledger posting",
+      "requirements": [
+        "ER-021",
+        "ER-022",
+        "ER-023"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T42",
+      "scenario": "history empty",
+      "requirements": [
+        "ER-005",
+        "ER-014"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T43",
+      "scenario": "signed history entries",
+      "requirements": [
+        "ER-005"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T44",
+      "scenario": "order detail links",
+      "requirements": [
+        "ER-005",
+        "ER-009"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt"
+      ],
+      "notes": "Rendered web order link and owned reference passed. Native order navigation remains open."
+    },
+    {
+      "id": "T45",
+      "scenario": "booking detail links",
+      "requirements": [
+        "ER-005",
+        "ER-009"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": "Service earn and reversal tested. Rendered booking navigation not exercised."
+    },
+    {
+      "id": "T46",
+      "scenario": "history truncation",
+      "requirements": [
+        "ER-005",
+        "ER-023"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T47",
+      "scenario": "cross-user API denial",
+      "requirements": [
+        "ER-010",
+        "ER-023"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T48",
+      "scenario": "role revocation",
+      "requirements": [
+        "ER-010"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/focused.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T49",
+      "scenario": "expired session",
+      "requirements": [
+        "ER-010",
+        "ER-020"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/focused.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T50",
+      "scenario": "offline/stale",
+      "requirements": [
+        "ER-020"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T51",
+      "scenario": "network failure",
+      "requirements": [
+        "ER-014",
+        "ER-020"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T52",
+      "scenario": "duplicate tap",
+      "requirements": [
+        "ER-004",
+        "ER-021"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt"
+      ],
+      "notes": "Web repeated click passed. Native repeated tap remains open."
+    },
+    {
+      "id": "T53",
+      "scenario": "320/390px mobile web",
+      "requirements": [
+        "ER-012"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T54",
+      "scenario": "tablet 768px",
+      "requirements": [
+        "ER-012"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T55",
+      "scenario": "desktop 1440px",
+      "requirements": [
+        "ER-011"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T56",
+      "scenario": "iOS safe area/VoiceOver",
+      "requirements": [
+        "ER-007",
+        "ER-013",
+        "ER-026"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/ios.txt"
+      ],
+      "notes": "Installed iOS screenshot and core workflow passed. VoiceOver remains open."
+    },
+    {
+      "id": "T57",
+      "scenario": "Android back/TalkBack",
+      "requirements": [
+        "ER-007",
+        "ER-013",
+        "ER-027"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/android.txt",
+        "docs/easyrewards-redesign/evidence/android-minified-launch.txt"
+      ],
+      "notes": "Android hardware back passed on the unminified build. TalkBack and standard release remain open."
+    },
+    {
+      "id": "T58",
+      "scenario": "keyboard and focus",
+      "requirements": [
+        "ER-013"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt"
+      ],
+      "notes": "Keyboard disclosure, enabled referral dialog, Escape and focus restoration passed."
+    },
+    {
+      "id": "T59",
+      "scenario": "large text",
+      "requirements": [
+        "ER-007",
+        "ER-013",
+        "ER-026",
+        "ER-027"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/ios-large.txt",
+        "docs/easyrewards-redesign/evidence/android-large.txt"
+      ],
+      "notes": "Larger text passed on iPhone 17 Pro and Pixel 8."
+    },
+    {
+      "id": "T60",
+      "scenario": "wallet separation",
+      "requirements": [
+        "ER-015"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/browser.txt",
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T61",
+      "scenario": "Paystack/checkout regression",
+      "requirements": [
+        "ER-015",
+        "ER-024"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/cross-feature-regression.txt",
+        "docs/easyrewards-redesign/evidence/browser-enabled.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T62",
+      "scenario": "service booking regression",
+      "requirements": [
+        "ER-018",
+        "ER-025"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt",
+        "docs/easyrewards-redesign/evidence/cross-feature-regression.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T63",
+      "scenario": "inventory/cylinder custody regression",
+      "requirements": [
+        "ER-025"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/cross-feature-regression.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T64",
+      "scenario": "reward policy independent approval",
+      "requirements": [
+        "ER-023"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/evidence/baseline.txt"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "T65",
+      "scenario": "traceability and rollback evidence",
+      "requirements": [
+        "ER-028",
+        "ER-029",
+        "ER-030"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/easyrewards-redesign/05-rollback-and-release.md"
+      ],
+      "notes": ""
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "gate": "repository audit",
+      "requirements": [
+        "ER-028"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G02",
+      "gate": "baseline evidence",
+      "requirements": [
+        "ER-028"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G03",
+      "gate": "route preserved",
+      "requirements": [
+        "ER-009"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G04",
+      "gate": "sidebar preserved",
+      "requirements": [
+        "ER-009"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G05",
+      "gate": "backend balance",
+      "requirements": [
+        "ER-001"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G06",
+      "gate": "pending distinct",
+      "requirements": [
+        "ER-001"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G07",
+      "gate": "no fake points",
+      "requirements": [
+        "ER-014"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G08",
+      "gate": "policy approval preserved",
+      "requirements": [
+        "ER-002"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G09",
+      "gate": "earning flags",
+      "requirements": [
+        "ER-002",
+        "ER-018"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G10",
+      "gate": "redemption flags",
+      "requirements": [
+        "ER-016",
+        "ER-017"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G11",
+      "gate": "referral flags",
+      "requirements": [
+        "ER-004"
+      ],
+      "status": "PARTIAL",
+      "notes": "See mapped requirement for outstanding work."
+    },
+    {
+      "id": "G12",
+      "gate": "offers eligibility",
+      "requirements": [
+        "ER-003",
+        "ER-019"
+      ],
+      "status": "PARTIAL",
+      "notes": "See mapped requirement for outstanding work."
+    },
+    {
+      "id": "G13",
+      "gate": "immutable ledger",
+      "requirements": [
+        "ER-021",
+        "ER-023"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G14",
+      "gate": "refund reversal",
+      "requirements": [
+        "ER-022"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G15",
+      "gate": "no wallet conflation",
+      "requirements": [
+        "ER-015"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G16",
+      "gate": "user/branch security",
+      "requirements": [
+        "ER-010"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G17",
+      "gate": "desktop compact design",
+      "requirements": [
+        "ER-011"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G18",
+      "gate": "mobile web",
+      "requirements": [
+        "ER-012"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G19",
+      "gate": "native iOS",
+      "requirements": [
+        "ER-026"
+      ],
+      "status": "PARTIAL",
+      "notes": "See mapped requirement for outstanding work."
+    },
+    {
+      "id": "G20",
+      "gate": "native Android",
+      "requirements": [
+        "ER-027"
+      ],
+      "status": "BLOCKED",
+      "notes": "Minified Android launch fails in AndroidX WorkManager initialization."
+    },
+    {
+      "id": "G21",
+      "gate": "Light/Dark/System",
+      "requirements": [
+        "ER-008"
+      ],
+      "status": "PARTIAL",
+      "notes": "See mapped requirement for outstanding work."
+    },
+    {
+      "id": "G22",
+      "gate": "accessible UI",
+      "requirements": [
+        "ER-013"
+      ],
+      "status": "PARTIAL",
+      "notes": "See mapped requirement for outstanding work."
+    },
+    {
+      "id": "G23",
+      "gate": "loading/empty/unavailable",
+      "requirements": [
+        "ER-006",
+        "ER-014"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G24",
+      "gate": "offline/retry",
+      "requirements": [
+        "ER-020"
+      ],
+      "status": "PARTIAL",
+      "notes": "See mapped requirement for outstanding work."
+    },
+    {
+      "id": "G25",
+      "gate": "navigation continuity",
+      "requirements": [
+        "ER-009"
+      ],
+      "status": "PARTIAL",
+      "notes": "See mapped requirement for outstanding work."
+    },
+    {
+      "id": "G26",
+      "gate": "payment/checkout regression",
+      "requirements": [
+        "ER-017",
+        "ER-024"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G27",
+      "gate": "stock/fulfilment regression",
+      "requirements": [
+        "ER-025"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G28",
+      "gate": "executed test evidence",
+      "requirements": [
+        "ER-029"
+      ],
+      "status": "PARTIAL",
+      "notes": "See mapped requirement for outstanding work."
+    },
+    {
+      "id": "G29",
+      "gate": "RTM/rollback",
+      "requirements": [
+        "ER-030"
+      ],
+      "status": "PASS",
+      "notes": "See mapped evidence."
+    },
+    {
+      "id": "G30",
+      "gate": "explicit GO/NO-GO",
+      "requirements": [
+        "ER-030"
+      ],
+      "status": "PASS",
+      "notes": "Production NO-GO recorded."
+    }
+  ]
+}

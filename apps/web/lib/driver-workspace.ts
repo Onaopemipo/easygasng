@@ -17,10 +17,13 @@ const allowed = new Set([
   "account.password",
   "preferences.save",
   "notifications.read",
+  "notifications.list",
+  "notifications.read.bulk",
   "support.list",
   "support.create",
   "support.reply",
   "driver.snapshot",
+  "driver.history",
   "driver.heartbeat",
   "driver.location",
   "manifest.summary",
@@ -29,6 +32,7 @@ const allowed = new Set([
   "trip.start",
   "trip.end",
   "trip.sync",
+  "trip.location.revoke",
   "driver.restrict",
   "driver.availability",
   "driver.complete",
@@ -99,6 +103,12 @@ export async function driverWorkspace(
   }
   if (!user.driver_delivery_only)
     throw new AppError(403, "Open a verified delivery-only session first.");
+  if (action === "driver.history") {
+    if (user.role !== "driver" || !(await one(tx,
+      "SELECT id FROM branches WHERE id=$1 AND active=true", [user.branch_id],
+    ))) throw new AppError(403, "An active driver branch is required.");
+    return driverHistory(tx, user, input);
+  }
   if (action === "driver.location") {
     z.object({}).strict().parse(input);
     const trip = await one(
@@ -127,7 +137,9 @@ export async function driverWorkspace(
     z.object({}).strict().parse(input);
     const profile = await one(
       tx,
-      "SELECT id,name,email,contact_phone,driver_available,driver_availability_updated_at,driver_last_seen_at FROM users WHERE id=$1",
+      `SELECT u.id,u.name,u.email,u.contact_phone,u.active,b.name AS branch_name,
+              u.driver_available,u.driver_availability_updated_at,u.driver_last_seen_at
+       FROM users u JOIN branches b ON b.id=u.branch_id WHERE u.id=$1 AND b.active=true`,
       [user.id],
     );
     const responses = (
@@ -136,9 +148,34 @@ export async function driverWorkspace(
         [user.id],
       )
     ).rows;
+    if (!profile) throw new AppError(403, "Your driver branch is unavailable.");
+    const totals = await one(tx, `
+      SELECT count(*) FILTER (WHERE o.status='assigned' AND a.state='assigned'
+               AND r.decision IS DISTINCT FROM 'acknowledged') AS new_assignments,
+             count(*) FILTER (WHERE o.status='out_for_delivery' OR (o.status='assigned'
+               AND (a.state='picked_up' OR r.decision='acknowledged'))) AS in_progress
+      FROM orders o JOIN delivery_attempts a ON a.order_id=o.id AND a.driver_id=o.driver_id
+      LEFT JOIN dispatch_responses r ON r.attempt_id=a.id
+      WHERE o.driver_id=$1 AND o.branch_id=$2 AND a.state IN ('assigned','picked_up','arrived')
+        AND r.decision IS DISTINCT FROM 'rejected'`, [user.id, user.branch_id]);
+    const completed = await one(tx, `
+      SELECT count(*) AS total FROM delivery_attempts a JOIN orders o ON o.id=a.order_id
+      WHERE a.driver_id=$1 AND o.branch_id=$2 AND a.state='delivered'
+        AND (a.completed_at AT TIME ZONE 'Africa/Lagos')::date=(now() AT TIME ZONE 'Africa/Lagos')::date`,
+      [user.id, user.branch_id]);
+    const trip = await one(tx, `
+      SELECT t.id,t.location_consent,v.label AS vehicle_label,v.capacity_grams
+      FROM driver_trips t LEFT JOIN driver_vehicles v ON v.id=t.vehicle_id AND v.branch_id=t.branch_id AND v.active=true
+      WHERE t.driver_id=$1 AND t.branch_id=$2 AND t.ended_at IS NULL`, [user.id, user.branch_id]);
     return {
       profile,
       responses,
+      trip: trip ?? null,
+      metrics: {
+        newAssignments: Number(totals?.new_assignments ?? 0),
+        inProgress: Number(totals?.in_progress ?? 0),
+        completedToday: Number(completed?.total ?? 0),
+      },
       gps: { status: "unavailable", lastUpdated: null },
       proofRequired: true,
       galleryApproved: process.env.EASYGAS_DRIVER_GALLERY_APPROVED === "true",
@@ -278,4 +315,57 @@ export async function driverWorkspace(
     });
   }
   throw new AppError(404, "Unknown driver action.");
+}
+
+const historyInput = z.object({
+  from: z.iso.date().optional(),
+  to: z.iso.date().optional(),
+  outcome: z.enum(["delivered", "failed", "returned", "declined", "cancelled"]).optional(),
+  page: z.coerce.number().int().min(1).max(10000).default(1),
+}).strict().refine(({ from, to }) => !from || !to || from <= to, {
+  message: "Choose an end date on or after the start date.",
+});
+
+async function driverHistory(tx: SQL, user: Actor, input: unknown) {
+  const { from, to, outcome, page } = historyInput.parse(input);
+  const pageSize = 20;
+  const result = await one(tx, `
+    WITH records AS (
+      SELECT a.id,a.order_id,o.reference,
+        CASE WHEN a.state IN ('delivered','failed','returned') THEN a.state
+             WHEN r.decision='rejected' THEN 'declined'
+             WHEN cancellation.created_at IS NOT NULL THEN 'cancelled' END AS outcome,
+        CASE WHEN a.state IN ('delivered','failed','returned') THEN a.completed_at
+             WHEN r.decision='rejected' THEN r.created_at
+             ELSE cancellation.created_at END AS closed_at,
+        (o.driver_id=a.driver_id AND a.state='delivered' AND EXISTS (
+          SELECT 1 FROM delivery_photos p
+          WHERE p.order_id=o.id AND p.attempt_id=a.id AND p.retain_until>now() AND p.consent=true
+        )) AS has_proof
+      FROM delivery_attempts a JOIN orders o ON o.id=a.order_id
+      JOIN branches b ON b.id=o.branch_id AND b.active=true
+      LEFT JOIN dispatch_responses r ON r.attempt_id=a.id AND r.driver_id=a.driver_id
+      LEFT JOIN LATERAL (
+        SELECT max(e.created_at) AS created_at FROM order_events e
+        WHERE e.order_id=o.id AND e.status='cancelled' AND e.created_at>=a.created_at
+          AND o.status='cancelled' AND o.driver_id=a.driver_id
+          AND NOT EXISTS (
+            SELECT 1 FROM delivery_attempts later WHERE later.order_id=a.order_id
+              AND later.assignment_version>a.assignment_version
+          )
+      ) cancellation ON true
+      WHERE a.driver_id=$1 AND o.branch_id=$2
+    ), filtered AS (
+      SELECT * FROM records WHERE closed_at IS NOT NULL AND outcome IS NOT NULL
+        AND ($3::date IS NULL OR (closed_at AT TIME ZONE 'Africa/Lagos')::date >= $3::date)
+        AND ($4::date IS NULL OR (closed_at AT TIME ZONE 'Africa/Lagos')::date <= $4::date)
+    ), page_rows AS (
+      SELECT * FROM filtered WHERE ($5::text IS NULL OR outcome=$5)
+      ORDER BY closed_at DESC,id DESC LIMIT $6 OFFSET $7
+    )
+    SELECT (SELECT count(*) FROM filtered WHERE ($5::text IS NULL OR outcome=$5)) AS total,
+           (SELECT count(*) FROM filtered WHERE outcome='delivered') AS delivered,
+           COALESCE((SELECT json_agg(page_rows ORDER BY closed_at DESC,id DESC) FROM page_rows),'[]'::json) AS rows
+  `, [user.id, user.branch_id, from ?? null, to ?? null, outcome ?? null, pageSize, (page - 1) * pageSize]);
+  return { rows: result?.rows ?? [], total: Number(result?.total ?? 0), delivered: Number(result?.delivered ?? 0), page, pageSize };
 }

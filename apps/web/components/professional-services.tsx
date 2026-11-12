@@ -1,11 +1,16 @@
 "use client";
+import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, ClipboardList, Clock3, Info, ListChecks, MapPin, ShieldCheck, Wrench, CircleMinus } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import {
+  activeServiceSlots, assertServiceSelection, serviceAvailabilityMessage, serviceDetailText, serviceMoney, servicePrice, serviceSlotDay, serviceSlotTime, serviceSlotsQuery, type ServiceAvailability,
+} from "../../../packages/business-rules/src/service-detail";
 import TechniciansAvailability from "./technicians-availability";
 import { lagosAppointment } from "../../../packages/business-rules/src/technicians-availability";
 import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
 import { FormInput } from "./password-input";
 import OrderInvoice from "./order-invoice";
 import { AddressAreaFields } from "./address-area-fields";
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import Link from "./workspace-link";
 import { serviceReportHtml } from "../../../packages/business-rules/src/service-report";
 import { BundleOffers } from "./bundles";
@@ -28,6 +33,11 @@ export function ServiceForm({
   done,
   submit = "Save",
   review,
+  prepareReview,
+  bookingSelection,
+  disabled = false,
+  reviewKey,
+  bookingAreas,
 }: {
   title: string;
   fields: Field[];
@@ -35,6 +45,11 @@ export function ServiceForm({
   done?: () => void;
   submit?: string;
   review?: (values: Record<string, any>) => ReactNode;
+  prepareReview?: (values: Record<string, any>) => Promise<void>;
+  bookingSelection?: { slotId: string; zone: string };
+  disabled?: boolean;
+  reviewKey?: string;
+  bookingAreas?: { values: string[]; onRecognized: (area: string) => void };
 }) {
   const [reviewValues, setReviewValues] = useState<Record<string, any> | null>(
     null,
@@ -43,8 +58,16 @@ export function ServiceForm({
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [message, setMessage] = useState("");
+  const submitting = useRef(false);
+  const currentReviewKey = useRef(reviewKey);
+  currentReviewKey.current = reviewKey;
+  useEffect(() => {
+    setReviewValues(null);
+  }, [reviewKey]);
   async function save(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (submitting.current || disabled) return;
+    submitting.current = true;
     setBusy(true);
     setError("");
     setMessage("");
@@ -52,40 +75,47 @@ export function ServiceForm({
       fd = new FormData(form),
       v: Record<string, any> = {};
     try {
-    for (const f of fields) {
-      const raw = String(fd.get(f.name) ?? "");
-      v[f.name] =
-        f.type === "checkbox"
-          ? fd.has(f.name)
-          : f.type === "number"
-            ? Number(raw)
-            : f.type === "datetime-lagos"
-              ? raw ? lagosAppointment(raw) : undefined
-              : f.type === "datetime-local"
-              ? raw
-                ? new Date(raw).toISOString()
-                : undefined
-              : raw;
-    }
-    } catch (err: any) { setError(err.message); setBusy(false); return; }
-    if (review && !reviewValues) {
-      setReviewValues(v);
-      setBusy(false);
-      return;
-    }
-    try {
-      const r = await send(v);
+      for (const f of fields) {
+        const raw = String(fd.get(f.name) ?? "");
+        v[f.name] =
+          f.type === "checkbox"
+            ? fd.has(f.name)
+            : f.type === "number"
+              ? Number(raw)
+              : f.type === "datetime-lagos"
+                ? raw
+                  ? lagosAppointment(raw)
+                  : undefined
+                : f.type === "datetime-local"
+                  ? raw
+                    ? new Date(raw).toISOString()
+                    : undefined
+                  : raw;
+      }
+      Object.assign(v, bookingSelection);
+      if (review && !reviewValues) {
+        await prepareReview?.(v);
+        if (currentReviewKey.current === reviewKey) setReviewValues(v);
+        return;
+      }
+      const r = await send(reviewValues ?? v);
       setMessage(r.id ? "Saved. Reference: " + r.id : "Saved successfully.");
       setDirty(false);
       done?.();
     } catch (err: any) {
       setError(err.message);
     } finally {
+      submitting.current = false;
       setBusy(false);
     }
   }
   return (
-    <form className="surface workflow-form service-form product-form" data-unsaved={dirty ? "true" : undefined} onChange={() => setDirty(true)} onSubmit={save}>
+    <form
+      className="surface workflow-form service-form product-form"
+      data-unsaved={dirty ? "true" : undefined}
+      onChange={() => setDirty(true)}
+      onSubmit={save}
+    >
       <h3>{title}</h3>
       <fieldset
         hidden={!!reviewValues}
@@ -99,9 +129,20 @@ export function ServiceForm({
         }}
       >
         {fields.map((f) =>
-          fields.some((x) => x.name === "street") &&
-          f.name === "zone" &&
-          f.options ? null : f.name === "street" &&
+          f.name === "street" && bookingAreas ? (
+            <AddressAreaFields
+              key={f.name}
+              street={f.value ?? ""}
+              areaLabel="Service area"
+              areas={bookingAreas.values.map((value) => ({
+                id: value,
+                name: value,
+              }))}
+              onRecognizedArea={bookingAreas.onRecognized}
+            />
+          ) : fields.some((x) => x.name === "street") &&
+            f.name === "zone" &&
+            f.options ? null : f.name === "street" &&
             fields.some((x) => x.name === "zone" && x.options) ? (
             <AddressAreaFields
               key={`${f.value ?? ""}:${fields.find((x) => x.name === "zone")?.value ?? ""}`}
@@ -138,7 +179,11 @@ export function ServiceForm({
               ) : (
                 <FormInput
                   name={f.name}
-                  type={f.type === "datetime-lagos" ? "datetime-local" : (f.type ?? "text")}
+                  type={
+                    f.type === "datetime-lagos"
+                      ? "datetime-local"
+                      : (f.type ?? "text")
+                  }
                   defaultValue={
                     f.type === "checkbox" ? undefined : (f.value ?? "")
                   }
@@ -168,7 +213,7 @@ export function ServiceForm({
       )}
       {error && <Notice type="error" message={error} />}{" "}
       {message && <Notice type="success" message={message} />}
-      <button className="button" disabled={busy}>
+      <button className="button" disabled={busy || disabled}>
         {busy ? "Saving…" : review && !reviewValues ? "Review booking" : submit}
       </button>
     </form>
@@ -177,6 +222,7 @@ export function ServiceForm({
 export default function ProfessionalServices({
   user,
   mode = "catalogue",
+  publicPage = false,
   serviceId,
   onBundle,
 }: {
@@ -184,9 +230,12 @@ export default function ProfessionalServices({
   mode?: string;
   serviceId?: string;
   onBundle?: (b: any) => void;
+  publicPage?: boolean;
 }) {
+  const search = useSearchParams();
   const staff = Boolean(
-      user &&
+      !publicPage &&
+        user &&
         [
           "owner",
           "service_manager",
@@ -196,8 +245,23 @@ export default function ProfessionalServices({
           "finance",
         ].includes(user.role),
     ),
-    manager = ["owner", "service_manager"].includes(user?.role);
-  const redesigned = mode === "technicians" && process.env.NEXT_PUBLIC_EASYGAS_TECHNICIANS_UI !== "legacy" && ["owner", "service_manager", "safety_officer", "inventory", "finance"].includes(user?.role);
+    manager = staff && ["owner", "service_manager"].includes(user?.role);
+  const canBook =
+    user && (!publicPage || ["customer", "commercial"].includes(user.role));
+  const loadBookings =
+    Boolean(user) &&
+    mode !== "incidents" &&
+    !(publicPage && mode === "catalogue");
+  const redesigned =
+    mode === "technicians" &&
+    process.env.NEXT_PUBLIC_EASYGAS_TECHNICIANS_UI !== "legacy" &&
+    [
+      "owner",
+      "service_manager",
+      "safety_officer",
+      "inventory",
+      "finance",
+    ].includes(user?.role);
   const [catalogue, setCatalogue] = useState<any[]>([]),
     [bookings, setBookings] = useState<any[]>([]),
     [workspace, setWorkspace] = useState<any>(null),
@@ -212,7 +276,7 @@ export default function ProfessionalServices({
     setError("");
     Promise.all([
       api("services.catalogue"),
-      user && mode !== "incidents" ? api("bookings") : Promise.resolve([]),
+      loadBookings ? api("bookings") : Promise.resolve([]),
       staff && mode !== "incidents"
         ? api("services.manage")
         : Promise.resolve(null),
@@ -233,9 +297,13 @@ export default function ProfessionalServices({
     return () => {
       active = false;
     };
-  }, [user?.id, version, staff, mode, redesigned]);
+  }, [user?.id, version, staff, mode, redesigned, loadBookings]);
   if (redesigned) return <TechniciansAvailability user={user} />;
-  if (loading) return <Loading page />;
+  const currentDetail =
+    publicPage &&
+    mode === "catalogue" &&
+    catalogue.some((item) => item.id === serviceId);
+  if (loading && !currentDetail) return <Loading page />;
   if (error)
     return (
       <>
@@ -246,26 +314,70 @@ export default function ProfessionalServices({
       </>
     );
   const service = catalogue.find((s) => s.id === serviceId);
+  if (publicPage && mode === "catalogue" && serviceId) {
+    if (!service)
+      return (
+        <div className="service-details-v2">
+          <Link className="text-link" href="/services">
+            ← All services
+          </Link>
+          <h1>Service unavailable</h1>
+          <p>This service is not currently listed.</p>
+        </div>
+      );
+    const returnPath =
+      "/services/" + serviceId + (search?.size ? "?" + search.toString() : "");
+    return (
+      <ServiceDetail
+        service={service}
+        booking={
+          canBook ? (
+            <BookingForm
+              key={canBook.id + ":" + service.id}
+              service={service}
+              done={reload}
+              customerId={canBook.id}
+            />
+          ) : user ? (
+            <p>Sign in with a customer account to book an appointment.</p>
+          ) : (
+            <Link
+              className="button"
+              href={"/login?returnTo=" + encodeURIComponent(returnPath)}
+            >
+              Sign in to check appointments
+            </Link>
+          )
+        }
+      />
+    );
+  }
   return (
     <div className="service-workspace product-workspace">
       <div className="page-heading">
-        <span className="eyebrow">{staff ? "DELIVERY & SERVICES" : "CARE FOR YOUR KITCHEN"}</span>
+        <span className="eyebrow">
+          {staff ? "DELIVERY & SERVICES" : "CARE FOR YOUR KITCHEN"}
+        </span>
         <h1>
           {mode === "catalogue"
-            ? (staff ? "Manage services" : "Professional services")
+            ? staff
+              ? "Manage services"
+              : "Professional services"
             : mode === "quotations"
               ? "Service quotations"
-            : mode === "technicians"
-              ? "Technicians & availability"
-              : mode === "incidents"
-                ? "Operational incidents"
-                : "Service bookings"}
+              : mode === "technicians"
+                ? "Technicians & availability"
+                : mode === "incidents"
+                  ? "Operational incidents"
+                  : "Service bookings"}
         </h1>
         <p>
           {staff
-            ? mode === "incidents" ? "Review incidents, follow up on evidence and manage authorised responses."
-              : mode === "quotations" ? "Review service quotations and their approval and payment status."
-              : "Manage service bookings, catalogue and assigned work using authorised business records."
+            ? mode === "incidents"
+              ? "Review incidents, follow up on evidence and manage authorised responses."
+              : mode === "quotations"
+                ? "Review service quotations and their approval and payment status."
+                : "Manage service bookings, catalogue and assigned work using authorised business records."
             : "Book installation, maintenance and safety services for your kitchen."}
         </p>
       </div>
@@ -307,53 +419,20 @@ export default function ProfessionalServices({
           {!service && onBundle && <BundleOffers select={onBundle} />}
           {service ? (
             <>
-              <Link className="text-link" href="/services">
-                ← All services
-              </Link>
-              <section className="surface service-detail">
-                <h2>{service.name}</h2>
-                <p>{service.config.description}</p>
-                <strong>
-                  {service.config.priceKobo === null
-                    ? "Quotation required"
-                    : `${service.config.pricingModel === "starting" ? "From " : ""}${money(service.config.priceKobo)}`}
-                </strong>
-                <p>
-                  Call-out: {money(service.config.calloutKobo)} ·{" "}
-                  {service.config.durationMinutes} minutes
-                </p>
-                <h3>What’s included</h3>
-                <p>{service.config.inclusions}</p>
-                <h3>Exclusions</h3>
-                <p>{service.config.exclusions}</p>
-                <h3>Prepare for your appointment</h3>
-                <p>{service.config.preparation}</p>
-                <p>{service.config.safety}</p>
-                <p>
-                  Areas: {service.config.zones.join(", ")}. Self-service changes
-                  close {service.config.cancellationHours} hours before arrival.{" "}
-                  {service.config.warranty}
-                </p>
-              </section>
-              {user ? (
-                <BookingForm
-                  service={service}
-                  done={reload}
-                  customerId={user.id}
-                />
-              ) : (
-                <Link
-                  className="button"
-                  href={
-                    "/login?returnTo=" +
-                    encodeURIComponent(
-                      serviceId ? "/services/" + serviceId : "/bookings",
-                    )
-                  }
-                >
-                  Sign in to request an appointment
-                </Link>
-              )}
+              <ServiceDetail
+                service={service}
+                booking={
+                  canBook ? (
+                    <BookingForm
+                      service={service}
+                      done={reload}
+                      customerId={canBook.id}
+                    />
+                  ) : (
+                    <Link href="/login">Sign in to check appointments</Link>
+                  )
+                }
+              />
             </>
           ) : (
             <div className="service-grid" id="available-services" tabIndex={-1}>
@@ -455,6 +534,128 @@ export default function ProfessionalServices({
     </div>
   );
 }
+function ServiceDetail({
+  service,
+  booking,
+}: {
+  service: any;
+  booking: ReactNode;
+}) {
+  const config = service.config;
+  const [imageFailed, setImageFailed] = useState(false);
+  useEffect(() => setImageFailed(false), [service.image_id]);
+  const inclusions = serviceDetailText(config.inclusions);
+  const coverage = Array.isArray(config.zones) ? config.zones.join(", ") : "";
+  const notes = [
+    Number.isInteger(config.cancellationHours)
+      ? `Self-service changes close ${config.cancellationHours} hours before arrival.`
+      : "",
+    serviceDetailText(config.warranty) || "Warranty terms are not configured.",
+  ].filter(Boolean);
+  const sections = [
+    { title: "What’s included", icon: ListChecks, content: inclusions },
+    {
+      title: "Exclusions",
+      icon: CircleMinus,
+      content: serviceDetailText(config.exclusions),
+    },
+    {
+      title: "Prepare for your appointment",
+      icon: ClipboardList,
+      content: serviceDetailText(config.preparation),
+    },
+    { title: "Service coverage", icon: MapPin, content: coverage },
+  ];
+  return (
+    <div className="service-details-v2">
+      <Link className="service-detail-back text-link" href="/services">
+        <ArrowLeft size={18} /> All services
+      </Link>
+      <section
+        className="service-detail-hero"
+        aria-labelledby="service-detail-title"
+      >
+        <div>
+          <div className="service-detail-identity">
+            <span className="service-detail-icon">
+              <CalendarDays aria-hidden="true" />
+            </span>
+            <div>
+              <h1 id="service-detail-title">{service.name}</h1>
+              {config.description && <p>{config.description}</p>}
+            </div>
+          </div>
+          <div className="service-detail-meta">
+            <strong>{servicePrice(config)}</strong>
+            <span>
+              Call-out {serviceMoney(config.calloutKobo) ?? "unavailable"}
+            </span>
+            <span>
+              <Clock3 size={17} aria-hidden="true" />
+              {Number.isInteger(config.durationMinutes) &&
+              config.durationMinutes > 0
+                ? `${config.durationMinutes} minutes`
+                : "Duration unavailable"}
+            </span>
+          </div>
+        </div>
+        {service.image_id && !imageFailed ? (
+          <img
+            className="service-detail-image"
+            src={"/api/media/" + service.image_id}
+            alt={service.name}
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div
+            className="service-detail-image service-detail-placeholder"
+            aria-hidden="true"
+          >
+            <Wrench size={56} strokeWidth={1.3} />
+          </div>
+        )}
+      </section>
+      <div className="service-detail-columns">
+        <div className="service-detail-information">
+          {serviceDetailText(config.safety) && (
+            <p className="surface service-detail-note">
+              <ShieldCheck size={20} aria-hidden="true" />
+              {config.safety}
+            </p>
+          )}
+          {sections.map(({ title, icon: Icon, content }, index) => (
+            <details
+              className="surface service-detail-accordion"
+              key={title}
+              open={index === 0 && Boolean(content)}
+            >
+              <summary>
+                <Icon size={20} aria-hidden="true" />
+                <span>{title}</span>
+                <ChevronDown size={17} aria-hidden="true" />
+              </summary>
+              <p>{content || "Details not configured."}</p>
+            </details>
+          ))}
+        </div>
+        <aside
+          className="surface service-detail-booking"
+          aria-labelledby="service-booking-title"
+        >
+          <h2 id="service-booking-title">
+            <CalendarDays size={22} aria-hidden="true" /> Book this service
+          </h2>
+          {booking}
+        </aside>
+      </div>
+      <p className="service-detail-note service-detail-policy">
+        <Info size={18} aria-hidden="true" />
+        {notes.join(" ")}
+      </p>
+    </div>
+  );
+}
+
 function BookingForm({
   service,
   done,
@@ -464,12 +665,19 @@ function BookingForm({
   done: () => void;
   customerId: string;
 }) {
-  const [slots, setSlots] = useState<any[]>([]),
-    [error, setError] = useState(""),
+  const [error, setError] = useState(""),
     [key, setKey] = useState(() => crypto.randomUUID()),
     [addresses, setAddresses] = useState<any[]>([]),
     [address, setAddress] = useState<any>(null),
-    [slotLoading, setSlotLoading] = useState(true);
+    [availability, setAvailability] = useState<{
+      zone: string;
+      value: ServiceAvailability;
+    } | null>(null),
+    [zone, setZone] = useState(""),
+    [day, setDay] = useState(""),
+    [slotId, setSlotId] = useState(""),
+    [details, setDetails] = useState(false),
+    [retry, setRetry] = useState(0);
   const requestStorage = `easygas.booking.request.${customerId}.${service.id}`;
   useEffect(() => {
     try {
@@ -499,240 +707,393 @@ function BookingForm({
     };
   }, [customerId, service.id]);
   useEffect(() => {
-    api(
-      "services.slots?" +
-        new URLSearchParams({
-          serviceId: service.id,
-          branchId: service.branch_id,
-        }),
-    )
-      .then(setSlots)
-      .catch((e) => setError(e.message))
-      .finally(() => setSlotLoading(false));
-  }, [service.id, service.branch_id]);
-  if (error) return <Notice type="error" message={error} />;
-  if (slotLoading) return <Loading />;
-  if (!slots.length)
-    return (
-      <Notice message="No qualified technician appointments are currently available. Contact EasyGas to arrange a suitable time." />
-    );
+    let active = true;
+    let generation = 0;
+    const refresh = async () => {
+      const request = ++generation;
+      try {
+        const value = await api(serviceSlotsQuery(service, zone));
+        if (active && request === generation && navigator.onLine) {
+          setAvailability({ zone, value });
+          setError("");
+        }
+      } catch (e: any) {
+        if (active && request === generation) {
+          setAvailability(null);
+          setError(e.message);
+        }
+      }
+    };
+    const offline = () => {
+      generation++;
+      setAvailability(null);
+      setError("You’re offline. Reconnect to check current appointments.");
+    };
+    void refresh();
+    const timer = window.setInterval(refresh, 30000);
+    window.addEventListener("offline", offline);
+    window.addEventListener("online", refresh);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      window.removeEventListener("offline", offline);
+      window.removeEventListener("online", refresh);
+    };
+  }, [service.id, service.branch_id, service.version, zone, retry]);
+
+  const current = availability?.zone === zone ? availability.value : null;
+  const slots = activeServiceSlots(current?.slots ?? []);
+  const days = [...new Set(slots.map(serviceSlotDay))];
+  const daySlots = slots.filter((slot) => serviceSlotDay(slot) === day);
+  const selected = daySlots.find((slot) => slot.id === slotId);
+  const changed =
+    current?.serviceVersion != null &&
+    Number(current.serviceVersion) !== Number(service.version);
+  const available =
+    current?.status === "available" && slots.length > 0 && !changed && !error;
+  const canProceed = Boolean(available && zone && selected);
+  const recheck = async (v: Record<string, any>) => {
+    const value: ServiceAvailability = await api(
+      serviceSlotsQuery(service, v.zone),
+    ).catch((failure) => {
+      setAvailability(null);
+      setError(failure.message);
+      throw failure;
+    });
+    setAvailability({ zone: v.zone, value });
+    assertServiceSelection(value, service.version, v.slotId);
+  };
   return (
     <>
-      {!!addresses.length && (
-        <label className="surface" style={{ display: "grid", gap: 8 }}>
-          Use a saved address
-          <select
-            aria-label="Saved service address"
-            value={address?.id ?? ""}
-            onChange={(e) =>
-              setAddress(addresses.find((a) => a.id === e.target.value) ?? null)
-            }
-          >
-            <option value="">Enter a new address</option>
-            {addresses.map((a) => (
-              <option key={a.id} value={a.id}>
-                {a.label} · {a.street}, {a.zone}
-              </option>
-            ))}
-          </select>
-        </label>
-      )}
-      <ServiceForm
-        key={address?.id ?? "new"}
-        title="Request your appointment"
-        submit="Confirm booking request"
-        done={done}
-        review={(v) => (
-          <>
-            <h3>Review your booking request</h3>
-            <p>
-              {service.name} ·{" "}
-              {slots.find((s) => s.id === v.slotId)?.starts_at
-                ? new Date(
-                    slots.find((s) => s.id === v.slotId).starts_at,
-                  ).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })
-                : "Choose appointment"}{" "}
-              (Lagos time)
-            </p>
-            <p>
-              {v.street}, {v.zone} · {v.phone}
-            </p>
-            <p>
-              {v.type} · {v.concerns}
-            </p>
-            <p>
-              {service.config.priceKobo === null
-                ? "Price requires an approved quotation"
-                : (service.config.pricingModel === "starting" ? "From " : "") +
-                  money(service.config.priceKobo)}{" "}
-              · Call-out {money(service.config.calloutKobo)}
-            </p>
-            <p>
-              Self-service changes close {service.config.cancellationHours}{" "}
-              hours before arrival. {service.config.warranty}
-            </p>
-            <p>
-              This is an appointment request. Payment and safety clearance are
-              not confirmed by submitting it.
-            </p>
-          </>
-        )}
-        fields={[
+      {error ? (
+        <Notice type="error" message={error} />
+      ) : !current ? (
+        <p role="status">Checking appointment availability…</p>
+      ) : changed ? (
+        <Notice message="Service details or pricing changed. Refresh the service and review the current terms." />
+      ) : !available ? (
+        <p role="status">
           {
-            name: "slotId",
-            label: "Available appointment",
-            options: slots.map((s) => ({
-              value: s.id,
-              label:
-                new Date(s.starts_at).toLocaleString("en-NG", {
-                  timeZone: "Africa/Lagos",
-                }) + " (Lagos time)",
-            })),
-          },
-          { name: "street", label: "Service address", value: address?.street },
-          {
-            name: "zone",
-            label: "Service area",
-            value: address?.zone,
-            options: service.config.zones.map((z: string) => ({
-              value: z,
-              label: z,
-            })),
-          },
-          {
-            name: "phone",
-            label: "Contact mobile number",
-            type: "tel",
-            value: address?.phone,
-          },
-          {
-            name: "brand",
-            label: "Equipment brand, if known",
-            required: false,
-          },
-          { name: "type", label: "Equipment type" },
-          {
-            name: "burners",
-            label: "Number of burners (0 if not applicable)",
-            type: "number",
-            value: 0,
-          },
-          {
-            name: "newEquipment",
-            label: "This is new equipment",
-            type: "checkbox",
-          },
-          {
-            name: "supplyPresent",
-            label: "A gas supply arrangement is already present",
-            type: "checkbox",
-          },
-          {
-            name: "concerns",
-            label: "Describe the equipment and your concerns",
-            type: "textarea",
-          },
-          {
-            name: "notes",
-            label: "Additional instructions",
-            type: "textarea",
-            required: false,
-          },
-          {
-            name: "combineWithProducts",
-            label: "Confirm this appointment together with my product cart",
-            type: "checkbox",
-          },
-        ]}
-        send={async (v) => {
-          const phone = bookingPhone(String(v.phone ?? ""));
-          if (!phone) throw new Error(bookingPhoneMessage);
-          const request = {
-            serviceId: service.id,
-            branchId: service.branch_id,
-            serviceVersion: service.version,
-            slotId: v.slotId,
-            address: { street: v.street, zone: v.zone, phone },
-            equipment: {
-              brand: v.brand,
-              type: v.type,
-              burners: v.burners,
-              newEquipment: v.newEquipment,
-              supplyPresent: v.supplyPresent,
-              concerns: v.concerns,
-            },
-            notes: v.notes,
-            idempotencyKey: key,
-            ...(new URLSearchParams(location.search).get("followup")
-              ? {
-                  followupId: new URLSearchParams(location.search).get(
-                    "followup",
-                  ),
-                }
-              : {}),
-            ...(new URLSearchParams(location.search).get("recommendation")
-              ? {
-                  recommendationId: new URLSearchParams(location.search).get(
-                    "recommendation",
-                  ),
-                }
-              : {}),
-          };
-          const bundleId = new URLSearchParams(location.search).get("bundle");
-          if (v.combineWithProducts || bundleId) {
-            const me = await api("me"),
-              storage = "easygas.serviceDrafts." + me.user.id;
-            const old = JSON.parse(sessionStorage.getItem(storage) ?? "[]");
-            if (old.length >= 5)
-              throw new Error(
-                "A linked request supports up to five appointments.",
-              );
-            sessionStorage.setItem(
-              storage,
-              JSON.stringify([
-                ...old,
-                {
-                  request,
-                  ...(bundleId
-                    ? {
-                        bundleId,
-                        bundleVersion: Number(
-                          new URLSearchParams(location.search).get(
-                            "bundleVersion",
-                          ),
-                        ),
-                        bundleTotalKobo: Number(
-                          new URLSearchParams(location.search).get(
-                            "bundleTotal",
-                          ),
-                        ),
-                      }
-                    : {}),
-                  name: service.name,
-                  label: slots.find((s) => s.id === v.slotId)?.starts_at,
-                  totalKobo: bundleId
-                    ? Number(
-                        new URLSearchParams(location.search).get(
-                          "bundleService",
-                        ),
-                      )
-                    : service.config.pricingModel === "fixed"
-                      ? service.config.priceKobo + service.config.calloutKobo
-                      : null,
-                },
-              ]),
-            );
-            window.location.assign("/combined-checkout");
-            return { message: "Appointment added to your linked request." };
+            serviceAvailabilityMessage[
+              current.status === "available" ? "no_slots" : current.status
+            ]
           }
-          const result = await serviceMutation("booking.create", request);
-          try {
-            sessionStorage.removeItem(requestStorage);
-          } catch {}
-          window.location.assign("/bookings");
-          return result;
-        }}
-      />
+        </p>
+      ) : null}
+      {(error || changed || (current && !available)) && (
+        <div className="button-row">
+          <button
+            type="button"
+            className="button secondary"
+            onClick={changed ? done : () => setRetry((n) => n + 1)}
+          >
+            {changed ? "Refresh service details" : "Recheck availability"}
+          </button>
+          <Link className="text-link" href="/contact">
+            Contact EasyGas
+          </Link>
+        </div>
+      )}
+      {(available || zone) && (
+        <div className="service-detail-slot-fields">
+          <label>
+            Service area
+            <select
+              value={zone}
+              onChange={(event) => {
+                setZone(event.target.value);
+                setDay("");
+                setSlotId("");
+                setAddress(null);
+                setError("");
+              }}
+            >
+              <option value="">Choose an area</option>
+              {service.config.zones.map((area: string) => (
+                <option key={area}>{area}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Appointment date
+            <select
+              value={days.includes(day) ? day : ""}
+              disabled={!available || !zone}
+              onChange={(event) => {
+                setDay(event.target.value);
+                setSlotId("");
+              }}
+            >
+              <option value="">Select a date</option>
+              {days.map((option) => (
+                <option key={option}>{option}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Appointment time (Lagos)
+            <select
+              value={selected?.id ?? ""}
+              disabled={!available || !day}
+              onChange={(event) => setSlotId(event.target.value)}
+            >
+              <option value="">Select a time</option>
+              {daySlots.map((slot) => (
+                <option value={slot.id} key={slot.id}>
+                  {serviceSlotTime(slot)}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      )}
+      {available && !details && (
+        <button
+          className="button service-detail-book-cta"
+          type="button"
+          disabled={!canProceed}
+          onClick={() => setDetails(true)}
+        >
+          <CalendarDays size={18} aria-hidden="true" /> Book service{" "}
+          <ArrowRight size={17} aria-hidden="true" />
+        </button>
+      )}
+      <div hidden={!details} className="service-detail-contact-fields">
+        {addresses.some((a) => a.zone.toLowerCase() === zone.toLowerCase()) && (
+          <label className="surface" style={{ display: "grid", gap: 8 }}>
+            Use a saved address
+            <select
+              aria-label="Saved service address"
+              value={address?.id ?? ""}
+              onChange={(e) =>
+                setAddress(
+                  addresses.find((a) => a.id === e.target.value) ?? null,
+                )
+              }
+            >
+              <option value="">Enter a new address</option>
+              {addresses
+                .filter((a) => a.zone.toLowerCase() === zone.toLowerCase())
+                .map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.label} · {a.street}, {a.zone}
+                  </option>
+                ))}
+            </select>
+          </label>
+        )}
+        <ServiceForm
+          key={address?.id ?? "new"}
+          title="Request your appointment"
+          submit="Confirm booking request"
+          done={done}
+          prepareReview={async (values) => {
+            if (!bookingPhone(String(values.phone ?? "")))
+              throw new Error(bookingPhoneMessage);
+            await recheck(values);
+          }}
+          reviewKey={service.version + ":" + zone + ":" + slotId}
+          bookingSelection={{ slotId, zone }}
+          bookingAreas={{
+            values: service.config.zones ?? [],
+            onRecognized: (value) => {
+              if (value !== zone) {
+                setZone(value);
+                setDay("");
+                setSlotId("");
+                setError("");
+              }
+            },
+          }}
+          disabled={!canProceed}
+          review={(v) => (
+            <>
+              <h3>Review your booking request</h3>
+              <p>
+                {service.name} ·{" "}
+                {slots.find((s) => s.id === v.slotId)?.starts_at
+                  ? new Date(
+                      slots.find((s) => s.id === v.slotId)?.starts_at ?? "",
+                    ).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })
+                  : "Choose appointment"}{" "}
+                (Lagos time)
+              </p>
+              <p>
+                {v.street}, {v.zone} · {v.phone}
+              </p>
+              <p>
+                {v.type} · {v.concerns}
+              </p>
+              <p>
+                {servicePrice(service.config)} · Call-out{" "}
+                {serviceMoney(service.config.calloutKobo) ?? "unavailable"}
+              </p>
+              <p>
+                Self-service changes close {service.config.cancellationHours}{" "}
+                hours before arrival. {service.config.warranty}
+              </p>
+              <p>
+                This is an appointment request. Payment and safety clearance are
+                not confirmed by submitting it.
+              </p>
+            </>
+          )}
+          fields={[
+            {
+              name: "street",
+              label: "Complete service address",
+              type: "textarea",
+              value: address?.street,
+            },
+            {
+              name: "phone",
+              label: "Contact mobile number",
+              type: "tel",
+              value: address?.phone,
+            },
+            {
+              name: "brand",
+              label: "Equipment brand, if known",
+              required: false,
+            },
+            { name: "type", label: "Equipment type" },
+            {
+              name: "burners",
+              label: "Number of burners (0 if not applicable)",
+              type: "number",
+              value: 0,
+            },
+            {
+              name: "newEquipment",
+              label: "This is new equipment",
+              type: "checkbox",
+            },
+            {
+              name: "supplyPresent",
+              label: "A gas supply arrangement is already present",
+              type: "checkbox",
+            },
+            {
+              name: "concerns",
+              label: "Describe the equipment and your concerns",
+              type: "textarea",
+            },
+            {
+              name: "notes",
+              label: "Additional instructions",
+              type: "textarea",
+              required: false,
+            },
+            {
+              name: "combineWithProducts",
+              label: "Confirm this appointment together with my product cart",
+              type: "checkbox",
+            },
+          ]}
+          send={async (v) => {
+            const phone = bookingPhone(String(v.phone ?? ""));
+            if (!phone) throw new Error(bookingPhoneMessage);
+            const request = {
+              serviceId: service.id,
+              branchId: service.branch_id,
+              serviceVersion: service.version,
+              slotId: v.slotId,
+              address: { street: v.street, zone: v.zone, phone },
+              equipment: {
+                brand: v.brand,
+                type: v.type,
+                burners: v.burners,
+                newEquipment: v.newEquipment,
+                supplyPresent: v.supplyPresent,
+                concerns: v.concerns,
+              },
+              notes: v.notes,
+              idempotencyKey: key,
+              ...(new URLSearchParams(location.search).get("followup")
+                ? {
+                    followupId: new URLSearchParams(location.search).get(
+                      "followup",
+                    ),
+                  }
+                : {}),
+              ...(new URLSearchParams(location.search).get("recommendation")
+                ? {
+                    recommendationId: new URLSearchParams(location.search).get(
+                      "recommendation",
+                    ),
+                  }
+                : {}),
+            };
+            const bundleId = new URLSearchParams(location.search).get("bundle");
+            if (v.combineWithProducts || bundleId) {
+              await recheck(v);
+              const query = new URLSearchParams(location.search);
+              const bundle = bundleId
+                ? (await api("bundles")).find(
+                    (offer: any) =>
+                      offer.id === bundleId &&
+                      offer.config.serviceId === service.id &&
+                      offer.branch_id === service.branch_id &&
+                      Number(offer.version) ===
+                        Number(query.get("bundleVersion")) &&
+                      Number(offer.serviceVersion) ===
+                        Number(service.version) &&
+                      Number(offer.totalKobo) ===
+                        Number(query.get("bundleTotal")),
+                  )
+                : null;
+              if (bundleId && !bundle)
+                throw new Error(
+                  "This bundle has changed or is unavailable. Return to services and review the current offer.",
+                );
+              const me = await api("me"),
+                storage = "easygas.serviceDrafts." + me.user.id;
+              const old = JSON.parse(sessionStorage.getItem(storage) ?? "[]");
+              if (old.length >= 5)
+                throw new Error(
+                  "A linked request supports up to five appointments.",
+                );
+              sessionStorage.setItem(
+                storage,
+                JSON.stringify([
+                  ...old,
+                  {
+                    request,
+                    ...(bundle
+                      ? {
+                          bundleId: bundle.id,
+                          bundleVersion: bundle.version,
+                          bundleTotalKobo: bundle.totalKobo,
+                        }
+                      : {}),
+                    name: service.name,
+                    label: slots.find((s) => s.id === v.slotId)?.starts_at,
+                    totalKobo: bundle
+                      ? bundle.servicePriceKobo + bundle.calloutKobo
+                      : service.config.pricingModel === "fixed"
+                        ? service.config.priceKobo + service.config.calloutKobo
+                        : null,
+                  },
+                ]),
+              );
+              window.location.assign("/combined-checkout");
+              return { message: "Appointment added to your linked request." };
+            }
+            let result;
+            try {
+              result = await serviceMutation("booking.create", request);
+            } catch (error: any) {
+              if (error.status === 409) setRetry((n) => n + 1);
+              throw error;
+            }
+            try {
+              sessionStorage.removeItem(requestStorage);
+            } catch {}
+            window.location.assign("/bookings");
+            return result;
+          }}
+        />
+      </div>
     </>
   );
 }

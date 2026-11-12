@@ -5,6 +5,12 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./theme.css";
 import "./product-ui.css";
+import "./homepage.css";
+import "./gas-order.css";
+import "./service-details.css";
+import "./easyrewards.css";
+
+
 export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };
 export const metadata: Metadata = {
   ...(process.env.EASYGAS_CLIENT_DEMO === "true"
@@ -31,10 +37,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ThemeProvider enabled={themeEnabled}>{children}<AppDialogProvider /></ThemeProvider>
         {process.env.EASYGAS_CLIENT_DEMO === "true" && (
           <aside
             role="note"
+            className="client-demo-notice"
             style={{
               position: "fixed",
               bottom: 8,
@@ -56,6 +62,7 @@ export default function RootLayout({
             messages
           </aside>
         )}
+        <ThemeProvider enabled={themeEnabled}>{children}<AppDialogProvider /></ThemeProvider>
       </body>
     </html>
   );

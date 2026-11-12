@@ -291,3 +291,20 @@ test("TECH-T09 assignment response is versioned, idempotent and required before 
     await f.db.close?.();
   }
 });
+
+test("SBV-002: a restricted session can browse the public catalogue while management remains protected", async () => {
+  const f = await fixture();
+  try {
+    await f.call("technician", "technician.restrict");
+    const catalogue = await f.call("technician", "services.catalogue");
+    assert.ok(catalogue.length > 0);
+    assert.deepEqual(catalogue, await f.call("owner", "services.catalogue"));
+    await assert.rejects(
+      () => f.call("technician", "services.manage"),
+      /limited to assigned technician/,
+    );
+    assert.ok((await f.call("owner", "services.manage")).services.length > 0);
+  } finally {
+    await f.db.close?.();
+  }
+});

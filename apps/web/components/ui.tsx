@@ -153,10 +153,12 @@ export function Modal({
   title,
   onClose,
   children,
+  className,
 }: {
   title: string;
   onClose: () => void;
   children: React.ReactNode;
+  className?: string;
 }) {
   const dialog = useRef<HTMLElement>(null);
   const closing = useRef(false);
@@ -208,7 +210,7 @@ export function Modal({
     };
   }, []);
   return (
-    <div className="modal-backdrop" onClick={close}>
+    <div className={className ? `modal-backdrop ${className}` : "modal-backdrop"} onClick={close}>
       <section
         ref={dialog}
         className="modal"

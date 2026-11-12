@@ -1,0 +1,404 @@
+{
+  "phase": "Business Owner Phase 2C",
+  "repository": "Onaopemipo/easygasng",
+  "releaseDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "OWN-005",
+      "title": "Business Controls",
+      "priority": "P1",
+      "scope": "web + native",
+      "ui_reference": "Approved Business Owner design",
+      "routes": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "implementation_files": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/web/components/owner-governance-links.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritative_data": "settings?scope=branch",
+      "security_controls": "Server role, setting view_roles and approved proposal workflow",
+      "executed_tests": [
+        "Web and mobile TypeScript checks passed",
+        "Web production build passed",
+        "Existing inventory-finance regression coverage passed"
+      ],
+      "acceptance_gate": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "PARTIAL",
+      "reason": "Native protected edit request not implemented",
+      "outstanding_work": "Native protected edit request not implemented",
+      "requirement": "Business Controls",
+      "uiReference": "Approved Business Owner design",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "settings?scope=branch",
+      "securityControl": "Server role, setting view_roles and approved proposal workflow",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing inventory-finance regression coverage passed",
+      "outstandingWork": "Native protected edit request not implemented",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/web/components/owner-governance-links.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [],
+      "acceptanceGate": "OWN-005-AC"
+    },
+    {
+      "id": "OWN-006",
+      "title": "Branch Performance",
+      "priority": "P1",
+      "scope": "web + native",
+      "ui_reference": "Approved Business Owner design",
+      "routes": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "implementation_files": [
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritative_data": "business.report report=branches",
+      "security_controls": "Owner-scoped report; backend branch checks",
+      "executed_tests": [
+        "Web and mobile TypeScript checks passed",
+        "Web production build passed",
+        "Existing inventory-finance regression coverage passed"
+      ],
+      "acceptance_gate": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "PARTIAL",
+      "reason": "Dedicated comparative chart and branch drilldowns unverified",
+      "outstanding_work": "Dedicated comparative chart and branch drilldowns unverified",
+      "requirement": "Branch Performance",
+      "uiReference": "Approved Business Owner design",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "business.report report=branches",
+      "securityControl": "Owner-scoped report; backend branch checks",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing inventory-finance regression coverage passed",
+      "outstandingWork": "Dedicated comparative chart and branch drilldowns unverified",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [],
+      "acceptanceGate": "OWN-006-AC"
+    },
+    {
+      "id": "OWN-007",
+      "title": "Approval Detail",
+      "priority": "P1",
+      "scope": "web + native",
+      "ui_reference": "Approved Business Owner design",
+      "routes": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "implementation_files": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/OwnerApprovals.tsx"
+      ],
+      "authoritative_data": "approvals; reauth; approval.decide",
+      "security_controls": "can_approve; independent review; server reauth and approval state",
+      "executed_tests": [
+        "Web and mobile TypeScript checks passed",
+        "Web production build passed",
+        "Existing approval-pagination regression coverage passed"
+      ],
+      "acceptance_gate": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "No full native device test/independent multi-actor E2E run",
+      "outstanding_work": "No full native device test/independent multi-actor E2E run",
+      "requirement": "Approval Detail",
+      "uiReference": "Approved Business Owner design",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "approvals; reauth; approval.decide",
+      "securityControl": "can_approve; independent review; server reauth and approval state",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing approval-pagination regression coverage passed",
+      "outstandingWork": "No full native device test/independent multi-actor E2E run",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/OwnerApprovals.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [],
+      "acceptanceGate": "OWN-007-AC"
+    },
+    {
+      "id": "OWN-008",
+      "title": "Reports & Analytics",
+      "priority": "P1",
+      "scope": "web + native",
+      "ui_reference": "Approved Business Owner design",
+      "routes": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "implementation_files": [
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritative_data": "business.report; business.export",
+      "security_controls": "Backend scoped report/export checks",
+      "executed_tests": [
+        "Web and mobile TypeScript checks passed",
+        "Web production build passed",
+        "Existing inventory-finance regression coverage passed"
+      ],
+      "acceptance_gate": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "PARTIAL",
+      "reason": "Native export/share and report drilldowns not implemented",
+      "outstanding_work": "Native export/share and report drilldowns not implemented",
+      "requirement": "Reports & Analytics",
+      "uiReference": "Approved Business Owner design",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "business.report; business.export",
+      "securityControl": "Backend scoped report/export checks",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing inventory-finance regression coverage passed",
+      "outstandingWork": "Native export/share and report drilldowns not implemented",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [],
+      "acceptanceGate": "OWN-008-AC"
+    },
+    {
+      "id": "OWN-009",
+      "title": "Organisation Profile",
+      "priority": "P1",
+      "scope": "web + native",
+      "ui_reference": "Approved Business Owner design",
+      "routes": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "implementation_files": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritative_data": "settings?scope=branch; setting.propose via existing web",
+      "security_controls": "Governed setting change, version and step-up",
+      "executed_tests": [
+        "Web and mobile TypeScript checks passed",
+        "Web production build passed"
+      ],
+      "acceptance_gate": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "PARTIAL",
+      "reason": "Native editing and exact registration field mapping unverified",
+      "outstanding_work": "Native editing and exact registration field mapping unverified",
+      "requirement": "Organisation Profile",
+      "uiReference": "Approved Business Owner design",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "settings?scope=branch; setting.propose via existing web",
+      "securityControl": "Governed setting change, version and step-up",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed",
+      "outstandingWork": "Native editing and exact registration field mapping unverified",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [],
+      "acceptanceGate": "OWN-009-AC"
+    },
+    {
+      "id": "OWN-010",
+      "title": "Roles & Access",
+      "priority": "P1",
+      "scope": "web + native",
+      "ui_reference": "Approved Business Owner design",
+      "routes": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "implementation_files": [
+        "apps/web/components/staff-management.tsx",
+        "apps/web/components/staff-privileges.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritative_data": "staff.manage; staff.privileges",
+      "security_controls": "Effective privileges, branch and independent protected changes",
+      "executed_tests": [
+        "Web and mobile TypeScript checks passed",
+        "Web production build passed",
+        "Existing staff-management and staff-privileges regression coverage passed"
+      ],
+      "acceptance_gate": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "PARTIAL",
+      "reason": "Native protected privilege mutations intentionally deferred",
+      "outstanding_work": "Native protected privilege mutations intentionally deferred",
+      "requirement": "Roles & Access",
+      "uiReference": "Approved Business Owner design",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "staff.manage; staff.privileges",
+      "securityControl": "Effective privileges, branch and independent protected changes",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing staff-management and staff-privileges regression coverage passed",
+      "outstandingWork": "Native protected privilege mutations intentionally deferred",
+      "implementationFiles": [
+        "apps/web/components/staff-management.tsx",
+        "apps/web/components/staff-privileges.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [],
+      "acceptanceGate": "OWN-010-AC"
+    },
+    {
+      "id": "OWN-011",
+      "title": "Audit History",
+      "priority": "P1",
+      "scope": "web + native",
+      "ui_reference": "Approved Business Owner design",
+      "routes": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "implementation_files": [
+        "apps/web/components/audit-history.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritative_data": "audit view=paged",
+      "security_controls": "Global owner/administrator read; append-only",
+      "executed_tests": [
+        "Web and mobile TypeScript checks passed",
+        "Web production build passed",
+        "Existing audit-pagination regression coverage passed"
+      ],
+      "acceptance_gate": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Native pagination/device test not run",
+      "outstanding_work": "Native pagination/device test not run",
+      "requirement": "Audit History",
+      "uiReference": "Approved Business Owner design",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "audit view=paged",
+      "securityControl": "Global owner/administrator read; append-only",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing audit-pagination regression coverage passed",
+      "outstandingWork": "Native pagination/device test not run",
+      "implementationFiles": [
+        "apps/web/components/audit-history.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "evidence": [],
+      "acceptanceGate": "OWN-011-AC"
+    }
+  ],
+  "gates": [
+    {
+      "id": "OWN-005-AC",
+      "requirement": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-006-AC",
+      "requirement": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-007-AC",
+      "requirement": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-008-AC",
+      "requirement": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-009-AC",
+      "requirement": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-010-AC",
+      "requirement": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-011-AC",
+      "requirement": "OPEN — authenticated UI and native device acceptance pending",
+      "status": "UNVERIFIED"
+    }
+  ]
+}

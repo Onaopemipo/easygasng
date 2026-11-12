@@ -1,6 +1,7 @@
 "use client";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "./workspace-link";
+import { useSearchParams } from "next/navigation";
 import { api, Loading, Notice, money, Empty, Modal, ProductArt } from "./ui";
 import { ActionForm } from "./workflows";
 import {
@@ -201,7 +202,10 @@ export function BusinessCentre({
   user: any;
   inventoryTab?: string;
 }) {
+  const params = useSearchParams();
   const { data, error, live, updated, reload } = useBusiness(),
+    [scopedFinance, setScopedFinance] = useState<any>(null),
+    [financeError, setFinanceError] = useState(""),
     [recordExpense, setRecordExpense] = useState(false),
     [tab, setTab] = useState(inventoryTab ?? "stock"),
     [search, setSearch] = useState(""),
@@ -210,16 +214,30 @@ export function BusinessCentre({
     [page, setPage] = useState(0),
     [selectedProduct, setSelectedProduct] = useState<any>(null),
     [selectedStocktake, setSelectedStocktake] = useState<any>(null),
-    [report, setReport] = useState("movements"),
-    [from, setFrom] = useState(""),
-    [to, setTo] = useState(""),
+    [report, setReport] = useState(() => params.get("report") === "payments" ? "payments" : "movements"),
+    [from, setFrom] = useState(() => params.get("from") ?? ""),
+    [to, setTo] = useState(() => params.get("to") ?? ""),
     [result, setResult] = useState<any>(null),
     [reportError, setReportError] = useState(""),
-    [branchFilter, setBranchFilter] = useState(""),
+    [branchFilter, setBranchFilter] = useState(() => params.get("branchId") ?? ""),
     [location, setLocation] = useState(""),
     [status, setStatus] = useState(""),
     [payment, setPayment] = useState(""),
     [customerCategory, setCustomerCategory] = useState("");
+  const scoped = mode === "finance" && user.role === "owner" && Boolean(branchFilter || from || to);
+  const financeQuery = new URLSearchParams({ ...(branchFilter ? { branchId: branchFilter } : {}), ...(from ? { from } : {}), ...(to ? { to } : {}) }).toString();
+  useEffect(() => {
+    setScopedFinance(null);
+    setFinanceError("");
+    if (!scoped) return;
+    const controller = new AbortController();
+    api("business.snapshot?" + financeQuery, undefined, { signal: controller.signal }).then(snapshot => {
+      if (!controller.signal.aborted) setScopedFinance({ query: financeQuery, snapshot });
+    }).catch(error => {
+      if (!controller.signal.aborted) setFinanceError(error.message);
+    });
+    return () => controller.abort();
+  }, [scoped, financeQuery, updated]);
   const branchId = user.branchId ?? user.branch_id ?? "lagos";
   const rows = useMemo(() => {
     const list = (data?.inventory ?? []).filter(
@@ -357,7 +375,7 @@ export function BusinessCentre({
               : mode === "inventory"
                 ? "Inventory management"
                 : mode === "finance"
-                  ? "Finance & expenses"
+                  ? user.role === "owner" ? "Financial Summary" : "Finance & expenses"
                   : "Reports & analytics"}
           </h1>
           <p>
@@ -1238,7 +1256,19 @@ export function BusinessCentre({
             />
           ) : (
             <>
-              <FinanceOverview data={data} onRecordExpense={() => setRecordExpense(true)} />
+              {user.role === "owner" && <div className="ac-snapshot">
+                <label>Branch <select value={branchFilter} onChange={event => setBranchFilter(event.target.value)}>
+                  <option value="">All authorised branches</option>
+                  {data.branches.map((branch: any) => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
+                </select></label>
+                <label>From <input type="date" value={from} onChange={event => setFrom(event.target.value)} /></label>
+                <label>To <input type="date" value={to} onChange={event => setTo(event.target.value)} /></label>
+                <Link href={"/admin/reports?" + new URLSearchParams({ ...Object.fromEntries(new URLSearchParams(financeQuery)), report: "payments" })}>Payment reports &amp; export</Link>
+                <Link href="/admin/reconciliation">Reconciliation</Link>
+              </div>}
+              {financeError ? <Notice type="error" message={financeError} /> : scoped && scopedFinance?.query !== financeQuery ? <Loading /> :
+                <FinanceOverview data={scoped ? scopedFinance.snapshot : data} onRecordExpense={() => setRecordExpense(true)} />}
+
               {user.role === "owner" && (
                 <details className="surface">
                   <summary>Manage expense categories</summary>
@@ -1889,7 +1919,10 @@ function FinanceOverview({ data, onRecordExpense }: { data: any; onRecordExpense
     <div className="finance-panels">
       <section className="surface">
         <h2>Revenue trend</h2>
-        <p>Period series unavailable in this overview.</p>
+        {data.analytics.dailyOrderRevenue?.length ? <ul className="finance-breakdown">
+          {data.analytics.dailyOrderRevenue.slice(-7).map(({ date, amountKobo }: { date: string; amountKobo: number }) =>
+            <li key={date}><span>{date}</span><strong>{format(amountKobo)}</strong></li>)}
+        </ul> : <p>No dated order revenue available.</p>}
         <Link href="/admin/reports">Open dated revenue reports →</Link>
       </section>
       <section className="surface">

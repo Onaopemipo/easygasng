@@ -8,15 +8,31 @@
         "/admin/support",
         "/admin/pos"
       ],
-      "acceptanceGate": "Support Desk fills the shell content area without document overflow at desktop and mobile widths.",
+      "acceptanceGate": "WIDTH-01-AC",
       "implementation": [
         "apps/web/app/globals.css"
       ],
       "authoritativeSource": "Admin shell content width after responsive gutters",
       "securityControls": "Existing authenticated admin shell and support API authorization",
-      "evidence": "Hosted Chrome measured 1100 of 1596px on both routes at 1920px. Local Chrome measured 1596 of 1596px at 1920px and 358 of 358px at 390px. Hosted deployment DBm2xMLMf9G4ATA2WAQbauocXCWb passed with the same full-width dimensions.",
-      "status": "VERIFIED_COMPLETE",
-      "outstanding": "None for measured desktop and mobile viewport states"
+      "evidence": [],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "outstanding": "None for measured desktop and mobile viewport states",
+      "reason": "Historical browser measurements are recorded below. Raw execution evidence has not been archived in the matrix.",
+      "requirement": "Support Desk fills the shell content area without document overflow at desktop and mobile widths.",
+      "scope": "Web page containers across public, customer and administration routes. The Support Desk screenshot is the visual reference. Component widths and native screens are outside this web layout change.",
+      "uiReference": "Phase screen requirements",
+      "route": [
+        "/admin/support",
+        "/admin/pos"
+      ],
+      "dataSource": "Admin shell content width after responsive gutters",
+      "securityControl": "Existing authenticated admin shell and support API authorization",
+      "testResult": "Hosted Chrome measured 1100 of 1596px on both routes at 1920px. Local Chrome measured 1596 of 1596px at 1920px and 358 of 358px at 390px. Hosted deployment DBm2xMLMf9G4ATA2WAQbauocXCWb passed with the same full-width dimensions.",
+      "outstandingWork": "Archive raw browser measurements or rerun viewport acceptance.",
+      "implementationFiles": [
+        "apps/web/app/globals.css"
+      ],
+      "testFiles": []
     },
     {
       "id": "WIDTH-02",
@@ -27,7 +43,7 @@
         "/payment-request",
         "/phone-completion"
       ],
-      "acceptanceGate": "Web page wrappers use their available shell width and retain responsive gutters.",
+      "acceptanceGate": "WIDTH-02-AC",
       "implementation": [
         "apps/web/app/globals.css",
         "apps/web/app/theme.css",
@@ -38,14 +54,37 @@
       ],
       "authoritativeSource": "Web route entrypoints and shared shell styles",
       "securityControls": "Presentation-only changes with existing route and API guards",
-      "evidence": "Route-entry and CSS audit, Products browser check at 1920px, typecheck and 15 product UI and navigation tests passed. Follow-up Chromium audit loaded all 29 owner administration routes and six public routes at 390px and 1920px. Measured administration content matched its shell and the document did not overflow in the 70 page loads. Local and hosted Chromium each loaded 74 route entries at both widths without document overflow. All 29 owner administration routes filled their measured content area.",
+      "evidence": [],
       "status": "IMPLEMENTED_UNVERIFIED",
-      "outstanding": "Measure individual public and customer content widths in additional states and sample dynamic product and service detail routes."
+      "outstanding": "Measure individual public and customer content widths in additional states and sample dynamic product and service detail routes.",
+      "requirement": "Web page wrappers use their available shell width and retain responsive gutters.",
+      "scope": "Web page containers across public, customer and administration routes. The Support Desk screenshot is the visual reference. Component widths and native screens are outside this web layout change.",
+      "uiReference": "Phase screen requirements",
+      "route": [
+        "Public and customer pages",
+        "Administration pages",
+        "/payment-request",
+        "/phone-completion"
+      ],
+      "dataSource": "Web route entrypoints and shared shell styles",
+      "securityControl": "Presentation-only changes with existing route and API guards",
+      "reason": "Measure individual public and customer content widths in additional states and sample dynamic product and service detail routes.",
+      "testResult": "Route-entry and CSS audit, Products browser check at 1920px, typecheck and 15 product UI and navigation tests passed. Follow-up Chromium audit loaded all 29 owner administration routes and six public routes at 390px and 1920px. Measured administration content matched its shell and the document did not overflow in the 70 page loads. Local and hosted Chromium each loaded 74 route entries at both widths without document overflow. All 29 owner administration routes filled their measured content area.",
+      "outstandingWork": "Measure individual public and customer content widths in additional states and sample dynamic product and service detail routes.",
+      "implementationFiles": [
+        "apps/web/app/globals.css",
+        "apps/web/app/theme.css",
+        "apps/web/components/site.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/payment-request.tsx",
+        "apps/web/components/phone-completion.tsx"
+      ],
+      "testFiles": []
     }
   ],
   "coverage": {
     "implemented": "2/2",
-    "verified": "1/2",
+    "verified": "0/2 with archived execution evidence",
     "localAcceptanceGates": "1/2",
     "criticalSecurityRequirements": "None added",
     "browserRoutes": "74 route entries at two viewports, locally and on Vercel. Dynamic detail routes and additional states remain."
@@ -54,5 +93,17 @@
     "Removed page wrapper maximum widths and retained local component constraints.",
     "Reproduced the shared width cap on the hosted POS and Support Desk. Made admin content explicitly fill the shell and checked all 29 administration routes locally.",
     "Deployed the width-only changes to the Vercel client demo and verified the public alias."
+  ],
+  "gates": [
+    {
+      "id": "WIDTH-01-AC",
+      "requirement": "Support Desk fills the shell content area without document overflow at desktop and mobile widths.",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "WIDTH-02-AC",
+      "requirement": "Web page wrappers use their available shell width and retain responsive gutters.",
+      "status": "UNVERIFIED"
+    }
   ]
 }

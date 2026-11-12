@@ -16,7 +16,8 @@ export async function GET(req: NextRequest) {
     return new Response(body, {
       headers: {
         "Content-Type": "text/event-stream",
-        "Cache-Control": "no-store, no-transform",
+        "Cache-Control": "private, no-store, no-transform",
+        Vary: "Cookie, Authorization",
         "X-Accel-Buffering": "no",
       },
     });

@@ -2,6 +2,11 @@ const base = require("./app.json");
 const localDemo = process.env.EAS_BUILD_PROFILE === "local-demo";
 const production = process.env.EAS_BUILD_PROFILE === "production";
 const origin = process.env.EXPO_PUBLIC_API_URL;
+const mapsEnabled = process.env.EASYGAS_NATIVE_GOOGLE_MAPS_ENABLED === "true";
+const iosMapsKey = mapsEnabled && process.env.EASYGAS_GOOGLE_MAPS_IOS_KEY;
+const androidMapsKey =
+  mapsEnabled && process.env.EASYGAS_GOOGLE_MAPS_ANDROID_KEY;
+
 if (production) {
   let url;
   try {
@@ -44,8 +49,25 @@ if (localDemo) {
 module.exports = {
   ...base.expo,
   name: localDemo ? "EasyGas Local" : base.expo.name,
+  plugins: [
+    ...(base.expo.plugins ?? []),
+    ...(iosMapsKey || androidMapsKey
+      ? [
+          [
+            "react-native-maps",
+            {
+              ...(iosMapsKey ? { iosGoogleMapsApiKey: iosMapsKey } : {}),
+              ...(androidMapsKey
+                ? { androidGoogleMapsApiKey: androidMapsKey }
+                : {}),
+            },
+          ],
+        ]
+      : []),
+  ],
   extra: {
     ...base.expo.extra,
+    riderMaps: { ios: Boolean(iosMapsKey), android: Boolean(androidMapsKey) },
     easygasRuntime: localDemo
       ? "local-demo"
       : production

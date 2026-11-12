@@ -9,6 +9,8 @@ const allowed = new Set([
   "account.password",
   "preferences.save",
   "notifications.read",
+  "notifications.list",
+  "notifications.read.bulk",
   "support.list",
   "support.create",
   "support.reply",

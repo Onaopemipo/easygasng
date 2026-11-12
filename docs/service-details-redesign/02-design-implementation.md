@@ -1,0 +1,7 @@
+# Service Details implementation
+
+The existing service URL opens a compact detail workspace inside the existing customer shell. It shows configured description, pricing basis, call-out fee, duration, governed media or a branded icon, four collapsible sections, and the current booking policy. The availability and booking panel moves above the accordion at narrow widths. It lists only returned appointment dates and times, in Africa/Lagos. The mobile CTA appears only when there is a confirmed appointment list and stays disabled until a valid area and slot are selected.
+
+The native Services screen uses the existing theme, account navigation, governed media, accordions and contextual selection sheets. System Back and the existing header Back return from details to the catalogue. The existing sign-in route can return a customer to their selected service. Contact information, saved addresses, equipment details and review use the existing form primitives and mutations. Bundles, follow-ups, staged appointments and My Bookings keep their existing entry points.
+
+Eligibility comes from the opt-in response from the existing slot endpoint. No technician, no appointment, unsupported area, unconfigured service, stale price and network errors have separate states. A request cannot enter review with a missing, expired or removed slot. A pricing version change requires refresh and review, and a stale slot conflict keeps the current contact draft on screen. The booking transaction remains the final authority.

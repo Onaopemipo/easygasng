@@ -122,6 +122,20 @@ export function safeCustomerReturn(value: string | null | undefined): string {
         !/^\/services\/[a-z0-9-]{1,80}$/.test(url.pathname))
     )
       return "/account";
+    if (url.pathname.startsWith("/services/")) {
+      const allowed = new URLSearchParams();
+      for (const key of ["followup", "recommendation", "bundle"]) {
+        const value = url.searchParams.get(key);
+        if (value && /^[a-zA-Z0-9-]{1,80}$/.test(value)) allowed.set(key, value);
+      }
+      if (allowed.has("bundle")) {
+        for (const key of ["bundleVersion", "bundleTotal", "bundleService"]) {
+          const value = url.searchParams.get(key);
+          if (value && /^\d{1,12}$/.test(value)) allowed.set(key, value);
+        }
+      }
+      return url.pathname + (allowed.size ? "?" + allowed.toString() : "");
+    }
     // Preserve only the explicitly supported order reference parameter.
     const ref = url.searchParams.get("ref");
     return (

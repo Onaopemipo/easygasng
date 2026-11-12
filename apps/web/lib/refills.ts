@@ -10,6 +10,7 @@ import { z } from "zod";
 import { type SQL, one } from "./db";
 import { id, AppError, type Actor, allow, recentVerification } from "./auth";
 import { audit, notify, activate } from "./governance";
+import { supplyOptions } from "../../../packages/business-rules/src/cooking-gas-profiles";
 import { forecast } from "../../../packages/business-rules/src/forecast";
 export async function refillAction(
   tx: SQL,
@@ -17,14 +18,18 @@ export async function refillAction(
   user: Actor,
   input: unknown,
 ): Promise<any> {
+  if (["refill.profiles", "refill.profile.create", "refill.feedback"].includes(action))
+    allow(user, ["customer", "commercial"]);
   if (action === "refill.profiles") {
     const profiles = (
       await tx.query(
-        "SELECT cp.*,p.name AS product_name FROM consumption_profiles cp JOIN products p ON p.id=cp.product_id WHERE cp.customer_id=$1 ORDER BY cp.created_at",
+        "SELECT cp.*,p.name AS product_name,p.size_kg AS product_size_kg FROM consumption_profiles cp JOIN products p ON p.id=cp.product_id WHERE cp.customer_id=$1 ORDER BY cp.created_at",
         [user.id],
       )
     ).rows;
     for (const p of profiles) {
+      p.capacityKg = p.product_size_kg == null ? null : Number(p.product_size_kg);
+      delete p.product_size_kg;
       await ingest(tx, p);
       const rows = (
         await tx.query(
@@ -57,7 +62,7 @@ export async function refillAction(
           : null;
       p.feedback = (
         await tx.query(
-          "SELECT state,created_at FROM consumption_feedback WHERE profile_id=$1 ORDER BY created_at DESC,id DESC LIMIT 10",
+          "SELECT id,state,created_at FROM consumption_feedback WHERE profile_id=$1 ORDER BY created_at DESC,id DESC LIMIT 10",
           [p.id],
         )
       ).rows;
@@ -97,6 +102,7 @@ export async function refillAction(
       ))
     )
       throw new AppError(400, "Choose a gas refill product.");
+    await tx.query("SELECT id FROM users WHERE id=$1 FOR UPDATE", [user.id]);
     if (
       await one(
         tx,
@@ -120,13 +126,8 @@ export async function refillAction(
     const d = z
       .object({
         profileId: z.string().uuid(),
-        state: z.enum([
-          "still_available",
-          "low",
-          "empty",
-          "already_refilled",
-          "remind_later",
-        ]),
+        state: z.enum(supplyOptions.map((option) => option.value)),
+        expectedFeedbackId: z.string().max(100).nullable().optional(),
       })
       .strict()
       .parse(input);
@@ -138,6 +139,15 @@ export async function refillAction(
       ))
     )
       throw new AppError(404, "Profile not found.");
+    if (d.expectedFeedbackId !== undefined) {
+      const latest = await one(
+        tx,
+        "SELECT id FROM consumption_feedback WHERE profile_id=$1 ORDER BY created_at DESC,id DESC LIMIT 1",
+        [d.profileId],
+      );
+      if ((latest?.id ?? null) !== d.expectedFeedbackId)
+        throw new AppError(409, "The saved supply has changed. Review the latest report before saving.", "REFILL_FEEDBACK_CONFLICT");
+    }
     if (
       await one(
         tx,
@@ -149,8 +159,9 @@ export async function refillAction(
         429,
         "Feedback was recently recorded. Please wait an hour before updating.",
       );
-    await tx.query(
-      "INSERT INTO consumption_feedback(id,profile_id,state) VALUES ($1,$2,$3)",
+    const feedback = await one(
+      tx,
+      "INSERT INTO consumption_feedback(id,profile_id,state) VALUES ($1,$2,$3) RETURNING id,state,created_at",
       [id(), d.profileId, d.state],
     );
     if (["already_refilled", "remind_later"].includes(d.state))
@@ -159,7 +170,7 @@ export async function refillAction(
         [user.id, d.profileId],
       );
     await audit(tx, user, "refill.feedback_received", d.profileId);
-    return { ok: true };
+    return { ok: true, feedback };
   }
   if (action === "jobs") {
     allow(user, ["owner", "administrator"]);

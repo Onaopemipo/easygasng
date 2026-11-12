@@ -1,0 +1,37 @@
+✔ BULK-PG01: separate connections serialize duplicate vehicle loads and rollback preserves canonical reservations and custody history (746.747792ms)
+✔ ROUTE-PG01: independent connections serialize destination revisions and preserve immutable history (662.571459ms)
+✔ DOOR-PG01: independent connections serialize reservation, cash verification and metered supplement; forced abort preserves stock and custody (706.543541ms)
+✔ ER-PG36: real PostgreSQL duplicate workers/refund approvals, encrypted backup and isolated restore preserve committed effects (1766.25125ms)
+✔ ER-PGSEC: migrated private schema works under the restricted runtime role and rejects public ledger access (784.011833ms)
+✔ ER-11: independent PostgreSQL connections cannot spend the same points across simultaneous checkouts (956.255166ms)
+✔ OPS-PG01: independent connections serialize invoice decisions, request replay and vehicle trip ownership (628.4715ms)
+✔ ADD-PG: concurrent addition retries post once and assignment competes on the same locked order (740.932209ms)
+✔ TRK-17: independent PostgreSQL connections serialize final-capacity assignment and duplicate proof (831.958917ms)
+✔ OWNER-AUTO-PG: independent PostgreSQL owner submissions and repeated applications serialize one version and one authorisation (791.0255ms)
+✔ PAY-PG-CONCURRENCY: separate connections post once; aborted posting rolls back wallet, audit and receipt (561.823833ms)
+✔ PM-T47: independent PostgreSQL callers serialize provisional creation and invoice issuance without duplicate business effects (530.250792ms)
+✔ multi-connection PostgreSQL: independent approvals and duplicate activation (626.643125ms)
+✔ PR-03: encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys (896.9585ms)
+✔ PR-04: release audit rejects privileged owners and detects missing RLS and public grants under the actual runtime role (349.94425ms)
+✔ PR-08: supervised worker completes a real maintenance transaction and exits cleanly on SIGTERM (871.403792ms)
+✔ POS-PG01: independent connections serialize till opening, sale replay, stock deduction and cash-up (602.187917ms)
+✔ EO-PG: independent PostgreSQL connections serialize duplicate operations and final-slot competition (810.894042ms)
+✔ SINV-PG01: independent connections issue one immutable service invoice, replay one request and rollback aborted issue (833.117584ms)
+✔ STAFF-PRIV-PG: concurrent administrators cannot overwrite privilege revisions; committed revocation blocks an existing session (796.141333ms)
+✔ SUPPORT-C01: list scans all scoped pages; search reaches beyond 100 requests (1203.637916ms)
+✔ SUPPORT-C02: immutable reply idempotency, message pagination and private-note isolation (20.238916ms)
+✔ SUPPORT-C03: authenticated image upload, private reads, validation, replay and limits (66.907875ms)
+✔ SUPPORT-C04: Lagos work windows, governed SLA policy, snapshots and one-time escalation (58.873541ms)
+✔ SUPPORT-C05: concurrent reply and attachment retries commit one record each in PostgreSQL (469.847084ms)
+✔ TECH-T56 independent PostgreSQL connections serialize one paid work authorisation (949.847583ms)
+✔ TAV-PG: independent PostgreSQL connections serialize competing availability without duplicate slots (825.313125ms)
+✔ TM-PG: independent PostgreSQL connections prevent duplicate/stale moderation and consent withdrawal wins publication races (989.608625ms)
+✔ MANIFEST-PG01: independent connections serialize physical capacity and replay; forced abort preserves custody and canonical reservations (669.269584ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29759.408417

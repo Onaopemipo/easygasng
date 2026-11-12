@@ -1,0 +1,7 @@
+# Service Details audit
+
+Baseline `54b1b15` on `codex/notifications-centre`. The worktree already contains unrelated edits, including rider tracking and service visibility. The preceding phase passed 680 regression tests with disposable PostgreSQL, web build/types and native bundle export. Existing demo screenshots show the authenticated customer shell and an unavailable service. The approved design is the layout reference; its prices, photo and inclusions are illustrative.
+
+The Next catch-all and storefront shell already pass the service ID from `/services/:id` to ProfessionalServices. Catalogue, bookings, follow-up, recommendation and bundle paths use existing URL/query contracts. Native Services owns selection and the same business mutations. Existing service images are optional governed media; there is no approved local cooker detail image. Use the service media only when configured, otherwise use the existing brand icon system.
+
+The original detail repeated the catalogue header and placed booking availability below the service text. Native initially conflated loading with empty availability. The slot read did not check current configured duration and booking checklist version, while booking creation did. It also had no public reason code or configured service version in its response. The redesign adds an opt-in response to that read and preserves its legacy array contract.

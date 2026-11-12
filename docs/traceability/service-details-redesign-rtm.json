@@ -1,0 +1,1117 @@
+{
+  "phase": "Service Details redesign",
+  "baseline": "54b1b15",
+  "status": "PARTIAL / PRODUCTION NO-GO",
+  "requirements": [
+    {
+      "id": "SDR-001",
+      "requirement": "Audit routes, source, baseline and risks",
+      "priority": "P1",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "Existing service paths",
+      "dataSource": "Repository and approved design",
+      "securityControl": "Existing rollout decision",
+      "implementationFiles": [
+        "docs/service-details-redesign/00-repository-audit.md",
+        "docs/service-details-redesign/01-api-permission-map.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/service-details-redesign/00-repository-audit.md",
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS audit and full suite.",
+      "testResult": "PASS audit and full suite.",
+      "outstandingWork": "No outstanding audit action.",
+      "acceptanceGate": "SDR-G01"
+    },
+    {
+      "id": "SDR-002",
+      "requirement": "Preserve customer shell, route and sign-in context",
+      "priority": "P0",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "/services/:id /login /bookings",
+      "dataSource": "Existing URLs and catalogue IDs",
+      "securityControl": "Allowlisted return context",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "packages/business-rules/src/customer-navigation.ts"
+      ],
+      "testFiles": [
+        "tests/service-detail-redesign.test.ts"
+      ],
+      "testIds": [
+        "SDR-T030"
+      ],
+      "negativeTests": [
+        "drops unrecognised parameters"
+      ],
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt",
+        "docs/service-details-redesign/evidence/focused.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS signed-in navigation and guest allowlist.",
+      "testResult": "PASS signed-in navigation and guest allowlist.",
+      "outstandingWork": "Native runtime navigation is tracked separately.",
+      "acceptanceGate": "SDR-G02"
+    },
+    {
+      "id": "SDR-003",
+      "requirement": "Display only configured price, duration, details and policy",
+      "priority": "P0",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "Service Details",
+      "dataSource": "Versioned service config and approved media",
+      "securityControl": "Missing fields remain explicit; no speculative values",
+      "implementationFiles": [
+        "packages/business-rules/src/service-detail.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/mobile/Services.tsx"
+      ],
+      "testFiles": [
+        "tests/service-detail-redesign.test.ts"
+      ],
+      "testIds": [
+        "SDR-T005"
+      ],
+      "negativeTests": [
+        "honest missing states"
+      ],
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt",
+        "docs/service-details-redesign/evidence/browser.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS formatting and browser details.",
+      "testResult": "PASS formatting and browser details.",
+      "outstandingWork": "Dedicated browser cases for missing duration and approved media fallback remain.",
+      "acceptanceGate": "SDR-G05"
+    },
+    {
+      "id": "SDR-004",
+      "requirement": "Qualified, coverage-aware appointment availability",
+      "priority": "P0",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "services.slots",
+      "dataSource": "Catalogue version, qualification, branch and unreserved slots",
+      "securityControl": "Minimised public projection and fail-closed eligibility",
+      "implementationFiles": [
+        "apps/web/lib/professional-services.ts",
+        "packages/business-rules/src/service-detail.ts"
+      ],
+      "testFiles": [
+        "tests/service-detail-redesign.test.ts"
+      ],
+      "testIds": [
+        "SDR-T022"
+      ],
+      "negativeTests": [
+        "absence without exposing staff"
+      ],
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt",
+        "docs/service-details-redesign/01-api-permission-map.md"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS independent eligibility, empty state and privacy projection.",
+      "testResult": "PASS independent eligibility, empty state and privacy projection.",
+      "outstandingWork": "No area-specific resource assignment beyond service coverage is configured.",
+      "acceptanceGate": "SDR-G08"
+    },
+    {
+      "id": "SDR-005",
+      "requirement": "Responsive web layout and true unavailable states",
+      "priority": "P1",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "/services/:id",
+      "dataSource": "Authoritative version and available windows",
+      "securityControl": "No enabled booking until area and real slot selected",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/service-details.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt",
+        "docs/service-details-redesign/evidence/web-build.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "PASS layout, no-overflow and availability controls.",
+      "testResult": "PASS layout, no-overflow and availability controls.",
+      "outstandingWork": "Full assistive technology and long-content stress cases remain.",
+      "acceptanceGate": "SDR-G17"
+    },
+    {
+      "id": "SDR-006",
+      "requirement": "Native detail, contextual selectors and navigation",
+      "priority": "P1",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "Native Services",
+      "dataSource": "Existing service, account and availability APIs",
+      "securityControl": "Role-specific booking and app lifecycle refresh",
+      "implementationFiles": [
+        "apps/mobile/Services.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/service-details-redesign/evidence/native-export.txt",
+        "docs/service-details-redesign/evidence/ios-simulator-build.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "PASS native types/export and fresh iOS Simulator launch.",
+      "testResult": "PASS native types/export and fresh iOS Simulator launch.",
+      "outstandingWork": "Finish authenticated iOS/Android booking, Back and screen readers.",
+      "acceptanceGate": "SDR-G19"
+    },
+    {
+      "id": "SDR-007",
+      "requirement": "Revalidate appointment and terms before review",
+      "priority": "P0",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "services.slots / booking.create",
+      "dataSource": "Current catalogue version and locked booking transaction",
+      "securityControl": "Version check, time expiry, stable identity and conflict recovery",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/mobile/Services.tsx",
+        "packages/business-rules/src/service-detail.ts",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "testFiles": [
+        "tests/service-detail-redesign.test.ts"
+      ],
+      "testIds": [
+        "SDR-T025"
+      ],
+      "negativeTests": [
+        "stale slots cannot reach review"
+      ],
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt",
+        "docs/service-details-redesign/evidence/browser.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS stale version, stale selection and conflict draft retention.",
+      "testResult": "PASS stale version, stale selection and conflict draft retention.",
+      "outstandingWork": "Native interactive recovery remains under the platform gate.",
+      "acceptanceGate": "SDR-G10"
+    },
+    {
+      "id": "SDR-008",
+      "requirement": "Preserve saved addresses, phone and contact draft",
+      "priority": "P1",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "account.profile and booking form",
+      "dataSource": "Scoped available customer addresses and contact validation",
+      "securityControl": "Owned profile and selected service area",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/components/address-area-fields.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt",
+        "docs/service-details-redesign/02-design-implementation.md"
+      ],
+      "status": "PARTIAL",
+      "reason": "PASS valid contact submission and conflict draft retention.",
+      "testResult": "PASS valid contact submission and conflict draft retention.",
+      "outstandingWork": "Saved address selection and invalid phone interaction still need UI acceptance.",
+      "acceptanceGate": "SDR-G10"
+    },
+    {
+      "id": "SDR-009",
+      "requirement": "Preserve bundles, staged appointments and follow-ups",
+      "priority": "P1",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "Service detail and linked checkout",
+      "dataSource": "Existing bundle API, mixed checkout, follow-up and recommendation IDs",
+      "securityControl": "Current bundle amounts and existing transactional revalidation",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/components/combined-checkout.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt",
+        "docs/service-details-redesign/03-security-and-finance-regression.md"
+      ],
+      "status": "PARTIAL",
+      "reason": "PASS existing mixed checkout and follow-up tests.",
+      "testResult": "PASS existing mixed checkout and follow-up tests.",
+      "outstandingWork": "Run redesigned web/native bundle staging and follow-up journeys.",
+      "acceptanceGate": "SDR-G16"
+    },
+    {
+      "id": "SDR-010",
+      "requirement": "Preserve quote, finance, report and booking state controls",
+      "priority": "P1",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "Booking mutation and quotation routes",
+      "dataSource": "Existing booking and ledger records",
+      "securityControl": "Independent approval, ownership, safety and payment verification",
+      "implementationFiles": [
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt",
+        "docs/service-details-redesign/evidence/focused.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS focused service and full financial regression.",
+      "testResult": "PASS focused service and full financial regression.",
+      "outstandingWork": "No hosted integration change in scope.",
+      "acceptanceGate": "SDR-G13"
+    },
+    {
+      "id": "SDR-011",
+      "requirement": "Theme, accessibility and device acceptance",
+      "priority": "P1",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "Web and native UI",
+      "dataSource": "Existing light/dark/system theme",
+      "securityControl": "Accessible accordions and state copy",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/web/app/service-details.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt",
+        "docs/service-details-redesign/evidence/native-export.txt",
+        "docs/service-details-redesign/evidence/ios-simulator-build.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "PASS browser viewport and keyboard accordion checks.",
+      "testResult": "PASS browser viewport and keyboard accordion checks.",
+      "outstandingWork": "Native back navigation, VoiceOver/TalkBack and full assistive flow.",
+      "acceptanceGate": "SDR-G22"
+    },
+    {
+      "id": "SDR-012",
+      "requirement": "Release evidence, traceability and rollback",
+      "priority": "P1",
+      "scope": "Compact Service Details, desktop web, mobile web, native iOS and Android",
+      "uiReference": "Approved Service Details desktop and native concept",
+      "route": "Release candidate",
+      "dataSource": "Executed suites and previous build",
+      "securityControl": "Reversible source and unchanged NO-GO",
+      "implementationFiles": [
+        "docs/service-details-redesign/04-test-results.md",
+        "docs/service-details-redesign/05-rollback-and-release.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt",
+        "docs/service-details-redesign/04-test-results.md",
+        "docs/service-details-redesign/05-rollback-and-release.md"
+      ],
+      "status": "PARTIAL",
+      "reason": "PASS 684 full tests; native interaction and rollout gates remain open.",
+      "testResult": "PASS 684 full tests; native interaction and rollout gates remain open.",
+      "outstandingWork": "Native/assistive acceptance and existing production blockers.",
+      "acceptanceGate": "SDR-G25"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "SDR-T001",
+      "scenario": "Service catalogue load",
+      "status": "PASS",
+      "result": "Browser return and focused catalogue suite.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T002",
+      "scenario": "Direct service deep-link",
+      "status": "PASS",
+      "result": "Browser opened both authenticated service routes directly.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T003",
+      "scenario": "Existing routes preserved",
+      "status": "PASS",
+      "result": "Browser detail and bookings routes, catalogue regression.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T004",
+      "scenario": "Back navigation",
+      "status": "PARTIAL",
+      "result": "Browser All services returned to catalogue. Native runtime Back pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T005",
+      "scenario": "Service identity mapping",
+      "status": "PASS",
+      "result": "Browser matched the title to each service ID.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T006",
+      "scenario": "Actual service title",
+      "status": "PASS",
+      "result": "Both service titles verified in Chromium.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T007",
+      "scenario": "Actual description",
+      "status": "PASS",
+      "result": "Browser screenshots show configured descriptions.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T008",
+      "scenario": "Actual price",
+      "status": "PASS",
+      "result": "SDR-T005 and browser show source price.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T009",
+      "scenario": "Missing price",
+      "status": "PASS",
+      "result": "SDR-T005 distinguishes quotation and unavailable fixed price.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T010",
+      "scenario": "Genuine zero call-out",
+      "status": "PASS",
+      "result": "SDR-T005 preserves actual zero.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T011",
+      "scenario": "Missing call-out",
+      "status": "PASS",
+      "result": "SDR-T005 rejects missing and nonnumeric value.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T012",
+      "scenario": "Configured duration",
+      "status": "PASS",
+      "result": "Browser records and slot validation use the configured duration.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T013",
+      "scenario": "Missing duration",
+      "status": "PARTIAL",
+      "result": "Missing duration fallback exists; dedicated browser fixture pending.",
+      "evidence": [
+        "docs/service-details-redesign/02-design-implementation.md"
+      ]
+    },
+    {
+      "id": "SDR-T014",
+      "scenario": "Configured inclusions",
+      "status": "PASS",
+      "result": "SDR-T005 preserves configured lines.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T015",
+      "scenario": "Missing inclusions",
+      "status": "PASS",
+      "result": "Keyboard-opened accordion showed Details not configured.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T016",
+      "scenario": "Configured exclusions",
+      "status": "PARTIAL",
+      "result": "Source maps existing exclusions; dedicated visual case pending.",
+      "evidence": [
+        "docs/service-details-redesign/02-design-implementation.md"
+      ]
+    },
+    {
+      "id": "SDR-T017",
+      "scenario": "Preparation guidance",
+      "status": "PARTIAL",
+      "result": "Source maps preparation and safety notes; dedicated visual case pending.",
+      "evidence": [
+        "docs/service-details-redesign/02-design-implementation.md"
+      ]
+    },
+    {
+      "id": "SDR-T018",
+      "scenario": "No warranty configured",
+      "status": "PASS",
+      "result": "Browser screenshot shows unconfigured warranty.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T019",
+      "scenario": "Configured service coverage",
+      "status": "PASS",
+      "result": "Ikoyi sourced from service config, selected in browser.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T020",
+      "scenario": "Unsupported location",
+      "status": "PASS",
+      "result": "SDR-T022 rejects unconfigured zone.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T021",
+      "scenario": "Active location",
+      "status": "PASS",
+      "result": "SDR-T022 and browser use the configured area.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T022",
+      "scenario": "No qualified technician",
+      "status": "PASS",
+      "result": "SDR-T022 exercises a technician unavailable for booking.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T023",
+      "scenario": "Qualified technician with no slots",
+      "status": "PASS",
+      "result": "SDR-T022 mismatched duration; browser installation service shows empty slots.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T024",
+      "scenario": "Valid available slots",
+      "status": "PASS",
+      "result": "SDR-T022 and browser real selected dates.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T025",
+      "scenario": "Stale slot",
+      "status": "PASS",
+      "result": "SDR-T025 rejects stale selection; competing browser booking retains draft.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T026",
+      "scenario": "Concurrent slot booking",
+      "status": "PASS",
+      "result": "PostgreSQL concurrency and focused conflict checks.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T027",
+      "scenario": "Selected area changes",
+      "status": "PARTIAL",
+      "result": "Initial area selection and backend area denial exercised; switching between multiple eligible areas pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T028",
+      "scenario": "Saved address",
+      "status": "NOT_TESTED",
+      "result": "Source restores scoped available addresses; redesigned end-to-end saved address case pending.",
+      "evidence": [
+        "docs/service-details-redesign/02-design-implementation.md"
+      ]
+    },
+    {
+      "id": "SDR-T029",
+      "scenario": "Recipient phone",
+      "status": "PARTIAL",
+      "result": "Valid Nigerian mobile submitted in browser; client validation uses shared rules, native acceptance pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T030",
+      "scenario": "Guest authentication return",
+      "status": "PASS",
+      "result": "Browser sign-in link and SDR-T030 allowlist verified.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T031",
+      "scenario": "Signed-in booking",
+      "status": "PASS",
+      "result": "Browser confirmed booking and read one committed record.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T032",
+      "scenario": "Idempotent repeat submission",
+      "status": "PASS",
+      "result": "EO-01 and independent PostgreSQL concurrency.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T033",
+      "scenario": "Authoritative quotation",
+      "status": "PASS",
+      "result": "Focused pricing, quotation and lifecycle suites.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T034",
+      "scenario": "Changed price before confirmation",
+      "status": "PASS",
+      "result": "SDR-T025 and stale service version rejection.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T035",
+      "scenario": "Quote-required work",
+      "status": "PASS",
+      "result": "Existing quotation and authorised work suite.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T036",
+      "scenario": "Latest quote revision",
+      "status": "PASS",
+      "result": "Focused quotation revision regression.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T037",
+      "scenario": "Unverified payment is not treated as paid",
+      "status": "PASS",
+      "result": "Focused booking recovery and payment assertions.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T038",
+      "scenario": "Independent financial approval",
+      "status": "PASS",
+      "result": "Focused wallet and refund approval regression.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T039",
+      "scenario": "Reschedule cutoff",
+      "status": "PASS",
+      "result": "Existing service rescheduling and governed cutoff regression.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T040",
+      "scenario": "Cancellation cutoff",
+      "status": "PASS",
+      "result": "Existing service cancellation and cutoff regression.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T041",
+      "scenario": "Terminal states",
+      "status": "PASS",
+      "result": "Existing service lifecycle regression.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T042",
+      "scenario": "Customer acknowledgement",
+      "status": "PASS",
+      "result": "Focused report and customer acknowledgement.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T043",
+      "scenario": "Technician qualification",
+      "status": "PASS",
+      "result": "SDR-T022 and focused stale qualification rejection.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-T044",
+      "scenario": "Photo and evidence continuity",
+      "status": "PASS",
+      "result": "Existing private evidence and technician reports regression.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T045",
+      "scenario": "Bundles",
+      "status": "PARTIAL",
+      "result": "Existing combined transaction tests pass; redesigned staging UI checks are pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T046",
+      "scenario": "Staged appointments",
+      "status": "PARTIAL",
+      "result": "Existing mixed checkout regression passed; redesign staging UI check pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T047",
+      "scenario": "Customer follow-ups",
+      "status": "PARTIAL",
+      "result": "Existing follow-up regression passed; redesigned link UI check pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T048",
+      "scenario": "Responsive web",
+      "status": "PASS",
+      "result": "No horizontal overflow at 320, 375, 390, 430, 768, 1024 and 1440 px after responsive layout settles.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T049",
+      "scenario": "iOS Back and VoiceOver",
+      "status": "NOT_TESTED",
+      "result": "Simulator binary built and launched; authenticated interaction and VoiceOver pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/ios-simulator-build.txt"
+      ]
+    },
+    {
+      "id": "SDR-T050",
+      "scenario": "Android Back and TalkBack",
+      "status": "NOT_TESTED",
+      "result": "Android bundle exported; emulator/device acceptance pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/native-export.txt"
+      ]
+    },
+    {
+      "id": "SDR-T051",
+      "scenario": "Light, dark and system themes",
+      "status": "PARTIAL",
+      "result": "Browser light and system dark observed. Native and explicit mode switch tests pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T052",
+      "scenario": "Offline, stale and retry",
+      "status": "PASS",
+      "result": "Browser offline disables confirm; reconnect and stale slot recovery exercised.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T053",
+      "scenario": "Permission and branch isolation",
+      "status": "PASS",
+      "result": "SDR-T022 and existing service ownership and branch tests.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T054",
+      "scenario": "Payment, inventory, wallet, orders and POS regression",
+      "status": "PASS",
+      "result": "Full PostgreSQL-enabled suite passed.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-T055",
+      "scenario": "Long descriptions and responsive wrapping",
+      "status": "PARTIAL",
+      "result": "Responsive tests used configured short descriptions; stress fixture pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T056",
+      "scenario": "Keyboard and reduced motion",
+      "status": "PARTIAL",
+      "result": "Keyboard accordion passed. Full keyboard journey and assistive motion checks pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T057",
+      "scenario": "Browser refresh and Lagos timezone",
+      "status": "PASS",
+      "result": "Browser refresh, slot selection and SDR-T025 Lagos day boundary.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T058",
+      "scenario": "Unavailable contact pathway",
+      "status": "PASS",
+      "result": "Contact link resolves to existing contact route in empty state.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-T059",
+      "scenario": "Session expiration and route error boundaries",
+      "status": "PARTIAL",
+      "result": "Existing auth regression passed; interactive detail expiry and error boundary pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "SDR-G01",
+      "gate": "Baseline audit",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source, screenshots, existing contracts and prior full regression recorded.",
+      "evidence": [
+        "docs/service-details-redesign/00-repository-audit.md"
+      ]
+    },
+    {
+      "id": "SDR-G02",
+      "gate": "Existing routes",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Catalogue return, direct detail and My Bookings browser flow.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-G03",
+      "gate": "Existing sidebar",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authenticated browser captures retain customer shell and sidebar.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-G04",
+      "gate": "Authoritative service data",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser fixture uses stored details and slot API response.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-G05",
+      "gate": "Configured prices only",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Shared formatting assertions and verified backend input.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-G06",
+      "gate": "Unavailable prices",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "SDR-T005 distinguishes missing fixed price and quotation basis.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-G07",
+      "gate": "Configured inclusions only",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "SDR-T005 and keyboard accordion empty state.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-G08",
+      "gate": "Qualified availability",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "SDR-T022 and existing independent qualification tests.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-G09",
+      "gate": "No false booking CTA",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Chromium unavailable and preselection states verified.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-G10",
+      "gate": "Server revalidation",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Competing booking and stale review exercised in Chromium and backend.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-G11",
+      "gate": "Idempotent booking",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "EO-01 and PostgreSQL concurrency.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-G12",
+      "gate": "Quotation integrity",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing quote revisions and authorisation regressions.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-G13",
+      "gate": "Payment verification",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Full payment and booking verification regression.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-G14",
+      "gate": "Safety and qualification",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing assignment, photo, report and acknowledgement regression.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-G15",
+      "gate": "Cancellation and reschedule",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing server conflict, cutoff and recovery tests.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/focused.txt"
+      ]
+    },
+    {
+      "id": "SDR-G16",
+      "gate": "Bundles and follow-ups",
+      "status": "PARTIAL",
+      "reason": "Existing tests passed; redesigned staging and follow-up UI acceptance pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-G17",
+      "gate": "Desktop design",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Desktop capture and responsive Chromium checks.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-G18",
+      "gate": "Mobile web design",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Seven viewport checks and 390 px dark booking flow.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-G19",
+      "gate": "iOS native",
+      "status": "PARTIAL",
+      "reason": "Fresh iPhone 17 Pro Simulator build installed and launched. Authenticated detail interaction remains pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/ios-simulator-build.txt"
+      ]
+    },
+    {
+      "id": "SDR-G20",
+      "gate": "Android native",
+      "status": "PARTIAL",
+      "reason": "Android JavaScript bundle passes. Installed application and TalkBack remain pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/native-export.txt"
+      ]
+    },
+    {
+      "id": "SDR-G21",
+      "gate": "Light, dark and system",
+      "status": "PARTIAL",
+      "reason": "Chromium light and system dark passed. Native mode acceptance pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-G22",
+      "gate": "Accessibility",
+      "status": "PARTIAL",
+      "reason": "Keyboard accordion and native accessibility properties. Screen-reader and full flow testing pending.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/browser.txt"
+      ]
+    },
+    {
+      "id": "SDR-G23",
+      "gate": "Role and branch scope",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Public field projection, customer ownership and branch regressions.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-G24",
+      "gate": "Regression and RTM",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "684 full regression, 30 focused and matrix validation.",
+      "evidence": [
+        "docs/service-details-redesign/evidence/full-regression.txt"
+      ]
+    },
+    {
+      "id": "SDR-G25",
+      "gate": "Rollback and release",
+      "status": "PARTIAL",
+      "reason": "Source rollback is documented; production stays NO-GO. No hosted rehearsal performed.",
+      "evidence": [
+        "docs/service-details-redesign/05-rollback-and-release.md"
+      ]
+    }
+  ],
+  "changeLog": [
+    {
+      "change": "Reused existing detail routes, service configuration, slot and booking APIs. Added opt-in availability reasons and native review. All 54 required scenarios and five supplemental checks are retained. No production deployment or migration."
+    }
+  ]
+}

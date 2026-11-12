@@ -1,4 +1,6 @@
 "use client";
+import DriverExperience from "./driver-experience";
+import { NotificationsTray } from "./notifications-tray";
 import { effectiveDateInLagos } from "../../../packages/business-rules/src/effective-date";
 import { appAlert } from "./app-dialog";
 import { FormInput } from "./password-input";
@@ -7,6 +9,7 @@ import PaymentGatewayPolicy from "./payment-gateway-policy";
 import InventoryWorkspace from "./inventory-workspace";
 import AdminOverview from "./admin-overview";
 import AuditHistory from "./audit-history";
+import OwnerGovernanceLinks from "./owner-governance-links";
 import AdminSearch from "./admin-search";
 
 import { OperationsExtensions } from "./operations-completion";
@@ -111,7 +114,6 @@ export default function Admin({
   const [user, setUser] = useState<any>(initialAccess.user),
     [access, setAccess] = useState<any>(initialAccess),
     [collapsed, setCollapsed] = useState(initialCollapsed),
-    [notifications, setNotifications] = useState<any[]>([]),
     [showNotifications, setShowNotifications] = useState(false),
     [menu, setMenu] = useState(false),
     [error, setError] = useState(""),
@@ -144,7 +146,6 @@ export default function Admin({
         if (!live || signingOut.current) return;
         setUser(d.user);
         setAccess(d);
-        setNotifications(d.notifications);
         setError("");
         if (!d.allowed.includes(section) && d.allowed.length) {
           const destination = navigationItems.find(n => d.allowed.includes(n.id));
@@ -168,7 +169,6 @@ export default function Admin({
         if ([401, 403].includes(e.status)) {
           setUser(null);
           setAccess(null);
-          setNotifications([]);
           setShowNotifications(false);
           router.replace(e.status === 401 ? "/login" : "/account");
         } else
@@ -208,7 +208,6 @@ export default function Admin({
       await api("logout", {});
       setUser(null);
       setAccess(null);
-      setNotifications([]);
       setShowNotifications(false);
       try {
         sessionStorage.removeItem("easygas.deliveryDraft");
@@ -264,6 +263,8 @@ export default function Admin({
             <button
               className="icon-button notification-toggle"
               aria-label="View notifications"
+              aria-haspopup="dialog"
+              aria-expanded={showNotifications}
               onClick={() => setShowNotifications(!showNotifications)}
             >
               <Bell size={19} />
@@ -297,46 +298,11 @@ export default function Admin({
           </div>
         </header>
         {showNotifications && (
-          <div className="notification-panel">
-            <h3>Your notifications</h3>
-            {notifications.length ? (
-              notifications.slice(0, 12).map((n) => (
-                <div key={n.id}>
-                  <strong>{n.title}</strong>
-                  <p>{n.body}</p>
-                  <small>
-                    {new Date(n.created_at).toLocaleString("en-NG", {
-                      timeZone: "Africa/Lagos",
-                    })}
-                  </small>
-                  {n.href && (
-                    <Link
-                      href={n.href}
-                      onClick={() => setShowNotifications(false)}
-                    >
-                      Open order
-                    </Link>
-                  )}
-                  {!n.read_at && (
-                    <button
-                      onClick={async () => {
-                        try {
-                          await api("notifications.read", { id: n.id });
-                          setRefresh((v) => v + 1);
-                        } catch (e: any) {
-                          setError(e.message);
-                        }
-                      }}
-                    >
-                      Mark read
-                    </button>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p>You’re all caught up.</p>
-            )}
-          </div>
+          <NotificationsTray
+            key={user?.id}
+            onClose={() => setShowNotifications(false)}
+            onRead={() => setRefresh((value) => value + 1)}
+          />
         )}
         <main
           className="admin-content"
@@ -347,17 +313,22 @@ export default function Admin({
             access?.allowed?.includes(section) &&
             !(
               section === "deliveries" &&
-              ["owner", "manager", "dispatcher"].includes(user.role)
+              ["owner", "manager", "dispatcher", "driver"].includes(user.role)
             ) && <OperationsExtensions section={section} user={user} />}
           {error && <Notice type="error" message={error} />}
           <div className="admin-breadcrumb">
             Workspace <span>/</span>{" "}
             {navigationItems.find((n) => n.id === section)?.label}
           </div>
+          {user?.role === "owner" && access?.allowed?.includes(section) && (
+            <OwnerGovernanceLinks section={section} allowed={access.allowed} />
+          )}
           {!user ? (
             <Loading />
           ) : !access?.allowed?.includes(section) ? (
             <p role="status">{access?.allowed?.length ? "Opening your workspace…" : "No workspace menus are assigned. Contact your administrator to arrange access."}</p>
+          ) : section === "deliveries" && user.role === "driver" ? (
+            <DriverExperience userId={user.id} />
           ) : section === "testimonials" ? (
             <TestimonialManagement />
           ) : section === "policies" ? (
@@ -1964,6 +1935,8 @@ function Approvals({
   onChange: () => void;
   verify: () => void;
 }) {
+  const params = useSearchParams();
+  const branchId = user.role === "owner" ? params.get("branchId") : null;
   const [selected, setSelected] = useState<any>(null),
     [filter, setFilter] = useState("all"),
     [search, setSearch] = useState(""),
@@ -1984,6 +1957,7 @@ function Approvals({
     "approvals?" +
       new URLSearchParams({
         view: "paged",
+        ...(branchId ? { branchId } : {}),
         page: String(page),
         pageSize: String(pageSize),
         q: query,

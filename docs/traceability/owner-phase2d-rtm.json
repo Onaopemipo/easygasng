@@ -1,0 +1,232 @@
+{
+  "phase": "Owner Phase 2D",
+  "productionGo": "NO-GO",
+  "requirements": [
+    {
+      "id": "OWN2D-01",
+      "requirement": "OWN-012 Profile & Security",
+      "implementation": "apps/mobile/OwnerSupportWorkspace.tsx",
+      "source": "account.profile; account.update; account.password",
+      "security": "Authenticated owner; server revalidates identity",
+      "status": "PARTIAL",
+      "reason": "Native profile and password UI prepared; full app/native test pending",
+      "acceptance": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "priority": "high",
+      "scope": "owner-phase2d",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "account.profile; account.update; account.password",
+      "securityControl": "Authenticated owner; server revalidates identity",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [
+        "apps/mobile/OwnerSupportWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN2D-01-AC"
+    },
+    {
+      "id": "OWN2D-02",
+      "requirement": "OWN-013 Notifications",
+      "implementation": "apps/mobile/OwnerSupportWorkspace.tsx",
+      "source": "navigation; notifications.read",
+      "security": "Owner session, notifications scoped by user_id",
+      "status": "PARTIAL",
+      "reason": "Read/mark read; native deep-link destination unverified",
+      "acceptance": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "priority": "high",
+      "scope": "owner-phase2d",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "navigation; notifications.read",
+      "securityControl": "Owner session, notifications scoped by user_id",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [
+        "apps/mobile/OwnerSupportWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN2D-02-AC"
+    },
+    {
+      "id": "OWN2D-03",
+      "requirement": "Light, Dark and System",
+      "implementation": "apps/mobile/OwnerSupportWorkspace.tsx",
+      "source": "apps/mobile/theme.tsx",
+      "security": "Device preference stored via existing theme provider",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "UI uses existing theme; physical device review pending",
+      "acceptance": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "priority": "high",
+      "scope": "owner-phase2d",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "apps/mobile/theme.tsx",
+      "securityControl": "Device preference stored via existing theme provider",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [
+        "apps/mobile/OwnerSupportWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN2D-03-AC"
+    },
+    {
+      "id": "OWN2D-04",
+      "requirement": "Offline, stale and reconnect",
+      "implementation": "apps/mobile/OwnerSupportWorkspace.tsx",
+      "source": "navigation; account.profile",
+      "security": "Read-only stale data; sensitive actions blocked",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Reconnect revalidates role; device network testing pending",
+      "acceptance": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "priority": "high",
+      "scope": "owner-phase2d",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "navigation; account.profile",
+      "securityControl": "Read-only stale data; sensitive actions blocked",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [
+        "apps/mobile/OwnerSupportWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN2D-04-AC"
+    },
+    {
+      "id": "OWN2D-05",
+      "requirement": "Permission changes",
+      "implementation": "apps/mobile/OwnerSupportWorkspace.tsx; apps/mobile/OwnerGovernanceWorkspace.tsx",
+      "source": "navigation",
+      "security": "Role and ID verified; 401/403 clears sensitive data",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "On app foreground recheck; cross-role E2E pending",
+      "acceptance": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "priority": "high",
+      "scope": "owner-phase2d",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "navigation",
+      "securityControl": "Role and ID verified; 401/403 clears sensitive data",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [],
+      "testFiles": [],
+      "acceptanceGate": "OWN2D-05-AC"
+    },
+    {
+      "id": "OWN2D-06",
+      "requirement": "Mobile owner navigation",
+      "implementation": "apps/mobile/App.tsx; apps/mobile/OwnerGovernanceWorkspace.tsx",
+      "source": "existing owner workspace",
+      "security": "Owner-only route; preserves other roles",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Integrated with the existing owner More menu. Device verification pending.",
+      "acceptance": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "priority": "high",
+      "scope": "owner-phase2d",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "existing owner workspace",
+      "securityControl": "Owner-only route; preserves other roles",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [],
+      "testFiles": [],
+      "acceptanceGate": "OWN2D-06-AC"
+    },
+    {
+      "id": "OWN2D-07",
+      "requirement": "Web supporting features",
+      "implementation": "apps/web/components/admin.tsx; apps/web/components/theme-provider.tsx",
+      "source": "Existing header, /account, notification panel",
+      "security": "Existing web server guards",
+      "status": "PARTIAL",
+      "reason": "Reuse existing web UI; no new web code; responsive acceptance pending",
+      "acceptance": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "priority": "high",
+      "scope": "owner-phase2d",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "Existing header, /account, notification panel",
+      "securityControl": "Existing web server guards",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [],
+      "testFiles": [],
+      "acceptanceGate": "OWN2D-07-AC"
+    },
+    {
+      "id": "OWN2D-08",
+      "requirement": "Regression and safety",
+      "implementation": "apps/mobile/App.tsx and targeted regression suites",
+      "source": "existing tests",
+      "security": "No financial/stock/server mutation changes",
+      "status": "PARTIAL",
+      "reason": "Web and mobile type checks and 25 targeted tests passed. Device and full regression acceptance pending.",
+      "acceptance": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "priority": "high",
+      "scope": "owner-phase2d",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "existing tests",
+      "securityControl": "No financial/stock/server mutation changes",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [],
+      "testFiles": [],
+      "acceptanceGate": "OWN2D-08-AC"
+    }
+  ],
+  "gates": [
+    {
+      "id": "OWN2D-01-AC",
+      "requirement": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN2D-02-AC",
+      "requirement": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN2D-03-AC",
+      "requirement": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN2D-04-AC",
+      "requirement": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN2D-05-AC",
+      "requirement": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN2D-06-AC",
+      "requirement": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN2D-07-AC",
+      "requirement": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN2D-08-AC",
+      "requirement": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "status": "UNVERIFIED"
+    }
+  ]
+}

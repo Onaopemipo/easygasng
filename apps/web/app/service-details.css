@@ -1,0 +1,220 @@
+.service-details-v2 {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  min-width: 0;
+  display: grid;
+  gap: 20px;
+  overflow-wrap: anywhere;
+}
+
+.service-detail-back,
+.service-detail-note,
+.service-detail-meta span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.service-detail-back {
+  width: fit-content;
+  min-height: 44px;
+}
+.service-detail-back svg,
+.service-details-v2 svg {
+  flex-shrink: 0;
+}
+
+.service-detail-hero,
+.service-detail-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.service-detail-hero {
+  align-items: center;
+}
+.service-detail-identity {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.service-detail-identity h1 {
+  font-size: clamp(1.8rem, 4vw, 2.75rem);
+  line-height: 1.1;
+  margin: 0 0 6px;
+}
+.service-detail-identity p {
+  margin: 0;
+}
+.service-detail-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  color: var(--green);
+  background: color-mix(in srgb, var(--green) 11%, transparent);
+}
+.service-detail-icon svg {
+  width: 29px;
+  height: 29px;
+}
+.service-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 17px;
+  margin-top: 16px;
+}
+.service-detail-meta strong {
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+  color: var(--green);
+}
+.service-detail-image {
+  width: 100%;
+  height: clamp(118px, 16vw, 210px);
+  border-radius: 18px;
+  object-fit: cover;
+}
+.service-detail-placeholder {
+  display: grid;
+  place-items: center;
+  color: var(--green);
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--green) 8%, transparent),
+    color-mix(in srgb, var(--green) 18%, transparent)
+  );
+}
+.service-detail-information,
+.service-detail-booking,
+.service-detail-slot-fields {
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+}
+.service-details-v2 :is(.service-detail-booking, .service-detail-note) {
+  border-radius: 16px;
+  padding: 16px;
+  margin: 0;
+}
+.service-detail-booking h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 1.25rem;
+}
+.service-detail-booking :is(h2, summary) svg,
+.service-detail-information svg,
+.service-detail-policy svg {
+  color: var(--green);
+}
+.service-detail-booking p {
+  margin: 0;
+}
+.service-detail-slot-fields label {
+  display: grid;
+  gap: 4px;
+  font-weight: 600;
+  min-width: 0;
+  margin: 0;
+}
+.service-detail-slot-fields select {
+  min-width: 0;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+}
+.service-detail-book-cta {
+  width: 100%;
+}
+.service-detail-contact-fields label.surface {
+  margin-bottom: 12px;
+}
+.service-detail-contact-fields .service-form {
+  padding: 12px 0 0;
+  border: 0;
+  box-shadow: none;
+}
+.service-detail-accordion.surface {
+  border-radius: 16px;
+  padding: 0;
+}
+.service-detail-accordion summary {
+  min-height: 48px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 8px 16px;
+  font-weight: 750;
+  list-style: none;
+}
+.service-detail-accordion summary::-webkit-details-marker {
+  display: none;
+}
+.service-detail-accordion[open] summary svg:last-child {
+  transform: rotate(180deg);
+}
+.service-detail-accordion p {
+  margin: 0;
+  padding: 0 16px 16px 48px;
+  white-space: pre-line;
+}
+.service-detail-policy {
+  background: color-mix(in srgb, var(--green) 8%, transparent);
+}
+.service-details-v2 :is(a, button, summary, select):focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1199px) {
+  .service-detail-columns {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .service-detail-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .service-detail-booking {
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .service-detail-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .service-detail-placeholder {
+    display: none;
+  }
+  .service-detail-identity {
+    gap: 10px;
+  }
+  .service-detail-icon {
+    width: 44px;
+    height: 44px;
+  }
+  .service-detail-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+  .service-detail-book-cta:not(:disabled) {
+    position: sticky;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    z-index: 2;
+  }
+  body:has(.client-demo-notice) .service-detail-book-cta:not(:disabled) {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 78px);
+  }
+}

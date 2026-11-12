@@ -1,3 +1,6 @@
+import { customerRiderLocation } from "./customer-rider-location";
+import { unavailableRiderLocation } from "../../../packages/business-rules/src/rider-location";
+import { notificationInbox, markNotificationsRead } from "./notification-inbox";
 import { enrollSupportSla } from "./support-desk";
 import { auditHistory } from "./audit-history";
 import {enforceStaffPrivilege, staffPrivilegeAction} from "./staff-privileges";
@@ -33,6 +36,7 @@ import { deliveryFailureReasons } from "../../../packages/business-rules/src/ord
 import { trackingAction, deliveryManifest } from "./order-tracking";
 import { testimonialAction } from "./testimonials";
 import {
+  canonicalRequest,
   businessOperation,
   requiredBusinessOperation,
   operationOutcome,
@@ -117,6 +121,7 @@ export async function dispatch(
       if (
         [
           "admin.dashboard",
+          "notifications.list",
           "technician.jobs",
           "technician.snapshot",
           "inventory.workspace",
@@ -368,6 +373,7 @@ export async function dispatch(
       if (action.startsWith("driver."))
         return [
           "driver.snapshot",
+          "driver.history",
           "driver.heartbeat",
           "driver.restrict",
           "driver.location",
@@ -582,6 +588,8 @@ export async function dispatch(
       if (action === "customer.dashboard")
         return customerDashboard(tx, user, input);
       if (action === "navigation.access") return navigationAccess(tx, user);
+      if (action === "notifications.list") return notificationInbox(tx, user, input);
+      if (action === "notifications.read.bulk") return markNotificationsRead(tx, user, input);
       if (action === "navigation") return navigationSnapshot(tx, user, input);
       if (["account.password", "reauth"].includes(action)) {
         const lock = await one(
@@ -791,7 +799,15 @@ export async function dispatch(
           staff && user.role === "owner"
             ? []
             : [staff && user.role !== "driver" ? user.branch_id : user.id];
-        if (user.role === "driver") params.push(user.branch_id);
+        if (user.role === "driver") {
+          params.push(user.branch_id);
+          if ((input as any)?.active === "1")
+            filter += ` AND o.status IN ('assigned','out_for_delivery') AND EXISTS (
+              SELECT 1 FROM delivery_attempts a LEFT JOIN dispatch_responses r ON r.attempt_id=a.id
+              WHERE a.order_id=o.id AND a.driver_id=o.driver_id
+                AND a.state IN ('assigned','picked_up','arrived') AND r.decision IS DISTINCT FROM 'rejected'
+            )`;
+        }
         if ((input as any)?.id) {
           const oid = z
             .string()
@@ -841,7 +857,19 @@ export async function dispatch(
                 [o.id],
               )
             )?.at ?? o.created_at;
-          o.gps = { enabled: false, status: "unavailable", eta: null };
+          o.gps = !staff && o.status === "out_for_delivery"
+            ? await customerRiderLocation(tx, user.id, o.id)
+            : unavailableRiderLocation;
+          if (user.role === "driver" && ["assigned", "out_for_delivery"].includes(o.status)) {
+            o.assignment_response_open = o.attempt?.state === "assigned" &&
+              Boolean(o.delivery_code_expires_at && new Date(o.delivery_code_expires_at).getTime() > Date.now());
+            o.destination = await one(tx,
+              `SELECT latitude,longitude FROM dispatch_destinations
+               WHERE order_id=$1 AND branch_id=$2 AND address_hash=$3
+                 AND revision=(SELECT max(revision) FROM dispatch_destinations WHERE order_id=$1)`,
+              [o.id, o.branch_id, digest(canonicalRequest(o.address))],
+            );
+          }
           if (staff) {
             o.manifest = await deliveryManifest(tx, o.id);
             o.delivery_evidence = o.attempt
@@ -1199,6 +1227,7 @@ export async function dispatch(
           ? z
               .object({
                 view: z.literal("paged"),
+                branchId: z.string().min(1).max(100).optional(),
                 page: z.coerce.number().int().min(1).max(10000).default(1),
                 pageSize: z.coerce
                   .number()
@@ -1230,8 +1259,14 @@ export async function dispatch(
               .strict()
               .parse(input)
           : null;
+        if (user.role === "owner" && !(await navigationAccess(tx, user)).allowed.includes("approvals"))
+          throw new AppError(403, "Your account has no Approval Centre access.");
+        if (options?.branchId && (
+          (user.role !== "owner" && options.branchId !== user.branch_id) ||
+          !(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true", [options.branchId]))
+        )) throw new AppError(403, "Choose an active authorised branch.");
         const scopeArgs = [
-          user.role === "owner" ? null : (user.branch_id ?? ""),
+          user.role === "owner" ? options?.branchId ?? null : (user.branch_id ?? ""),
           JSON.stringify([user.role]),
         ];
         const base =
@@ -1353,6 +1388,8 @@ export async function dispatch(
           : permitted;
       }
       if (action === "approval.decide") {
+        if (user.role === "owner" && !(await navigationAccess(tx, user)).allowed.includes("approvals"))
+          throw new AppError(403, "Your account has no Approval Centre access.");
         const d = z
           .object({
             id: z.string().uuid(),

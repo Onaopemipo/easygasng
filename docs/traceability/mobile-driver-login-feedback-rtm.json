@@ -8,10 +8,21 @@
       "implementation": "apps/mobile/App.tsx",
       "authoritativeSource": "Authentication API error",
       "securityControl": "Existing authentication controls",
-      "evidence": "Mobile typecheck passed",
+      "evidence": [],
       "gate": "Accessible inline error above Sign In",
       "outstanding": "Simulator visual check",
-      "status": "IMPLEMENTED_UNVERIFIED"
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "scope": "mobile-driver-login-feedback",
+      "uiReference": "Phase screen requirements",
+      "dataSource": "Authentication API error",
+      "reason": "Simulator visual check",
+      "testResult": "Mobile typecheck passed",
+      "outstandingWork": "Simulator visual check",
+      "implementationFiles": [
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "DRIVER-LOGIN-UI-01-AC"
     },
     {
       "id": "DRIVER-LOGIN-ENV-01",
@@ -21,14 +32,37 @@
       "implementation": "apps/web/lib/service.ts",
       "authoritativeSource": "Isolated local demo account database",
       "securityControl": "Driver role checked at sign-in",
-      "evidence": "Wrong password returned 401. Native login and session checked.",
+      "evidence": [],
       "gate": "Valid driver reaches home",
       "outstanding": "Installed app sign-in",
-      "status": "IMPLEMENTED_UNVERIFIED"
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "scope": "mobile-driver-login-feedback",
+      "uiReference": "Phase screen requirements",
+      "dataSource": "Isolated local demo account database",
+      "reason": "Installed app sign-in",
+      "testResult": "Wrong password returned 401. Native login and session checked.",
+      "outstandingWork": "Installed app sign-in",
+      "implementationFiles": [
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "DRIVER-LOGIN-ENV-01-AC"
     }
   ],
   "coverage": {
     "implemented": "2/2",
     "deviceVerified": "0/2"
-  }
+  },
+  "gates": [
+    {
+      "id": "DRIVER-LOGIN-UI-01-AC",
+      "requirement": "Accessible inline error above Sign In",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "DRIVER-LOGIN-ENV-01-AC",
+      "requirement": "Valid driver reaches home",
+      "status": "UNVERIFIED"
+    }
+  ]
 }

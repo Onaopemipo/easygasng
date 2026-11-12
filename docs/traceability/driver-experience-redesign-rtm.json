@@ -1,0 +1,2546 @@
+{
+  "phase": "Driver experience redesign",
+  "baseline": "54b1b15",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "DRV-R01",
+      "requirement": "Audit",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Existing routes, session and delivery code",
+      "securityControl": "Preserved release and business controls",
+      "implementationFiles": [
+        "docs/driver-redesign/00-audit.md",
+        "docs/driver-redesign/01-source-contracts.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/baseline-focused.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · audit",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G01",
+      "scenarios": [
+        "T78"
+      ]
+    },
+    {
+      "id": "DRV-R02",
+      "requirement": "Baseline",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Pre-change type checks and targeted regression",
+      "securityControl": "Isolated fixture data",
+      "implementationFiles": [
+        "docs/driver-redesign/00-audit.md"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-AUDIT01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/baseline-focused.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Pre-change device captures and a separate baseline release build were not run.",
+      "testResult": "PARTIAL · baseline",
+      "outstandingWork": "Pre-change device captures and a separate baseline release build were not run.",
+      "acceptanceGate": "G02",
+      "scenarios": [
+        "T78"
+      ]
+    },
+    {
+      "id": "DRV-R03",
+      "requirement": "Route parity",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Existing browser landing and shared native driver shell",
+      "securityControl": "Server role guard and preserved staff route",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/web/components/admin.tsx"
+      ],
+      "testFiles": [
+        "tests/driver-workspace.test.ts"
+      ],
+      "testIds": [
+        "DR-WEB-01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · route parity",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G03",
+      "scenarios": [
+        "T01",
+        "T02",
+        "T78"
+      ]
+    },
+    {
+      "id": "DRV-R04",
+      "requirement": "Driver role scoping",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Authenticated actor, scoped branch and assignment",
+      "securityControl": "Driver reads reject other roles and forged branch or driver identity",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DRV-T46–55",
+        "DDI-READ02"
+      ],
+      "negativeTests": [
+        "DRV-T46–55",
+        "DDI-READ02"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · driver role scoping",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G04",
+      "scenarios": [
+        "T02",
+        "T03",
+        "T22",
+        "T39",
+        "T40",
+        "T41"
+      ]
+    },
+    {
+      "id": "DRV-R05",
+      "requirement": "Home compact",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Scoped snapshot and existing brand photography",
+      "securityControl": "No illustrative data",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Toggle layout stability and the empty Home state were not replayed on each installed client.",
+      "testResult": "PARTIAL · Home compact",
+      "outstandingWork": "Toggle layout stability and the empty Home state were not replayed on each installed client.",
+      "acceptanceGate": "G05",
+      "scenarios": [
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15",
+        "T17",
+        "T18"
+      ]
+    },
+    {
+      "id": "DRV-R06",
+      "requirement": "Availability verified",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Committed availability flag",
+      "securityControl": "Existing active-assignment hold and server response",
+      "implementationFiles": [
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-S024"
+      ],
+      "negativeTests": [
+        "DDI-S024"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The active-assignment refusal and browser offline state passed. A clean on/off cycle remains to be replayed on devices.",
+      "testResult": "PARTIAL · availability verified",
+      "outstandingWork": "The active-assignment refusal and browser offline state passed. A clean on/off cycle remains to be replayed on devices.",
+      "acceptanceGate": "G06",
+      "scenarios": [
+        "T04",
+        "T05",
+        "T06"
+      ]
+    },
+    {
+      "id": "DRV-R07",
+      "requirement": "Connectivity separate",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Confirmed API contact",
+      "securityControl": "Contact remains separate from readiness and GPS",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/web/lib/driver-workspace.ts"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-CONTACT01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · connectivity separate",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G07",
+      "scenarios": [
+        "T07",
+        "T19"
+      ]
+    },
+    {
+      "id": "DRV-R08",
+      "requirement": "Gps status honest",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Device permission and server trip state",
+      "securityControl": "Reject off-trip, stale and future observations",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverTripTracking.tsx"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-S016"
+      ],
+      "negativeTests": [
+        "DDI-S016"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Not-granted and no active trip were displayed. Permission transitions on physical devices remain open.",
+      "testResult": "PARTIAL · GPS status honest",
+      "outstandingWork": "Not-granted and no active trip were displayed. Permission transitions on physical devices remain open.",
+      "acceptanceGate": "G08",
+      "scenarios": [
+        "T08",
+        "T10",
+        "T60"
+      ]
+    },
+    {
+      "id": "DRV-R09",
+      "requirement": "Actual counts",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Orders, attempts and Lagos completion timestamps",
+      "securityControl": "Unavailable data remains unavailable",
+      "implementationFiles": [
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The Home count was observed with a real fixture. Error and all-zero Home states were not exercised in both native clients.",
+      "testResult": "PARTIAL · actual counts",
+      "outstandingWork": "The Home count was observed with a real fixture. Error and all-zero Home states were not exercised in both native clients.",
+      "acceptanceGate": "G09",
+      "scenarios": [
+        "T11",
+        "T12"
+      ]
+    },
+    {
+      "id": "DRV-R10",
+      "requirement": "Orders backend list",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Assigned orders and current attempts",
+      "securityControl": "Reject foreign assignment and no unassigned inventory of work",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DRV-T42–43"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · Orders backend list",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G10",
+      "scenarios": [
+        "T21",
+        "T22",
+        "T42",
+        "T43"
+      ]
+    },
+    {
+      "id": "DRV-R11",
+      "requirement": "No self-claim",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Assigned attempts and existing dispatch policy",
+      "securityControl": "Only assigned orders are actionable. No self-claim or automatic assignment",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-S084"
+      ],
+      "negativeTests": [
+        "DDI-S084"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · no self-claim",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G11",
+      "scenarios": [
+        "T16",
+        "T23",
+        "T77"
+      ]
+    },
+    {
+      "id": "DRV-R12",
+      "requirement": "Assignment acknowledge",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Persisted dispatch response and expiry",
+      "securityControl": "Backend validates current assignment version and expiry",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-S031"
+      ],
+      "negativeTests": [
+        "DDI-S031"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Expired and repeated requests were covered in regression. Fresh web and mobile acknowledgement was not replayed in the UI.",
+      "testResult": "PARTIAL · assignment acknowledge",
+      "outstandingWork": "Expired and repeated requests were covered in regression. Fresh web and mobile acknowledgement was not replayed in the UI.",
+      "acceptanceGate": "G12",
+      "scenarios": [
+        "T24",
+        "T25",
+        "T34",
+        "T36",
+        "T37"
+      ]
+    },
+    {
+      "id": "DRV-R13",
+      "requirement": "Pickup guards",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Canonical attempt, cylinder allocation and load custody",
+      "securityControl": "Server guards pickup against missing manifest, stock and payment",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-S060",
+        "DDI-PAY01"
+      ],
+      "negativeTests": [
+        "DDI-S060",
+        "DDI-PAY01"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Backend guards were exercised. A physical inspected pickup remains open.",
+      "testResult": "PARTIAL · pickup guards",
+      "outstandingWork": "Backend guards were exercised. A physical inspected pickup remains open.",
+      "acceptanceGate": "G13",
+      "scenarios": [
+        "T26",
+        "T27",
+        "T28",
+        "T29"
+      ]
+    },
+    {
+      "id": "DRV-R14",
+      "requirement": "Delivery transitions",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Canonical attempt transitions",
+      "securityControl": "Existing version and ownership guards",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/operations-completion.test.ts",
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "OPS-T07",
+        "DDI-DECLINE01"
+      ],
+      "negativeTests": [
+        "OPS-T07",
+        "DDI-DECLINE01"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Current driver design was not exercised through a real delivery handover or return.",
+      "testResult": "PARTIAL · delivery transitions",
+      "outstandingWork": "Current driver design was not exercised through a real delivery handover or return.",
+      "acceptanceGate": "G14",
+      "scenarios": [
+        "T30",
+        "T31",
+        "T33",
+        "T34",
+        "T35",
+        "T36",
+        "T37",
+        "T38"
+      ]
+    },
+    {
+      "id": "DRV-R15",
+      "requirement": "Proof server-confirmed",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Existing private media and committed attempts",
+      "securityControl": "Consent, attempt scope and expiry",
+      "implementationFiles": [
+        "apps/web/lib/delivery-photos.ts",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverPhotoHistory.tsx"
+      ],
+      "testFiles": [
+        "tests/dispatch-driver-photos.test.ts"
+      ],
+      "testIds": [
+        "DDI-PHOTO01"
+      ],
+      "negativeTests": [
+        "DDI-PHOTO01"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Backend proof and privacy regression passed. A fresh native photo and handover were not captured.",
+      "testResult": "PARTIAL · proof server-confirmed",
+      "outstandingWork": "Backend proof and privacy regression passed. A fresh native photo and handover were not captured.",
+      "acceptanceGate": "G15",
+      "scenarios": [
+        "T32",
+        "T52",
+        "T53",
+        "T54"
+      ]
+    },
+    {
+      "id": "DRV-R16",
+      "requirement": "Offline queue preserved",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Existing encrypted outbox, receipts and GPS leases",
+      "securityControl": "Idempotent replay and offline states cannot imply completion",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverTripTracking.tsx"
+      ],
+      "testFiles": [
+        "tests/operations-completion.test.ts",
+        "tests/offline-driver-location.test.ts"
+      ],
+      "testIds": [
+        "OPS-T10",
+        "GPS-OFF02"
+      ],
+      "negativeTests": [
+        "OPS-T10",
+        "GPS-OFF02"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Offline records and GPS replay passed automated tests. Physical capture, restart and reconnect acceptance remains open.",
+      "testResult": "PARTIAL · offline queue preserved",
+      "outstandingWork": "Offline records and GPS replay passed automated tests. Physical capture, restart and reconnect acceptance remains open.",
+      "acceptanceGate": "G16",
+      "scenarios": [
+        "T44",
+        "T45",
+        "T62",
+        "T67",
+        "T68"
+      ]
+    },
+    {
+      "id": "DRV-R17",
+      "requirement": "History closed-only",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Attempt, decline, cancellation and delivery records",
+      "securityControl": "Closed outcomes only and current driver branch",
+      "implementationFiles": [
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DRV-T46–55"
+      ],
+      "negativeTests": [
+        "DRV-T46–55"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · History closed-only",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G17",
+      "scenarios": [
+        "T46",
+        "T47",
+        "T48",
+        "T49",
+        "T50",
+        "T51"
+      ]
+    },
+    {
+      "id": "DRV-R18",
+      "requirement": "History accurate aggregates",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Closed attempts in requested Lagos range",
+      "securityControl": "Totals computed before pagination; stable deterministic order",
+      "implementationFiles": [
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DRV-T46–55"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Totals and pagination passed. Restoring filter state across native restart was not requested by the code path and was not checked.",
+      "testResult": "PARTIAL · History accurate aggregates",
+      "outstandingWork": "Totals and pagination passed. Restoring filter state across native restart was not requested by the code path and was not checked.",
+      "acceptanceGate": "G18",
+      "scenarios": [
+        "T50",
+        "T51",
+        "T52",
+        "T55"
+      ]
+    },
+    {
+      "id": "DRV-R19",
+      "requirement": "Proof access controlled",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Original media, attempt and retained consent",
+      "securityControl": "Restrict media to the owning assignment and attempt",
+      "implementationFiles": [
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/mobile/DriverPhotoHistory.tsx"
+      ],
+      "testFiles": [
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DDI-PHOTO01",
+        "DRV-T46–55"
+      ],
+      "negativeTests": [
+        "DDI-PHOTO01",
+        "DRV-T46–55"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Existing private proof tests pass. New history proof download with consented media was not replayed in the browser or installed clients.",
+      "testResult": "PARTIAL · proof access controlled",
+      "outstandingWork": "Existing private proof tests pass. New history proof download with consented media was not replayed in the browser or installed clients.",
+      "acceptanceGate": "G19",
+      "scenarios": [
+        "T41",
+        "T53",
+        "T54"
+      ]
+    },
+    {
+      "id": "DRV-R20",
+      "requirement": "Profile real identity",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Authenticated driver and active branch",
+      "securityControl": "Own identity only",
+      "implementationFiles": [
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · Profile real identity",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G20",
+      "scenarios": [
+        "T56",
+        "T57"
+      ]
+    },
+    {
+      "id": "DRV-R21",
+      "requirement": "Vehicle read-only",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Vehicle of the authenticated driver’s current trip",
+      "securityControl": "No vehicle write UI",
+      "implementationFiles": [
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "No-vehicle state was verified. A live active trip with a vehicle was not exercised on all clients.",
+      "testResult": "PARTIAL · vehicle read-only",
+      "outstandingWork": "No-vehicle state was verified. A live active trip with a vehicle was not exercised on all clients.",
+      "acceptanceGate": "G21",
+      "scenarios": [
+        "T58"
+      ]
+    },
+    {
+      "id": "DRV-R22",
+      "requirement": "Compliance noneditable",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Existing account and compliance policies",
+      "securityControl": "No self-edit of role, branch or qualification",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-READ02"
+      ],
+      "negativeTests": [
+        "DDI-READ02"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The driver workspace exposes no compliance edit. A specific compliance-write negative test was not added.",
+      "testResult": "PARTIAL · compliance noneditable",
+      "outstandingWork": "The driver workspace exposes no compliance edit. A specific compliance-write negative test was not added.",
+      "acceptanceGate": "G22",
+      "scenarios": [
+        "T57",
+        "T59"
+      ]
+    },
+    {
+      "id": "DRV-R23",
+      "requirement": "Location consent",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Trip lease, consent and device permissions",
+      "securityControl": "Revocation, scope and expiry are checked by the server",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverTripTracking.tsx",
+        "apps/web/lib/driver-workspace.ts"
+      ],
+      "testFiles": [
+        "tests/live-rider-tracking.test.ts",
+        "tests/offline-driver-location.test.ts"
+      ],
+      "testIds": [
+        "LRT-T008",
+        "GPS-OFF02"
+      ],
+      "negativeTests": [
+        "LRT-T008",
+        "GPS-OFF02"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Revocation and delayed sync passed automated tests. Physical background and locked-screen GPS acceptance remains open.",
+      "testResult": "PARTIAL · location consent",
+      "outstandingWork": "Revocation and delayed sync passed automated tests. Physical background and locked-screen GPS acceptance remains open.",
+      "acceptanceGate": "G23",
+      "scenarios": [
+        "T09",
+        "T61",
+        "T67",
+        "T68",
+        "T69"
+      ]
+    },
+    {
+      "id": "DRV-R24",
+      "requirement": "Light/dark/system",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Existing appearance providers",
+      "securityControl": "Retains account preferences",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt",
+        "docs/driver-redesign/evidence/browser-dark.txt",
+        "docs/driver-redesign/evidence/ios-dark.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Web switched between all three choices. Installed iOS system light/dark passed. Native preference switching and Android dark acceptance remain open.",
+      "testResult": "PARTIAL · Light/Dark/System",
+      "outstandingWork": "Web switched between all three choices. Installed iOS system light/dark passed. Native preference switching and Android dark acceptance remain open.",
+      "acceptanceGate": "G24",
+      "scenarios": [
+        "T64",
+        "T73"
+      ]
+    },
+    {
+      "id": "DRV-R25",
+      "requirement": "Support/security",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Existing notification inbox, account and support services",
+      "securityControl": "Existing auth and user ownership",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Entry points exist. Support, password change and secure logout were not replayed on every client.",
+      "testResult": "PARTIAL · support/security",
+      "outstandingWork": "Entry points exist. Support, password change and secure logout were not replayed on every client.",
+      "acceptanceGate": "G25",
+      "scenarios": [
+        "T13",
+        "T20",
+        "T63",
+        "T65"
+      ]
+    },
+    {
+      "id": "DRV-R26",
+      "requirement": "Web responsive",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Authenticated responsive browser",
+      "securityControl": "Existing protected workspace",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-experience.module.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · web responsive",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G26",
+      "scenarios": [
+        "T75"
+      ]
+    },
+    {
+      "id": "DRV-R27",
+      "requirement": "Native ios",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Signed-in synthetic driver on fresh iPhone Simulator build",
+      "securityControl": "Role-scoped existing API",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/ios-build.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Physical-device and signed-distribution testing remains open.",
+      "testResult": "PARTIAL · native iOS",
+      "outstandingWork": "Physical-device and signed-distribution testing remains open.",
+      "acceptanceGate": "G27",
+      "scenarios": [
+        "T01",
+        "T66",
+        "T70"
+      ]
+    },
+    {
+      "id": "DRV-R28",
+      "requirement": "Native android",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Android app packaging and Pixel 8 emulator",
+      "securityControl": "Isolated demo backend",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/native-export.txt",
+        "docs/driver-redesign/evidence/full-regression.txt",
+        "docs/driver-redesign/evidence/android-ui.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "The unminified emulator build passed the four-screen smoke test. Standard minified release and physical devices remain open.",
+      "testResult": "PARTIAL · native Android",
+      "outstandingWork": "The unminified emulator build passed the four-screen smoke test. Standard minified release and physical devices remain open.",
+      "acceptanceGate": "G28",
+      "scenarios": [
+        "T66",
+        "T70",
+        "T71"
+      ]
+    },
+    {
+      "id": "DRV-R29",
+      "requirement": "Accessibility",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Accessible roles and app layout",
+      "securityControl": "Keyboard and device controls retain labels",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "VoiceOver, TalkBack and large text checks remain open.",
+      "testResult": "PARTIAL · accessibility",
+      "outstandingWork": "VoiceOver, TalkBack and large text checks remain open.",
+      "acceptanceGate": "G29",
+      "scenarios": [
+        "T70",
+        "T72",
+        "T74"
+      ]
+    },
+    {
+      "id": "DRV-R30",
+      "requirement": "Cross-role security",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Authenticated role, branch and delivery ownership",
+      "securityControl": "Reject privilege expansion, foreign driver and finance",
+      "implementationFiles": [
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/driver-experience.tsx"
+      ],
+      "testFiles": [
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DRV-T46–55",
+        "DDI-READ02"
+      ],
+      "negativeTests": [
+        "DRV-T46–55",
+        "DDI-READ02"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · cross-role security",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G30",
+      "scenarios": [
+        "T03",
+        "T39",
+        "T40",
+        "T41",
+        "T54",
+        "T77",
+        "T78"
+      ]
+    },
+    {
+      "id": "DRV-R31",
+      "requirement": "Payment/stock/custody regressions",
+      "priority": "P0",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Existing stock, net payment and cylinder ledgers",
+      "securityControl": "Required approvals and custody checks before mutation",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-PAY01",
+        "DDI-S060"
+      ],
+      "negativeTests": [
+        "DDI-PAY01",
+        "DDI-S060"
+      ],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · payment/stock/custody regressions",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G31",
+      "scenarios": [
+        "T27",
+        "T28",
+        "T29",
+        "T76"
+      ]
+    },
+    {
+      "id": "DRV-R32",
+      "requirement": "Tests and screenshots",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Regression and browser/device artifacts",
+      "securityControl": "Retain evidence and incomplete cases",
+      "implementationFiles": [
+        "docs/driver-redesign/04-test-results.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt",
+        "docs/driver-redesign/evidence/ios-ui.txt",
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Full theme, device and physical handover coverage remains open.",
+      "testResult": "PARTIAL · tests and screenshots",
+      "outstandingWork": "Full theme, device and physical handover coverage remains open.",
+      "acceptanceGate": "G32",
+      "scenarios": [
+        "T66",
+        "T73",
+        "T75"
+      ]
+    },
+    {
+      "id": "DRV-R33",
+      "requirement": "Rtm",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Approved brief, requirement map and executed checks",
+      "securityControl": "Open gates stay in denominators",
+      "implementationFiles": [
+        "docs/traceability/README.md",
+        "docs/driver-redesign/06-final-report.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · RTM",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G33",
+      "scenarios": [
+        "T79"
+      ]
+    },
+    {
+      "id": "DRV-R34",
+      "requirement": "Rollback",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Source change, unchanged schema and previous release",
+      "securityControl": "Preserve ledgers, proof and queued records",
+      "implementationFiles": [
+        "docs/driver-redesign/05-rollback-release.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Rollback is documented. A hosted rollback drill was not run.",
+      "testResult": "PARTIAL · rollback",
+      "outstandingWork": "Rollback is documented. A hosted rollback drill was not run.",
+      "acceptanceGate": "G34",
+      "scenarios": [
+        "T80"
+      ]
+    },
+    {
+      "id": "DRV-R35",
+      "requirement": "Explicit go/no-go",
+      "priority": "P1",
+      "scope": "Driver workspace",
+      "uiReference": "DRV-001–004 approved references and driver brief",
+      "route": "/admin/deliveries and native driver Home, Orders, History, Profile",
+      "dataSource": "Production release decision and phase evidence",
+      "securityControl": "No live activation or deployment",
+      "implementationFiles": [
+        "docs/driver-redesign/05-rollback-release.md",
+        "docs/driver-redesign/06-final-report.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The mapped checks passed and cover this requirement.",
+      "testResult": "PASS · explicit GO/NO-GO",
+      "outstandingWork": "None for this requirement.",
+      "acceptanceGate": "G35",
+      "scenarios": [
+        "T80"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "T01",
+      "scenario": "Native sign-in",
+      "requirements": [
+        "DRV-R03",
+        "DRV-R27"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T02",
+      "scenario": "Driver role",
+      "requirements": [
+        "DRV-R03",
+        "DRV-R04"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T03",
+      "scenario": "Branch scope",
+      "requirements": [
+        "DRV-R04",
+        "DRV-R30"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T04",
+      "scenario": "Availability on",
+      "requirements": [
+        "DRV-R06"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T05",
+      "scenario": "Availability off",
+      "requirements": [
+        "DRV-R06"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T06",
+      "scenario": "Offline availability",
+      "requirements": [
+        "DRV-R06"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T07",
+      "scenario": "Backend freshness",
+      "requirements": [
+        "DRV-R07"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T08",
+      "scenario": "GPS permission",
+      "requirements": [
+        "DRV-R08"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T09",
+      "scenario": "Trip consent",
+      "requirements": [
+        "DRV-R23"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T10",
+      "scenario": "No trip",
+      "requirements": [
+        "DRV-R08"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T11",
+      "scenario": "Home counts",
+      "requirements": [
+        "DRV-R05",
+        "DRV-R09"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T12",
+      "scenario": "Unavailable counts",
+      "requirements": [
+        "DRV-R05",
+        "DRV-R09"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T13",
+      "scenario": "Notification count",
+      "requirements": [
+        "DRV-R05",
+        "DRV-R25"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T14",
+      "scenario": "Stable toggle layout",
+      "requirements": [
+        "DRV-R05"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T15",
+      "scenario": "Eligible actions",
+      "requirements": [
+        "DRV-R05"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T16",
+      "scenario": "Unsupported scanning",
+      "requirements": [
+        "DRV-R11"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T17",
+      "scenario": "Active assignment priority",
+      "requirements": [
+        "DRV-R05"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T18",
+      "scenario": "Empty Home",
+      "requirements": [
+        "DRV-R05"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T19",
+      "scenario": "Reconnect",
+      "requirements": [
+        "DRV-R07"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T20",
+      "scenario": "Logout",
+      "requirements": [
+        "DRV-R25"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T21",
+      "scenario": "Assigned list",
+      "requirements": [
+        "DRV-R10"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T22",
+      "scenario": "Current attempt ownership",
+      "requirements": [
+        "DRV-R04",
+        "DRV-R10"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T23",
+      "scenario": "No unassigned claims",
+      "requirements": [
+        "DRV-R11"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T24",
+      "scenario": "Acknowledge assignment",
+      "requirements": [
+        "DRV-R12"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T25",
+      "scenario": "Assignment expiry",
+      "requirements": [
+        "DRV-R12"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T26",
+      "scenario": "Pickup guards",
+      "requirements": [
+        "DRV-R13"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T27",
+      "scenario": "Stock and cylinder checks",
+      "requirements": [
+        "DRV-R13",
+        "DRV-R31"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T28",
+      "scenario": "Vehicle capacity",
+      "requirements": [
+        "DRV-R13",
+        "DRV-R31"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T29",
+      "scenario": "Payment and COD",
+      "requirements": [
+        "DRV-R13",
+        "DRV-R31"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T30",
+      "scenario": "Out for delivery",
+      "requirements": [
+        "DRV-R14"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T31",
+      "scenario": "Arrival",
+      "requirements": [
+        "DRV-R14"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T32",
+      "scenario": "Photo proof",
+      "requirements": [
+        "DRV-R15"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T33",
+      "scenario": "Completion",
+      "requirements": [
+        "DRV-R14"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T34",
+      "scenario": "Decline",
+      "requirements": [
+        "DRV-R12",
+        "DRV-R14"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T35",
+      "scenario": "Failure and returns",
+      "requirements": [
+        "DRV-R14"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T36",
+      "scenario": "Version conflict",
+      "requirements": [
+        "DRV-R12",
+        "DRV-R14"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T37",
+      "scenario": "Idempotent retry",
+      "requirements": [
+        "DRV-R12",
+        "DRV-R14"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T38",
+      "scenario": "Reassignment",
+      "requirements": [
+        "DRV-R14"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T39",
+      "scenario": "Revocation",
+      "requirements": [
+        "DRV-R04",
+        "DRV-R30"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T40",
+      "scenario": "Branch isolation",
+      "requirements": [
+        "DRV-R04",
+        "DRV-R30"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T41",
+      "scenario": "Customer privacy",
+      "requirements": [
+        "DRV-R04",
+        "DRV-R19",
+        "DRV-R30"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T42",
+      "scenario": "Verified directions",
+      "requirements": [
+        "DRV-R10"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T43",
+      "scenario": "Missing destination",
+      "requirements": [
+        "DRV-R10"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T44",
+      "scenario": "Offline queue",
+      "requirements": [
+        "DRV-R16"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T45",
+      "scenario": "Sync",
+      "requirements": [
+        "DRV-R16"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T46",
+      "scenario": "Closed History",
+      "requirements": [
+        "DRV-R17"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T47",
+      "scenario": "Active orders excluded",
+      "requirements": [
+        "DRV-R17"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T48",
+      "scenario": "Delivered timestamp",
+      "requirements": [
+        "DRV-R17"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T49",
+      "scenario": "Failed and cancelled outcomes",
+      "requirements": [
+        "DRV-R17"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T50",
+      "scenario": "Lagos date and status filters",
+      "requirements": [
+        "DRV-R17",
+        "DRV-R18"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T51",
+      "scenario": "History pagination",
+      "requirements": [
+        "DRV-R17",
+        "DRV-R18"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T52",
+      "scenario": "History totals",
+      "requirements": [
+        "DRV-R15",
+        "DRV-R18"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T53",
+      "scenario": "Immutable proof",
+      "requirements": [
+        "DRV-R15",
+        "DRV-R19"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T54",
+      "scenario": "Unauthorized evidence denied",
+      "requirements": [
+        "DRV-R15",
+        "DRV-R19",
+        "DRV-R30"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T55",
+      "scenario": "Filter persistence",
+      "requirements": [
+        "DRV-R18"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T56",
+      "scenario": "Own identity",
+      "requirements": [
+        "DRV-R20"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T57",
+      "scenario": "Role and branch are read-only",
+      "requirements": [
+        "DRV-R20",
+        "DRV-R22"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T58",
+      "scenario": "Vehicle is read-only",
+      "requirements": [
+        "DRV-R21"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T59",
+      "scenario": "Compliance is immutable",
+      "requirements": [
+        "DRV-R22"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T60",
+      "scenario": "OS permission status",
+      "requirements": [
+        "DRV-R08"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T61",
+      "scenario": "Active-trip consent",
+      "requirements": [
+        "DRV-R23"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T62",
+      "scenario": "Queued sync",
+      "requirements": [
+        "DRV-R16"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T63",
+      "scenario": "Notifications",
+      "requirements": [
+        "DRV-R25"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T64",
+      "scenario": "Appearance",
+      "requirements": [
+        "DRV-R24"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T65",
+      "scenario": "Secure logout",
+      "requirements": [
+        "DRV-R25"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T66",
+      "scenario": "iOS and Android build",
+      "requirements": [
+        "DRV-R27",
+        "DRV-R28",
+        "DRV-R32"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T67",
+      "scenario": "Physical background GPS",
+      "requirements": [
+        "DRV-R16",
+        "DRV-R23"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T68",
+      "scenario": "Screen lock",
+      "requirements": [
+        "DRV-R16",
+        "DRV-R23"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T69",
+      "scenario": "App restart",
+      "requirements": [
+        "DRV-R23"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T70",
+      "scenario": "Safe areas",
+      "requirements": [
+        "DRV-R27",
+        "DRV-R28",
+        "DRV-R29"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T71",
+      "scenario": "Android Back",
+      "requirements": [
+        "DRV-R28"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T72",
+      "scenario": "VoiceOver and TalkBack",
+      "requirements": [
+        "DRV-R29"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T73",
+      "scenario": "Dark, light and system",
+      "requirements": [
+        "DRV-R24",
+        "DRV-R32"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/ios-ui.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T74",
+      "scenario": "Large text",
+      "requirements": [
+        "DRV-R29"
+      ],
+      "status": "NOT_RUN",
+      "evidence": [],
+      "notes": "See mapped requirement for outstanding acceptance."
+    },
+    {
+      "id": "T75",
+      "scenario": "Web viewport overflow",
+      "requirements": [
+        "DRV-R26",
+        "DRV-R32"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T76",
+      "scenario": "Payment, stock and cylinder regression",
+      "requirements": [
+        "DRV-R31"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T77",
+      "scenario": "Dispatch security regression",
+      "requirements": [
+        "DRV-R11",
+        "DRV-R30"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T78",
+      "scenario": "Route and permission regression",
+      "requirements": [
+        "DRV-R01",
+        "DRV-R02",
+        "DRV-R03",
+        "DRV-R30"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/browser.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T79",
+      "scenario": "Traceability validation",
+      "requirements": [
+        "DRV-R33"
+      ],
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-redesign/evidence/traceability.txt"
+      ],
+      "notes": "Observed in the cited check."
+    },
+    {
+      "id": "T80",
+      "scenario": "Rollback evidence",
+      "requirements": [
+        "DRV-R34",
+        "DRV-R35"
+      ],
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/driver-redesign/evidence/full-regression.txt"
+      ],
+      "notes": "See mapped requirement for outstanding acceptance."
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "gate": "audit",
+      "requirements": [
+        "DRV-R01"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G02",
+      "gate": "baseline",
+      "requirements": [
+        "DRV-R02"
+      ],
+      "status": "PARTIAL",
+      "notes": "Pre-change device captures and a separate baseline release build were not run."
+    },
+    {
+      "id": "G03",
+      "gate": "route parity",
+      "requirements": [
+        "DRV-R03"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G04",
+      "gate": "driver role scoping",
+      "requirements": [
+        "DRV-R04"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G05",
+      "gate": "Home compact",
+      "requirements": [
+        "DRV-R05"
+      ],
+      "status": "PARTIAL",
+      "notes": "Toggle layout stability and the empty Home state were not replayed on each installed client."
+    },
+    {
+      "id": "G06",
+      "gate": "availability verified",
+      "requirements": [
+        "DRV-R06"
+      ],
+      "status": "PARTIAL",
+      "notes": "The active-assignment refusal and browser offline state passed. A clean on/off cycle remains to be replayed on devices."
+    },
+    {
+      "id": "G07",
+      "gate": "connectivity separate",
+      "requirements": [
+        "DRV-R07"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G08",
+      "gate": "GPS status honest",
+      "requirements": [
+        "DRV-R08"
+      ],
+      "status": "PARTIAL",
+      "notes": "Not-granted and no active trip were displayed. Permission transitions on physical devices remain open."
+    },
+    {
+      "id": "G09",
+      "gate": "actual counts",
+      "requirements": [
+        "DRV-R09"
+      ],
+      "status": "PARTIAL",
+      "notes": "The Home count was observed with a real fixture. Error and all-zero Home states were not exercised in both native clients."
+    },
+    {
+      "id": "G10",
+      "gate": "Orders backend list",
+      "requirements": [
+        "DRV-R10"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G11",
+      "gate": "no self-claim",
+      "requirements": [
+        "DRV-R11"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G12",
+      "gate": "assignment acknowledge",
+      "requirements": [
+        "DRV-R12"
+      ],
+      "status": "PARTIAL",
+      "notes": "Expired and repeated requests were covered in regression. Fresh web and mobile acknowledgement was not replayed in the UI."
+    },
+    {
+      "id": "G13",
+      "gate": "pickup guards",
+      "requirements": [
+        "DRV-R13"
+      ],
+      "status": "PARTIAL",
+      "notes": "Backend guards were exercised. A physical inspected pickup remains open."
+    },
+    {
+      "id": "G14",
+      "gate": "delivery transitions",
+      "requirements": [
+        "DRV-R14"
+      ],
+      "status": "PARTIAL",
+      "notes": "Current driver design was not exercised through a real delivery handover or return."
+    },
+    {
+      "id": "G15",
+      "gate": "proof server-confirmed",
+      "requirements": [
+        "DRV-R15"
+      ],
+      "status": "PARTIAL",
+      "notes": "Backend proof and privacy regression passed. A fresh native photo and handover were not captured."
+    },
+    {
+      "id": "G16",
+      "gate": "offline queue preserved",
+      "requirements": [
+        "DRV-R16"
+      ],
+      "status": "PARTIAL",
+      "notes": "Offline records and GPS replay passed automated tests. Physical capture, restart and reconnect acceptance remains open."
+    },
+    {
+      "id": "G17",
+      "gate": "History closed-only",
+      "requirements": [
+        "DRV-R17"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G18",
+      "gate": "History accurate aggregates",
+      "requirements": [
+        "DRV-R18"
+      ],
+      "status": "PARTIAL",
+      "notes": "Totals and pagination passed. Restoring filter state across native restart was not requested by the code path and was not checked."
+    },
+    {
+      "id": "G19",
+      "gate": "proof access controlled",
+      "requirements": [
+        "DRV-R19"
+      ],
+      "status": "PARTIAL",
+      "notes": "Existing private proof tests pass. New history proof download with consented media was not replayed in the browser or installed clients."
+    },
+    {
+      "id": "G20",
+      "gate": "Profile real identity",
+      "requirements": [
+        "DRV-R20"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G21",
+      "gate": "vehicle read-only",
+      "requirements": [
+        "DRV-R21"
+      ],
+      "status": "PARTIAL",
+      "notes": "No-vehicle state was verified. A live active trip with a vehicle was not exercised on all clients."
+    },
+    {
+      "id": "G22",
+      "gate": "compliance noneditable",
+      "requirements": [
+        "DRV-R22"
+      ],
+      "status": "PARTIAL",
+      "notes": "The driver workspace exposes no compliance edit. A specific compliance-write negative test was not added."
+    },
+    {
+      "id": "G23",
+      "gate": "location consent",
+      "requirements": [
+        "DRV-R23"
+      ],
+      "status": "PARTIAL",
+      "notes": "Revocation and delayed sync passed automated tests. Physical background and locked-screen GPS acceptance remains open."
+    },
+    {
+      "id": "G24",
+      "gate": "Light/Dark/System",
+      "requirements": [
+        "DRV-R24"
+      ],
+      "status": "PARTIAL",
+      "notes": "Web switched between all three choices. Installed iOS system light/dark passed. Native preference switching and Android dark acceptance remain open."
+    },
+    {
+      "id": "G25",
+      "gate": "support/security",
+      "requirements": [
+        "DRV-R25"
+      ],
+      "status": "PARTIAL",
+      "notes": "Entry points exist. Support, password change and secure logout were not replayed on every client."
+    },
+    {
+      "id": "G26",
+      "gate": "web responsive",
+      "requirements": [
+        "DRV-R26"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G27",
+      "gate": "native iOS",
+      "requirements": [
+        "DRV-R27"
+      ],
+      "status": "PARTIAL",
+      "notes": "Physical-device and signed-distribution testing remains open."
+    },
+    {
+      "id": "G28",
+      "gate": "native Android",
+      "requirements": [
+        "DRV-R28"
+      ],
+      "status": "PARTIAL",
+      "notes": "The unminified emulator build passed the four-screen smoke test. Standard minified release and physical devices remain open."
+    },
+    {
+      "id": "G29",
+      "gate": "accessibility",
+      "requirements": [
+        "DRV-R29"
+      ],
+      "status": "PARTIAL",
+      "notes": "VoiceOver, TalkBack and large text checks remain open."
+    },
+    {
+      "id": "G30",
+      "gate": "cross-role security",
+      "requirements": [
+        "DRV-R30"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G31",
+      "gate": "payment/stock/custody regressions",
+      "requirements": [
+        "DRV-R31"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G32",
+      "gate": "tests and screenshots",
+      "requirements": [
+        "DRV-R32"
+      ],
+      "status": "PARTIAL",
+      "notes": "Full theme, device and physical handover coverage remains open."
+    },
+    {
+      "id": "G33",
+      "gate": "RTM",
+      "requirements": [
+        "DRV-R33"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    },
+    {
+      "id": "G34",
+      "gate": "rollback",
+      "requirements": [
+        "DRV-R34"
+      ],
+      "status": "PARTIAL",
+      "notes": "Rollback is documented. A hosted rollback drill was not run."
+    },
+    {
+      "id": "G35",
+      "gate": "explicit GO/NO-GO",
+      "requirements": [
+        "DRV-R35"
+      ],
+      "status": "PASS",
+      "notes": "None for this requirement."
+    }
+  ]
+}

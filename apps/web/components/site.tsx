@@ -1,4 +1,7 @@
 "use client";
+import { RefillProfiles } from "./refill-profiles";
+import { Wrench } from "lucide-react";
+import { hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
 import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
 
 import { CustomerWallet } from "./customer-wallet";
@@ -51,7 +54,6 @@ import {
   AccountSettings,
   Recovery,
   SupportDesk,
-  RefillProfiles,
 } from "./workflows";
 import {
   useState,
@@ -354,6 +356,7 @@ export default function Site({
             pathname === "/bookings" ? (
             <div className="container page">
               <ProfessionalServices
+                publicPage
                 onBundle={(b) => {
                   const next = b.products.map((p: any) => ({
                     productId: p.productId,
@@ -407,7 +410,7 @@ export default function Site({
             </div>
           ) : pathname === "/consumption" ? (
             <div className="container page">
-              <RefillProfiles />
+              <RefillProfiles key={`${user?.id}:${user?.role}:${user?.branchId}`} />
             </div>
           ) : [
               "/forgot-password",
@@ -500,12 +503,18 @@ function Header() {
 }
 function Home() {
   const { catalogue, user } = useShop();
+  const deliveryAreas = catalogue.gas.locations
+    .filter((area: { coverage?: string }) =>
+      hasConfirmedDeliveryCoverage(area.coverage),
+    )
+    .map((area: { name: string }) => area.name)
+    .join(", ");
   preload(
     catalogue.website?.heroImage ?? "/assets/easygas-cooking-hero-v1.webp",
     { as: "image", fetchPriority: "high" },
   );
   return (
-    <>
+    <div className="compact-home">
       <section className="hero">
         <div
           className="hero-photo"
@@ -531,8 +540,10 @@ function Home() {
               {catalogue.website?.heroSubheading ?? "More Cooking. Less Worry."}
             </h2>
             <p>
-              Order the amount of cooking gas you need with home delivery across{" "}
-              {catalogue.gas.locations.map((l: any) => l.name).join(", ")}.
+              Order the amount of cooking gas you need for home delivery.
+              {deliveryAreas
+                ? ` Confirmed delivery areas include ${deliveryAreas}.`
+                : " Check your address for current coverage."}
             </p>
             <div className="hero-buttons">
               <a href="#quick-order" className="button big">
@@ -573,16 +584,24 @@ function Home() {
       </section>
       <div className="container home-content">
         <div className="home-main">
-          <section className="surface service-home">
-            <span className="eyebrow">PROFESSIONAL GAS SERVICES</span>
-            <h2>
-              {catalogue.website?.serviceHeading ??
-                "Care for your cooking equipment."}
-            </h2>
-            <div className="metric-grid">
+          <section className="service-home" aria-labelledby="home-services-title">
+            <div className="home-service-intro">
+              <span className="eyebrow">PROFESSIONAL GAS SERVICES</span>
+              <h2 id="home-services-title">
+                {catalogue.website?.serviceHeading ??
+                  "Care for your cooking equipment."}
+              </h2>
+              <p>
+                Cooker servicing, installations and gas safety checks by eligible personnel.
+              </p>
+              <Link className="button" href="/services">
+                Explore services <ArrowRight size={16} />
+              </Link>
+            </div>
+            <div className="home-service-cards">
               {(catalogue.homeServices ?? []).map((service: any) => (
-                <article key={service.id}>
-                  {service.image_id && (
+                <article className="surface home-service-card" key={service.id}>
+                  {service.image_id ? (
                     <img
                       src={`/api/media/${service.image_id}`}
                       alt={service.name}
@@ -590,6 +609,8 @@ function Home() {
                       width="320"
                       height="160"
                     />
+                  ) : (
+                    <span className="home-service-icon"><Wrench size={24} aria-hidden="true" /></span>
                   )}
                   <h3>{service.name}</h3>
                   <p>{service.config.description}</p>
@@ -599,19 +620,9 @@ function Home() {
                 </article>
               ))}
               {!catalogue.homeServices?.length && (
-                <p>
-                  Explore our service catalogue for current availability and
-                  coverage.
-                </p>
+                <p>Explore our service catalogue for current availability and coverage.</p>
               )}
             </div>
-            <p>
-              Cooker servicing, installations and gas safety checks by eligible
-              personnel.
-            </p>
-            <Link className="text-link" href="/services">
-              Explore services →
-            </Link>
           </section>
           <section className="product-section">
             <div className="section-heading">
@@ -650,6 +661,7 @@ function Home() {
             <ProductGrid compact />
           </section>
         </div>
+        <HowItWorks compact />
         <aside className="home-aside">
           <AppPromo />
           <Link href="/rewards" className="reward-promo">
@@ -669,15 +681,15 @@ function Home() {
             </div>
           </Link>
         </aside>
-        <HowItWorks compact />
       </div>
       <PublicTestimonials initialRows={catalogue.testimonials ?? []} />
       <section className="coverage-home container surface">
         <div>
           <span className="eyebrow">DELIVERED TO YOUR DOOR</span>
           <h2>
-            Home delivery across{" "}
-            {catalogue.gas.locations.map((l: any) => l.name).join(", ")}.
+            {deliveryAreas
+              ? `Home delivery across ${deliveryAreas}.`
+              : "Check delivery coverage for your address."}
           </h2>
           <p>
             Enter your delivery address to confirm current coverage,
@@ -699,7 +711,7 @@ function Home() {
           </p>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 function QuickOrder() {
@@ -1703,7 +1715,7 @@ function Account({ section }: { section: string }) {
     let active = true;
     setData(null);
     setError("");
-    if (user) {
+    if (user && !["/rewards", "/refill"].includes(section)) {
       const action = ["/orders", "/track"].includes(section)
         ? "orders"
         : section === "/schedules"
@@ -1745,6 +1757,10 @@ function Account({ section }: { section: string }) {
         </Empty>
       </div>
     );
+  if (section === "/rewards")
+    return <div className="container page"><EasyRewards key={`${user.id}:${user.role}:${user.branchId}`} /></div>;
+  if (section === "/refill")
+    return <div className="container page"><RefillProfiles smart key={`${user.id}:${user.role}:${user.branchId}`} /></div>;
   async function createSchedule(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setBusy(true);
@@ -1919,8 +1935,6 @@ function Account({ section }: { section: string }) {
           )
         ) : section === "/wallet" ? (
           <CustomerWallet data={data} />
-        ) : section === "/rewards" ? (
-          <EasyRewards />
         ) : section === "/schedules" ? (
           <>
             <Notice message="Refill plans save your preferred dates. They do not automatically charge you or dispatch gas; each order requires confirmation." />
@@ -1998,22 +2012,6 @@ function Account({ section }: { section: string }) {
                 Save Refill Plan <CalendarDays size={17} />
               </button>
             </form>
-          </>
-        ) : section === "/refill" ? (
-          <>
-            <RefillProfiles embedded />
-            <p>
-              <Link href="/account-settings">Manage reminder preferences</Link>{" "}
-              ·{" "}
-              <Link href="/gas-order">
-                Already refilled? View ordering options
-              </Link>
-            </p>
-            <p>
-              Refills purchased elsewhere cannot be verified automatically. The
-              already-refilled option records a self-report and pauses outdated
-              estimates until a new verified purchase.
-            </p>
           </>
         ) : (
           <>

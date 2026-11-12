@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Card, Copy, Button } from "./CustomerUI";
 import { Text } from "./typography";
 import { useTheme } from "./theme";
+import NativeRiderMap from "./NativeRiderMap";
+import type { RiderFix } from "../../packages/business-rules/src/rider-location";
 export default function TrackingSummary({
   order,
   onSupport,
@@ -12,6 +14,18 @@ export default function TrackingSummary({
   onSupport: () => void;
 }) {
   const { colors } = useTheme();
+  const fix: RiderFix | undefined = order.gps?.fix;
+  const [expired, setExpired] = useState("");
+  useEffect(() => {
+    if (!fix) return;
+    const timeout = setTimeout(
+      () => setExpired(fix.expiresAt),
+      Math.max(0, Date.parse(fix.expiresAt) - Date.now()),
+    );
+    return () => clearTimeout(timeout);
+  }, [fix]);
+  const current =
+    fix && expired !== fix.expiresAt && Date.parse(fix.expiresAt) > Date.now();
   return (
     <View style={{ gap: 12 }}>
       <Card accent>
@@ -42,9 +56,22 @@ export default function TrackingSummary({
             timeZone: "Africa/Lagos",
           })}
         </Copy>
+        {current && (
+          <NativeRiderMap
+            points={[
+              {
+                id: order.id,
+                label: "Assigned rider’s recorded location",
+                lat: fix.lat,
+                lng: fix.lng,
+              },
+            ]}
+          />
+        )}
         <Copy>
-          Live GPS and arrival estimate are unavailable. This view shows
-          recorded order events.
+          {current
+            ? `Last recorded rider GPS: ${new Date(fix.recordedAt).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })} (Lagos). Accuracy ±${Math.round(fix.accuracy)} m. ETA unavailable.`
+            : "Rider location and ETA are unavailable. Check your scheduled delivery window."}
         </Copy>
       </Card>
       {order.events?.map((event: any, index: number) => (

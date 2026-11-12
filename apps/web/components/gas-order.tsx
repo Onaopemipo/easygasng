@@ -27,6 +27,22 @@ import {
   nextGasQuantity,
   gasMoney as money,
 } from "../../../packages/business-rules/src/gas-pricing";
+import {
+  deliveryCoveragePending,
+  hasConfirmedDeliveryCoverage,
+} from "../../../packages/business-rules/src/delivery-coverage";
+
+function CoverageHelp() {
+  return (
+    <div role="status">
+      <p>{deliveryCoveragePending}</p>
+      <Link className="text-link" href="/contact">
+        Contact EasyGas
+      </Link>
+    </div>
+  );
+}
+
 export default function GasOrder({
   catalogue,
   user,
@@ -69,9 +85,25 @@ export default function GasOrder({
   const [compactKg, setCompactKg] = useState("");
   const [pricingBranch, setPricingBranch] = useState<string | null>(null);
   const compactSubmit = useRef(false);
-  const areaBranch = config?.locations?.find(
+  const requestLock = useRef(false);
+  const details = useRef<HTMLDetailsElement>(null);
+  const quoteKey = JSON.stringify([
+    lines,
+    items,
+    address,
+    date,
+    window,
+    method,
+    includeAppointments,
+  ]);
+  const latestQuoteKey = useRef(quoteKey);
+  latestQuoteKey.current = quoteKey;
+  const selectedArea = config?.locations?.find(
     (l: any) => l.id === address.locationId,
-  )?.branch_id;
+  );
+  const areaBranch = selectedArea?.branch_id;
+  const coveragePending =
+    selectedArea && !hasConfirmedDeliveryCoverage(selectedArea.coverage);
   const requestedBranch = areaBranch ?? "lagos";
   const cardEnabled = useCardCheckout(user?.id);
   useEffect(() => {
@@ -94,6 +126,7 @@ export default function GasOrder({
   }, [catalogue?.codEnabled, catalogue?.walletEnabled, cardEnabled, method]);
   useEffect(() => {
     let live = true;
+    setPricingBranch(null);
     const controller = new AbortController();
     const timeout = setTimeout(() => {
       if (live) {
@@ -324,30 +357,83 @@ export default function GasOrder({
     ["minimumKg", "maximumKg", "incrementKg", "precision"].every(
       (k) => config.policy[k] != null,
     );
+  const priceReady =
+    pricingBranch === requestedBranch &&
+    Number.isSafeInteger(config.priceKobo) &&
+    config.priceKobo > 0;
+  const feeReady =
+    pricingBranch === requestedBranch &&
+    config.feeVersion != null &&
+    Number.isSafeInteger(config.deliveryKobo) &&
+    config.deliveryKobo >= 0;
+  const productsPriced = physical.every(
+    (item) =>
+      Number(
+        catalogue.products.find((product: any) => product.id === item.productId)
+          ?.price_kobo,
+      ) > 0,
+  );
+  const currentQuote = quote?.inputKey === quoteKey ? quote : null;
+  const canReview =
+    !!areaBranch &&
+    !coveragePending &&
+    configured &&
+    estimateValid &&
+    priceReady &&
+    feeReady &&
+    catalogue.orderingEnabled &&
+    !!method;
+
+  function editOrder(section: string) {
+    setQuote(null);
+    document
+      .getElementById(section)
+      ?.querySelector<HTMLElement>("input, select, textarea, button")
+      ?.focus();
+  }
+
   async function review(e: FormEvent) {
     e.preventDefault();
+    if (!canReview || requestLock.current) return;
+    requestLock.current = true;
     setBusy(true);
     setError("");
     try {
-      const q = await api("gas.quote", {
-        lines,
-        items: physical,
-        branchId: config.locations.find((l: any) => l.id === address.locationId)
-          ?.branch_id,
-      });
+      const q = await api(
+        "gas.quote",
+        {
+          lines,
+          items: physical,
+          branchId: areaBranch,
+          locationId: address.locationId,
+        },
+        { signal: AbortSignal.timeout(15000) },
+      );
+      if (latestQuoteKey.current !== quoteKey) return;
       setConfig(q);
       setQuote({
+        inputKey: quoteKey,
         ...q,
         totalKobo: q.subtotalKobo + q.deliveryKobo + q.physicalSubtotalKobo,
       });
     } catch (e: any) {
+      if (latestQuoteKey.current !== quoteKey) return;
       setQuote(null);
-      setError(e.message);
+      setError(
+        e.name === "TimeoutError"
+          ? "The quotation timed out. Try again."
+          : e.message,
+      );
+      if (e.code === "DELIVERY_COVERAGE_PENDING")
+        retryCatalogue((revision) => revision + 1);
     } finally {
+      requestLock.current = false;
       setBusy(false);
     }
   }
   async function confirm() {
+    if (coveragePending || !currentQuote || requestLock.current) return;
+    requestLock.current = true;
     setBusy(true);
     setError("");
     try {
@@ -355,10 +441,10 @@ export default function GasOrder({
         items: physical,
         gasLines: lines,
         pricing: {
-          priceVersion: quote.priceVersion,
-          feeVersion: quote.feeVersion,
-          policyVersion: quote.policyVersion,
-          totalKobo: quote.totalKobo,
+          priceVersion: currentQuote.priceVersion,
+          feeVersion: currentQuote.feeVersion,
+          policyVersion: currentQuote.policyVersion,
+          totalKobo: currentQuote.totalKobo,
         },
         address,
         date,
@@ -392,10 +478,9 @@ export default function GasOrder({
     } catch (e: any) {
       setQuote(null);
       setError(e.message);
-      api("gas.catalogue?branchId=" + encodeURIComponent(requestedBranch))
-        .then(setConfig)
-        .catch(() => {});
+      retryCatalogue((revision) => revision + 1);
     } finally {
+      requestLock.current = false;
       setBusy(false);
     }
   }
@@ -430,6 +515,7 @@ export default function GasOrder({
       feeReady &&
       estimateValid &&
       areaBranch &&
+      !coveragePending &&
       address.street.trim().length >= 8;
     return (
       <section
@@ -598,10 +684,14 @@ export default function GasOrder({
                 {config.locations.map((l: any) => (
                   <option key={l.id} value={l.id}>
                     {l.name}
+                    {hasConfirmedDeliveryCoverage(l.coverage)
+                      ? ""
+                      : " (coverage pending)"}
                   </option>
                 ))}
               </select>
             </div>
+            {coveragePending && <CoverageHelp />}
             <label htmlFor="compact-address">House address</label>
             <div className="compact-gas-control">
               <House aria-hidden="true" />
@@ -678,394 +768,602 @@ export default function GasOrder({
     );
   }
   return (
-    <section className="gas-order">
-      <h1>Cooking gas, delivered.</h1>
-      <p>
-        {money(config.priceKobo)}/kg · One flat delivery fee of{" "}
-        {money(config.deliveryKobo)} per order.
-      </p>
+    <section className="gas-order gas-order-workspace">
+      <header className="gas-order-heading">
+        <div>
+          <h1>Order Cooking Gas</h1>
+          <p>
+            Choose your cylinder size, enter the gas quantity and arrange home
+            delivery.
+          </p>
+        </div>
+        <img
+          src="/assets/cylinder-illustration.png"
+          alt=""
+          width="104"
+          height="120"
+        />
+      </header>
       {!configured && (
-        <Notice message="Gas ordering is awaiting business quantity limits and verified stock. Prices below are estimates; ordering opens after configuration." />
+        <Notice message="Gas ordering is awaiting business quantity limits and verified stock." />
       )}
-      <form onSubmit={review} className="surface">
-        <h2>Your cylinders</h2>
-        {lines.map((l, i) => (
-          <fieldset key={i}>
-            <legend>Cylinder {i + 1}</legend>
-            <label>
-              Cylinder capacity (kg)
-              <select
-                value={l.capacityKg}
-                onChange={(e) =>
-                  setLines(
-                    lines.map((x, n) =>
-                      n === i
-                        ? { ...x, capacityKg: Number(e.target.value) }
-                        : x,
-                    ),
-                  )
-                }
-              >
-                {config.policy.capacitiesKg.map((c: number) => (
-                  <option key={c} value={c}>
-                    {c} kg
-                  </option>
+      <form onSubmit={review} className="gas-order-grid">
+        <fieldset
+          className="surface gas-order-editor"
+          disabled={busy}
+          onInvalid={() => {
+            if (details.current?.querySelector(":invalid"))
+              details.current.open = true;
+          }}
+        >
+          <section id="gas-order-lines" className="gas-order-step">
+            <h2>
+              <span>1</span> Cylinders and gas quantity
+            </h2>
+            {lines.map((line, i) => {
+              const l = line;
+              const previous = nextGasQuantity(
+                l.kg,
+                -1,
+                l.capacityKg,
+                config.policy,
+              );
+              const next = nextGasQuantity(
+                l.kg,
+                1,
+                l.capacityKg,
+                config.policy,
+              );
+              const update = (kg: number) =>
+                setLines((current) =>
+                  current.map((item, index) =>
+                    index === i ? { ...item, kg } : item,
+                  ),
+                );
+              return (
+                <fieldset key={i} className="gas-cylinder-line">
+                  <legend>Cylinder {i + 1}</legend>
+                  <p id={`gas-capacity-${i}`}>Cylinder capacity guidance</p>
+                  <div
+                    className="gas-capacity-tiles"
+                    role="group"
+                    aria-labelledby={`gas-capacity-${i}`}
+                  >
+                    {config.policy.capacitiesKg.map((capacity: number) => (
+                      <button
+                        key={capacity}
+                        type="button"
+                        aria-pressed={l.capacityKg === capacity}
+                        onClick={() =>
+                          setLines((current) =>
+                            current.map((item, index) =>
+                              index === i
+                                ? { ...item, capacityKg: capacity }
+                                : item,
+                            ),
+                          )
+                        }
+                      >
+                        <img
+                          src="/assets/cylinder-illustration.png"
+                          alt=""
+                          width="24"
+                          height="32"
+                        />
+                        {capacity} kg
+                      </button>
+                    ))}
+                  </div>
+                  <label>
+                    Requested gas (kg)
+                    <input
+                      type="number"
+                      min={config.policy.minimumKg ?? undefined}
+                      max={Math.min(
+                        l.capacityKg,
+                        config.policy.maximumKg ?? l.capacityKg,
+                      )}
+                      step="any"
+                      inputMode="decimal"
+                      value={l.kg || ""}
+                      required
+                      onChange={(e) =>
+                        setLines(
+                          lines.map((x, n) =>
+                            n === i ? { ...x, kg: Number(e.target.value) } : x,
+                          ),
+                        )
+                      }
+                    />
+                  </label>
+                  <div className="button-row gas-quantity-actions">
+                    <button
+                      type="button"
+                      className="button secondary"
+                      aria-label={`Decrease gas for cylinder ${i + 1}`}
+                      disabled={previous === null}
+                      onClick={() => previous !== null && update(previous)}
+                    >
+                      −
+                    </button>
+                    <button
+                      type="button"
+                      className="button secondary"
+                      aria-label={`Increase gas for cylinder ${i + 1}`}
+                      disabled={next === null}
+                      onClick={() => next !== null && update(next)}
+                    >
+                      +
+                    </button>
+                    {config.policy.capacitiesKg
+                      .filter((quantity: number) => {
+                        if (!configured || !priceReady) return false;
+                        try {
+                          gasLine(
+                            quantity,
+                            l.capacityKg,
+                            config.priceKobo,
+                            config.policy,
+                          );
+                          return true;
+                        } catch {
+                          return false;
+                        }
+                      })
+                      .map((quantity: number) => (
+                        <button
+                          key={quantity}
+                          className="button secondary"
+                          type="button"
+                          aria-label={`Set gas for cylinder ${i + 1} to ${quantity} kg`}
+                          aria-pressed={l.kg === quantity}
+                          onClick={() => update(quantity)}
+                        >
+                          {quantity} kg
+                        </button>
+                      ))}
+                    {lines.length > 1 && (
+                      <button
+                        type="button"
+                        className="button secondary"
+                        onClick={() =>
+                          setLines(lines.filter((_, n) => n !== i))
+                        }
+                      >
+                        Remove cylinder
+                      </button>
+                    )}
+                  </div>
+                </fieldset>
+              );
+            })}
+            <button
+              className="button secondary"
+              type="button"
+              disabled={lines.length >= 20}
+              onClick={() =>
+                setLines([
+                  ...lines,
+                  { capacityKg: config.policy.capacitiesKg[0], kg: 0 },
+                ])
+              }
+            >
+              Add another cylinder
+            </button>
+            {estimateError && lines.some((line) => line.kg > 0) && (
+              <p role="status">{estimateError}</p>
+            )}
+          </section>
+          {physical.length > 0 && (
+            <section className="gas-order-step">
+              <h2>Included products</h2>
+              <ul>
+                {physical.map((item) => (
+                  <li key={item.productId}>
+                    {catalogue.products.find(
+                      (product: any) => product.id === item.productId,
+                    )?.name ?? "Product"}{" "}
+                    × {item.quantity}
+                  </li>
                 ))}
+              </ul>
+              <Link href="/cart">Edit cart</Link>
+            </section>
+          )}
+          <p>
+            Address coverage must be confirmed before dispatch. Refill
+            quantities remain subject to verified cylinder condition, residual
+            gas and filling eligibility. A new physical cylinder and
+            installation are priced separately.
+          </p>
+          {appointments.length > 0 && (
+            <section className="surface">
+              <h2>Installation and service appointments</h2>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={includeAppointments}
+                  onChange={(e) => setIncludeAppointments(e.target.checked)}
+                />{" "}
+                Include my separately configured service appointments
+              </label>
+              {appointments.map((a, i) => (
+                <p key={i}>
+                  {a.name} ·{" "}
+                  {a.totalKobo === null
+                    ? "Quotation required"
+                    : money(a.totalKobo)}{" "}
+                  · {a.label}
+                </p>
+              ))}
+              <p>
+                Service charges and call-outs remain separate from the one gas
+                delivery fee. Appointment capacity and pricing are rechecked on
+                confirmation.
+              </p>
+            </section>
+          )}
+          <section id="gas-order-address" className="gas-order-step">
+            <h2>
+              <span>2</span> Delivery details
+            </h2>
+            {saved.length > 0 && (
+              <label>
+                Use a saved address
+                <select
+                  defaultValue=""
+                  onChange={(e) => {
+                    const a = saved.find((a) => a.id === e.target.value);
+                    if (a)
+                      setAddress({
+                        ...address,
+                        ...a.details,
+                        name: a.details?.recipient ?? user.name,
+                        phone: a.phone,
+                        street: a.street,
+                        zone: a.zone,
+                        locationId: a.location_id,
+                      });
+                  }}
+                >
+                  <option value="">Enter a new address</option>
+                  {saved.map((a) => (
+                    <option
+                      key={a.id}
+                      value={a.id}
+                      disabled={!a.location_available}
+                    >
+                      {a.label} · {a.zone}
+                      {!a.location_available ? " (unavailable)" : ""}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            <div className="gas-address-grid">
+              <label>
+                Delivery location
+                <select
+                  required
+                  value={address.locationId}
+                  onChange={(e) => {
+                    const l = config.locations.find(
+                      (l: any) => l.id === e.target.value,
+                    );
+                    setError("");
+                    setAddressHint(
+                      "Delivery location chosen manually. Please check it matches your address.",
+                    );
+                    writeDeliveryArea(user?.id ?? "guest", e.target.value);
+                    setAddress({
+                      ...address,
+                      locationId: e.target.value,
+                      zone: l?.name ?? "",
+                    });
+                  }}
+                >
+                  <option value="">Choose your location</option>
+                  {config.locations.map((l: any) => (
+                    <option key={l.id} value={l.id}>
+                      {l.name}
+                      {hasConfirmedDeliveryCoverage(l.coverage)
+                        ? ""
+                        : " (coverage pending)"}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <div>{completeAddress}</div>
+            </div>
+            {coveragePending && <CoverageHelp />}
+            <details ref={details} className="gas-delivery-details">
+              <summary>Additional delivery details</summary>
+              <div className="gas-address-grid">
+                {[
+                  ["name", "Recipient name"],
+                  ["phone", "Recipient phone"],
+                  ["building", "Building / house number"],
+                  ["landmark", "Estate / landmark"],
+                  ["directions", "Additional directions"],
+                ].map(([k, label]) => (
+                  <label key={k}>
+                    {label}
+                    <input
+                      value={(address as any)[k]}
+                      required={[
+                        "name",
+                        "phone",
+                        "street",
+                        "building",
+                      ].includes(k)}
+                      onChange={(e) =>
+                        setAddress({ ...address, [k]: e.target.value })
+                      }
+                    />
+                  </label>
+                ))}
+              </div>
+            </details>
+          </section>
+          <section id="gas-order-schedule" className="gas-order-step">
+            <h2>
+              <span>3</span> Schedule and payment
+            </h2>
+            <div className="gas-address-grid">
+              <label>
+                Delivery date
+                <input
+                  type="date"
+                  required
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </label>
+              <label>
+                Delivery window
+                <select
+                  required
+                  value={window}
+                  onChange={(e) => setWindow(e.target.value)}
+                >
+                  {catalogue.windows.map((w: string) => (
+                    <option key={w}>{w}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <RewardCheckoutField
+              onChange={setRewardPoints}
+              onOfferChange={setRewardOfferId}
+            />
+            <label id="gas-order-payment">
+              Payment arrangement
+              <select
+                value={method}
+                onChange={(e) => setMethod(e.target.value)}
+              >
+                {catalogue.codEnabled && (
+                  <option value="cash_on_delivery">
+                    Cash on delivery · payment stays unverified
+                  </option>
+                )}
+                {catalogue.walletEnabled && (
+                  <option value="wallet">Available purchase credit</option>
+                )}
+                {cardEnabled && (
+                  <option value="card">
+                    Credit / debit card · Paystack sandbox
+                  </option>
+                )}
+                {!catalogue.codEnabled &&
+                  !catalogue.walletEnabled &&
+                  !cardEnabled && (
+                    <option value="">No payment arrangement enabled</option>
+                  )}
               </select>
             </label>
-            <label>
-              Requested gas (kg)
-              <input
-                type="number"
-                min={config.policy.minimumKg ?? undefined}
-                max={Math.min(
-                  l.capacityKg,
-                  config.policy.maximumKg ?? l.capacityKg,
-                )}
-                step={config.policy.incrementKg ?? "any"}
-                value={l.kg || ""}
-                required
-                onChange={(e) =>
-                  setLines(
-                    lines.map((x, n) =>
-                      n === i ? { ...x, kg: Number(e.target.value) } : x,
-                    ),
-                  )
-                }
-              />
-            </label>
-            <div className="button-row">
-              <button
-                type="button"
-                className="button secondary"
-                onClick={() =>
-                  setLines(
-                    lines.map((x, n) =>
-                      n === i
-                        ? {
-                            ...x,
-                            kg: Math.max(
-                              0,
-                              x.kg - (config.policy.incrementKg ?? 1),
-                            ),
-                          }
-                        : x,
-                    ),
-                  )
-                }
-              >
-                −
-              </button>
-              <button
-                type="button"
-                className="button secondary"
-                onClick={() =>
-                  setLines(
-                    lines.map((x, n) =>
-                      n === i
-                        ? {
-                            ...x,
-                            kg: Math.min(
-                              x.capacityKg,
-                              x.kg + (config.policy.incrementKg ?? 1),
-                            ),
-                          }
-                        : x,
-                    ),
-                  )
-                }
-              >
-                +
-              </button>
-              {config.policy.capacitiesKg
-                .filter((c: number) => c <= l.capacityKg)
-                .map((c: number) => (
-                  <button
-                    key={c}
-                    className="button secondary"
-                    type="button"
-                    onClick={() =>
-                      setLines(
-                        lines.map((x, n) => (n === i ? { ...x, kg: c } : x)),
-                      )
-                    }
-                  >
-                    {c} kg
-                  </button>
-                ))}
-              {lines.length > 1 && (
-                <button
-                  type="button"
-                  className="button secondary"
-                  onClick={() => setLines(lines.filter((_, n) => n !== i))}
-                >
-                  Remove cylinder
-                </button>
-              )}
-            </div>
-          </fieldset>
-        ))}
-        <button
-          className="button secondary"
-          type="button"
-          disabled={lines.length >= 20}
-          onClick={() =>
-            setLines([
-              ...lines,
-              { capacityKg: config.policy.capacitiesKg[0], kg: 0 },
-            ])
-          }
-        >
-          Add another cylinder
-        </button>
-        <p>
-          Gas estimate {money(estimated)} + physical products {money(extra)} +
-          one delivery {money(config.deliveryKobo)} ={" "}
-          <strong>{money(estimated + extra + config.deliveryKobo)}</strong>
-        </p>
-        <p>
-          Address coverage must be confirmed before dispatch. Refill quantities
-          remain subject to verified cylinder condition, residual gas and
-          filling eligibility. A new physical cylinder and installation are
-          priced separately.
-        </p>
-        {appointments.length > 0 && (
-          <section className="surface">
-            <h2>Installation and service appointments</h2>
-            <label>
-              <input
-                type="checkbox"
-                checked={includeAppointments}
-                onChange={(e) => setIncludeAppointments(e.target.checked)}
-              />{" "}
-              Include my separately configured service appointments
-            </label>
-            {appointments.map((a, i) => (
-              <p key={i}>
-                {a.name} ·{" "}
-                {a.totalKobo === null
-                  ? "Quotation required"
-                  : money(a.totalKobo)}{" "}
-                · {a.label}
-              </p>
-            ))}
-            <p>
-              Service charges and call-outs remain separate from the one gas
-              delivery fee. Appointment capacity and pricing are rechecked on
-              confirmation.
-            </p>
           </section>
-        )}
-        <h2>Delivery address</h2>
-        {saved.length > 0 && (
-          <label>
-            Use a saved address
-            <select
-              defaultValue=""
-              onChange={(e) => {
-                const a = saved.find((a) => a.id === e.target.value);
-                if (a)
-                  setAddress({
-                    ...address,
-                    ...a.details,
-                    name: a.details?.recipient ?? user.name,
-                    phone: a.phone,
-                    street: a.street,
-                    zone: a.zone,
-                    locationId: a.location_id,
-                  });
-              }}
-            >
-              <option value="">Enter a new address</option>
-              {saved.map((a) => (
-                <option
-                  key={a.id}
-                  value={a.id}
-                  disabled={!a.location_available}
-                >
-                  {a.label} · {a.zone}
-                  {!a.location_available ? " (unavailable)" : ""}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
-        {completeAddress}
-        <label>
-          Delivery location
-          <select
-            required
-            value={address.locationId}
-            onChange={(e) => {
-              const l = config.locations.find(
-                (l: any) => l.id === e.target.value,
-              );
-              setAddressHint(
-                "Delivery location chosen manually. Please check it matches your address.",
-              );
-              writeDeliveryArea(user?.id ?? "guest", e.target.value);
-              setAddress({
-                ...address,
-                locationId: e.target.value,
-                zone: l?.name ?? "",
-              });
-            }}
-          >
-            <option value="">Choose your location</option>
-            {config.locations.map((l: any) => (
-              <option key={l.id} value={l.id}>
-                {l.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        {[
-          ["name", "Recipient name"],
-          ["phone", "Recipient phone"],
-          ["building", "Building / house number"],
-          ["landmark", "Estate / landmark"],
-          ["directions", "Additional directions"],
-        ].map(([k, label]) => (
-          <label key={k}>
-            {label}
-            <input
-              value={(address as any)[k]}
-              required={["name", "phone", "street", "building"].includes(k)}
-              onChange={(e) => setAddress({ ...address, [k]: e.target.value })}
-            />
-          </label>
-        ))}
-        <label>
-          Delivery date
-          <input
-            type="date"
-            required
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </label>
-        <label>
-          Delivery window
-          <select
-            required
-            value={window}
-            onChange={(e) => setWindow(e.target.value)}
-          >
-            {catalogue.windows.map((w: string) => (
-              <option key={w}>{w}</option>
-            ))}
-          </select>
-        </label>
-        <RewardCheckoutField
-          onChange={setRewardPoints}
-          onOfferChange={setRewardOfferId}
-        />
-        <label>
-          Payment arrangement
-          <select value={method} onChange={(e) => setMethod(e.target.value)}>
-            {catalogue.codEnabled && (
-              <option value="cash_on_delivery">
-                Cash on delivery · payment stays unverified
-              </option>
+        </fieldset>
+        <aside
+          className="surface gas-order-summary"
+          aria-labelledby="gas-order-summary-title"
+        >
+          <h2 id="gas-order-summary-title">
+            <ShoppingCart aria-hidden="true" /> Order Summary
+          </h2>
+          <dl aria-live="polite">
+            <div>
+              <dt>Gas price</dt>
+              <dd>
+                {priceReady ? money(config.priceKobo) + " / kg" : "Unavailable"}
+              </dd>
+            </div>
+            <div>
+              <dt>Quantity</dt>
+              <dd>
+                {new Intl.NumberFormat("en-NG", {
+                  maximumFractionDigits: 3,
+                }).format(lines.reduce((sum, line) => sum + line.kg, 0))}{" "}
+                kg
+              </dd>
+            </div>
+            <div>
+              <dt>Gas subtotal</dt>
+              <dd>
+                {currentQuote
+                  ? money(currentQuote.subtotalKobo)
+                  : priceReady && estimateValid
+                    ? money(estimated)
+                    : "—"}
+              </dd>
+            </div>
+            {physical.length > 0 && (
+              <div>
+                <dt>Products</dt>
+                <dd>
+                  {currentQuote
+                    ? money(currentQuote.physicalSubtotalKobo)
+                    : productsPriced
+                      ? money(extra)
+                      : "Unavailable"}
+                </dd>
+              </div>
             )}
-            {catalogue.walletEnabled && (
-              <option value="wallet">Available purchase credit</option>
-            )}
-            {cardEnabled && (
-              <option value="card">
-                Credit / debit card · Paystack sandbox
-              </option>
-            )}
-            {!catalogue.codEnabled &&
-              !catalogue.walletEnabled &&
-              !cardEnabled && (
-                <option value="">No payment arrangement enabled</option>
-              )}
-          </select>
-        </label>
-        {error && <Notice type="error" message={error} />}{" "}
-        {!user ? (
-          <Link
-            href="/login?returnTo=%2Fgas-order"
-            className="button"
-            onClick={() => {
-              try {
-                sessionStorage.setItem(
-                  "easygas.gasDraft",
-                  JSON.stringify({ lines, address, date, window, method }),
-                );
-              } catch {}
-            }}
-          >
-            Sign in to continue
-          </Link>
-        ) : (
-          <button
-            className="button"
-            disabled={
-              busy ||
-              !configured ||
-              !catalogue.orderingEnabled ||
-              (!catalogue.codEnabled &&
-                !catalogue.walletEnabled &&
-                !cardEnabled)
-            }
-          >
-            {busy ? "Checking…" : "Review current quotation"}
-          </button>
-        )}
-        {quote && (
-          <div className="proposal-context">
-            <h2>Confirm your quotation</h2>
-            <p>
-              Gas {money(quote.subtotalKobo)} · Products {money(extra)} ·
-              Delivery {money(quote.deliveryKobo)}
-            </p>
-            <strong>Total {money(quote.totalKobo)}</strong>
-            <p>
-              {address.zone} · {address.building} {address.street}
-            </p>
+            <div>
+              <dt>Delivery fee</dt>
+              <dd>
+                {feeReady
+                  ? money(currentQuote?.deliveryKobo ?? config.deliveryKobo)
+                  : "Unavailable"}
+              </dd>
+            </div>
+            <div className="gas-summary-total">
+              <dt>{currentQuote ? "Quoted total" : "Estimated total"}</dt>
+              <dd>
+                {currentQuote
+                  ? money(currentQuote.totalKobo)
+                  : priceReady && feeReady && estimateValid && productsPriced
+                    ? money(estimated + extra + config.deliveryKobo)
+                    : "—"}
+              </dd>
+            </div>
+          </dl>
+          {pricingBranch !== requestedBranch && (
+            <p role="status">Checking prices for the selected area.</p>
+          )}
+          {(rewardPoints > 0 || rewardOfferId) && (
+            <p>Eligible rewards are applied by checkout.</p>
+          )}
+          {includeAppointments && appointments.length > 0 && (
+            <p>Staged service charges are separate.</p>
+          )}
+          {error && <Notice type="error" message={error} />}
+          {error && pricingBranch !== requestedBranch && (
             <button
               type="button"
-              className="button"
-              disabled={busy}
-              onClick={confirm}
+              className="button secondary"
+              onClick={() => retryCatalogue((value) => value + 1)}
             >
-              Accept total and confirm order
+              Retry prices
             </button>
-          </div>
-        )}
+          )}
+          {!user ? (
+            <Link
+              href="/login?returnTo=%2Fgas-order"
+              className="button"
+              onClick={() => {
+                try {
+                  sessionStorage.setItem(
+                    "easygas.gasDraft",
+                    JSON.stringify({ lines, address, date, window, method }),
+                  );
+                } catch {}
+              }}
+            >
+              Sign in to continue
+            </Link>
+          ) : (
+            <button
+              className="button"
+              type="submit"
+              disabled={busy || !canReview}
+            >
+              {busy ? "Checking…" : "Review current quotation"}
+            </button>
+          )}
+          {currentQuote && !coveragePending && (
+            <section
+              className="proposal-context gas-order-confirmation"
+              aria-label="Review and confirm"
+            >
+              <h3>Review and confirm</h3>
+              <p>
+                {lines
+                  .map(
+                    (line) =>
+                      `${line.kg} kg in a ${line.capacityKg} kg cylinder`,
+                  )
+                  .join(" · ")}
+              </p>
+              <p>
+                {address.name} · {address.phone}
+                <br />
+                {address.street}, {address.zone}
+              </p>
+              <p>
+                {date} · {window}
+              </p>
+              <p>
+                {method === "card"
+                  ? "Paystack card"
+                  : method === "wallet"
+                    ? "Purchase credit"
+                    : "Cash on delivery · unverified"}
+              </p>
+              <div className="button-row">
+                {[
+                  ["Change gas", "gas-order-lines"],
+                  ["Change address", "gas-order-address"],
+                  ["Change schedule", "gas-order-schedule"],
+                  ["Change payment", "gas-order-payment"],
+                ].map(([label, id]) => (
+                  <button
+                    key={id}
+                    type="button"
+                    className="button secondary"
+                    disabled={busy}
+                    onClick={() => editOrder(id)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="button"
+                disabled={busy}
+                onClick={confirm}
+              >
+                {busy ? "Confirming…" : "Accept total and confirm order"}
+              </button>
+            </section>
+          )}
+        </aside>
       </form>
-      <section className="surface">
-        <h2>Cylinder size guide</h2>
-        <div className="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Capacity</th>
-                <th>Gas only</th>
-                <th>With delivery</th>
-              </tr>
-            </thead>
-            <tbody>
-              {config.policy.capacitiesKg.map((c: number) => {
-                const amount = gasLine(c, c, config.priceKobo).subtotalKobo;
-                return (
-                  <tr key={c}>
-                    <td>{c} kg</td>
-                    <td>{money(amount)}</td>
-                    <td>{money(amount + config.deliveryKobo)}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+      <details className="surface gas-size-guide">
+        <summary>Cylinder size guide</summary>
+        {priceReady && feeReady ? (
+          <div className="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Capacity</th>
+                  <th>Gas only</th>
+                  <th>With delivery</th>
+                </tr>
+              </thead>
+              <tbody>
+                {config.policy.capacitiesKg.map((c: number) => {
+                  const amount = gasLine(c, c, config.priceKobo).subtotalKobo;
+                  return (
+                    <tr key={c}>
+                      <td>{c} kg</td>
+                      <td>{money(amount)}</td>
+                      <td>{money(amount + config.deliveryKobo)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p>Current price estimates are unavailable.</p>
+        )}
         <p>
           Gas estimates exclude the cost of a new cylinder, installation and
           professional services.
         </p>
-      </section>
+      </details>
     </section>
   );
 }

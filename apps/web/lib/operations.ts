@@ -1,3 +1,4 @@
+import { deliveryCoveragePending, hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
 import { paystackAvailability } from "./payments/runtime";
 import { gatewayPolicy } from "./payments/policy";
 import { applyRewardDiscount, restoreOrderDiscount } from "./rewards";
@@ -205,10 +206,11 @@ export async function checkout(
   );
   if (!location)
     throw new AppError(400, "Choose an active supported delivery location.");
-  if (location.coverage.trim().length < 10)
+  if (!hasConfirmedDeliveryCoverage(location.coverage))
     throw new AppError(
       409,
-      "Business confirmation of the delivery coverage boundary is required before ordering.",
+      deliveryCoveragePending,
+      "DELIVERY_COVERAGE_PENDING",
     );
   input.address = {
     ...input.address,

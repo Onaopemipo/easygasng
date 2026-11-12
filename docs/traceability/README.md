@@ -175,3 +175,21 @@ Finance workspace redesign: [traceability matrix](finance-redesign-rtm.md). Resp
 Credits & Refunds: [traceability matrix](../credits-refunds/traceability.md). Scoped web workspace and existing approval flows. Provider, native and release acceptance remain open.
 
 Full-width web layouts: [matrix](full-width-web-rtm.md) and [JSON](full-width-web-rtm.json).
+
+Notifications redesign and delivery coverage guidance: [notifications requirements](notifications-redesign-rtm.md), [notification test evidence](../notifications-redesign/04-test-results.md), and [delivery coverage requirement](compact-order-rtm.md). The admin tray and native role inboxes use the existing recipient records. Gas ordering identifies pending coverage before quotation, and checkout retains its governed coverage check. Native device and hosted acceptance remain open. Production NO-GO is unchanged.
+
+Compact homepage: [25 requirements and 26 gates](easygas-homepage-compact-rtm.md), [60 scenarios](../homepage-compact/scenarios.csv) and [implementation report](../homepage-compact/report.md). Browser checks and native exports passed. Installed-device acceptance and production release remain open.
+
+Compact gas-order redesign: [screen and business-rule matrix](compact-gas-order-rtm.md), [84 scenarios](../compact-gas-order/scenarios.csv) and [test results](../compact-gas-order/04-test-results.md). Local Chromium and PostgreSQL verification passed. Installed-device and production acceptance remain open.
+
+Live rider tracking Steps 3–6: [requirements, scenarios and gates](live-rider-tracking-rtm.md) and [audit](../live-rider-tracking/00-audit-and-gap-map.md). Scoped customer observations, consent withdrawal and optional web/native fleet and customer maps reuse the existing trip and order records. Provider, physical-device and release gates remain open. Production NO-GO stays in effect.
+
+Service Details redesign: [requirements, scenarios and gates](service-details-redesign-rtm.md), [audit](../service-details-redesign/00-repository-audit.md) and [verification](../service-details-redesign/04-test-results.md). Compact web and native detail screens reuse the existing service, slot, booking and pricing records. Production NO-GO remains in effect.
+
+Cooking Gas Profiles redesign: [requirements, 65 scenarios and 30 gates](cooking-gas-profiles-redesign-rtm.md) and [API and permissions](../cooking-gas-profiles-redesign/01-api-permissions-map.md). Existing customer routes use scoped profile, verified history, recurring and Smart Refill records. Web, PostgreSQL concurrency and native export evidence is recorded. Production NO-GO remains in effect.
+
+EasyRewards redesign: [30 requirements, 65 scenarios and 30 gates](easyrewards-redesign-rtm.md), [test results](../easyrewards-redesign/04-test-results.md) and [rollback](../easyrewards-redesign/05-rollback-and-release.md). The existing summary and referral actions drive the redesigned customer screens. Production NO-GO remains in effect.
+
+Smart Refill redesign ([30 requirements, 70 scenarios and 30 gates](smart-refill-redesign-rtm.md), [verification](../smart-refill-redesign/04-test-results.md), [rollback](../smart-refill-redesign/05-rollback-and-release.md)). Desktop and mobile web, iPhone Simulator and an unminified Pixel 8 build were exercised. The standard Android release remains blocked at launch. Production remains NO-GO.
+
+Driver experience redesign: [matrix](driver-experience-redesign-rtm.md), [machine-readable requirements](driver-experience-redesign-rtm.json) and [release report](../driver-redesign/06-final-report.md). All 80 scenarios and 35 gates are tracked. Production remains NO-GO.

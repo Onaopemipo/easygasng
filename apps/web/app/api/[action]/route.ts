@@ -16,6 +16,8 @@ const reads = new Set([
   "admin.dashboard",
   "admin.search",
   "driver.snapshot",
+  "driver.history",
+  "driver.location",
   "technician.snapshot",
   "technician.jobs",
   "technicians.workspace",
@@ -46,6 +48,7 @@ const reads = new Set([
   "customers.detail",
   "customer.dashboard",
   "navigation",
+  "notifications.list",
   "navigation.access",
   "business.snapshot",
   "gas.catalogue",
@@ -218,6 +221,7 @@ async function handle(
         "approvals",
         "credit.customers",
         "admin.search",
+        "driver.history",
         "technician.jobs",
         "technicians.workspace",
         "technician.snapshot",
@@ -259,7 +263,7 @@ async function handle(
     );
     return NextResponse.json(data, {
       headers:
-        action === "documents.list"
+        ["documents.list", "orders", "dispatch.centre"].includes(action)
           ? {
               "Cache-Control": "private, no-store, max-age=0",
               Vary: "Cookie, Authorization",

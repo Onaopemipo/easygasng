@@ -1,0 +1,57 @@
+id,scenario,status,evidence
+T01,open/close bell tray,PASS,04-test-results.md
+T02,Escape/outside click/focus return,NOT_RUN,
+T03,accurate server unread badge,PASS,04-test-results.md
+T04,all/unread filters,PASS,04-test-results.md
+T05,categories only if verified,PASS,04-test-results.md
+T06,single read,PASS,04-test-results.md
+T07,duplicate read idempotent,PASS,04-test-results.md
+T08,forged other-user UUID,NOT_RUN,
+T09,401,PASS,04-test-results.md
+T10,403,NOT_RUN,
+T11,offline mark-read blocked,NOT_RUN,
+T12,failed mutation retains unread,NOT_RUN,
+T13,bulk own records,PASS,04-test-results.md
+T14,bulk cross-user denial,PASS,04-test-results.md
+T15,bulk concurrency (bulk tests only if implemented),NOT_RUN,
+T16,pagination stable order,PASS,04-test-results.md
+T17,>100 records,NOT_RUN,
+T18,zero records,NOT_RUN,
+T19,filtered empty,PASS,04-test-results.md
+T20,approval notification never approves,NOT_RUN,
+T21,authorised deep link,NOT_RUN,
+T22,unauthorised deep link,NOT_RUN,
+T23,no invented URL,NOT_RUN,
+T24,branch change,NOT_RUN,
+T25,role revoked,NOT_RUN,
+T26,logout response race,NOT_RUN,
+T27,correct timestamp/timezone,PASS,04-test-results.md
+T28,malformed timestamp,NOT_RUN,
+T29,long title/body,NOT_RUN,
+T30,unsafe HTML plain text,NOT_RUN,
+T31,responsive widths 320/375/390/768/1024/1440,NOT_RUN,
+T32,light/dark/system,NOT_RUN,
+T33,keyboard/focus,NOT_RUN,
+T34,reduced motion,NOT_RUN,
+T35,iOS safe area/VoiceOver,NOT_RUN,
+T36,Android back/TalkBack,NOT_RUN,
+T37,mobile role-specific tabs,NOT_RUN,
+T38,customer order deep links,NOT_RUN,
+T39,staff links,NOT_RUN,
+T40,badge after mutation,NOT_RUN,
+T41,foreground refresh,NOT_RUN,
+T42,no duplicate poll,NOT_RUN,
+T43,stale timestamp,PASS,evidence/browser.txt
+T44,retry,PASS,evidence/browser.txt
+T45,native auth expiry,NOT_RUN,
+T46,cross-device consistency,NOT_RUN,
+T47,notification producer regression,PASS,04-test-results.md
+T48,approval workflow regression,PASS,04-test-results.md
+T49,Paystack/finance/refunds regression,PASS,04-test-results.md
+T50,stock/cylinder custody regression,PASS,04-test-results.md
+T51,staff permissions regression,PASS,04-test-results.md
+T52,web sidebar regression,PASS,04-test-results.md
+T53,SSR/hydration,NOT_RUN,
+T54,API backwards compatibility,PASS,04-test-results.md
+T55,migration rollback if used,NOT_RUN,
+T56,no live deployment,PASS,04-test-results.md

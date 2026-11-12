@@ -356,7 +356,7 @@ test("decimal calculator matches confirmed gas quantities and rejects unsafe pre
     assert.throws(() => gasLine(n, 12.5, 180000));
   assert.throws(() => gasLine(13, 12.5, 180000));
 });
-test("gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety", async () => {
+test("COVERAGE-01: gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety", async () => {
   const f = await fixture();
   try {
     await f.db.query(
@@ -376,7 +376,6 @@ test("gas checkout snapshots prices, charges one fee, reserves grams once, preve
       ...location.value,
       coverage: "Synthetic district boundary confirmed for fixture only",
     });
-    await f.approve(coverage.id);
     await f.call("inventory", "gas.stock.receive", {
       branchId: "lagos",
       grams: 11000,
@@ -409,6 +408,19 @@ test("gas checkout snapshots prices, charges one fee, reserves grams once, preve
       window: "14:00–18:00",
       idempotencyKey: id(),
     };
+    const locationQuote = () =>
+      dispatch("gas.quote", null, { lines, locationId: "lekki" }, f.db);
+    await assert.rejects(locationQuote, { code: "DELIVERY_COVERAGE_PENDING" });
+    await assert.rejects(() => f.call("customer", "checkout", request), {
+      code: "DELIVERY_COVERAGE_PENDING",
+    });
+    assert.equal(
+      Number((await one(f.db, "SELECT reserved_grams FROM gas_stock WHERE branch_id='lagos'"))?.reserved_grams),
+      0,
+    );
+    await f.approve(coverage.id);
+    assert.equal((await locationQuote()).deliveryKobo, q.deliveryKobo);
+
     const [a, b] = await Promise.all([
       f.call("customer", "checkout", request),
       f.call("customer", "checkout", request),

@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { RiderMap } from "./rider-map";
 import {
   Package,
   UserRound,
@@ -7,8 +8,8 @@ import {
   CheckCircle2,
   TriangleAlert,
   Users,
-  RefreshCw,
   MapPin,
+  RefreshCw,
   Plus,
   Fuel,
   ClipboardList,
@@ -43,6 +44,45 @@ export default function DispatchCentre({ user }: { user: any }) {
     [reason, setReason] = useState(""),
     [selected, setSelected] = useState(""),
     [working, setWorking] = useState(false);
+  const [mapDriver, setMapDriver] = useState("");
+  const [mapFreshness, setMapFreshness] = useState("");
+  const [locationScope, setLocationScope] = useState("");
+  const viewerScope = JSON.stringify([
+    user.id,
+    user.role,
+    user.branchId,
+    branch,
+  ]);
+  const fleetLocationsVisible = !error && locationScope === viewerScope;
+  const mapPoints = useMemo(() => {
+    if (!fleetLocationsVisible) return [];
+    return (data?.drivers ?? []).flatMap((driver: any) => {
+      const fix = driver.location?.lastKnown;
+      if (
+        !fix ||
+        (mapDriver && driver.id !== mapDriver) ||
+        (mapFreshness && driver.location.status !== mapFreshness)
+      )
+        return [];
+      return [
+        {
+          id: driver.id,
+          lat: fix.lat,
+          lng: fix.lng,
+          label: `${driver.name}, recorded ${new Date(fix.recordedAt).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })} Lagos time, ±${Math.round(fix.accuracy)} m, ${driver.active_stops} deliveries`,
+          onSelect: () => {
+            const detail = document.getElementById(
+              `dispatch-driver-${driver.id}`,
+            );
+            if (detail instanceof HTMLDetailsElement) {
+              detail.open = true;
+              detail.querySelector("summary")?.focus();
+            }
+          },
+        },
+      ];
+    });
+  }, [data, fleetLocationsVisible, mapDriver, mapFreshness]);
   const [focusedOrderId, setFocusedOrderId] = useState("");
   const [status, setStatus] = useState(""),
     [sort, setSort] = useState("oldest");
@@ -81,6 +121,7 @@ export default function DispatchCentre({ user }: { user: any }) {
       });
       if (generation === sequence.current) {
         setData(next);
+        setLocationScope(viewerScope);
         setError("");
       }
     } catch (e: any) {
@@ -689,131 +730,173 @@ export default function DispatchCentre({ user }: { user: any }) {
               )}
             </section>
             <aside className="dc-panel dc-map">
-              <h2>Live Delivery Map</h2>
-              <div className="dc-map-empty">
-                <MapPin size={34} />
-                <strong>Embedded map unavailable</strong>
-                <p>
-                  No map provider is configured. No vehicle positions or arrival
-                  times are assumed.
-                </p>
+              <h2>Delivery map</h2>
+              <p className="dc-muted">
+                Recorded rider locations. Arrival estimates are unavailable
+                here.
+              </p>
+              <div className="dc-filters">
+                <label>
+                  Driver
+                  <select
+                    value={mapDriver}
+                    onChange={(event) => setMapDriver(event.target.value)}
+                  >
+                    <option value="">All visible drivers</option>
+                    {data?.drivers
+                      .filter((driver: any) => Number(driver.active_stops) > 0)
+                      .map((driver: any) => (
+                        <option key={driver.id} value={driver.id}>
+                          {driver.name}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+                <label>
+                  Location status
+                  <select
+                    value={mapFreshness}
+                    onChange={(event) => setMapFreshness(event.target.value)}
+                  >
+                    <option value="">All recorded locations</option>
+                    <option value="recent_observation">
+                      Recent observations
+                    </option>
+                    <option value="last_known_only">Last known only</option>
+                  </select>
+                </label>
               </div>
+              <RiderMap key={viewerScope} points={mapPoints.slice(0, 50)} />
+              {mapPoints.length > 50 && (
+                <p className="dc-muted">
+                  Showing 50 map points. Select a driver to narrow the map.
+                </p>
+              )}
               <div id="dispatch-drivers">
                 <h2>Active Drivers ({data?.drivers.length ?? "—"})</h2>
                 <p className="dc-muted">{data?.contactNote}</p>
-                {data?.drivers.map((d: any) => (
-                  <div className="dc-driver" key={d.id}>
-                    <span className="dc-avatar">{d.name.slice(0, 1)}</span>
-                    <div>
-                      <strong>{d.name}</strong>
-                      <small>
-                        {d.driver_available
-                          ? "Available for assignment"
-                          : "Unavailable"}{" "}
-                        ·{" "}
-                        {d.contact === "recent_contact"
-                          ? "Recent contact"
-                          : d.contact === "stale"
-                            ? "Stale contact"
-                            : "Contact unknown"}
-                      </small>
-                      <small>
-                        {d.driver_last_seen_at
-                          ? "Last contact " +
-                            new Date(d.driver_last_seen_at).toLocaleTimeString(
-                              "en-NG",
-                              { timeZone: "Africa/Lagos" },
-                            )
-                          : "No contact recorded"}
-                      </small>
-                    </div>
-                    <span className="dc-badge green">
-                      {d.active_stops} deliveries
-                    </span>
-                    {d.location?.lastKnown && (
-                      <small className="dc-location">
-                        <a
-                          href={
-                            "https://www.google.com/maps/search/?api=1&query=" +
-                            encodeURIComponent(
-                              d.location.lastKnown.lat +
-                                "," +
-                                d.location.lastKnown.lng,
-                            )
-                          }
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {d.location.status === "recent_observation" &&
-                          !error &&
-                          Date.now() -
-                            Date.parse(d.location.lastKnown.recordedAt) <
-                            120000
-                            ? "Recent GPS observation"
-                            : "Last known GPS · stale"}
-                        </a>{" "}
-                        ·{" "}
-                        {Math.max(
-                          0,
-                          Math.floor(
-                            (Date.now() -
-                              Date.parse(d.location.lastKnown.recordedAt)) /
-                              1000,
-                          ),
-                        )}
-                        s old · ±{d.location.lastKnown.accuracy}m
-                      </small>
-                    )}
-                    {!d.location?.lastKnown && <small>GPS unavailable</small>}
-                    <details className="dc-driver-details">
-                      <summary>View status details</summary>
-                      <p>
-                        Last authenticated contact:{" "}
-                        {d.driver_last_seen_at
-                          ? new Date(d.driver_last_seen_at).toLocaleString(
-                              "en-NG",
-                              { timeZone: "Africa/Lagos" },
-                            ) + " (Lagos)"
-                          : "Unknown"}
-                      </p>
-                      {d.location?.lastKnown ? (
-                        <>
-                          <p>
-                            GPS captured:{" "}
-                            {new Date(
-                              d.location.lastKnown.recordedAt,
-                            ).toLocaleString("en-NG", {
-                              timeZone: "Africa/Lagos",
-                            })}{" "}
-                            (Lagos)
-                          </p>
-                          <p>
-                            GPS received:{" "}
-                            {d.location.lastKnown.receivedAt
-                              ? new Date(
-                                  d.location.lastKnown.receivedAt,
-                                ).toLocaleString("en-NG", {
-                                  timeZone: "Africa/Lagos",
-                                })
-                              : "Unknown"}
-                          </p>
-                          <p>
-                            Accuracy: ±{d.location.lastKnown.accuracy} m.{" "}
-                            {d.location.lastKnown.delayedUpload
-                              ? "Delayed upload; capture time determines freshness."
-                              : "Capture and receipt times are recorded separately."}
-                          </p>
-                        </>
-                      ) : (
-                        <p>
-                          No authorised GPS observation is available. Location
-                          is shown only during an active, consented delivery
-                          trip.
-                        </p>
+                {data?.drivers.map((driver: any) => {
+                  const d = fleetLocationsVisible
+                    ? driver
+                    : { ...driver, location: null };
+                  return (
+                    <div className="dc-driver" key={d.id}>
+                      <span className="dc-avatar">{d.name.slice(0, 1)}</span>
+                      <div>
+                        <strong>{d.name}</strong>
+                        <small>
+                          {d.driver_available
+                            ? "Available for assignment"
+                            : "Unavailable"}{" "}
+                          ·{" "}
+                          {d.contact === "recent_contact"
+                            ? "Recent contact"
+                            : d.contact === "stale"
+                              ? "Stale contact"
+                              : "Contact unknown"}
+                        </small>
+                        <small>
+                          {d.driver_last_seen_at
+                            ? "Last contact " +
+                              new Date(
+                                d.driver_last_seen_at,
+                              ).toLocaleTimeString("en-NG", {
+                                timeZone: "Africa/Lagos",
+                              })
+                            : "No contact recorded"}
+                        </small>
+                      </div>
+                      <span className="dc-badge green">
+                        {d.active_stops} deliveries
+                      </span>
+                      {d.location?.lastKnown && (
+                        <small className="dc-location">
+                          <a
+                            href={
+                              "https://www.google.com/maps/search/?api=1&query=" +
+                              encodeURIComponent(
+                                d.location.lastKnown.lat +
+                                  "," +
+                                  d.location.lastKnown.lng,
+                              )
+                            }
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {d.location.status === "recent_observation" &&
+                            !error &&
+                            Date.now() -
+                              Date.parse(d.location.lastKnown.recordedAt) <
+                              120000
+                              ? "Recent GPS observation"
+                              : "Last known GPS · stale"}
+                          </a>{" "}
+                          ·{" "}
+                          {Math.max(
+                            0,
+                            Math.floor(
+                              (Date.now() -
+                                Date.parse(d.location.lastKnown.recordedAt)) /
+                                1000,
+                            ),
+                          )}
+                          s old · ±{d.location.lastKnown.accuracy}m
+                        </small>
                       )}
-                    </details>
-                  </div>
-                ))}
+                      {!d.location?.lastKnown && <small>GPS unavailable</small>}
+                      <details
+                        className="dc-driver-details"
+                        id={`dispatch-driver-${d.id}`}
+                      >
+                        <summary>View status details</summary>
+                        <p>
+                          Last authenticated contact:{" "}
+                          {d.driver_last_seen_at
+                            ? new Date(d.driver_last_seen_at).toLocaleString(
+                                "en-NG",
+                                { timeZone: "Africa/Lagos" },
+                              ) + " (Lagos)"
+                            : "Unknown"}
+                        </p>
+                        {d.location?.lastKnown ? (
+                          <>
+                            <p>
+                              GPS captured:{" "}
+                              {new Date(
+                                d.location.lastKnown.recordedAt,
+                              ).toLocaleString("en-NG", {
+                                timeZone: "Africa/Lagos",
+                              })}{" "}
+                              (Lagos)
+                            </p>
+                            <p>
+                              GPS received:{" "}
+                              {d.location.lastKnown.receivedAt
+                                ? new Date(
+                                    d.location.lastKnown.receivedAt,
+                                  ).toLocaleString("en-NG", {
+                                    timeZone: "Africa/Lagos",
+                                  })
+                                : "Unknown"}
+                            </p>
+                            <p>
+                              Accuracy: ±{d.location.lastKnown.accuracy} m.{" "}
+                              {d.location.lastKnown.delayedUpload
+                                ? "Delayed upload; capture time determines freshness."
+                                : "Capture and receipt times are recorded separately."}
+                            </p>
+                          </>
+                        ) : (
+                          <p>
+                            No authorised GPS observation is available. Location
+                            is shown only during an active, consented delivery
+                            trip.
+                          </p>
+                        )}
+                      </details>
+                    </div>
+                  );
+                })}
                 {data && !data.drivers.length && (
                   <p>No active driver accounts in this scope.</p>
                 )}

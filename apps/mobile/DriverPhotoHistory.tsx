@@ -4,11 +4,13 @@ import { Card, Copy, Button, type CustomerAPI } from "./CustomerUI";
 export default function DriverPhotoHistory({
   api,
   orderId,
+  attemptId,
   origin,
   token,
 }: {
   api: CustomerAPI;
   orderId: string;
+  attemptId?: string;
   origin: string;
   token: string | null;
 }) {
@@ -17,7 +19,7 @@ export default function DriverPhotoHistory({
   useEffect(() => {
     let current = true;
     setPhotos([]);
-    api("delivery.photos?orderId=" + encodeURIComponent(orderId))
+    api("delivery.photos?" + new URLSearchParams({ orderId, ...(attemptId ? { attemptId } : {}) }).toString())
       .then((result) => {
         if (current) setPhotos(result.photos);
       })
@@ -27,7 +29,7 @@ export default function DriverPhotoHistory({
     return () => {
       current = false;
     };
-  }, [orderId, token]);
+  }, [orderId, attemptId, token]);
   return (
     <>
       {!!error && <Copy>{error}</Copy>}

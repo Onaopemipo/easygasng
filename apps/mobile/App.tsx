@@ -1,3 +1,8 @@
+import { CookingGasProfiles } from "./CookingGasProfiles";
+import OwnerSupportWorkspace from "./OwnerSupportWorkspace";
+import OwnerGovernanceWorkspace, { isOwnerGovernanceScreen } from "./OwnerGovernanceWorkspace";
+import { OwnerWorkspace, type OwnerScope } from "./OwnerWorkspace";
+import { OwnerApprovals } from "./OwnerApprovals";
 import { FinanceOverview } from "./FinanceOverview";
 import { SalesCustomerLookup } from "./SalesCustomerLookup";
 import { OwnerOverview } from "./OwnerOverview";
@@ -16,6 +21,8 @@ import { ScreenTitleContext } from "./CustomerUI";
 import { customerMobileLink } from "../../packages/business-rules/src/customer-mobile";
 import CustomerWallet from "./CustomerWallet";
 import TrackingSummary from "./TrackingSummary";
+import FleetLocations from "./FleetLocations";
+import { withoutRiderLocations } from "../../packages/business-rules/src/rider-location";
 import Cylinders from "./Cylinders";
 import CustomerNotifications from "./CustomerNotifications";
 import AccountHub from "./AccountHub";
@@ -57,6 +64,7 @@ import {
   Linking,
   StatusBar,
   BackHandler,
+  AppState,
 } from "react-native";
 import { View, ScrollView, Pressable } from "./surfaces";
 import { Text, TextInput } from "./typography";
@@ -78,6 +86,7 @@ export default function App() {
     [user, setUser] = useState<any>(null),
     [catalogue, setCatalogue] = useState<any>(null),
     [screen, setScreen] = useState("home"),
+    [ownerScope, setOwnerScope] = useState<OwnerScope>({ branchId: "", period: "month" }),
     [cart, setCart] = useState<Item[]>([]),
     [hydrated, setHydrated] = useState(false),
     [orders, setOrders] = useState<any[]>([]),
@@ -111,9 +120,14 @@ export default function App() {
     scrollRef.current?.scrollTo({ y: 0, animated: false });
   }, [screen, user?.id]);
   const navHistory = useRef<string[]>(["home"]);
+  const serviceBack = useRef<(() => boolean) | null>(null);
+  const pendingServiceSignIn = useRef<string | null>(null);
+  const [initialServiceId, setInitialServiceId] = useState<string | undefined>();
   const pendingLink = useRef<{ screen: string; id?: string } | null>(null);
   const initialLink = useRef(false);
   useEffect(() => {
+    if (screen !== "services") setInitialServiceId(undefined);
+    if (screen !== "login") pendingServiceSignIn.current = null;
     const history = navHistory.current;
     if (history.at(-1) !== screen) {
       if (screen === "home") navHistory.current = ["home"];
@@ -121,6 +135,7 @@ export default function App() {
     }
   }, [screen]);
   function back() {
+    if (serviceBack.current?.()) return true;
     if (navHistory.current.length < 2) return false;
     navHistory.current.pop();
     setScreen(navHistory.current.at(-1) ?? "home");
@@ -197,6 +212,7 @@ export default function App() {
     setScreen(destination);
   }
   function clearPrivateState() {
+    setOwnerScope({ branchId: "", period: "month" });
     navHistory.current = ["home"];
     trackingOperations.current.clear();
     setOrders([]);
@@ -212,6 +228,11 @@ export default function App() {
     setKey(null);
     setPassword("");
   }
+  function ownerWorkspace(mode: "home" | "operations" | "finance" | "reports") {
+    return <OwnerWorkspace key={user?.id + mode} api={api} mode={mode} scope={ownerScope} onScope={setOwnerScope}
+      navigate={setScreen} openWeb={path => { void Linking.openURL(origin + path).catch(() => setError("Could not open this workspace in your browser.")); }} />;
+  }
+
   async function api(action: string, data?: any, session = token) {
     if (action === "checkout" && data) data = { ...data, source: "MOBILE" };
     if (action === "checkout.mixed" && data?.products)
@@ -242,6 +263,7 @@ export default function App() {
       }
       throw Object.assign(new Error(friendlyMessage(body.error ?? "Please try again.")), {
         status: response.status,
+        code: body.code,
       });
     }
     if (body.signedOut) {
@@ -296,31 +318,18 @@ export default function App() {
   useEffect(() => {
     let active = true;
     setError("");
-    if (user && ["orders", "wallet", "rewards", "checkout"].includes(screen)) {
+    if (screen === "orders") return;
+    if (user && ["wallet", "checkout"].includes(screen)) {
       setLoading(true);
-      api(
-        screen === "orders"
-          ? orderFilter
-            ? "orders?id=" + encodeURIComponent(orderFilter)
-            : "orders"
-          : "wallet",
-      )
-        .then((d) => {
-          if (active) {
-            screen === "orders" ? setOrders(d) : setWallet(d);
-          }
-        })
-        .catch((e) => {
-          if (active) setError(e.message);
-        })
-        .finally(() => {
-          if (active) setLoading(false);
-        });
+      api("wallet")
+        .then((data) => { if (active) setWallet(data); })
+        .catch((e) => { if (active) setError(e.message); })
+        .finally(() => { if (active) setLoading(false); });
     } else setLoading(false);
     return () => {
       active = false;
     };
-  }, [screen, user, orderFilter]);
+  }, [screen, user]);
   useEffect(() => {
     let active = true;
     setPendingDeliveries([]);
@@ -339,25 +348,42 @@ export default function App() {
   useEffect(() => {
     if (!user || screen !== "orders") return;
     let active = true;
-    const timer = setInterval(() => {
-      api(
-        orderFilter ? "orders?id=" + encodeURIComponent(orderFilter) : "orders",
-      )
+    let generation = 0;
+    const clearLocations = () => {
+      generation++;
+      setOrders((prior) => withoutRiderLocations(prior));
+    };
+    const refreshTracking = (initial = false) => {
+      if (AppState.currentState !== "active" && !initial) return;
+      const request = ++generation;
+      if (initial) setLoading(true);
+      api(orderFilter ? "orders?id=" + encodeURIComponent(orderFilter) : "orders")
         .then((next) => {
-          if (active) setOrders(next);
+          if (!active || request !== generation) return;
+          setOrders(AppState.currentState === "active" ? next : withoutRiderLocations(next));
+          setError("");
+          setLoading(false);
         })
-        .catch(() => {
-          if (active)
-            setError(
-              "Offline or tracking unavailable. Displayed order status may be stale.",
-            );
+        .catch((e) => {
+          if (!active || request !== generation) return;
+          clearLocations();
+          setError(initial ? e.message : "Tracking couldn’t refresh. Displayed order status may be out of date.");
+          setLoading(false);
         });
-    }, 15000);
+    };
+    clearLocations();
+    refreshTracking(true);
+    const timer = setInterval(() => refreshTracking(), 15000);
+    const listener = AppState.addEventListener("change", (state) => {
+      if (state === "active") refreshTracking();
+      else clearLocations();
+    });
     return () => {
       active = false;
       clearInterval(timer);
+      listener.remove();
     };
-  }, [user?.id, screen, orderFilter]);
+  }, [user?.id, token, screen, orderFilter]);
   async function syncDeliveries() {
     if (!user || syncing) return;
     setSyncing(true);
@@ -423,8 +449,13 @@ export default function App() {
       setUser(me.user);
       setPassword("");
       const destination = pendingLink.current;
+      const serviceId = pendingServiceSignIn.current;
       pendingLink.current = null;
-      if (destination && ["customer", "commercial"].includes(me.user.role)) {
+      pendingServiceSignIn.current = null;
+      if (serviceId && ["customer", "commercial"].includes(me.user.role)) {
+        setInitialServiceId(serviceId);
+        setScreen("services");
+      } else if (destination && ["customer", "commercial"].includes(me.user.role)) {
         setOrderFilter(destination.id ?? null);
         setScreen(destination.screen);
       } else setScreen("home");
@@ -612,6 +643,7 @@ export default function App() {
     bookings: "Service Bookings",
     cylinders: "My Cylinders",
     plans: "Refill Plan",
+    "smart-refill": "Smart Refill",
     wallet: "My Wallet",
     invoices: "Invoices & Receipts",
     notifications: "Notifications",
@@ -777,6 +809,13 @@ export default function App() {
             />
           ) : screen === "services" || screen === "bookings" ? (
             <Services
+              key={screen + ":" + (user?.id ?? "guest")}
+              backRef={serviceBack}
+              initialServiceId={screen === "services" ? initialServiceId : undefined}
+              onSignIn={(serviceId) => {
+                pendingServiceSignIn.current = serviceId;
+                setScreen("login");
+              }}
               api={api}
               user={user}
               bookingsOnly={screen === "bookings"}
@@ -812,9 +851,26 @@ export default function App() {
             ) : (
               <Text>Sign in to view notifications.</Text>
             )
+          ) : ["consumption", "smart-refill"].includes(screen) && user && customerView ? (
+            <CookingGasProfiles
+              key={`${user.id}:${user.role}:${user.branchId}:${screen}`}
+              api={api}
+              smart={screen === "smart-refill"}
+              onPreferences={() => navigateCustomer("profile")}
+              onOrderGas={() => navigateCustomer("gas-order")}
+              onOrders={(id) => {
+                setOrderFilter(id ?? null);
+                setScreen("orders");
+              }}
+              onOffer={(offer) => {
+                setRewardPoints(String(offer.points));
+                setRewardOfferId(offer.id);
+                setKey(null);
+                setScreen(cart.length ? "checkout" : "products");
+              }}
+            />
           ) : [
               "profile",
-              "consumption",
               "credit",
               "plans",
               "recovery",
@@ -822,7 +878,7 @@ export default function App() {
               "notifications",
             ].includes(screen) ? (
             <>
-              {["consumption", "plans", "recurring"].includes(screen) && (
+              {["plans", "recurring"].includes(screen) && (
                 <NativeSmartOffers
                   api={api}
                   onOffer={(o) => {
@@ -983,14 +1039,16 @@ export default function App() {
               key={user?.id ?? "guest"}
               user={user}
               api={api}
-              navigate={navigateCustomer}
+              navigate={(destination) =>
+                navigateCustomer(destination === "consumption" ? "smart-refill" : destination)
+              }
             />
           ) : screen === "home" ? (
             <>
-              <Text style={s.title}>{staffHomeTitles[user?.role] ?? "Staff Workspace"}</Text>
-              {(user?.role === "owner" || user?.role === "manager") && (
-                <OwnerOverview key={user.id} api={api} branchManager={user.role === "manager"} />
-              )}
+              {user?.role !== "owner" && <Text style={s.title}>{staffHomeTitles[user?.role] ?? "Staff Workspace"}</Text>}
+              {user?.role === "owner" && ownerWorkspace("home")}
+              {user?.role === "manager" && <OwnerOverview key={user.id} api={api} branchManager />}
+              {user?.role === "dispatcher" && <FleetLocations key={user.id + user.branchId} api={api} />}
 
               <Text style={s.body}>{user?.name}</Text>
               {user?.role === "finance" && <FinanceOverview key={user.id} api={api} />}
@@ -1437,7 +1495,7 @@ export default function App() {
                     </Text>
                     <Text style={s.productPrice}>{currency(o.total_kobo)}</Text>
                     <Text style={s.caption}>
-                      Payment: {o.payment_status} · GPS and ETA unavailable
+                      Payment: {o.payment_status}
                     </Text>
                     {!driver &&
                       o.status === "delivered" &&
@@ -1694,9 +1752,13 @@ export default function App() {
                 </View>
               )}
             </>
-          ) : screen === "rewards" ? (
+          ) : screen === "rewards" && user && customerView ? (
             <NativeEasyRewards
+              key={`${user.id}:${user.role}:${user.branchId}`}
               api={api}
+              onBookings={() => setScreen("bookings")}
+              onProducts={() => setScreen("products")}
+              onHelp={() => setScreen("conversations")}
               onOrder={(id) => {
                 setOrderFilter(id);
                 setScreen("orders");
@@ -1754,6 +1816,27 @@ export default function App() {
               navigate={navigateCustomer}
               logout={logout}
             />
+          ) : user?.role === "owner" && screen === "owner-notifications" ? (
+            <CustomerNotifications key={user.id + screen} api={api}
+              onBack={() => setScreen("more")}
+              openOrderLink={(path) => {
+                void Linking.openURL(origin + path).catch(() => setError("Could not open this order."));
+              }} />
+          ) : user?.role === "owner" && screen === "owner-profile" ? (
+            <OwnerSupportWorkspace key={user.id + screen} user={user} screen={screen} api={api} navigate={setScreen} signOut={logout} />
+          ) : user?.role === "owner" && isOwnerGovernanceScreen(screen) ? (
+            <OwnerGovernanceWorkspace key={user.id + screen} user={user} screen={screen} api={api} navigate={setScreen} />
+          ) : user?.role === "owner" && screen === "owner-operations" ? (
+            <>
+              {ownerWorkspace("operations")}
+              <FleetLocations key={user.id + ownerScope.branchId} api={api} branchId={ownerScope.branchId} />
+            </>
+          ) : user?.role === "owner" && screen === "owner-approvals" ? (
+            <OwnerApprovals api={api} branchId={ownerScope.branchId} />
+          ) : user?.role === "owner" && screen === "owner-finance" ? (
+            ownerWorkspace("finance")
+          ) : user?.role === "owner" && screen === "owner-reports" ? (
+            ownerWorkspace("reports")
           ) : screen === "technicians-management" && user && ["owner","service_manager","safety_officer","inventory","finance"].includes(user.role) ? (
             <TechniciansManagement key={user.id} user={user} api={api} />
           ) : screen === "sales-customers" && user?.role === "sales" ? (
@@ -1767,6 +1850,10 @@ export default function App() {
               <Text style={s.greeting}>MY ACCOUNT</Text>
               <Text style={s.title}>{user?.name ?? "Your EasyGas"}</Text>
               <Text style={s.body}>{user?.email}</Text>
+              {user?.role === "owner" && button("Financial Summary", () => setScreen("owner-finance"))}
+              {user?.role === "owner" && button("Management & Governance", () => setScreen("owner-governance"))}
+              {user?.role === "owner" && button("Profile & Security", () => setScreen("owner-profile"))}
+              {user?.role === "owner" && button("Notifications", () => setScreen("owner-notifications"))}
               {canOpenRetailPos(user?.role) && button("Retail POS", () => setScreen("retail-pos"))}
               {user && ["owner","service_manager","safety_officer","inventory","finance"].includes(user.role) && button("Technicians & Availability", () => setScreen("technicians-management"))}
               {[
@@ -1804,7 +1891,7 @@ export default function App() {
         </ScrollView>
       </ScreenTitleContext.Provider>
       <View style={s.bottomNav}>
-        {(user?.role === "sales" ? [["Home", "home"], ["Customers", "sales-customers"], ["POS", "retail-pos"], ["Account", "more"]] : driver || (user && !["customer", "commercial"].includes(user.role))
+        {(user?.role === "owner" ? [["Home", "home"], ["Operations", "owner-operations"], ["Approvals", "owner-approvals"], ["Reports", "owner-reports"], ["More", "more"]] : user?.role === "sales" ? [["Home", "home"], ["Customers", "sales-customers"], ["POS", "retail-pos"], ["Account", "more"]] : driver || (user && !["customer", "commercial"].includes(user.role))
           ? [
               ["Home", "home"],
               ["Account", "more"],
@@ -1833,6 +1920,9 @@ export default function App() {
                 (
                   {
                     home: "home-outline",
+                    "owner-operations": "bus-outline",
+                    "owner-approvals": "shield-checkmark-outline",
+                    "owner-reports": "stats-chart-outline",
                     products: "cube-outline",
                     orders: "bag-check-outline",
                     cart: "cart-outline",
@@ -1849,6 +1939,9 @@ export default function App() {
             />
             <Text
               preserveColor
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.8}
               style={[
                 s.navText,
                 { color: colors.muted },
@@ -2065,7 +2158,7 @@ const s = StyleSheet.create({
   },
   navItem: { alignItems: "center", minWidth: 0, flex: 1, paddingHorizontal: 4 },
   navSymbol: { fontSize: 23, color: "#a3ad99" },
-  navText: { fontSize: 15, color: "#9aa48e", marginTop: 3 },
+  navText: { fontSize: 12, color: "#9aa48e", marginTop: 3, textAlign: "center" },
 });
 function NativeDelivery({
   order,

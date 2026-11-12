@@ -1,3 +1,5 @@
+import { unavailableRiderLocation } from "./rider-location";
+
 export const trackingLabels: Record<string, string> = {
   placed: "Order Placed",
   accepted: "Confirmed",
@@ -13,7 +15,9 @@ export function reconcileTracking(previous: any[], next: any[]) {
   return next.map((o) => {
     const prior = previous.find((p) => p.id === o.id);
     return prior && Number(prior.tracking_version) > Number(o.tracking_version)
-      ? prior
+      ? prior.gps
+        ? { ...prior, gps: unavailableRiderLocation }
+        : prior
       : o;
   });
 }

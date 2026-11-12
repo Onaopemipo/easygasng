@@ -1,9 +1,18 @@
+import { Ionicons } from "@expo/vector-icons";
+import { ContextSheet } from "./ContextSheet";
+import { useTheme } from "./theme";
+import { bookingPhone, bookingPhoneMessage } from "../../packages/business-rules/src/booking-contact";
+import {
+  activeServiceSlots, assertServiceSelection, serviceAvailabilityMessage, serviceDetailText, serviceMoney, servicePrice, serviceSlotDay, serviceSlotTime, serviceSlotsQuery, type ServiceAvailability,
+} from "../../packages/business-rules/src/service-detail";
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasLoader } from "./EasyGasLoader";
 import { technicianMutation, captureFieldEvent } from "./field-queue";
 import { NativeHostedPayment } from "./HostedPayment";
 import Constants from "expo-constants";
 import {
+  Button as CustomerButton,
+  Feedback as CustomerFeedback,
   Card as CustomerCard,
   Row as CustomerRow,
   Copy as CustomerCopy,
@@ -12,6 +21,8 @@ import {
 import * as SecureStore from "expo-secure-store";
 import React, { useEffect, useState, useRef } from "react";
 import {
+  AppState,
+  Linking,
   StyleSheet,
   Share,
   Image,
@@ -45,6 +56,9 @@ export default function Services({
   apiUrl,
   onStage,
   onBundle,
+  backRef,
+  onSignIn,
+  initialServiceId,
 }: {
   api: API;
   user: any;
@@ -53,6 +67,9 @@ export default function Services({
   apiUrl: string;
   onStage?: () => void;
   onBundle?: (b: any) => void;
+  backRef?: React.RefObject<(() => boolean) | null>;
+  onSignIn?: (serviceId: string) => void;
+  initialServiceId?: string;
 }) {
   const [bundles, setBundles] = useState<any[]>([]),
     [bundle, setBundle] = useState<any>(null),
@@ -60,7 +77,9 @@ export default function Services({
     [followup, setFollowup] = useState<any>(null),
     [items, setItems] = useState<any[]>([]),
     [bookings, setBookings] = useState<any[]>([]),
-    [selected, setSelected] = useState<any>(null),
+    [selected, setSelected] = useState<any>(() =>
+      initialServiceId ? { id: initialServiceId } : null,
+    ),
     [error, setError] = useState(""),
     [loading, setLoading] = useState(true),
     [version, setVersion] = useState(0);
@@ -95,6 +114,22 @@ export default function Services({
       live = false;
     };
   }, [user?.id, version]);
+  const clearSelection = () => {
+    setSelected(null);
+    setFollowup(null);
+    setBundle(null);
+  };
+  useEffect(() => {
+    if (!backRef || !selected) return;
+    backRef.current = () => {
+      clearSelection();
+      return true;
+    };
+    return () => {
+      backRef.current = null;
+    };
+  }, [backRef, selected]);
+  const currentService = items.find((item) => item.id === selected?.id);
   return (
     <View>
       {!bookingsOnly && !selected && (
@@ -137,17 +172,11 @@ export default function Services({
             />
           </View>
         ))}
-      <CustomerTitle>
-        {bookingsOnly
-          ? "My service appointments"
-          : selected
-            ? "Service Booking"
-            : "Book a Service"}
-      </CustomerTitle>
-      <Text style={s.body}>
-        Cooker servicing, installations and gas safety checks, with clear
-        quotations and documented outcomes.
-      </Text>
+      {!selected && (
+        <CustomerTitle>
+          {bookingsOnly ? "My service appointments" : "Book a Service"}
+        </CustomerTitle>
+      )}
       {loading && <EasyGasLoader color="#07592e" />}
       {error && (
         <>
@@ -177,51 +206,53 @@ export default function Services({
           </>
         ) : (
           <>
-            <Button
-              text="All services"
-              press={() => {
-                setSelected(null);
-                setFollowup(null);
-                setBundle(null);
-              }}
+            <CustomerButton
+              label="All services"
+              secondary
+              onPress={clearSelection}
             />
-            <View style={s.card}>
-              <Text style={s.heading}>{selected.name}</Text>
-              <Text style={s.body}>{selected.config.inclusions}</Text>
-              <Text style={s.body}>
-                Exclusions: {selected.config.exclusions}
-              </Text>
-              <Text style={s.body}>
-                Preparation: {selected.config.preparation}
-              </Text>
-              <Text style={s.body}>{selected.config.safety}</Text>
-              <Text style={s.body}>
-                Call-out {money(selected.config.calloutKobo)}. Changes close{" "}
-                {selected.config.cancellationHours} hours before the
-                appointment. {selected.config.warranty}
-              </Text>
-            </View>
-            {user ? (
-              <Booking
-                bundleId={bundle?.id}
-                bundleVersion={bundle?.version}
-                bundleTotalKobo={bundle?.totalKobo}
-                followupId={followup?.id}
-                userId={user.id}
-                onStage={onStage}
-                service={selected}
-                api={api}
-                done={() => {
-                  setSelected(null);
-                  setFollowup(null);
-                  setBundle(null);
-                  reload();
-                }}
-              />
+            {currentService ? (
+              <>
+                <NativeServiceDetail
+                  key={currentService.id}
+                  service={currentService}
+                  apiUrl={apiUrl}
+                />
+                {user && ["customer", "commercial"].includes(user.role) ? (
+                  <Booking
+                    key={user.id + ":" + currentService.id}
+                    bundleId={bundle?.id}
+                    bundleVersion={bundle?.version}
+                    bundleTotalKobo={bundle?.totalKobo}
+                    followupId={followup?.id}
+                    userId={user.id}
+                    onStage={onStage}
+                    service={currentService}
+                    api={api}
+                    apiUrl={apiUrl}
+                    reloadService={reload}
+                    done={() => {
+                      clearSelection();
+                      reload();
+                    }}
+                  />
+                ) : !user && onSignIn ? (
+                  <CustomerButton
+                    label="Sign in to check appointments"
+                    onPress={() => onSignIn(currentService.id)}
+                  />
+                ) : (
+                  <CustomerCopy>
+                    Sign in with a customer account to book an appointment.
+                  </CustomerCopy>
+                )}
+              </>
             ) : (
-              <Text style={s.body}>
-                Sign in from your account to request an appointment.
-              </Text>
+              !loading && (
+                <CustomerCopy>
+                  This service is not currently listed.
+                </CustomerCopy>
+              )
             )}
           </>
         ))}
@@ -291,9 +322,149 @@ export default function Services({
     </View>
   );
 }
+function NativeServiceDetail({
+  service,
+  apiUrl,
+}: {
+  service: any;
+  apiUrl: string;
+}) {
+  const { colors } = useTheme();
+  const config = service.config;
+  const included = serviceDetailText(config.inclusions);
+  const [expanded, setExpanded] = useState<string[]>(
+    included ? ["What’s included"] : [],
+  );
+  const [imageFailed, setImageFailed] = useState(false);
+  useEffect(() => setImageFailed(false), [service.image_id]);
+  const sections = [
+    ["What’s included", included, "list-outline"],
+    [
+      "Exclusions",
+      serviceDetailText(config.exclusions),
+      "remove-circle-outline",
+    ],
+    [
+      "Prepare for your appointment",
+      serviceDetailText(config.preparation),
+      "clipboard-outline",
+    ],
+    [
+      "Service coverage",
+      Array.isArray(config.zones) ? config.zones.join(", ") : "",
+      "location-outline",
+    ],
+  ] as const;
+  return (
+    <View style={{ gap: 8, marginVertical: 12 }}>
+      <CustomerCard>
+        {service.image_id && !imageFailed ? (
+          <Image
+            source={{ uri: apiUrl + "/api/media/" + service.image_id }}
+            accessibilityLabel={service.name}
+            resizeMode="cover"
+            onError={() => setImageFailed(true)}
+            style={{ height: 136, width: "100%", borderRadius: 14 }}
+          />
+        ) : (
+          <Ionicons
+            name="construct-outline"
+            color={colors.primary}
+            size={30}
+            accessible={false}
+          />
+        )}
+        <CustomerTitle>{service.name}</CustomerTitle>
+        {!!config.description && (
+          <CustomerCopy>{config.description}</CustomerCopy>
+        )}
+        <Text
+          accessibilityRole="text"
+          style={{ fontWeight: "800", fontSize: 21 }}
+        >
+          {servicePrice(config)}
+        </Text>
+        <CustomerCopy>
+          Call-out {serviceMoney(config.calloutKobo) ?? "unavailable"} ·{" "}
+          {Number.isInteger(config.durationMinutes) &&
+          config.durationMinutes > 0
+            ? `${config.durationMinutes} minutes`
+            : "Duration unavailable"}
+        </CustomerCopy>
+        {!!serviceDetailText(config.safety) && (
+          <CustomerCopy>{config.safety}</CustomerCopy>
+        )}
+      </CustomerCard>
+      {sections.map(([title, content, icon]) => {
+        const open = expanded.includes(title);
+        return (
+          <View
+            key={title}
+            style={{
+              backgroundColor: colors.surface,
+              borderColor: colors.border,
+              borderWidth: 1,
+              borderRadius: 14,
+            }}
+          >
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ expanded: open }}
+              onPress={() =>
+                setExpanded((prior) =>
+                  open
+                    ? prior.filter((value) => value !== title)
+                    : [...prior, title],
+                )
+              }
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
+                minHeight: 48,
+                padding: 12,
+              }}
+            >
+              <Ionicons
+                name={icon}
+                color={colors.primary}
+                size={19}
+                accessible={false}
+              />
+              <Text style={{ fontWeight: "700", flex: 1 }}>{title}</Text>
+              <Ionicons
+                name={open ? "chevron-up" : "chevron-down"}
+                color={colors.muted}
+                size={16}
+                accessible={false}
+              />
+            </Pressable>
+            {open && (
+              <View style={{ paddingHorizontal: 12, paddingBottom: 12 }}>
+                <CustomerCopy>
+                  {content || "Details not configured."}
+                </CustomerCopy>
+              </View>
+            )}
+          </View>
+        );
+      })}
+      <CustomerCopy>
+        {Number.isInteger(config.cancellationHours)
+          ? `Self-service changes close ${config.cancellationHours} hours before arrival. `
+          : ""}
+        {serviceDetailText(config.warranty) ||
+          "Warranty terms are not configured."}
+      </CustomerCopy>
+    </View>
+  );
+}
+
 function Booking({
   service,
   api,
+  apiUrl,
+  reloadService,
   done,
   userId,
   onStage,
@@ -308,38 +479,113 @@ function Booking({
   bundleTotalKobo?: number;
   service: any;
   api: API;
+  apiUrl: string;
+  reloadService: () => void;
   done: () => void;
   userId: string;
   onStage?: () => void;
 }) {
-  const [slots, setSlots] = useState<any[]>([]),
-    [error, setError] = useState(""),
-    [key] = useState(randomUUID);
+  const [availability, setAvailability] = useState<{
+    zone: string;
+    value: ServiceAvailability;
+  } | null>(null);
+  const [error, setError] = useState("");
+  const [key] = useState(randomUUID);
+  const [zone, setZone] = useState("");
+  const [day, setDay] = useState("");
+  const [slotId, setSlotId] = useState("");
+  const [details, setDetails] = useState(false);
+  const [retry, setRetry] = useState(0);
+  const [addresses, setAddresses] = useState<any[]>([]);
+  const [address, setAddress] = useState<any>(null);
+  const [choice, setChoice] = useState<
+    "area" | "date" | "time" | "address" | null
+  >(null);
   useEffect(() => {
-    api(
-      "services.slots?" +
-        new URLSearchParams({
-          serviceId: service.id,
-          branchId: service.branch_id,
-        }),
-    )
-      .then(setSlots)
-      .catch((e) => setError(e.message));
-  }, [service.id]);
-  if (error) return <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>;
-  if (!slots.length)
-    return (
-      <Text style={s.body}>
-        No qualified technician appointments are currently available.
-      </Text>
-    );
+    let live = true;
+    api("account.profile")
+      .then((profile) => {
+        if (live)
+          setAddresses(
+            (profile.addresses ?? []).filter(
+              (item: any) => item.location_available,
+            ),
+          );
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [userId]);
+  useEffect(() => {
+    let live = true;
+    let generation = 0;
+    const refresh = async () => {
+      const request = ++generation;
+      try {
+        const value = await api(serviceSlotsQuery(service, zone));
+        if (live && request === generation) {
+          setAvailability({ zone, value });
+          setError("");
+        }
+      } catch (e: any) {
+        if (live && request === generation) {
+          setAvailability(null);
+          setError(e.message);
+        }
+      }
+    };
+    void refresh();
+    const timer = setInterval(() => {
+      if (AppState.currentState === "active") void refresh();
+    }, 30000);
+    const state = AppState.addEventListener("change", (next) => {
+      if (next === "active") void refresh();
+      else {
+        generation++;
+        setAvailability(null);
+      }
+    });
+    return () => {
+      live = false;
+      clearInterval(timer);
+      state.remove();
+    };
+  }, [service.id, service.branch_id, service.version, zone, retry]);
+  const current = availability?.zone === zone ? availability.value : null;
+  const slots = activeServiceSlots(current?.slots ?? []);
+  const days = [...new Set(slots.map(serviceSlotDay))];
+  const daySlots = slots.filter((slot) => serviceSlotDay(slot) === day);
+  const selected = daySlots.find((slot) => slot.id === slotId);
+  const changed =
+    current?.serviceVersion != null &&
+    Number(current.serviceVersion) !== Number(service.version);
+  const available =
+    current?.status === "available" && slots.length > 0 && !changed && !error;
+  const canProceed = Boolean(available && zone && selected);
+  const areaAddresses = addresses.filter(
+    (item) => item.zone?.toLowerCase() === zone.toLowerCase(),
+  );
+  const recheck = async () => {
+    const value: ServiceAvailability = await api(
+      serviceSlotsQuery(service, zone),
+    ).catch((failure) => {
+      setAvailability(null);
+      setError(failure.message);
+      throw failure;
+    });
+    setAvailability({ zone, value });
+    assertServiceSelection(value, service.version, slotId);
+  };
   const adapted: API = async (_, v) => {
+    const phone = bookingPhone(String(v.address?.phone ?? ""));
+    if (!phone) throw new Error(bookingPhoneMessage);
     const request = {
       serviceId: service.id,
       branchId: service.branch_id,
       serviceVersion: service.version,
-      slotId: v.slotId,
-      address: v.address,
+      slotId,
+      address: { ...v.address, zone, phone },
       equipment: {
         brand: v.brand,
         type: v.equipmentType,
@@ -353,6 +599,22 @@ function Booking({
       ...(followupId ? { followupId } : {}),
     };
     if (v.combineWithProducts || bundleId) {
+      await recheck();
+      const bundle = bundleId
+        ? (await api("bundles")).find(
+            (offer: any) =>
+              offer.id === bundleId &&
+              offer.config.serviceId === service.id &&
+              offer.branch_id === service.branch_id &&
+              Number(offer.version) === Number(bundleVersion) &&
+              Number(offer.totalKobo) === Number(bundleTotalKobo) &&
+              Number(offer.serviceVersion) === Number(service.version),
+          )
+        : null;
+      if (bundleId && !bundle)
+        throw new Error(
+          "This bundle has changed or is unavailable. Return to services and review the current offer.",
+        );
       const key = "easygas.serviceDrafts." + userId;
       const old = JSON.parse((await SecureStore.getItemAsync(key)) ?? "[]");
       if (old.length >= 5)
@@ -364,70 +626,242 @@ function Booking({
           {
             request,
             ...(bundleId ? { bundleId, bundleVersion, bundleTotalKobo } : {}),
-            totalKobo:
-              service.config.pricingModel === "fixed"
+            totalKobo: bundle
+              ? bundle.servicePriceKobo + bundle.calloutKobo
+              : service.config.pricingModel === "fixed"
                 ? service.config.priceKobo + service.config.calloutKobo
                 : null,
             name: service.name,
-            label: slots.find((s) => s.id === v.slotId)?.starts_at,
+            label: selected?.starts_at,
           },
         ]),
       );
       onStage?.();
       return { message: "Appointment added to your linked request." };
     }
-    return api("booking.create", request);
+    try {
+      return await api("booking.create", request);
+    } catch (e: any) {
+      if (e.status === 409) setRetry((n) => n + 1);
+      throw e;
+    }
   };
+  const choices =
+    choice === "area"
+      ? service.config.zones.map((area: string) => ({
+          value: area,
+          label: area,
+        }))
+      : choice === "date"
+        ? days.map((value) => ({ value, label: value }))
+        : choice === "time"
+          ? daySlots.map((slot) => ({
+              value: slot.id,
+              label: serviceSlotTime(slot),
+            }))
+          : [
+              { value: "", label: "Enter a new address" },
+              ...areaAddresses.map((item) => ({
+                value: item.id,
+                label: `${item.label} · ${item.street}`,
+              })),
+            ];
   return (
-    <NativeForm
-      api={adapted}
-      action="booking.create"
-      title="Request an appointment"
-      onDone={done}
-      fields={[
-        {
-          name: "slotId",
-          label: "Appointment (Lagos time)",
-          options: slots.map((x) => ({
-            value: x.id,
-            label: new Date(x.starts_at).toLocaleString("en-NG", {
-              timeZone: "Africa/Lagos",
-            }),
-          })),
-        },
-        { name: "address.street", label: "Service address" },
-        {
-          name: "address.zone",
-          label: "Service area",
-          options: service.config.zones.map((z: string) => ({
-            value: z,
-            label: z,
-          })),
-        },
-        { name: "address.phone", label: "Contact mobile number" },
-        { name: "brand", label: "Equipment brand, if known" },
-        { name: "equipmentType", label: "Equipment type" },
-        {
-          name: "burners",
-          label: "Burners (0 if not applicable)",
-          type: "number",
-          value: 0,
-        },
-        { name: "newEquipment", label: "New equipment", type: "checkbox" },
-        {
-          name: "supplyPresent",
-          label: "Gas supply already present",
-          type: "checkbox",
-        },
-        { name: "concerns", label: "Describe equipment and concerns" },
-        { name: "notes", label: "Additional instructions" },
-        {
-          name: "combineWithProducts",
-          label: "Confirm together with my product cart",
-          type: "checkbox",
-        },
-      ]}
-    />
+    <View style={{ gap: 12 }}>
+      <CustomerCard>
+        <CustomerTitle>Book this service</CustomerTitle>
+        {error ? (
+          <CustomerFeedback error={error} />
+        ) : !current ? (
+          <CustomerCopy>Checking appointment availability…</CustomerCopy>
+        ) : changed ? (
+          <CustomerCopy>
+            Service details or pricing changed. Refresh the service and review
+            the current terms.
+          </CustomerCopy>
+        ) : !available ? (
+          <CustomerCopy>
+            {
+              serviceAvailabilityMessage[
+                current.status === "available" ? "no_slots" : current.status
+              ]
+            }
+          </CustomerCopy>
+        ) : null}
+        {(error || changed || (current && !available)) && (
+          <>
+            <CustomerButton
+              label={
+                changed ? "Refresh service details" : "Recheck availability"
+              }
+              secondary
+              onPress={changed ? reloadService : () => setRetry((n) => n + 1)}
+            />
+            <CustomerButton
+              label="Contact EasyGas"
+              secondary
+              onPress={() => {
+                void Linking.openURL(apiUrl + "/contact").catch(() =>
+                  setError("Couldn’t open EasyGas contact information."),
+                );
+              }}
+            />
+          </>
+        )}
+        {(available || zone) && (
+          <>
+            <CustomerButton
+              label={zone || "Choose a service area"}
+              secondary
+              onPress={() => setChoice("area")}
+            />
+            <CustomerButton
+              label={days.includes(day) ? day : "Select a date"}
+              disabled={!available || !zone}
+              secondary
+              onPress={() => setChoice("date")}
+            />
+            <CustomerButton
+              label={
+                selected
+                  ? serviceSlotTime(selected) + " (Lagos)"
+                  : "Select a time (Lagos)"
+              }
+              disabled={!available || !day}
+              secondary
+              onPress={() => setChoice("time")}
+            />
+          </>
+        )}
+        {available && !details && (
+          <CustomerButton
+            label="Book service"
+            disabled={!canProceed}
+            onPress={() => setDetails(true)}
+          />
+        )}
+      </CustomerCard>
+      {choice && (
+        <ContextSheet
+          title={`Choose ${choice === "address" ? "a saved address" : choice === "area" ? "an area" : "a " + choice}`}
+          onClose={() => setChoice(null)}
+        >
+          <View style={{ gap: 8 }}>
+            {choices.map(
+              ({ value, label }: { value: string; label: string }) => (
+                <CustomerButton
+                  key={value}
+                  label={label}
+                  secondary
+                  onPress={() => {
+                    if (choice === "area") {
+                      setZone(value);
+                      setDay("");
+                      setSlotId("");
+                      setAddress(null);
+                      setError("");
+                    }
+                    if (choice === "date") {
+                      setDay(value);
+                      setSlotId("");
+                    }
+                    if (choice === "time") setSlotId(value);
+                    if (choice === "address")
+                      setAddress(
+                        areaAddresses.find((item) => item.id === value) ?? null,
+                      );
+                    setChoice(null);
+                  }}
+                />
+              ),
+            )}
+          </View>
+        </ContextSheet>
+      )}
+      {details && (
+        <>
+          {!!areaAddresses.length && (
+            <CustomerButton
+              label={address?.label ?? "Use a saved address"}
+              secondary
+              onPress={() => setChoice("address")}
+            />
+          )}
+          <NativeForm
+            key={address?.id ?? "new"}
+            api={adapted}
+            action="booking.create"
+            title="Request an appointment"
+            onDone={done}
+            disabled={!canProceed}
+            reviewKey={service.version + ":" + zone + ":" + slotId}
+            prepareReview={async (values) => {
+              if (!bookingPhone(String(values.address?.phone ?? "")))
+                throw new Error(bookingPhoneMessage);
+              await recheck();
+            }}
+            review={(values) => (
+              <>
+                <CustomerTitle>Review your booking request</CustomerTitle>
+                <CustomerCopy>
+                  {service.name} · {day} ·{" "}
+                  {selected && serviceSlotTime(selected)} (Lagos)
+                </CustomerCopy>
+                <CustomerCopy>
+                  {values.address?.street}, {zone} · {values.address?.phone}
+                </CustomerCopy>
+                <CustomerCopy>
+                  {servicePrice(service.config)} · Call-out{" "}
+                  {serviceMoney(service.config.calloutKobo) ?? "unavailable"}
+                </CustomerCopy>
+                <CustomerCopy>
+                  Submitting this request does not confirm payment or safety
+                  clearance.
+                </CustomerCopy>
+              </>
+            )}
+            fields={[
+              {
+                name: "address.street",
+                label: "Complete service address",
+                type: "textarea",
+                value: address?.street,
+              },
+              {
+                name: "address.phone",
+                label: "Contact mobile number",
+                value: address?.phone,
+              },
+              { name: "brand", label: "Equipment brand, if known" },
+              { name: "equipmentType", label: "Equipment type" },
+              {
+                name: "burners",
+                label: "Burners (0 if not applicable)",
+                type: "number",
+                value: 0,
+              },
+              {
+                name: "newEquipment",
+                label: "New equipment",
+                type: "checkbox",
+              },
+              {
+                name: "supplyPresent",
+                label: "Gas supply already present",
+                type: "checkbox",
+              },
+              { name: "concerns", label: "Describe equipment and concerns" },
+              { name: "notes", label: "Additional instructions" },
+              {
+                name: "combineWithProducts",
+                label: "Confirm together with my product cart",
+                type: "checkbox",
+              },
+            ]}
+          />
+        </>
+      )}
+    </View>
   );
 }
 export function Appointment({

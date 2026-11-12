@@ -1,3 +1,4 @@
+import CustomerNotifications from "./CustomerNotifications";
 import { EasyGasAlert } from "./AppAlert";
 import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
 import VehicleManifest from "./VehicleManifest";
@@ -12,6 +13,8 @@ import {
   StatusBar,
   Linking,
   AppState,
+  BackHandler,
+  useWindowDimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -25,7 +28,6 @@ import {
   Copy,
   Title,
   Feedback,
-  money,
   type CustomerAPI,
 } from "./CustomerUI";
 import { NativeForm } from "./Workflows";
@@ -40,6 +42,12 @@ import {
 } from "./field-queue";
 import { loadQueue } from "./offline";
 import { deliveryFailureReasons } from "../../packages/business-rules/src/order-tracking";
+import { stopDriverLocation } from "./driver-location";
+import {
+  assignmentLabel, driverDate, driverHistoryAction, driverNavigation,
+  driverOrderAddress, driverOutcomes, type DriverHistory, type DriverHistoryRow,
+} from "../../packages/business-rules/src/driver-experience";
+
 const tabs = [
   ["Home", "home", "home-outline"],
   ["Orders", "orders", "bag-handle-outline"],
@@ -59,7 +67,20 @@ export default function DriverWorkspace({
   token: string | null;
   logout: () => Promise<void>;
 }) {
-  const { colors, dark, preference, setPreference } = useTheme();
+  const { colors, preference, setPreference } = useTheme();
+  const headerGreen = "#07592e";
+  const { width, fontScale } = useWindowDimensions();
+  const [backgroundPermission, setBackgroundPermission] = useState("Not checked");
+  const [history, setHistory] = useState<DriverHistory | null>(null);
+  const [historyRow, setHistoryRow] = useState<DriverHistoryRow | null>(null);
+  const [historyError, setHistoryError] = useState("");
+  const [historyFilters, setHistoryFilters] = useState({ from: "", to: "", outcome: "", page: 1 });
+  const [historyDraft, setHistoryDraft] = useState({ from: "", to: "", outcome: "" });
+  const [showFilters, setShowFilters] = useState(false);
+  const [historyRefresh, setHistoryRefresh] = useState(0);
+  const [assignmentFilter, setAssignmentFilter] = useState<"all" | "progress">("all");
+  const [lastSync, setLastSync] = useState<string | null>(null);
+  const [revoked, setRevoked] = useState(false);
   const [page, setPage] = useState("home"),
     [selected, setSelected] = useState<string | null>(null),
     [phase, setPhase] = useState("detail"),
@@ -80,36 +101,68 @@ export default function DriverWorkspace({
     [permission, setPermission] = useState("Not checked"),
     [query, setQuery] = useState(""),
     [limit, setLimit] = useState(20),
-    [notices, setNotices] = useState<any[]>([]),
+    [unread, setUnread] = useState<number | null>(null),
     [completed, setCompleted] = useState<any>(null);
   const alive = useRef(true),
     appActive = useRef(true),
+    actionBusy = useRef(false),
+    refreshSequence = useRef(0),
     keys = useRef(new Map<string, string>());
-  const order = orders.find((o) => o.id === selected);
+  const order = orders.find((o) => o.id === selected) ?? (phase === "completed" ? completed : null);
   const response = snapshot?.responses?.find(
     (r: any) => r.order_id === selected,
   )?.decision;
-  const activeOrders = orders.filter((o) =>
-      ["assigned", "out_for_delivery"].includes(o.status),
-    ),
-    done = orders.filter((o) => o.status === "delivered");
+  const activeOrders = orders;
+  const connectionError = "Connection or session unavailable. Displayed records may be stale. Reconnect to verify assignments.";
   async function refresh() {
-    const [list, s, me, pending, old] = await Promise.all([
-      api("orders"),
+    const sequence = ++refreshSequence.current;
+    const [list, next, inbox, pending, old] = await Promise.all([
+      api("orders?active=1"),
       api("driver.snapshot"),
-      api("me"),
-      fieldQueue(user.id, true),
-      loadQueue(user.id),
-      api("driver.heartbeat", {}),
+      api("notifications.list").catch(() => null),
+      fieldQueue(user.id, true).catch(() => null),
+      loadQueue(user.id).catch(() => null),
+      api("driver.heartbeat", {}).catch(() => null),
     ]);
-    if (!alive.current) return;
+    if (!alive.current || sequence !== refreshSequence.current) return;
     setOrders(list);
-    setSnapshot(s);
-    setNotices(me.notifications);
-    setQueue(pending.filter((e) => e.tripId.startsWith("order:")).length);
-    setLegacy(old.length);
+    setSnapshot(next);
+    if (inbox) setUnread(inbox.unread);
+    if (pending) setQueue(pending.filter((e) => e.tripId.startsWith("order:")).length);
+    if (old) setLegacy(old.length);
     setConnected(true);
+    setError((message) => message === connectionError ? "" : message);
+    setRevoked(false);
     setLastContact(new Date().toISOString());
+  }
+
+  async function readPermission() {
+    try {
+      const [foreground, background] = await Promise.all([
+        Location.getForegroundPermissionsAsync(),
+        Location.getBackgroundPermissionsAsync(),
+      ]);
+      if (!alive.current) return;
+      setPermission(foreground.granted ? "Granted" : "Not granted");
+      setBackgroundPermission(background.granted ? "Granted" : "Not granted");
+    } catch {
+      if (!alive.current) return;
+      setPermission("Unavailable");
+      setBackgroundPermission("Unavailable");
+    }
+  }
+
+  function clearRevokedAccess() {
+    ++refreshSequence.current;
+    setSnapshot(null);
+    setOrders([]);
+    setHistory(null);
+    setHistoryRow(null);
+    setSelected(null);
+    setUnread(null);
+    setConnected(false);
+    setRevoked(true);
+    void stopDriverLocation();
   }
   useEffect(() => {
     alive.current = true;
@@ -119,12 +172,11 @@ export default function DriverWorkspace({
       running = true;
       try {
         await refresh();
-      } catch {
+      } catch (e: any) {
         if (alive.current) {
+          if ([401, 403].includes(e.status)) clearRevokedAccess();
           setConnected(false);
-          setError(
-            "Connection or session unavailable. Displayed records may be stale. Reconnect to verify assignments.",
-          );
+          setError(connectionError);
         }
       } finally {
         running = false;
@@ -133,15 +185,17 @@ export default function DriverWorkspace({
     api("driver.restrict", {})
       .then(poll)
       .catch((e) => {
+        if (alive.current && [401, 403].includes(e.status)) clearRevokedAccess();
         if (alive.current) setError(e.message);
       });
-    Location.getForegroundPermissionsAsync().then((p) => {
-      if (alive.current) setPermission(p.granted ? "Granted" : "Not granted");
-    });
+    void readPermission();
     const timer = setInterval(poll, 15000);
     const listener = AppState.addEventListener("change", (state) => {
       appActive.current = state === "active";
-      if (state === "active") poll();
+      if (state === "active") {
+        void readPermission();
+        void poll();
+      }
     });
     return () => {
       alive.current = false;
@@ -164,7 +218,7 @@ export default function DriverWorkspace({
         )
           throw new Error("Invalid driver delivery link.");
         await api("driver.restrict", {});
-        const owned = await api("orders?id=" + encodeURIComponent(orderId));
+        const owned = await api("orders?active=1&id=" + encodeURIComponent(orderId));
         if (!owned.length)
           throw new Error(
             "This delivery is no longer assigned to your account.",
@@ -188,6 +242,38 @@ export default function DriverWorkspace({
       listener.remove();
     };
   }, [user.id]);
+  useEffect(() => {
+    if (page !== "history" || !connected || revoked) return;
+    let current = true;
+    setHistory(null);
+    setHistoryError("");
+    api(driverHistoryAction(historyFilters)).then((data) => {
+      if (current) setHistory(data);
+    }).catch((e: any) => {
+      if (!current) return;
+      if ([401, 403].includes(e.status)) clearRevokedAccess();
+      setHistoryError(e.message);
+    });
+    return () => { current = false; };
+  }, [page, connected, revoked, historyFilters, historyRefresh, user.id]);
+
+  function back() {
+    if (historyRow) setHistoryRow(null);
+    else if (selected && phase !== "detail") {
+      setPhase("detail");
+      setCompleted(null);
+    } else if (selected) setSelected(null);
+    else if (showFilters) setShowFilters(false);
+    else if (["security", "personal", "trip"].includes(page)) setPage("profile");
+    else if (page !== "home") setPage("home");
+    else return false;
+    return true;
+  }
+  useEffect(() => {
+    const handler = BackHandler.addEventListener("hardwareBackPress", back);
+    return () => handler.remove();
+  }, [page, selected, phase, historyRow, showFilters]);
+
   function open(o: any) {
     setSelected(o.id);
     setPhase("detail");
@@ -197,7 +283,8 @@ export default function DriverWorkspace({
     setError("");
   }
   async function run(action: string, input: any) {
-    if (!order) return;
+    if (!order || actionBusy.current) return;
+    actionBusy.current = true;
     setBusy(true);
     setError("");
     const signature = action + JSON.stringify(input);
@@ -205,13 +292,18 @@ export default function DriverWorkspace({
     const operationKey = keys.current.get(signature)!;
     try {
       await api(action, { ...input, operationKey });
-      await refresh();
-      if (action === "driver.complete") {
-        const current = (await api("orders?id=" + order.id))[0];
-        if (current?.status === "delivered") {
-          setCompleted(current);
-          setPhase("completed");
+      try {
+        if (action === "driver.complete") {
+          const current = (await api("orders?id=" + order.id))[0];
+          if (current?.status === "delivered") {
+            setCompleted(current);
+            setPhase("completed");
+          }
         }
+        await refresh();
+      } catch {
+        setConnected(false);
+        setError("The server accepted the update. Reconnect to confirm the latest delivery status.");
       }
     } catch (e: any) {
       if (e instanceof TypeError) {
@@ -237,6 +329,7 @@ export default function DriverWorkspace({
         }
       } else setError(e.message);
     } finally {
+      actionBusy.current = false;
       setBusy(false);
     }
   }
@@ -250,6 +343,7 @@ export default function DriverWorkspace({
         photoUploader(origin, token),
       );
       await refresh();
+      if (!result.conflicts.length) setLastSync(new Date().toISOString());
       setError(
         result.conflicts[0] ??
           `${result.sent} pending records verified by the server. Refresh the order before continuing.`,
@@ -260,144 +354,103 @@ export default function DriverWorkspace({
       setBusy(false);
     }
   }
-  const heading = selected
-    ? phase === "proof"
-      ? "Proof of Delivery"
-      : phase === "status"
-        ? "Update Order Status"
-        : phase === "completed"
-          ? "Delivery Completed"
-          : (order?.reference ?? "Assigned delivery")
-    : page === "home"
-      ? "EasyGas Driver"
-      : page === "history"
-        ? "Delivery History"
-        : page === "profile"
-          ? "My Profile"
-          : page === "notices"
-            ? "Notifications"
-            : "My Orders";
-  function orderList(list: any[]) {
-    const filtered = list.filter((o) =>
-      [o.reference, o.address?.street, o.status]
-        .join(" ")
-        .toLowerCase()
-        .includes(query.toLowerCase()),
+  const heading = historyRow ? "Delivery record" : selected
+    ? phase === "proof" ? "Proof of delivery"
+      : phase === "status" ? "Update delivery status"
+      : phase === "completed" ? "Delivery completed"
+      : order?.reference ?? "Assigned delivery"
+    : ({ home: "", orders: "Orders", history: "History", profile: "Profile",
+        notices: "Notifications", security: "Security", personal: "Personal information",
+        support: "Help & support", trip: "Trip & custody" } as Record<string, string>)[page];
+
+  function navigate(destination?: { latitude: unknown; longitude: unknown }) {
+    const url = connected && driverNavigation(destination);
+    if (url) Linking.openURL(url).catch(() => setError("Navigation could not be opened."));
+  }
+
+  function openOrders() {
+    setPage("orders");
+    setAssignmentFilter("all");
+  }
+
+  function orderList() {
+    const filtered = activeOrders.filter((o) =>
+      (assignmentFilter === "all" || assignmentLabel(o.status, o.attempt?.state,
+        snapshot.responses.find((r: any) => r.order_id === o.id)?.decision) !== "Assigned") &&
+      [o.reference, o.address?.street, o.customer_name].join(" ").toLowerCase().includes(query.trim().toLowerCase()),
     );
     return (
       <>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+          <Button label={`${assignmentFilter === "all" ? "✓ " : ""}Assigned`} onPress={openOrders} secondary />
+          <Button label={`${assignmentFilter === "progress" ? "✓ " : ""}In progress`} onPress={() => setAssignmentFilter("progress")} secondary />
+        </View>
         <TextInput
-          accessibilityLabel="Search assigned orders"
-          placeholder="Search reference or address"
-          value={query}
-          onChangeText={(v) => {
-            setQuery(v);
-            setLimit(20);
-          }}
-          style={{
-            backgroundColor: colors.input,
-            color: colors.text,
-            padding: 13,
-            borderWidth: 1,
-            borderColor: colors.border,
-            borderRadius: 13,
-          }}
+          accessibilityLabel="Search assigned orders" placeholder="Search assigned orders"
+          value={query} onChangeText={(value) => { setQuery(value); setLimit(20); }}
+          style={{ backgroundColor: colors.input, color: colors.text, padding: 13, minHeight: 48,
+            borderWidth: 1, borderColor: colors.border, borderRadius: 14 }}
         />
-        {!filtered.length && (
-          <Card>
-            <Copy>
-              No matching assignments. Dispatch assigns deliveries through the
-              existing system.
-            </Copy>
-          </Card>
-        )}
+        {!filtered.length && <Card><Copy>{connected ? "No matching assignments." : "Reconnect to check assigned orders."}</Copy></Card>}
         {filtered.slice(0, limit).map((o) => (
           <Card key={o.id}>
-            <Text
-              preserveColor
-              style={{ color: colors.text, fontWeight: "800", fontSize: 20 }}
-            >
-              {o.reference}
-            </Text>
-            <Copy>
-              {o.status.replaceAll("_", " ")} · {o.delivery_date} ·{" "}
-              {o.delivery_window}
-            </Copy>
-            <Copy>
-              {o.address?.street}, {o.address?.zone}
-            </Copy>
-            <Button
-              label={
-                o.status === "delivered"
-                  ? "View delivery history"
-                  : "View assignment"
-              }
-              secondary
-              onPress={() => open(o)}
-            />
+            <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", gap: 8 }}>
+              <DriverLabel icon="cube-outline" label={o.reference} />
+              <Copy>{assignmentLabel(o.status, o.attempt?.state,
+                snapshot.responses.find((r: any) => r.order_id === o.id)?.decision)}</Copy>
+            </View>
+            {!!o.customer_name && <Copy>{o.customer_name}</Copy>}
+            {!!driverOrderAddress(o.address) && <Copy>{driverOrderAddress(o.address)}</Copy>}
+            {(o.items ?? []).map((item: any, index: number) => <Copy key={item.id ?? index}>{item.quantity} × {item.name}</Copy>)}
+            {(o.gas_lines ?? []).map((line: any, index: number) => <Copy key={line.id ?? index}>{Number(line.grams) / 1000} kg gas</Copy>)}
+            <Copy>{[o.delivery_date, o.delivery_window].filter(Boolean).join(" · ")}</Copy>
+            {!!o.last_update && <Copy>Updated {driverDate(o.last_update)} WAT</Copy>}
+            {connected && driverNavigation(o.destination) && (
+              <Button label="Navigate" secondary onPress={() => navigate(o.destination)} />
+            )}
+            <Button label="Open assignment" onPress={() => open(o)} />
           </Card>
         ))}
-        {filtered.length > limit && (
-          <Button
-            label="Show more assigned records"
-            secondary
-            onPress={() => setLimit((n) => n + 20)}
-          />
-        )}
-        <Copy>
-          Latest100 canonical assignments. Completed records are read-only.
-        </Copy>
+        {filtered.length > limit && <Button label="Show more assignments" secondary onPress={() => setLimit((n) => n + 20)} />}
+        {activeOrders.length === 100 && <Copy>Showing up to 100 current assignments. Contact dispatch for older assigned records.</Copy>}
       </>
     );
   }
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
-      <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
-      <View
-        style={{
-          padding: 14,
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 12,
-          borderBottomWidth: 1,
-          borderColor: colors.border,
-        }}
-      >
-        {(selected || !tabs.some((t) => t[1] === page)) && (
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Back"
-            onPress={() => {
-              if (selected && phase !== "detail") {
-                setPhase("detail");
-                setCompleted(null);
-              } else {
-                setSelected(null);
-                setPage("home");
-              }
-            }}
-            style={{ width: 44, height: 44, justifyContent: "center" }}
-          >
-            <Ionicons
-              accessible={false}
-              name="chevron-back"
-              size={24}
-              color={colors.text}
-            />
-          </Pressable>
-        )}
-        <Text
-          preserveColor
-          style={{
-            fontSize: 21,
-            fontWeight: "800",
-            color: colors.text,
-            flex: 1,
-          }}
-        >
-          {heading}
-        </Text>
-      </View>
+    <SafeAreaView edges={["left", "right", "bottom"]} style={{ flex: 1, backgroundColor: colors.background }}>
+      <StatusBar barStyle="light-content" />
+      <SafeAreaView edges={["top"]} style={{ backgroundColor: headerGreen, paddingHorizontal: 18, paddingBottom: 14 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8, minHeight: 54 }}>
+          {(selected || historyRow || !tabs.some((t) => t[1] === page)) && (
+            <Pressable accessibilityRole="button" accessibilityLabel="Back" onPress={back}
+              style={{ width: 48, minHeight: 48, justifyContent: "center" }}>
+              <Ionicons accessible={false} name="chevron-back" size={24} color="#fff" />
+            </Pressable>
+          )}
+          <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 8 }}>
+            <View style={{ backgroundColor: "#fff", borderRadius: 10, paddingHorizontal: 6 }}>
+              <Image accessibilityLabel="EasyGas" source={require("./assets/easygas-logo-hd.png")}
+                resizeMode="contain" style={{ width: 92, height: 36 }} />
+            </View>
+            <Text preserveColor style={{ color: "#fff", fontWeight: "700" }}>Driver</Text>
+          </View>
+          {!!snapshot && <Pressable accessibilityRole="button" accessibilityLabel={unread == null ? "Notifications" : `Notifications, ${unread} unread`}
+            style={{ minWidth: 48, minHeight: 48, alignItems: "center", justifyContent: "center" }}
+            onPress={() => { setSelected(null); setHistoryRow(null); setPage("notices"); }}>
+            <Ionicons name="notifications-outline" size={24} color="#fff" accessible={false} />
+            {connected && !!unread && <Text preserveColor style={{ color: "#fff", fontSize: 11 }}>{unread > 99 ? "99+" : unread}</Text>}
+          </Pressable>}
+          {!!snapshot && <Pressable accessibilityRole="button" accessibilityLabel="Help and support"
+            style={{ width: 48, height: 48, alignItems: "center", justifyContent: "center" }}
+            onPress={() => { setSelected(null); setHistoryRow(null); setPage("support"); }}>
+            <Ionicons name="help-circle-outline" size={26} color="#fff" accessible={false} />
+          </Pressable>}
+        </View>
+        {!!heading && <Text accessibilityRole="header" preserveColor style={{ color: "#fff", fontWeight: "800", fontSize: 27 }}>{heading}</Text>}
+        {!selected && !historyRow && page === "orders" && <Text preserveColor style={{ color: "#fff" }}>Manage your assigned deliveries</Text>}
+        {!historyRow && page === "history" && <Text preserveColor style={{ color: "#fff" }}>Review closed delivery attempts</Text>}
+      </SafeAreaView>
       <ScrollView
         automaticallyAdjustKeyboardInsets
         keyboardShouldPersistTaps="handled"
@@ -410,8 +463,8 @@ export default function DriverWorkspace({
           alignSelf: "center",
         }}
       >
-        <DriverTripTracking api={api} userId={user.id} visible={!selected} />
-        {!!snapshot && !selected && (
+        {!!snapshot && !revoked && <DriverTripTracking api={api} userId={user.id} visible={page === "trip" && !selected} />}
+        {!!snapshot && page === "trip" && !selected && (
           <>
             <BulkLPG api={api} />
             <VehicleManifest api={api} />
@@ -429,7 +482,11 @@ export default function DriverWorkspace({
             }}
           />
         )}
-        {!snapshot ? (
+        {revoked ? (
+          <Card><Title>Driver access unavailable</Title><Copy>Sign in again or contact dispatch to confirm your access.</Copy>
+            <Button label="Sign out" secondary onPress={() => { void logout().catch(() => setError("Sign-out needs review.")); }} />
+          </Card>
+        ) : !snapshot ? (
           <Card>
             <Image
               source={require("./assets/easygas-logo-hd.png")}
@@ -438,6 +495,13 @@ export default function DriverWorkspace({
             />
             <Title>Driver App</Title>
             <Copy>Restoring your verified delivery-only session…</Copy>
+          </Card>
+        ) : historyRow ? (
+          <Card>
+            <Title>{historyRow.reference}</Title>
+            <Copy>{driverOutcomes[historyRow.outcome]} · {driverDate(historyRow.closed_at)} WAT</Copy>
+            {connected && historyRow.has_proof && <DriverPhotoHistory api={api} orderId={historyRow.order_id}
+              attemptId={historyRow.id} origin={origin} token={token} />}
           </Card>
         ) : selected && !order ? (
           <Card>
@@ -502,10 +566,7 @@ export default function DriverWorkspace({
                       .map((i: any) => `${i.quantity} × ${i.name}`)
                       .join(" · ")}
                   </Copy>
-                  <Copy>
-                    {money(order.total_kobo)} · Payment {order.payment_status}{" "}
-                    (read-only)
-                  </Copy>
+                  <Copy>Payment status · {order.payment_status}</Copy>
                   <Copy>
                     {order.delivery_date} · {order.delivery_window}
                   </Copy>
@@ -539,21 +600,9 @@ export default function DriverWorkspace({
                     ))}
                     {activeOrders.some((o) => o.id === order.id) && (
                       <>
-                        <Button
-                          label="Navigate to Customer"
-                          onPress={() =>
-                            Linking.openURL(
-                              "https://www.google.com/maps/search/?api=1&query=" +
-                                encodeURIComponent(
-                                  order.address.street +
-                                    ", " +
-                                    order.address.zone,
-                                ),
-                            ).catch(() =>
-                              setError("Navigation could not be opened."),
-                            )
-                          }
-                        />
+                        {connected && driverNavigation(order.destination) && (
+                          <Button label="Navigate to confirmed destination" onPress={() => navigate(order.destination)} />
+                        )}
                         {/^\+?[0-9]{10,15}$/.test(
                           order.address?.phone ?? "",
                         ) && (
@@ -572,8 +621,9 @@ export default function DriverWorkspace({
                           />
                         )}
                         <Copy>
-                          GPS/ETA unavailable. Navigation opens the authorised
-                          address, not a simulated tracking map.
+                          {driverNavigation(order.destination)
+                            ? "Directions use the destination confirmed by dispatch."
+                            : "Directions are unavailable until dispatch confirms the destination."}
                         </Copy>
                       </>
                     )}
@@ -591,7 +641,8 @@ export default function DriverWorkspace({
                             borderRadius: 12,
                           }}
                         />
-                        {!response && (
+                        {!response && !order.assignment_response_open && <Copy>Ask dispatch to renew this assignment before responding.</Copy>}
+                        {!response && order.assignment_response_open && (
                           <>
                             <Button
                               label="Acknowledge Assignment"
@@ -754,9 +805,7 @@ export default function DriverWorkspace({
                       onPress={sync}
                     />
                     <Copy>
-                      Only verified purchase-credit payments can be completed in
-                      this delivery-only app. Contact dispatch for cash/payment
-                      review.
+                      Completion requires a verified payment. Contact dispatch for payment review.
                     </Copy>
                     <TextInput
                       accessibilityLabel="Customer six-digit handover code"
@@ -792,7 +841,7 @@ export default function DriverWorkspace({
                         busy ||
                         !handover ||
                         !/^\d{6}$/.test(code) ||
-                        !["wallet", "cash_on_delivery"].includes(
+                        !["wallet", "card", "cash_on_delivery"].includes(
                           order.payment_method,
                         ) ||
                         order.payment_status !== "verified"
@@ -813,141 +862,136 @@ export default function DriverWorkspace({
           </>
         ) : page === "home" ? (
           <>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
-            >
-              <View style={{ flex: 1 }}>
-                <Copy>Good to see you,</Copy>
-                <Title>{user.name}</Title>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 8 }}>
+              <View style={{ backgroundColor: colors.elevated, padding: 12, borderRadius: 32 }}>
+                <Ionicons accessible={false} name="car-outline" size={26} color={colors.primary} />
               </View>
-              <Button
-                label={`Notifications (${notices.filter((n) => !n.read_at).length})`}
-                secondary
-                onPress={() => setPage("notices")}
-              />
+              <View style={{ flex: 1 }}><Copy>Good to see you,</Copy><Title>{snapshot.profile.name}</Title></View>
             </View>
             <Card accent>
-              <Image
-                source={require("./assets/delivery.png")}
-                resizeMode="contain"
-                style={{ width: "100%", height: 150 }}
-              />
-              <Title>
-                {snapshot.profile.driver_available
-                  ? "Available for Dispatch"
-                  : "Not Available for New Assignments"}
-              </Title>
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
-              >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+                <View style={{ flex: 1, gap: 6 }}>
+              <DriverLabel icon="car-outline" label={snapshot.profile.driver_available
+                ? "Available for dispatch" : "Unavailable for dispatch"} />
+              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8, minHeight: 48 }}>
+                <View style={{ flex: 1 }}><Copy>{snapshot.profile.driver_available ? "Ready for new assignments." : "New assignments are paused."}</Copy></View>
                 <Switch
-                  accessibilityLabel="Available for dispatch, independent of internet or GPS"
+                  accessibilityLabel="Available for dispatch"
                   value={snapshot.profile.driver_available}
-                  disabled={busy}
+                  disabled={busy || !connected}
                   onValueChange={async (available) => {
+                    if (actionBusy.current) return;
+                    actionBusy.current = true;
                     setBusy(true);
+                    setError("");
                     try {
-                      await api("driver.availability", {
-                        available,
-                        operationKey: randomUUID(),
-                      });
-                      await refresh();
+                      const result = await api("driver.availability", { available, operationKey: randomUUID() });
+                      ++refreshSequence.current;
+                      setSnapshot((old: any) => old ? { ...old, profile: { ...old.profile, driver_available: result.available } } : old);
                     } catch (e: any) {
+                      if ([401, 403].includes(e.status)) clearRevokedAccess();
                       setError(e.message);
                     } finally {
+                      actionBusy.current = false;
                       setBusy(false);
                     }
                   }}
                 />
-                <Copy>Availability is not internet connectivity.</Copy>
+              </View>
+                </View>
+                {width >= 360 && fontScale < 1.3 && <Image
+                  source={require("./assets/delivery.png")} accessible={false} resizeMode="cover"
+                  style={{ width: Math.min(112, width * 0.25), height: 98, borderRadius: 14 }} />}
               </View>
             </Card>
-            <Copy>
-              Backend connection:{" "}
-              {connected
-                ? "last verified " + new Date(lastContact!).toLocaleTimeString()
-                : "unavailable / records stale"}
-              . GPS permission: {permission}. Trip recording status appears in
-              Trip GPS above.
-            </Copy>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
-              {[
-                [
-                  "New Assignments",
-                  orders.filter((o) => o.status === "assigned").length,
-                ],
-                [
-                  "In Progress",
-                  orders.filter((o) => o.status === "out_for_delivery").length,
-                ],
-                ["Completed", done.length],
-              ].map(([label, count]) => (
-                <Card key={label}>
-                  <Text
-                    preserveColor
-                    style={{
-                      fontSize: 24,
-                      fontWeight: "800",
-                      color: colors.text,
-                    }}
-                  >
-                    {count}
-                  </Text>
-                  <Copy>{label}</Copy>
-                </Card>
-              ))}
-            </View>
-            {activeOrders[0] && (
-              <Button
-                label={"View next assignment " + activeOrders[0].reference}
-                onPress={() => open(activeOrders[0])}
-              />
-            )}
-            <Button
-              label="Refresh Assignments"
-              secondary
-              onPress={() =>
-                refresh().catch(() => setError("Connection unavailable."))
-              }
-            />
+            <Card>
+              <DriverLabel icon="wifi-outline" label={connected ? "Backend connected" : "Connection unconfirmed"} />
+              {lastContact && <Copy>Last confirmed {driverDate(lastContact)} WAT</Copy>}
+              <Copy>GPS permission · {permission}</Copy>
+              <Copy>Trip location consent · {connected ? snapshot.trip ? snapshot.trip.location_consent ? "Granted for this trip" : "Off" : "No active trip" : "Unavailable"}</Copy>
+            </Card>
+            <Card>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+                <DriverLabel icon="stats-chart-outline" label="At a glance" />
+                <Button label="View history" secondary onPress={() => setPage("history")} />
+              </View>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+                {[
+                  ["New assignments", snapshot.metrics?.newAssignments],
+                  ["In progress", snapshot.metrics?.inProgress],
+                  ["Completed today", snapshot.metrics?.completedToday],
+                ].map(([label, count]) => (
+                  <View key={label} style={{ flexGrow: 1, flexBasis: 86, padding: 9, backgroundColor: colors.elevated, borderRadius: 12 }}>
+                    <Title>{connected ? count ?? "—" : "—"}</Title><Copy>{label}</Copy>
+                  </View>
+                ))}
+              </View>
+            </Card>
+            {activeOrders[0] && <Card>
+              <DriverLabel icon="cube-outline" label="Next assignment" />
+              <Copy>{activeOrders[0].reference}</Copy>
+              <Button label="Open next assignment" onPress={() => { openOrders(); open(activeOrders[0]); }} />
+            </Card>}
+            <Card>
+              <DriverLabel icon="flash-outline" label="Quick actions" />
+              <Button label="Open assigned orders" secondary onPress={openOrders} />
+              {connected && driverNavigation(activeOrders[0]?.destination) && <Button label="Navigate to next delivery" secondary onPress={() => navigate(activeOrders[0].destination)} />}
+              <Button label="Trip & custody" secondary onPress={() => setPage("trip")} />
+              <Button label="Contact dispatch support" secondary onPress={() => setPage("support")} />
+            </Card>
           </>
-        ) : page === "orders" || page === "history" ? (
-          orderList(page === "history" ? done : orders)
-        ) : page === "notices" ? (
+        ) : page === "orders" ? orderList() : page === "history" ? (
           <>
-            {!notices.length && (
-              <Card>
-                <Copy>No driver notifications yet.</Copy>
-              </Card>
-            )}
-            {notices.map((n) => (
-              <Card key={n.id}>
-                <Title>{n.title}</Title>
-                <Copy>{n.body}</Copy>
-                <Copy>{new Date(n.created_at).toLocaleString()}</Copy>
-                {orders.some((o) => o.id === n.related_id) && (
-                  <Button
-                    label="View assigned order"
-                    secondary
-                    onPress={() =>
-                      open(orders.find((o) => o.id === n.related_id))
-                    }
-                  />
-                )}{" "}
-                {!n.read_at && (
-                  <Button
-                    label="Mark read"
-                    secondary
-                    onPress={() =>
-                      api("notifications.read", { id: n.id })
-                        .then(refresh)
-                        .catch((e) => setError(e.message))
-                    }
-                  />
-                )}
-              </Card>
-            ))}
+            <Button label={showFilters ? "Close filters" : "Filter history"} secondary onPress={() => setShowFilters((value) => !value)} />
+            {showFilters && <Card>
+              {(["from", "to"] as const).map((field) => (
+                <View key={field} style={{ gap: 6 }}>
+                  <Copy>{field === "from" ? "Start date" : "End date"} · YYYY-MM-DD</Copy>
+                  <TextInput accessibilityLabel={field === "from" ? "Start date" : "End date"} value={historyDraft[field]}
+                    placeholder="YYYY-MM-DD" onChangeText={(value) => setHistoryDraft((draft) => ({ ...draft, [field]: value }))}
+                    style={{ minHeight: 48, paddingHorizontal: 12, borderWidth: 1, borderColor: colors.border, borderRadius: 12 }} />
+                </View>
+              ))}
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
+                {[["", "All outcomes"], ...Object.entries(driverOutcomes)].map(([value, label]) => (
+                  <Button key={value} label={(historyDraft.outcome === value ? "✓ " : "") + label} secondary
+                    onPress={() => setHistoryDraft((draft) => ({ ...draft, outcome: value }))} />
+                ))}
+              </View>
+              <Button label="Apply filters" onPress={() => {
+                setHistoryFilters({ ...historyDraft, page: 1 }); setShowFilters(false);
+              }} />
+            </Card>}
+            {historyError && <Feedback error={historyError} retry={() => setHistoryRefresh((value) => value + 1)} />}
+            {!connected ? <Copy>Reconnect to confirm delivery history.</Copy> : history ? (
+              <>
+                <Card accent><DriverLabel icon="checkmark-circle-outline" label={`${history.delivered} completed deliveries in this period`} /></Card>
+                {!history.rows.length && <Card><Copy>No closed deliveries match these filters.</Copy></Card>}
+                {history.rows.map((row) => (
+                  <Pressable key={row.id} accessibilityRole="button"
+                    accessibilityLabel={`${row.reference}, ${driverOutcomes[row.outcome]}`} onPress={() => setHistoryRow(row)}>
+                    <Card><DriverLabel icon="cube-outline" label={row.reference} />
+                      <Copy>{driverOutcomes[row.outcome]} · {driverDate(row.closed_at)} WAT</Copy>
+                    </Card>
+                  </Pressable>
+                ))}
+                <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+                  <Button label="Previous" secondary disabled={history.page <= 1} onPress={() => setHistoryFilters((old) => ({ ...old, page: old.page - 1 }))} />
+                  <Copy>Page {history.page}</Copy>
+                  <Button label="Next" secondary disabled={history.page * history.pageSize >= history.total} onPress={() => setHistoryFilters((old) => ({ ...old, page: old.page + 1 }))} />
+                </View>
+              </>
+            ) : !historyError && <Feedback loading />}
           </>
+        ) : page === "notices" ? (
+          <CustomerNotifications
+            api={api}
+            onUnreadCount={setUnread}
+            relatedAction={(id) => {
+              const assigned = orders.find((order) => order.id === id);
+              return assigned ? { label: "View assigned order", open: () => open(assigned) } : undefined;
+            }}
+          />
         ) : page === "security" ? (
           <NativeForm
             api={api}
@@ -978,12 +1022,16 @@ export default function DriverWorkspace({
             ]}
             onDone={() => setPage("profile")}
           />
-        ) : (
+        ) : page === "personal" ? (
+          <NativeForm api={api} action="account.update" title="Edit your name"
+            fields={[{ name: "name", label: "Your name", value: snapshot.profile.name }]}
+            onDone={() => { setPage("profile"); void refresh().catch(() => setConnected(false)); }} />
+        ) : page === "trip" ? null : (
           <>
             <Card>
-              <Title>{user.name}</Title>
-              <Copy>Driver ID: {user.id}</Copy>
-              <Copy>{user.email}</Copy>
+              <DriverLabel icon="person-circle-outline" label={snapshot.profile.name} />
+              <Copy>Driver · {snapshot.profile.branch_name}</Copy>
+              <Copy>{snapshot.profile.email}</Copy>
               <Copy>
                 {snapshot.profile.contact_phone ??
                   "No verified contact phone recorded"}
@@ -995,12 +1043,22 @@ export default function DriverWorkspace({
                   : "Unavailable"}
               </Copy>
             </Card>
-            <NativeForm
-              api={api}
-              action="account.update"
-              title="Profile information"
-              fields={[{ name: "name", label: "Your name", value: user.name }]}
-            />
+            <Card>
+              <DriverLabel icon="id-card-outline" label="Driver details" />
+              <Button label="Edit personal information" secondary onPress={() => setPage("personal")} />
+              <Copy>{connected && snapshot.trip
+                && snapshot.trip.vehicle_label
+                ? `Current trip vehicle · ${snapshot.trip.vehicle_label} · ${Number(snapshot.trip.capacity_grams) / 1000} kg capacity`
+                : "No confirmed trip vehicle."}</Copy>
+            </Card>
+            <Card>
+              <DriverLabel icon="navigate-outline" label="Location & sync" />
+              <Copy>Foreground · {permission} · Background · {backgroundPermission}</Copy>
+              <Copy>{queue} encrypted delivery updates pending</Copy>
+              {lastSync && <Copy>Last confirmed sync {driverDate(lastSync)} WAT</Copy>}
+              <Button label="Open device location settings" secondary onPress={() => { void Linking.openSettings().catch(() => setError("Device settings could not be opened.")); }} />
+              <Button label="Trip location consent and custody" secondary onPress={() => setPage("trip")} />
+            </Card>
             <Button
               label="Notifications"
               secondary
@@ -1052,7 +1110,7 @@ export default function DriverWorkspace({
             />
           </>
         )}
-        {(queue > 0 || legacy > 0) && (
+        {!revoked && (queue > 0 || legacy > 0) && (
           <Card>
             <Title>Pending Sync</Title>
             <Copy>
@@ -1085,16 +1143,18 @@ export default function DriverWorkspace({
             accessibilityState={{ selected: page === dest && !selected }}
             onPress={() => {
               setSelected(null);
+              setHistoryRow(null);
+              setCompleted(null);
               setPhase("detail");
               setPage(dest);
-              setQuery("");
-              setLimit(20);
             }}
             style={{
               flex: 1,
               alignItems: "center",
               justifyContent: "center",
               minHeight: 56,
+              borderRadius: 24,
+              backgroundColor: page === dest ? colors.elevated : colors.surface,
             }}
           >
             <Ionicons
@@ -1114,4 +1174,12 @@ export default function DriverWorkspace({
       </View>
     </SafeAreaView>
   );
+}
+
+function DriverLabel({ icon, label }: { icon: React.ComponentProps<typeof Ionicons>["name"]; label: string }) {
+  const { colors } = useTheme();
+  return <View style={{ flexDirection: "row", alignItems: "center", gap: 8, flexShrink: 1 }}>
+    <Ionicons name={icon} color={colors.primary} size={22} accessible={false} />
+    <Text preserveColor style={{ color: colors.text, fontWeight: "800", fontSize: 17, flexShrink: 1 }}>{label}</Text>
+  </View>;
 }

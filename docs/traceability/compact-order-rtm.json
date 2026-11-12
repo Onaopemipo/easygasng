@@ -226,6 +226,40 @@
       "reason": "Bounded evidence recorded; full acceptance remains open",
       "testResult": "PASS traceability and focused regression",
       "acceptanceGate": "COMPACT-G32"
+    },
+    {
+      "id": "COVERAGE-01",
+      "requirement": "Identify pending delivery coverage before quote and enforce governed confirmation at checkout",
+      "priority": "P1",
+      "scope": "Public gas order and compact widget",
+      "uiReference": "Reported gas checkout coverage error",
+      "route": "/gas-order; /",
+      "dataSource": "Active delivery_locations coverage and governed setting versions",
+      "securityControl": "Quote and checkout retain server coverage checks; failed checkout reserves no stock",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Synthetic quote/checkout blocked before approval and passed after governed approval. Chromium verified the pending-area help.",
+      "testResult": "PASS \u2014 shared approval and gas regression and Chromium at 390px",
+      "outstandingWork": "Hosted rollout and business confirmation of the actual area",
+      "implementationFiles": [
+        "packages/business-rules/src/delivery-coverage.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/components/gas-order.tsx"
+      ],
+      "testFiles": [
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "evidence": [
+        "docs/reports/delivery-coverage/tests.txt",
+        "docs/reports/delivery-coverage/browser.txt"
+      ],
+      "testIds": [
+        "COVERAGE-01"
+      ],
+      "negativeTests": [
+        "COVERAGE-01"
+      ],
+      "acceptanceGate": "COVERAGE-G01"
     }
   ],
   "scenarios": [
@@ -782,6 +816,11 @@
       "scope": "production approval",
       "status": "BLOCKED",
       "evidence": "Full gate not closed."
+    },
+    {
+      "id": "COVERAGE-G01",
+      "status": "PASS",
+      "description": "Pending area is visible before quotation; governed confirmation still required"
     }
   ],
   "scopeChanges": [

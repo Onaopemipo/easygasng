@@ -454,21 +454,85 @@ export async function professionalServiceAction(
   }
   if (action === "services.slots") {
     const d = z
-      .object({ serviceId: scope, branchId: scope.default("lagos") })
+      .object({
+        serviceId: scope,
+        branchId: scope.default("lagos"),
+        view: z.literal("detail").optional(),
+        zone: z.string().trim().min(2).max(100).optional(),
+      })
       .strict()
       .parse(input);
     const service = await one(
       tx,
-      "SELECT config FROM service_catalogue WHERE id=$1 AND branch_id=$2 AND (config->>'active')::boolean=true",
+      `SELECT s.config,s.version,s.checklist_version FROM service_catalogue s
+       JOIN branches b ON b.id=s.branch_id AND b.active
+       WHERE s.id=$1 AND s.branch_id=$2 AND (s.config->>'active')::boolean=true`,
       [d.serviceId, d.branchId],
     );
-    if (!service) return [];
-    return (
+    const empty = (
+      status:
+        | "unconfigured"
+        | "outside_coverage"
+        | "no_qualified_technician"
+        | "no_slots",
+    ) =>
+      d.view
+        ? { status, serviceVersion: service?.version ?? null, slots: [] }
+        : [];
+    if (
+      !service ||
+      !Number.isInteger(service.config.durationMinutes) ||
+      (d.view &&
+        (!service.checklist_version ||
+          !Array.isArray(service.config.zones) ||
+          !service.config.zones.length))
+    )
+      return empty("unconfigured");
+    if (
+      d.zone &&
+      !(service.config.zones ?? []).some(
+        (zone: string) => zone.toLowerCase() === d.zone?.toLowerCase(),
+      )
+    )
+      return empty("outside_coverage");
+
+    const qualified = `
+      SELECT u.id,q.expires_at FROM users u
+      JOIN technician_qualifications q ON q.user_id=u.id AND q.code=$2
+      JOIN users v ON v.id=q.verified_by AND v.id<>u.id AND v.active AND v.role IN ('owner','safety_officer')
+        AND (v.role='owner' OR v.branch_id=u.branch_id)
+      WHERE u.branch_id=$1 AND u.active AND u.technician_available AND u.role='technician' AND q.expires_at>now()
+    `;
+    const slots = (
       await tx.query(
-        "SELECT s.id,s.starts_at,s.ends_at FROM service_slots s JOIN users u ON u.id=s.technician_id JOIN branches b ON b.id=s.branch_id WHERE s.service_id=$1 AND s.branch_id=$2 AND s.blocked=false AND b.active=true AND u.active=true AND u.technician_available=true AND u.role='technician' AND u.branch_id=s.branch_id AND s.starts_at>now() AND s.starts_at<now()+interval '60 days' AND EXISTS(SELECT 1 FROM technician_qualifications q JOIN users v ON v.id=q.verified_by WHERE q.user_id=u.id AND q.code=$3 AND q.expires_at>s.ends_at AND v.active=true AND v.role IN ('owner','safety_officer') AND (v.role='owner' OR v.branch_id=s.branch_id)) AND NOT EXISTS(SELECT 1 FROM service_bookings x JOIN service_slots y ON y.id=x.slot_id WHERE x.technician_id=u.id AND x.status NOT IN ('completed','cancelled','failed') AND y.starts_at<s.ends_at AND y.ends_at>s.starts_at) ORDER BY s.starts_at LIMIT 100",
-        [d.serviceId, d.branchId, service.config.qualification],
+        `WITH qualified AS (${qualified})
+       SELECT s.id,s.starts_at,s.ends_at FROM service_slots s
+       WHERE s.service_id=$3 AND s.branch_id=$1 AND NOT s.blocked AND s.starts_at>now()
+         AND s.starts_at<now()+interval '60 days'
+         AND s.ends_at=s.starts_at+($4::integer*interval '1 minute')
+         AND EXISTS(SELECT 1 FROM qualified q WHERE q.id=s.technician_id AND q.expires_at>s.ends_at)
+         AND NOT EXISTS(
+           SELECT 1 FROM service_bookings x JOIN service_slots y ON y.id=x.slot_id
+           WHERE x.technician_id=s.technician_id AND x.status NOT IN ('completed','cancelled','failed')
+             AND y.starts_at<s.ends_at AND y.ends_at>s.starts_at)
+       ORDER BY s.starts_at,s.id LIMIT 100`,
+        [
+          d.branchId,
+          service.config.qualification,
+          d.serviceId,
+          service.config.durationMinutes,
+        ],
       )
     ).rows;
+    if (!d.view) return slots;
+    if (slots.length)
+      return { status: "available", serviceVersion: service.version, slots };
+    const technician = await one(
+      tx,
+      `SELECT id FROM (${qualified}) candidates LIMIT 1`,
+      [d.branchId, service.config.qualification],
+    );
+    return empty(technician ? "no_slots" : "no_qualified_technician");
   }
   if (!user) throw new AppError(401, "Please sign in.");
   if (action === "services.manage") {

@@ -1,0 +1,5 @@
+# Customer tracking
+
+My Orders and Track Order keep the order timeline and delivery window. When a verified session receives an eligible committed observation, it can display the optional map and Lagos timestamp with reported accuracy. The customer view drops coordinates on expiry or a failed refresh and does not retain last-known customer pins beyond the sharing window. Web snapshots are reconciled about every five seconds while connected. Native refreshes every 15 seconds while the order screen is foregrounded and on foreground return. Native backgrounding clears the shared observation. A customer can see the previous authorised observation until the next refresh, a detected disconnect, or expiry, whichever comes first. This is not instantaneous push revocation.
+
+Native customer, dispatcher and Business Owner surfaces use opt-in Google SDK display plus readable status, accuracy and timestamps. Customer tracking uses order ownership, and staff fleet data comes from the existing scoped dispatch snapshot. No arrival estimate or road route is inferred.

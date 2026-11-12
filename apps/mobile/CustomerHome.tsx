@@ -37,7 +37,7 @@ export default function CustomerHome({
     ["Rewards", "rewards", "gift-outline"],
   ];
   return (
-    <View style={{ gap: 16 }}>
+    <View style={{ gap: 12 }}>
       <Image
         source={require("./assets/easygas-logo-hd.png")}
         resizeMode="contain"
@@ -166,7 +166,7 @@ export default function CustomerHome({
         style={{
           backgroundColor: "#07592e",
           borderRadius: 22,
-          padding: 22,
+          padding: 18,
           flexDirection: "row",
           alignItems: "center",
         }}
@@ -183,7 +183,7 @@ export default function CustomerHome({
           >
             Order Cooking Gas
           </Text>
-          <Text preserveColor style={{ color: "#e4f2dd", marginVertical: 10 }}>
+          <Text preserveColor style={{ color: "#e4f2dd", marginVertical: 8 }}>
             More Cooking. Less Worry.
           </Text>
           <Pressable

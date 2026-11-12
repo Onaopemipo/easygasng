@@ -272,12 +272,20 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   const approvedCardCheckoutHash =
     "20781703f0aa90b35e885921e72a69a389789ac32ecba9e6f95f01493ecda145";
   const approvedAlerts = JSON.parse(await readFile("docs/custom-alerts/approved-scope-change.json", "utf8"));
+  const approvedNotificationSources = JSON.parse(await readFile(
+    "docs/notifications-redesign/approved-field-source.json", "utf8",
+  ));
+  const approvedHomepageSources = JSON.parse(await readFile(
+    "docs/homepage-compact/approved-native-source.json", "utf8",
+  ));
+  const approvedDriverSources = JSON.parse(await readFile(
+    "docs/driver-redesign/approved-field-source.json", "utf8",
+  ));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
-      ? approvedCardCheckoutHash : approvedAlerts[file]?.approvedHash ?? originalHash;
-    let source = await readFile(file, "utf8");
-    if (file === "apps/mobile/DriverWorkspace.tsx")
-      source = source.replace('      api("driver.heartbeat", {}),\n', "");
+      ? approvedCardCheckoutHash
+      : approvedDriverSources[file] ?? approvedHomepageSources[file] ?? approvedNotificationSources[file] ?? approvedAlerts[file]?.approvedHash ?? originalHash;
+    const source = await readFile(file);
     assert.equal(createHash("sha256").update(source).digest("hex"), hash, file);
   }
 });

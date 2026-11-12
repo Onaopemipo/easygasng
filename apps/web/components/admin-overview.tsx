@@ -7,6 +7,7 @@ import {
   UsersRound,
   Cylinder,
   Coins,
+  ClipboardCheck,
   TriangleAlert,
   Truck,
   HardHat,
@@ -119,7 +120,30 @@ export default function AdminOverview({ user }: { user: any }) {
     [error, setError] = useState(""),
     [loading, setLoading] = useState(false),
     [last, setLast] = useState("");
+  const [ownerFinance, setOwnerFinance] = useState<any>(null);
+  const [ownerPending, setOwnerPending] = useState<number | null>(null);
   const dates = period(range);
+  const ownerQuery = new URLSearchParams({ ...dates, ...(branchId ? { branchId } : {}) }).toString();
+  useEffect(() => {
+    setOwnerFinance(null);
+    setOwnerPending(null);
+    if (user.role !== "owner" || !data || (data.scope.branchId ?? "") !== branchId ||
+        data.scope.from !== dates.from || data.scope.to !== dates.to) return;
+    const controller = new AbortController();
+    const options = { signal: controller.signal };
+    if (data.allowed.includes("finance") || data.allowed.includes("inventory")) {
+      api("business.snapshot?" + ownerQuery, undefined, options).then(value => {
+        if (!controller.signal.aborted) setOwnerFinance(value);
+      }).catch(() => {});
+    }
+    if (data.allowed.includes("approvals")) {
+      const query = new URLSearchParams({ view: "paged", filter: "pending", ...(branchId ? { branchId } : {}) });
+      api("approvals?" + query, undefined, options).then(value => {
+        if (!controller.signal.aborted) setOwnerPending(value.total);
+      }).catch(() => {});
+    }
+    return () => controller.abort();
+  }, [user.role, data, ownerQuery]);
   const refresh = useCallback(
     async (signal?: AbortSignal) => {
       const version = ++requestVersion.current;
@@ -216,6 +240,7 @@ export default function AdminOverview({ user }: { user: any }) {
         "Verified net receipts",
         data?.revenue,
         Coins,
+  ClipboardCheck,
         "finance",
         "teal",
         "Completed order/service receipts and verified POS, net of approved refunds",
@@ -230,6 +255,9 @@ export default function AdminOverview({ user }: { user: any }) {
       ],
     ];
   const actions = [
+    ["Delivery Operations", "deliveries", Truck, ["owner"]],
+    ["Review Approvals", "approvals", ClipboardCheck, ["owner"]],
+    ["Financial Summary", "finance", Coins, ["owner"]],
     ["New Order", "orders", ShoppingCart, ["owner", "manager", "sales"]],
     ["Retail POS", "pos", Monitor, ["owner", "manager", "sales"]],
     [
@@ -268,7 +296,7 @@ export default function AdminOverview({ user }: { user: any }) {
       <section className="ac-welcome">
         <div>
           <p className="ac-eyebrow">YOUR EASYGAS OPERATIONS</p>
-          <h1>{user.role === "manager" ? "Branch Dashboard" : `Hello, ${user.name?.split(" ")[0] ?? "there"}`}</h1>
+          <h1>{user.role === "owner" ? "Business Overview" : user.role === "manager" ? "Branch Dashboard" : `Hello, ${user.name?.split(" ")[0] ?? "there"}`}</h1>
           <p>Here’s what’s happening across your authorised workspace.</p>
         </div>
         <div className="ac-period">
@@ -349,12 +377,30 @@ export default function AdminOverview({ user }: { user: any }) {
       ) : (
         <>
           {user.role === "owner" && allowed("finance") && (
-            <Link href="/admin/finance" className="ac-owner-receipts">
-              <span>Verified net receipts</span>
-              <strong>{data?.revenue == null ? "Unavailable" : money(data.revenue)}</strong>
-              <span>{data?.scope.from} – {data?.scope.to}</span>
-            </Link>
+            <section className="finance-primary" aria-label="Business financial indicators">
+              <Link href={"/admin/finance?" + ownerQuery} className="ac-owner-receipts">
+                <span>Verified net receipts</span>
+                <strong>{data.revenue == null ? "Unavailable" : money(data.revenue)}</strong>
+                <span>{data.scope.from} – {data.scope.to}</span>
+              </Link>
+              {[
+                ["Verified completed revenue", ownerFinance?.finance.verifiedCompletedRevenueKobo],
+                ["Recorded expenses", ownerFinance?.finance.recordedExpensesKobo],
+                ["Net profit", ownerFinance?.finance.netProfitKobo],
+              ].map(([label, value]) => <Link href={"/admin/finance?" + ownerQuery} className="surface finance-metric" key={label}>
+                <span>{label}</span><strong>{value == null ? "Unavailable" : money(value)}</strong>
+              </Link>)}
+            </section>
           )}
+          {user.role === "owner" && <section className="ac-panel owner-priorities">
+            <h2>Priorities</h2>
+            <div className="owner-priority-links">
+              {allowed("approvals") && <Link href={branchId ? "/admin/approvals?" + new URLSearchParams({ branchId }) : "/admin/approvals"}>{ownerPending == null ? "Review approvals" : ownerPending + " requests awaiting review"}</Link>}
+              {allowed("inventory") && <Link href="/admin/inventory">Active stock holds · {ownerFinance?.holds?.length ?? "Unavailable"}</Link>}
+              {allowed("incidents") && <Link href="/admin/incidents">Open incidents · {data.incidents ?? "Unavailable"}</Link>}
+              {allowed("deliveries") && <a href="#owner-operations-summary">Operations Summary ↓</a>}
+            </div>
+          </section>}
           <section className="ac-kpis" aria-label="Workspace metrics">
             {cards.filter(([, , , route]) => !(user.role === "owner" && allowed("finance") && route === "finance")).map(([label, value, Icon, route, colour, note]: any) => {
               const content = (
@@ -518,15 +564,15 @@ export default function AdminOverview({ user }: { user: any }) {
                 </div>
               )}
             </section>
-            <section className="ac-panel">
-              <h2>Operations Overview</h2>
+            <section className="ac-panel" id="owner-operations-summary">
+              <h2>{user.role === "owner" ? "Operations Summary" : "Operations Overview"}</h2>
               <dl className="ac-operations">
                 {[
-                  ["Active deliveries", data.operations?.deliveries, Truck],
+                  ["Active deliveries", data.operations?.deliveries, Truck, "deliveries"],
                   [
                     "Appointments in period",
                     data.operations?.appointments,
-                    CalendarDays,
+                    CalendarDays, "bookings",
                   ],
                   [
                     "Technicians on authorised work",
@@ -534,12 +580,17 @@ export default function AdminOverview({ user }: { user: any }) {
                     HardHat,
                   ],
                   ["Drivers on delivery", data.operations?.drivers, Truck],
-                  ["Open incidents", data.incidents, TriangleAlert],
-                ].map(([label, value, Icon]: any) => (
+                  ["Open incidents", data.incidents, TriangleAlert, "incidents"],
+                  ...(user.role === "owner" ? [
+                    ["Orders in period", data.orders?.count, ShoppingCart, "orders"],
+                    ["Stock exceptions", ownerFinance?.alerts?.filter((item: any) => ["low_stock", "low_gas"].includes(item.kind)).length, PackagePlus, "inventory"],
+                    ["Active stock holds", ownerFinance?.holds?.length, PackagePlus, "inventory"],
+                  ] : []),
+                ].map(([label, value, Icon, route]: any) => (
                   <div key={label}>
                     <dt>
                       <Icon size={20} />
-                      {label}
+                      {route && allowed(route) ? <Link href={"/admin/" + route}>{label}</Link> : label}
                     </dt>
                     <dd>{value ?? "Unavailable"}</dd>
                   </div>

@@ -1,0 +1,163 @@
+/* Public home layout. Storefront subpages and workspaces keep their own sizing. */
+.compact-home .container,
+body:has(.compact-home) .site-footer .container {
+  width: min(calc(100% - 2 * clamp(16px, 3vw, 40px)), 1320px);
+  margin-inline: auto;
+}
+
+.compact-home .hero {
+  min-height: 0;
+  background: var(--page);
+}
+
+.compact-home .hero-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 390px);
+  align-items: center;
+  gap: clamp(24px, 5vw, 80px);
+  min-height: 0;
+  padding-block: 22px;
+}
+
+.compact-home .hero-copy { max-width: 480px; padding-block: 8px; }
+.compact-home .hero h1 {
+  font-size: clamp(2.65rem, 4.3vw, 4.3rem);
+  letter-spacing: -.055em;
+  margin-block: 12px 20px;
+}
+.compact-home .hero h1 em { display: block; width: fit-content; white-space: normal; }
+.compact-home .hero-photo { background-position: center 46%; }
+.compact-home .quick-order { align-self: center; border-radius: 18px; }
+.compact-home .compact-gas-heading { margin-bottom: 10px; }
+.compact-home .compact-gas label { margin-top: 7px; }
+.compact-home .compact-gas-control :is(input, select) { font-size: 1rem; }
+
+.compact-home .benefit-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  padding: 12px 0;
+}
+.compact-home .home-content { gap: 28px; padding-block: 26px 12px; }
+.compact-home .service-home {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) minmax(0, 3fr);
+  align-items: start;
+  gap: 16px;
+  margin: 0;
+}
+.home-service-intro h2 { margin-block: 5px 8px; }
+.home-service-intro p { margin-block: 0 12px; }
+.home-service-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.home-service-cards > p { grid-column: 1 / -1; }
+.compact-home .home-service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0;
+  padding: 12px;
+  min-width: 0;
+  border-radius: 16px;
+}
+.compact-home .home-service-card img {
+  height: auto;
+  aspect-ratio: 3 / 1;
+  border-radius: 10px;
+}
+.home-service-icon {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--primary);
+}
+.home-service-card h3 { margin-block: 9px 4px; }
+.home-service-card p { margin-block: 0 8px; overflow-wrap: anywhere; }
+.home-service-card .text-link { margin-block-start: auto; min-height: 44px; }
+
+.compact-home .product-grid.compact { gap: 12px; padding-bottom: 10px; }
+.compact-home .product-grid.compact .product-card {
+  flex-basis: calc((100% - 60px) / 6);
+  min-width: 145px;
+}
+.compact-home .compact .product-art { height: 112px; }
+.compact-home .product-card-bottom .add-product { min-width: 44px; min-height: 44px; }
+.compact-home .section-heading { flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.compact-home .section-heading .icon-button { min-width: 44px; min-height: 44px; }
+.compact-home .how-it-works .steps { gap: 12px; }
+.compact-home .how-it-works .step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px;
+}
+.compact-home .step-arrow { display: none; }
+
+.compact-home .home-aside { grid-template-columns: 1.35fr 1fr; gap: 14px; }
+.compact-home .home-aside .app-promo {
+  min-height: 220px;
+  padding: 20px clamp(180px, 22vw, 242px) 20px 22px;
+}
+.compact-home .home-aside .app-promo h2 { font-size: clamp(1.45rem, 2.5vw, 2rem); }
+.compact-home .home-aside .phone-mock {
+  top: 12px;
+  right: 24px;
+  width: 190px;
+  height: auto;
+  padding: 21px 10px 10px;
+}
+.compact-home .home-aside .phone-tiles > div { min-height: 46px; gap: 3px; padding: 4px 2px; }
+.compact-home .home-aside .phone-tiles small { white-space: normal; }
+.compact-home .home-aside .phone-mock > img { height: 42px; margin-block-start: 6px; }
+body:has(.compact-home) .client-demo-notice {
+  position: static !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding-top: max(6px, env(safe-area-inset-top)) !important;
+}
+.compact-home .testimonial-section { padding-block: 16px; }
+.compact-home .coverage-home {
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 18px 22px;
+  margin-block: 10px 26px;
+  border-radius: 18px;
+}
+.compact-home .coverage-home .eyebrow,
+.compact-home .coverage-home h2 { color: #fff; }
+.compact-home .coverage-home h2 { font-size: clamp(1.15rem, 2vw, 1.65rem); margin-block: 4px; }
+.compact-home .coverage-home p { margin-block: 6px 10px; }
+.compact-home .coverage-promises { gap: 12px; flex-wrap: wrap; }
+.compact-home .coverage-promises p { flex-direction: row; align-items: center; gap: 6px; }
+.compact-home .coverage-promises svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+@media (max-width: 1050px) {
+  .compact-home .service-home { grid-template-columns: 1fr; }
+  .compact-home .home-aside { grid-template-columns: 1fr; }
+}
+@media (max-width: 767px) {
+  .compact-home .hero-layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .compact-home .hero-copy { max-width: 100%; }
+  .compact-home .hero-photo { inset: 0 0 auto; height: 370px; background-position: 62% center; }
+  .compact-home .hero-wash {
+    background: linear-gradient(90deg, var(--page) 0%, transparent 160%),
+      linear-gradient(180deg, transparent 80px, var(--page) 370px);
+  }
+  .compact-home .benefit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .compact-home .benefit { gap: 8px; }
+  .compact-home .home-content { gap: 22px; padding-top: 18px; }
+  .compact-home .home-service-cards { grid-template-columns: 1fr; }
+  .compact-home .how-it-works .steps,
+  .compact-home .coverage-home { grid-template-columns: 1fr; }
+  .compact-home .product-grid.compact .product-card { flex-basis: 46%; min-width: 135px; }
+}
+@media (max-width: 600px) {
+  .compact-home .home-aside .app-promo { padding: 16px; }
+  .compact-home .home-aside .phone-mock { position: relative; inset: auto; width: min(100%, 210px); height: auto; transform: none; margin-inline: auto; }
+  .compact-home .home-aside .app-promo { display: grid; gap: 16px; }
+}

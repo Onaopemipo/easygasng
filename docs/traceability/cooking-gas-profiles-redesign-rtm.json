@@ -1,0 +1,928 @@
+{
+  "phase": "Cooking Gas Profiles redesign",
+  "baseline": "54b1b15",
+  "status": "PARTIAL / PRODUCTION NO-GO",
+  "requirements": [
+    {
+      "id": "CGP-001",
+      "requirement": "Repository audit and baseline",
+      "priority": "P1",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "Repository and design handoff",
+      "securityControl": "Production release gates",
+      "implementationFiles": [
+        "docs/cooking-gas-profiles-redesign/00-repository-audit.md"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Audit and baseline recorded.",
+      "testResult": "PASS Audit and baseline recorded.",
+      "outstandingWork": "None in this requirement.",
+      "acceptanceGate": "CGP-G01"
+    },
+    {
+      "id": "CGP-002",
+      "requirement": "Preserve routes, shell and navigation",
+      "priority": "P1",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "Existing /consumption and /refill",
+      "securityControl": "Existing authenticated customer shell",
+      "implementationFiles": [
+        "apps/web/components/refill-profiles.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt",
+        "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing web entries and customer shell verified with authenticated Chromium. The native entry remains the customer account and Smart Refill navigation.",
+      "testResult": "PASS Existing web entries and customer shell verified with authenticated Chromium. The native entry remains the customer account and Smart Refill navigation.",
+      "outstandingWork": "None in this requirement.",
+      "acceptanceGate": "CGP-G03"
+    },
+    {
+      "id": "CGP-003",
+      "requirement": "Authoritative overview counts",
+      "priority": "P1",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "refill.profiles, schedules, schedule.authorisations and rewards.smart-offers",
+      "securityControl": "Current customer and matching active authorisation",
+      "implementationFiles": [
+        "apps/web/components/refill-profiles.tsx",
+        "apps/mobile/CookingGasProfiles.tsx",
+        "packages/business-rules/src/cooking-gas-profiles.ts",
+        "apps/web/lib/scheduling.ts"
+      ],
+      "testFiles": [
+        "tests/cooking-gas-profiles.test.ts"
+      ],
+      "testIds": [
+        "CGP-T06",
+        "CGP-T08"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/focused.txt",
+        "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authoritative count and missing-source handling verified.",
+      "testResult": "PASS Authoritative count and missing-source handling verified.",
+      "outstandingWork": "None in this requirement.",
+      "acceptanceGate": "CGP-G06"
+    },
+    {
+      "id": "CGP-004",
+      "requirement": "Smart Refill eligibility and redemption",
+      "priority": "P0",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "rewards.smart-offers",
+      "securityControl": "Approved offer policy and opted-in preferences",
+      "implementationFiles": [
+        "apps/web/components/refill-profiles.tsx",
+        "apps/mobile/CookingGasProfiles.tsx",
+        "apps/web/lib/reward-offers.ts"
+      ],
+      "testFiles": [
+        "tests/easyrewards-completion.test.ts"
+      ],
+      "testIds": [
+        "ER-31P",
+        "ER-10O"
+      ],
+      "negativeTests": [
+        "disappears on consent withdrawal"
+      ],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt",
+        "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Approved offer, verified history, expiry, opt-out and budget tests passed.",
+      "testResult": "PASS Approved offer, verified history, expiry, opt-out and budget tests passed.",
+      "outstandingWork": "None in this requirement.",
+      "acceptanceGate": "CGP-G08"
+    },
+    {
+      "id": "CGP-005",
+      "requirement": "Verified history and estimate semantics",
+      "priority": "P0",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "refill.profiles, refill_history and verified payments",
+      "securityControl": "Customer-scoped verified single-cylinder history",
+      "implementationFiles": [
+        "apps/web/components/refill-profiles.tsx",
+        "apps/mobile/CookingGasProfiles.tsx",
+        "apps/web/lib/refills.ts",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "testFiles": [
+        "tests/cooking-gas-profiles.test.ts",
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testIds": [
+        "CGP-T37"
+      ],
+      "negativeTests": [
+        "assert.deepEqual(profile.history, [])"
+      ],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt",
+        "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified history and insufficient-history cases passed.",
+      "testResult": "PASS Verified history and insufficient-history cases passed.",
+      "outstandingWork": "None in this requirement.",
+      "acceptanceGate": "CGP-G11"
+    },
+    {
+      "id": "CGP-006",
+      "requirement": "Supply editing and conflict recovery",
+      "priority": "P0",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "refill.feedback and consumption_feedback",
+      "securityControl": "Customer ownership, profile lock, expected reading and throttle",
+      "implementationFiles": [
+        "apps/web/components/refill-profiles.tsx",
+        "apps/mobile/CookingGasProfiles.tsx",
+        "apps/web/lib/refills.ts",
+        "packages/business-rules/src/cooking-gas-profiles.ts"
+      ],
+      "testFiles": [
+        "tests/cooking-gas-profiles.test.ts",
+        "tests/cooking-gas-profiles-postgres.test.ts"
+      ],
+      "testIds": [
+        "CGP-T27",
+        "CGP-PG"
+      ],
+      "negativeTests": [
+        "a stale supply report cannot overwrite"
+      ],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/focused.txt",
+        "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Confirmed save, reset, stale conflict, throttling and independent PostgreSQL concurrency passed.",
+      "testResult": "PASS Confirmed save, reset, stale conflict, throttling and independent PostgreSQL concurrency passed.",
+      "outstandingWork": "None in this requirement.",
+      "acceptanceGate": "CGP-G16"
+    },
+    {
+      "id": "CGP-007",
+      "requirement": "Contextual profile creation",
+      "priority": "P0",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "refill.profile.create and catalogue",
+      "securityControl": "Customer ownership, validation and duplicate prevention",
+      "implementationFiles": [
+        "apps/web/components/refill-profiles.tsx",
+        "apps/mobile/CookingGasProfiles.tsx",
+        "apps/web/lib/refills.ts"
+      ],
+      "testFiles": [
+        "tests/cooking-gas-profiles.test.ts",
+        "tests/cooking-gas-profiles-postgres.test.ts"
+      ],
+      "testIds": [
+        "CGP-T37",
+        "CGP-PG"
+      ],
+      "negativeTests": [
+        "repeat profile creation cannot duplicate"
+      ],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/focused.txt",
+        "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser creation, refill-product validation and concurrent duplicate prevention passed.",
+      "testResult": "PASS Browser creation, refill-product validation and concurrent duplicate prevention passed.",
+      "outstandingWork": "None in this requirement.",
+      "acceptanceGate": "CGP-G15"
+    },
+    {
+      "id": "CGP-008",
+      "requirement": "Responsive and accessible web design",
+      "priority": "P1",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "Existing theme and approved cylinder illustration",
+      "securityControl": "Shared dialog and labelled controls",
+      "implementationFiles": [
+        "apps/web/components/refill-profiles.tsx",
+        "apps/web/components/refill-profiles.module.css",
+        "apps/web/components/ui.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Browser viewport, keyboard, dialog and theme checks passed. Screen-reader audit remains open.",
+      "testResult": "PARTIAL Browser viewport, keyboard, dialog and theme checks passed. Screen-reader audit remains open.",
+      "outstandingWork": "Browser viewport, keyboard, dialog and theme checks passed. Screen-reader audit remains open.",
+      "acceptanceGate": "CGP-G19"
+    },
+    {
+      "id": "CGP-009",
+      "requirement": "Native design and device acceptance",
+      "priority": "P1",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "Existing Expo customer session and theme",
+      "securityControl": "Scoped client state and native sheet",
+      "implementationFiles": [
+        "apps/mobile/CookingGasProfiles.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/ContextSheet.tsx",
+        "apps/mobile/theme.tsx"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/native-export.txt",
+        "docs/cooking-gas-profiles-redesign/04-test-results.md",
+        "docs/cooking-gas-profiles-redesign/evidence/ios-runtime.txt",
+        "docs/cooking-gas-profiles-redesign/evidence/android-runtime.txt",
+        "docs/cooking-gas-profiles-redesign/evidence/android-launch.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Native types and both exports passed. iPhone 17 Pro and the unminified Pixel 8 variant passed the core profile flow. Minified Android release startup remains blocked.",
+      "testResult": "PARTIAL Native types and both exports passed. iPhone 17 Pro and the unminified Pixel 8 variant passed the core profile flow. Minified Android release startup remains blocked.",
+      "outstandingWork": "Native types and both exports passed. iPhone 17 Pro and the unminified Pixel 8 variant passed the core profile flow. Minified Android release startup remains blocked.",
+      "acceptanceGate": "CGP-G20"
+    },
+    {
+      "id": "CGP-010",
+      "requirement": "Session isolation and offline handling",
+      "priority": "P0",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "Live session role and confirmed responses",
+      "securityControl": "No offline writes or cross-user data",
+      "implementationFiles": [
+        "apps/web/components/refill-profiles.tsx",
+        "apps/mobile/CookingGasProfiles.tsx",
+        "apps/web/lib/refills.ts",
+        "apps/web/lib/auth.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "testFiles": [
+        "tests/cooking-gas-profiles.test.ts"
+      ],
+      "testIds": [
+        "CGP-T31"
+      ],
+      "negativeTests": [
+        "cross-customer, staff and expired sessions cannot read"
+      ],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/focused.txt",
+        "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Account and role isolation and offline web recovery passed. Device accessibility and broader connectivity cases remain open.",
+      "testResult": "PARTIAL Account and role isolation and offline web recovery passed. Device accessibility and broader connectivity cases remain open.",
+      "outstandingWork": "Account and role isolation and offline web recovery passed. Device accessibility and broader connectivity cases remain open.",
+      "acceptanceGate": "CGP-G25"
+    },
+    {
+      "id": "CGP-011",
+      "requirement": "Non-regression and release evidence",
+      "priority": "P1",
+      "scope": "Cooking Gas Profiles web and native",
+      "uiReference": "Approved Cooking Gas Profiles handoff",
+      "route": "/consumption and existing native account screen",
+      "dataSource": "Existing workflow and release suites",
+      "securityControl": "Production NO-GO and code-only rollback",
+      "implementationFiles": [
+        "docs/cooking-gas-profiles-redesign/00-repository-audit.md",
+        "docs/cooking-gas-profiles-redesign/05-rollback.md",
+        "docs/cooking-gas-profiles-redesign/06-final-report.md"
+      ],
+      "testFiles": [
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt",
+        "docs/cooking-gas-profiles-redesign/04-test-results.md"
+      ],
+      "status": "PARTIAL",
+      "reason": "The full automated suite and rollback review passed. Native release and production gates remain open.",
+      "testResult": "PARTIAL The full automated suite and rollback review passed. Native release and production gates remain open.",
+      "outstandingWork": "The full automated suite and rollback review passed. Native release and production gates remain open.",
+      "acceptanceGate": "CGP-G28"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "CGP-T01",
+      "scenario": "route loads for authorised customer",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T02",
+      "scenario": "existing sidebar intact",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T03",
+      "scenario": "header/search/location/cart/theme intact",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T04",
+      "scenario": "direct link and refresh",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T05",
+      "scenario": "real profile count",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T06",
+      "scenario": "missing count unavailable",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T07",
+      "scenario": "real zero count",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T08",
+      "scenario": "recurring count distinct from profiles",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T09",
+      "scenario": "no unsupported recurring metric",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T10",
+      "scenario": "eligible offers count",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T11",
+      "scenario": "no approved offers",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T12",
+      "scenario": "opted-out offers hidden",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T13",
+      "scenario": "expired offers hidden",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T14",
+      "scenario": "profile list stable IDs",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T15",
+      "scenario": "one profile",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T16",
+      "scenario": "multiple profiles",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T17",
+      "scenario": "empty profile state",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T18",
+      "scenario": "actual cylinder capacity",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T19",
+      "scenario": "missing cylinder details",
+      "status": "NOT RUN",
+      "reason": "No dedicated executed evidence for this case."
+    },
+    {
+      "id": "CGP-T20",
+      "scenario": "supply options from backend",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T21",
+      "scenario": "current supply preselected",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T22",
+      "scenario": "supply validation",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T23",
+      "scenario": "save success",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T24",
+      "scenario": "save failure",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T25",
+      "scenario": "duplicate save prevented",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T26",
+      "scenario": "local cancel/reset",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T27",
+      "scenario": "concurrent edit conflict",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T28",
+      "scenario": "deleted profile while editing",
+      "status": "NOT RUN",
+      "reason": "No dedicated executed evidence for this case."
+    },
+    {
+      "id": "CGP-T29",
+      "scenario": "cross-user profile read denied",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T30",
+      "scenario": "cross-user profile write denied",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T31",
+      "scenario": "staff/driver/technician isolation",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T32",
+      "scenario": "session expired",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T33",
+      "scenario": "role revoked",
+      "status": "NOT RUN",
+      "reason": "No dedicated executed evidence for this case."
+    },
+    {
+      "id": "CGP-T34",
+      "scenario": "add profile modal",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T35",
+      "scenario": "add profile validation",
+      "status": "NOT RUN",
+      "reason": "No dedicated executed evidence for this case."
+    },
+    {
+      "id": "CGP-T36",
+      "scenario": "add profile server success",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T37",
+      "scenario": "add profile duplicate handling",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T38",
+      "scenario": "profile limits preserved",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T39",
+      "scenario": "supported cylinder sizes",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/focused.txt"
+    },
+    {
+      "id": "CGP-T40",
+      "scenario": "insufficient verified history",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T41",
+      "scenario": "two qualifying verified refills",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T42",
+      "scenario": "unverified purchase excluded",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T43",
+      "scenario": "cancelled/refunded records according to existing eligibility",
+      "status": "NOT RUN",
+      "reason": "No dedicated executed evidence for this case."
+    },
+    {
+      "id": "CGP-T44",
+      "scenario": "multi-cylinder eligibility semantics",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T45",
+      "scenario": "no sensor claim",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T46",
+      "scenario": "missing estimate unavailable",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T47",
+      "scenario": "estimate basis/last update",
+      "status": "PARTIAL",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T48",
+      "scenario": "Smart Refill links",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T49",
+      "scenario": "rewards and refill plans preserved",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T50",
+      "scenario": "recurring orders preserved",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T51",
+      "scenario": "notifications/consent preserved",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T52",
+      "scenario": "web desktop 1440",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T53",
+      "scenario": "web tablet 768/1024",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T54",
+      "scenario": "mobile web 320/375/390",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T55",
+      "scenario": "iOS layout/safe area",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/ios-runtime.txt"
+    },
+    {
+      "id": "CGP-T56",
+      "scenario": "Android layout/back",
+      "status": "PARTIAL",
+      "reason": "Local unminified emulator passed. Minified release launch remains blocked.",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/android-runtime.txt"
+    },
+    {
+      "id": "CGP-T57",
+      "scenario": "light/dark/system",
+      "status": "PARTIAL",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T58",
+      "scenario": "keyboard and focus",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T59",
+      "scenario": "screen-reader accordion/dialog",
+      "status": "NOT RUN",
+      "reason": "No dedicated executed evidence for this case."
+    },
+    {
+      "id": "CGP-T60",
+      "scenario": "offline/stale/retry",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-T61",
+      "scenario": "financial ledger non-regression",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T62",
+      "scenario": "inventory/cylinder custody non-regression",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T63",
+      "scenario": "customer order/checkout non-regression",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T64",
+      "scenario": "existing production readiness and RTM validator",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-T65",
+      "scenario": "rollback and source diff verified",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/05-rollback.md"
+    }
+  ],
+  "gates": [
+    {
+      "id": "CGP-G01",
+      "gate": "repository audit recorded",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/04-test-results.md"
+    },
+    {
+      "id": "CGP-G02",
+      "gate": "baseline tests recorded",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/04-test-results.md"
+    },
+    {
+      "id": "CGP-G03",
+      "gate": "`/consumption` route preserved",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-G04",
+      "gate": "customer shell intact",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-G05",
+      "gate": "profile ownership server enforced",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G06",
+      "gate": "profile count authoritative",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G07",
+      "gate": "recurring count not conflated",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G08",
+      "gate": "Smart Refill eligibility correct",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G09",
+      "gate": "no fabricated offers",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G10",
+      "gate": "no sensor claims",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G11",
+      "gate": "verified delivery history rule preserved",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G12",
+      "gate": "no false estimates",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G13",
+      "gate": "current supply selection preserved",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-G14",
+      "gate": "save server-confirmed",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-G15",
+      "gate": "add profile functional",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-G16",
+      "gate": "profile edit/concurrency safe",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G17",
+      "gate": "no lost existing fields",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-G18",
+      "gate": "desktop layout matches approved direction",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-G19",
+      "gate": "mobile web",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/browser.txt"
+    },
+    {
+      "id": "CGP-G20",
+      "gate": "native iOS",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/ios-runtime.txt"
+    },
+    {
+      "id": "CGP-G21",
+      "gate": "native Android",
+      "status": "PARTIAL",
+      "evidence": "docs/cooking-gas-profiles-redesign/04-test-results.md"
+    },
+    {
+      "id": "CGP-G22",
+      "gate": "light/dark/system",
+      "status": "PARTIAL",
+      "evidence": "docs/cooking-gas-profiles-redesign/04-test-results.md"
+    },
+    {
+      "id": "CGP-G23",
+      "gate": "accessible controls",
+      "status": "PARTIAL",
+      "evidence": "docs/cooking-gas-profiles-redesign/04-test-results.md"
+    },
+    {
+      "id": "CGP-G24",
+      "gate": "offline/stale/empty/error states",
+      "status": "PARTIAL",
+      "evidence": "docs/cooking-gas-profiles-redesign/04-test-results.md"
+    },
+    {
+      "id": "CGP-G25",
+      "gate": "cross-role security",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G26",
+      "gate": "rewards/recurring/refill regression",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G27",
+      "gate": "financial and inventory regression",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/evidence/full-regression.txt"
+    },
+    {
+      "id": "CGP-G28",
+      "gate": "full tests/build evidence",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/04-test-results.md"
+    },
+    {
+      "id": "CGP-G29",
+      "gate": "RTM and rollback complete",
+      "status": "PASS",
+      "evidence": "docs/cooking-gas-profiles-redesign/04-test-results.md"
+    },
+    {
+      "id": "CGP-G30",
+      "gate": "explicit production GO/NO-GO with platform-wide blockers preserved",
+      "status": "NO-GO",
+      "evidence": "docs/cooking-gas-profiles-redesign/06-final-report.md"
+    }
+  ]
+}

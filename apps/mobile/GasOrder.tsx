@@ -1,3 +1,7 @@
+import {
+  deliveryCoveragePending,
+  hasConfirmedDeliveryCoverage,
+} from "../../packages/business-rules/src/delivery-coverage";
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import {
   Card as CustomerCard,
@@ -43,7 +47,7 @@ export default function GasOrder({
   const [config, setConfig] = useState<any>(catalogue?.gas ?? null),
     [lines, setLines] = useState([{ capacityKg: 12.5, kg: 0 }]),
     [error, setError] = useState(""),
-    [quote, setQuote] = useState<any>(null),
+    [storedQuote, setQuote] = useState<any>(null),
     [key] = useState(() => randomUUID()),
     [order, setOrder] = useState<any>(null),
     [appointments, setAppointments] = useState<any[]>([]),
@@ -57,9 +61,23 @@ export default function GasOrder({
   const [pricingBranch, setPricingBranch] = useState<string | null>(null);
   const [loadingQuote, setLoadingQuote] = useState(false);
   const quoteLock = useRef(false);
-  const selectedBranch = config?.locations?.find(
-    (l: any) => l.id === locationId,
-  )?.branch_id;
+  const [showGuide, setShowGuide] = useState(false);
+  const selectedArea = config?.locations?.find((l: any) => l.id === locationId);
+  const selectedBranch = selectedArea?.branch_id;
+  const pendingCoverage =
+    selectedArea && !hasConfirmedDeliveryCoverage(selectedArea.coverage);
+  const inputKey = JSON.stringify([
+    lines,
+    cart,
+    locationId,
+    street,
+    picked?.id,
+    includeAppointments,
+    catalogueRevision,
+  ]);
+  const latestInput = useRef(inputKey);
+  latestInput.current = inputKey;
+  const quote = storedQuote?.inputKey === inputKey ? storedQuote : null;
   const requestedBranch = selectedBranch ?? "lagos";
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (state) => {
@@ -234,7 +252,7 @@ export default function GasOrder({
         <View style={s.row}>
           <Ionicons name="flame-outline" size={26} color={colors.primary} />
           <View style={{ flex: 1 }}>
-            <CustomerTitle>Order the gas you need</CustomerTitle>
+            <CustomerTitle>Order Cooking Gas</CustomerTitle>
             <CustomerCopy>Quick, secure and home delivery</CustomerCopy>
           </View>
         </View>
@@ -461,8 +479,13 @@ export default function GasOrder({
               setQuote(null);
             }),
           )}
+        {pendingCoverage && (
+          <Text accessibilityRole="alert">{deliveryCoveragePending}</Text>
+        )}
         <CustomerCard accent>
-          <CustomerTitle>Estimated Total</CustomerTitle>
+          <CustomerTitle>
+            {quote ? "Quoted total" : "Order summary"}
+          </CustomerTitle>
           {!pricingReady || !feeReady ? (
             <CustomerCopy>Current pricing unavailable.</CustomerCopy>
           ) : quantityError ? (
@@ -477,7 +500,13 @@ export default function GasOrder({
                 visit
               </CustomerCopy>
               <CustomerTitle>
-                {money(subtotal + extra + config.deliveryKobo)}
+                {money(
+                  quote
+                    ? quote.subtotalKobo +
+                        quote.physicalSubtotalKobo +
+                        quote.deliveryKobo
+                    : subtotal + extra + config.deliveryKobo,
+                )}
               </CustomerTitle>
             </>
           )}
@@ -523,21 +552,21 @@ export default function GasOrder({
           </View>
         )}
         {button(
-          loadingQuote ? "Checking quote…" : "Order Gas Now",
+          loadingQuote ? "Checking quote…" : "Review order",
           async () => {
             if (quoteLock.current) return;
             quoteLock.current = true;
             setLoadingQuote(true);
             setError("");
             try {
-              setQuote(
-                await api("gas.quote", {
-                  lines,
-                  items: physical,
-                  branchId: selectedBranch,
-                  locationId,
-                }),
-              );
+              const result = await api("gas.quote", {
+                lines,
+                items: physical,
+                branchId: selectedBranch,
+                locationId,
+              });
+              if (latestInput.current === inputKey)
+                setQuote({ ...result, inputKey });
             } catch (e: any) {
               setQuote(null);
               setError(e.message);
@@ -551,6 +580,7 @@ export default function GasOrder({
             !feeReady ||
             !!quantityError ||
             !selectedBranch ||
+            !!pendingCoverage ||
             street.trim().length < 8,
           true,
         )}
@@ -569,12 +599,23 @@ export default function GasOrder({
         </Pressable>
       </View>
       {quote && user && (
+        <CustomerCard>
+          <CustomerTitle>Review and confirm</CustomerTitle>
+          <CustomerCopy>
+            {street} · {selectedArea?.name}
+          </CustomerCopy>
+          {button("Change order details", () => setQuote(null))}
+        </CustomerCard>
+      )}
+      {quote && user && (
         <NativeRewardSelector api={api} onChange={setRewardSelection} />
       )}
       {quote && user && (
         <NativeForm
           key={picked?.id ?? "new"}
           api={async (action, data) => {
+            if (latestInput.current !== inputKey)
+              throw new Error("Review the updated order before confirming.");
             const l = config.locations.find(
               (l: any) => l.id === data.address.locationId,
             );
@@ -688,8 +729,15 @@ export default function GasOrder({
           onDone={() => {}}
         />
       )}
-      <Text style={s.title}>Cylinder size guide</Text>
-      {pricingReady &&
+      {button(
+        showGuide ? "Hide cylinder size guide" : "Cylinder size guide",
+        () => setShowGuide(!showGuide),
+      )}
+      {showGuide && (!pricingReady || !feeReady || !(config.priceKobo > 0)) && (
+        <CustomerCopy>Current price estimates are unavailable.</CustomerCopy>
+      )}
+      {showGuide &&
+        pricingReady &&
         feeReady &&
         config.priceKobo > 0 &&
         capacities.map((c: number) => (

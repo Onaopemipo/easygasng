@@ -1,7 +1,9 @@
 "use client";
 import { OrderCardPayment } from "./hosted-payment";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import Link from "./workspace-link";
+import { RiderMap } from "./rider-map";
+import { withoutRiderLocations, type RiderFix } from "../../../packages/business-rules/src/rider-location";
 import { OrderOperations } from "./order-operations";
 import OrderInvoice from "./order-invoice";
 import { orderTransitions } from "../../../packages/business-rules/src/forecast";
@@ -24,20 +26,31 @@ export function useTrackingOrders(
     [observed, setObserved] = useState("");
   const live = useRef(true);
   const generation = useRef(0);
+  const snapshot = useRef(0);
+  const [loadedIdentity, setLoadedIdentity] = useState("");
+  const scope = JSON.stringify([identity, orderId]);
+  const clearLocations = () => {
+    snapshot.current++;
+    setOrders((prior) => prior && withoutRiderLocations(prior));
+  };
   async function refresh() {
     const requestGeneration = generation.current;
+    const requestSnapshot = ++snapshot.current;
     try {
       const next = await api(
         orderId ? `orders?id=${encodeURIComponent(orderId)}` : "orders",
       );
-      if (live.current && requestGeneration === generation.current) {
+      if (live.current && requestGeneration === generation.current && requestSnapshot === snapshot.current && navigator.onLine) {
         setOrders((prior) => reconcileTracking(prior ?? [], next));
         setError("");
         setObserved(new Date().toISOString());
       }
     } catch (e: any) {
-      if (live.current && requestGeneration === generation.current)
+      if (live.current && requestGeneration === generation.current && requestSnapshot === snapshot.current) {
+        clearLocations();
+        if ([401, 403].includes(e.status)) setOrders(null);
         setError(e.message);
+      }
     }
   }
   useEffect(() => {
@@ -45,30 +58,38 @@ export function useTrackingOrders(
     live.current = true;
     const ownGeneration = ++generation.current;
     setOrders(null);
+    setLoadedIdentity(scope);
     refresh();
     const stream = new EventSource(
       `/api/tracking/stream${orderId ? `?id=${encodeURIComponent(orderId)}` : ""}`,
     );
     stream.addEventListener("snapshot", (event) => {
-      if (ownGeneration !== generation.current) return;
+      if (ownGeneration !== generation.current || !navigator.onLine) return;
       try {
         const value = JSON.parse((event as MessageEvent).data);
+        snapshot.current++;
         setOrders((prior) => reconcileTracking(prior ?? [], value.orders));
         setObserved(value.observedAt);
         setConnection("Live updates connected");
         setError("");
       } catch {
+        clearLocations();
         setConnection("Update unavailable — refresh tracking");
       }
     });
-    stream.onerror = () =>
+    stream.onerror = () => {
+      if (ownGeneration !== generation.current) return;
+      clearLocations();
       setConnection(
         navigator.onLine
           ? "Reconnecting — displayed status may be stale"
           : "Offline — displayed status may be stale",
       );
-    const offline = () =>
+    };
+    const offline = () => {
+      clearLocations();
       setConnection("Offline — displayed status may be stale");
+    };
     globalThis.window.addEventListener("offline", offline);
     return () => {
       live.current = false;
@@ -78,7 +99,7 @@ export function useTrackingOrders(
       setOrders(null);
     };
   }, [enabled, orderId, identity]);
-  return { orders, error, connection, observed, refresh };
+  return { orders: enabled && loadedIdentity === scope ? orders : null, error, connection, observed, refresh };
 }
 export function TrackingConnection({
   tracking,
@@ -100,6 +121,24 @@ export function TrackingConnection({
     </div>
   );
 }
+function CustomerRiderPosition({ fix }: { fix?: RiderFix }) {
+  const [expired, setExpired] = useState<string | null>(null);
+  useEffect(() => {
+    if (!fix) return;
+    const timeout = setTimeout(() => setExpired(fix.expiresAt), Math.max(0, Date.parse(fix.expiresAt) - Date.now()));
+    return () => clearTimeout(timeout);
+  }, [fix]);
+  const points = useMemo(() => fix ? [{ ...fix, id: fix.recordedAt, label: "Assigned rider’s recorded location" }] : [], [fix]);
+  if (!fix || expired === fix.expiresAt || Date.parse(fix.expiresAt) <= Date.now())
+    return <p className="muted">Rider location and ETA are unavailable. Check your scheduled delivery window.</p>;
+  return (
+    <div>
+      <RiderMap points={points} />
+      <p>Last recorded GPS observation at {new Date(fix.recordedAt).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })} (Lagos). Accuracy ±{Math.round(fix.accuracy)} m. ETA unavailable.</p>
+    </div>
+  );
+}
+
 export function TrackingDetails({
   order,
   staff = false,
@@ -129,10 +168,7 @@ export function TrackingDetails({
       {order.attempt && (
         <p>Delivery attempt: {order.attempt.state.replaceAll("_", " ")}</p>
       )}
-      <p className="muted">
-        Live driver location and ETA unavailable. Your scheduled delivery window
-        is shown above.
-      </p>
+      {!staff && <CustomerRiderPosition fix={order.gps?.fix} />}
       {order.status === "delivery_failed" && (
         <Notice message="Delivery was unsuccessful. Contact support to arrange the next step; a new delivery is not confirmed until dispatch accepts it." />
       )}
