@@ -12,8 +12,8 @@ demo intentionally runs with background jobs disabled.
 Implementation 2/2. Verified 2/2. Critical requirements 2/2. Route coverage
 1/1. Scoped acceptance gates 2/2.
 
-The current demo deployment is `dpl_HVW4uqRU3tpNAmvp53B1fziobd4C`. The prior
-deployment `dpl_62q4HyhJVVKC5z2Fb8K9rbdmQ7gT` is the alias rollback target.
+The readiness repair was initially verified on `dpl_HVW4uqRU3tpNAmvp53B1fziobd4C`. The prior
+deployment `dpl_62q4HyhJVVKC5z2Fb8K9rbdmQ7gT` was the rollback target for that release. The current deployment and its rollback target are listed in the [demo runbook](../deployment/vercel-client-demo.md).
 
 No owner input is required for the demo repair. Commercial hosting still
 requires the staging hostname, approved access and the production worker probe.

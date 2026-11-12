@@ -75,3 +75,11 @@ Source `01f1ab7` pushed to main; Vercel `dpl_2VUKcpuRv1Sr2WmFVcjf9774Kwzv` READY
 ## Business Owner automatic approval rollout — 10 November
 
 Source67d94cc, deployment dpl_AMwAo4VzXVKn7ewqvCZ7P3g8WXj6 READY at the stable demo URL. EASYGAS_OWNER_AUTO_APPROVAL enabled on this linked demo only. Existing pending requests remain unchanged until the requester uses Apply my request; new owner submissions automatically record authority and follow existing activation/scheduling. Technical administrators and staff retain their existing permissions/review requirements. Qualified safety, payment/provider, current authority, expiry/version and stock gates remain. No migration, bulk approval, price/payment/balance mutation or native build performed by rollout verification. [Scope, tests and acceptance](../owner-auto-approval/report.md), [matrix](../traceability/owner-auto-approval-rtm.json). Production NO-GO remains.
+
+## 13 November public layout and pending fixes rollout
+
+Git source `5179c7a659922230d8ab88e95fa4c621825fec3b` on `codex/driver-experience-redesign` includes the public 1440px layout, form contrast fixes, and demo readiness repair. The release also integrates the already deployed Smart Refill branch history and its CI fixes. Vercel built the committed source snapshot, verified it before promotion and promoted `dpl_2YCvePvu86S9a7Gs6aos7TD4x6CE` to the stable demo alias. Prior alias rollback target: `dpl_HVW4uqRU3tpNAmvp53B1fziobd4C`.
+
+After promotion, Chrome verified all eight public destinations at 1920px and 390px, including the Home anchor. The demo health endpoint returned HTTP 200 with demo scope. Owner/customer sign-in, customer denial on the owner dashboard endpoint, the public catalogue and no-index controls passed. The 36 focused local tests and both typechecks passed. The [GitHub release validation run](https://github.com/Onaopemipo/easygasng/actions/runs/43322279192) passed both jobs. No database migration or app-store release was performed. Commercial production remains NO-GO.
+
+Related matrices: [public website width](../traceability/public-width-1440-rtm.md), [form contrast](../traceability/form-contrast-rtm.md), and [demo readiness](../traceability/demo-readiness-rtm.md).
