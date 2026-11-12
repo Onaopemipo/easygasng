@@ -17,6 +17,8 @@ The baseline failures were legacy matrix files without a `gates` array and the r
 
 See the [hosted check log](evidence/demo-hosted-smoke.txt), [isolated test totals](evidence/demo-release-tests.txt) and [requirements matrix](../traceability/smart-refill-redesign-rtm.md).
 
+The [replacement validation run](https://github.com/Onaopemipo/easygasng/actions/runs/43241741135) passed on repair commit `5cf28ca`. The web job passed 685 tests, build, typecheck and dependency audit. The native job passed. The repair was limited to CI, tests and documentation.
+
 ## Demo rollback
 
 Promote the previous READY deployment `dpl_4VZSSkf2vQ8vrZugcaEKTnDeoPEw` in the `easygas-client-demo` project. Confirm the stable alias points to it and rerun signed-in customer checks. The rollout introduced no schema changes or data backfill.
