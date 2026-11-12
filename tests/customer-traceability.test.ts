@@ -8,6 +8,8 @@ test("RTM-01–07: every phase matrix has unique requirements, actual implementa
     p.endsWith("-rtm.json"),
   )) {
     const matrix = JSON.parse(await readFile(`${directory}/${file}`, "utf8"));
+    assert.ok(Array.isArray(matrix.requirements), `${file}: requirements must be an array`);
+    assert.ok(Array.isArray(matrix.gates), `${file}: gates must be an array`);
     assert.equal(
       new Set(matrix.requirements.map((r: any) => r.id)).size,
       matrix.requirements.length,
@@ -15,6 +17,7 @@ test("RTM-01–07: every phase matrix has unique requirements, actual implementa
     assert.equal(
       new Set(matrix.gates.map((r: any) => r.id)).size,
       matrix.gates.length,
+      `${file}: every gate needs a unique ID`,
     );
     for (const row of matrix.requirements) {
       for (const key of [

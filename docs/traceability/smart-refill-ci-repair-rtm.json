@@ -1,0 +1,117 @@
+{
+  "phase": "Smart Refill demo CI repair",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "SR-CI-R01",
+      "requirement": "Keep existing traceability IDs and validate the branch-local evidence",
+      "priority": "P1",
+      "scope": "Isolated Smart Refill CI repair",
+      "uiReference": "GitHub Actions run 43204950582",
+      "route": "GitHub Actions release-validation web job",
+      "dataSource": "Committed requirements and gate definitions",
+      "securityControl": "Existing validator checks every matrix, including approval and evidence references",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed checks are linked.",
+      "testResult": "PASS all matrix schemas, file references and gate identifiers validate.",
+      "outstandingWork": "Owner workspace files excluded from this release remain tracked on their feature branch.",
+      "implementationFiles": [
+        "docs/traceability/all-roles-mobile-rtm.json",
+        "docs/traceability/branch-manager-rtm.json",
+        "docs/traceability/business-owner-rtm.json",
+        "docs/traceability/finance-compact-rtm.json",
+        "docs/traceability/full-width-web-rtm.json",
+        "docs/traceability/mobile-driver-login-feedback-rtm.json",
+        "docs/traceability/mobile-sales-rtm.json",
+        "docs/traceability/technician-end-to-end-rtm.json"
+      ],
+      "testFiles": [
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "RTM-01–07"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/smart-refill-redesign/evidence/ci-repair-targeted.txt"
+      ],
+      "acceptanceGate": "SR-CI-G01"
+    },
+    {
+      "id": "SR-CI-R02",
+      "requirement": "Verify the inherited Technician Workspace baseline",
+      "priority": "P1",
+      "scope": "Isolated Smart Refill CI repair",
+      "uiReference": "GitHub Actions run 43204950582",
+      "route": "GitHub Actions release-validation web job",
+      "dataSource": "Reviewed source at 54b1b15",
+      "securityControl": "Exact historical hash keeps file integrity enforcement in place",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed checks are linked.",
+      "testResult": "PASS protected source audit.",
+      "outstandingWork": "None for the local check.",
+      "implementationFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts"
+      ],
+      "testIds": [
+        "DDI-AUDIT01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/smart-refill-redesign/evidence/ci-repair-targeted.txt"
+      ],
+      "acceptanceGate": "SR-CI-G02"
+    },
+    {
+      "id": "SR-CI-R03",
+      "requirement": "Display web test failures in the job log and preserve artifact and failure status",
+      "priority": "P1",
+      "scope": "Isolated Smart Refill CI repair",
+      "uiReference": "GitHub Actions run 43204950582",
+      "route": "GitHub Actions release-validation web job",
+      "dataSource": "GitHub workflow and Bash pipeline",
+      "securityControl": "Pipeline failure remains fatal to the web test step",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed checks are linked.",
+      "testResult": "PASS deliberate failed pipeline returned a failing exit status and wrote the artifact.",
+      "outstandingWork": "None for the local check.",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/smart-refill-redesign/evidence/ci-repair-targeted.txt",
+        "docs/smart-refill-redesign/evidence/ci-repair-logging.txt"
+      ],
+      "acceptanceGate": "SR-CI-G03"
+    }
+  ],
+  "gates": [
+    {
+      "id": "SR-CI-G01",
+      "requirement": "Keep existing traceability IDs and validate the branch-local evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "SR-CI-G02",
+      "requirement": "Verify the inherited Technician Workspace baseline",
+      "status": "PASS"
+    },
+    {
+      "id": "SR-CI-G03",
+      "requirement": "Display web test failures in the job log and preserve artifact and failure status",
+      "status": "PASS"
+    },
+    {
+      "id": "SR-CI-G04",
+      "requirement": "Replacement GitHub Actions run",
+      "status": "PENDING",
+      "outstandingWork": "Observe web and native jobs at the repair commit."
+    }
+  ]
+}

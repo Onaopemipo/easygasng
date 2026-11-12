@@ -177,3 +177,5 @@ Credits & Refunds: [traceability matrix](../credits-refunds/traceability.md). Sc
 Full-width web layouts: [matrix](full-width-web-rtm.md) and [JSON](full-width-web-rtm.json).
 
 Smart Refill redesign ([30 requirements, 70 scenarios and 30 gates](smart-refill-redesign-rtm.md), [verification](../smart-refill-redesign/04-test-results.md), [rollback](../smart-refill-redesign/05-rollback-and-release.md)). Desktop and mobile web, iPhone Simulator and an unminified Pixel 8 build were exercised. The standard Android release remains blocked at launch. Production remains NO-GO.
+
+Smart Refill demo CI repair: [matrix](smart-refill-ci-repair-rtm.md). Repairs the inherited legacy matrix schema and protected source checks on the isolated demo branch. Production remains NO-GO.

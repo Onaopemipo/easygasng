@@ -37,7 +37,11 @@ jobs:
       - run: echo /usr/lib/postgresql/16/bin >> "$GITHUB_PATH"
       - run: npm ci
       - run: npm ci --prefix apps/mobile --ignore-scripts
-      - run: mkdir -p artifacts && npm test > artifacts/tests.txt 2>&1
+      - name: Run web regression tests
+        shell: bash
+        run: |
+          mkdir -p artifacts
+          npm test 2>&1 | tee artifacts/tests.txt
       - run: npm run build > artifacts/build.txt 2>&1
       - run: npm run typecheck > artifacts/types.txt 2>&1
       - run: npm audit --omit=dev --audit-level=high > artifacts/dependency-audit.txt 2>&1

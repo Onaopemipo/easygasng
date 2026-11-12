@@ -274,7 +274,11 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   const approvedAlerts = JSON.parse(await readFile("docs/custom-alerts/approved-scope-change.json", "utf8"));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
-      ? approvedCardCheckoutHash : approvedAlerts[file]?.approvedHash ?? originalHash;
+      ? approvedCardCheckoutHash
+      // The reviewed layout release removed the unused technician picker titles.
+      : file === "apps/mobile/TechnicianWorkspace.tsx"
+        ? "6068d7f40ac33c17fd7cc78099bf3d23b6184b1a9861f3e53e91b893558dc006" // 54b1b15
+        : approvedAlerts[file]?.approvedHash ?? originalHash;
     let source = await readFile(file, "utf8");
     if (file === "apps/mobile/DriverWorkspace.tsx")
       source = source.replace('      api("driver.heartbeat", {}),\n', "");

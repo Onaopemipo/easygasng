@@ -6,123 +6,472 @@
       "priority": "high",
       "status": "PARTIAL",
       "implementation": [
-        "apps/mobile/OwnerOverview.tsx",
-        "apps/web/components/admin-overview.tsx"
+        "apps/mobile/OwnerWorkspace.tsx",
+        "apps/web/components/admin-overview.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/service.ts"
       ],
-      "authoritativeSource": "Existing owner APIs and committed records",
+      "authoritativeSource": "admin.dashboard, business.snapshot, paged approvals",
       "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Dashboard and appearance baseline passed 9 tests",
-      "outstanding": "Complete web and native reference journey and verify signed-in behavior"
+      "evidence": [],
+      "outstanding": "Verify non-empty trend and desktop/mobile-web visual acceptance. Branch comparison remains in OWN-006.",
+      "acceptanceGate": "OWN-001-AC",
+      "simulatorEvidence": "iPhone 17 Pro iOS 26.5 fresh local Release. Verified owner home, Lagos and 7-day scope carried into Operations and Finance, approval list filtering and evidence details, unavailable profit, and empty payment report/export. Final build rechecked Home and formatted approval detail. Screenshot .data/owner-simulator-evidence/business-overview.png.",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Implemented owner workspace changes and passed targeted checks. Full design and acceptance coverage remains open.",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "admin.dashboard, business.snapshot, paged approvals",
+      "securityControl": "Existing server role and branch checks and governed approvals",
+      "testResult": "Web and native TypeScript checks; 29 regression tests; branch-scope assertions rerun in approval-pagination suite; authenticated HTTP 200 for /admin, scoped Approvals and Finance, and Reports.",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Verify non-empty trend and desktop/mobile-web visual acceptance. Branch comparison remains in OWN-006.",
+      "implementationFiles": [
+        "apps/web/components/admin-overview.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [],
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerWorkspace.tsx"
+      ]
     },
     {
       "id": "OWN-002",
       "requirement": "Operations Summary",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/mobile/OwnerWorkspace.tsx",
+        "apps/web/components/admin-overview.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "authoritativeSource": "admin.dashboard operations widgets and scoped inventory alerts and active stock holds",
       "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "evidence": [],
+      "outstanding": "Verify browser drilldowns against populated records. Financial reconciliation holds have no verified source in this summary.",
+      "acceptanceGate": "OWN-002-AC",
+      "simulatorEvidence": "iPhone 17 Pro iOS 26.5 fresh local Release. Verified owner home, Lagos and 7-day scope carried into Operations and Finance, approval list filtering and evidence details, unavailable profit, and empty payment report/export. Final build rechecked Home and formatted approval detail. Screenshot .data/owner-simulator-evidence/business-overview.png.",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Implemented owner workspace changes and passed targeted checks. Full design and acceptance coverage remains open.",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "admin.dashboard operations widgets and scoped inventory alerts and active stock holds",
+      "securityControl": "Existing server role and branch checks and governed approvals",
+      "testResult": "Web and native TypeScript checks; 29 regression tests; branch-scope assertions rerun in approval-pagination suite; authenticated HTTP 200 for /admin, scoped Approvals and Finance, and Reports.",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Verify browser drilldowns against populated records. Financial reconciliation holds have no verified source in this summary.",
+      "implementationFiles": [
+        "apps/web/components/admin-overview.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [],
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerWorkspace.tsx"
+      ]
     },
     {
       "id": "OWN-003",
       "requirement": "Approval Centre",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/mobile/OwnerApprovals.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "authoritativeSource": "Paged approvals and existing approval.decide and reauth handlers",
       "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "evidence": [],
+      "outstanding": "Verify the eligible approve/reject/step-up journey in Simulator with an independently submitted fixture. Existing governed owner self-apply remains on web.",
+      "acceptanceGate": "OWN-003-AC",
+      "simulatorEvidence": "iPhone 17 Pro iOS 26.5 fresh local Release. Verified owner home, Lagos and 7-day scope carried into Operations and Finance, approval list filtering and evidence details, unavailable profit, and empty payment report/export. Final build rechecked Home and formatted approval detail. Screenshot .data/owner-simulator-evidence/business-overview.png.",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Implemented owner workspace changes and passed targeted checks. Full design and acceptance coverage remains open.",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "Paged approvals and existing approval.decide and reauth handlers",
+      "securityControl": "Existing server role and branch checks and governed approvals",
+      "testResult": "Web and native TypeScript checks; 29 regression tests; branch-scope assertions rerun in approval-pagination suite; authenticated HTTP 200 for /admin, scoped Approvals and Finance, and Reports.",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Verify the eligible approve/reject/step-up journey in Simulator with an independently submitted fixture. Existing governed owner self-apply remains on web.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [],
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerApprovals.tsx"
+      ]
     },
     {
       "id": "OWN-004",
       "requirement": "Financial Summary",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/mobile/OwnerWorkspace.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "authoritativeSource": "business.snapshot, admin.dashboard receipts, business.report and audited business.export",
       "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "evidence": [],
+      "outstanding": "Verify non-empty transaction, share sheet, reconciliation and desktop/mobile-web visual acceptance. Reconciliation opens the existing web workflow.",
+      "acceptanceGate": "OWN-004-AC",
+      "simulatorEvidence": "iPhone 17 Pro iOS 26.5 fresh local Release. Verified owner home, Lagos and 7-day scope carried into Operations and Finance, approval list filtering and evidence details, unavailable profit, and empty payment report/export. Final build rechecked Home and formatted approval detail. Screenshot .data/owner-simulator-evidence/business-overview.png.",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Implemented owner workspace changes and passed targeted checks. Full design and acceptance coverage remains open.",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "business.snapshot, admin.dashboard receipts, business.report and audited business.export",
+      "securityControl": "Existing server role and branch checks and governed approvals",
+      "testResult": "Web and native TypeScript checks; 29 regression tests; branch-scope assertions rerun in approval-pagination suite; authenticated HTTP 200 for /admin, scoped Approvals and Finance, and Reports.",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Verify non-empty transaction, share sheet, reconciliation and desktop/mobile-web visual acceptance. Reconciliation opens the existing web workflow.",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "testFiles": [],
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerWorkspace.tsx"
+      ]
     },
     {
       "id": "OWN-005",
       "requirement": "Business Controls",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
-      "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/web/components/owner-governance-links.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritativeSource": "settings?scope=branch",
+      "securityControls": "Server role, setting view_roles and approved proposal workflow",
+      "evidence": [],
+      "outstanding": "Native protected edit request not implemented",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "settings?scope=branch",
+      "securityControl": "Server role, setting view_roles and approved proposal workflow",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Native protected edit request not implemented",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing inventory-finance regression coverage passed",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Native protected edit request not implemented",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN-005-AC",
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/web/components/owner-governance-links.tsx",
+        "docs/traceability/owner-phase2c-rtm.json"
+      ]
     },
     {
       "id": "OWN-006",
       "requirement": "Branch Performance",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
-      "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritativeSource": "business.report report=branches",
+      "securityControls": "Owner-scoped report; backend branch checks",
+      "evidence": [],
+      "outstanding": "Dedicated comparative chart and branch drilldowns unverified",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "business.report report=branches",
+      "securityControl": "Owner-scoped report; backend branch checks",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Dedicated comparative chart and branch drilldowns unverified",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing inventory-finance regression coverage passed",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Dedicated comparative chart and branch drilldowns unverified",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN-006-AC",
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "docs/traceability/owner-phase2c-rtm.json"
+      ]
     },
     {
       "id": "OWN-007",
       "requirement": "Approval Detail",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
-      "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/OwnerApprovals.tsx"
+      ],
+      "authoritativeSource": "approvals; reauth; approval.decide",
+      "securityControls": "can_approve; independent review; server reauth and approval state",
+      "evidence": [],
+      "outstanding": "No full native device test/independent multi-actor E2E run",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "approvals; reauth; approval.decide",
+      "securityControl": "can_approve; independent review; server reauth and approval state",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. No full native device test/independent multi-actor E2E run",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing approval-pagination regression coverage passed",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. No full native device test/independent multi-actor E2E run",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN-007-AC",
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerApprovals.tsx",
+        "docs/traceability/owner-phase2c-rtm.json"
+      ]
     },
     {
       "id": "OWN-008",
       "requirement": "Reports & Analytics",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
-      "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritativeSource": "business.report; business.export",
+      "securityControls": "Backend scoped report/export checks",
+      "evidence": [],
+      "outstanding": "Native export/share and report drilldowns not implemented",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "business.report; business.export",
+      "securityControl": "Backend scoped report/export checks",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Native export/share and report drilldowns not implemented",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing inventory-finance regression coverage passed",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Native export/share and report drilldowns not implemented",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN-008-AC",
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "docs/traceability/owner-phase2c-rtm.json"
+      ]
     },
     {
       "id": "OWN-009",
       "requirement": "Organisation Profile",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
-      "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritativeSource": "settings?scope=branch; setting.propose via existing web",
+      "securityControls": "Governed setting change, version and step-up",
+      "evidence": [],
+      "outstanding": "Native editing and exact registration field mapping unverified",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "settings?scope=branch; setting.propose via existing web",
+      "securityControl": "Governed setting change, version and step-up",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Native editing and exact registration field mapping unverified",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Native editing and exact registration field mapping unverified",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN-009-AC",
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "docs/traceability/owner-phase2c-rtm.json"
+      ]
     },
     {
       "id": "OWN-010",
       "requirement": "Roles & Access",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
-      "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/web/components/staff-management.tsx",
+        "apps/web/components/staff-privileges.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritativeSource": "staff.manage; staff.privileges",
+      "securityControls": "Effective privileges, branch and independent protected changes",
+      "evidence": [],
+      "outstanding": "Native protected privilege mutations intentionally deferred",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "staff.manage; staff.privileges",
+      "securityControl": "Effective privileges, branch and independent protected changes",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Native protected privilege mutations intentionally deferred",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing staff-management and staff-privileges regression coverage passed",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Native protected privilege mutations intentionally deferred",
+      "implementationFiles": [
+        "apps/web/components/staff-management.tsx",
+        "apps/web/components/staff-privileges.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN-010-AC",
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "docs/traceability/owner-phase2c-rtm.json"
+      ]
     },
     {
       "id": "OWN-011",
       "requirement": "Audit History",
       "priority": "high",
-      "status": "NOT_IMPLEMENTED",
-      "implementation": [],
-      "authoritativeSource": "Existing owner APIs and committed records",
-      "securityControls": "Existing server role and branch checks and governed approvals",
-      "evidence": "Pending screen-level acceptance",
-      "outstanding": "Map existing modules to the requested owner screen and verify web and mobile acceptance"
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/web/components/audit-history.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "authoritativeSource": "audit view=paged",
+      "securityControls": "Global owner/administrator read; append-only",
+      "evidence": [],
+      "outstanding": "Native pagination/device test not run",
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": [
+        "/admin/settings",
+        "/admin/reports",
+        "/admin/approvals",
+        "/admin/staff",
+        "/admin/audit"
+      ],
+      "dataSource": "audit view=paged",
+      "securityControl": "Global owner/administrator read; append-only",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Native pagination/device test not run",
+      "testResult": "Web and mobile TypeScript checks passed; Web production build passed; Existing audit-pagination regression coverage passed",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Native pagination/device test not run",
+      "implementationFiles": [
+        "apps/web/components/audit-history.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "testFiles": [],
+      "acceptanceGate": "OWN-011-AC",
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "docs/traceability/owner-phase2c-rtm.json"
+      ]
+    },
+    {
+      "id": "OWN-012",
+      "requirement": "Profile & Security",
+      "priority": "high",
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/mobile/OwnerSupportWorkspace.tsx"
+      ],
+      "outstanding": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "account.profile; account.update; account.password",
+      "securityControl": "Authenticated owner; server revalidates identity",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Native profile and password UI prepared; full app/native test pending",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [],
+      "testFiles": [],
+      "acceptanceGate": "OWN-012-AC",
+      "authoritativeSource": "account.profile; account.update; account.password",
+      "securityControls": "Authenticated owner; server revalidates identity",
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerSupportWorkspace.tsx",
+        "docs/traceability/owner-phase2d-rtm.json"
+      ]
+    },
+    {
+      "id": "OWN-013",
+      "requirement": "Notifications",
+      "priority": "high",
+      "status": "PARTIAL",
+      "implementation": [
+        "apps/mobile/OwnerSupportWorkspace.tsx"
+      ],
+      "outstanding": "Native typecheck + web regression + owner device tests + permission-negative tests",
+      "evidence": [],
+      "scope": "business-owner",
+      "uiReference": "Phase screen requirements",
+      "route": "See mapped workspace implementation",
+      "dataSource": "navigation; notifications.read",
+      "securityControl": "Owner session, notifications scoped by user_id",
+      "reason": "This isolated Smart Refill branch excludes newer Business Owner workspace changes. Read/mark read; native deep-link destination unverified",
+      "testResult": "docs/owner-phase2d/verification.md",
+      "outstandingWork": "Verify the referenced changes on the feature branch that contains them. Native typecheck + web regression + owner device tests + permission-negative tests",
+      "implementationFiles": [],
+      "testFiles": [],
+      "acceptanceGate": "OWN-013-AC",
+      "authoritativeSource": "navigation; notifications.read",
+      "securityControls": "Owner session, notifications scoped by user_id",
+      "referencesOutsideDemoBranch": [
+        "apps/mobile/OwnerSupportWorkspace.tsx",
+        "docs/traceability/owner-phase2d-rtm.json"
+      ]
     }
   ],
   "gates": [
@@ -248,7 +597,7 @@
     },
     {
       "id": "G25",
-      "requirement": "stock/cylinder custody R01\u2013R05",
+      "requirement": "stock/cylinder custody R01–R05",
       "status": "UNVERIFIED"
     },
     {
@@ -325,10 +674,78 @@
       "id": "G40",
       "requirement": "explicit release GO/NO-GO",
       "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-001-AC",
+      "requirement": "Complete the screen acceptance checks in the editable handoff and verify authenticated web and native journeys",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-002-AC",
+      "requirement": "Complete the screen acceptance checks in the editable handoff and verify authenticated web and native journeys",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-003-AC",
+      "requirement": "Complete the screen acceptance checks in the editable handoff and verify authenticated web and native journeys",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-004-AC",
+      "requirement": "Complete the screen acceptance checks in the editable handoff and verify authenticated web and native journeys",
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-005-AC",
+      "requirement": null,
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-006-AC",
+      "requirement": null,
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-007-AC",
+      "requirement": null,
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-008-AC",
+      "requirement": null,
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-009-AC",
+      "requirement": null,
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-010-AC",
+      "requirement": null,
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-011-AC",
+      "requirement": null,
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-012-AC",
+      "requirement": null,
+      "status": "UNVERIFIED"
+    },
+    {
+      "id": "OWN-013-AC",
+      "requirement": null,
+      "status": "UNVERIFIED"
     }
   ],
   "verifiedCoverage": "0/11",
   "changeLog": [
-    "Added a verified net receipts summary to the existing web dashboard and a read-only mobile overview."
+    "Imported 13 editable handoff specifications. Added OWN-012 and OWN-013 to the scope. This pass advanced OWN-001 through OWN-004.",
+    "Fresh local-demo Release build installed in iOS Simulator. Authenticated owner smoke checks passed. Corrected bottom navigation label wrapping discovered during visual inspection.",
+    "Implemented shared mobile scope, owner desktop overview and operations panel, native approval evidence and decisions, scoped finance and native export. Full design acceptance remains open.",
+    "Reconciled the consolidated screen statuses with Phase 2C and 2D mappings. All 13 acceptance gates remain open."
   ]
 }
