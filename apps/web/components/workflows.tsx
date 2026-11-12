@@ -6,7 +6,7 @@ import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/passwo
 import { FormInput } from "./password-input";
 import { ChannelPreferences } from "./operations-completion";
 import { MailDeliveryControls } from "./mail-delivery";
-import { EasyRewardsReport, SmartRewardOffers } from "./easyrewards";
+import { EasyRewardsReport } from "./easyrewards";
 import React, { useState, useEffect, useRef, type FormEvent } from "react";
 import Link from "./workspace-link";
 import { useSearchParams } from "next/navigation";
@@ -23,6 +23,9 @@ type Field = {
   type?: string;
   step?: string;
   min?: number;
+  max?: number;
+  minLength?: number;
+  maxLength?: number;
   value?: any;
   required?: boolean;
   options?: { value: string; label: string }[];
@@ -181,9 +184,10 @@ export function ActionForm({
                   f.min ??
                   (["number", "money"].includes(f.type ?? "") ? 0 : undefined)
                 }
+                max={f.max}
                 step={f.type === "money" ? "0.01" : f.step}
-                minLength={f.type === "password" ? PASSWORD_MIN_LENGTH : undefined}
-                maxLength={f.type === "password" ? 128 : 1000}
+                minLength={f.type === "password" ? PASSWORD_MIN_LENGTH : f.minLength}
+                maxLength={f.type === "password" ? 128 : (f.maxLength ?? 1000)}
                 autoComplete={
                   f.type === "password" ? "new-password" : undefined
                 }
@@ -698,137 +702,6 @@ export function SupportDesk({ staff = false }: { staff?: boolean }) {
             ...(form === "note" ? [{ name: "internal", label: "", type: "boolean-hidden", value: "true" }] : []),
           ]} />}
       </Modal>}
-    </div>
-  );
-}
-export function RefillProfiles({
-  embedded = false,
-}: { embedded?: boolean } = {}) {
-  const { data, error, reload } = useRecords("refill.profiles"),
-    { data: catalogue } = useRecords("catalogue");
-  if (error) return <Notice type="error" message={error} />;
-  if (!data || !catalogue) return <Loading />;
-  return (
-    <div className="workflow-stack">
-      {embedded ? (
-        <h2>Your cooking gas profiles</h2>
-      ) : (
-        <ProductHeading eyebrow="YOUR KITCHEN" title="Cooking gas profiles" description="Manage refill profiles and review estimates based on your verified deliveries." />
-      )}
-      <SmartRewardOffers />
-      <p>
-        Estimates use delivered, independently verified single-cylinder
-        purchases for the selected refill size. They are not sensor readings.
-      </p>
-      {data.map((p: any) => (
-        <section className="surface workflow-form" key={p.id}>
-          <h2>
-            {p.label} · {p.product_name}
-          </h2>
-          <p>{p.forecast.reason}</p>
-          {p.lastVerifiedRefill && (
-            <p>
-              Last verified refill:{" "}
-              {new Date(p.lastVerifiedRefill.date).toLocaleDateString("en-NG")}{" "}
-              · {p.lastVerifiedRefill.kg} kg
-              {p.typicalIntervalDays
-                ? ` · Typical interval: ${p.typicalIntervalDays} days`
-                : ""}
-            </p>
-          )}
-          {p.history?.length > 0 && (
-            <details>
-              <summary>View verified refill history</summary>
-              <ul>
-                {p.history.map((r: any) => (
-                  <li key={r.orderId}>
-                    {new Date(r.date).toLocaleDateString("en-NG")} · {r.kg} kg ·{" "}
-                    <Link href="/orders">View orders</Link>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          )}
-          {p.forecast.available && (
-            <>
-              <h3>
-                Estimated {p.forecast.estimatedPercent}% remaining ·{" "}
-                {p.forecast.daysLeft} days
-              </h3>
-              <p>
-                Confidence: {p.forecast.confidence} · estimated refill{" "}
-                {new Date(p.forecast.nextDate).toLocaleDateString()}
-              </p>
-            </>
-          )}
-          <ActionForm
-            action="refill.feedback"
-            title="Tell us how much gas is left"
-            fields={[
-              { name: "profileId", label: "", type: "hidden", value: p.id },
-              {
-                name: "state",
-                label: "Current supply",
-                options: [
-                  { value: "still_available", label: "Still have gas" },
-                  { value: "low", label: "Almost empty" },
-                  { value: "empty", label: "Gas finished" },
-                  {
-                    value: "already_refilled",
-                    label: "Already refilled (self-report)",
-                  },
-                  {
-                    value: "remind_later",
-                    label: "Remind me later (pause for 24 hours)",
-                  },
-                ],
-              },
-            ]}
-            onDone={reload}
-          />
-          {p.reminderState?.reason && (
-            <p role="status">
-              {p.reminderState.reason}
-              {p.reminderState.until
-                ? ` Until ${new Date(p.reminderState.until).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })}.`
-                : ""}
-            </p>
-          )}
-          {p.feedback.map((f: any, i: number) => (
-            <small key={i}>
-              {f.state.replaceAll("_", " ")} ·{" "}
-              {new Date(f.created_at).toLocaleDateString()}{" "}
-            </small>
-          ))}
-        </section>
-      ))}
-      <ActionForm
-        action="refill.profile.create"
-        title="Add consumption profile"
-        fields={[
-          { name: "label", label: "Profile name" },
-          {
-            name: "productId",
-            label: "Refill size",
-            options: catalogue.products
-              .filter((p: any) => p.category === "Gas refills")
-              .map((p: any) => ({ value: p.id, label: p.name })),
-          },
-          {
-            name: "householdSize",
-            label: "People served",
-            type: "number",
-            value: 1,
-          },
-          {
-            name: "cookingDays",
-            label: "Cooking days per week",
-            type: "number",
-            value: 7,
-          },
-        ]}
-        onDone={reload}
-      />
     </div>
   );
 }

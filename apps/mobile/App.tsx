@@ -1,3 +1,4 @@
+import { CookingGasProfiles } from "./CookingGasProfiles";
 import { FinanceOverview } from "./FinanceOverview";
 import { SalesCustomerLookup } from "./SalesCustomerLookup";
 import { OwnerOverview } from "./OwnerOverview";
@@ -812,9 +813,26 @@ export default function App() {
             ) : (
               <Text>Sign in to view notifications.</Text>
             )
+          ) : ["consumption", "smart-refill"].includes(screen) && user && customerView ? (
+            <CookingGasProfiles
+              key={`${user.id}:${user.role}:${user.branchId}:${screen}`}
+              api={api}
+              smart={screen === "smart-refill"}
+              onPreferences={() => navigateCustomer("profile")}
+              onOrderGas={() => navigateCustomer("gas-order")}
+              onOrders={(id) => {
+                setOrderFilter(id ?? null);
+                setScreen("orders");
+              }}
+              onOffer={(offer) => {
+                setRewardPoints(String(offer.points));
+                setRewardOfferId(offer.id);
+                setKey(null);
+                setScreen(cart.length ? "checkout" : "products");
+              }}
+            />
           ) : [
               "profile",
-              "consumption",
               "credit",
               "plans",
               "recovery",
@@ -822,7 +840,7 @@ export default function App() {
               "notifications",
             ].includes(screen) ? (
             <>
-              {["consumption", "plans", "recurring"].includes(screen) && (
+              {["plans", "recurring"].includes(screen) && (
                 <NativeSmartOffers
                   api={api}
                   onOffer={(o) => {
@@ -983,7 +1001,9 @@ export default function App() {
               key={user?.id ?? "guest"}
               user={user}
               api={api}
-              navigate={navigateCustomer}
+              navigate={(destination) =>
+                navigateCustomer(destination === "consumption" ? "smart-refill" : destination)
+              }
             />
           ) : screen === "home" ? (
             <>

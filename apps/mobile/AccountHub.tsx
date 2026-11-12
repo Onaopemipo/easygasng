@@ -9,6 +9,7 @@ const rows = [
   ["My Profile", "profile", "person-outline"],
   ["My Cylinders", "cylinders", "flame-outline"],
   ["Cooking Profiles & Usage", "consumption", "bar-chart-outline"],
+  ["Smart Refill", "smart-refill", "speedometer-outline"],
   ["Refill Plan", "plans", "calendar-outline"],
   ["Invoices & Receipts", "invoices", "receipt-outline"],
   ["Order History", "orders", "bag-check-outline"],

@@ -252,11 +252,6 @@ export default function Workflows({
     const load = async () => {
       if (screen === "notifications") return api("me");
       if (screen === "profile") return api("account.profile");
-      if (screen === "consumption")
-        return {
-          profiles: await api("refill.profiles"),
-          catalogue: await api("catalogue"),
-        };
       if (screen === "credit")
         return {
           wallet: await api("wallet"),
@@ -568,83 +563,6 @@ export default function Workflows({
               ],
             },
             { name: "reason", label: "Reason and details" },
-          ]}
-          onDone={reload}
-        />
-      </>
-    );
-  if (screen === "consumption")
-    return (
-      <>
-        <Text style={s.title}>Cooking gas profiles</Text>
-        <Text style={s.body}>
-          Estimates use verified single-cylinder purchases. They are not sensor
-          readings.
-        </Text>
-        {data.profiles.map((p: any) => (
-          <View style={s.card} key={p.id}>
-            <Text style={s.heading}>
-              {p.label} · {p.product_name}
-            </Text>
-            <Text style={s.body}>{p.forecast.reason}</Text>
-            {p.forecast.available && (
-              <Text>
-                {p.forecast.estimatedPercent}% estimated remaining ·{" "}
-                {p.forecast.daysLeft} days
-              </Text>
-            )}
-            <NativeForm
-              api={api}
-              action="refill.feedback"
-              title="Update your gas supply"
-              fields={[
-                {
-                  name: "profileId",
-                  type: "hidden",
-                  label: "Profile reference",
-                  value: p.id,
-                },
-                {
-                  name: "state",
-                  label: "Current gas supply",
-                  value: "low",
-                  options: [
-                    { value: "still_available", label: "Still available" },
-                    { value: "low", label: "Running low" },
-                    { value: "empty", label: "Empty" },
-                  ],
-                },
-              ]}
-              onDone={reload}
-            />
-          </View>
-        ))}
-        <NativeForm
-          api={api}
-          action="refill.profile.create"
-          title="Add cooking profile"
-          fields={[
-            {
-              name: "productId",
-              label: "Refill size",
-              value: "refill-6",
-              options: data.catalogue.products
-                .filter((p: any) => p.category === "Gas refills")
-                .map((p: any) => ({ value: p.id, label: p.name })),
-            },
-            { name: "label", label: "Profile name" },
-            {
-              name: "householdSize",
-              label: "People served",
-              type: "number",
-              value: 1,
-            },
-            {
-              name: "cookingDays",
-              label: "Cooking days per week",
-              type: "number",
-              value: 7,
-            },
           ]}
           onDone={reload}
         />

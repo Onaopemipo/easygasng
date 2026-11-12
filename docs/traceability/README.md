@@ -175,3 +175,5 @@ Finance workspace redesign: [traceability matrix](finance-redesign-rtm.md). Resp
 Credits & Refunds: [traceability matrix](../credits-refunds/traceability.md). Scoped web workspace and existing approval flows. Provider, native and release acceptance remain open.
 
 Full-width web layouts: [matrix](full-width-web-rtm.md) and [JSON](full-width-web-rtm.json).
+
+Smart Refill redesign ([30 requirements, 70 scenarios and 30 gates](smart-refill-redesign-rtm.md), [verification](../smart-refill-redesign/04-test-results.md), [rollback](../smart-refill-redesign/05-rollback-and-release.md)). Desktop and mobile web, iPhone Simulator and an unminified Pixel 8 build were exercised. The standard Android release remains blocked at launch. Production remains NO-GO.

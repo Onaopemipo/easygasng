@@ -1,4 +1,5 @@
 "use client";
+import { RefillProfiles } from "./refill-profiles";
 import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
 
 import { CustomerWallet } from "./customer-wallet";
@@ -51,7 +52,6 @@ import {
   AccountSettings,
   Recovery,
   SupportDesk,
-  RefillProfiles,
 } from "./workflows";
 import {
   useState,
@@ -407,7 +407,7 @@ export default function Site({
             </div>
           ) : pathname === "/consumption" ? (
             <div className="container page">
-              <RefillProfiles />
+              <RefillProfiles key={`${user?.id}:${user?.role}:${user?.branchId}`} />
             </div>
           ) : [
               "/forgot-password",
@@ -1703,7 +1703,7 @@ function Account({ section }: { section: string }) {
     let active = true;
     setData(null);
     setError("");
-    if (user) {
+    if (user && section !== "/refill") {
       const action = ["/orders", "/track"].includes(section)
         ? "orders"
         : section === "/schedules"
@@ -1745,6 +1745,8 @@ function Account({ section }: { section: string }) {
         </Empty>
       </div>
     );
+  if (section === "/refill")
+    return <div className="container page"><RefillProfiles smart key={`${user.id}:${user.role}:${user.branchId}`} /></div>;
   async function createSchedule(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setBusy(true);
@@ -1998,22 +2000,6 @@ function Account({ section }: { section: string }) {
                 Save Refill Plan <CalendarDays size={17} />
               </button>
             </form>
-          </>
-        ) : section === "/refill" ? (
-          <>
-            <RefillProfiles embedded />
-            <p>
-              <Link href="/account-settings">Manage reminder preferences</Link>{" "}
-              ·{" "}
-              <Link href="/gas-order">
-                Already refilled? View ordering options
-              </Link>
-            </p>
-            <p>
-              Refills purchased elsewhere cannot be verified automatically. The
-              already-refilled option records a self-report and pauses outdated
-              estimates until a new verified purchase.
-            </p>
           </>
         ) : (
           <>
