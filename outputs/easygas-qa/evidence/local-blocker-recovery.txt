@@ -1,0 +1,16 @@
+13 November 2026, Australia/Brisbane. EasyGas source revision 6a7522c.
+
+Android Pixel 8 emulator initially had Expo Go 57.0.9. Installed the official
+Expo Go 58.0.5 release APK in place, matching EasyGas Expo SDK 58. Verified the
+installed version after the emulator restarted. Connected Metro and the isolated
+QA API over adb reverse. iPhone 17 Pro Simulator used Expo Go 58.0.7.
+APK source: https://github.com/expo/expo-go-releases/releases/tag/Expo-Go-58.0.5
+
+Docker Desktop's restart command initially hung. Terminated the unresponsive
+backend and relaunched Docker Desktop. Docker Server 29.6.2 responded. The first
+Compose attempt then hit a snapshotter storage I/O error. Host free space had
+dropped to 132 MiB. Removed generated files from the disposable QA copy and
+restarted Docker Desktop. The initial image contained an empty package.json.
+A rehearsal with the previously built readiness image passed. Rebuilt a fresh
+image from git archive HEAD and verified both package manifests load before
+rerunning the current revision. See compose-current-rerun.txt for the result.

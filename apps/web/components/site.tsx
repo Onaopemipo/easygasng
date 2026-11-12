@@ -282,7 +282,10 @@ export default function Site({
     <Context.Provider value={ctx}>
       {!workspace && <Header />}
       <CustomerFrame workspace={workspace} user={user} onLogout={signOut} cartCount={cart.reduce((n, i) => n + i.quantity, 0)}>
-        <main id="main">
+        <main
+          id="main"
+          className={!workspace && publicWidthPaths.has(pathname) ? "public-width" : undefined}
+        >
           {!ready || (protectedPath && !user) ? (
             <Loading page />
           ) : pathname === "/account" && workspace ? (
@@ -478,6 +481,16 @@ export default function Site({
     </Context.Provider>
   );
 }
+const publicWidthPaths = new Set([
+  "/",
+  "/gas-order",
+  "/products",
+  "/services",
+  "/about",
+  "/help",
+  "/business",
+]);
+
 function CustomerFrame({ workspace, user, onLogout, children, cartCount }: any) {
   return workspace ? (
     <CustomerWorkspace key={user.id} user={user} onLogout={onLogout} cartCount={cartCount}>
@@ -503,6 +516,12 @@ function Header() {
 }
 function Home() {
   const { catalogue, user } = useShop();
+  useEffect(() => {
+    // The section can mount after the router has already tried to scroll to it.
+    if (window.location.hash === "#how-it-works") {
+      document.getElementById("how-it-works")?.scrollIntoView();
+    }
+  }, []);
   const deliveryAreas = catalogue.gas.locations
     .filter((area: { coverage?: string }) =>
       hasConfirmedDeliveryCoverage(area.coverage),

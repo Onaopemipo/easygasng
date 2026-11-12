@@ -1,0 +1,56 @@
+body:has(main.public-width) {
+  --public-content-max: 1440px;
+  --public-gutter: clamp(16px, 4.7vw, 20px);
+}
+
+@media (min-width: 768px) {
+  body:has(main.public-width) {
+    --public-gutter: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body:has(main.public-width) {
+    --public-gutter: clamp(24px, 2.25vw, 32px);
+  }
+}
+
+@media (min-width: 1440px) {
+  body:has(main.public-width) {
+    --public-gutter: 40px;
+  }
+}
+
+.public-width > .container,
+.public-width .compact-home .container:not(.coverage-home),
+body:has(main.public-width) :is(
+  .public-header-upper,
+  .public-desktop-navigation,
+  .public-mobile-nav-bar,
+  .site-footer > .container
+) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--public-content-max);
+  min-width: 0;
+  margin-inline: auto;
+  padding-inline: var(--public-gutter);
+}
+
+/* Keep the inset coverage card aligned with the content inside the gutters. */
+.public-width .compact-home .coverage-home {
+  width: calc(100% - 2 * var(--public-gutter));
+  max-width: calc(var(--public-content-max) - 2 * var(--public-gutter));
+  margin-inline: auto;
+}
+
+.public-width .compact-home .hero-copy > .eyebrow {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 359px) {
+  .public-width .compact-home .hero-copy > .eyebrow {
+    font-size: 0.8125rem;
+    letter-spacing: 0.07em;
+  }
+}

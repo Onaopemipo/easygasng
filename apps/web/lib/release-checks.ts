@@ -140,13 +140,26 @@ export async function databaseChecks(tx: SQL): Promise<ReleaseCheck[]> {
     },
   ];
 }
-export async function operationalHealth(tx: SQL, now = Date.now()) {
+export function isHostedClientDemo(env: NodeJS.ProcessEnv) {
+  return (
+    env.VERCEL === "1" &&
+    env.APP_URL === "https://easygas-client-demo.vercel.app" &&
+    env.EASYGAS_CLIENT_DEMO === "true" &&
+    env.EASYGAS_BACKGROUND_JOBS === "false"
+  );
+}
+
+export async function schemaReady(tx: SQL) {
   const versions = new Set(
     (await tx.query("SELECT version FROM schema_migrations")).rows.map(
       (r) => r.version,
     ),
   );
-  if (requiredSchemaVersions.some((v) => !versions.has(v))) return false;
+  return requiredSchemaVersions.every((v) => versions.has(v));
+}
+
+export async function operationalHealth(tx: SQL, now = Date.now()) {
+  if (!(await schemaReady(tx))) return false;
   const row = (
     await tx.query(
       "SELECT max(finished_at) AS finished_at FROM job_runs WHERE job='maintenance' AND status='completed'",

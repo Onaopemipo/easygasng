@@ -1,0 +1,20 @@
+EasyGas local QA, 13 November 2026 (Australia/Brisbane)
+Source revision: 6a7522c. The working tree was copied before testing, with its
+existing changes. The test copy excluded local environment files and business data.
+
+Regression: npm test (Node v24.21.0), with EASYGAS_ENABLE_LOCAL_PG_TESTS=yes
+and EASYGAS_TEST_POSTGRES_URL set to a disposable localhost PostgreSQL 17
+cluster. DATABASE_URL was unset.
+Web and mobile: npm run typecheck in the respective workspaces. Web build used
+Next.js webpack and a separate preview output directory. Expo exported both
+platforms against the isolated QA origin.
+
+Browser: local Chrome via Playwright against Next.js webpack dev on localhost.
+The isolated demo fixture enabled COD and delivery and seeded a synthetic gas
+quantity policy, stock and area coverage. No order or payment was submitted.
+The final browser run compared the rendered quote with the server response.
+
+Native: Expo Go loaded the current source through local Metro. iOS reached
+onboarding. Android rejected the project version. The screenshots record
+those outcomes. Native quote review and signed physical-device acceptance
+remain open.

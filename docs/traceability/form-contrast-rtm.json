@@ -1,0 +1,114 @@
+{
+  "phase": "Form contrast audit",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "FC-01",
+      "requirement": "Pair native form values and placeholders with the same appearance surface",
+      "scope": "Native shared forms",
+      "priority": "P1",
+      "uiReference": "Account & privacy Full name screenshot",
+      "route": "Account & privacy, support, sign-in, and shared forms",
+      "dataSource": "Native theme palette and existing field values",
+      "securityControl": "The shared wrapper preserves field values, editable state and secure entry",
+      "implementationFiles": [
+        "apps/mobile/typography.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/EasyRewards.tsx"
+      ],
+      "testFiles": [
+        "tests/form-contrast.test.ts"
+      ],
+      "testIds": [
+        "FC-01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/form-contrast/evidence/regression.txt",
+        "docs/form-contrast/evidence/native.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "iPhone and Android emulator accepted edits and displayed profile and search fields in both themes.",
+      "testResult": "PASS · iPhone and Android emulator accepted edits and displayed profile and search fields in both themes.",
+      "outstandingWork": "Other data-dependent native forms were audited through their shared input implementation.",
+      "acceptanceGate": "FC-G01"
+    },
+    {
+      "id": "FC-02",
+      "requirement": "Use the shared input for remaining native screens",
+      "scope": "Native approvals and sales lookup",
+      "priority": "P1",
+      "uiReference": "Account & privacy Full name screenshot",
+      "route": "Owner Approvals and Sales Customer Lookup",
+      "dataSource": "Existing approval and customer lookup fields",
+      "securityControl": "Existing access and submission logic with secure password entry",
+      "implementationFiles": [
+        "apps/mobile/OwnerApprovals.tsx",
+        "apps/mobile/SalesCustomerLookup.tsx",
+        "apps/mobile/typography.tsx"
+      ],
+      "testFiles": [
+        "tests/form-contrast.test.ts"
+      ],
+      "testIds": [
+        "FC-02"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/form-contrast/evidence/regression.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "No native screen bypasses the shared input. Password visibility regression checks passed.",
+      "testResult": "PASS · No native screen bypasses the shared input. Password visibility regression checks passed.",
+      "outstandingWork": "Owner approval and Sales lookup workflows were not replayed on devices.",
+      "acceptanceGate": "FC-G02"
+    },
+    {
+      "id": "FC-03",
+      "requirement": "Use readable placeholder colours on web forms",
+      "scope": "Public, customer and administration web",
+      "priority": "P1",
+      "uiReference": "Account & privacy Full name screenshot",
+      "route": "75 audited routes",
+      "dataSource": "Computed CSS theme, form values and placeholders",
+      "securityControl": "Autofill uses the same theme colours. Authentication and forms retain existing permissions.",
+      "implementationFiles": [
+        "apps/web/app/theme.css"
+      ],
+      "testFiles": [
+        "tests/form-contrast.test.ts"
+      ],
+      "testIds": [
+        "FC-03"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/form-contrast/evidence/regression.txt",
+        "docs/form-contrast/evidence/browser.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Both modes passed at 4.5:1 for all controls visible in the Chromium sweep.",
+      "testResult": "PASS · Both modes passed at 4.5:1 for all controls visible in the Chromium sweep.",
+      "outstandingWork": "Record-dependent or unexercised form states were not individually measured.",
+      "acceptanceGate": "FC-G03"
+    }
+  ],
+  "gates": [
+    {
+      "id": "FC-G01",
+      "requirement": "Pair native form values and placeholders with the same appearance surface",
+      "status": "PASS"
+    },
+    {
+      "id": "FC-G02",
+      "requirement": "Use the shared input for remaining native screens",
+      "status": "PASS"
+    },
+    {
+      "id": "FC-G03",
+      "requirement": "Use readable placeholder colours on web forms",
+      "status": "PASS"
+    }
+  ]
+}

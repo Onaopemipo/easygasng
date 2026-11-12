@@ -1,0 +1,514 @@
+{
+  "phase": "Public Website 1440px Frontend Only",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "coverage": {
+    "implemented": "8/8 public destinations",
+    "verified": "5/8 complete requirement rows with 3 partial",
+    "routes": "8/8 layout-verified",
+    "criticalGates": "2/2 phase isolation and frontend-only gates, with bounded browser evidence for isolation",
+    "gates": "16/20 passed, 4/20 partial"
+  },
+  "changeLog": [
+    "Established exact public route scoping. Added a narrow-screen eyebrow fit and restored cross-route Home anchor scrolling observed during browser checks. Retained all original requirements and gates."
+  ],
+  "requirements": [
+    {
+      "id": "PUB-01",
+      "requirement": "Home shares the public 1440px width while preserving existing functionality.",
+      "priority": "P1",
+      "scope": "Exact public destination; signed-in workspace excluded",
+      "uiReference": "Public Website 1440px Frontend Only brief",
+      "route": "/",
+      "dataSource": "Initial homepage catalogue, product and service catalogue and public testimonial records",
+      "securityControl": "Exact path and existing public/customer frame guard; original backend checks and contracts retained.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Hero, benefit strip, promotions, carousel, testimonials, coverage, header and footer aligned. Existing order and tracking links verified.",
+      "testResult": "PASS bounded Chrome layout and interaction checks",
+      "outstandingWork": "None for scoped layout.",
+      "acceptanceGate": "A06",
+      "acceptanceGates": [
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A11",
+        "A13",
+        "A15",
+        "A16",
+        "A18"
+      ],
+      "implementationFiles": [
+        "apps/web/app/public-width.css",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts",
+        "tests/compact-gas-quantity.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "evidence": [
+        "docs/public-width-1440/evidence/final-browser.txt",
+        "docs/public-width-1440/evidence/interactions.txt",
+        "docs/public-width-1440/evidence/final-tests.txt"
+      ],
+      "testIds": [
+        "PW-HOME"
+      ],
+      "negativeTests": []
+    },
+    {
+      "id": "PUB-02",
+      "requirement": "Order Gas shares the public 1440px width while preserving existing functionality.",
+      "priority": "P1",
+      "scope": "Exact public destination; signed-in workspace excluded",
+      "uiReference": "Public Website 1440px Frontend Only brief",
+      "route": "/gas-order",
+      "dataSource": "Active gas pricing, delivery policy and gas quantity configuration via catalogue API",
+      "securityControl": "Exact path and existing public/customer frame guard; original backend checks and contracts retained.",
+      "status": "PARTIAL",
+      "reason": "Layout and API-driven price display passed. Browser fixture enforced unavailable gas quantity policy and sign-in.",
+      "testResult": "PASS bounded Chrome layout and interaction checks",
+      "outstandingWork": "Replay positive quote/checkout with configured test stock, coverage and payment.",
+      "acceptanceGate": "A07",
+      "acceptanceGates": [
+        "A03",
+        "A04",
+        "A05",
+        "A07",
+        "A11",
+        "A13",
+        "A15",
+        "A16",
+        "A18"
+      ],
+      "implementationFiles": [
+        "apps/web/app/public-width.css",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts",
+        "tests/compact-gas-quantity.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "evidence": [
+        "docs/public-width-1440/evidence/final-browser.txt",
+        "docs/public-width-1440/evidence/interactions.txt",
+        "docs/public-width-1440/evidence/final-tests.txt"
+      ],
+      "testIds": [
+        "PW-GAS"
+      ],
+      "negativeTests": []
+    },
+    {
+      "id": "PUB-03",
+      "requirement": "Products shares the public 1440px width while preserving existing functionality.",
+      "priority": "P1",
+      "scope": "Exact public destination; signed-in workspace excluded",
+      "uiReference": "Public Website 1440px Frontend Only brief",
+      "route": "/products",
+      "dataSource": "Existing catalogue and availability records",
+      "securityControl": "Exact path and existing public/customer frame guard; original backend checks and contracts retained.",
+      "status": "PARTIAL",
+      "reason": "Layout, search, category filters and unavailable cart state passed.",
+      "testResult": "PASS bounded Chrome layout and interaction checks",
+      "outstandingWork": "Replay positive add-to-cart with saleable test stock.",
+      "acceptanceGate": "A08",
+      "acceptanceGates": [
+        "A03",
+        "A04",
+        "A05",
+        "A08",
+        "A11",
+        "A13",
+        "A15",
+        "A16",
+        "A18"
+      ],
+      "implementationFiles": [
+        "apps/web/app/public-width.css",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts",
+        "tests/compact-gas-quantity.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "evidence": [
+        "docs/public-width-1440/evidence/final-browser.txt",
+        "docs/public-width-1440/evidence/interactions.txt",
+        "docs/public-width-1440/evidence/final-tests.txt"
+      ],
+      "testIds": [
+        "PW-PRODUCTS"
+      ],
+      "negativeTests": []
+    },
+    {
+      "id": "PUB-04",
+      "requirement": "Book a Service shares the public 1440px width while preserving existing functionality.",
+      "priority": "P1",
+      "scope": "Exact public destination; signed-in workspace excluded",
+      "uiReference": "Public Website 1440px Frontend Only brief",
+      "route": "/services",
+      "dataSource": "Existing professional services catalogue and booking eligibility",
+      "securityControl": "Exact path and existing public/customer frame guard; original backend checks and contracts retained.",
+      "status": "PARTIAL",
+      "reason": "Public layout and empty state passed. Existing integration tests cover booking and eligibility.",
+      "testResult": "PASS bounded Chrome layout and interaction checks",
+      "outstandingWork": "Replay a bookable fixture in-browser.",
+      "acceptanceGate": "A09",
+      "acceptanceGates": [
+        "A03",
+        "A04",
+        "A05",
+        "A09",
+        "A11",
+        "A13",
+        "A15",
+        "A16",
+        "A18"
+      ],
+      "implementationFiles": [
+        "apps/web/app/public-width.css",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts",
+        "tests/compact-gas-quantity.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "evidence": [
+        "docs/public-width-1440/evidence/final-browser.txt",
+        "docs/public-width-1440/evidence/interactions.txt",
+        "docs/public-width-1440/evidence/final-tests.txt"
+      ],
+      "testIds": [
+        "PW-SERVICES"
+      ],
+      "negativeTests": []
+    },
+    {
+      "id": "PUB-05",
+      "requirement": "How It Works shares the public 1440px width while preserving existing functionality.",
+      "priority": "P1",
+      "scope": "Exact public destination; signed-in workspace excluded",
+      "uiReference": "Public Website 1440px Frontend Only brief",
+      "route": "/#how-it-works",
+      "dataSource": "Existing Home HowItWorks component, four steps and section ID",
+      "securityControl": "Exact path and existing public/customer frame guard; original backend checks and contracts retained.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Direct, same-page and cross-page anchor navigation passed.",
+      "testResult": "PASS bounded Chrome layout and interaction checks",
+      "outstandingWork": "None for scoped layout.",
+      "acceptanceGate": "A06",
+      "acceptanceGates": [
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A11",
+        "A13",
+        "A15",
+        "A16",
+        "A18"
+      ],
+      "implementationFiles": [
+        "apps/web/app/public-width.css",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts",
+        "tests/compact-gas-quantity.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "evidence": [
+        "docs/public-width-1440/evidence/final-browser.txt",
+        "docs/public-width-1440/evidence/interactions.txt",
+        "docs/public-width-1440/evidence/final-tests.txt"
+      ],
+      "testIds": [
+        "PW-ANCHOR"
+      ],
+      "negativeTests": []
+    },
+    {
+      "id": "PUB-06",
+      "requirement": "About Us shares the public 1440px width while preserving existing functionality.",
+      "priority": "P1",
+      "scope": "Exact public destination; signed-in workspace excluded",
+      "uiReference": "Public Website 1440px Frontend Only brief",
+      "route": "/about",
+      "dataSource": "Existing ContentPage and public catalogue configuration",
+      "securityControl": "Exact path and existing public/customer frame guard; original backend checks and contracts retained.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Content rendered at all viewport sizes with shared alignment.",
+      "testResult": "PASS bounded Chrome layout and interaction checks",
+      "outstandingWork": "None for scoped layout.",
+      "acceptanceGate": "A10",
+      "acceptanceGates": [
+        "A03",
+        "A04",
+        "A05",
+        "A10",
+        "A11",
+        "A13",
+        "A15",
+        "A16",
+        "A18"
+      ],
+      "implementationFiles": [
+        "apps/web/app/public-width.css",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts",
+        "tests/compact-gas-quantity.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "evidence": [
+        "docs/public-width-1440/evidence/final-browser.txt",
+        "docs/public-width-1440/evidence/interactions.txt",
+        "docs/public-width-1440/evidence/final-tests.txt"
+      ],
+      "testIds": [
+        "PW-CONTENT"
+      ],
+      "negativeTests": []
+    },
+    {
+      "id": "PUB-07",
+      "requirement": "Help shares the public 1440px width while preserving existing functionality.",
+      "priority": "P1",
+      "scope": "Exact public destination; signed-in workspace excluded",
+      "uiReference": "Public Website 1440px Frontend Only brief",
+      "route": "/help",
+      "dataSource": "Existing FAQ content and public catalogue coverage",
+      "securityControl": "Exact path and existing public/customer frame guard; original backend checks and contracts retained.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "FAQ expands and collapses. Signed-in Help dimensions matched baseline.",
+      "testResult": "PASS bounded Chrome layout and interaction checks",
+      "outstandingWork": "None for scoped layout.",
+      "acceptanceGate": "A10",
+      "acceptanceGates": [
+        "A03",
+        "A04",
+        "A05",
+        "A10",
+        "A11",
+        "A13",
+        "A15",
+        "A16",
+        "A18"
+      ],
+      "implementationFiles": [
+        "apps/web/app/public-width.css",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts",
+        "tests/compact-gas-quantity.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "evidence": [
+        "docs/public-width-1440/evidence/final-browser.txt",
+        "docs/public-width-1440/evidence/interactions.txt",
+        "docs/public-width-1440/evidence/final-tests.txt"
+      ],
+      "testIds": [
+        "PW-CONTENT"
+      ],
+      "negativeTests": []
+    },
+    {
+      "id": "PUB-08",
+      "requirement": "Business Supply shares the public 1440px width while preserving existing functionality.",
+      "priority": "P1",
+      "scope": "Exact public destination; signed-in workspace excluded",
+      "uiReference": "Public Website 1440px Frontend Only brief",
+      "route": "/business",
+      "dataSource": "Existing business content and contact route",
+      "securityControl": "Exact path and existing public/customer frame guard; original backend checks and contracts retained.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing enquiry link reached the contact route.",
+      "testResult": "PASS bounded Chrome layout and interaction checks",
+      "outstandingWork": "Live enquiry submission is outside the frontend width phase.",
+      "acceptanceGate": "A10",
+      "acceptanceGates": [
+        "A03",
+        "A04",
+        "A05",
+        "A10",
+        "A11",
+        "A13",
+        "A15",
+        "A16",
+        "A18"
+      ],
+      "implementationFiles": [
+        "apps/web/app/public-width.css",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/homepage.css"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts",
+        "tests/compact-gas-quantity.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/professional-services.test.ts"
+      ],
+      "evidence": [
+        "docs/public-width-1440/evidence/final-browser.txt",
+        "docs/public-width-1440/evidence/interactions.txt",
+        "docs/public-width-1440/evidence/final-tests.txt"
+      ],
+      "testIds": [
+        "PW-CONTENT"
+      ],
+      "negativeTests": []
+    }
+  ],
+  "gates": [
+    {
+      "id": "A01",
+      "acceptance": "Map eight public destinations",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A02",
+      "acceptance": "Audit width rules and shared consumers",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A03",
+      "acceptance": "Maximum outer width is 1440px including padding",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A04",
+      "acceptance": "Centre containers and use responsive gutters",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A05",
+      "acceptance": "Retain full-bleed bands",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A06",
+      "acceptance": "Keep Home and How It Works intact and reachable",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A07",
+      "acceptance": "Gas order layout, prices and complete interaction",
+      "status": "PARTIAL",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A08",
+      "acceptance": "Catalogue layout and complete cart interaction",
+      "status": "PARTIAL",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A09",
+      "acceptance": "Service catalogue and complete booking interaction",
+      "status": "PARTIAL",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A10",
+      "acceptance": "About, Help and Business Supply flows",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A11",
+      "acceptance": "Public header, footer and navigation alignment",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A12",
+      "acceptance": "Light, dark and system appearance",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A13",
+      "acceptance": "No narrow viewport overflow, usable tablet layout",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A14",
+      "acceptance": "Accessibility, keyboard and focus",
+      "status": "PARTIAL",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A15",
+      "acceptance": "Scope isolation for customer, staff and native",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A16",
+      "acceptance": "Frontend-only safety diff",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A17",
+      "acceptance": "Run frontend typecheck, tests and build",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A18",
+      "acceptance": "Before and after browser screenshots",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A19",
+      "acceptance": "Source-only rollback",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A20",
+      "acceptance": "Changes, results and release decision reported",
+      "status": "PASS",
+      "evidence": "docs/public-width-1440/02-qa-results.md"
+    }
+  ]
+}

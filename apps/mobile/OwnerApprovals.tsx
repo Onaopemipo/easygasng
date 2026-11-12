@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { TextInput, View } from "react-native";
+import { View } from "react-native";
+import { TextInput } from "./typography";
 import { Pressable } from "./surfaces";
 import { Button, Card, Copy, Title } from "./CustomerUI";
 import { gasMoney } from "../../packages/business-rules/src/gas-pricing";
-import { useTheme } from "./theme";
 
 type Request = {
   id: string; key: string; value_type: string; label: string; scope: string; status: string; risk: number;
@@ -33,7 +33,6 @@ export function OwnerApprovals({ api, branchId }: {
   branchId: string;
   api: (action: string, data?: unknown) => Promise<any>;
 }) {
-  const { colors } = useTheme();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("pending");
   const [page, setPage] = useState(1);
@@ -93,7 +92,7 @@ export function OwnerApprovals({ api, branchId }: {
   const current = result?.key === key ? result : undefined;
   const queue = current?.queue;
 
-  const inputStyle = { color: colors.text, borderColor: colors.border, borderWidth: 1, borderRadius: 10, padding: 12 };
+  const inputStyle = { borderWidth: 1, borderRadius: 10, padding: 12 };
   const money = selected?.value_type === "money" || Boolean(selected?.key.startsWith("price.")) ||
     ["delivery.fee", "wallet.maximum", "gas.price_per_kg"].includes(selected?.key ?? "");
   if (selected) return <Card>
@@ -113,7 +112,7 @@ export function OwnerApprovals({ api, branchId }: {
     {selected.failure_reason && <Copy>{selected.failure_reason}</Copy>}
     {selected.decisions.map((item, index) => <Copy key={index}>{item.approver} · {item.decision.replaceAll("_", " ")} · {item.reason}</Copy>)}
     {selected.can_approve && <>
-      <TextInput accessibilityLabel="Decision reason" placeholder="Reason for decision" placeholderTextColor={colors.muted} style={inputStyle}
+      <TextInput accessibilityLabel="Decision reason" placeholder="Reason for decision" style={inputStyle}
         value={reason} maxLength={1000} onChangeText={setReason} multiline />
       {!decision ? <>
         <Button label="Approve" onPress={() => setDecision("approve")} />
@@ -121,7 +120,7 @@ export function OwnerApprovals({ api, branchId }: {
         <Button label="Request changes" onPress={() => setDecision("request_changes")} />
       </> : <>
         <Copy>Confirm {decision.replaceAll("_", " ")}. Execution follows the request’s approval rules.</Copy>
-        {verify && <TextInput accessibilityLabel="Verify password" placeholder="Enter your password" placeholderTextColor={colors.muted}
+        {verify && <TextInput accessibilityLabel="Verify password" placeholder="Enter your password"
           secureTextEntry style={inputStyle} value={password} onChangeText={setPassword} />}
         <Button label={busy ? "Saving…" : verify ? "Verify and confirm" : "Confirm decision"} disabled={busy || (verify && !password)} onPress={() => void submit()} />
         <Button label="Cancel decision" disabled={busy} onPress={() => { setDecision(undefined); setVerify(false); setPassword(""); setMessage(""); }} />
@@ -133,7 +132,7 @@ export function OwnerApprovals({ api, branchId }: {
     <Title>Approval Centre</Title>
     {message && <Copy>{message}</Copy>}
     <TextInput accessibilityLabel="Search approval requests" placeholder="Search requests"
-      placeholderTextColor={colors.muted} style={{ color: colors.text, borderColor: colors.border, borderWidth: 1, borderRadius: 10, padding: 12 }}
+      style={{ borderWidth: 1, borderRadius: 10, padding: 12 }}
       value={search} maxLength={100} onChangeText={value => { setSearch(value); setPage(1); }} />
     <View style={{ gap: 8 }}>
       <Button label={filter === "pending" ? "Show all requests" : "Show requests awaiting review"} onPress={() => {

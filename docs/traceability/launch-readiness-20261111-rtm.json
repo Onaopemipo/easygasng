@@ -7,7 +7,14 @@
       "priority": "P1",
       "scope": "Full production readiness scope; no synthetic-demo production substitution",
       "uiReference": "11 November six-area production request",
-      "testIds": [],
+      "testIds": [
+        "COMPOSE-READINESS-01",
+        "PR-01",
+        "PR-02",
+        "PR-03",
+        "PR-04",
+        "PR-08"
+      ],
       "negativeTests": [],
       "id": "LAUNCH-1111-HOST",
       "requirement": "Production hosting and recovery",
@@ -16,9 +23,9 @@
       "dataSource": "Reviewed source, issued migrations and database/worker health",
       "securityControl": "Verified TLS, restricted database role, internal rehearsal network and isolated restore",
       "status": "PARTIAL",
-      "reason": "VPS is not provisioned. Actual domain/TLS, off-host backup restore, load and rollback acceptance remain.",
+      "reason": "Deploy to approved staging. Verify the actual domain and TLS, worker health, expected load, encrypted off-host restore and compatible image rollback.",
       "testResult": "Local container isolation, release preflight and isolated Compose rehearsal passed. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped. Encrypted restore, wrong-key/tamper/overwrite negatives and graceful worker shutdown passed.",
-      "outstandingWork": "VPS is not provisioned. Actual domain/TLS, off-host backup restore, load and rollback acceptance remain.",
+      "outstandingWork": "Deploy to approved staging. Verify the actual domain and TLS, worker health, expected load, encrypted off-host restore and compatible image rollback.",
       "implementationFiles": [
         "apps/web/lib/release-checks.ts",
         "deploy/compose.namecheap.yml",
@@ -33,26 +40,36 @@
         "docs/releases/20261111-readiness/preflight.txt",
         "docs/releases/20261111-readiness/container.txt",
         "docs/releases/20261111-readiness/compose.txt",
-        "docs/releases/20261111-readiness/regression.txt"
+        "docs/releases/20261111-readiness/regression.txt",
+        "outputs/easygas-qa/evidence/compose-current-rerun.txt",
+        "outputs/easygas-qa/evidence/production-focused-regression.txt",
+        "outputs/easygas-qa/evidence/demo-readiness-hosted.txt"
       ],
-      "acceptanceGate": "LAUNCH-1111-G-HOST"
+      "acceptanceGate": "LAUNCH-1111-G-HOST",
+      "ownerInput": "Confirm the Namecheap VPS is provisioned, provide the staging hostname and approved access, and identify the backup destination and recovery targets.",
+      "latestAcceptanceEvidence": "Commit 6a7522c passed isolated Compose with hostname TLS, restricted PostgreSQL role, migrations and a healthy worker. Fresh tests restored encrypted data locally and rejected overwrite, tampering and wrong keys. The hosted demo readiness probe now reports its database and schema status separately from the commercial worker check."
     },
     {
       "priority": "P1",
       "scope": "Full production readiness scope; no synthetic-demo production substitution",
       "uiReference": "11 November six-area production request",
-      "testIds": [],
+      "testIds": [
+        "PAY-PG-CONCURRENCY",
+        "PAY-INVOICE",
+        "PAY-ZERO-EFFECT",
+        "PAY-POLICY"
+      ],
       "negativeTests": [],
       "id": "LAUNCH-1111-PAY",
       "requirement": "Live payment acceptance",
-      "relatedRequirements": "PAY-R01\u201317 / wallet top-up matrix",
+      "relatedRequirements": "PAY-R01–17 / wallet top-up matrix",
       "route": "Paystack checkout, webhook, wallet and reconciliation",
       "dataSource": "Existing sandbox policy, transaction intents and immutable ledger",
       "securityControl": "Live keys and live runtime rejected; test and real money stay separated",
       "status": "PARTIAL",
-      "reason": "Live merchant account is unavailable. Live support, channel/fee approval, webhook/settlement/refund acceptance remain.",
+      "reason": "Implement and qualify live-mode support, then reconcile approved merchant transactions, fees, refunds, chargebacks and settlements against the ledger.",
       "testResult": "Existing sandbox fixture coverage; no live payment or merchant account tested. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped.",
-      "outstandingWork": "Live merchant account is unavailable. Live support, channel/fee approval, webhook/settlement/refund acceptance remain.",
+      "outstandingWork": "Implement and qualify live-mode support, then reconcile approved merchant transactions, fees, refunds, chargebacks and settlements against the ledger.",
       "implementationFiles": [
         "apps/web/lib/payments/runtime.ts",
         "apps/web/lib/payments/policy.ts",
@@ -64,26 +81,34 @@
       ],
       "evidence": [
         "docs/releases/20261111-readiness/launch-gates.md",
-        "docs/releases/20261111-readiness/regression.txt"
+        "docs/releases/20261111-readiness/regression.txt",
+        "outputs/easygas-qa/evidence/production-focused-regression.txt"
       ],
-      "acceptanceGate": "LAUNCH-1111-G-PAY"
+      "acceptanceGate": "LAUNCH-1111-G-PAY",
+      "ownerInput": "Confirm the live merchant account and authorised test budget, channels and fee policy. Provide access through the approved secret store.",
+      "latestAcceptanceEvidence": "Fresh Paystack fixture tests passed checkout and webhook safeguards, duplicate posting, rollback and invoice allocation. The live-mode rejection guard still passes."
     },
     {
       "priority": "P1",
       "scope": "Full production readiness scope; no synthetic-demo production substitution",
       "uiReference": "11 November six-area production request",
-      "testIds": [],
+      "testIds": [
+        "DR-INTEGRATION-01",
+        "GPS-OFF02",
+        "OPS-PG01",
+        "OPS-T02"
+      ],
       "negativeTests": [],
       "id": "LAUNCH-1111-OPS",
       "requirement": "Operational acceptance",
-      "relatedRequirements": "E2E-01\u201304 / E2E-06",
+      "relatedRequirements": "E2E-01–04 / E2E-06",
       "route": "Orders, dispatch, bookings and finance workspaces",
       "dataSource": "Existing orders, bookings, custody and ledger records",
       "securityControl": "Assignment, qualification, branch and finance approval controls preserved",
       "status": "PARTIAL",
-      "reason": "Complete role-based browser and physical handover/cylinder/safety/finance sign-off.",
+      "reason": "Complete role-based staging journeys and supervised physical handover, equipment and cylinder checks, exception returns and finance reconciliation.",
       "testResult": "Synthetic operational fixture coverage; demo settings browser smoke only. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped.",
-      "outstandingWork": "Complete role-based browser and physical handover/cylinder/safety/finance sign-off.",
+      "outstandingWork": "Complete role-based staging journeys and supervised physical handover, equipment and cylinder checks, exception returns and finance reconciliation.",
       "implementationFiles": [
         "apps/web/lib/service.ts",
         "apps/web/lib/professional-services.ts"
@@ -94,15 +119,26 @@
       ],
       "evidence": [
         "docs/releases/20261111-readiness/demo-browser.txt",
-        "docs/releases/20261111-readiness/regression.txt"
+        "docs/releases/20261111-readiness/regression.txt",
+        "outputs/easygas-qa/evidence/production-focused-regression.txt",
+        "outputs/easygas-qa/evidence/native-quote-api.jsonl"
       ],
-      "acceptanceGate": "LAUNCH-1111-G-OPS"
+      "acceptanceGate": "LAUNCH-1111-G-OPS",
+      "ownerInput": "Nominate operations, safety and finance signers. Confirm the test branch, staff roles, equipment, cylinders and approved field scenarios.",
+      "latestAcceptanceEvidence": "Fresh isolated tests passed driver assignment and branch restrictions, custody and finance workflows, independent review and offline GPS replay. The native quote reached review on both simulators."
     },
     {
       "priority": "P1",
       "scope": "Full production readiness scope; no synthetic-demo production substitution",
       "uiReference": "11 November six-area production request",
-      "testIds": [],
+      "testIds": [
+        "AUD-01",
+        "AUD-02",
+        "AUD-03",
+        "AUD-04",
+        "ROUTE-02",
+        "ROUTE-PG01"
+      ],
       "negativeTests": [],
       "id": "LAUNCH-1111-CHANNEL",
       "requirement": "Messaging and routing acceptance",
@@ -111,9 +147,9 @@
       "dataSource": "Existing outbox, providers and route evidence",
       "securityControl": "Provider switches, sender verification, retry and consent controls remain",
       "status": "PARTIAL",
-      "reason": "No SMTP, SMS/WhatsApp or road routing accounts available. Real acceptance and outbound activation remain.",
+      "reason": "Verify recovery delivery and receipt handling through real test providers. Exercise approved SMS and WhatsApp templates and known road routes, including provider outage.",
       "testResult": "Local worker heartbeat verified; no external delivery or route provider call. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped.",
-      "outstandingWork": "No SMTP, SMS/WhatsApp or road routing accounts available. Real acceptance and outbound activation remain.",
+      "outstandingWork": "Verify recovery delivery and receipt handling through real test providers. Exercise approved SMS and WhatsApp templates and known road routes, including provider outage.",
       "implementationFiles": [
         "scripts/worker.ts",
         "apps/web/lib/channel-messaging.ts",
@@ -125,15 +161,22 @@
       ],
       "evidence": [
         "docs/releases/20261111-readiness/compose.txt",
-        "docs/releases/20261111-readiness/regression.txt"
+        "docs/releases/20261111-readiness/regression.txt",
+        "outputs/easygas-qa/evidence/provider-safety-regression.txt",
+        "outputs/easygas-qa/evidence/production-focused-regression.txt"
       ],
-      "acceptanceGate": "LAUNCH-1111-G-CHANNEL"
+      "acceptanceGate": "LAUNCH-1111-G-CHANNEL",
+      "ownerInput": "Choose approved SMTP, SMS/WhatsApp and routing accounts. Confirm sender identity, allowed test recipients, templates and reference routes. Provide access through the approved secret store.",
+      "latestAcceptanceEvidence": "Four provider safety tests passed, covering SMTP duplicate-send fencing, interrupted-send reconciliation and TLS verification. Local routing contract and PostgreSQL destination revision tests passed."
     },
     {
       "priority": "P1",
       "scope": "Full production readiness scope; no synthetic-demo production substitution",
       "uiReference": "11 November six-area production request",
-      "testIds": [],
+      "testIds": [
+        "XLS-PREVIEW-01",
+        "XLS-PREVIEW-02"
+      ],
       "negativeTests": [],
       "id": "LAUNCH-1111-DATA",
       "requirement": "Reconcile and approve historical import",
@@ -142,9 +185,9 @@
       "dataSource": "Approved workbook, matched customer IDs, reconciled ledger/stock/fees",
       "securityControl": "Import hold and retain-all decision preserved",
       "status": "BLOCKED",
-      "reason": "Latest authorised reconciled workbook and customer approval not supplied; no records imported.",
+      "reason": "Reconcile source exceptions, preview the owner-approved revision against an authorised target snapshot, then rehearse repeatable import and recovery in isolation.",
       "testResult": "Existing synthetic preview tests only; no production workbook acceptance. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped.",
-      "outstandingWork": "Latest authorised reconciled workbook and customer approval not supplied; no records imported.",
+      "outstandingWork": "Reconcile source exceptions, preview the owner-approved revision against an authorised target snapshot, then rehearse repeatable import and recovery in isolation.",
       "implementationFiles": [
         "scripts/easygas_excel_preview.py",
         "scripts/excel_independent_check.py",
@@ -155,15 +198,24 @@
       ],
       "evidence": [
         "docs/releases/20261111-readiness/launch-gates.md",
-        "docs/releases/20261111-readiness/regression.txt"
+        "docs/releases/20261111-readiness/regression.txt",
+        "outputs/easygas-qa/evidence/production-data-preview.json",
+        "outputs/easygas-qa/evidence/production-focused-regression.txt"
       ],
-      "acceptanceGate": "LAUNCH-1111-G-DATA"
+      "acceptanceGate": "LAUNCH-1111-G-DATA",
+      "ownerInput": "Confirm whether the audited workbook is the intended import revision. Approve receipt allocations, stock and cutoff, historical delivery fees and row-level customer matches before exact import approval.",
+      "latestAcceptanceEvidence": "The local source matched the previously audited hash. Replayed the same 5 Nov cutoff and target snapshot. Results matched exactly: 282 rows, 1,456 exceptions, 361 proposals on hold and zero business writes."
     },
     {
       "priority": "P1",
       "scope": "Full production readiness scope; no synthetic-demo production substitution",
       "uiReference": "11 November six-area production request",
-      "testIds": [],
+      "testIds": [
+        "PR-07",
+        "GPS-OFF01",
+        "GPS-OFF02",
+        "GPS-OFF03"
+      ],
       "negativeTests": [],
       "id": "LAUNCH-1111-RELEASE",
       "requirement": "Mobile and final release qualification",
@@ -172,9 +224,9 @@
       "dataSource": "Reviewed Git commit, CI evidence, demo UI and signed-device acceptance",
       "securityControl": "CI threshold maintained; no native distribution or production cutover",
       "status": "PARTIAL",
-      "reason": "Hosted CI rerun, remaining role/browser journeys, signing/device acceptance and independent approval remain.",
+      "reason": "Qualify the final reviewed commit, complete staging browser roles and signed physical-device offline, background, restart, GPS and reconnect checks, verify the staging worker heartbeat and record independent sign-off.",
       "testResult": "Local repaired PostgreSQL booking case, clean mobile audit and typecheck, hosted settings UI desktop/390px passed. Full isolated PostgreSQL-enabled regression: 662 passed, 0 failed, 0 skipped. Hosted native passed; hosted web still running on run 42929663881.",
-      "outstandingWork": "Hosted CI rerun, remaining role/browser journeys, signing/device acceptance and independent approval remain.",
+      "outstandingWork": "Qualify the final reviewed commit, complete staging browser roles and signed physical-device offline, background, restart, GPS and reconnect checks, verify the staging worker heartbeat and record independent sign-off.",
       "implementationFiles": [
         ".github/workflows/release-validation.yml",
         "apps/mobile/package-lock.json",
@@ -187,9 +239,18 @@
       ],
       "evidence": [
         "docs/releases/20261111-readiness/demo-browser.txt",
-        "docs/releases/20261111-readiness/regression.txt"
+        "docs/releases/20261111-readiness/regression.txt",
+        "outputs/easygas-qa/evidence/production-hosted-ci-run.json",
+        "outputs/easygas-qa/evidence/production-hosted-ci-jobs.json",
+        "outputs/easygas-qa/evidence/production-demo-public-smoke.txt",
+        "outputs/easygas-qa/evidence/native-quote-api.jsonl",
+        "outputs/easygas-qa/evidence/demo-readiness-diagnosis.json",
+        "outputs/easygas-qa/evidence/demo-readiness-tests.txt",
+        "outputs/easygas-qa/evidence/demo-readiness-hosted.txt"
       ],
-      "acceptanceGate": "LAUNCH-1111-G-RELEASE"
+      "acceptanceGate": "LAUNCH-1111-G-RELEASE",
+      "ownerInput": "Confirm the release candidate and provide approved Apple and Android signing access, physical test devices and the independent release reviewer.",
+      "latestAcceptanceEvidence": "Hosted web and native CI passed on 6a7522c. The hosted native export was skipped. Local exports and simulator quotes passed. The demo readiness fix returned 200 with demo scope. Five targeted tests passed."
     }
   ],
   "gates": [
@@ -227,6 +288,8 @@
   "scopeChanges": [
     "Six launch gates mapped to existing requirements without dropping any prior IDs or gates.",
     "User confirmed Namecheap VPS and provider/live merchant accounts are not yet available. No purchase, remote infrastructure write, live payment, provider activation, historical import or mobile distribution.",
-    "The existing synthetic demo was used for interactive Settings verification only; no business setting was submitted."
+    "The existing synthetic demo was used for interactive Settings verification only; no business setting was submitted.",
+    "13 November 2026: refreshed evidence for all six gates. Verified hosted CI on 6a7522c and repeated the audited workbook preview with the original cutoff and snapshot. All six gates remain pending. Production NO-GO and import hold continue.",
+    "13 November 2026: repaired the synthetic demo readiness probe. The demo returns HTTP 200 with demo scope. All six commercial launch gates remain pending."
   ]
 }

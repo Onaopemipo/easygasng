@@ -1,0 +1,89 @@
+{
+  "phase": "Hosted client demo readiness repair",
+  "date": "2026-11-13",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "priority": "P0",
+      "scope": "Hosted synthetic demo readiness and commercial readiness guard",
+      "route": "GET /api/status",
+      "uiReference": "Public readiness endpoint",
+      "implementationFiles": [
+        "apps/web/app/api/status/route.ts",
+        "apps/web/lib/release-checks.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "outstandingWork": "None for this scoped requirement.",
+      "id": "DEMO-STATUS-R01",
+      "requirement": "Report demo database and migration readiness without a worker heartbeat.",
+      "dataSource": "Dedicated demo PostgreSQL schema_migrations accessed over verified TLS.",
+      "securityControl": "Only the canonical Vercel demo with demo flag and jobs disabled uses schema-only readiness. The public response exposes status and demo scope.",
+      "testIds": [
+        "PR-02",
+        "PR-DEMO-STATUS"
+      ],
+      "negativeTests": [
+        "PR-02: readiness rejects missing migrations, absent/stale worker and future heartbeat",
+        "PR-DEMO-STATUS: only the configured hosted client demo can use schema-only readiness"
+      ],
+      "testResult": "PASS — Targeted tests passed. The staged deployment and public alias returned HTTP 200 with status ready and scope demo.",
+      "evidence": [
+        "outputs/easygas-qa/evidence/demo-readiness-diagnosis.json",
+        "outputs/easygas-qa/evidence/demo-readiness-tests.txt",
+        "outputs/easygas-qa/evidence/demo-readiness-hosted.txt"
+      ],
+      "reason": "Hosted response and fail-closed controls verified.",
+      "acceptanceGate": "DEMO-STATUS-G01"
+    },
+    {
+      "priority": "P0",
+      "scope": "Hosted synthetic demo readiness and commercial readiness guard",
+      "route": "GET /api/status",
+      "uiReference": "Public readiness endpoint",
+      "implementationFiles": [
+        "apps/web/app/api/status/route.ts",
+        "apps/web/lib/release-checks.ts"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "outstandingWork": "None for this scoped requirement.",
+      "id": "DEMO-STATUS-R02",
+      "requirement": "Preserve commercial schema and maintenance heartbeat requirements.",
+      "dataSource": "PostgreSQL schema_migrations and latest completed maintenance job.",
+      "securityControl": "Non-demo readiness requires every migration and a completed maintenance heartbeat within the accepted window. Commercial release preflight rejects demo configuration.",
+      "testIds": [
+        "PR-01",
+        "PR-02",
+        "PR-DEMO-STATUS"
+      ],
+      "negativeTests": [
+        "PR-01: release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions",
+        "PR-02: readiness rejects missing migrations, absent/stale worker and future heartbeat"
+      ],
+      "testResult": "PASS — Targeted automated tests passed. The commercial production hosting gate remains pending.",
+      "evidence": [
+        "outputs/easygas-qa/evidence/demo-readiness-tests.txt"
+      ],
+      "reason": "Production readiness guard verified in tests.",
+      "acceptanceGate": "DEMO-STATUS-G02"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DEMO-STATUS-G01",
+      "status": "PASS"
+    },
+    {
+      "id": "DEMO-STATUS-G02",
+      "status": "PASS"
+    }
+  ],
+  "scopeChanges": [
+    "Added two scoped demo repair requirements. The six launch gates and their pending statuses are preserved."
+  ]
+}

@@ -982,11 +982,8 @@ const s = StyleSheet.create({
   label: { fontSize: 15, color: "#24361f", marginTop: 9, marginBottom: 6 },
   input: {
     borderWidth: 1,
-    borderColor: "#e2e8da",
     borderRadius: 10,
     padding: 13,
-    color: "#142c20",
-    backgroundColor: "#fcfdf9",
   },
   button: {
     backgroundColor: "#087a36",

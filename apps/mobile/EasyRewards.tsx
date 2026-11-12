@@ -30,17 +30,13 @@ function Text(props: React.ComponentProps<typeof BaseText>) {
   );
 }
 function TextInput(props: React.ComponentProps<typeof BaseInput>) {
-  const dark = useColorScheme() === "dark";
   return (
     <BaseInput
       {...props}
       style={[
         {
-          color: dark ? "#e9f5ed" : "#102d21",
-          backgroundColor: dark ? "#102f24" : "#fff",
           padding: 12,
           borderWidth: 1,
-          borderColor: "#8eb09b",
           borderRadius: 8,
         },
         props.style,

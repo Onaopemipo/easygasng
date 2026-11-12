@@ -3,8 +3,10 @@ import assert from "node:assert/strict";
 import { readdirSync } from "node:fs";
 import {
   environmentChecks,
+  isHostedClientDemo,
   operationalHealth,
   requiredSchemaVersions,
+  schemaReady,
 } from "../apps/web/lib/release-checks";
 import { fixture } from "./helpers/order-tracking-fixture";
 const good = {
@@ -90,6 +92,7 @@ test("PR-02: readiness rejects missing migrations, absent/stale worker and futur
         version,
       ]);
     const now = Date.now();
+    assert.equal(await schemaReady(f.db), true);
     assert.equal(await operationalHealth(f.db, now), false);
     await f.db.query(
       "INSERT INTO job_runs(id,job,status,finished_at) VALUES('probe-fixture','maintenance','completed',$1)",
@@ -99,10 +102,30 @@ test("PR-02: readiness rejects missing migrations, absent/stale worker and futur
     assert.equal(await operationalHealth(f.db, now + 300001), false);
     assert.equal(await operationalHealth(f.db, now - 60001), false);
     await f.db.query("DELETE FROM schema_migrations WHERE version='075'");
+    assert.equal(await schemaReady(f.db), false);
     assert.equal(await operationalHealth(f.db, now), false);
   } finally {
     await f.db.close?.();
   }
+});
+
+test("PR-DEMO-STATUS: only the configured hosted client demo can use schema-only readiness", () => {
+  const demo = {
+    VERCEL: "1",
+    APP_URL: "https://easygas-client-demo.vercel.app",
+    EASYGAS_CLIENT_DEMO: "true",
+    EASYGAS_BACKGROUND_JOBS: "false",
+  };
+  assert.equal(isHostedClientDemo(demo), true);
+  for (const change of [
+    { VERCEL: undefined },
+    { APP_URL: good.APP_URL },
+    { EASYGAS_CLIENT_DEMO: "false" },
+    { EASYGAS_BACKGROUND_JOBS: undefined },
+  ]) {
+    assert.equal(isHostedClientDemo({ ...demo, ...change }), false);
+  }
+  assert.equal(environmentChecks({ ...good, ...demo }).find((c) => c.id === "preview")?.ok, false);
 });
 
 test("PR-07: signed native configuration refuses local API origins and unconfirmed identifiers", async () => {

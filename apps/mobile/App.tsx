@@ -526,7 +526,6 @@ export default function App() {
         style={s.input}
         value={value}
         onChangeText={set}
-        placeholderTextColor="#939d90"
         {...props}
       />
     </View>
@@ -2044,12 +2043,9 @@ const s = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#e2e8da",
     borderRadius: 10,
     padding: 13,
-    backgroundColor: "#fcfdf9",
     fontSize: 15,
-    color: "#142c20",
   },
   shortcuts: {
     flexDirection: "row",

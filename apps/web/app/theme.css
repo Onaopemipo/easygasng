@@ -10,6 +10,7 @@
   --accent: #edf7e9;
   --border: #dce7df;
   --input: #ffffff;
+  --input-placeholder: #54675e;
   --ring: #087a36;
   --success: #126b38;
   --warning: #875300;
@@ -39,6 +40,7 @@ html[data-theme="dark"] {
   --soft: #10352a;
   --cream: #243b25;
   --input: #112d26;
+  --input-placeholder: #a9beb2;
   --ring: #8bfdab;
   --ink: #f4f8f5;
   --lime: #65ef83;
@@ -134,11 +136,13 @@ html[data-theme="dark"] :is(input, select, textarea) {
   border-color: var(--border);
   color-scheme: dark;
 }
-html[data-theme="dark"] :is(input, textarea)::placeholder {
-  color: #a9beb2;
+:is(input, textarea)::placeholder {
+  color: var(--input-placeholder);
+  opacity: 1;
 }
-html[data-theme="dark"] input:-webkit-autofill {
+:is(input, select, textarea):is(:autofill, :-webkit-autofill) {
   -webkit-text-fill-color: var(--foreground);
+  caret-color: var(--foreground);
   box-shadow: 0 0 0 1000px var(--input) inset;
 }
 html[data-theme="dark"] :is(.button, button.button) {

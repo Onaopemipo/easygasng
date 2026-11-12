@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { TextInput } from "react-native";
 import { Card, Copy, Title } from "./CustomerUI";
 import { Pressable } from "./surfaces";
-import { Text } from "./typography";
-import { useTheme } from "./theme";
+import { Text, TextInput } from "./typography";
 
 type Customer = { id: string; name: string; public_customer_id: string; contact_phone: string | null };
 
 export function SalesCustomerLookup({ api }: {
   api: (action: string, data: { query: string }) => Promise<{ customers: Customer[]; duplicate: boolean }>;
 }) {
-  const { colors } = useTheme();
   const [query, setQuery] = useState("");
   const [result, setResult] = useState<Awaited<ReturnType<typeof api>> | null>(null);
   const [error, setError] = useState("");
@@ -39,7 +36,7 @@ export function SalesCustomerLookup({ api }: {
         onChangeText={value => { setQuery(value); setResult(null); setError(""); }}
         editable={!busy}
         autoCorrect={false}
-        style={{ color: colors.text, borderColor: colors.border, borderWidth: 1, borderRadius: 10, padding: 12, minHeight: 44 }}
+        style={{ borderWidth: 1, borderRadius: 10, padding: 12, minHeight: 44 }}
       />
       {error ? <Text accessibilityRole="alert">{error}</Text> : null}
       <Pressable accessibilityRole="button" disabled={busy || query.trim().length < 5}

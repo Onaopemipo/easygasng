@@ -12,11 +12,16 @@ import {
   type TextProps,
   type TextInputProps,
 } from "react-native";
+
+function fontMetrics(fontSize = 15) {
+  const size = Math.max(15, fontSize);
+  return { fontSize: size, lineHeight: Math.max(24, Math.ceil(size * 1.5)) };
+}
+
 // Explicit defaults cover unstyled labels, notices, controls and navigation.
 // Native accessibility font scaling remains enabled.
 function readable(style: StyleProp<TextStyle>, dark: boolean) {
   const resolved = StyleSheet.flatten(style);
-  const fontSize = Math.max(15, resolved?.fontSize ?? 15);
   const value = resolved?.color;
   const color =
     dark &&
@@ -43,8 +48,7 @@ function readable(style: StyleProp<TextStyle>, dark: boolean) {
       : value;
   return {
     color,
-    fontSize,
-    lineHeight: Math.max(24, Math.ceil(fontSize * 1.5)),
+    ...fontMetrics(resolved?.fontSize),
   };
 }
 export const Text = forwardRef<
@@ -68,18 +72,27 @@ export const TextInput = forwardRef<
   React.ComponentRef<typeof NativeTextInput>,
   TextInputProps
 >(function TextInput({ style, allowFontScaling = true, ...props }, ref) {
-  const { dark } = useTheme();
+  const { dark, colors } = useTheme();
   const [visible, setVisible] = useState(false);
   const input = (
     <NativeTextInput
       ref={ref}
       keyboardAppearance={dark ? "dark" : "light"}
-      placeholderTextColor={dark ? "#bed0c5" : "#54675e"}
-      selectionColor={dark ? "#a7ed67" : "#087a36"}
       {...props}
+      placeholderTextColor={colors.muted}
+      selectionColor={colors.primary}
       secureTextEntry={Boolean(props.secureTextEntry) && !visible}
       allowFontScaling={allowFontScaling}
-      style={[style, readable(style, dark), props.secureTextEntry && { paddingRight: 52 }]}
+      style={[
+        style,
+        {
+          ...fontMetrics(StyleSheet.flatten(style)?.fontSize),
+          backgroundColor: colors.input,
+          color: colors.text,
+          borderColor: colors.border,
+        },
+        props.secureTextEntry && { paddingRight: 52 },
+      ]}
     />
   );
   if (!props.secureTextEntry) return input;
@@ -94,7 +107,7 @@ export const TextInput = forwardRef<
         onPress={() => setVisible((current) => !current)}
         style={{ position: "absolute", right: 4, top: 0, bottom: 0, width: 44, minHeight: 44, alignItems: "center", justifyContent: "center" }}
       >
-        <Ionicons name={visible ? "eye-off-outline" : "eye-outline"} size={22} color={dark ? "#b7efc8" : "#07592e"} />
+        <Ionicons name={visible ? "eye-off-outline" : "eye-outline"} size={22} color={colors.text} />
       </Pressable>
     </View>
   );

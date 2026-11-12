@@ -193,3 +193,9 @@ EasyRewards redesign: [30 requirements, 65 scenarios and 30 gates](easyrewards-r
 Smart Refill redesign ([30 requirements, 70 scenarios and 30 gates](smart-refill-redesign-rtm.md), [verification](../smart-refill-redesign/04-test-results.md), [rollback](../smart-refill-redesign/05-rollback-and-release.md)). Desktop and mobile web, iPhone Simulator and an unminified Pixel 8 build were exercised. The standard Android release remains blocked at launch. Production remains NO-GO.
 
 Driver experience redesign: [matrix](driver-experience-redesign-rtm.md), [machine-readable requirements](driver-experience-redesign-rtm.json) and [release report](../driver-redesign/06-final-report.md). All 80 scenarios and 35 gates are tracked. Production remains NO-GO.
+
+Form contrast audit: [matrix](form-contrast-rtm.md) and [browser and simulator evidence](../form-contrast/README.md). Shared native inputs and web placeholders now use appearance colours.
+
+Public website width (13 November): [matrix](public-width-1440-rtm.md) and [QA](../public-width-1440/02-qa-results.md). All eight public destinations use the scoped 1440px outer width. Local browser checks cover nine viewport widths. Positive cart, checkout and booking browser journeys remain unverified. Production NO-GO remains.
+
+Hosted demo readiness repair: [traceability](demo-readiness-rtm.md). The synthetic demo reports scoped schema readiness. Commercial production readiness still requires a recent maintenance heartbeat.
