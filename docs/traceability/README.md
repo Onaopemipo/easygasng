@@ -205,3 +205,11 @@ Smart Refill demo CI repair: [matrix](smart-refill-ci-repair-rtm.md). Repairs th
 Dashboard receipts contrast: [matrix](dashboard-receipts-contrast-rtm.md). Finance and Business Owner cards passed local browser checks in light and dark at desktop and mobile widths.
 
 Customers row Actions layout: [matrix](customer-actions-menu-rtm.md). Local desktop and mobile browser checks confirm the popover leaves table geometry intact.
+
+Pending server data and About Us hero performance (13 November): [matrix](pending-data-and-about-hero-rtm.md). The About image and representative web loading states passed delayed-response Chrome checks. Native changes passed TypeScript. Full route and installed-app acceptance remain open.
+
+Account invitation and password recovery (13 November): [matrix](account-onboarding-rtm.md). Staff and customer setup, required temporary password replacement, and password recovery passed local API and Chrome checks. Hosted SMTP delivery and installed mobile testing remain open.
+
+Staff role consolidation (13 November). [Requirements matrix](staff-role-consolidation-rtm.md) and [machine-readable mapping](staff-role-consolidation-rtm.json). Five staff roles passed the Vercel demo cutover and installed iOS Simulator and minified Android emulator checks. Production remains NO-GO.
+
+Unified email and phone sign-in (14 November). [Requirements matrix](unified-sign-in-rtm.md) and [executed evidence](unified-sign-in-evidence.txt). Web browser and shared authentication checks passed locally. Installed mobile and hosted acceptance remain open.

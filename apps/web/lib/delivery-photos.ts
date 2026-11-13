@@ -21,7 +21,7 @@ export async function photoOrder(
   } else {
     allow(
       user,
-      write ? ["driver"] : ["owner", "manager", "dispatcher", "driver"],
+      write ? ["driver"] : ["owner", "manager", "driver"],
       o.branch_id,
     );
     if (user.role === "driver" && o.driver_id !== user.id)
@@ -150,12 +150,12 @@ export async function latestDeliveryPhoto(
   if (["customer", "commercial"].includes(user.role)) {
     if (customerId !== user.id) throw new AppError(404, "Customer not found.");
   } else {
-    allow(user, ["owner", "manager", "dispatcher"]);
+    allow(user, ["owner", "manager"]);
     const c = await one(tx, "SELECT branch_id FROM users WHERE id=$1", [
       customerId,
     ]);
     if (!c) throw new AppError(404, "Customer not found.");
-    allow(user, ["owner", "manager", "dispatcher"], c.branch_id);
+    allow(user, ["owner", "manager"], c.branch_id);
   }
   return one(
     tx,

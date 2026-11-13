@@ -104,7 +104,7 @@ export async function invoiceCorrections(
         "owner",
         "finance",
         "manager",
-        ...(d.bookingId ? ["service_manager"] : []),
+        ...(d.bookingId ? ["manager"] : []),
       ],
       o.branch_id,
     );

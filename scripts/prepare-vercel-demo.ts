@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 // Explicit temporary demo provisioning. Only the new dedicated Neon resource is allowed.
 // Secret input/output are files outside the upload, never command arguments or logs.
 import { readFile, writeFile, chmod } from "node:fs/promises";
@@ -61,7 +62,7 @@ try {
           `Demo ${a.role.replaceAll("_", " ")}`,
           a.email,
           hashPassword(a.password),
-          a.role,
+          consolidatedRole(a.role),
         ],
       );
       await tx.query(

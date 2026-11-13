@@ -27,7 +27,7 @@ export default function VehicleManifest({ api }: { api: CustomerAPI }) {
         stock. Cash, stock discrepancies and return approval require independent
         operations review.
       </Copy>
-      {!!error && <Feedback error={error} />}
+      <Feedback loading={!data} error={error} retry={() => setTick(n => n + 1)} />
       {data?.loads
         .filter((l: any) => l.state !== "reconciled")
         .map((l: any) => (

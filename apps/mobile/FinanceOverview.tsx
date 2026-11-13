@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Copy, Title } from "./CustomerUI";
 import { gasMoney } from "../../packages/business-rules/src/gas-pricing";
@@ -35,7 +36,7 @@ export function FinanceOverview({ api }: { api: (action: string) => Promise<Snap
       setRevision(value => value + 1);
     }} />
   </Card>;
-  if (!snapshot) return <Copy>Loading finance records…</Copy>;
+  if (!snapshot) return <EasyGasLoader variant="section" label="Loading finance records" />;
   if (!snapshot.permissions.financeWrite) return <Copy>Finance records are unavailable for this account.</Copy>;
 
   return <Card>

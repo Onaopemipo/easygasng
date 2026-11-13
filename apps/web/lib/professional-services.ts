@@ -23,7 +23,7 @@ import { serviceConfig, checklistConfig } from "./service-schema";
 const uuid = z.string().uuid(),
   reason = z.string().trim().min(5).max(2000),
   scope = z.string().min(1).max(100);
-const managers = ["owner", "service_manager"];
+const managers = ["owner", "manager"];
 const terminal = ["completed", "cancelled", "failed"];
 const money = z.number().int().min(0).max(100000000);
 export const bookingInput = z
@@ -72,8 +72,8 @@ async function eligible(
   );
   const q = await one(
     tx,
-    "SELECT q.id FROM technician_qualifications q JOIN users v ON v.id=q.verified_by WHERE q.user_id=$1 AND q.code=$2 AND q.expires_at>now() AND v.active=true AND v.role IN ('owner','safety_officer') AND (v.role='owner' OR v.branch_id=$3)",
-    [uid, qualification, branch],
+    "SELECT q.id FROM technician_qualifications q JOIN users v ON v.id=q.verified_by WHERE q.user_id=$1 AND q.code=$2 AND q.expires_at>now() AND v.active=true AND v.role='owner' AND v.id<>q.user_id",
+    [uid, qualification],
   );
   if (!u || !q)
     throw new AppError(
@@ -101,7 +101,7 @@ async function booking(tx: SQL, user: Actor, bid: string, write = false) {
   } else
     allow(
       user,
-      [...managers, "finance", "inventory", "safety_officer"],
+      [...managers, "finance", "owner"],
       b.branch_id,
     );
   if (user.role === "technician" && user.technician_service_only)
@@ -499,7 +499,7 @@ export async function professionalServiceAction(
     const qualified = `
       SELECT u.id,q.expires_at FROM users u
       JOIN technician_qualifications q ON q.user_id=u.id AND q.code=$2
-      JOIN users v ON v.id=q.verified_by AND v.id<>u.id AND v.active AND v.role IN ('owner','safety_officer')
+      JOIN users v ON v.id=q.verified_by AND v.id<>u.id AND v.active AND v.role IN ('owner')
         AND (v.role='owner' OR v.branch_id=u.branch_id)
       WHERE u.branch_id=$1 AND u.active AND u.technician_available AND u.role='technician' AND q.expires_at>now()
     `;
@@ -536,13 +536,7 @@ export async function professionalServiceAction(
   }
   if (!user) throw new AppError(401, "Please sign in.");
   if (action === "services.manage") {
-    allow(user, [
-      ...managers,
-      "safety_officer",
-      "technician",
-      "inventory",
-      "finance",
-    ]);
+    allow(user, [...managers, "technician", "finance"]);
     const branch = user.branch_id ?? "lagos";
     return {
       services: (
@@ -553,7 +547,7 @@ export async function professionalServiceAction(
       ).rows,
       staff: (
         await tx.query(
-          "SELECT id,name,role FROM users WHERE active=true AND branch_id=$1 AND role IN ('technician','safety_officer') ORDER BY name",
+          "SELECT id,name,role FROM users WHERE active=true AND branch_id=$1 AND role IN ('technician','owner') ORDER BY name",
           [branch],
         )
       ).rows,
@@ -627,13 +621,7 @@ export async function professionalServiceAction(
     if (
       !target ||
       !(
-        [
-          "technician",
-          "safety_officer",
-          "inventory",
-          "manager",
-          "owner",
-        ].includes(target.role) ||
+        ["technician", "owner", "finance", "manager"].includes(target.role) ||
         (target.role === "driver" && d.code === "bulk_lpg_dispensing")
       )
     )
@@ -641,7 +629,7 @@ export async function professionalServiceAction(
         400,
         "Choose an active inspection employee, or a driver for bulk LPG dispensing verification.",
       );
-    allow(user, ["owner", "safety_officer"], target.branch_id);
+    allow(user, ["owner"], target.branch_id);
     recentVerification(user);
     if (user.id === d.userId)
       throw new AppError(
@@ -774,13 +762,7 @@ export async function professionalServiceAction(
     return { ok: true };
   }
   if (action === "incidents") {
-    allow(user, [
-      "owner",
-      "administrator",
-      "service_manager",
-      "safety_officer",
-      "finance",
-    ]);
+    allow(user, ["owner", "manager", "finance"]);
     return (
       await tx.query(
         `SELECT * FROM operational_incidents WHERE ${user.role === "owner" ? "true" : "branch_id=$1"} ORDER BY created_at DESC LIMIT 100`,
@@ -805,20 +787,20 @@ export async function professionalServiceAction(
     if (!incident) throw new AppError(404, "Incident not found.");
     allow(
       user,
-      ["owner", "safety_officer", "service_manager", "administrator"],
+      ["owner", "manager"],
       incident.branch_id,
     );
     if (
       d.status === "resolved" &&
       incident.category === "service_safety" &&
-      !["owner", "safety_officer"].includes(user.role)
+      !["owner"].includes(user.role)
     )
       throw new AppError(
         403,
         "Safety incidents require authorised safety review.",
       );
     if (incident.category === "service_dispute") {
-      allow(user, ["owner", "service_manager"], incident.branch_id);
+      allow(user, ["owner", "manager"], incident.branch_id);
       recentVerification(user);
       const report = await one(
         tx,
@@ -850,7 +832,7 @@ export async function professionalServiceAction(
       [d.id],
     );
     if (!q) throw new AppError(404, "Qualification not found.");
-    allow(user, ["owner", "safety_officer"], q.branch_id);
+    allow(user, ["owner"], q.branch_id);
     recentVerification(user);
     if (q.user_id === user.id)
       throw new AppError(
@@ -987,13 +969,7 @@ export async function professionalServiceAction(
     const selector = z.object({ id: uuid.optional() }).strict().parse(input);
     const customer = ["customer", "commercial"].includes(user.role);
     if (!customer)
-      allow(user, [
-        ...managers,
-        "technician",
-        "finance",
-        "inventory",
-        "safety_officer",
-      ]);
+      allow(user, [...managers, "technician", "finance", "owner"]);
     const filter = customer
       ? "customer_id=$1"
       : user.role === "owner"
@@ -1174,7 +1150,7 @@ export async function professionalServiceAction(
     if (d.decision === "declined")
       for (const manager of (
         await tx.query(
-          "SELECT id FROM users WHERE active=true AND (role='owner' OR (role='service_manager' AND branch_id=$1))",
+          "SELECT id FROM users WHERE active=true AND (role='owner' OR (role='manager' AND branch_id=$1))",
           [b.branch_id],
         )
       ).rows)
@@ -1281,7 +1257,7 @@ export async function professionalServiceAction(
       );
     const key = "service_quote." + q.id;
     await tx.query(
-      "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,'Professional Services','Independent review of immutable quotation scope and charges.','owner',3,'boolean','[\"technician\"]','[\"owner\"]','[\"owner\",\"service_manager\",\"technician\",\"finance\"]','[]',true) ON CONFLICT(key) DO NOTHING",
+      "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,'Professional Services','Independent review of immutable quotation scope and charges.','owner',3,'boolean','[\"technician\"]','[\"owner\"]','[\"owner\",\"manager\",\"technician\",\"finance\"]','[]',true) ON CONFLICT(key) DO NOTHING",
       [key, b.reference + " quotation " + q.revision],
     );
     await tx.query(
@@ -1435,7 +1411,7 @@ export async function professionalServiceAction(
     const key = "service_cancellation." + b.id + "." + b.version;
     if (action === "booking.cancel.request_review") {
       await tx.query(
-        "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,'Professional Services','One-time pre-work cancellation review bound to the exact booking revision; payments and invoices retained.','owner',3,'boolean','[\"owner\",\"service_manager\"]','[\"owner\",\"finance\"]','[\"owner\",\"service_manager\",\"finance\"]','[\"finance\"]',true) ON CONFLICT(key) DO NOTHING",
+        "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,'Professional Services','One-time pre-work cancellation review bound to the exact booking revision; payments and invoices retained.','owner',3,'boolean','[\"owner\",\"manager\"]','[\"owner\",\"finance\"]','[\"owner\",\"manager\",\"finance\"]','[\"finance\"]',true) ON CONFLICT(key) DO NOTHING",
         [key, b.reference + " cancellation revision " + b.version],
       );
       await tx.query(
@@ -1671,7 +1647,7 @@ export async function professionalServiceAction(
       .object({ bookingId: uuid, materialId: uuid, unitCostKobo: money })
       .strict()
       .parse(input);
-    allow(user, ["owner", "inventory", "service_manager"], b.branch_id);
+    allow(user, ["owner", "finance", "manager"], b.branch_id);
     const m = await one(
       tx,
       "SELECT * FROM service_materials WHERE id=$1 AND booking_id=$2 FOR UPDATE",
@@ -1746,7 +1722,7 @@ export async function professionalServiceAction(
       })
       .strict()
       .parse(input);
-    allow(user, ["owner", "inventory", "service_manager"], b.branch_id);
+    allow(user, ["owner", "finance", "manager"], b.branch_id);
     const m = await one(
       tx,
       "SELECT * FROM service_materials WHERE id=$1 AND booking_id=$2 FOR UPDATE",
@@ -1954,7 +1930,7 @@ export async function professionalServiceAction(
     );
     if (failed)
       await tx.query(
-        "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES ($1,$2,$3,'service_safety',$4,$5,'safety_officer') ON CONFLICT(category,target) DO NOTHING",
+        "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES ($1,$2,$3,'service_safety',$4,$5,'owner') ON CONFLICT(category,target) DO NOTHING",
         [
           id(),
           b.branch_id,
@@ -2336,7 +2312,7 @@ async function openServiceDispute(
     );
   else
     await tx.query(
-      "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES($1,$2,'high','service_dispute',$3,$4,'service_manager')",
+      "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES($1,$2,'high','service_dispute',$3,$4,'manager')",
       [incidentId, b.branch_id, b.id, reason],
     );
   await tx.query(

@@ -20,13 +20,7 @@ import {
 import { EasyGasAlert } from "./AppAlert";
 import { randomUUID } from "expo-crypto";
 type API = (action: string, data?: any) => Promise<any>;
-const roles = [
-  "owner",
-  "service_manager",
-  "safety_officer",
-  "inventory",
-  "finance",
-];
+const roles = ["owner", "manager", "finance"];
 const local = (v: string) =>
   new Date(v).toLocaleString("en-GB", { timeZone: "Africa/Lagos" });
 export default function TechniciansManagement({

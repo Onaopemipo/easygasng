@@ -19,6 +19,9 @@ function key() {
     throw new AppError(503, "Secure messaging storage is not configured.");
   return Buffer.from(s, "hex");
 }
+export function requireMessageEncryption() {
+  key();
+}
 export function sealMessage(body: string) {
   const iv = randomBytes(12),
     cipher = createCipheriv("aes-256-gcm", key(), iv);
@@ -148,7 +151,7 @@ export async function channelAction(
     .parse(input);
   const uid = d.customerId ?? user.id;
   if (uid !== user.id) {
-    allow(user, ["owner", "manager", "sales"]);
+    allow(user, ["owner", "manager"]);
     if (d.purpose === "marketing" || d.purpose === "refill")
       throw new AppError(
         403,
@@ -164,7 +167,7 @@ export async function channelAction(
         403,
         "Assisted consent recording is limited to provisional accounts.",
       );
-    allow(user, ["owner", "manager", "sales"], u.branch_id);
+    allow(user, ["owner", "manager"], u.branch_id);
   }
   await tx.query(
     "INSERT INTO channel_consents(user_id,channel,purpose,enabled,evidence) VALUES($1,$2,$3,$4,$5) ON CONFLICT(user_id,channel,purpose) DO UPDATE SET enabled=excluded.enabled,evidence=excluded.evidence,version=channel_consents.version+1,updated_at=now()",

@@ -13,7 +13,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import Link from "./workspace-link";
-import { SectionLoadingFallback } from "./easygas-loader";
+import { EasyGasLoader } from "./easygas-loader";
 export const money = (kobo: number | string | null) =>
   kobo === null
     ? "Pricing soon"
@@ -125,8 +125,8 @@ export function Empty({
     </div>
   );
 }
-export function Loading({ page = false }: { page?: boolean } = {}) {
-  return <div className={page ? "loading loading--page" : "loading"}><SectionLoadingFallback /></div>;
+export function Loading({ page = false, label = "Loading information" }: { page?: boolean; label?: string } = {}) {
+  return <div className={page ? "loading loading--page" : "loading"}><EasyGasLoader variant="section" label={label} /></div>;
 }
 export function Notice({
   message,

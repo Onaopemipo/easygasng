@@ -24,6 +24,7 @@ import DispatchCentre from "./dispatch-centre";
 import { ThemeToggle } from "./theme-provider";
 import { TestimonialManagement } from "./testimonials";
 
+import { staffRoles } from "../../../packages/business-rules/src/staff-roles";
 import AdminNavigation, { roleLabel } from "./admin-navigation";
 import {
   navigationItems,
@@ -153,12 +154,7 @@ export default function Admin({
         }
         if (
           section === "dashboard" &&
-          [
-            "driver",
-            "technician",
-            "service_manager",
-            "safety_officer",
-          ].includes(d.user.role)
+          ["driver", "technician", "manager", "owner"].includes(d.user.role)
         )
           router.replace(
             d.user.role === "driver" ? "/admin/deliveries" : "/admin/bookings",
@@ -313,7 +309,7 @@ export default function Admin({
             access?.allowed?.includes(section) &&
             !(
               section === "deliveries" &&
-              ["owner", "manager", "dispatcher", "driver"].includes(user.role)
+              ["owner", "manager", "driver"].includes(user.role)
             ) && <OperationsExtensions section={section} user={user} />}
           {error && <Notice type="error" message={error} />}
           <div className="admin-breadcrumb">
@@ -1763,23 +1759,13 @@ function SettingForm({
               value={value.role}
               onChange={(e) => setValue({ ...value, role: e.target.value })}
             >
-              {[
-                "owner",
-                "manager",
-                "sales",
-                "inventory",
-                "dispatcher",
-                "driver",
-                "finance",
-                "customer",
-                "commercial",
-                "administrator",
-                "service_manager",
-                "technician",
-                "safety_officer",
-              ].map((r) => (
-                <option key={r}>{r}</option>
-              ))}
+              <optgroup label="Staff roles">
+                {staffRoles.map((role) => <option value={role} key={role}>{roleLabel(role)}</option>)}
+              </optgroup>
+              <optgroup label="Customer access">
+                <option value="customer">Customer account only</option>
+                <option value="commercial">Commercial customer only</option>
+              </optgroup>
             </select>
           </label>
           <label>
@@ -2620,7 +2606,7 @@ function Inventory({
         title="Keep your stock moving."
         text="Available quantities, reservations and traceable stock receipts."
         action={
-          ["owner", "manager", "inventory"].includes(user.role) && (
+          ["owner", "manager", "finance"].includes(user.role) && (
             <button className="button" onClick={() => setReceive(true)}>
               <Plus size={17} />
               Receive Stock
@@ -2739,7 +2725,7 @@ function Records({
         : section;
   const { data, error } = useData(action, refresh),
     staff = useData(
-      ["owner", "manager", "dispatcher"].includes(user.role) ? "staff" : null,
+      ["owner", "manager"].includes(user.role) ? "staff" : null,
       refresh,
     ),
     [query, setQuery] = useState(""),
@@ -2771,7 +2757,7 @@ function Records({
     };
   }, [section, targetOrder, user.id]);
   if (section === "deliveries")
-    return ["owner", "manager", "dispatcher"].includes(user.role) ? (
+    return ["owner", "manager"].includes(user.role) ? (
       <DispatchCentre user={user} />
     ) : (
       <DispatchTracking user={user} />
@@ -2860,7 +2846,7 @@ function Records({
               Export CSV
             </button>
           ) : section === "cylinders" &&
-            ["owner", "manager", "inventory"].includes(user.role) ? (
+            ["owner", "manager", "finance"].includes(user.role) ? (
             <button
               className="button"
               onClick={() => setSelected({ newCylinder: true })}
@@ -2873,7 +2859,7 @@ function Records({
       />
       {message && <Notice message={message} />}
       {section === "orders" &&
-        ["owner", "manager", "sales"].includes(user.role) && (
+        ["owner", "manager"].includes(user.role) && (
           <div className="orders-assisted-action">
             <AssistedOrder user={user} onCreated={onChange} />
           </div>
@@ -3067,7 +3053,7 @@ function Records({
         )}
       </div>
       {section === "staff" && (
-        <Notice message="Accounts register as customers. Role changes require a protected Staff & Permissions request, two independent approvals, and verification. Technical administrators cannot grant themselves business authority." />
+        <Notice message="Accounts register as customers. Role changes require a protected Staff & Permissions request, two independent approvals, and verification. Staff cannot grant themselves business authority." />
       )}
       {["finance", "reports"].includes(section) && (
         <Notice message="Amounts are based on recorded orders. An unpaid order does not count as verified revenue. Purchase credit and refunds are reviewed under Credits & Refunds; external payment providers remain unconnected. CSV amounts are in kobo." />
@@ -3113,7 +3099,7 @@ function Records({
                     canIssue={["owner", "finance"].includes(user.role)}
                   />
                 )}
-              {section === "orders" && ["owner", "manager", "sales"].includes(user.role) && <details className="order-detail-disclosure">
+              {section === "orders" && ["owner", "manager"].includes(user.role) && <details className="order-detail-disclosure">
                 <summary>Add items to this delivery</summary>
               {section === "orders" && <OrderAdditions
                   order={selected}
@@ -3129,7 +3115,7 @@ function Records({
                 <Notice type="error" message={selected.operational_review} />
               )}
               {(selected.gas_lines ?? []).length > 0 &&
-                ["owner", "manager", "dispatcher"].includes(user.role) && (
+                ["owner", "manager"].includes(user.role) && (
                   <details className="order-detail-disclosure">
                     <summary>Confirm delivery coverage</summary>
                   <ActionForm
@@ -3166,7 +3152,7 @@ function Records({
                     Inspection:{" "}
                     {g.inspected_at ? "Recorded" : "Required before dispatch"}
                   </p>
-                  {["owner", "inventory"].includes(user.role) &&
+                  {["owner", "finance"].includes(user.role) &&
                     ["placed", "confirmed", "preparing"].includes(
                       selected.status,
                     ) && (

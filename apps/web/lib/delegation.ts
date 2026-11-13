@@ -22,7 +22,7 @@ export async function delegatedAuthority(
   if (!eligible(d)) return null;
   const grants = (
     await tx.query(
-      "SELECT a.*,g.active AS grantor_active,g.role AS grantor_role,g.branch_id AS grantor_branch,v.active AS reviewer_active,v.role AS reviewer_role FROM approval_delegations a JOIN users g ON g.id=a.grantor_id JOIN users v ON v.id=a.reviewed_by JOIN users du ON du.id=a.delegate_id WHERE du.active=true AND du.role IN ('manager','sales','inventory','dispatcher') AND du.branch_id=a.scope AND a.delegate_id=$1 AND a.setting_key=$2 AND a.scope=$3 AND a.status='approved' AND a.starts_at<=now() AND a.expires_at>now()",
+      "SELECT a.*,g.active AS grantor_active,g.role AS grantor_role,g.branch_id AS grantor_branch,v.active AS reviewer_active,v.role AS reviewer_role FROM approval_delegations a JOIN users g ON g.id=a.grantor_id JOIN users v ON v.id=a.reviewed_by JOIN users du ON du.id=a.delegate_id WHERE du.active=true AND du.role IN ('manager','finance') AND du.branch_id=a.scope AND a.delegate_id=$1 AND a.setting_key=$2 AND a.scope=$3 AND a.status='approved' AND a.starts_at<=now() AND a.expires_at>now()",
       [uid, d.key, r.scope],
     )
   ).rows;
@@ -51,7 +51,7 @@ export async function delegationAction(
   input: unknown,
 ): Promise<any> {
   if (action === "delegations") {
-    allow(user, ["owner", "manager", "sales", "inventory", "dispatcher"]);
+    allow(user, ["owner", "manager", "finance"]);
     return (
       await tx.query(
         `SELECT a.*,g.name AS grantor,d.name AS delegate,s.label FROM approval_delegations a JOIN users g ON g.id=a.grantor_id JOIN users d ON d.id=a.delegate_id JOIN setting_definitions s ON s.key=a.setting_key WHERE ${user.role === "owner" ? "true" : "a.grantor_id=$1 OR a.delegate_id=$1"} ORDER BY a.created_at DESC LIMIT 100`,
@@ -96,7 +96,7 @@ export async function delegationAction(
     );
     if (
       !delegate?.active ||
-      !["manager", "sales", "inventory", "dispatcher"].includes(
+      !["manager", "finance"].includes(
         delegate.role,
       ) ||
       delegate.branch_id !== d.scope ||
@@ -191,7 +191,7 @@ export async function delegationAction(
       (grantor.role !== "owner" && grantor.branch_id !== a.scope) ||
       !delegate?.active ||
       delegate.branch_id !== a.scope ||
-      !["manager", "sales", "inventory", "dispatcher"].includes(delegate.role)
+      !["manager", "finance"].includes(delegate.role)
     )
       throw new AppError(
         409,

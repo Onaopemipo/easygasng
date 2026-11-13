@@ -1,3 +1,4 @@
+import { consolidatedRole, staffRoles } from "../packages/business-rules/src/staff-roles";
 // Explicit, isolated local fixture; never provisions users in business/hosted data.
 import { randomBytes } from "node:crypto";
 import { mkdir, readFile, writeFile, chmod, access } from "node:fs/promises";
@@ -10,17 +11,7 @@ if (process.env.NODE_ENV === "production" || process.env.DATABASE_URL)
   );
 const directory = path.join(root, ".data/mobile-demo-accounts");
 const credentialsPath = path.join(root, ".data/mobile-demo-credentials.json");
-const roles = [
-  "owner",
-  "manager",
-  "finance",
-  "sales",
-  "inventory",
-  "dispatcher",
-  "driver",
-  "technician",
-  "customer",
-];
+const roles = [...staffRoles, "customer"];
 let credentials: any;
 try {
   credentials = JSON.parse(await readFile(credentialsPath, "utf8"));
@@ -47,7 +38,7 @@ try {
       );
       if (
         !u ||
-        u.role !== a.role ||
+        u.role !== consolidatedRole(a.role) ||
         !passwordMatches(a.password, u.password_hash)
       )
         throw new Error(

@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { NativeRewardSelector } from "./EasyRewards";
 import React, { useEffect, useState } from "react";
@@ -37,7 +38,7 @@ export default function CombinedCheckout({
   }, [storage]);
   if (!user) return <Text>Sign in to confirm a linked request.</Text>;
   if (error) return <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>;
-  if (!appointments) return <Text>Loading appointment drafts…</Text>;
+  if (!appointments) return <EasyGasLoader variant="section" label="Loading appointment drafts" />;
   return (
     <View>
       <Text style={{ fontSize: 28, fontWeight: "800", color: "#073b27" }}>

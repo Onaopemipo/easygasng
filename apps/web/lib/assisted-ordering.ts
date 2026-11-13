@@ -9,7 +9,7 @@ import { allow, AppError, hashPassword, id, type Actor } from "./auth";
 import { one, type SQL } from "./db";
 import { audit } from "./governance";
 import { checkout, checkoutSchema } from "./operations";
-const operators = ["owner", "manager", "sales"];
+const operators = ["owner", "manager"];
 export async function assistedOrdering(
   tx: SQL,
   user: Actor,

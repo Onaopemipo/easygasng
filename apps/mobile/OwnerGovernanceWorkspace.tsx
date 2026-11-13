@@ -1,3 +1,4 @@
+import { staffRoleLabel } from "../../packages/business-rules/src/staff-roles";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AppState, StyleSheet } from "react-native";
 import { View, Pressable } from "./surfaces";
@@ -57,7 +58,7 @@ export default function OwnerGovernanceWorkspace({ user, screen, api, navigate }
   const [report, setReport] = useState<typeof reportKinds[number]>("branches");
   const [message, setMessage] = useState("");
   const { from, to } = useMemo(lagosPeriod, []);
-  const isOwner = user.role === "owner";
+  const authorised = user.role === "owner" || (user.role === "finance" && screen === "owner-audit");
   const relevant = sections.find((x) => x.key === screen);
   const required = relevant?.access ?? "dashboard";
   const can = (section: string) => allowed?.includes(section) ?? false;
@@ -95,14 +96,14 @@ export default function OwnerGovernanceWorkspace({ user, screen, api, navigate }
     let active = true;
     privilegeRequest.current++;
     setData(null); setPrivileges(null); setStaff(null); setError(""); setMessage("");
-    if (!isOwner) return;
+    if (!authorised) return;
     (async () => {
       try {
         const nav = await apiRef.current("navigation.access");
         if (!active) return;
-        if (nav.user?.id !== user.id || nav.user?.role !== "owner") {
+        if (nav.user?.id !== user.id || nav.user?.role !== user.role) {
           setAllowed([]);
-          setError("Business Owner access has changed. Sign in again to refresh your workspace.");
+          setError("Your staff access has changed. Sign in again to refresh your workspace.");
           return;
         }
         const permissions: string[] = Array.isArray(nav.allowed) ? nav.allowed : [];
@@ -127,7 +128,7 @@ export default function OwnerGovernanceWorkspace({ user, screen, api, navigate }
       } catch (e: any) { if (active) { setAllowed(null); setError(readableError(e)); } }
     })();
     return () => { active = false; };
-  }, [user.id, user.role, user.branchId, user.branch_id, screen, reload, page, report, auditQuery, required, from, to, isOwner]);
+  }, [user.id, user.role, user.branchId, user.branch_id, screen, reload, page, report, auditQuery, required, from, to, authorised]);
 
   async function readPrivileges(person: any) {
     const request = ++privilegeRequest.current;
@@ -136,7 +137,7 @@ export default function OwnerGovernanceWorkspace({ user, screen, api, navigate }
     catch (e: any) { if (request === privilegeRequest.current) { setPrivileges(false); setMessage(readableError(e)); } }
   }
 
-  if (!isOwner) return <Text accessibilityRole="alert">Business Owner access is required.</Text>;
+  if (!authorised) return <Text accessibilityRole="alert">Your staff role does not have access to this workspace.</Text>;
   return (
     <View style={styles.wrap}>
       <Text style={[styles.eyebrow, { color: colors.primary }]}>EASYGAS · BUSINESS OWNER</Text>
@@ -167,12 +168,12 @@ export default function OwnerGovernanceWorkspace({ user, screen, api, navigate }
       {data && can(required) && screen === "owner-staff" ? <>
         {staff ? panel(<>
           <Pressable onPress={()=>{privilegeRequest.current++;setStaff(null);setPrivileges(null);}}><Text style={{color:colors.primary}}>‹ Staff directory</Text></Pressable>
-          {show("Staff member",staff.name)}{show("Role",staff.role)}{show("Branch",staff.branch_id)}{show("Status",staff.active?"Active":"Suspended")}
+          {show("Staff member",staff.name)}{show("Role",staffRoleLabel(staff.role))}{show("Branch",staff.branch_id)}{show("Status",staff.active?"Active":"Suspended")}
           {privileges ? (privileges.privileges??[]).map((p:any)=>show(p.label, p.effective ? "Allowed" : "Denied")) : <Text style={{color:secondary}}>{privileges === false ? "Privileges unavailable." : "Loading effective privileges…"}</Text>}
           <Text style={{color:secondary}}>Permission changes require existing protected approval workflows. This mobile view cannot grant privileges directly.</Text>
         </>,"Role & privileges") : <>
           {show("Staff accounts",data.people?.length)}
-          {(data.people??[]).slice(0,100).map((p:any) => <Pressable key={p.id} style={[styles.card,{backgroundColor:surface,borderColor:border}]} onPress={()=>readPrivileges(p)} accessibilityRole="button"><Text style={{color:foreground,fontWeight:"700"}}>{safeString(p.name)}</Text><Text style={{color:secondary}}>{safeString(p.role)} · {safeString(p.branch_id)}</Text><Text style={{color:colors.primary}}>View effective access ›</Text></Pressable>)}
+          {(data.people??[]).slice(0,100).map((p:any) => <Pressable key={p.id} style={[styles.card,{backgroundColor:surface,borderColor:border}]} onPress={()=>readPrivileges(p)} accessibilityRole="button"><Text style={{color:foreground,fontWeight:"700"}}>{safeString(p.name)}</Text><Text style={{color:secondary}}>{staffRoleLabel(p.role)} · {safeString(p.branch_id)}</Text><Text style={{color:colors.primary}}>View effective access ›</Text></Pressable>)}
         </>}
       </> : null}
       {can(required) && screen === "owner-audit" ? panel(<>

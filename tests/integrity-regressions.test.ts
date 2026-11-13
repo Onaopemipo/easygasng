@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { verifiedPickup } from "./helpers/tracking-fixture";
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -17,7 +18,7 @@ async function fixture() {
         role,
         `${uid}@example.test`,
         hashPassword("Integrity-fixture-only-123!"),
-        role,
+        consolidatedRole(role),
       ],
     );
     actors[role] = { id: uid, token: await issueSession(db, uid) };

@@ -28,7 +28,7 @@ test("service drafts are not sellable; checklist and price activation require in
     assert.equal(s[0].version, 2);
     await assert.rejects(
       () =>
-        f.call("administrator", "services.propose", {
+        f.call("customer", "services.propose", {
           serviceId: s[0].id,
           branchId: "lagos",
           version: 2,
@@ -48,15 +48,8 @@ test("service drafts are not sellable; checklist and price activation require in
       checks: f.checks,
       reason: "Test revoked reviewer",
     });
-    await assert.rejects(
-      () =>
-        f.call("safety_officer", "approval.decide", {
-          id: p.id,
-          decision: "approve",
-          reason: "Invalid reviewer",
-        }),
-      /qualification/,
-    );
+    const pending = await f.call("safety_officer", "approval.decide", { id: p.id, decision: "approve", reason: "Business decision without a valid safety qualification" });
+    assert.equal(pending.status, "partially_approved");
   } finally {
     await f.db.close?.();
   }

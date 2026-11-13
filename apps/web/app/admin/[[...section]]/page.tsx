@@ -26,7 +26,7 @@ export default async function Page({
   }
   if (
     key === "dashboard" &&
-    ["driver", "technician", "service_manager", "safety_officer"].includes(
+    ["driver", "technician"].includes(
       access.user.role,
     )
   )

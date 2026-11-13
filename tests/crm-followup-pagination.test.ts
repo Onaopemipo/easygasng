@@ -7,7 +7,7 @@ test("CRM-PAGE01: all follow-ups remain reachable with stable equal-date paginat
   try {
     const sales = id();
     await f.db.query(
-      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Synthetic sales',$2,$3,'sales','lagos')",
+      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Synthetic sales',$2,$3,'manager','lagos')",
       [sales, `${sales}@example.test`, hashPassword("Fixture-only-123!")],
     );
     f.actors.sales = { id: sales, token: await issueSession(f.db, sales) };

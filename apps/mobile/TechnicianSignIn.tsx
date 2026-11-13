@@ -6,9 +6,9 @@ import { useTheme } from "./theme";
 import { Card, Copy, Title, Button, Feedback } from "./CustomerUI";
 import { NativeForm } from "./Workflows";
 export default function TechnicianSignIn({
-  email,
+  identifier,
   password,
-  setEmail,
+  setIdentifier,
   setPassword,
   submit,
   busy,
@@ -17,10 +17,13 @@ export default function TechnicianSignIn({
   setRecover,
   api,
   signout,
+  passwordChangeRequired,
+  newPassword,
+  setNewPassword,
 }: {
-  email: string;
+  identifier: string;
   password: string;
-  setEmail: (v: string) => void;
+  setIdentifier: (v: string) => void;
   setPassword: (v: string) => void;
   submit: () => void;
   busy: boolean;
@@ -29,6 +32,9 @@ export default function TechnicianSignIn({
   setRecover: (v: boolean) => void;
   api: any;
   signout?: () => void;
+  passwordChangeRequired: boolean;
+  newPassword: string;
+  setNewPassword: (v: string) => void;
 }) {
   const { colors, dark } = useTheme();
   return (
@@ -74,8 +80,9 @@ export default function TechnicianSignIn({
               api={api}
               action="account.recover"
               title="Request secure recovery"
-              fields={[{ name: "email", label: "Registered work email" }]}
+              fields={[{ name: "email", label: "Registered work email", value: identifier.includes("@") ? identifier : "", type: "email" }]}
             />
+            <Copy>Open the link in your email to set a new password, then return here to sign in.</Copy>
             <Button
               label="Back to Technician Sign In"
               secondary
@@ -84,19 +91,15 @@ export default function TechnicianSignIn({
           </>
         ) : (
           <>
-            <Copy>
-              Use your existing EasyGas technician work email and password.
-              Technician ID/phone-only login is not configured in this delivery
-              app.
-            </Copy>
             <TextInput
-              accessibilityLabel="Technician work email"
-              autoComplete="email"
-              keyboardType="email-address"
+              accessibilityLabel="Email or phone number"
+              autoComplete="username"
+              keyboardType="default"
+              autoCorrect={false}
               autoCapitalize="none"
-              value={email}
-              onChangeText={setEmail}
-              placeholder="Technician work email"
+              value={identifier}
+              onChangeText={setIdentifier}
+              placeholder="Email or phone number"
               style={{
                 padding: 15,
                 borderWidth: 1,
@@ -122,9 +125,30 @@ export default function TechnicianSignIn({
                 borderRadius: 14,
               }}
             />
+            {passwordChangeRequired && (
+              <>
+                <Copy>Choose a new password to finish your first sign-in.</Copy>
+                <TextInput
+                  accessibilityLabel="New password"
+                  autoComplete="new-password"
+                  secureTextEntry
+                  value={newPassword}
+                  onChangeText={setNewPassword}
+                  placeholder="New password"
+                  style={{
+                    padding: 15,
+                    borderWidth: 1,
+                    borderColor: colors.border,
+                    color: colors.text,
+                    backgroundColor: colors.input,
+                    borderRadius: 14,
+                  }}
+                />
+              </>
+            )}
             <Button
-              label={busy ? "Signing in…" : "Sign In"}
-              disabled={busy || !email || !password}
+              label={busy ? "Signing in…" : passwordChangeRequired ? "Change Password & Sign In" : "Sign In"}
+              disabled={busy || !identifier || !password}
               onPress={submit}
             />
             <Button

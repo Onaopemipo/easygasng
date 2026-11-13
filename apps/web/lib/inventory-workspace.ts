@@ -62,19 +62,12 @@ export async function inventoryWorkspace(
   )
     throw new AppError(400, "Use an ordered date range of at most 367 days.");
   const params = [branch, literal(d.q), d.category, d.status];
-  const canWrite = ["owner", "manager", "inventory"].includes(user.role),
-    canExport = ["owner", "manager", "inventory", "finance"].includes(
+  const canWrite = ["owner", "manager", "finance"].includes(user.role),
+    canExport = ["owner", "manager", "finance"].includes(
       user.role,
     );
   if (action === "inventory.movements") {
-    allow(user, [
-      "owner",
-      "manager",
-      "inventory",
-      "finance",
-      "dispatcher",
-      "administrator",
-    ]);
+    allow(user, ["owner", "manager", "finance"]);
     const union = `WITH movements AS (SELECT m.id,m.branch_id,p.name,p.sku,m.quantity::numeric AS quantity,'units' AS unit,m.kind,m.reason,m.reference,m.actor_id,m.created_at FROM stock_movements m JOIN products p ON p.id=m.product_id UNION ALL SELECT m.id,m.branch_id,'Bulk gas','GAS-KG',m.grams::numeric/1000,'kg',m.kind,m.reason,m.reference,m.actor_id,m.created_at FROM gas_stock_movements m), matches AS (SELECT m.*,u.name AS actor FROM movements m LEFT JOIN users u ON u.id=m.actor_id WHERE ($1::text IS NULL OR m.branch_id=$1) AND ($2='%%' OR m.name ILIKE $2 ESCAPE '\\' OR m.sku ILIKE $2 ESCAPE '\\' OR m.reference ILIKE $2 ESCAPE '\\') AND ($3::date IS NULL OR (m.created_at AT TIME ZONE 'Africa/Lagos')::date>=$3) AND ($4::date IS NULL OR (m.created_at AT TIME ZONE 'Africa/Lagos')::date<=$4) AND ($5::text IS NULL OR m.kind=$5)) `;
     const p = [
       branch,
@@ -213,10 +206,7 @@ export async function inventoryWorkspace(
       [branch],
     ))!.count,
   );
-  const recent =
-    user.role === "sales"
-      ? []
-      : (
+  const recent = (
           await tx.query(
             "SELECT id,kind,quantity::numeric AS quantity,'units' AS unit,reference,created_at FROM stock_movements WHERE ($1::text IS NULL OR branch_id=$1) UNION ALL SELECT id,kind,grams::numeric/1000,'kg',reference,created_at FROM gas_stock_movements WHERE ($1::text IS NULL OR branch_id=$1) ORDER BY created_at DESC LIMIT 5",
             [branch],
@@ -296,7 +286,7 @@ export async function inventoryWorkspace(
     permissions: {
       write: canWrite,
       export: canExport,
-      history: user.role !== "sales",
+      history: true,
       cylinders: access.allowed.includes("cylinders"),
       products: access.allowed.includes("products"),
       services: access.allowed.includes("bookings"),

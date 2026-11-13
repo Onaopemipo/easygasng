@@ -4,6 +4,7 @@ import { AppError, recentVerification, type Actor } from "./auth";
 import {
   autoApproveOwnerRequest,
   ownerAutoApprovalEnabled,
+  canAutoApproveDefinition,
   definition,
   validateValue,
   transitionApproval,
@@ -159,7 +160,7 @@ export async function approvalWorkflowAction(
     [JSON.stringify(policySnapshot(def)), r.id, def.risk],
   );
   await transitionApproval(tx, user, r.id, "pending_approval", d.reason);
-  if (ownerAutoApprovalEnabled() && user.role === "owner" && r.requester_id === user.id && r.requester_role === "owner") return autoApproveOwnerRequest(tx, user, r.id);
+  if (canAutoApproveDefinition(def) && user.role === "owner" && r.requester_id === user.id && r.requester_role === "owner") return autoApproveOwnerRequest(tx, user, r.id);
   for (const u of (
     await tx.query(
       "SELECT id,role FROM users WHERE active=true AND (role='owner' OR branch_id=$1)",

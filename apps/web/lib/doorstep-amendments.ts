@@ -64,7 +64,7 @@ export async function doorstepAmendments(
   } else {
     allow(
       user,
-      ["owner", "manager", "dispatcher", "driver", "inventory", "finance"],
+      ["owner", "manager", "driver", "finance"],
       o.branch_id,
     );
     if (user.role === "driver" && o.driver_id !== user.id)

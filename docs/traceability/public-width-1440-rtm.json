@@ -2,14 +2,15 @@
   "phase": "Public Website 1440px Frontend Only",
   "releaseDecision": "NO-GO — Public Commercial Production",
   "coverage": {
-    "implemented": "8/8 public destinations",
-    "verified": "5/8 complete requirement rows with 3 partial",
-    "routes": "8/8 layout-verified",
+    "implemented": "10/10 public destinations",
+    "verified": "5/9 complete requirement rows with 4 partial",
+    "routes": "10/10 layout-verified locally",
     "criticalGates": "2/2 phase isolation and frontend-only gates, with bounded browser evidence for isolation",
-    "gates": "16/20 passed, 4/20 partial"
+    "gates": "16/21 passed, 5/21 partial"
   },
   "changeLog": [
-    "Established exact public route scoping. Added a narrow-screen eyebrow fit and restored cross-route Home anchor scrolling observed during browser checks. Retained all original requirements and gates."
+    "Established exact public route scoping. Added a narrow-screen eyebrow fit and restored cross-route Home anchor scrolling observed during browser checks. Retained all original requirements and gates.",
+    "14 November 2026: Added the shared sign-in and registration layout to the 1440px public shell."
   ],
   "requirements": [
     {
@@ -387,6 +388,33 @@
         "PW-CONTENT"
       ],
       "negativeTests": []
+    },
+    {
+      "id": "PUB-09",
+      "requirement": "Match the public website width on sign-in and registration.",
+      "priority": "P1",
+      "scope": "Public authentication layout",
+      "uiReference": "Reported wide sign-in page",
+      "route": "/login and /register",
+      "dataSource": "Shared storefront width and responsive gutters",
+      "securityControl": "Existing authentication and workspace routing govern access.",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/app/public-width.css"
+      ],
+      "testFiles": [
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/public-width-1440/evidence/auth-browser.txt"
+      ],
+      "acceptanceGate": "A21",
+      "status": "PARTIAL",
+      "reason": "Local Chrome confirmed alignment and no overflow at five widths.",
+      "testResult": "PASS: ten local browser checks.",
+      "outstandingWork": "Verify the hosted alias after promotion."
     }
   ],
   "gates": [
@@ -509,6 +537,11 @@
       "acceptance": "Changes, results and release decision reported",
       "status": "PASS",
       "evidence": "docs/public-width-1440/02-qa-results.md"
+    },
+    {
+      "id": "A21",
+      "gate": "Sign-in and registration match the public header and footer across viewport sizes.",
+      "status": "PARTIAL"
     }
   ]
 }

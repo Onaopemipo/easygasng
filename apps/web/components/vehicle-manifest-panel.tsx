@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { api, Notice } from "./ui";
+import { api, Loading, Notice } from "./ui";
 export function VehicleManifestPanel({ user, Form }: { user: any; Form: any }) {
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
@@ -19,7 +19,7 @@ export function VehicleManifestPanel({ user, Form }: { user: any; Form: any }) {
       active = false;
     };
   }, [tick]);
-  const stock = ["owner", "inventory"].includes(user.role),
+  const stock = ["owner", "finance"].includes(user.role),
     driver = user.role === "driver",
     evidence = [
       { name: "evidence", label: "Actual count / inspection evidence" },
@@ -34,7 +34,8 @@ export function VehicleManifestPanel({ user, Form }: { user: any; Form: any }) {
         payload capacity, serials and returns must reconcile.
       </p>
       {error && <Notice type="error" message={error} />}
-      {stock && (
+      {!data && !error && <Loading label="Loading vehicle manifests" />}
+      {data && stock && (
         <Form
           title="Request existing vehicle payload update"
           action="fleet.vehicle.payload.request"
@@ -208,7 +209,7 @@ export function VehicleManifestPanel({ user, Form }: { user: any; Form: any }) {
                     onDone={refresh}
                     fields={returned}
                   />
-                  {user.role === "inventory" && (
+                  {user.role === "finance" && (
                     <Form
                       title="Request owner and finance discrepancy review"
                       action="manifest.return.review"

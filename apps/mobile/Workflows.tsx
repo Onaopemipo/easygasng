@@ -20,7 +20,7 @@ type Field = {
   name: string;
   label: string;
   value?: any;
-  type?: "number" | "password" | "checkbox" | "text" | "hidden" | "textarea";
+  type?: "email" | "number" | "password" | "checkbox" | "text" | "hidden" | "textarea";
   options?: { value: string; label: string }[];
 };
 export function NativeForm({
@@ -168,7 +168,7 @@ export function NativeForm({
                   multiline={f.type === "textarea"}
                   editable={draftReady}
                   secureTextEntry={f.type === "password"}
-                  keyboardType={f.type === "number" ? "numeric" : "default"}
+                  keyboardType={f.type === "email" ? "email-address" : f.type === "number" ? "numeric" : "default"}
                   autoCapitalize="none"
                   value={String(values[f.name] ?? "")}
                   onChangeText={(v) => setValues({ ...values, [f.name]: v })}
@@ -379,25 +379,11 @@ export default function Workflows({
         <NativeForm
           api={api}
           action="account.recover"
-          title="Request a recovery email"
-          fields={[{ name: "email", label: "Account email" }]}
-        />
-        <NativeForm
-          api={api}
-          action="account.reset"
-          title="Reset with your email token"
-          fields={[
-            { name: "token", label: "Secure token" },
-            {
-              name: "password",
-              label: `New password (at least ${PASSWORD_MIN_LENGTH} characters)`,
-              type: "password",
-            },
-          ]}
+          title="Send a password reset link"
+          fields={[{ name: "email", label: "Account email", type: "email" }]}
         />
         <Text style={s.body}>
-          Email is queued for local preview by the installation operator.
-          External delivery is unconnected.
+          Open the link in your email to set a new password, then return to EasyGas to sign in.
         </Text>
       </>
     );

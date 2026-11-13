@@ -28,7 +28,7 @@ export async function bulkLPG(
   input: unknown,
 ): Promise<any> {
   if (action === "bulk.summary") {
-    allow(user, ["owner", "manager", "dispatcher", "inventory", "driver"]);
+    allow(user, ["owner", "manager", "finance", "driver"]);
     const loads = (
       await tx.query(
         "SELECT l.*,t.driver_id,t.vehicle_id,v.label FROM bulk_lpg_loads l JOIN driver_trips t ON t.id=l.trip_id JOIN driver_vehicles v ON v.id=t.vehicle_id WHERE ($1::boolean OR l.branch_id=$2) AND ($3::boolean OR t.driver_id=$4) ORDER BY l.created_at DESC LIMIT 100",
@@ -234,7 +234,7 @@ export async function bulkLPG(
     return { id: mid };
   }
   if (action === "bulk.load.issue") {
-    allow(user, ["owner", "inventory"]);
+    allow(user, ["owner", "finance"]);
     recentVerification(user);
     const d = z
       .object({
@@ -275,7 +275,7 @@ export async function bulkLPG(
         409,
         "Active suitable trip, capacity and independent driver required.",
       );
-    allow(user, ["owner", "inventory"], trip.branch_id);
+    allow(user, ["owner", "finance"], trip.branch_id);
     await inventoryQualification(
       tx,
       user.id,
@@ -295,7 +295,7 @@ export async function bulkLPG(
     let allocated = 0;
     const quantities: number[] = [];
     for (const order of orders) {
-      allow(user, ["owner", "inventory"], order.branch_id);
+      allow(user, ["owner", "finance"], order.branch_id);
       if (
         order.branch_id !== trip.branch_id ||
         order.driver_id !== trip.driver_id ||
@@ -416,7 +416,7 @@ export async function bulkLPG(
     [d.loadId],
   );
   if (!load) throw new AppError(404, "Load not found.");
-  allow(user, ["owner", "inventory", "driver"], load.branch_id);
+  allow(user, ["owner", "finance", "driver"], load.branch_id);
   if (user.role === "driver" && load.driver_id !== user.id)
     throw new AppError(404, "Load not found.");
   if (load.ended_at || Number(load.version) !== d.version)
@@ -683,7 +683,7 @@ export async function bulkLPG(
       [d.returnGrams, load.id],
     );
   } else if (action === "bulk.return.receive") {
-    allow(user, ["owner", "inventory"], load.branch_id);
+    allow(user, ["owner", "finance"], load.branch_id);
     recentVerification(user);
     await inventoryQualification(
       tx,

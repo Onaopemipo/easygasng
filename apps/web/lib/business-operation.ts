@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../../../packages/business-rules/src/staff-roles";
 import {enforceStaffPrivilege} from "./staff-privileges";
 import { sealMessage,openMessage } from "./channel-messaging";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
@@ -45,7 +46,7 @@ export async function businessOperation(
   if (
     !prior ||
     prior.actor_id !== user.id ||
-    prior.actor_role !== user.role ||
+    consolidatedRole(prior.actor_role) !== user.role ||
     prior.actor_branch !== user.branch_id ||
     prior.action !== action ||
     prior.request_hash !== hash
@@ -76,10 +77,10 @@ export async function operationOutcome(tx: SQL, user: Actor, input: unknown) {
   const d = z.object({ key: z.string().uuid() }).strict().parse(input);
   const result = await one(
     tx,
-    "SELECT action,result,committed_at FROM business_operation_results WHERE operation_key=$1 AND actor_id=$2 AND actor_role=$3 AND actor_branch IS NOT DISTINCT FROM $4",
-    [d.key, user.id, user.role, user.branch_id],
+    "SELECT action,result,committed_at,actor_role FROM business_operation_results WHERE operation_key=$1 AND actor_id=$2 AND actor_branch IS NOT DISTINCT FROM $3",
+    [d.key, user.id, user.branch_id],
   );
-  if (!result?.committed_at)
+  if (!result?.committed_at || consolidatedRole(result.actor_role) !== user.role)
     return {
       status: "NOT_FOUND",
       message:

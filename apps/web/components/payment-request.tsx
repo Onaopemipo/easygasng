@@ -1,4 +1,5 @@
 "use client";
+import { EasyGasLoader } from "./easygas-loader";
 import { useEffect, useState } from "react";
 import { HostedPayment } from "./hosted-payment";
 import { api, Notice, money } from "./ui";
@@ -58,7 +59,7 @@ export default function PaymentRequest() {
           </a>
         </section>
       ) : (
-        !error && <p>Checking your invoice request…</p>
+        !error && <EasyGasLoader size="sm" variant="section" label="Checking your invoice request" />
       )}
     </main>
   );

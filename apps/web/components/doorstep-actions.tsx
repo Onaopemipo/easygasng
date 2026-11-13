@@ -31,7 +31,7 @@ export function DoorstepActions({
     ],
     why = { name: "reason", label: "Evidence and reason" };
   const finance = ["owner", "finance"].includes(user?.role),
-    inspector = ["owner", "inventory"].includes(user?.role),
+    inspector = ["owner", "finance"].includes(user?.role),
     driver = user?.role === "driver";
   return (
     <>

@@ -9,23 +9,15 @@ export type Privilege = {
   actions: readonly string[];
   routes?: readonly string[];
 };
-const operational = [
-  "owner",
-  "manager",
-  "inventory",
-  "sales",
-  "finance",
-  "dispatcher",
-  "administrator",
-];
+const operational = ["owner", "manager", "finance"];
 export const staffPrivileges: readonly Privilege[] = [
   {
     id: "orders.view",
     label: "View orders",
     group: "Sales & customers",
     description: "View orders within the existing branch or assignment scope.",
-    roles: ["owner", "manager", "sales", "dispatcher", "driver", "finance"],
-    grantRole: "sales",
+    roles: ["owner", "manager", "driver", "finance"],
+    grantRole: "manager",
     actions: ["orders"],
     routes: ["orders"],
   },
@@ -56,7 +48,7 @@ export const staffPrivileges: readonly Privilege[] = [
     group: "Protected authority",
     description:
       "Role-required: accept orders, request linked additions and update fulfilment. Assignment, cutoff, stock and payment controls remain mandatory.",
-    roles: ["owner", "manager", "sales", "dispatcher", "driver"],
+    roles: ["owner", "manager", "driver"],
     actions: [
       "order.transition",
       "order.additions",
@@ -70,7 +62,7 @@ export const staffPrivileges: readonly Privilege[] = [
     group: "Protected authority",
     description:
       "Role-required: view dispatch queues and assign drivers. Safety blockers and automatic-assignment restrictions remain in effect.",
-    roles: ["owner", "manager", "dispatcher"],
+    roles: ["owner", "manager"],
     actions: [
       "dispatch.centre",
       "dispatch.candidates",
@@ -85,13 +77,7 @@ export const staffPrivileges: readonly Privilege[] = [
     group: "Protected authority",
     description:
       "Role-required: view and manage service appointments. Assigned-technician, quotation, payment and completion checks remain mandatory.",
-    roles: [
-      "owner",
-      "service_manager",
-      "technician",
-      "finance",
-      "safety_officer",
-    ],
+    roles: ["owner", "manager", "technician", "finance"],
     actions: [
       "bookings",
       "booking.reschedule",
@@ -112,16 +98,8 @@ export const staffPrivileges: readonly Privilege[] = [
     label: "View product catalogue",
     group: "Products & stock",
     description: "View the internal product catalogue.",
-    roles: [
-      "owner",
-      "manager",
-      "sales",
-      "inventory",
-      "technician",
-      "service_manager",
-      "safety_officer",
-    ],
-    grantRole: "inventory",
+    roles: ["owner", "manager", "finance", "technician"],
+    grantRole: "finance",
     actions: ["products.manage"],
     routes: ["products"],
   },
@@ -131,8 +109,8 @@ export const staffPrivileges: readonly Privilege[] = [
     group: "Products & stock",
     description:
       "Create and edit products. Bulk imports and governed price changes keep their existing controls.",
-    roles: ["owner", "manager", "inventory"],
-    grantRole: "inventory",
+    roles: ["owner", "manager", "finance"],
+    grantRole: "finance",
     actions: ["product.save"],
   },
   {
@@ -142,7 +120,7 @@ export const staffPrivileges: readonly Privilege[] = [
     description:
       "View branch stock and movement history. Valuation and exports keep their existing authority checks.",
     roles: operational,
-    grantRole: "inventory",
+    grantRole: "finance",
     actions: ["inventory", "inventory.workspace", "inventory.movements"],
     routes: ["inventory"],
   },
@@ -152,8 +130,8 @@ export const staffPrivileges: readonly Privilege[] = [
     group: "Products & stock",
     description:
       "Record stock receipts using existing stock and reference checks.",
-    roles: ["owner", "manager", "inventory"],
-    grantRole: "inventory",
+    roles: ["owner", "manager", "finance"],
+    grantRole: "finance",
     actions: ["inventory.receive"],
   },
   {
@@ -161,8 +139,8 @@ export const staffPrivileges: readonly Privilege[] = [
     label: "View cylinders",
     group: "Products & stock",
     description: "View branch cylinder records.",
-    roles: ["owner", "manager", "inventory"],
-    grantRole: "inventory",
+    roles: ["owner", "manager", "finance"],
+    grantRole: "finance",
     actions: ["cylinders"],
     routes: ["cylinders"],
   },
@@ -172,8 +150,8 @@ export const staffPrivileges: readonly Privilege[] = [
     group: "Products & stock",
     description:
       "Inspect, fill and record cylinder custody; existing safety and stock checks still apply.",
-    roles: ["owner", "manager", "inventory"],
-    grantRole: "inventory",
+    roles: ["owner", "manager", "finance"],
+    grantRole: "finance",
     actions: ["cylinder.inspect", "cylinder.custody", "cylinder.fill"],
   },
   {
@@ -181,8 +159,8 @@ export const staffPrivileges: readonly Privilege[] = [
     label: "View purchasing",
     group: "Products & stock",
     description: "View branch suppliers and purchase records.",
-    roles: ["owner", "manager", "inventory", "finance"],
-    grantRole: "inventory",
+    roles: ["owner", "manager", "finance"],
+    grantRole: "finance",
     actions: ["purchasing"],
   },
   {
@@ -191,8 +169,8 @@ export const staffPrivileges: readonly Privilege[] = [
     group: "Products & stock",
     description:
       "Create branch supplier and purchase records. Payment and approval authority are separate.",
-    roles: ["owner", "manager", "inventory"],
-    grantRole: "inventory",
+    roles: ["owner", "manager", "finance"],
+    grantRole: "finance",
     actions: ["supplier.create", "purchase.create"],
   },
   {
@@ -200,8 +178,8 @@ export const staffPrivileges: readonly Privilege[] = [
     label: "View stock transfers",
     group: "Products & stock",
     description: "View branch transfer records.",
-    roles: ["owner", "manager", "inventory"],
-    grantRole: "inventory",
+    roles: ["owner", "manager", "finance"],
+    grantRole: "finance",
     actions: ["transfers"],
   },
   {
@@ -209,8 +187,8 @@ export const staffPrivileges: readonly Privilege[] = [
     label: "Request stock transfers",
     group: "Products & stock",
     description: "Create a transfer using existing custody and stock checks.",
-    roles: ["owner", "manager", "inventory"],
-    grantRole: "inventory",
+    roles: ["owner", "manager", "finance"],
+    grantRole: "finance",
     actions: ["transfer.create"],
   },
   {
@@ -218,8 +196,8 @@ export const staffPrivileges: readonly Privilege[] = [
     label: "View support requests",
     group: "Customer support",
     description: "View branch support requests.",
-    roles: ["owner", "manager", "sales"],
-    grantRole: "sales",
+    roles: ["owner", "manager"],
+    grantRole: "manager",
     actions: ["support.list", "support.detail"],
     routes: ["support"],
   },
@@ -228,8 +206,8 @@ export const staffPrivileges: readonly Privilege[] = [
     label: "Manage support requests",
     group: "Customer support",
     description: "Reply to and update accessible support requests.",
-    roles: ["owner", "manager", "sales"],
-    grantRole: "sales",
+    roles: ["owner", "manager"],
+    grantRole: "manager",
     actions: ["support.reply", "support.update", "support.attachment", "support.sla.enroll", "support.sla.save", "support.sla.policy", "support.sla.scan"],
   },
   {
@@ -284,22 +262,21 @@ export const staffPrivileges: readonly Privilege[] = [
     ],
   },
   {
+    id: "audit.view",
+    label: "View Audit History",
+    group: "Finance & reporting",
+    description: "Review business-wide audit history as an owner, or scoped finance and inventory activity in your branch.",
+    roles: ["owner", "finance"],
+    actions: ["audit"],
+    routes: ["audit"],
+  },
+  {
     id: "approvals.manage",
     label: "Governed settings and approvals",
     group: "Protected authority",
     description:
       "Role-required: setting visibility, independent approval, owner policy and qualification checks remain mandatory.",
-    roles: [
-      "owner",
-      "manager",
-      "sales",
-      "inventory",
-      "dispatcher",
-      "finance",
-      "administrator",
-      "service_manager",
-      "safety_officer",
-    ],
+    roles: ["owner", "manager", "finance"],
     actions: [
       "settings",
       "setting.history",
@@ -322,7 +299,7 @@ export const staffPrivileges: readonly Privilege[] = [
     group: "Protected authority",
     description:
       "Role-required. Does not grant privilege administration, role approval or authority over the Business Owner.",
-    roles: ["owner", "administrator", "manager"],
+    roles: ["owner", "manager"],
     actions: [
       "staff.manage",
       "staff.lookup",
@@ -340,7 +317,7 @@ export const staffPrivileges: readonly Privilege[] = [
     group: "Protected authority",
     description:
       "Role-required. Qualifications, job assignment, quotation approval and payment conditions cannot be overridden.",
-    roles: ["owner", "service_manager", "safety_officer"],
+    roles: ["owner", "manager"],
     actions: [
       "services.manage",
       "technicians.workspace",
@@ -357,14 +334,4 @@ export function privilegeForAction(action: string) {
   return staffPrivileges.find((p) => p.actions.includes(action));
 }
 export const isBusinessStaff = (role: string) =>
-  [
-    "owner",
-    "administrator",
-    "manager",
-    "sales",
-    "inventory",
-    "finance",
-    "dispatcher",
-    "service_manager",
-    "safety_officer",
-  ].includes(role);
+  ["owner", "manager", "finance"].includes(role);

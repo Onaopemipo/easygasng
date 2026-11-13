@@ -244,7 +244,7 @@ export async function trackingAction(
   if (!o) throw new AppError(404, "Order not found.");
   allow(
     user,
-    ["owner", "manager", "dispatcher", "driver", "inventory"],
+    ["owner", "manager", "driver", "finance"],
     o.branch_id,
   );
   if (user.role === "driver" && o.driver_id !== user.id)
@@ -261,7 +261,7 @@ export async function trackingAction(
     [o.id],
   );
   if (action === "delivery.reschedule") {
-    allow(user, ["owner", "manager", "dispatcher"], o.branch_id);
+    allow(user, ["owner", "manager"], o.branch_id);
     if (
       !["placed", "accepted", "preparing", "delivery_failed"].includes(o.status)
     )
@@ -347,7 +347,7 @@ export async function trackingAction(
       );
     } else if (kind === "help") {
       await tx.query(
-        "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES($1,$2,'high','delivery_help',$3,$4,'dispatcher') ON CONFLICT(category,target) DO NOTHING",
+        "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES($1,$2,'high','delivery_help',$3,$4,'manager') ON CONFLICT(category,target) DO NOTHING",
         [id(), o.branch_id, a.id, `Order ${o.reference}: ${d.reason}`],
       );
       await audit(tx, user, "delivery.help", o.id, "success", {
@@ -356,7 +356,7 @@ export async function trackingAction(
       });
       return { ok: true, orderId: o.id, version: d.version };
     } else if (kind === "return") {
-      allow(user, ["owner", "inventory"], o.branch_id);
+      allow(user, ["owner", "finance"], o.branch_id);
       if (
         o.status !== "delivery_failed" ||
         !a.picked_up_at ||

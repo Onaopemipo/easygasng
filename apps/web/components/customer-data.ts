@@ -2,25 +2,28 @@
 import { useEffect, useState } from "react";
 import { api } from "./ui";
 export function useCustomerResource(action: string, identity: string) {
+  const key = JSON.stringify([action, identity]);
   const [state, setState] = useState<{
+    key: string;
     data: any;
     error: string;
     loading: boolean;
-  }>({ data: null, error: "", loading: true });
+  }>({ key, data: null, error: "", loading: true });
   const [version, setVersion] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
     let live = true;
-    setState({ data: null, error: "", loading: true });
+    setState(previous => ({ key, data: previous.key === key ? previous.data : null, error: "", loading: true }));
     const timeout = setTimeout(() => controller.abort(), 12000);
     api(action, undefined, { signal: controller.signal })
       .then((data) => {
         if (live && !controller.signal.aborted)
-          setState({ data, error: "", loading: false });
+          setState({ key, data, error: "", loading: false });
       })
       .catch((e) => {
         if (live)
           setState({
+            key,
             data: null,
             error:
               e.name === "AbortError"
@@ -35,7 +38,7 @@ export function useCustomerResource(action: string, identity: string) {
       clearTimeout(timeout);
       controller.abort();
     };
-  }, [action, identity, version]);
+  }, [action, key, version]);
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     const refresh = () => {
@@ -56,5 +59,6 @@ export function useCustomerResource(action: string, identity: string) {
       window.removeEventListener("focus", refresh);
     };
   }, [action]);
-  return { ...state, retry: () => setVersion((v) => v + 1) };
+  const current = state.key === key ? state : { data: null, error: "", loading: true };
+  return { ...current, loading: current.loading && current.data === null, retry: () => setVersion((v) => v + 1) };
 }

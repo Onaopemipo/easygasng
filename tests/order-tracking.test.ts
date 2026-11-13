@@ -668,7 +668,7 @@ test("TRK-14F: structured unsafe-cylinder failure creates critical incident and 
       "SELECT severity,owner_role FROM operational_incidents WHERE category='delivery_failure'",
     );
     assert.equal(incident!.severity, "critical");
-    assert.equal(incident!.owner_role, "dispatcher");
+    assert.equal(incident!.owner_role, "manager");
     const evidence = await one(
       f.db,
       "SELECT detail FROM delivery_evidence WHERE kind='failed'",

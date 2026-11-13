@@ -1,0 +1,153 @@
+{
+  "phase": "Pending server data and About Us hero performance",
+  "productionDecision": "Existing NO-GO preserved. Source changes verified locally.",
+  "requirements": [
+    {
+      "id": "LDR-DATA-01",
+      "requirement": "Show the EasyGas loader for pending web data, keep confirmed values during same-scope background reads where supported, and reserve empty or unavailable messages for settled responses.",
+      "priority": "P1",
+      "scope": "Public, customer and administrative web request states",
+      "uiReference": "Existing orange flame and green orbit",
+      "route": "Public catalogue and search, customer workspace, /admin and related records routes",
+      "implementationFiles": [
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/components/audit-history.tsx",
+        "apps/web/components/bundles.tsx",
+        "apps/web/components/compatibility.tsx",
+        "apps/web/components/customer-dashboard.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/components/customer-management.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/hosted-payment.tsx",
+        "apps/web/components/inventory-workspace.tsx",
+        "apps/web/components/notifications-tray.tsx",
+        "apps/web/components/order-additions.tsx",
+        "apps/web/components/order-operations.tsx",
+        "apps/web/components/payment-request.tsx",
+        "apps/web/components/paystack-reconciliation.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/recommendations.tsx",
+        "apps/web/components/rider-map.tsx",
+        "apps/web/components/testimonials.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/public-header.tsx"
+      ],
+      "dataSource": "Existing catalogue, customer, admin, dispatch, stock, finance, payments and service APIs.",
+      "securityControl": "Existing API authorization is authoritative. Branch and date changes hide the previous dashboard scope during the request. Authentication errors clear the dashboard snapshot.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts",
+        "tests/admin-dashboard-http.test.ts",
+        "tests/customer-management.test.ts",
+        "tests/inventory-workspace-http.test.ts"
+      ],
+      "testIds": [
+        "DATA-LOADER-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/loader/evidence/pending-data-and-about-hero.txt"
+      ],
+      "acceptanceGate": "LDR-DATA-G01",
+      "status": "PARTIAL",
+      "reason": "Shared and route-specific loading states updated. Representative admin routes verified with controlled delays, refresh and error.",
+      "testResult": "PASS: Dashboard, Inventory, Customers, secondary Owner finance, same-scope refresh, first-load inventory error and branch-scoped Finance in Chrome. Focused suite passed 71 tests.",
+      "outstandingWork": "Authenticated browser verification of the remaining public, customer and staff routes and hosted deployment acceptance."
+    },
+    {
+      "id": "LDR-DATA-02",
+      "requirement": "Use the branded loader for pending native reads before showing empty or unavailable data.",
+      "priority": "P1",
+      "scope": "Shared native shell and customer, finance, operations and field workspaces",
+      "uiReference": "Existing native EasyGas loader",
+      "route": "Startup, orders, wallet, gas order, combined checkout, services, finance, retail POS, owner workspaces, fleet, maps, manifests and technician workspace",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/CombinedCheckout.tsx",
+        "apps/mobile/CustomerUI.tsx",
+        "apps/mobile/DriverPhotoHistory.tsx",
+        "apps/mobile/FinanceOverview.tsx",
+        "apps/mobile/FleetLocations.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/NativeRiderMap.native.tsx",
+        "apps/mobile/OwnerApprovals.tsx",
+        "apps/mobile/OwnerOverview.tsx",
+        "apps/mobile/RetailPos.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/VehicleManifest.tsx"
+      ],
+      "dataSource": "Existing session, catalogue, wallet, orders, finance, POS, location, evidence and service APIs.",
+      "securityControl": "Private records remain scoped to the authenticated account and selected request. Background native tracking removes rider locations while inactive.",
+      "testFiles": [
+        "tests/easygas-loader.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/loader/evidence/pending-data-and-about-hero.txt"
+      ],
+      "acceptanceGate": "LDR-DATA-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Native source and shared loader tests pass. Runtime screen behavior needs installed-app acceptance.",
+      "testResult": "PASS: native TypeScript and focused shared loader tests. No installed-app run for this phase.",
+      "outstandingWork": "Fresh iOS and Android builds and device checks for delayed reads, errors, reconnection and account or filter changes."
+    },
+    {
+      "id": "ABOUT-HERO-01",
+      "requirement": "Reduce the About Us hero download and start loading it without waiting for the catalogue.",
+      "priority": "P1",
+      "scope": "About Us desktop and mobile web",
+      "uiReference": "User screenshot of the existing delivery photograph",
+      "route": "/about",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/public-header.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/public/assets/about-delivery-1440.webp",
+        "apps/web/public/assets/about-delivery-480.webp",
+        "apps/web/public/assets/about-delivery-768.webp"
+      ],
+      "dataSource": "Existing local delivery-illustration.png re-encoded as responsive WebP assets.",
+      "securityControl": "Public static image. No session, catalogue, checkout or access policy changes.",
+      "testFiles": [
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [
+        "ABOUT-HERO-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/loader/evidence/pending-data-and-about-hero.txt"
+      ],
+      "acceptanceGate": "ABOUT-HERO-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Chrome decoded the original photograph's responsive assets while the catalogue request was held. The image box retained its desktop and mobile heights.",
+      "testResult": "PASS: 22,894 bytes at 390px DPR 1, 42,044 bytes at 1440px DPR 1 and 92,110 bytes at 1440px DPR 2, from 2,183,786 bytes.",
+      "outstandingWork": "Hosted rollout and cold-cache production measurement are outside this local verification."
+    }
+  ],
+  "gates": [
+    {
+      "id": "LDR-DATA-G01",
+      "status": "PARTIAL",
+      "gate": "Web delays, errors, scope and same-scope refresh verified across supported request paths"
+    },
+    {
+      "id": "LDR-DATA-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "gate": "Installed native loading, retry and scope transitions verified on iOS and Android"
+    },
+    {
+      "id": "ABOUT-HERO-G01",
+      "status": "VERIFIED_COMPLETE",
+      "gate": "Representative mobile and desktop select a sub-95 KB variant that decodes before catalogue completion"
+    }
+  ],
+  "changeLog": [
+    "Extended the existing LDR loader phase to request-owned states and added the About Us image optimization after the user reported slow loading. Earlier LDR requirements and gates remain in force."
+  ]
+}

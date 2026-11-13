@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { useTheme } from "./theme";
@@ -41,7 +42,7 @@ export function OwnerOverview({ api, branchManager = false, operationsOnly = fal
 
   return (
     <View style={{ gap: 12 }}>
-      {loading ? <Text style={{ color: colors.text }}>Loading business overview…</Text> : failed ? (
+      {loading ? <EasyGasLoader variant="section" label="Loading business overview" /> : failed ? (
         <Pressable accessibilityRole="button" onPress={() => {
           setFailed(false);
           setLoading(true);

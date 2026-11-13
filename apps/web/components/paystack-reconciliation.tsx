@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { api, money, Notice } from "./ui";
+import { api, Loading, money, Notice } from "./ui";
 export default function PaystackReconciliation() {
   const [from, setFrom] = useState(() =>
       new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10),
@@ -11,7 +11,7 @@ export default function PaystackReconciliation() {
     [purpose, setPurpose] = useState(""),
     [report, setReport] = useState<any>(null),
     [error, setError] = useState(""),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(true);
   async function load() {
     setBusy(true);
     setReport(null);
@@ -110,6 +110,7 @@ export default function PaystackReconciliation() {
         </button>
       </form>
       {error && <Notice type="error" message={error} />}
+      {busy && <Loading label="Loading reconciliation records" />}
       {report && (
         <>
           <div className="service-grid">

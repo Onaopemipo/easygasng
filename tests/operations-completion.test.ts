@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { escalateUnacknowledgedDispatch } from "../apps/web/lib/dispatch-escalation";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -38,13 +39,8 @@ async function setup() {
   ]) {
     ids[role] = id();
     await db.query(
-      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,$4,$2,'lagos')",
-      [
-        ids[role],
-        role,
-        `${role}-${id()}@fixture.invalid`,
-        hashPassword(password),
-      ],
+      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,$4,$5,'lagos')",
+      [ids[role], role, `${role}-${id()}@fixture.invalid`, hashPassword(password), consolidatedRole(role)],
     );
     tokens[role] = await issueSession(db, ids[role]);
     await db.query("UPDATE sessions SET verified_at=now() WHERE user_id=$1", [

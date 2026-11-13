@@ -26,7 +26,7 @@ export async function requestBulkRecovery(
   input: unknown,
 ) {
   enabled();
-  allow(user, ["owner", "inventory"]);
+  allow(user, ["owner", "finance"]);
   recentVerification(user);
   const d = z
     .object({
@@ -47,7 +47,7 @@ export async function requestBulkRecovery(
     [d.loadId],
   );
   if (!load) throw new AppError(404, "Load not found.");
-  allow(user, ["owner", "inventory"], load.branch_id);
+  allow(user, ["owner", "finance"], load.branch_id);
   if (
     load.state !== "held" ||
     load.ended_at ||

@@ -8,6 +8,7 @@ import { type DB, type SQL, one } from "./db";
 import { allow, recentVerification, type Actor, AppError } from "./auth";
 import { audit } from "./governance";
 import { recordFailure } from "./observability";
+import { openMessage } from "./channel-messaging";
 export type MailTransport = {
   send(message: {
     id: string;
@@ -100,6 +101,17 @@ export async function deliverTransactionalMail(
           return { cancelled: true as const };
         }
       }
+      if (row.dedupe_key.startsWith("invite:")) {
+        const [, invitationId, tokenHash] = row.dedupe_key.split(":");
+        const invitation = await one(tx,
+          "SELECT i.id FROM staff_invitations i JOIN users u ON u.id=i.invited_by JOIN branches b ON b.id=i.branch_id WHERE i.id=$1 AND i.email=$2 AND i.invited_by=$3 AND (i.temporary_password_hash IS NULL OR i.token_hash=$4) AND i.accepted_at IS NULL AND i.expires_at>now() AND u.active=true AND b.active=true AND (u.role='owner' OR (u.role='owner' AND u.branch_id=i.branch_id))",
+          [invitationId, row.recipient, row.user_id, tokenHash ?? null],
+        );
+        if (!invitation) {
+          await tx.query("UPDATE message_outbox SET status='cancelled' WHERE id=$1", [row.id]);
+          return { cancelled: true as const };
+        }
+      }
       // Durable fail-closed claim BEFORE external I/O. A crash/timeout is an
       // uncertain send, never an invitation to automatically send twice.
       await tx.query(
@@ -128,7 +140,7 @@ export async function deliverTransactionalMail(
         id: message.id,
         recipient: message.recipient,
         subject: message.subject,
-        body: message.body,
+        body: message.body.startsWith("v1:") ? openMessage(message.body) : message.body,
       });
       await db.transaction(async (tx) => {
         await tx.query(

@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useEffect, useRef, useState } from "react";
 import { randomUUID } from "expo-crypto";
 import { ContextSheet } from "./ContextSheet";
@@ -11,7 +12,7 @@ import { nairaToKobo } from "../../packages/business-rules/src/pos-money";
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 
 export const canOpenRetailPos = (role?: string) =>
-  ["owner", "manager", "sales", "finance"].includes(role ?? "");
+  ["owner", "manager", "finance"].includes(role ?? "");
 
 export default function RetailPos({ api }: { api: (action: string, data?: any) => Promise<any> }) {
   const { colors } = useTheme();
@@ -60,7 +61,7 @@ export default function RetailPos({ api }: { api: (action: string, data?: any) =
     <Copy>Cash sales and till reconciliation. Internet access is required.</Copy>
     {feedback && <Text accessibilityLiveRegion="polite">{feedback}</Text>}
     {error && <><Text accessibilityRole="alert">{friendlyMessage(error)}</Text>{action("Retry POS", refresh)}</>}
-    {!data && !error && <Text>Loading POS…</Text>}
+    {!data && !error && <EasyGasLoader variant="section" label="Loading POS records" />}
     {data && <>
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
         {[

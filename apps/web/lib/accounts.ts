@@ -15,6 +15,7 @@ import {
   allow,
 } from "./auth";
 import { audit, notify } from "./governance";
+import { sealMessage, requireMessageEncryption } from "./channel-messaging";
 const email = z
   .email()
   .max(200)
@@ -26,6 +27,10 @@ export const publicAccountActions = new Set([
   "account.verify",
   "invitation.accept",
 ]);
+const invitationCredentials = () => ({
+  token: randomBytes(32).toString("hex"),
+  password: generateTemporaryPassword(),
+});
 export async function accountAction(
   tx: SQL,
   action: string,
@@ -34,29 +39,27 @@ export async function accountAction(
 ): Promise<any> {
   if (action === "account.recover") {
     const d = z.object({ email }).strict().parse(input);
-    const u = await one(
-      tx,
-      "SELECT id,email FROM users WHERE email=$1 AND active=true",
-      [d.email],
-    );
-    // The same response is returned for known and unknown accounts; throttle before revealing any detail.
+    requireMessageEncryption();
+    appOrigin();
+    // Increment atomically so concurrent requests share one per-account limit.
     const key = digest(`recovery:${d.email}`);
     const recent = await one(
       tx,
-      "SELECT attempts FROM auth_attempts WHERE key=$1 AND reset_at>now()",
+      "INSERT INTO auth_attempts(key,attempts,reset_at) VALUES ($1,1,now()+interval '1 hour') ON CONFLICT(key) DO UPDATE SET attempts=CASE WHEN auth_attempts.reset_at<=now() THEN 1 ELSE LEAST(auth_attempts.attempts+1,4) END,reset_at=CASE WHEN auth_attempts.reset_at<=now() THEN now()+interval '1 hour' ELSE auth_attempts.reset_at END RETURNING attempts",
       [key],
     );
-    if (!recent || recent.attempts < 3) {
-      await tx.query(
-        "INSERT INTO auth_attempts(key,attempts,reset_at) VALUES ($1,1,now()+interval '1 hour') ON CONFLICT(key) DO UPDATE SET attempts=CASE WHEN auth_attempts.reset_at<now() THEN 1 ELSE auth_attempts.attempts+1 END,reset_at=CASE WHEN auth_attempts.reset_at<now() THEN now()+interval '1 hour' ELSE auth_attempts.reset_at END",
-        [key],
+    if (Number(recent?.attempts) <= 3) {
+      const u = await one(
+        tx,
+        "SELECT id,email FROM users WHERE email=$1 AND active=true AND provisional=false FOR UPDATE",
+        [d.email],
       );
       if (u) await challenge(tx, { id: u.id, email: u.email }, "reset");
     }
     return {
       ok: true,
       message:
-        "If an active account exists, recovery instructions have been requested.",
+        "If this email matches an active EasyGas account, you’ll receive a password reset link. Check your inbox and spam folder.",
     };
   }
   if (action === "account.reset" || action === "account.verify") {
@@ -68,14 +71,23 @@ export async function accountAction(
       .strict()
       .parse(input);
     const purpose = action === "account.reset" ? "reset" : "verify";
-    const c = await one(
+    const challengeOwner = await one(
       tx,
-      "SELECT c.*,u.active FROM account_challenges c JOIN users u ON u.id=c.user_id WHERE token_hash=$1 AND purpose=$2 FOR UPDATE OF c",
+      "SELECT user_id FROM account_challenges WHERE token_hash=$1 AND purpose=$2",
       [digest(d.token), purpose],
     );
+    const account = challengeOwner && await one(
+      tx,
+      "SELECT active,provisional,password_hash,temporary_password_expires_at FROM users WHERE id=$1 FOR UPDATE",
+      [challengeOwner.user_id],
+    );
+    const c = account?.active && !account.provisional ? await one(
+      tx,
+      "SELECT * FROM account_challenges WHERE token_hash=$1 AND purpose=$2 FOR UPDATE",
+      [digest(d.token), purpose],
+    ) : null;
     if (
       !c ||
-      !c.active ||
       c.consumed_at ||
       new Date(c.expires_at).getTime() <= Date.now()
     )
@@ -83,9 +95,11 @@ export async function accountAction(
         400,
         "This link has expired or has already been used. Request a new link.",
       );
-    if ("password" in d) {
-      await tx.query("UPDATE users SET password_hash=$1 WHERE id=$2", [
-        hashPassword(String(d.password)),
+    if ("password" in d && typeof d.password === "string") {
+      if (account!.temporary_password_expires_at && passwordMatches(d.password, account!.password_hash))
+        throw new AppError(400, "Choose a password different from your temporary password.");
+      await tx.query("UPDATE users SET password_hash=$1,verified=(verified OR temporary_password_expires_at IS NOT NULL),temporary_password_expires_at=NULL WHERE id=$2", [
+        hashPassword(d.password),
         c.user_id,
       ]);
       await tx.query("UPDATE sessions SET revoked_at=now() WHERE user_id=$1", [
@@ -97,6 +111,8 @@ export async function accountAction(
       "UPDATE account_challenges SET consumed_at=now() WHERE user_id=$1 AND purpose=$2 AND consumed_at IS NULL",
       [c.user_id, purpose],
     );
+    if (purpose === "reset" && account?.temporary_password_expires_at)
+      await tx.query("UPDATE account_challenges SET consumed_at=now() WHERE user_id=$1 AND purpose='verify' AND consumed_at IS NULL", [c.user_id]);
     await audit(tx, null, action, c.user_id);
     await notify(
       tx,
@@ -106,7 +122,7 @@ export async function accountAction(
         ? "Your password changed. All existing sessions were signed out."
         : "Your email address has been verified.",
     );
-    return { ok: true };
+    return { ok: true, message: purpose === "reset" ? "Password reset. Sign in with your new password." : "Your email address is verified." };
   }
   if (action === "invitation.accept") {
     const d = z
@@ -115,7 +131,7 @@ export async function accountAction(
       .parse(input);
     const invitation = await one(
       tx,
-      "SELECT i.*,u.active,u.role,u.branch_id AS inviter_branch_id FROM staff_invitations i JOIN users u ON u.id=i.invited_by WHERE token_hash=$1 FOR UPDATE OF i",
+      "SELECT i.*,u.active,u.role,u.branch_id AS inviter_branch_id,b.active AS branch_active FROM staff_invitations i JOIN users u ON u.id=i.invited_by JOIN branches b ON b.id=i.branch_id WHERE token_hash=$1 FOR UPDATE OF i",
       [digest(d.token)],
     );
     if (
@@ -123,30 +139,27 @@ export async function accountAction(
       invitation.accepted_at ||
       new Date(invitation.expires_at).getTime() <= Date.now() ||
       !invitation.active ||
-      !["owner", "administrator"].includes(invitation.role) ||
-      (invitation.role === "administrator" &&
-        invitation.inviter_branch_id !== invitation.branch_id)
+      !invitation.branch_active ||
+      invitation.role !== "owner"
     )
       throw new AppError(400, "This invitation is no longer valid.");
-    if (
-      await one(tx, "SELECT id FROM users WHERE email=$1", [invitation.email])
-    )
-      throw new AppError(
-        409,
-        "This email already has an account. Use the governed access workflow for that account.",
-      );
+    if (invitation.temporary_password_hash && !passwordMatches(d.password, invitation.temporary_password_hash))
+      throw new AppError(400, "The temporary password does not match this invitation.");
     // Invitations create an unprivileged account. Staff access still requires the existing independent dual approval.
     const uid = id();
-    await tx.query(
-      "INSERT INTO users(id,name,email,password_hash,role,branch_id,verified) VALUES ($1,$2,$3,$4,'customer',$5,true)",
+    const created = await one(tx,
+      "INSERT INTO users(id,name,email,password_hash,role,branch_id,verified,temporary_password_expires_at) VALUES ($1,$2,$3,$4,'customer',$5,true,$6) ON CONFLICT(email) DO NOTHING RETURNING id",
       [
         uid,
         invitation.name,
         invitation.email,
-        hashPassword(d.password),
+        invitation.temporary_password_hash ?? hashPassword(d.password),
         invitation.branch_id,
+        invitation.temporary_password_hash ? invitation.expires_at : null,
       ],
     );
+    if (!created)
+      throw new AppError(409, "This email already has an account. Ask your administrator to use the staff access workflow.");
     await tx.query(
       "UPDATE staff_invitations SET accepted_at=now() WHERE id=$1",
       [invitation.id],
@@ -159,7 +172,12 @@ export async function accountAction(
       `${invitation.name} accepted the invitation. Submit a staff access request for independent approval.`,
       uid,
     );
-    return { ok: true };
+    return {
+      ok: true,
+      message: invitation.temporary_password_hash
+        ? "Invitation accepted. Sign in with your temporary password, then choose a new password."
+        : "Invitation accepted. Sign in with the password you just set.",
+    };
   }
   if (!user) throw new AppError(401, "Please sign in.");
   if (action === "account.profile")
@@ -390,11 +408,12 @@ export async function accountAction(
     await tx.query("UPDATE sessions SET revoked_at=now() WHERE user_id=$1", [
       user.id,
     ]);
+    await tx.query("UPDATE account_challenges SET consumed_at=now() WHERE user_id=$1 AND purpose='reset' AND consumed_at IS NULL", [user.id]);
     await audit(tx, user, "account.password_changed", user.id);
     return { ok: true, signedOut: true };
   }
   if (action === "account.verification.send") {
-    const row = await one(tx, "SELECT verified,email FROM users WHERE id=$1", [
+    const row = await one(tx, "SELECT verified,email FROM users WHERE id=$1 FOR UPDATE", [
       user.id,
     ]);
     if (row!.verified) return { ok: true };
@@ -620,7 +639,7 @@ export async function accountAction(
     return { ok: true };
   }
   if (action === "staff.invite") {
-    allow(user, ["owner", "administrator"]);
+    allow(user, ["owner"]);
     recentVerification(user);
     const d = z
       .object({
@@ -636,15 +655,15 @@ export async function accountAction(
       ]))
     )
       throw new AppError(400, "Choose an active branch.");
+    allow(user, ["owner"], d.branchId);
+    await tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+      "staff-invite:" + d.email,
+    ]);
     if (await one(tx, "SELECT id FROM users WHERE email=$1", [d.email]))
       throw new AppError(
         409,
         "This account already exists. Use the governed access workflow.",
       );
-    allow(user, ["owner", "administrator"], d.branchId);
-    await tx.query("SELECT id FROM branches WHERE id=$1 FOR UPDATE", [
-      d.branchId,
-    ]);
     if (
       await one(
         tx,
@@ -656,32 +675,33 @@ export async function accountAction(
         409,
         "An active invitation already exists. Resend or revoke it from Staff Management.",
       );
-    const token = randomBytes(32).toString("hex"),
-      iid = id();
+    const { token, password: temporaryPassword } = invitationCredentials();
+    const iid = id();
     await tx.query(
-      "INSERT INTO staff_invitations(id,email,name,branch_id,invited_by,token_hash,expires_at) VALUES ($1,$2,$3,$4,$5,$6,now()+interval '48 hours')",
-      [iid, d.email, d.name, d.branchId, user.id, digest(token)],
+      "INSERT INTO staff_invitations(id,email,name,branch_id,invited_by,token_hash,expires_at,temporary_password_hash) VALUES ($1,$2,$3,$4,$5,$6,now()+interval '48 hours',$7)",
+      [iid, d.email, d.name, d.branchId, user.id, digest(token), hashPassword(temporaryPassword)],
     );
     await queueMessage(
       tx,
       user.id,
       d.email,
       "EasyGas invitation",
-      `${appOrigin()}/accept-invitation#token=${token}`,
-      `invite:${iid}`,
+      staffInvitationBody(token, temporaryPassword),
+      `invite:${iid}:${digest(token)}`,
+      true,
     );
     await audit(tx, user, "staff.invited", iid);
     return {
       ok: true,
       invitationId: iid,
-      invitationUrl: `${appOrigin()}/accept-invitation#token=${token}`,
+      message: "Invitation email queued. The recipient has 48 hours to accept and use their temporary password.",
     };
   }
   if (
     action === "staff.invitation.revoke" ||
     action === "staff.invitation.resend"
   ) {
-    allow(user, ["owner", "administrator"]);
+    allow(user, ["owner"]);
     recentVerification(user);
     const d = z.object({ id: z.string().uuid() }).strict().parse(input);
     const i = await one(
@@ -690,7 +710,7 @@ export async function accountAction(
       [d.id],
     );
     if (!i) throw new AppError(404, "Invitation not found.");
-    allow(user, ["owner", "administrator"], i.branch_id);
+    allow(user, ["owner"], i.branch_id);
     if (i.accepted_at)
       throw new AppError(
         409,
@@ -708,6 +728,7 @@ export async function accountAction(
       await audit(tx, user, "staff.invitation_revoked", i.id);
       return { ok: true };
     }
+    await tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", ["staff-invite:" + i.email]);
     if (
       !(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true", [
         i.branch_id,
@@ -719,26 +740,28 @@ export async function accountAction(
         409,
         "This account already exists. Use its access request controls.",
       );
-    const token = randomBytes(32).toString("hex");
+    if (await one(tx, "SELECT id FROM staff_invitations WHERE email=$1 AND id<>$2 AND accepted_at IS NULL AND expires_at>now()", [i.email, i.id]))
+      throw new AppError(409, "A newer invitation already exists for this email. Resend that invitation instead.");
+    const { token, password: temporaryPassword } = invitationCredentials();
     await tx.query(
-      "UPDATE staff_invitations SET token_hash=$1,expires_at=now()+interval '48 hours',invited_by=$2 WHERE id=$3",
-      [digest(token), user.id, i.id],
+      "UPDATE staff_invitations SET token_hash=$1,expires_at=now()+interval '48 hours',invited_by=$2,temporary_password_hash=$3 WHERE id=$4",
+      [digest(token), user.id, hashPassword(temporaryPassword), i.id],
     );
     await tx.query(
       "UPDATE message_outbox SET status='cancelled' WHERE dedupe_key LIKE $1 AND status IN ('pending','failed')",
       ["invite:" + i.id + "%"],
     );
-    const invitationUrl = `${appOrigin()}/accept-invitation#token=${token}`;
     await queueMessage(
       tx,
       user.id,
       i.email,
       "EasyGas invitation",
-      invitationUrl,
-      "invite:" + i.id + ":" + id(),
+      staffInvitationBody(token, temporaryPassword),
+      `invite:${i.id}:${digest(token)}`,
+      true,
     );
     await audit(tx, user, "staff.invitation_resent", i.id);
-    return { ok: true, invitationUrl };
+    return { ok: true, message: "A new invitation email is queued. The previous link and temporary password have been replaced." };
   }
   if (action === "staff.suspend") {
     allow(user, ["owner"]);
@@ -770,6 +793,17 @@ export async function accountAction(
   }
   return undefined;
 }
+export function generateTemporaryPassword() {
+  return randomBytes(24).toString("base64url");
+}
+function staffInvitationBody(token: string, temporaryPassword: string) {
+  return [
+    "You’ve been invited to join EasyGas.",
+    `Temporary password: ${temporaryPassword}`,
+    `Accept your invitation: ${appOrigin()}/accept-invitation#token=${token}&setup=temporary`,
+    "Use the temporary password to accept. Then sign in and choose a new password. The invitation and temporary password expire after 48 hours.",
+  ].join("\n\n");
+}
 export async function queueMessage(
   tx: SQL,
   userId: string,
@@ -777,16 +811,18 @@ export async function queueMessage(
   subject: string,
   body: string,
   key: string,
+  confidential = false,
 ) {
   await tx.query(
     "INSERT INTO message_outbox(id,user_id,channel,recipient,subject,body,dedupe_key) VALUES ($1,$2,'email',$3,$4,$5,$6) ON CONFLICT(dedupe_key) DO NOTHING",
-    [id(), userId, recipient, subject, body, key],
+    [id(), userId, recipient, subject, confidential ? sealMessage(body) : body, key],
   );
 }
-async function challenge(
+export async function challenge(
   tx: SQL,
   u: { id: string; email: string },
   purpose: "reset" | "verify",
+  temporaryPassword?: string,
 ) {
   const token = randomBytes(32).toString("hex"),
     cid = id();
@@ -795,17 +831,24 @@ async function challenge(
     [u.id, purpose],
   );
   await tx.query(
-    "INSERT INTO account_challenges(id,user_id,purpose,token_hash,expires_at) VALUES ($1,$2,$3,$4,now()+interval '30 minutes')",
-    [cid, u.id, purpose, digest(token)],
+    "INSERT INTO account_challenges(id,user_id,purpose,token_hash,expires_at) VALUES ($1,$2,$3,$4,now()+CASE WHEN $5::boolean THEN interval '48 hours' ELSE interval '30 minutes' END)",
+    [cid, u.id, purpose, digest(token), Boolean(temporaryPassword)],
   );
   await queueMessage(
     tx,
     u.id,
     u.email,
-    purpose === "reset"
+    temporaryPassword
+      ? "Accept your EasyGas account"
+      : purpose === "reset"
       ? "Reset your EasyGas password"
       : "Verify your EasyGas email",
-    `${appOrigin()}/${purpose === "reset" ? "reset-password" : "verify-email"}#token=${token}`,
+    temporaryPassword
+      ? `Your EasyGas account is ready to accept.\n\nTemporary password: ${temporaryPassword}\n\nAccept your account: ${appOrigin()}/verify-email#token=${token}\n\nSign in with your temporary password and choose a new one. The link and temporary password expire after 48 hours.`
+      : purpose === "reset"
+      ? `Use this link to choose a new password for your EasyGas account. It expires in 30 minutes.\n\n${appOrigin()}/reset-password#token=${token}\n\nIf you didn’t request a reset, you can ignore this email.`
+      : `${appOrigin()}/verify-email#token=${token}`,
     `challenge:${cid}`,
+    Boolean(temporaryPassword) || purpose === "reset",
   );
 }

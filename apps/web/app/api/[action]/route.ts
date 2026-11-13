@@ -160,6 +160,7 @@ async function handle(
           "register",
           "account.recover",
           "account.reset",
+          "account.verify",
           "invitation.accept",
           "phone.otp",
           "phone.review",

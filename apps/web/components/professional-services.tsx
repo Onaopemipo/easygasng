@@ -1,4 +1,5 @@
 "use client";
+import { EasyGasLoader } from "./easygas-loader";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, ClipboardList, Clock3, Info, ListChecks, MapPin, ShieldCheck, Wrench, CircleMinus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import {
@@ -99,7 +100,7 @@ export function ServiceForm({
         return;
       }
       const r = await send(reviewValues ?? v);
-      setMessage(r.id ? "Saved. Reference: " + r.id : "Saved successfully.");
+      setMessage(r.message ?? (r.id ? "Saved. Reference: " + r.id : "Saved successfully."));
       setDirty(false);
       done?.();
     } catch (err: any) {
@@ -236,16 +237,9 @@ export default function ProfessionalServices({
   const staff = Boolean(
       !publicPage &&
         user &&
-        [
-          "owner",
-          "service_manager",
-          "technician",
-          "safety_officer",
-          "inventory",
-          "finance",
-        ].includes(user.role),
+        ["owner", "manager", "technician", "finance"].includes(user.role),
     ),
-    manager = staff && ["owner", "service_manager"].includes(user?.role);
+    manager = staff && ["owner", "manager"].includes(user?.role);
   const canBook =
     user && (!publicPage || ["customer", "commercial"].includes(user.role));
   const loadBookings =
@@ -255,13 +249,7 @@ export default function ProfessionalServices({
   const redesigned =
     mode === "technicians" &&
     process.env.NEXT_PUBLIC_EASYGAS_TECHNICIANS_UI !== "legacy" &&
-    [
-      "owner",
-      "service_manager",
-      "safety_officer",
-      "inventory",
-      "finance",
-    ].includes(user?.role);
+    ["owner", "manager", "finance"].includes(user?.role);
   const [catalogue, setCatalogue] = useState<any[]>([]),
     [bookings, setBookings] = useState<any[]>([]),
     [workspace, setWorkspace] = useState<any>(null),
@@ -411,7 +399,7 @@ export default function ProfessionalServices({
       {mode === "incidents" ? (
         <Incidents />
       ) : mode === "technicians" &&
-        ["owner", "service_manager", "safety_officer"].includes(user?.role) &&
+        ["owner", "manager"].includes(user?.role) &&
         workspace ? (
         <Technicians data={workspace} reload={reload} user={user} />
       ) : mode === "catalogue" ? (
@@ -768,7 +756,7 @@ function BookingForm({
       {error ? (
         <Notice type="error" message={error} />
       ) : !current ? (
-        <p role="status">Checking appointment availability…</p>
+        <EasyGasLoader size="sm" variant="section" label="Checking appointment availability" />
       ) : changed ? (
         <Notice message="Service details or pricing changed. Refresh the service and review the current terms." />
       ) : !available ? (
@@ -1379,7 +1367,7 @@ function Technicians({
             <p>{q.evidence}</p>
           </div>
         ))}
-        {["owner", "safety_officer"].includes(user.role) && (
+        {["owner"].includes(user.role) && (
           <ServiceForm
             title="Record independent qualification verification"
             done={reload}
@@ -1488,8 +1476,8 @@ export function BookingCard({
 }) {
   const customer = user.id === b.customer_id,
     tech = user.role === "technician",
-    manager = ["owner", "service_manager"].includes(user.role),
-    store = ["owner", "inventory", "service_manager"].includes(user.role),
+    manager = ["owner", "manager"].includes(user.role),
+    store = ["owner", "finance", "manager"].includes(user.role),
     finance = ["owner", "finance"].includes(user.role),
     q = b.quotes[0];
   const [error, setError] = useState(""),
@@ -1775,7 +1763,7 @@ export function BookingCard({
               }
             />
           )}{" "}
-          {["owner", "inventory"].includes(user.role) &&
+          {["owner", "finance"].includes(user.role) &&
             m.state === "issued" && (
               <details>
                 <summary>Recover stopped-work material custody</summary>
@@ -1784,7 +1772,7 @@ export function BookingCard({
                   required. Recovery never authorises further work or changes
                   customer charges.
                 </p>
-                {(user.role === "inventory"
+                {(user.role === "finance"
                   ? ["request", "execute"]
                   : ["execute"]
                 ).map((step) => (
@@ -1947,7 +1935,7 @@ export function BookingCard({
           <ImageUpload bookingId={b.id} done={done} />
         )}
       {(customer ||
-        ["owner", "finance", "service_manager", "manager"].includes(
+        ["owner", "finance", "manager"].includes(
           user.role,
         )) && (
         <OrderInvoice
@@ -1963,7 +1951,7 @@ export function BookingCard({
             separately approved, customer-agreed settlement can establish
             reviewed charges.
           </p>
-          {user.role === "service_manager" && (
+          {user.role === "manager" && (
             <ServiceForm
               title="Propose an exception settlement"
               fields={[

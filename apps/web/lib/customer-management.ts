@@ -1,9 +1,9 @@
 import {latestDeliveryPhoto} from "./delivery-photos";
-import { randomBytes } from "node:crypto";
 import { z } from "zod";
 import { type SQL, one } from "./db";
 import { allow, AppError, hashPassword, id, type Actor } from "./auth";
 import { audit } from "./governance";
+import { challenge, generateTemporaryPassword } from "./accounts";
 
 export async function customerManagement(
   tx: SQL,
@@ -33,24 +33,29 @@ export async function customerManagement(
       ]))
     )
       throw new AppError(400, "Choose an active branch.");
+    await tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", ["staff-invite:" + d.email]);
     if (await one(tx, "SELECT id FROM users WHERE lower(email)=$1", [d.email]))
       throw new AppError(409, "An account already uses this email address.");
+    if (await one(tx, "SELECT id FROM staff_invitations WHERE email=$1 AND accepted_at IS NULL AND expires_at>now()", [d.email]))
+      throw new AppError(409, "An invitation already uses this email address.");
     const uid = id();
+    const temporaryPassword = generateTemporaryPassword();
     await tx.query(
-      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,$4,'customer',$5)",
+      "INSERT INTO users(id,name,email,password_hash,role,branch_id,temporary_password_expires_at) VALUES($1,$2,$3,$4,'customer',$5,now()+interval '48 hours')",
       [
         uid,
         d.name,
         d.email,
-        hashPassword(randomBytes(48).toString("hex")),
+        hashPassword(temporaryPassword),
         d.branchId,
       ],
     );
+    await challenge(tx, { id: uid, email: d.email }, "verify", temporaryPassword);
     await audit(tx, user, action, uid);
     return {
       id: uid,
       message:
-        "Customer created. Account access requires password recovery; email delivery is not connected locally.",
+        "Customer created. An acceptance email with a temporary password is queued.",
     };
   }
   const scope = user.role === "owner" ? [] : [user.branch_id];
@@ -99,7 +104,7 @@ export async function customerManagement(
         user.role === "owner" ? [d.id] : [d.id, user.branch_id],
       )
     ).rows;
-    return { customer, orders, latestDeliveryPhoto:["owner","manager","dispatcher"].includes(user.role)?await latestDeliveryPhoto(tx,user,d.id):null };
+    return { customer, orders, latestDeliveryPhoto:["owner", "manager"].includes(user.role)?await latestDeliveryPhoto(tx,user,d.id):null };
   }
   await audit(tx, user, "customers.view", "directory");
   return {

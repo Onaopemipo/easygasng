@@ -23,7 +23,7 @@ export function DoorstepProductActions({
     <>
       {!e &&
         m.state === "consented" &&
-        ["owner", "inventory"].includes(user.role) && (
+        ["owner", "finance"].includes(user.role) && (
           <Form
             title="Reserve exact manifested products"
             action="doorstep.products.prepare"

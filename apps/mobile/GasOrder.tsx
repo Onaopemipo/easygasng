@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import {
   deliveryCoveragePending,
   hasConfirmedDeliveryCoverage,
@@ -59,6 +60,7 @@ export default function GasOrder({
   const [street, setStreet] = useState("");
   const [catalogueRevision, refreshCatalogue] = useState(0);
   const [pricingBranch, setPricingBranch] = useState<string | null>(null);
+  const [pricingFailed, setPricingFailed] = useState<string | null>(null);
   const [loadingQuote, setLoadingQuote] = useState(false);
   const quoteLock = useRef(false);
   const [showGuide, setShowGuide] = useState(false);
@@ -88,6 +90,7 @@ export default function GasOrder({
   useEffect(() => {
     let live = true;
     setPricingBranch(null);
+    setPricingFailed(null);
     setQuote(null);
     api("gas.catalogue?branchId=" + encodeURIComponent(requestedBranch))
       .then((value) => {
@@ -104,7 +107,10 @@ export default function GasOrder({
         );
       })
       .catch((e) => {
-        if (live) setError(e.message);
+        if (live) {
+          setPricingFailed(requestedBranch);
+          setError(e.message);
+        }
       });
     return () => {
       live = false;
@@ -151,10 +157,11 @@ export default function GasOrder({
         </Pressable>
       </View>
     ) : (
-      <Text>Loading gas prices…</Text>
+      <EasyGasLoader variant="section" label="Loading gas prices" />
     );
   const capacities: number[] = config.policy?.capacitiesKg ?? [];
   const pricingReady = pricingBranch === requestedBranch;
+  const pricingLoading = !pricingReady && pricingFailed !== requestedBranch;
   const feeReady =
     Number.isSafeInteger(config.deliveryKobo) &&
     config.deliveryKobo >= 0 &&
@@ -264,22 +271,22 @@ export default function GasOrder({
               color={colors.primary}
             />
             <View style={{ flex: 1 }}>
-              <Text>
+              {pricingLoading ? <EasyGasLoader size="xs" label="Loading gas price" /> : <Text>
                 {pricingReady && config.priceKobo > 0
                   ? money(config.priceKobo) + "/kg"
                   : "Unavailable"}
-              </Text>
+              </Text>}
               <CustomerCopy>Gas price</CustomerCopy>
             </View>
           </View>
           <View style={s.priceCell}>
             <Ionicons name="car-outline" size={18} color={colors.primary} />
             <View style={{ flex: 1 }}>
-              <Text>
+              {pricingLoading ? <EasyGasLoader size="xs" label="Loading delivery fee" /> : <Text>
                 {pricingReady && feeReady
                   ? money(config.deliveryKobo)
                   : "Unavailable"}
-              </Text>
+              </Text>}
               <CustomerCopy>Flat delivery</CustomerCopy>
             </View>
           </View>
@@ -486,7 +493,9 @@ export default function GasOrder({
           <CustomerTitle>
             {quote ? "Quoted total" : "Order summary"}
           </CustomerTitle>
-          {!pricingReady || !feeReady ? (
+          {pricingLoading ? (
+            <EasyGasLoader size="sm" variant="section" label="Loading the order estimate" />
+          ) : !pricingReady || !feeReady ? (
             <CustomerCopy>Current pricing unavailable.</CustomerCopy>
           ) : quantityError ? (
             <CustomerCopy>{quantityError}</CustomerCopy>
@@ -733,7 +742,8 @@ export default function GasOrder({
         showGuide ? "Hide cylinder size guide" : "Cylinder size guide",
         () => setShowGuide(!showGuide),
       )}
-      {showGuide && (!pricingReady || !feeReady || !(config.priceKobo > 0)) && (
+      {showGuide && pricingLoading && <EasyGasLoader size="sm" variant="section" label="Loading cylinder prices" />}
+      {showGuide && !pricingLoading && (!pricingReady || !feeReady || !(config.priceKobo > 0)) && (
         <CustomerCopy>Current price estimates are unavailable.</CustomerCopy>
       )}
       {showGuide &&

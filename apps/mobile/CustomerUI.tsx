@@ -14,32 +14,34 @@ export function useRemote(
   input?: any,
   enabled = true,
 ) {
-  const [data, setData] = useState<any>(null),
-    [error, setError] = useState(""),
-    [version, reload] = useState(0);
   const fingerprint = JSON.stringify(input ?? {});
+  const request = enabled ? customerReadAction(action, JSON.parse(fingerprint)) : null;
+  const [result, setResult] = useState<{ request: string; data: any; error: string }>();
+  const [version, reload] = useState(0);
   useEffect(() => {
+    if (!request) {
+      setResult(undefined);
+      return;
+    }
     let live = true;
-    setData(null);
-    setError("");
-    if (enabled)
-      api(customerReadAction(action, JSON.parse(fingerprint)))
-        .then((value) => {
-          if (live) setData(value);
-        })
-        .catch(() => {
-          if (live)
-            setError("Could not load this information. Please try again.");
-        });
+    setResult(previous => previous?.request === request && !previous.error ? previous : undefined);
+    api(request)
+      .then(data => {
+        if (live) setResult({ request, data, error: "" });
+      })
+      .catch(() => {
+        if (live) setResult({ request, data: null, error: "Could not load this information. Please try again." });
+      });
     return () => {
       live = false;
     };
-  }, [action, fingerprint, version, enabled]);
+  }, [request, version]);
+  const current = result?.request === request ? result : undefined;
   return {
-    data,
-    error,
+    data: current?.data ?? null,
+    error: current?.error ?? "",
     reload: () => reload((v) => v + 1),
-    loading: enabled && data === null && !error,
+    loading: enabled && !current,
   };
 }
 export function Button({

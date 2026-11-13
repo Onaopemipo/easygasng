@@ -1,8 +1,11 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate } from "../apps/web/lib/db";
 import { id, hashPassword, issueSession } from "../apps/web/lib/auth";
 import { dispatch } from "../apps/web/lib/service";
+process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY ??= "7".repeat(64);
+
 test("CM-01: customer creation, scoped management and privilege rejection", async () => {
   const db = await createDatabase("memory://");
   await migrate(db);
@@ -16,7 +19,7 @@ test("CM-01: customer creation, scoped management and privilege rejection", asyn
         role,
         role + "@cm.test",
         hashPassword("Synthetic-only-password-123!"),
-        role,
+        consolidatedRole(role),
       ],
     );
     actors[role] = await issueSession(db, uid);

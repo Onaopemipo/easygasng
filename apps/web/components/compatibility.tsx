@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { api, Notice } from "./ui";
+import { api, Loading, Notice } from "./ui";
 import { ServiceForm } from "./professional-services";
 export function Compatibility({
   productId,
@@ -11,7 +11,7 @@ export function Compatibility({
   user?: any;
   manage?: boolean;
 }) {
-  const [rows, setRows] = useState<any[]>([]),
+  const [rows, setRows] = useState<any[] | null>(null),
     [error, setError] = useState(""),
     [version, setVersion] = useState(0);
   const reload = () => setVersion((v) => v + 1);
@@ -32,10 +32,11 @@ export function Compatibility({
         Unknown equipment requires professional confirmation.
       </p>
       {error && <Notice type="error" message={error} />}{" "}
-      {!rows.length && (
+      {!rows && !error && <Loading label="Loading compatibility records" />}
+      {rows?.length === 0 && (
         <p>No independently reviewed compatibility records are published.</p>
       )}
-      {rows.map((c) => (
+      {rows?.map((c) => (
         <article className="quote-card" key={c.id}>
           <strong>
             {c.equipment_brand} · {c.equipment_model}
@@ -51,7 +52,7 @@ export function Compatibility({
           </p>
           <p>{c.evidence}</p>
           {manage &&
-            ["owner", "safety_officer"].includes(user?.role) &&
+            ["owner"].includes(user?.role) &&
             !c.reviewed_by &&
             c.proposed_by !== user.id && (
               <ServiceForm
@@ -71,7 +72,7 @@ export function Compatibility({
         </article>
       ))}
       {manage &&
-        ["owner", "service_manager", "safety_officer"].includes(user?.role) && (
+        ["owner", "manager"].includes(user?.role) && (
           <ServiceForm
             title="Record a specific equipment match"
             fields={[

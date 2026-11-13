@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { one, type SQL } from "./db";
 import { id, allow, AppError, recentVerification, type Actor } from "./auth";
-import { audit } from "./governance";
+import { audit, hasQualifiedSafetyReviewer } from "./governance";
 export async function catalogueAction(
   tx: SQL,
   action: string,
@@ -15,11 +15,11 @@ export async function catalogueAction(
       .parse(input);
     if (action === "compatibility.manage") {
       if (!user) throw new AppError(401, "Please sign in.");
-      allow(user, ["owner", "service_manager", "safety_officer", "inventory"]);
+      allow(user, ["owner", "manager", "finance"]);
     }
     return (
       await tx.query(
-        "SELECT c.*,u.name AS reviewer FROM product_compatibility c LEFT JOIN users u ON u.id=c.reviewed_by WHERE c.product_id=$1 AND ($2::boolean OR (c.reviewed_by IS NOT NULL AND u.active=true AND u.role IN ('owner','safety_officer') AND (c.status<>'verified_compatible' OR EXISTS(SELECT 1 FROM technician_qualifications q JOIN users v ON v.id=q.verified_by WHERE q.user_id=u.id AND q.code='safety_review' AND q.expires_at>now() AND v.active=true AND v.role IN ('owner','safety_officer'))))) ORDER BY c.created_at DESC",
+        "SELECT c.*,u.name AS reviewer FROM product_compatibility c LEFT JOIN users u ON u.id=c.reviewed_by WHERE c.product_id=$1 AND ($2::boolean OR (c.reviewed_by IS NOT NULL AND u.active=true AND u.role IN ('owner') AND (c.status<>'verified_compatible' OR EXISTS(SELECT 1 FROM technician_qualifications q JOIN users v ON v.id=q.verified_by WHERE q.user_id=u.id AND q.code='safety_review' AND q.expires_at>now() AND v.active=true AND v.role='owner' AND v.id<>q.user_id)))) ORDER BY c.created_at DESC",
         [d.productId, action === "compatibility.manage"],
       )
     ).rows.map((c) =>
@@ -39,7 +39,7 @@ export async function catalogueAction(
   }
   if (!user) return undefined;
   if (action === "compatibility.propose") {
-    allow(user, ["owner", "service_manager", "safety_officer"]);
+    allow(user, ["owner", "manager"]);
     const d = z
       .object({
         productId: z.string().min(1).max(100),
@@ -76,7 +76,7 @@ export async function catalogueAction(
     return { id: cid };
   }
   if (action === "compatibility.review") {
-    allow(user, ["owner", "safety_officer"]);
+    allow(user, ["owner"]);
     recentVerification(user);
     const d = z
       .object({ id: z.string().uuid(), approve: z.boolean() })
@@ -98,11 +98,7 @@ export async function catalogueAction(
     if (
       d.approve &&
       c.status === "verified_compatible" &&
-      !(await one(
-        tx,
-        "SELECT id FROM technician_qualifications WHERE user_id=$1 AND code='safety_review' AND expires_at>now()",
-        [user.id],
-      ))
+      !(await hasQualifiedSafetyReviewer(tx, [user.id]))
     )
       throw new AppError(
         409,
@@ -121,7 +117,7 @@ export async function catalogueAction(
     return { ok: true };
   }
   if (action === "catalogue.manage") {
-    allow(user, ["owner", "manager", "inventory"]);
+    allow(user, ["owner", "manager", "finance"]);
     const branch = user.branch_id ?? "lagos";
     return {
       categories: (
@@ -253,7 +249,7 @@ export async function catalogueAction(
       .parse(input);
     const rows = (
       await tx.query(
-        "SELECT r.id,r.relation,r.evidence,p.name AS product,s.id AS service_id,s.name AS service,s.config FROM recommendation_rules r JOIN users reviewer ON reviewer.id=r.reviewed_by JOIN products p ON p.id=r.product_id JOIN inventory i ON i.product_id=p.id AND i.branch_id=r.branch_id JOIN service_catalogue s ON s.id=r.service_id AND s.branch_id=r.branch_id WHERE r.active=true AND reviewer.active=true AND reviewer.role IN ('owner','safety_officer') AND p.archived=false AND i.published=true AND i.price_kobo>0 AND i.quantity-i.reserved>0 AND (s.config->>'active')::boolean=true AND r.relation IN ('assessment','unknown') AND (($1::text IS NOT NULL AND p.id=$1) OR ($1::text IS NULL AND EXISTS(SELECT 1 FROM orders o JOIN order_items oi ON oi.order_id=o.id WHERE o.customer_id=$2 AND oi.product_id=p.id AND o.status='delivered' AND o.payment_status='verified'))) ORDER BY r.id LIMIT 12",
+        "SELECT r.id,r.relation,r.evidence,p.name AS product,s.id AS service_id,s.name AS service,s.config FROM recommendation_rules r JOIN users reviewer ON reviewer.id=r.reviewed_by JOIN products p ON p.id=r.product_id JOIN inventory i ON i.product_id=p.id AND i.branch_id=r.branch_id JOIN service_catalogue s ON s.id=r.service_id AND s.branch_id=r.branch_id WHERE r.active=true AND reviewer.active=true AND reviewer.role IN ('owner') AND p.archived=false AND i.published=true AND i.price_kobo>0 AND i.quantity-i.reserved>0 AND (s.config->>'active')::boolean=true AND r.relation IN ('assessment','unknown') AND (($1::text IS NOT NULL AND p.id=$1) OR ($1::text IS NULL AND EXISTS(SELECT 1 FROM orders o JOIN order_items oi ON oi.order_id=o.id WHERE o.customer_id=$2 AND oi.product_id=p.id AND o.status='delivered' AND o.payment_status='verified'))) ORDER BY r.id LIMIT 12",
         [d.productId ?? null, user.id],
       )
     ).rows;
@@ -301,7 +297,7 @@ export async function catalogueAction(
     return { ok: true };
   }
   if (action === "recommendations.manage") {
-    allow(user, ["owner", "service_manager", "safety_officer"]);
+    allow(user, ["owner", "manager"]);
     return (
       await tx.query(
         `SELECT r.*,(SELECT count(*) FROM recommendation_events e WHERE e.rule_id=r.id AND kind='displayed') AS displayed,(SELECT count(*) FROM recommendation_events e WHERE e.rule_id=r.id AND kind='selected') AS selected,(SELECT count(*) FROM recommendation_events e WHERE e.rule_id=r.id AND kind='booked') AS booked,(SELECT count(*) FROM recommendation_events e WHERE e.rule_id=r.id AND kind='completed') AS completed,p.name AS product,s.name AS service FROM recommendation_rules r LEFT JOIN products p ON p.id=r.product_id JOIN service_catalogue s ON s.id=r.service_id AND s.branch_id=r.branch_id WHERE ${user.role === "owner" ? "true" : "r.branch_id=$1"} ORDER BY r.id`,
@@ -320,7 +316,7 @@ export async function catalogueAction(
       })
       .strict()
       .parse(input);
-    allow(user, ["owner", "service_manager"], d.branchId);
+    allow(user, ["owner", "manager"], d.branchId);
     const rid = id();
     await tx.query(
       "INSERT INTO recommendation_rules(id,branch_id,product_id,service_id,relation,evidence,created_by) VALUES ($1,$2,$3,$4,$5,$6,$7)",
@@ -348,7 +344,7 @@ export async function catalogueAction(
       [d.id],
     );
     if (!r) throw new AppError(404, "Rule not found.");
-    allow(user, ["owner", "safety_officer"], r.branch_id);
+    allow(user, ["owner"], r.branch_id);
     recentVerification(user);
     if (r.created_by === user.id)
       throw new AppError(

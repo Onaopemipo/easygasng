@@ -24,6 +24,7 @@ import {
   publicSearchResults,
 } from "../../../packages/business-rules/src/public-header";
 import { Logo, api } from "./ui";
+import { ActionLoadingIndicator } from "./easygas-loader";
 import { ThemeToggle } from "./theme-provider";
 import { CustomerAccountMenu } from "./customer-workspace";
 import {
@@ -44,6 +45,7 @@ export default function PublicHeader({
   user,
   cartCount,
   catalogue,
+  cataloguePending,
   onLogout,
 }: any) {
   const path = usePathname();
@@ -268,15 +270,17 @@ export default function PublicHeader({
                     <X size={18} />
                   </button>
                 </div>
-                <p role="status">
-                  {searchState === "loading"
-                    ? "Searching public products and services…"
-                    : searchState === "error"
+                {searchState === "loading" ? (
+                  <ActionLoadingIndicator label="Searching public products and services" />
+                ) : (
+                  <p role="status">
+                    {searchState === "error"
                       ? "Search is unavailable. Please submit again to retry."
                       : results.length
                         ? `${results.length} matching results${results.length > 12 ? "; showing the first 12" : ""}.`
                         : "No matching products, services or help pages."}
-                </p>
+                  </p>
+                )}
                 {partial && searchState === "ready" && (
                   <p role="status">
                     Some catalogue results are unavailable. Submit again to
@@ -320,7 +324,7 @@ export default function PublicHeader({
               }}
             >
               <option value="">
-                {locations.length
+                {cataloguePending ? "Select delivery location" : locations.length
                   ? "Select delivery location"
                   : "Delivery areas unavailable"}
               </option>

@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate, one } from "../apps/web/lib/db";
@@ -12,13 +13,8 @@ test("PM-T11: invoice issue is immutable, numbered, ownership-scoped and derives
     for (const role of ["owner", "finance", "manager", "customer", "sales"]) {
       ids[role] = id();
       await db.query(
-        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,$4,$2,'lagos')",
-        [
-          ids[role],
-          role,
-          role + "@invoice.test",
-          hashPassword("Fixture-password-123!"),
-        ],
+        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,$4,$5,'lagos')",
+        [ids[role], role, role + "@invoice.test", hashPassword("Fixture-password-123!"), consolidatedRole(role)],
       );
       tokens[role] = await issueSession(db, ids[role]);
     }
@@ -48,9 +44,7 @@ test("PM-T11: invoice issue is immutable, numbered, ownership-scoped and derives
       (await call("finance", "invoice.issue", { orderId: oid })).invoice.id,
       first.invoice.id,
     );
-    await assert.rejects(() =>
-      call("sales", "invoice.order", { orderId: oid }),
-    );
+    assert.equal((await call("sales", "invoice.order", { orderId: oid })).invoice.id, first.invoice.id);
     await assert.rejects(() =>
       call("customer", "invoice.issue", { orderId: oid }),
     );

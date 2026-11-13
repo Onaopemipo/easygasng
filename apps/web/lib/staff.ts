@@ -1,3 +1,4 @@
+import { accountRoles } from "../../../packages/business-rules/src/staff-roles";
 import { z } from "zod";
 import { one, type SQL } from "./db";
 import { allow, AppError, recentVerification, type Actor } from "./auth";
@@ -9,7 +10,7 @@ export async function staffAction(
   input: unknown,
 ): Promise<any> {
   if (action === "staff.manage") {
-    allow(user, ["owner", "administrator", "manager"]);
+    allow(user, ["owner", "manager"]);
     const global = user.role === "owner",
       args = global ? [] : [user.branch_id];
     return {
@@ -40,7 +41,7 @@ export async function staffAction(
     };
   }
   if (action === "staff.lookup") {
-    allow(user, ["owner", "administrator", "manager"]);
+    allow(user, ["owner", "manager"]);
     const d = z
       .object({ email: z.email().transform((v) => v.trim().toLowerCase()) })
       .strict()
@@ -60,7 +61,7 @@ export async function staffAction(
     return target;
   }
   if (action === "staff.edit") {
-    allow(user, ["owner", "administrator", "manager"]);
+    allow(user, ["owner", "manager"]);
     recentVerification(user);
     const d = z
       .object({
@@ -78,7 +79,7 @@ export async function staffAction(
     if (!t) throw new AppError(404, "Staff account not found.");
     if (user.role !== "owner" && t.branch_id !== user.branch_id)
       throw new AppError(403, "This record belongs to another branch.");
-    allow(user, ["owner", "administrator", "manager"], t.branch_id);
+    allow(user, ["owner", "manager"], t.branch_id);
     if (
       (t.role === "owner" && user.role !== "owner") ||
       (["customer", "commercial"].includes(t.role) &&
@@ -131,25 +132,12 @@ export async function staffAction(
     return { ok: true };
   }
   if (action === "staff.access.request") {
-    allow(user, ["owner", "administrator", "manager"]);
+    allow(user, ["owner", "manager"]);
     recentVerification(user);
     const d = z
       .object({
         userId: z.string().uuid(),
-        role: z.enum([
-          "owner",
-          "administrator",
-          "manager",
-          "sales",
-          "inventory",
-          "dispatcher",
-          "driver",
-          "finance",
-          "service_manager",
-          "technician",
-          "safety_officer",
-          "customer",
-        ]),
+        role: z.enum(accountRoles),
         branchId: z.string().min(1).max(100),
         reason: z.string().trim().min(10).max(1000),
       })

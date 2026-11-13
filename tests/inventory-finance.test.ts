@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate, one } from "../apps/web/lib/db";
@@ -24,7 +25,7 @@ async function fixture() {
         role,
         uid + "@example.test",
         hashPassword("Inventory-fixture-only-123!"),
-        role,
+        consolidatedRole(role),
       ],
     );
     users[role] = { id: uid, token: await issueSession(db, uid) };
@@ -42,8 +43,8 @@ test("F,N: operational dashboard and sales inventory must not expose financial m
     assert.ok(rows.length);
     assert.equal("price_kobo" in rows[0], true);
     assert.equal("unit_cost_kobo" in rows[0], false);
-    const d = await f.call("inventory", "dashboard");
-    assert.equal(d.revenueKobo, null);
+    const d = await f.call("manager", "dashboard");
+    assert.equal(d.revenueKobo, 0);
     assert.equal("walletLiabilityKobo" in d, false);
     await assert.rejects(
       () => f.call("sales", "finance.summary"),
@@ -95,7 +96,7 @@ test("A–E,M: governed corrections preserve reservations, stale counts fail and
     );
     await assert.rejects(
       () =>
-        f.call("sales", "inventory.adjust", {
+        f.call("driver", "inventory.adjust", {
           branchId: "lagos",
           productId: "hose",
           quantity: -2,
@@ -193,7 +194,7 @@ test("A–E,M: governed corrections preserve reservations, stale counts fail and
     );
     const snapshot = await f.call("inventory", "business.snapshot");
     assert.equal(snapshot.overview.heldUnits, 2);
-    assert.equal(snapshot.finance.verifiedCompletedRevenueKobo, undefined);
+    assert.equal(snapshot.finance.verifiedCompletedRevenueKobo, 0);
     assert.ok(snapshot.alerts.length);
     const { inventoryExceptions } = await import(
       "../apps/web/lib/inventory-monitoring"
@@ -244,7 +245,7 @@ test("G,H,L,N,O: branch tampering, protected exports, suspended accounts and for
         () => f.call(role, "business.snapshot", { branchId: "other" }),
         /another branch/,
       );
-      await assert.rejects(
+      if (role !== "inventory") await assert.rejects(
         () => f.call(role, "business.report", { report: "profit" }),
         /permission/,
       );
@@ -281,7 +282,7 @@ test("G,H,L,N,O: branch tampering, protected exports, suspended accounts and for
       (await one(f.db, "SELECT role FROM users WHERE id=$1", [
         f.users.sales.id,
       ]))!.role,
-      "sales",
+      "manager",
     );
     assert.ok(
       Number(
@@ -456,7 +457,7 @@ test("controlled transfers reserve, dispatch, partially receive and quarantine d
     );
     const uid = id();
     await f.db.query(
-      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Receiving fixture',$2,$3,'inventory','destination')",
+      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Receiving fixture',$2,$3,'finance','destination')",
       [uid, uid + "@example.test", hashPassword("Inventory-fixture-only-123!")],
     );
     f.users.receiver = { id: uid, token: await issueSession(f.db, uid) };
@@ -626,12 +627,13 @@ test("supplier purchases do not add stock; independently approved partial receip
       ]))!.status,
       "received",
     );
-    const operationalPurchases = await f.call("inventory", "purchasing");
+    const operationalPurchases = await f.call("manager", "purchasing");
     assert.equal("unit_cost_kobo" in operationalPurchases.orders[0], false);
     assert.equal(operationalPurchases.permissions.canApprove, false);
     const snapshot = await f.call("sales", "business.snapshot");
     assert.deepEqual(snapshot.receipts, []);
-    assert.deepEqual(snapshot.purchases, []);
+    assert.ok(snapshot.purchases.length > 0);
+    assert.equal("unit_cost_kobo" in snapshot.purchases[0], false);
   } finally {
     await f.db.close?.();
   }
@@ -686,7 +688,7 @@ test("report availability schedules deduplicate, recheck roles and never claim e
       () => f.call("owner", "report.delivery", { id: delivered!.id }),
       /not found/,
     );
-    await f.db.query("UPDATE users SET role='sales' WHERE id=$1", [
+    await f.db.query("UPDATE users SET role='manager' WHERE id=$1", [
       f.users.finance.id,
     ]);
     await f.db.query(
@@ -959,7 +961,7 @@ test("stocktake sessions snapshot categories, generate scoped count sheets, reco
       /Stock moved/,
     );
     await assert.rejects(
-      () => f.call("sales", "inventory.stocktake.sheet", { id: session.id }),
+      () => f.call("driver", "inventory.stocktake.sheet", { id: session.id }),
       /permission/,
     );
   } finally {

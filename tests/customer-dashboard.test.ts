@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { before, test } from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate, one, type DB } from "../apps/web/lib/db";
@@ -24,7 +25,7 @@ before(async () => {
         role,
         `${role}@customer-dashboard.test`,
         hashPassword("Customer-dashboard-test-only-123!"),
-        role === "owner" ? "owner" : "customer",
+        consolidatedRole(role === "owner" ? "owner" : "customer"),
       ],
     );
     actors[role] = { id: uid, token: await issueSession(db, uid) };

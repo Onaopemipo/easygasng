@@ -35,14 +35,14 @@ export async function dispatchCentre(
   action: string,
   input: unknown,
 ) {
-  allow(user, ["owner", "manager", "dispatcher"]);
+  allow(user, ["owner", "manager"]);
   if (action === "dispatch.candidates") {
     const d = z.object({ orderId: z.string().uuid() }).strict().parse(input);
     const order = await one(tx, "SELECT * FROM orders WHERE id=$1", [
       d.orderId,
     ]);
     if (!order) throw new AppError(404, "Order not found.");
-    allow(user, ["owner", "manager", "dispatcher"], order.branch_id);
+    allow(user, ["owner", "manager"], order.branch_id);
     if (!["accepted", "preparing", "assigned"].includes(order.status))
       throw new AppError(
         409,

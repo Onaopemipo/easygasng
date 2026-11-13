@@ -20,7 +20,7 @@ export async function serviceSettlements(
       })
       .strict()
       .parse(input);
-    allow(user, ["service_manager"], b.branch_id);
+    allow(user, ["manager"], b.branch_id);
     recentVerification(user);
     if (
       !["failed", "cancelled"].includes(b.status) ||
@@ -90,7 +90,7 @@ export async function serviceSettlements(
       ],
     );
     await tx.query(
-      'INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,\'Professional Services\',$3,\'owner\',4,\'boolean\',\'["service_manager"]\',\'["owner","finance"]\',\'["owner","finance","service_manager"]\',\'["owner","finance"]\',true)',
+      'INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,\'Professional Services\',$3,\'owner\',4,\'boolean\',\'["manager"]\',\'["owner","finance"]\',\'["owner","finance","manager"]\',\'["owner","finance"]\',true)',
       [
         key,
         b.reference + " exception settlement " + revision,

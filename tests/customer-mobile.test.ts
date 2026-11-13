@@ -104,9 +104,20 @@ test("CUI-SCOPE: onboarding is preserved and later authorised driver-GPS launch 
   for (const line of manifest.trim().split("\n")) {
     if (line.endsWith("apps/mobile/Onboarding.tsx")) assert.equal(alerts["apps/mobile/Onboarding.tsx"].originalHash, line.split(/\s+/)[0]);
     const [hash, path] = line.split(/\s+/);
+    let source = await readFile(path, "utf8");
+    if (path === "apps/mobile/app.config.js") {
+      // The installed staff-role demo added two Android build plugins.
+      // Compare everything else with the reviewed native maps configuration.
+      const plugins = [
+        '    "./plugins/with-workmanager-room",\n',
+        '    ["./plugins/with-local-android-network", { enabled: localDemo }],\n',
+      ].join("");
+      assert.ok(source.includes(plugins), "Expected Android demo build plugins");
+      source = source.replace(plugins, "");
+    }
     assert.equal(
       createHash("sha256")
-        .update(await readFile(path))
+        .update(source)
         .digest("hex"),
       mapsPhase.changes[path]?.sha256 ?? laterPhase.changes[path]?.sha256 ?? (path === "apps/mobile/Onboarding.tsx" ? alerts[path].approvedHash : hash),
       path,

@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -181,8 +182,8 @@ test("RM-07,10,11: fresh authentication, branch scope, counter aggregates and ro
     assert.deepEqual(tech.allowed, ["bookings", "services"]);
     assert.deepEqual(tech.counters, {});
     const inv = await f.call("inventory", "navigation");
-    assert.ok(!("reconciliation" in inv.counters));
-    assert.ok(!inv.allowed.includes("reconciliation"));
+    assert.ok("reconciliation" in inv.counters);
+    assert.ok(inv.allowed.includes("reconciliation"));
     const other = "nav-other-branch";
     await f.db.query(
       "INSERT INTO branches(id,name) VALUES($1,'Other Nav Test Branch')",
@@ -242,7 +243,7 @@ test("RM-07,10,11: fresh authentication, branch scope, counter aggregates and ro
       (await f.call("owner", "navigation")).counters.incidents,
       incidentCount - 1,
     );
-    await f.db.query("UPDATE users SET role='inventory' WHERE id=$1", [
+    await f.db.query("UPDATE users SET role='finance' WHERE id=$1", [
       staffId,
     ]);
     const changed = await dispatch("navigation", managerToken, {}, f.db);
@@ -276,7 +277,7 @@ test("approval badge agrees with independent eligibility, excludes requester, re
   try {
     const request = await f.call("owner", "staff.access.request", {
       userId: f.actors.technician.id,
-      role: "inventory",
+      role: "finance",
       branchId: "lagos",
       reason: "Synthetic access request for badge verification",
     });
@@ -292,7 +293,7 @@ test("approval badge agrees with independent eligibility, excludes requester, re
     assert.equal((await f.call("finance", "navigation")).counters.approvals, 0);
     const pending = await f.call("owner", "staff.access.request", {
       userId: f.actors.inventory.id,
-      role: "sales",
+      role: "manager",
       branchId: "lagos",
       reason: "Second synthetic access review",
     });
@@ -460,7 +461,7 @@ test("permitted navigation maps actual backend read allowlists for every existin
       const uid = id();
       await f.db.query(
         "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Synthetic Navigation Role',$2,$3,$4,'lagos')",
-        [uid, `${uid}@example.test`, hashPassword(password), role],
+        [uid, `${uid}@example.test`, hashPassword(password), consolidatedRole(role)],
       );
       f.actors[role] = { id: uid, token: await issueSession(f.db, uid) };
     }
@@ -469,7 +470,7 @@ test("permitted navigation maps actual backend read allowlists for every existin
     )) {
       const access = await f.call(role, "navigation.access");
       if (role === "sales")
-        assert.ok(!("orders" in (await f.call(role, "navigation")).counters));
+        assert.ok("orders" in (await f.call(role, "navigation")).counters);
       const actions = new Set<string>();
       for (const key of access.allowed) {
         const item = navigationItems.find((i) => i.id === key)!;

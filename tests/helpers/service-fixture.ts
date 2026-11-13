@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../../packages/business-rules/src/staff-roles";
 import { createDatabase, migrate, one, type DB } from "../../apps/web/lib/db";
 import { dispatch } from "../../apps/web/lib/service";
 import { id, hashPassword, issueSession } from "../../apps/web/lib/auth";
@@ -21,7 +22,7 @@ export async function fixture(dataDir: string | DB = "memory://") {
     const uid = id();
     await db.query(
       "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,$2,$3,$4,$5,'lagos')",
-      [uid, role, `${uid}@example.test`, hashPassword(password), role],
+      [uid, role, `${uid}@example.test`, hashPassword(password), consolidatedRole(role)],
     );
     actors[role] = { id: uid, token: await issueSession(db, uid) };
   }

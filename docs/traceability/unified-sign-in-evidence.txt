@@ -1,0 +1,52 @@
+✔ ONBOARD-01: staff email acceptance, replacement before access and replay rejection (2543.238542ms)
+✔ ONBOARD-02: admin-created customer must accept and replace the emailed password (1397.865375ms)
+✔ ONBOARD-03: recovery covers staff and customers with bounded sends and single-use links (1195.536417ms)
+✔ direct URL API refuses unauthenticated financial settings (1837.459542ms)
+✔ web cookie and mobile bearer requests enforce identical restricted-setting rules (12.718125ms)
+✔ mobile bearer tokens cannot approve fabricated requests or impersonate privileged identities (2.969875ms)
+✔ cross-origin mutation is refused before processing credentials (0.352209ms)
+✔ JSON is mandatory and GET cannot mutate state (0.331125ms)
+✔ native sign-in returns an opaque token, web sign-in keeps it in an HttpOnly cookie (87.818833ms)
+✔ oversized JSON bodies and malformed origin values are refused (0.634875ms)
+✔ aggregate authentication budget persists across identities and resets after its window (27.912834ms)
+✔ G,H: live subscriptions reject forged branch scope, deduplicate committed snapshots and terminate after suspension (10048.928834ms)
+✔ OPS-T01: phone activation requires possession, preserves identity, expires/revokes, commits failed attempts and rejects replay (1160.038666ms)
+✔ OPS-T02: invoice notes need independent approval, never overwrite originals, invalidate stale requests and reject cross-customer access (877.579833ms)
+✔ OPS-T03: trip capture is account scoped, replay safe, bounded to duty, and reports actual purchases separately (825.633416ms)
+✔ OPS-T04: proof photos are private, append-only, retain historical records and reject invalid image input (795.882959ms)
+✔ OPS-T05: messaging encrypts contents, rechecks consent, quarantines uncertain sends and authenticates/deduplicates callbacks (792.859458ms)
+✔ OPS-T06: GPS rejects impossible jumps and gaps; no distance-derived actual fuel claim (0.297125ms)
+✔ FIELD-GPS-02: fleet summary requires current accurate consented trip evidence and ignores future uploaded fixes (913.109083ms)
+✔ OPS-T07: enhanced dispatch requires a suitable active trip, records acknowledgement and rejects stale versions (840.906792ms)
+✔ OPS-T08: win-back uses true completed delivery timestamps, preserves low-data state and requires marketing consent (877.964709ms)
+✔ OPS-T09: doorstep review preserves original order, rejects driver-as-customer consent and never commits unverified van stock (959.517625ms)
+✔ OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption (7.653167ms)
+✔ OPS-T11: retain-all policy preserves expired proof bytes without widening access (910.180875ms)
+✔ PW-MIN01: eight-character registration, login, change and reset work while short passwords, wrong current password and token replay fail (1266.839292ms)
+✔ PW-MIN02: all account entry points use the shared eight-character policy and retain separate backup encryption rules (5.973041ms)
+✔ STAFF-ROLE01–03: legacy identities upgrade atomically with overrides, session renewal and approval history (1046.469917ms)
+✔ STAFF-ROLE04–06: branch isolation, qualified checklist review and independent financial approvals (1010.784667ms)
+✔ SIGNIN-01: email and verified phone resolve to the same account and retain legacy login (1537.14675ms)
+✔ SIGNIN-02: unverified and ambiguous numbers fail closed and phone variants share a retry limit (1257.858ms)
+✔ SIGNIN-03: verified phone cannot bypass field role or temporary password requirements (1094.136084ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19609.597916
+PASS browser desktop email with inline error, retry and authenticated account redirect
+PASS browser mobile web phone with inline error, retry and authenticated account redirect
+PASS browser registration retains email field
+
+> easygas-platform@0.1.0 typecheck
+> tsc --noEmit -p apps/web/tsconfig.json
+
+
+> @easygas/mobile@0.1.0 typecheck
+> tsc --noEmit
+
+
+PASS npm run build (optimized web build)

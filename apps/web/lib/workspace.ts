@@ -20,7 +20,7 @@ async function ticket(tx: SQL, user: Actor, ticketId: string) {
   if (["customer", "commercial"].includes(user.role)) {
     if (t.customer_id !== user.id)
       throw new AppError(404, "Support request not found.");
-  } else allow(user, ["owner", "manager", "sales"], t.branch_id);
+  } else allow(user, ["owner", "manager"], t.branch_id);
   return t;
 }
 export async function workspaceAction(
@@ -35,11 +35,11 @@ export async function workspaceAction(
   }
   if (action === "support.list") {
     const customer = ["customer", "commercial"].includes(user.role);
-    if (!customer) allow(user, ["owner", "manager", "sales"]);
+    if (!customer) allow(user, ["owner", "manager"]);
     const query = z.object({ view: z.enum(["inbox", "paged"]).optional(), page: z.coerce.number().int().min(1).max(1000000).default(1), search: z.string().trim().max(100).default(""), status: z.enum(["all", "open", "in_progress", "resolved", "closed"]).default("all"), days: z.coerce.number().int().min(0).max(3650).default(0), sla: z.enum(["all", "overdue"]).default("all") }).strict().parse(input);
     const manage = user.privilege_overrides?.["support.manage"];
     const canManage = !customer && manage !== "deny" && (
-      ["owner", "manager", "sales"].includes(user.role) ||
+      ["owner", "manager"].includes(user.role) ||
       (manage === "grant" && isBusinessStaff(user.role) && Boolean(user.branch_id))
     );
     const inbox = Boolean(query.view);
@@ -144,12 +144,12 @@ export async function workspaceAction(
         .parse(input),
       t = await ticket(tx, user, d.id);
     if (d.version !== undefined && d.version !== Number(t.version)) throw new AppError(409, "This request changed. Refresh and review it before saving.");
-    allow(user, ["owner", "manager", "sales"], t.branch_id);
+    allow(user, ["owner", "manager"], t.branch_id);
     if (
       d.assigneeId &&
       !(await one(
         tx,
-        "SELECT id FROM users WHERE id=$1 AND active=true AND (branch_id=$2 OR role='owner') AND role IN ('owner','manager','sales')",
+        "SELECT id FROM users WHERE id=$1 AND active=true AND (branch_id=$2 OR role='owner') AND role IN ('owner','manager')",
         [d.assigneeId, t.branch_id],
       ))
     )
@@ -178,7 +178,7 @@ export async function workspaceAction(
       allow(user, ["owner"]);
       recentVerification(user);
     }
-    allow(user, ["owner", "manager", "inventory"]);
+    allow(user, ["owner", "manager", "finance"]);
     const d = z
       .object({
         id: z.string().regex(/^[a-z0-9][a-z0-9-]{1,79}$/),
@@ -252,9 +252,9 @@ export async function workspaceAction(
             "Branch catalogue approval",
             risk,
             type,
-            JSON.stringify(["owner", "manager", "inventory"]),
+            JSON.stringify(["owner", "manager", "finance"]),
             JSON.stringify(risk === 3 ? ["owner"] : ["owner", "manager"]),
-            JSON.stringify(["owner", "manager", "inventory", "sales"]),
+            JSON.stringify(["owner", "manager", "finance"]),
           ],
         );
         for (const b of (
@@ -269,12 +269,12 @@ export async function workspaceAction(
     return { ok: true };
   }
   if (action === "purchasing") {
-    allow(user, ["owner", "manager", "inventory", "finance"]);
+    allow(user, ["owner", "manager", "finance"]);
     const global = user.role === "owner";
     return {
       permissions: {
         canApprove: user.role === "owner",
-        canReceive: ["owner", "manager", "inventory"].includes(user.role),
+        canReceive: ["owner", "manager", "finance"].includes(user.role),
         userId: user.id,
       },
       suppliers: (
@@ -306,7 +306,7 @@ export async function workspaceAction(
       })
       .strict()
       .parse(input);
-    allow(user, ["owner", "manager", "inventory"], d.branchId);
+    allow(user, ["owner", "manager", "finance"], d.branchId);
     const sid = id();
     await tx.query(
       "INSERT INTO suppliers(id,branch_id,name,contact) VALUES ($1,$2,$3,$4)",
@@ -331,7 +331,7 @@ export async function workspaceAction(
       [d.supplierId],
     );
     if (!s) throw new AppError(404, "Supplier not found.");
-    allow(user, ["owner", "manager", "inventory"], s.branch_id);
+    allow(user, ["owner", "manager", "finance"], s.branch_id);
     if (
       !(await one(
         tx,
@@ -396,7 +396,7 @@ export async function workspaceAction(
       );
     }
     if (d.status === "received") {
-      allow(user, ["owner", "manager", "inventory"], p.branch_id);
+      allow(user, ["owner", "manager", "finance"], p.branch_id);
       if (p.status === "received") return { ok: true };
       if (p.status !== "approved" || !d.invoiceReference)
         throw new AppError(
@@ -446,7 +446,7 @@ export async function workspaceAction(
         d.id,
       ]);
     if (!c) throw new AppError(404, "Cylinder not found.");
-    allow(user, ["owner", "manager", "inventory"], c.branch_id);
+    allow(user, ["owner", "manager", "finance"], c.branch_id);
     if (
       Date.parse(d.nextDue) <= Date.now() ||
       Date.parse(d.nextDue) > Date.now() + 10 * 366 * 86400000
@@ -491,7 +491,7 @@ export async function workspaceAction(
         d.id,
       ]);
     if (!c) throw new AppError(404, "Cylinder not found.");
-    allow(user, ["owner", "manager", "inventory"], c.branch_id);
+    allow(user, ["owner", "manager", "finance"], c.branch_id);
     if (
       d.customerId &&
       (c.status !== "filled" || Date.parse(c.test_due) <= Date.now())
@@ -548,7 +548,7 @@ export async function workspaceAction(
         d.id,
       ]);
     if (!c) throw new AppError(404, "Cylinder not found.");
-    allow(user, ["owner", "manager", "inventory"], c.branch_id);
+    allow(user, ["owner", "manager", "finance"], c.branch_id);
     if (c.status !== "empty" || Date.parse(c.test_due) <= Date.now())
       throw new AppError(
         409,
@@ -563,7 +563,7 @@ export async function workspaceAction(
     return { ok: true };
   }
   if (action === "branches") {
-    allow(user, ["owner", "manager", "inventory", "finance"]);
+    allow(user, ["owner", "manager", "finance"]);
     return (await tx.query("SELECT * FROM branches ORDER BY name")).rows;
   }
   if (action === "branch.create") {
@@ -599,7 +599,7 @@ export async function workspaceAction(
     return { ok: true };
   }
   if (action === "transfers") {
-    allow(user, ["owner", "manager", "inventory"]);
+    allow(user, ["owner", "manager", "finance"]);
     return (
       await tx.query(
         `SELECT * FROM stock_transfers WHERE ${user.role === "owner" ? "true" : "source_branch=$1 OR destination_branch=$1"} ORDER BY created_at DESC LIMIT 100`,
@@ -617,7 +617,7 @@ export async function workspaceAction(
       })
       .strict()
       .parse(input);
-    allow(user, ["owner", "manager", "inventory"], d.sourceBranch);
+    allow(user, ["owner", "manager", "finance"], d.sourceBranch);
     if (d.sourceBranch === d.destinationBranch)
       throw new AppError(400, "Choose a different destination branch.");
     if (
@@ -663,7 +663,7 @@ export async function workspaceAction(
         [d.id],
       );
     if (!t) throw new AppError(404, "Transfer not found.");
-    allow(user, ["owner", "manager", "inventory"], t.destination_branch);
+    allow(user, ["owner", "manager", "finance"], t.destination_branch);
     if (t.requested_by === user.id)
       throw new AppError(
         403,

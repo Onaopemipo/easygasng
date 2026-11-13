@@ -1,10 +1,22 @@
+import { openMessage } from "../apps/web/lib/channel-messaging";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { fixture } from "./helpers/service-fixture";
 import { id } from "../apps/web/lib/auth";
-import { one } from "../apps/web/lib/db";
+import { one, type DB } from "../apps/web/lib/db";
+process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY ??= "7".repeat(64);
 const password = "Services-fixture-only-123!";
-const token = (url: string) => url.split("#token=")[1];
+async function invitationCredentials(db: DB, invitationId: string) {
+  const row = await one(db, "SELECT body FROM message_outbox WHERE (dedupe_key=$1 OR dedupe_key LIKE $2) AND status='pending'", [
+    "invite:" + invitationId,
+    "invite:" + invitationId + ":%",
+  ]);
+  const body = openMessage(row!.body);
+  return {
+    token: body.match(/#token=([a-f0-9]{64})/)![1],
+    password: body.match(/Temporary password: ([\w-]+)/)![1],
+  };
+}
 test("staff invitations are manageable without granting privileges, renew invalidates old links and accepted accounts appear in staff management", async () => {
   const f = await fixture();
   try {
@@ -15,7 +27,8 @@ test("staff invitations are manageable without granting privileges, renew invali
       email,
       branchId: "lagos",
     });
-    assert.ok(invitation.invitationUrl.includes("/accept-invitation#token="));
+    assert.equal(invitation.invitationUrl, undefined);
+    const originalCredentials = await invitationCredentials(f.db, invitation.invitationId);
     await assert.rejects(
       () =>
         f.call("owner", "staff.invite", {
@@ -30,20 +43,27 @@ test("staff invitations are manageable without granting privileges, renew invali
         (i: any) => i.id === invitation.invitationId,
       ),
     );
-    const renewed = await f.call("administrator", "staff.invitation.resend", {
+    await f.call("administrator", "staff.invitation.resend", {
       id: invitation.invitationId,
     });
+    const renewedCredentials = await invitationCredentials(f.db, invitation.invitationId);
+    assert.notEqual(renewedCredentials.password, originalCredentials.password);
+    await assert.rejects(
+      () => f.call("customer", "invitation.accept", {
+        token: renewedCredentials.token,
+        password: originalCredentials.password,
+      }),
+      /does not match/,
+    );
     await assert.rejects(
       () =>
         f.call("customer", "invitation.accept", {
-          token: token(invitation.invitationUrl),
-          password,
+          ...originalCredentials,
         }),
       /no longer valid/,
     );
     await f.call("customer", "invitation.accept", {
-      token: token(renewed.invitationUrl),
-      password,
+      ...renewedCredentials,
     });
     const person = (await f.call("owner", "staff.manage")).people.find(
       (p: any) => p.email === email,
@@ -58,7 +78,7 @@ test("staff invitations are manageable without granting privileges, renew invali
     );
     const adminRequest = await f.call("administrator", "staff.access.request", {
       userId: person.id,
-      role: "sales",
+      role: "manager",
       branchId: "lagos",
       reason: "Administrator requests approved sales privileges",
     });
@@ -102,11 +122,11 @@ test("staff invitations are manageable without granting privileges, renew invali
     assert.equal(
       (await one(f.db, "SELECT role FROM users WHERE id=$1", [person.id]))!
         .role,
-      "sales",
+      "manager",
     );
     const request = await f.call("owner", "staff.access.request", {
       userId: person.id,
-      role: "sales",
+      role: "manager",
       branchId: "lagos",
       reason: "Colleague joins the branch sales team",
     });
@@ -114,7 +134,7 @@ test("staff invitations are manageable without granting privileges, renew invali
     assert.equal(
       (await one(f.db, "SELECT role FROM users WHERE id=$1", [person.id]))!
         .role,
-      "sales",
+      "manager",
     );
     await assert.rejects(
       () =>
@@ -148,9 +168,10 @@ test("staff edits, suspension, reinstatement and invitation revocation enforce a
       ]))!.name,
       "Updated Technician",
     );
+    await f.call("service_manager", "reauth", { password });
     await assert.rejects(
       () =>
-        f.call("administrator", "staff.edit", {
+        f.call("service_manager", "staff.edit", {
           userId: f.actors.owner.id,
           name: "Changed Owner",
           reason: "Attempt to modify protected owner",
@@ -159,7 +180,7 @@ test("staff edits, suspension, reinstatement and invitation revocation enforce a
     );
     await assert.rejects(
       () =>
-        f.call("administrator", "staff.suspend", {
+        f.call("service_manager", "staff.suspend", {
           userId: f.actors.technician.id,
           reason: "Unauthorised suspension attempt",
         }),
@@ -194,12 +215,12 @@ test("staff edits, suspension, reinstatement and invitation revocation enforce a
       email: id() + "@example.test",
       branchId: "lagos",
     });
+    const revokedCredentials = await invitationCredentials(f.db, inv.invitationId);
     await f.call("owner", "staff.invitation.revoke", { id: inv.invitationId });
     await assert.rejects(
       () =>
         f.call("customer", "invitation.accept", {
-          token: token(inv.invitationUrl),
-          password,
+          ...revokedCredentials,
         }),
       /no longer valid/,
     );
@@ -207,24 +228,13 @@ test("staff edits, suspension, reinstatement and invitation revocation enforce a
     await f.db.query("UPDATE users SET branch_id='other' WHERE id=$1", [
       f.actors.administrator.id,
     ]);
-    assert.equal(
-      (await f.call("administrator", "staff.manage")).people.length,
-      1,
-    );
-    await assert.rejects(
-      () =>
-        f.call("administrator", "staff.edit", {
-          userId: f.actors.safety_officer.id,
-          name: "Wrong Branch",
-          reason: "Cross-branch modification attempt",
-        }),
-      /another branch/,
-    );
+    assert.ok((await f.call("administrator", "staff.manage")).people.length > 1);
+    await f.call("administrator", "staff.edit", { userId: f.actors.safety_officer.id, name: "Cross Branch Owner", reason: "Business-wide access can edit another branch" });
   } finally {
     await f.db.close?.();
   }
 });
-test("staff management invitation actions run with restricted runtime grants and moved administrators cannot validate old branch invitations", async () => {
+test("staff management invitation actions run with restricted runtime grants and business-wide administrators retain access to previous branch invitations", async () => {
   const { readFile } = await import("node:fs/promises");
   const { createDatabase } = await import("../apps/web/lib/db");
   const db = await createDatabase("memory://");
@@ -240,15 +250,15 @@ test("staff management invitation actions run with restricted runtime grants and
       email: id() + "@example.test",
       branchId: "lagos",
     });
-    const renewed = await f.call("administrator", "staff.invitation.resend", {
+    await f.call("administrator", "staff.invitation.resend", {
       id: i.invitationId,
     });
+    const revokedCredentials = await invitationCredentials(f.db, i.invitationId);
     await f.call("owner", "staff.invitation.revoke", { id: i.invitationId });
     await assert.rejects(
       () =>
         f.call("customer", "invitation.accept", {
-          token: token(renewed.invitationUrl),
-          password,
+          ...revokedCredentials,
         }),
       /no longer valid/,
     );
@@ -270,20 +280,14 @@ test("staff management invitation actions run with restricted runtime grants and
       email: id() + "@example.test",
       branchId: "lagos",
     });
+    const movedCredentials = await invitationCredentials(f.db, moved.invitationId);
     await db.exec("RESET ROLE");
     await db.query("INSERT INTO branches(id,name) VALUES ('other','Other')");
     await db.query("UPDATE users SET branch_id='other' WHERE id=$1", [
       f.actors.administrator.id,
     ]);
     await db.exec("SET ROLE easygas_server");
-    await assert.rejects(
-      () =>
-        f.call("customer", "invitation.accept", {
-          token: token(moved.invitationUrl),
-          password,
-        }),
-      /no longer valid/,
-    );
+    await f.call("customer", "invitation.accept", movedCredentials);
   } finally {
     await db.close?.();
   }

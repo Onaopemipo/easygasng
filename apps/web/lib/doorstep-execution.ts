@@ -78,7 +78,7 @@ export async function doorstepExecution(
     d.orderId,
   ]);
   if (!o) throw new AppError(404, "Order not found.");
-  allow(user, ["owner", "finance", "inventory", "driver"], o.branch_id);
+  allow(user, ["owner", "finance", "driver"], o.branch_id);
   if (user.role === "driver" && o.driver_id !== user.id)
     throw new AppError(404, "Order not found.");
   const m = await one(
@@ -184,7 +184,7 @@ export async function doorstepExecution(
       );
   }
   if (action === "doorstep.prepare") {
-    allow(user, ["owner", "inventory"], o.branch_id);
+    allow(user, ["owner", "finance"], o.branch_id);
     recentVerification(user);
     await inventoryQualification(tx, user.id, o.branch_id, "bulk_lpg_loading");
     if (

@@ -51,6 +51,8 @@ module.exports = {
   name: localDemo ? "EasyGas Local" : base.expo.name,
   plugins: [
     ...(base.expo.plugins ?? []),
+    "./plugins/with-workmanager-room",
+    ["./plugins/with-local-android-network", { enabled: localDemo }],
     ...(iosMapsKey || androidMapsKey
       ? [
           [

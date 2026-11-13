@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import test from "node:test";
 import { invoiceAction } from "../apps/web/lib/invoices";
 import assert from "node:assert/strict";
@@ -32,7 +33,7 @@ async function fixture() {
   ])
     await db.query(
       "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Synthetic payment fixture',$2,$3,$4,'lagos')",
-      [x, x + "@example.test", hashPassword("Fixture-only123!"), role],
+      [x, x + "@example.test", hashPassword("Fixture-only123!"), consolidatedRole(role)],
     );
   const token = await issueSession(db, uid),
     otherToken = await issueSession(db, other),

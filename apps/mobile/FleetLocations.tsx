@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { EasyGasLoader } from "./EasyGasLoader";
 import { AppState } from "react-native";
 import { lagosDate } from "../../packages/business-rules/src/dispatch-centre";
 import { Button, Card, Copy, type CustomerAPI } from "./CustomerUI";
@@ -116,14 +117,12 @@ export default function FleetLocations({
               Showing 50 map points. All scoped drivers are listed below.
             </Copy>
           )}
-          <Copy>
+          {drivers === null && !error ? <EasyGasLoader size="sm" variant="section" label="Loading fleet locations" /> : <Copy>
             {error ||
-              (drivers === null
-                ? "Checking fleet locations…"
-                : !drivers.length
+              (!drivers?.length
                   ? "No active deliveries."
                   : "Last recorded observations. ETA unavailable.")}
-          </Copy>
+          </Copy>}
           {drivers?.map((driver) => {
             const fix = driver.location?.lastKnown;
             return (

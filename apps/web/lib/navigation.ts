@@ -86,7 +86,7 @@ export async function navigationSnapshot(tx: SQL, user: Actor, input: unknown) {
     counters[key] = Number(r?.count ?? 0);
   }
   // Roles without action authority get no misleading badge even when they can read a module.
-  if (["owner", "manager", "dispatcher"].includes(user.role))
+  if (["owner", "manager"].includes(user.role))
     await count(
       "orders",
       "SELECT count(*) AS count FROM orders WHERE status='placed' AND ($1::text IS NULL OR branch_id=$1)",
@@ -104,7 +104,7 @@ export async function navigationSnapshot(tx: SQL, user: Actor, input: unknown) {
       "deliveries",
       "SELECT count(*) AS count FROM orders WHERE status IN ('accepted','preparing') AND driver_id IS NULL AND ($1::text IS NULL OR branch_id=$1)",
     );
-  if (["owner", "service_manager"].includes(user.role))
+  if (["owner", "manager"].includes(user.role))
     await count(
       "bookings",
       "SELECT count(*) AS count FROM service_bookings WHERE (status='pending_confirmation' OR (status='confirmed' AND technician_id IS NULL)) AND ($1::text IS NULL OR branch_id=$1)",
@@ -119,7 +119,7 @@ export async function navigationSnapshot(tx: SQL, user: Actor, input: unknown) {
   );
   await count(
     "approvals",
-    `SELECT count(*) AS count FROM change_requests r JOIN setting_definitions d ON d.key=r.key WHERE ($1::text IS NULL OR r.scope=$1) AND d.view_roles @> $2::jsonb AND r.status IN ('pending_approval','partially_approved') AND r.expires_at>now() AND r.requester_id<>$3 AND (d.value_type<>'access' OR r.proposed_value->>'userId' IS DISTINCT FROM $3) AND NOT EXISTS(SELECT 1 FROM approval_decisions a WHERE a.request_id=r.id AND a.revision=r.revision AND a.approver_id=$3) AND (d.approve_roles @> $2::jsonb OR (d.risk=2 AND d.value_type IN ('boolean','integer') AND d.category NOT IN ('Staff & Permissions','Security','Payments & Wallet') AND (d.key='delivery.capacity' OR d.key LIKE 'publish.%') AND EXISTS(SELECT 1 FROM approval_delegations a JOIN users g ON g.id=a.grantor_id JOIN users v ON v.id=a.reviewed_by WHERE a.delegate_id=$3 AND $4 IN ('manager','sales','inventory','dispatcher') AND a.scope=$5 AND a.setting_key=d.key AND a.scope=r.scope AND a.status='approved' AND a.starts_at<=now() AND a.expires_at>now() AND g.active=true AND v.active=true AND v.role='owner' AND a.reviewed_by<>a.grantor_id AND a.grantor_id<>r.requester_id AND g.role IN ('owner','manager') AND d.approve_roles @> jsonb_build_array(g.role) AND (g.role='owner' OR g.branch_id=r.scope) AND (a.maximum_value IS NULL OR jsonb_typeof(r.proposed_value)='boolean' OR (jsonb_typeof(r.proposed_value)='number' AND (r.proposed_value::text)::numeric<=a.maximum_value))))) AND (d.value_type<>'checklist' OR $4<>'safety_officer' OR EXISTS(SELECT 1 FROM technician_qualifications q JOIN users v ON v.id=q.verified_by WHERE q.user_id=$3 AND q.code='safety_review' AND q.expires_at>now() AND v.active=true AND v.role IN ('owner','safety_officer')))`,
+    `SELECT count(*) AS count FROM change_requests r JOIN setting_definitions d ON d.key=r.key WHERE ($1::text IS NULL OR r.scope=$1) AND d.view_roles @> $2::jsonb AND r.status IN ('pending_approval','partially_approved') AND r.expires_at>now() AND r.requester_id<>$3 AND (d.value_type<>'access' OR r.proposed_value->>'userId' IS DISTINCT FROM $3) AND NOT EXISTS(SELECT 1 FROM approval_decisions a WHERE a.request_id=r.id AND a.revision=r.revision AND a.approver_id=$3) AND (d.approve_roles @> $2::jsonb OR (d.risk=2 AND d.value_type IN ('boolean','integer') AND d.category NOT IN ('Staff & Permissions','Security','Payments & Wallet') AND (d.key='delivery.capacity' OR d.key LIKE 'publish.%') AND EXISTS(SELECT 1 FROM approval_delegations a JOIN users g ON g.id=a.grantor_id JOIN users v ON v.id=a.reviewed_by WHERE a.delegate_id=$3 AND $4 IN ('manager','finance') AND a.scope=$5 AND a.setting_key=d.key AND a.scope=r.scope AND a.status='approved' AND a.starts_at<=now() AND a.expires_at>now() AND g.active=true AND v.active=true AND v.role='owner' AND a.reviewed_by<>a.grantor_id AND a.grantor_id<>r.requester_id AND g.role IN ('owner','manager') AND d.approve_roles @> jsonb_build_array(g.role) AND (g.role='owner' OR g.branch_id=r.scope) AND (a.maximum_value IS NULL OR jsonb_typeof(r.proposed_value)='boolean' OR (jsonb_typeof(r.proposed_value)='number' AND (r.proposed_value::text)::numeric<=a.maximum_value)))))`,
     [b, JSON.stringify([user.role]), user.id, user.role, user.branch_id],
   );
   return {

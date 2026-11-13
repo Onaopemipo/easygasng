@@ -9,13 +9,7 @@ export async function followupAction(
   input: unknown,
 ): Promise<any> {
   if (action === "service.followups") {
-    allow(user, [
-      "customer",
-      "commercial",
-      "technician",
-      "owner",
-      "service_manager",
-    ]);
+    allow(user, ["customer", "commercial", "technician", "owner", "manager"]);
     return (
       await tx.query(
         `SELECT f.*,b.service_id,b.branch_id,b.reference,s.name FROM service_followups f JOIN service_bookings b ON b.id=f.booking_id JOIN service_catalogue s ON s.id=b.service_id AND s.branch_id=b.branch_id WHERE ${["customer", "commercial"].includes(user.role) ? "f.customer_id=$1" : user.role === "technician" ? "b.technician_id=$1" : user.role === "owner" ? "true" : "b.branch_id=$1"} ORDER BY due_date LIMIT 200`,
@@ -44,7 +38,7 @@ export async function followupAction(
       [d.bookingId],
     );
     if (!b) throw new AppError(404, "Booking not found.");
-    allow(user, ["owner", "service_manager", "technician"], b.branch_id);
+    allow(user, ["owner", "manager", "technician"], b.branch_id);
     if (user.role === "technician" && b.technician_id !== user.id)
       throw new AppError(
         403,

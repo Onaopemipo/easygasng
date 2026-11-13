@@ -281,10 +281,18 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   const approvedDriverSources = JSON.parse(await readFile(
     "docs/driver-redesign/approved-field-source.json", "utf8",
   ));
+  const staffRoleNavigationSources = JSON.parse(await readFile(
+    "docs/traceability/staff-role-navigation-hashes.json", "utf8",
+  ));
+  const approvedLoaderSources = JSON.parse(await readFile(
+    "docs/loader/approved-field-source.json", "utf8",
+  ));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
       ? approvedCardCheckoutHash
-      : approvedDriverSources[file] ?? approvedHomepageSources[file] ?? approvedNotificationSources[file] ?? approvedAlerts[file]?.approvedHash ?? originalHash;
+      : staffRoleNavigationSources[file] ?? approvedLoaderSources[file] ?? approvedDriverSources[file]
+        ?? approvedHomepageSources[file] ?? approvedNotificationSources[file]
+        ?? approvedAlerts[file]?.approvedHash ?? originalHash;
     const source = await readFile(file);
     assert.equal(createHash("sha256").update(source).digest("hex"), hash, file);
   }

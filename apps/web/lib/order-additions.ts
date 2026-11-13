@@ -5,7 +5,7 @@ import { checkoutSchema, settingValue } from "./operations";
 import { gasQuote } from "./gas-delivery";
 import { allocateCylinders } from "./cylinder-allocation";
 import { audit, notify } from "./governance";
-const roles = ["owner", "manager", "sales"];
+const roles = ["owner", "manager"];
 const target = z.object({ orderId: z.string().uuid() }).strict();
 const lines = target.extend({
   items: checkoutSchema.shape.items,

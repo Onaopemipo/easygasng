@@ -55,7 +55,7 @@ export async function doorstepProducts(
     d.orderId,
   ]);
   if (!o) throw new AppError(404, "Order not found.");
-  allow(user, ["owner", "inventory", "finance", "driver"], o.branch_id);
+  allow(user, ["owner", "finance", "driver"], o.branch_id);
   if (user.role === "driver" && o.driver_id !== user.id)
     throw new AppError(404, "Order not found.");
   const m = await one(
@@ -130,7 +130,7 @@ export async function doorstepProducts(
     ? agreed
     : await gasQuote(tx, [], o.branch_id, m.proposal.items);
   if (action === "doorstep.products.prepare") {
-    allow(user, ["owner", "inventory"], o.branch_id);
+    allow(user, ["owner", "finance"], o.branch_id);
     recentVerification(user);
     await inventoryQualification(tx, user.id, o.branch_id, "inventory_safety");
     if (

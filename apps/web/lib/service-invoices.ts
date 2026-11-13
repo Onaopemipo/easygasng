@@ -53,7 +53,7 @@ export async function serviceInvoiceAction(
   } else
     allow(
       user,
-      ["owner", "finance", "service_manager", "manager"],
+      ["owner", "finance", "manager"],
       b.branch_id,
     );
   let invoice = await one(

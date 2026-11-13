@@ -88,10 +88,10 @@ export async function checkout(
   input: z.infer<typeof checkoutSchema>,
   assisted?: { customerId: string; reason: string },
 ) {
-  allow(user, ["customer", "commercial", "owner", "sales", "manager"]);
+  allow(user, ["customer", "commercial", "owner", "manager"]);
   const customerId = assisted?.customerId ?? user.id;
   if (assisted) {
-    allow(user, ["owner", "manager", "sales"]);
+    allow(user, ["owner", "manager"]);
     if (
       (input.paymentMethod ?? "cash_on_delivery") !== "cash_on_delivery" ||
       input.rewardOfferId ||
@@ -123,7 +123,7 @@ export async function checkout(
     [customerId, input.idempotencyKey],
   );
   if (prior) {
-    if (assisted) allow(user, ["owner", "manager", "sales"], prior.branch_id);
+    if (assisted) allow(user, ["owner", "manager"], prior.branch_id);
     if (prior.request_hash !== hash)
       throw new AppError(
         409,
@@ -152,7 +152,7 @@ export async function checkout(
     },
   };
   if (!["customer", "commercial", "owner"].includes(user.role))
-    allow(user, ["sales", "manager"], branchId);
+    allow(user, ["manager"], branchId);
   // A shared branch row lock serializes reservations and duplicate checkouts, including empty inventories.
   const branch = await one(
     tx,
@@ -578,7 +578,7 @@ export async function transitionOrder(
         "You can only cancel your own newly placed orders.",
       );
   } else {
-    allow(user, ["owner", "manager", "dispatcher", "driver"], o.branch_id);
+    allow(user, ["owner", "manager", "driver"], o.branch_id);
     if (
       user.role === "driver" &&
       (o.driver_id !== user.id ||
@@ -687,7 +687,7 @@ export async function transitionOrder(
   if (input.status === "delivery_failed" && attempt) {
     const incidentId = id();
     await tx.query(
-      "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES($1,$2,$5,'delivery_failure',$3,$4,'dispatcher') ON CONFLICT(category,target) DO NOTHING",
+      "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES($1,$2,$5,'delivery_failure',$3,$4,'manager') ON CONFLICT(category,target) DO NOTHING",
       [
         incidentId,
         o.branch_id,
@@ -777,7 +777,7 @@ export async function receiveStock(
     branchId: string;
   },
 ) {
-  allow(user, ["owner", "manager", "inventory"], input.branchId);
+  allow(user, ["owner", "manager", "finance"], input.branchId);
   await tx.query("SELECT id FROM branches WHERE id=$1 FOR UPDATE", [
     input.branchId,
   ]);

@@ -8,15 +8,7 @@ import { z } from "zod";
 import { one, type SQL, type Row } from "./db";
 import { allow, AppError, id, type Actor } from "./auth";
 import { audit, notify } from "./governance";
-const operational = [
-  "owner",
-  "manager",
-  "inventory",
-  "sales",
-  "finance",
-  "dispatcher",
-  "administrator",
-];
+const operational = ["owner", "manager", "finance"];
 export const reportNames = [
   "sales",
   "gas",
@@ -217,7 +209,7 @@ async function data(tx: SQL, user: Actor, filters: any) {
       [b, filters.from ?? null, filters.to ?? null],
     )
   ).rows;
-  const materials = ["owner", "manager", "inventory", "finance"].includes(
+  const materials = ["owner", "manager", "finance"].includes(
     user.role,
   )
     ? (
@@ -243,7 +235,7 @@ async function data(tx: SQL, user: Actor, filters: any) {
         )
       ).rows
     : [];
-  const purchases = ["owner", "finance", "manager", "inventory"].includes(
+  const purchases = ["owner", "finance", "manager"].includes(
     user.role,
   )
     ? (
@@ -254,7 +246,7 @@ async function data(tx: SQL, user: Actor, filters: any) {
       ).rows
     : [];
   if (!costs) for (const p of purchases) delete p.unit_cost_kobo;
-  const suppliers = ["owner", "manager", "inventory", "finance"].includes(
+  const suppliers = ["owner", "manager", "finance"].includes(
     user.role,
   )
     ? (
@@ -501,7 +493,7 @@ async function data(tx: SQL, user: Actor, filters: any) {
         "Below configured threshold; supplier lead time and approved safety stock are required for a purchase recommendation.",
     };
   });
-  const stocktakes = ["owner", "manager", "inventory"].includes(user.role)
+  const stocktakes = ["owner", "manager", "finance"].includes(user.role)
     ? (
         await tx.query(
           "SELECT s.*,COALESCE((SELECT jsonb_agg(jsonb_build_object('product_id',c.product_id,'gas',c.gas,'expected',c.expected,'counted',c.counted,'reason',c.reason,'evidence',c.evidence,'operation_id',c.operation_id) ORDER BY c.id) FROM stocktake_counts c WHERE c.stocktake_id=s.id),'[]'::jsonb) AS counts FROM stocktakes s WHERE ($1::text IS NULL OR s.branch_id=$1) ORDER BY s.created_at DESC LIMIT 100",
@@ -547,20 +539,20 @@ async function data(tx: SQL, user: Actor, filters: any) {
     permissions: {
       costs,
       revenue,
-      inventoryWrite: ["owner", "manager", "inventory"].includes(user.role),
+      inventoryWrite: ["owner", "manager", "finance"].includes(user.role),
       financeWrite: costs,
     },
     inventory,
     gas,
     materials,
     stocktakes,
-    cylinders: ["owner", "manager", "inventory"].includes(user.role)
+    cylinders: ["owner", "manager", "finance"].includes(user.role)
       ? cylinders
       : [],
-    holds: user.role === "sales" ? [] : holds,
-    transfers: user.role === "sales" ? [] : transfers,
-    movements: user.role === "sales" ? [] : movements,
-    operations: user.role === "sales" ? [] : operations,
+    holds,
+    transfers,
+    movements,
+    operations,
     alerts,
     recommendations,
     receipts,
@@ -659,7 +651,7 @@ export async function businessReporting(
     return publicSnapshot(await data(tx, user, f));
   }
   if (action === "inventory") {
-    allow(user, ["owner", "manager", "inventory", "sales"]);
+    allow(user, ["owner", "manager", "finance"]);
     z.object({}).strict().parse(input);
     return (
       await tx.query(
@@ -996,7 +988,7 @@ export async function businessReporting(
     );
     if (
       !reviewer ||
-      !["owner", "manager", "finance", "safety_officer"].includes(
+      !["owner", "manager", "finance"].includes(
         reviewer.role,
       ) ||
       (reviewer.role !== "owner" && reviewer.branch_id !== incident.branch_id)

@@ -1,3 +1,4 @@
+import { accountRoles } from "../../../packages/business-rules/src/staff-roles";
 import { documentIdentitySchema } from "./document-identity";
 import { serviceMaterialRecovery } from "./service-recovery-schema";
 import { manifestReturn, vehiclePayload } from "./vehicle-manifest-schema";
@@ -60,11 +61,8 @@ export async function notify(
     [id(), userId, title, body, related ?? null],
   );
 }
-// Technical administrators may propose access changes; approval authority is unchanged.
 function proposalRoles(d: Row): string[] {
-  return d.key === "security.permissions"
-    ? [...new Set([...d.propose_roles, "administrator"])]
-    : d.propose_roles;
+  return d.propose_roles;
 }
 export async function definition(
   tx: SQL,
@@ -203,21 +201,7 @@ export function validateValue(d: Row, value: any) {
     d.value_type === "access" &&
     (!value ||
       typeof value.userId !== "string" ||
-      ![
-        "owner",
-        "manager",
-        "sales",
-        "inventory",
-        "dispatcher",
-        "driver",
-        "finance",
-        "customer",
-        "commercial",
-        "administrator",
-        "service_manager",
-        "technician",
-        "safety_officer",
-      ].includes(value.role) ||
+      !accountRoles.includes(value.role) ||
       typeof value.branchId !== "string")
   )
     throw new AppError(
@@ -259,7 +243,7 @@ export async function propose(
       "This setting changed. Reload and review the current version.",
       "VERSION_CONFLICT",
     );
-  if (d.value_type === "access" && input.value.userId === user.id)
+  if (d.value_type === "access" && input.value?.userId === user.id)
     throw new AppError(
       403,
       "You cannot request changes to your own privileges.",
@@ -342,7 +326,7 @@ export async function propose(
     newState: "PENDING_APPROVAL",
     version: setting.version,
   });
-  if (ownerAutoApprovalEnabled() && user.role === "owner" && !options.deferOwnerActivation) return autoApproveOwnerRequest(tx, user, requestId);
+  if (canAutoApproveDefinition(d) && user.role === "owner" && !options.deferOwnerActivation) return autoApproveOwnerRequest(tx, user, requestId);
   if (d.risk === 1) {
     await transitionApproval(
       tx,
@@ -352,7 +336,7 @@ export async function propose(
       "Routine change under existing policy",
     );
     await activate(tx, user, requestId, true);
-  } else if (!(ownerAutoApprovalEnabled() && user.role === "owner" && options.deferOwnerActivation)) {
+  } else if (!(canAutoApproveDefinition(d) && user.role === "owner" && options.deferOwnerActivation)) {
     const users = (
       await tx.query(
         "SELECT id,role FROM users WHERE active=true AND (branch_id=$1 OR role='owner')",
@@ -376,6 +360,12 @@ export async function propose(
   );
   return { id: requestId, ...result, state: result!.status.toUpperCase() };
 }
+export function canAutoApproveDefinition(d: Row) {
+  if (!ownerAutoApprovalEnabled() || d.value_type === "access" || d.category === "Finance Operations")
+    return false;
+  return d.key === "gas.price_per_kg" || d.value_type === "checklist" ||
+    (d.risk < 4 && d.required_roles.length === 0);
+}
 export function ownerAutoApprovalEnabled() {
   return process.env.EASYGAS_OWNER_AUTO_APPROVAL === "true";
 }
@@ -396,6 +386,7 @@ export async function autoApproveOwnerRequest(tx: SQL, user: Actor, requestId: s
   if (r.requester_id !== user.id || r.requester_role !== "owner")
     throw new AppError(403, "Only your own Business Owner requests qualify for automatic approval.");
   const d = await definition(tx, user, r.key, r.scope, "propose");
+  if (!canAutoApproveDefinition(d)) throw new AppError(403, "This change requires independent approval.");
   if (d.additional_verification) recentVerification(user);
   if (new Date(r.expires_at).getTime() <= Date.now()) throw new AppError(409, "This request has expired. Create a fresh request.");
   if (r.status === "active") return { id: r.id, status: "active", state: "ACTIVE", autoApproved: true };
@@ -418,8 +409,14 @@ export async function autoApproveOwnerRequest(tx: SQL, user: Actor, requestId: s
   const result = await activate(tx, user, r.id);
   return { id: r.id, ...result, autoApproved: true };
 }
+export async function hasQualifiedSafetyReviewer(tx: SQL, ids: string[]) {
+  return Boolean(await one(tx, `SELECT q.id FROM technician_qualifications q
+    JOIN users verifier ON verifier.id=q.verified_by
+    WHERE q.user_id=ANY($1::text[]) AND q.code='safety_review' AND q.expires_at>now()
+      AND q.verified_by<>q.user_id AND verifier.active=true AND verifier.role='owner' LIMIT 1`, [ids]));
+}
 export async function validApprovals(tx: SQL, r: Row, d: Row) {
-  const ownerAuthorized = await ownerRequestAuthorized(tx, r);
+  const ownerAuthorized = canAutoApproveDefinition(d) && await ownerRequestAuthorized(tx, r);
   if (ownerAuthorized && d.value_type !== "checklist") return true;
   const decisions = (
     await tx.query(
@@ -449,18 +446,10 @@ export async function validApprovals(tx: SQL, r: Row, d: Row) {
       if (!(await delegatedAuthority(tx, a.approver_id, d, r, a.delegation_id)))
         continue;
     } else if (!d.approve_roles.includes(a.current_role)) continue;
-    if (
-      d.value_type === "checklist" &&
-      a.current_role === "safety_officer" &&
-      !(await one(
-        tx,
-        "SELECT q.id FROM technician_qualifications q JOIN users u ON u.id=q.verified_by WHERE q.user_id=$1 AND q.code='safety_review' AND q.expires_at>now() AND u.active=true AND u.role IN ('owner','safety_officer')",
-        [a.approver_id],
-      ))
-    )
-      continue;
     valid.push(a);
   }
+  if (d.value_type === "checklist" && !(await hasQualifiedSafetyReviewer(tx, valid.map((a) => a.approver_id))))
+    return false;
   if (ownerAuthorized) valid.push({ approver_id: r.requester_id, current_role: "owner" });
   const unique = [...new Map(valid.map((a) => [a.approver_id, a])).values()];
   return (
@@ -809,25 +798,15 @@ export async function decide(
       403,
       "Your account has no current approval authority for this request.",
     );
-  if (
-    d.value_type === "checklist" &&
-    user.role === "safety_officer" &&
-    !(await one(
-      tx,
-      "SELECT q.id FROM technician_qualifications q JOIN users u ON u.id=q.verified_by WHERE q.user_id=$1 AND q.code='safety_review' AND q.expires_at>now() AND u.active=true AND u.role IN ('owner','safety_officer')",
-      [user.id],
-    ))
-  )
-    throw new AppError(
-      403,
-      "A current independently verified safety-review qualification is required.",
-    );
   if (r.requester_id === user.id)
     throw new AppError(
       403,
       "An independent colleague must review your request.",
       "SELF_APPROVAL",
     );
+  if (decision === "approve" && d.value_type === "checklist" && await ownerRequestAuthorized(tx, r)
+      && !(await hasQualifiedSafetyReviewer(tx, [user.id])))
+    throw new AppError(403, "A current independently verified safety-review qualification is required.");
   if (
     !["pending_approval", "partially_approved"].includes(r.status) ||
     new Date(r.expires_at).getTime() < Date.now()
@@ -927,7 +906,7 @@ export async function emergencyDisable(
   scope: string,
   reason: string,
 ) {
-  allow(user, ["owner", "administrator"], scope);
+  allow(user, ["owner"], scope);
   recentVerification(user);
   if (!["payment.integration", "delivery.enabled"].includes(key))
     throw new AppError(

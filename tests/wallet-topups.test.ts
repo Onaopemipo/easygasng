@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate, one } from "../apps/web/lib/db";
@@ -28,8 +29,8 @@ test("WALLET-BANK: pending transfer, scoped independent approval, rejection and 
     ]) {
       ids[role] = id();
       await db.query(
-        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,$4,$2,'lagos')",
-        [ids[role], role, role + "@wallet.test", hashPassword(password)],
+        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,$4,$5,'lagos')",
+        [ids[role], role, role + "@wallet.test", hashPassword(password), consolidatedRole(role)],
       );
       tokens[role] = await issueSession(db, ids[role]);
     }

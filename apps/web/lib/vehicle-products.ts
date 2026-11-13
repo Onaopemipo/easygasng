@@ -52,14 +52,7 @@ export async function vehicleProducts(
   input: unknown,
 ): Promise<any> {
   if (action === "manifest.summary") {
-    allow(user, [
-      "owner",
-      "manager",
-      "dispatcher",
-      "inventory",
-      "finance",
-      "driver",
-    ]);
+    allow(user, ["owner", "manager", "finance", "driver"]);
     const loads = (
       await tx.query(
         "SELECT l.*,p.name,t.driver_id,v.label,u.active AS driver_active FROM vehicle_product_loads l JOIN products p ON p.id=l.product_id JOIN driver_trips t ON t.id=l.trip_id JOIN users u ON u.id=t.driver_id JOIN driver_vehicles v ON v.id=t.vehicle_id WHERE ($1::boolean OR l.branch_id=$2) AND ($3::boolean OR t.driver_id=$4) ORDER BY l.created_at DESC LIMIT 100",
@@ -119,7 +112,7 @@ export async function vehicleProducts(
       "Vehicle product operations require operational release approval.",
     );
   if (action === "manifest.issue") {
-    allow(user, ["owner", "inventory"]);
+    allow(user, ["owner", "finance"]);
     recentVerification(user);
     const d = z
       .object({
@@ -140,7 +133,7 @@ export async function vehicleProducts(
     );
     if (!t || t.ended_at || !t.active)
       throw new AppError(409, "Active vehicle trip required.");
-    allow(user, ["owner", "inventory"], t.branch_id);
+    allow(user, ["owner", "finance"], t.branch_id);
     await inventoryQualification(tx, user.id, t.branch_id, "inventory_safety");
     const product = await one(
       tx,
@@ -266,7 +259,7 @@ export async function vehicleProducts(
     [d.manifestId],
   );
   if (!l) throw new AppError(404, "Manifest not found.");
-  allow(user, ["owner", "inventory", "driver"], l.branch_id);
+  allow(user, ["owner", "finance", "driver"], l.branch_id);
   if (user.role === "driver" && l.driver_id !== user.id)
     throw new AppError(404, "Manifest not found.");
   if (Number(l.version) !== d.version || l.state === "reconciled")
@@ -333,7 +326,7 @@ export async function vehicleProducts(
     await productCustodyEvent(tx, user, l.id, "manifest.return_declared", d);
     return { ok: true, held: !matched };
   }
-  allow(user, ["owner", "inventory"], l.branch_id);
+  allow(user, ["owner", "finance"], l.branch_id);
   recentVerification(user);
   await inventoryQualification(tx, user.id, l.branch_id, "inventory_safety");
   const supervisedRecovery =
@@ -367,9 +360,9 @@ export async function vehicleProducts(
     await checkedSerials(tx, l.branch_id, saleable, Number(l.size_kg));
   const key = `vehicle_return.${l.id}.${l.version}`;
   if (action === "manifest.return.review") {
-    allow(user, ["inventory"], l.branch_id);
+    allow(user, ["finance"], l.branch_id);
     await tx.query(
-      "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,'Inventory','Immutable manifest return loss/quarantine quantities and serial evidence; does not create a cash refund.','owner',4,'vehicle_return_recovery','[\"inventory\"]','[\"owner\",\"finance\"]','[\"owner\",\"finance\",\"inventory\"]','[\"owner\",\"finance\"]',true) ON CONFLICT(key) DO NOTHING",
+      "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,'Inventory','Immutable manifest return loss/quarantine quantities and serial evidence; does not create a cash refund.','owner',4,'vehicle_return_recovery','[\"finance\"]','[\"owner\",\"finance\"]','[\"owner\",\"finance\"]','[\"owner\",\"finance\"]',true) ON CONFLICT(key) DO NOTHING",
       [key, "Vehicle product return " + l.id],
     );
     await tx.query(

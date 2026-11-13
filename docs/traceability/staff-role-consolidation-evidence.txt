@@ -1,0 +1,85 @@
+✔ STAFF-ROLE01–03: legacy identities upgrade atomically with overrides, session renewal and approval history (1034.114042ms)
+✔ STAFF-ROLE04–06: branch isolation, qualified checklist review and independent financial approvals (931.328334ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2431.179292
+
+Local Chrome and disposable PostgreSQL 17. The role reference and assignment picker showed the five approved staff names. The assignment picker also offered customer account types for removing staff access.
+PASS owner sign-in, landing, and scoped routes
+PASS finance sign-in, landing, and scoped routes
+PASS manager sign-in, landing, and scoped routes
+PASS driver sign-in, landing, and scoped routes
+PASS technician sign-in, landing, and scoped routes
+PASS customer sign-in, landing, and scoped routes
+PASS commercial sign-in, landing, and scoped routes
+
+Disposable PostgreSQL 17 legacy account upgrade
+✔ STAFF-ROLE01–03: legacy identities upgrade atomically with overrides, session renewal and approval history (763.271875ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1592.606875
+
+Clean bootstrap returned latest schema 078.
+Web production build and web and mobile TypeScript checks passed.
+Focused approval, finance, inventory, service and role checks passed, 31 of 31.
+Full regression suite with test concurrency 5
+ℹ tests 710
+ℹ suites 0
+ℹ pass 684
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 26
+ℹ todo 0
+ℹ duration_ms 122274.720625
+
+## Demo cutover and installed native acceptance — 14 November 2026 (Brisbane)
+
+STAFF-ROLE-G02/G03/G07: encrypted pre-cutover backup authenticated and archive list read with PostgreSQL 18 tooling. No restore drill. Schema moved from 076 through prerequisite 077 to 078. Preserved 27 users, 2 orders, 1 wallet entry, 1 verified payment, 20 change requests and 21 approval decisions. Wrote 11 staff role audit events. No change request or delegation was flagged, and the one existing inventory valuation draft remained a draft.
+
+Vercel deployment dpl_wc7sEBwrmVp1CBthWHrNKYae8gRR built and was promoted to https://easygas-client-demo.vercel.app. Health returned ready/demo and robots disallowed indexing. The release was deployed from a workspace snapshot. The temporary development-only Neon connection for backup/migration was disconnected. Existing hosted configuration and provider flags were retained.
+
+STAFF-ROLE-G04: hosted API sign-in checked immutable account IDs, assigned-branch access and out-of-branch denial for Finance and Branch Manager, global inventory for owner, and assigned-only navigation or API access for field staff.
+PASS owner -> owner existing identity, sign-in and authorised workspace
+PASS manager -> manager existing identity, sign-in and authorised workspace
+PASS finance -> finance existing identity, sign-in and authorised workspace
+PASS inventory -> finance existing identity, sign-in and authorised workspace
+PASS dispatcher -> manager existing identity, sign-in and authorised workspace
+PASS sales -> manager existing identity, sign-in and authorised workspace
+PASS driver -> driver existing identity, sign-in and authorised workspace
+PASS technician -> technician existing identity, sign-in and authorised workspace
+PASS service_manager -> manager existing identity, sign-in and authorised workspace
+PASS safety_officer -> owner existing identity, sign-in and authorised workspace
+PASS administrator -> owner existing identity, sign-in and authorised workspace
+PASS customer -> customer existing identity, sign-in and authorised workspace
+PASS commercial -> commercial existing identity, sign-in and authorised workspace
+
+STAFF-ROLE-G06: built and installed an iOS Simulator release and a minified arm64 Android emulator release against a separate, synthetic PostgreSQL fixture. Each test signed in, verified the role home, asserted absence of the customer Wallet tab and opened its role destination. Destinations were Approval Centre, Audit History, fleet locations, assigned driver orders and technician jobs. The Android build required WorkManager Room keep rules and a loopback HTTP manifest setting for the local-demo profile. Plugin checks confirmed idempotent keep rules and removal of that manifest override for other profiles. Web-hosted finance inventory remains a browser link in the mobile app. Physical-device and app-store acceptance were outside this rollout.
+ROLE-QA PASS owner
+ROLE-QA PASS finance
+ROLE-QA PASS manager
+ROLE-QA PASS driver
+ROLE-QA PASS technician
+** TEST SUCCEEDED **
+ROLE-QA PASS owner
+ROLE-QA PASS finance
+ROLE-QA PASS manager
+ROLE-QA PASS driver
+ROLE-QA PASS technician
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7482.532542

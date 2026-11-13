@@ -1,4 +1,5 @@
 "use client";
+import { EasyGasLoader } from "./easygas-loader";
 import { useEffect, useState, useRef, type FormEvent } from "react";
 import { ImageUpload } from "./image-upload";
 import { api, Notice, Modal } from "./ui";
@@ -192,7 +193,7 @@ export function CustomerTestimonials() {
       </p>
       {error && <Notice message={error} />}
       {!data ? (
-        <p>Loading your feedback…</p>
+        <EasyGasLoader size="sm" variant="section" label="Loading your feedback" />
       ) : (
         <>
           <div className="testimonial-grid">
@@ -632,7 +633,7 @@ export function TestimonialManagement() {
             </select>
           </label>
         </div>
-        {loading && <p role="status">Loading testimonial records…</p>}
+        {loading && <EasyGasLoader size="sm" variant="section" label="Loading testimonial records" />}
         <p>
           {total} matching submissions. Page {page + 1} of{" "}
           {Math.max(1, Math.ceil(total / 10))}.

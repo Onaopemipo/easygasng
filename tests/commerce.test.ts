@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { preparePayment, initializePayment, reconcilePayment } from "../apps/web/lib/payments/orchestrator";
 import { fulfilmentReady } from "../apps/web/lib/order-tracking";
 import { verifiedPickup } from "./helpers/tracking-fixture";
@@ -30,7 +31,7 @@ before(async () => {
     ids[role] = id();
     await db.query(
       "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,$2,$3,$4,$5,'lagos')",
-      [ids[role], `Test ${role}`, `${role}@commerce.test`, hash, role],
+      [ids[role], `Test ${role}`, `${role}@commerce.test`, hash, consolidatedRole(role)],
     );
     tokens[role] = await issueSession(db, ids[role]);
   }

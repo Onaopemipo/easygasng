@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../../packages/business-rules/src/staff-roles";
 import { createDatabase, migrate, one, type DB } from "../../apps/web/lib/db";
 import { dispatch } from "../../apps/web/lib/service";
 import { id, hashPassword, issueSession } from "../../apps/web/lib/auth";
@@ -21,7 +22,7 @@ export async function fixture(database?: DB) {
         role,
         `${uid}@tracking.example.test`,
         hashPassword("Tracking-fixture-only-123!"),
-        role,
+        consolidatedRole(role),
       ],
     );
     actors[role] = { id: uid, token: await issueSession(db, uid) };

@@ -61,7 +61,7 @@ export async function gasDeliveryAction(
   input: unknown,
 ): Promise<any> {
   if (action === "delivery.locations.manage") {
-    allow(user, ["owner", "manager", "dispatcher", "finance", "administrator"]);
+    allow(user, ["owner", "manager", "finance"]);
     return (
       await tx.query(
         `SELECT l.*,(SELECT count(*) FROM orders o WHERE o.location_id=l.id) AS order_count,(SELECT count(*) FROM orders o WHERE o.location_id=l.id AND o.status='delivered') AS delivered_count FROM delivery_locations l WHERE ${user.role === "owner" ? "true" : "l.branch_id=$1"} ORDER BY l.display_order,l.name`,
@@ -74,7 +74,7 @@ export async function gasDeliveryAction(
       .object({ config: locationConfig, reason: z.string().min(5).max(1000) })
       .strict()
       .parse(input);
-    allow(user, ["owner", "manager", "dispatcher"], d.config.branchId);
+    allow(user, ["owner", "manager"], d.config.branchId);
     if (
       !(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true", [
         d.config.branchId,
@@ -112,7 +112,7 @@ export async function gasDeliveryAction(
     return { id: lid, request: r };
   }
   if (action === "gas.inspections") {
-    allow(user, ["owner", "inventory"]);
+    allow(user, ["owner", "finance"]);
     return (
       await tx.query(
         `SELECT g.id,g.order_id,g.capacity_grams,g.grams,g.inspected_at,o.reference,o.status,o.branch_id FROM order_gas_lines g JOIN orders o ON o.id=g.order_id WHERE o.status IN ('placed','accepted','preparing') AND ${user.role === "owner" ? "true" : "o.branch_id=$1"} ORDER BY o.created_at`,
@@ -121,7 +121,7 @@ export async function gasDeliveryAction(
     ).rows;
   }
   if (action === "gas.stock") {
-    allow(user, ["owner", "manager", "inventory", "finance"]);
+    allow(user, ["owner", "manager", "finance"]);
     return (
       await tx.query(
         `SELECT * FROM gas_stock WHERE ${user.role === "owner" ? "true" : "branch_id=$1"}`,
@@ -139,7 +139,7 @@ export async function gasDeliveryAction(
       })
       .strict()
       .parse(input);
-    allow(user, ["owner", "inventory"], d.branchId);
+    allow(user, ["owner", "finance"], d.branchId);
     recentVerification(user);
     const branch = await one(
       tx,
@@ -180,7 +180,7 @@ export async function gasDeliveryAction(
       d.orderId,
     ]);
     if (!o) throw new AppError(404, "Order not found.");
-    allow(user, ["owner", "manager", "dispatcher"], o.branch_id);
+    allow(user, ["owner", "manager"], o.branch_id);
     if (["cancelled", "delivered"].includes(o.status))
       throw new AppError(409, "This order is closed.");
     const l = await one(tx, "SELECT * FROM delivery_locations WHERE id=$1", [
@@ -220,7 +220,7 @@ export async function gasDeliveryAction(
       [d.lineId],
     );
     if (!line) throw new AppError(404, "Gas line not found.");
-    allow(user, ["owner", "inventory"], line.branch_id);
+    allow(user, ["owner", "finance"], line.branch_id);
     recentVerification(user);
     if (
       !["placed", "accepted", "preparing"].includes(line.status) ||
@@ -269,7 +269,7 @@ export async function gasDeliveryAction(
       [d.lineId],
     );
     if (!line) throw new AppError(404, "Gas line not found.");
-    allow(user, ["owner", "inventory"], line.branch_id);
+    allow(user, ["owner", "finance"], line.branch_id);
     recentVerification(user);
     if (!["placed", "accepted", "preparing"].includes(line.status))
       throw new AppError(409, "Inspect before dispatch.");
@@ -665,7 +665,7 @@ export async function verifyGasDispatch(tx: SQL, orderId: string) {
       coverage.value.requiresAddressConfirmation !== false &&
       !(await one(
         tx,
-        "SELECT a.id FROM audit_events a JOIN users u ON u.id=a.actor_id WHERE a.action='delivery.coverage_confirmed' AND a.target=$1 AND a.detail->>'locationId'=$2 AND a.detail->>'locationVersion'=$3 AND u.active=true AND u.role IN ('owner','manager','dispatcher') AND (u.role='owner' OR u.branch_id=$4)",
+        "SELECT a.id FROM audit_events a JOIN users u ON u.id=a.actor_id WHERE a.action='delivery.coverage_confirmed' AND a.target=$1 AND a.detail->>'locationId'=$2 AND a.detail->>'locationVersion'=$3 AND u.active=true AND u.role IN ('owner','manager') AND (u.role='owner' OR u.branch_id=$4)",
         [orderId, coverage.id, String(coverage.version), lines[0].order_branch],
       ))
     )

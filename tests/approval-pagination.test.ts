@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate } from "../apps/web/lib/db";
@@ -77,8 +78,8 @@ test("APPROVAL-SCOPE01: pagination and summary enforce branch and view permissio
       const uid = id();
       ids[role] = uid;
       await db.query(
-        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,$4,$2,'lagos')",
-        [uid, role, uid + "@example.test", hashPassword("Fixture-only-123!")],
+        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,$4,$5,'lagos')",
+        [uid, role, uid + "@example.test", hashPassword("Fixture-only-123!"), consolidatedRole(role)],
       );
       tokens[role] = await issueSession(db, uid);
     }

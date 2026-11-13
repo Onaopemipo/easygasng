@@ -20,37 +20,7 @@ import {
 import { api, Modal, Notice, Loading } from "./ui";
 import StaffPrivileges from "./staff-privileges";
 import { ServiceForm } from "./professional-services";
-const roles = [
-  "sales",
-  "inventory",
-  "dispatcher",
-  "driver",
-  "service_manager",
-  "technician",
-  "safety_officer",
-  "manager",
-  "finance",
-  "administrator",
-  "owner",
-  "customer",
-];
-const rolePrivileges: Record<string, string> = {
-  sales: "Branch sales and order operations.",
-  inventory: "Branch stock, receipts and permitted cylinder operations.",
-  dispatcher: "Branch delivery coordination and assignments.",
-  driver: "Assigned deliveries and permitted delivery updates.",
-  service_manager: "Branch service appointments, quotations and coordination.",
-  technician:
-    "Assigned service jobs; technical actions require current qualifications.",
-  safety_officer:
-    "Branch safety reviews and independently verified qualifications.",
-  manager: "Branch operations, reporting and protected change requests.",
-  finance: "Scoped reconciliation and independent financial reviews.",
-  administrator:
-    "Technical administration and staff access requests; business approvals remain separate.",
-  owner: "Global administration and eligible independent approvals.",
-  customer: "Own orders, bookings, wallet and customer account only.",
-};
+import { accountRoles, staffRoleDetails, staffRoleLabel, staffRoles } from "../../../packages/business-rules/src/staff-roles";
 export default function StaffManagement({
   user,
   refresh = 0,
@@ -70,13 +40,11 @@ export default function StaffManagement({
     [version, setVersion] = useState(0),
     [modal, setModal] = useState(""),
     [target, setTarget] = useState<any>(null),
-    [link, setLink] = useState(""),
     [message, setMessage] = useState("");
   const reload = () => setVersion((v) => v + 1),
     close = () => {
       setModal("");
       setTarget(null);
-      setLink("");
     };
   useEffect(() => {
     let live = true;
@@ -95,8 +63,8 @@ export default function StaffManagement({
     };
   }, [version, refresh]);
   const owner = user.role === "owner",
-    canInvite = ["owner", "administrator"].includes(user.role),
-    canAccess = ["owner", "administrator", "manager"].includes(user.role);
+    canInvite = ["owner"].includes(user.role),
+    canAccess = ["owner", "manager"].includes(user.role);
   if (!data && !error) return <Loading />;
   if (!data)
     return (
@@ -112,7 +80,6 @@ export default function StaffManagement({
     .map((b: any) => ({ value: b.id, label: b.name }));
   const action = (mode: string, person?: any) => {
     setTarget(person ?? null);
-    setLink("");
     setModal(mode);
   };
   const done = () => {
@@ -122,29 +89,12 @@ export default function StaffManagement({
   };
   async function inviteAction(actionName: string, payload: any) {
     const r = await api(actionName, payload);
-    if (r.invitationUrl) setLink(r.invitationUrl);
     reload();
     return r;
   }
   const branchName = (id: string) =>
     data.branches.find((b: any) => b.id === id)?.name ?? id ?? "No branch";
-  const roleName = (role: string) =>
-    (
-      ({
-        owner: "Business Owner",
-        manager: "Branch Manager",
-        finance: "Finance Officer",
-        sales: "Sales Attendant",
-        driver: "Delivery Driver",
-        technician: "Service Technician",
-        administrator: "Administrator",
-        service_manager: "Service Manager",
-        safety_officer: "Safety Officer",
-        inventory: "Inventory Officer",
-        dispatcher: "Dispatcher",
-        customer: "Awaiting Role Approval",
-      }) as Record<string, string>
-    )[role] ?? role;
+  const roleName = (role: string) => role === "customer" ? "Awaiting staff access" : staffRoleLabel(role);
   const pending = data.invitations.filter(
     (i: any) => !i.accepted_at && new Date(i.expires_at) > new Date(),
   );
@@ -330,7 +280,7 @@ export default function StaffManagement({
           }}
         >
           <option value="">All Roles</option>
-          {roles.map((role) => (
+          {staffRoles.map((role) => (
             <option key={role} value={role}>
               {roleName(role)}
             </option>
@@ -582,12 +532,12 @@ export default function StaffManagement({
       {modal === "roles" && (
         <Modal title="Role Privileges Reference" onClose={close}>
           <dl>
-            {roles.map((role) => (
+            {staffRoles.map((role) => (
               <div key={role}>
                 <dt>
                   <strong>{roleName(role)}</strong>
                 </dt>
-                <dd>{rolePrivileges[role]}</dd>
+                <dd>{staffRoleDetails[role].description}</dd>
               </div>
             ))}
           </dl>
@@ -668,7 +618,7 @@ export default function StaffManagement({
                 },
               ]}
               send={(v) => inviteAction("staff.invite", v)}
-              submit="Create Staff Invitation"
+              submit="Send Staff Invitation"
             />
           ) : modal === "lookup" ? (
             <ServiceForm
@@ -701,14 +651,13 @@ export default function StaffManagement({
             />
           ) : modal === "access" ? (
             <>
-              {["owner","administrator"].includes(user.role)&&<StaffPrivileges target={target} user={user} onSaved={reload}/>}
+              {["owner"].includes(user.role)&&<StaffPrivileges target={target} user={user} onSaved={reload}/>}
               <details className="staff-role-change"><summary>Change role or branch</summary>
               <p>
-                Role defaults are assigned through the selected role. Changing a
-                role replaces the user’s existing role permissions; branch
-                access is limited to the selected branch. Technical
-                qualifications and independent financial approvals remain
-                separate requirements.
+                Changing a role updates the user’s default permissions.
+                Admin / Business Owner has business-wide access. Other staff
+                roles use their assigned branch and work. Technical
+                qualifications and independent financial approvals still apply.
               </p>
               <Notice message="This submits an approval request; it does not immediately grant access. The recipient and requester cannot approve their own access change." />
               <ServiceForm
@@ -718,9 +667,11 @@ export default function StaffManagement({
                     name: "role",
                     label: "Requested role",
                     value: target.role,
-                    options: roles.map((value) => ({
+                    options: accountRoles.map((value) => ({
                       value,
-                      label: value.replaceAll("_", " "),
+                      label: value === "customer" ? "Customer (remove staff access)"
+                        : value === "commercial" ? "Commercial customer (remove staff access)"
+                        : staffRoleLabel(value),
                     })),
                   },
                   {
@@ -770,7 +721,7 @@ export default function StaffManagement({
               <p>
                 {target.name} · {target.email}.{" "}
                 {modal === "resend"
-                  ? "A new private link replaces the old link."
+                  ? "A new email replaces the previous invitation link and temporary password."
                   : "The outstanding invitation link will stop working."}
               </p>
               <ServiceForm
@@ -786,44 +737,11 @@ export default function StaffManagement({
                 done={modal === "revoke" ? done : undefined}
                 submit={
                   modal === "resend"
-                    ? "Generate New Invitation"
+                    ? "Resend Invitation Email"
                     : "Confirm Revocation"
                 }
               />
             </>
-          )}
-          {link && (
-            <div className="surface">
-              <h3>Private staff invitation link</h3>
-              <p>
-                Email delivery is unconnected. Copy this link and share it
-                privately with the intended colleague. It expires after 48 hours
-                and does not grant staff privileges by itself.
-              </p>
-              <label>
-                Invitation link
-                <input
-                  readOnly
-                  value={link}
-                  onFocus={(e) => e.currentTarget.select()}
-                />
-              </label>
-              <button
-                className="button secondary"
-                onClick={() =>
-                  navigator.clipboard
-                    .writeText(link)
-                    .then(() => setMessage("Invitation link copied."))
-                    .catch(() =>
-                      setMessage(
-                        "Select and copy the invitation link manually.",
-                      ),
-                    )
-                }
-              >
-                Copy Invitation Link
-              </button>
-            </div>
           )}
         </Modal>
       )}

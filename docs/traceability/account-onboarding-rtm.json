@@ -1,0 +1,217 @@
+{
+  "phase": "Invitation acceptance and account password recovery",
+  "productionDecision": "Existing production NO-GO preserved. No hosted deployment or live email activation in this phase.",
+  "requirements": [
+    {
+      "id": "ONBOARD-R01",
+      "requirement": "Invite newly provisioned staff by email and require the recipient to accept the invitation.",
+      "priority": "P0",
+      "scope": "Staff invitation, resend and revocation",
+      "uiReference": "Existing EasyGas sign-in, Staff Management, Customers and account recovery",
+      "route": "/admin/staff, /accept-invitation",
+      "implementationFiles": [
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/transactional-mail.ts",
+        "apps/web/components/staff-management.tsx",
+        "apps/web/components/workflows.tsx",
+        "database/migrations/077_temporary_passwords.sql"
+      ],
+      "dataSource": "Staff invitations and transactional outbox.",
+      "securityControl": "Branch-scoped privileged invitation with fresh identity verification. Link and temporary password must match. Invitation acceptance leaves governed access approval in place.",
+      "testFiles": [
+        "tests/account-onboarding.test.ts",
+        "tests/staff-management.test.ts"
+      ],
+      "testIds": [
+        "ONBOARD-01",
+        "ONBOARD-BROWSER-01"
+      ],
+      "negativeTests": [
+        "does not match",
+        "no longer valid",
+        "verify your password"
+      ],
+      "evidence": [
+        "docs/account-onboarding/evidence.txt"
+      ],
+      "acceptanceGate": "ONBOARD-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser and service tests verify encrypted queued email, acceptance, replay rejection and replacement credentials on resend.",
+      "testResult": "PASS: Browser and service tests verify encrypted queued email, acceptance, replay rejection and replacement credentials on resend.",
+      "outstandingWork": "Hosted mailbox delivery is tracked by ONBOARD-R05."
+    },
+    {
+      "id": "ONBOARD-R02",
+      "requirement": "Email acceptance and a temporary password when staff create a customer account.",
+      "priority": "P0",
+      "scope": "Customer creation by authorised staff",
+      "uiReference": "Existing EasyGas sign-in, Staff Management, Customers and account recovery",
+      "route": "/admin/customers, /verify-email",
+      "implementationFiles": [
+        "apps/web/lib/customer-management.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/components/customer-management.tsx",
+        "apps/web/components/workflows.tsx"
+      ],
+      "dataSource": "Customer user row, account challenge and transactional outbox.",
+      "securityControl": "Scoped creator, one-time confirmation, 48-hour expiry and secure storage.",
+      "testFiles": [
+        "tests/account-onboarding.test.ts",
+        "tests/customer-management.test.ts"
+      ],
+      "testIds": [
+        "ONBOARD-02",
+        "ONBOARD-BROWSER-03"
+      ],
+      "negativeTests": [
+        "temporary_password_expires_at",
+        "status, 403"
+      ],
+      "evidence": [
+        "docs/account-onboarding/evidence.txt"
+      ],
+      "acceptanceGate": "ONBOARD-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser confirms the customer creation and acceptance flow. Service checks cover rejection before acceptance and after temporary password expiry.",
+      "testResult": "PASS: Browser confirms the customer creation and acceptance flow. Service checks cover rejection before acceptance and after temporary password expiry.",
+      "outstandingWork": "Hosted mailbox delivery is tracked by ONBOARD-R05."
+    },
+    {
+      "id": "ONBOARD-R03",
+      "requirement": "Replace the temporary password before the first authenticated session.",
+      "priority": "P0",
+      "scope": "Email sign-in and session authorization",
+      "uiReference": "Existing EasyGas sign-in, Staff Management, Customers and account recovery",
+      "route": "/login, POST /api/login, native sign-in API",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/phone-activation.ts",
+        "apps/web/components/site.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/DriverSignIn.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "database/migrations/077_temporary_passwords.sql"
+      ],
+      "dataSource": "Users, password hashes, temporary expiry and sessions.",
+      "securityControl": "No valid session before password replacement. Reject matching replacement and replay. Preserve staff approval and native role scoping.",
+      "testFiles": [
+        "tests/account-onboarding.test.ts"
+      ],
+      "testIds": [
+        "ONBOARD-01",
+        "ONBOARD-BROWSER-01",
+        "ONBOARD-MIGRATION"
+      ],
+      "negativeTests": [
+        "issueSession",
+        "newPassword: password"
+      ],
+      "evidence": [
+        "docs/account-onboarding/evidence.txt"
+      ],
+      "acceptanceGate": "ONBOARD-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser checked that no cookie exists before replacement. Service tests cover concurrent replacement and rejection of pre-issued sessions.",
+      "testResult": "PASS: Browser checked that no cookie exists before replacement. Service tests cover concurrent replacement and rejection of pre-issued sessions.",
+      "outstandingWork": "Installed-app UI acceptance is tracked by ONBOARD-R05."
+    },
+    {
+      "id": "ONBOARD-R04",
+      "requirement": "Provide password reset for staff and customers.",
+      "priority": "P0",
+      "scope": "Staff and customer accounts with a registered email",
+      "uiReference": "Existing EasyGas sign-in, Staff Management, Customers and account recovery",
+      "route": "/forgot-password, /reset-password, native recovery request",
+      "implementationFiles": [
+        "apps/web/lib/accounts.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/site.tsx",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "dataSource": "Account challenges, auth attempt limits, users and sessions.",
+      "securityControl": "Generic responses, atomic throttle, hashed 30-minute single-use reset token, session revocation and purpose separation.",
+      "testFiles": [
+        "tests/account-onboarding.test.ts",
+        "tests/workflows.test.ts"
+      ],
+      "testIds": [
+        "ONBOARD-03",
+        "ONBOARD-BROWSER-02"
+      ],
+      "negativeTests": [
+        "missing@example.test",
+        "oldSession",
+        "forged"
+      ],
+      "evidence": [
+        "docs/account-onboarding/evidence.txt"
+      ],
+      "acceptanceGate": "ONBOARD-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Staff and customer recovery, token invalidation and session revocation passed. Chrome reset worked during catalogue failure.",
+      "testResult": "PASS: Staff and customer recovery, token invalidation and session revocation passed. Chrome reset worked during catalogue failure.",
+      "outstandingWork": "Installed-app and hosted mailbox acceptance are tracked by ONBOARD-R05."
+    },
+    {
+      "id": "ONBOARD-R05",
+      "requirement": "Verify hosted email delivery and installed mobile onboarding and recovery.",
+      "priority": "P1",
+      "scope": "Hosted web and installed iOS and Android",
+      "uiReference": "Existing EasyGas sign-in, Staff Management, Customers and account recovery",
+      "route": "Hosted SMTP worker and native login/recovery",
+      "implementationFiles": [
+        "apps/web/lib/transactional-mail.ts",
+        "scripts/worker.ts",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "dataSource": "Authorised SMTP provider, transactional outbox and installed app sessions.",
+      "securityControl": "Require TLS and keep email credentials and message encryption keys in server configuration.",
+      "testFiles": [
+        "tests/account-onboarding.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/account-onboarding/evidence.txt"
+      ],
+      "acceptanceGate": "ONBOARD-G05",
+      "status": "PARTIAL",
+      "reason": "The local environment has no configured SMTP sender. Local browser acceptance used an isolated mailbox capture transport.",
+      "testResult": "Local PostgreSQL and Chrome passed with a capture transport. Native TypeScript passed.",
+      "outstandingWork": "Apply migration 077 on the hosted database. Configure the HTTPS APP_URL, SMTP sender and worker, and share the same message encryption key across API and worker. Verify delivery with approved test inboxes and test installed iOS and Android builds."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ONBOARD-G01",
+      "gate": "Invite newly provisioned staff by email and require the recipient to accept the invitation.",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "id": "ONBOARD-G02",
+      "gate": "Email acceptance and a temporary password when staff create a customer account.",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "id": "ONBOARD-G03",
+      "gate": "Replace the temporary password before the first authenticated session.",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "id": "ONBOARD-G04",
+      "gate": "Provide password reset for staff and customers.",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "id": "ONBOARD-G05",
+      "gate": "Verify hosted email delivery and installed mobile onboarding and recovery.",
+      "status": "PARTIAL"
+    }
+  ],
+  "changeLog": [
+    "The new flow extends existing staff invitation and account challenge routes. Legacy pending staff invites still accept a user-chosen password. Resending uses the new temporary-password flow. Existing role approvals and customer phone activation remain separate."
+  ]
+}

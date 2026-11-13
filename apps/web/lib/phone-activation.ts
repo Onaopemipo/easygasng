@@ -9,14 +9,12 @@ import {
   hashPassword,
   id,
   issueSession,
-  passwordMatches,
   recentVerification,
   type Actor,
 } from "./auth";
 import { one, type SQL } from "./db";
 import { audit } from "./governance";
 import { enqueueChannel } from "./channel-messaging";
-import { normaliseCustomerPhone } from "../../../packages/business-rules/src/customer-identity";
 function otpDigest(value: string) {
   const secret = process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY;
   if (!secret || !/^[a-f0-9]{64}$/i.test(secret))
@@ -25,13 +23,11 @@ function otpDigest(value: string) {
     .update(value)
     .digest("hex");
 }
-const absentHash = hashPassword("No-valid-phone-account-password");
 const token = z.string().regex(/^[a-f0-9]{64}$/);
 export const publicPhoneActions = new Set([
   "phone.otp",
   "phone.review",
   "phone.complete",
-  "phone.login",
 ]);
 export async function phoneActivation(
   tx: SQL,
@@ -39,43 +35,6 @@ export async function phoneActivation(
   action: string,
   input: unknown,
 ) {
-  if (action === "phone.login") {
-    const d = z
-        .object({
-          phone: z.string().max(40),
-          password: z.string().min(1).max(128),
-        })
-        .strict()
-        .parse(input),
-      phone = normaliseCustomerPhone(d.phone);
-    const bucket = digest(`phone-login:${phone ?? "invalid"}`);
-    const limit = await one(
-      tx,
-      "INSERT INTO auth_attempts(key,attempts,reset_at) VALUES($1,1,now()+interval '15 minutes') ON CONFLICT(key) DO UPDATE SET attempts=CASE WHEN auth_attempts.reset_at<=now() THEN 1 ELSE auth_attempts.attempts+1 END,reset_at=CASE WHEN auth_attempts.reset_at<=now() THEN now()+interval '15 minutes' ELSE auth_attempts.reset_at END RETURNING attempts",
-      [bucket],
-    );
-    const matches = (
-      await tx.query(
-        "SELECT id,role,password_hash FROM users WHERE contact_phone=$1 AND phone_verified_at IS NOT NULL AND active=true AND provisional=false AND role IN ('customer','commercial') LIMIT 2",
-        [phone],
-      )
-    ).rows;
-    const valid = passwordMatches(
-      d.password,
-      matches.length === 1 ? matches[0].password_hash : absentHash,
-    );
-    if (Number(limit?.attempts) > 10 || matches.length !== 1 || !valid)
-      return {
-        authError:
-          "Phone or password is incorrect, or sign-in is temporarily limited.",
-        status: 401,
-      };
-    await tx.query("DELETE FROM auth_attempts WHERE key=$1", [bucket]);
-    return {
-      token: await issueSession(tx, matches[0].id),
-      role: matches[0].role,
-    };
-  }
   if (action === "phone.invite" || action === "phone.revoke") {
     if (!user) throw new AppError(401, "Sign in.");
     const d = z
@@ -91,7 +50,7 @@ export async function phoneActivation(
       [d.orderId],
     );
     if (!o) throw new AppError(404, "Order not found.");
-    allow(user, ["owner", "manager", "sales"], o.branch_id);
+    allow(user, ["owner", "manager"], o.branch_id);
     recentVerification(user);
     await tx.query(
       "UPDATE phone_activations SET revoked_at=now() WHERE order_id=$1 AND consumed_at IS NULL AND revoked_at IS NULL",

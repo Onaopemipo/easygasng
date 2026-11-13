@@ -3,6 +3,7 @@ import{randomBytes}from'node:crypto';
 import{parseEnv}from'node:util';
 import{createDatabase,one}from'../apps/web/lib/db';
 import{hashPassword,id}from'../apps/web/lib/auth';
+import{accountRoles}from'../packages/business-rules/src/staff-roles';
 const m=JSON.parse(await readFile('/tmp/easygas-vercel-demo-credentials.json','utf8'));
 if(m.purpose!=='isolated-vercel-client-demo'||m.project!=='easygas-client-demo')throw Error('Dedicated demo required');
 process.loadEnvFile('/tmp/easygas-deploy-current.env');
@@ -12,7 +13,7 @@ const manifestUrl=new URL(m.runtimeUrl),configured=new URL(protectedEnv.DATABASE
 if(configured.hostname.replace('-pooler','')!==manifestUrl.hostname.replace('-pooler','')||configured.pathname!==manifestUrl.pathname||!configured.hostname.endsWith('.neon.tech'))throw Error('Demo target mismatch');
 process.env.DATABASE_URL=m.runtimeUrl;process.env.NODE_ENV='production';process.env.EASYGAS_BACKGROUND_JOBS='false';
 const db=await createDatabase();
-const roles=['owner','manager','finance','inventory','dispatcher','sales','driver','technician','service_manager','safety_officer','administrator','customer','commercial'];
+const roles=accountRoles;
 const accounts=roles.map(role=>({role,id:id(),email:`${role}.qa10nov@demo.easygas.invalid`,password:'Eg!'+randomBytes(12).toString('base64url')}));
 const privateFile='.data/demo-test-logins-20261110.json';
 try{
@@ -27,5 +28,5 @@ try{
  }});
  const after=await counts();if(after.users!==before.users+accounts.length||after.orders!==before.orders||after.wallet_entries!==before.wallet_entries||after.verified_payments!==before.verified_payments)throw Error('Unexpected record counts; investigate');
  const report={target:'isolated-vercel-client-demo',createdRoles:roles,before,after,existingAccountsPreserved:true,financialRecordsPreserved:true,credentialsInGit:false};
- await writeFile('docs/demo-accounts/evidence/provisioning.json',JSON.stringify(report,null,2));console.log('PASS thirteen fresh synthetic demo identities created; existing accounts and financial records preserved; credentials saved privately.');
+ await writeFile('docs/demo-accounts/evidence/provisioning.json',JSON.stringify(report,null,2));console.log('PASS fresh synthetic demo identities created; existing accounts and financial records preserved; credentials saved privately.');
 }finally{await db.close?.();}

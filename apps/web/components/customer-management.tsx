@@ -49,9 +49,9 @@ export default function CustomerManagement() {
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
   async function load() {
+    setError("");
     try {
       setData(await api("customers.manage"));
-      setError("");
     } catch (e: any) {
       setData(null);
       setError(e.message);
@@ -206,7 +206,7 @@ export default function CustomerManagement() {
           <button onClick={load}>Retry</button>
         </>
       )}
-      <div className="cm-metrics">
+      {data && <div className="cm-metrics">
         {[
           [
             UsersRound,
@@ -242,13 +242,13 @@ export default function CustomerManagement() {
             </span>
             <div>
               <span>{title}</span>
-              <strong>{data ? count : "—"}</strong>
+              <strong>{count}</strong>
               <small>{caption}</small>
             </div>
           </div>
         ))}
-      </div>
-      <section className="cm-directory">
+      </div>}
+      {data ? <section className="cm-directory">
         <div className="cm-filters">
           <label className="cm-search">
             <Search size={20} />
@@ -305,9 +305,6 @@ export default function CustomerManagement() {
             Reset
           </button>
         </div>
-        {!data && !error ? (
-          <Loading />
-        ) : (
           <div className="table-scroll">
             <table>
               <thead>
@@ -462,7 +459,6 @@ export default function CustomerManagement() {
               <p className="cm-empty">No customers match these filters.</p>
             )}
           </div>
-        )}
         <div className="cm-pagination">
           <span>
             Showing {rows.length ? (current - 1) * size + 1 : 0}–
@@ -498,7 +494,7 @@ export default function CustomerManagement() {
             </select>
           </div>
         </div>
-      </section>
+      </section> : !error && <Loading page label="Loading customer records" />}
       <div className="cm-shortcuts">
         {[
           [
@@ -616,9 +612,8 @@ export default function CustomerManagement() {
                     </select>
                   </label>
                   <p>
-                    Creates a customer account with no staff privileges. The
-                    customer must use password recovery to set their own
-                    password. Email delivery is not connected locally.
+                    The customer will receive an acceptance link and a temporary
+                    password. They’ll choose their own password at first sign-in.
                   </p>
                 </>
               )}

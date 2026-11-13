@@ -1,0 +1,149 @@
+{
+  "phase": "Unified email and phone sign-in",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "SIGNIN-REQ-01",
+      "requirement": "Offer one email-or-phone sign-in field on the website.",
+      "priority": "P1",
+      "scope": "Desktop and responsive web",
+      "uiReference": "User request for a single Email or phone number field",
+      "route": "/login and /register",
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "Existing account record and authenticated session",
+      "securityControl": "The same password and server verification are required with either identifier.",
+      "testFiles": [
+        "tests/unified-sign-in.test.ts"
+      ],
+      "testIds": [
+        "SIGNIN-01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/unified-sign-in-evidence.txt"
+      ],
+      "acceptanceGate": "SIGNIN-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local Chrome checks at 1440px and 390px used the same synthetic customer.",
+      "testResult": "PASS: desktop email and mobile web phone, inline error and retry, account redirect, registration email field.",
+      "outstandingWork": "Hosted deployment and acceptance are separate."
+    },
+    {
+      "id": "SIGNIN-REQ-02",
+      "requirement": "Resolve a verified phone or email to the existing account, including legacy clients.",
+      "priority": "P0",
+      "scope": "Shared authentication",
+      "uiReference": "User request for a single Email or phone number field",
+      "route": "/api/login and /api/phone.login",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/phone-activation.ts",
+        "packages/business-rules/src/customer-identity.ts"
+      ],
+      "dataSource": "users.email, users.contact_phone, users.phone_verified_at, auth_attempts and sessions",
+      "securityControl": "Only unique verified numbers on active, non-provisional accounts qualify. Equivalent formats and both phone entry points share a retry limit.",
+      "testFiles": [
+        "tests/unified-sign-in.test.ts"
+      ],
+      "testIds": [
+        "SIGNIN-01",
+        "SIGNIN-02"
+      ],
+      "negativeTests": [
+        "unverified and ambiguous numbers fail closed"
+      ],
+      "evidence": [
+        "docs/traceability/unified-sign-in-evidence.txt"
+      ],
+      "acceptanceGate": "SIGNIN-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The API authenticated both identifiers to the same account and rejected unsafe lookups.",
+      "testResult": "PASS: case-insensitive email, supported Nigerian phone formats, compatibility, number ambiguity and rate limiting.",
+      "outstandingWork": "Accounts without a verified phone can use their email."
+    },
+    {
+      "id": "SIGNIN-REQ-03",
+      "requirement": "Preserve onboarding and role-specific sign-in controls.",
+      "priority": "P0",
+      "scope": "Authentication and restricted field sessions",
+      "uiReference": "User request for a single Email or phone number field",
+      "route": "/api/login, /api/driver.login and /api/technician.login",
+      "implementationFiles": [
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "users.role, users.temporary_password_expires_at and sessions",
+      "securityControl": "Dedicated field sign-in keeps role checks and scoped sessions. Temporary passwords still require accepted invitations and password replacement.",
+      "testFiles": [
+        "tests/unified-sign-in.test.ts"
+      ],
+      "testIds": [
+        "SIGNIN-03",
+        "ONBOARD-01",
+        "ONBOARD-03"
+      ],
+      "negativeTests": [
+        "cannot bypass field role or temporary password requirements"
+      ],
+      "evidence": [
+        "docs/traceability/unified-sign-in-evidence.txt"
+      ],
+      "acceptanceGate": "SIGNIN-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused authentication and onboarding tests exercised the server controls.",
+      "testResult": "PASS: role mismatch rejected, temporary password replaced before login, restricted technician session, existing recovery checks.",
+      "outstandingWork": "Installed app checks are tracked in SIGNIN-REQ-04."
+    },
+    {
+      "id": "SIGNIN-REQ-04",
+      "requirement": "Offer one email-or-phone sign-in field in the shared, Driver and Technician mobile screens.",
+      "priority": "P1",
+      "scope": "Native iOS and Android",
+      "uiReference": "User request for a single Email or phone number field",
+      "route": "Shared sign-in, Driver Sign In and Technician Sign In",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/DriverSignIn.tsx",
+        "apps/mobile/TechnicianSignIn.tsx"
+      ],
+      "dataSource": "Existing account and role from the sign-in API",
+      "securityControl": "The app submits the identifier to the existing server-side sign-in endpoints and stores the returned session as before.",
+      "testFiles": [
+        "tests/unified-sign-in.test.ts"
+      ],
+      "testIds": [
+        "SIGNIN-01",
+        "SIGNIN-03"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/unified-sign-in-evidence.txt"
+      ],
+      "acceptanceGate": "SIGNIN-G04",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Native form source and API are covered by type checking and service tests.",
+      "testResult": "PASS: native TypeScript and shared authentication tests. Installed-app checks pending.",
+      "outstandingWork": "Verify the three forms in fresh iOS and Android builds."
+    }
+  ],
+  "gates": [
+    {
+      "id": "SIGNIN-G01",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "id": "SIGNIN-G02",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "id": "SIGNIN-G03",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "id": "SIGNIN-G04",
+      "status": "IMPLEMENTED_UNVERIFIED"
+    }
+  ]
+}

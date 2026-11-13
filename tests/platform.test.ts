@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { verifiedPickup } from "./helpers/tracking-fixture";
 import { before, test } from "node:test";
 import assert from "node:assert/strict";
@@ -59,7 +60,7 @@ async function fixture() {
     const uid = id();
     await db.query(
       "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,$2,$3,$4,$5,$6)",
-      [uid, `Test ${role}`, `${uid}@example.test`, passwordHash, role, branch],
+      [uid, `Test ${role}`, `${uid}@example.test`, passwordHash, consolidatedRole(role), branch],
     );
     const token = await issueSession(db, uid);
     users[role] = { id: uid, token };
@@ -198,7 +199,7 @@ test("D: self-approval fails without changing request, settings or decisions", a
 test("E: revoked authority takes effect on existing sessions immediately", async () => {
   const f = await fixture();
   const r = await f.proposal("sales", "price.hose", 800000);
-  await db.query("UPDATE users SET role='sales' WHERE id=$1", [
+  await db.query("UPDATE users SET role='driver' WHERE id=$1", [
     f.users.manager.id,
   ]);
   await denied(() =>
@@ -367,15 +368,14 @@ test("J5: approval classification cannot be downgraded through policy settings",
     f.proposal("owner", "security.policy", { dualApproval: false }),
   );
 });
-test("J6: sales cannot delegate financial authority", async () => {
+test("J6: Branch Managers can request finance access but cannot approve it", async () => {
   const f = await fixture();
-  await denied(() =>
-    f.proposal("sales", "security.permissions", {
+  const request = await f.proposal("sales", "security.permissions", {
       userId: f.users.driver.id,
       role: "finance",
       branchId: f.branch,
-    }),
-  );
+  });
+  await denied(() => f.call("sales", "approval.decide", { id: request.id, decision: "approve", reason: "" }));
 });
 test("J7: managers cannot read or propose changes across branches", async () => {
   const f = await fixture();
@@ -411,11 +411,11 @@ test("J9: suspended accounts lose authority without waiting for session expiry",
   ]);
   await denied(() => f.call("manager", "settings", { scope: f.branch }), 401);
 });
-test("J10: technical administrators cannot approve financial decisions", async () => {
+test("J10: branch operational staff cannot approve protected financial decisions", async () => {
   const f = await fixture();
   const r = await f.proposal("finance", "wallet.maximum", 70000000);
   await denied(() =>
-    f.call("administrator", "approval.decide", {
+    f.call("manager", "approval.decide", {
       id: r.id,
       decision: "approve",
       reason: "",
@@ -829,7 +829,7 @@ test("protected staff changes require independent approvals and revoke the targe
   const f = await fixture();
   const r = await f.proposal("manager", "security.permissions", {
     userId: f.users.sales.id,
-    role: "inventory",
+    role: "finance",
     branchId: f.branch,
   });
   await f.call("owner", "reauth", { password });
@@ -842,7 +842,7 @@ test("protected staff changes require independent approvals and revoke the targe
   assert.equal(
     (await one(db, "SELECT role FROM users WHERE id=$1", [f.users.sales.id]))!
       .role,
-    "sales",
+    "manager",
   );
   await f.call("finance", "approval.decide", {
     id: r.id,
@@ -852,7 +852,7 @@ test("protected staff changes require independent approvals and revoke the targe
   assert.equal(
     (await one(db, "SELECT role FROM users WHERE id=$1", [f.users.sales.id]))!
       .role,
-    "inventory",
+    "finance",
   );
   await denied(() => f.call("sales", "inventory"), 401);
   const login = await dispatch(

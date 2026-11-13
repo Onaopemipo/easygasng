@@ -1,3 +1,5 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
+import { openMessage } from "../apps/web/lib/channel-messaging";
 import { before, test } from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate, one, type DB } from "../apps/web/lib/db";
@@ -6,6 +8,7 @@ import { id, hashPassword, issueSession } from "../apps/web/lib/auth";
 let db: DB;
 const tokens: Record<string, string> = {},
   ids: Record<string, string> = {};
+process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY ??= "7".repeat(64);
 const password = "Workflows-test-only-123!";
 before(async () => {
   db = await createDatabase("memory://");
@@ -29,7 +32,7 @@ before(async () => {
         `Test ${role}`,
         `${role}@workflow.test`,
         hash,
-        role === "other" ? "customer" : role,
+        consolidatedRole(role === "other" ? "customer" : role),
       ],
     );
     tokens[role] = await issueSession(db, uid);
@@ -82,7 +85,7 @@ test("recovery is non-enumerating, single-use, expires and revokes sessions", as
     "SELECT body FROM message_outbox WHERE recipient=$1 ORDER BY created_at DESC",
     [email],
   );
-  const secret = message!.body.split("#token=")[1];
+  const secret = openMessage(message!.body).match(/#token=([a-f0-9]{64})/)![1];
   assert.equal(
     (await one(
       db,
@@ -361,7 +364,7 @@ test("branch transfers remove source stock and destination receipt is independen
   );
   const uid = id();
   await db.query(
-    "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,'Receiving tester',$2,$3,'inventory','test-branch')",
+    "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,'Receiving tester',$2,$3,'finance','test-branch')",
     [uid, `${uid}@workflow.test`, hashPassword(password)],
   );
   const token = await issueSession(db, uid);
@@ -413,8 +416,10 @@ test("staff invitation acceptance cannot grant privileges and suspension revokes
       db,
       "SELECT body FROM message_outbox WHERE recipient='invited@workflow.test'",
     ),
-    secret = m!.body.split("#token=")[1];
-  await dispatch("invitation.accept", null, { token: secret, password }, db);
+    body = openMessage(m!.body),
+    secret = body.match(/#token=([a-f0-9]{64})/)![1],
+    temporaryPassword = body.match(/Temporary password: ([\w-]+)/)![1];
+  await dispatch("invitation.accept", null, { token: secret, password: temporaryPassword }, db);
   assert.equal(
     (await one(
       db,
@@ -423,7 +428,7 @@ test("staff invitation acceptance cannot grant privileges and suspension revokes
     "customer",
   );
   await assert.rejects(
-    () => dispatch("invitation.accept", null, { token: secret, password }, db),
+    () => dispatch("invitation.accept", null, { token: secret, password: temporaryPassword }, db),
     /no longer valid/,
   );
   await call("owner", "staff.suspend", {
@@ -530,7 +535,7 @@ test("catalogue branch browsing enforces current user scope", async () => {
 
 test("SUPPORT-DESK01: staff intake reuses scoped customer identity and inbox totals preserve private notes", async () => {
   const staffId = id();
-  await db.query("INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Desk fixture agent',$2,$3,'sales','lagos')", [staffId, staffId + "@workflow.test", hashPassword(password)]);
+  await db.query("INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Desk fixture agent',$2,$3,'manager','lagos')", [staffId, staffId + "@workflow.test", hashPassword(password)]);
   const staffToken = await issueSession(db, staffId);
   const staffCall = (action: string, data: any) => dispatch(action, staffToken, data, db);
   const payload = { customerRef: ids.customer, subject: "Customer requested support", message: "Synthetic request entered by an authorised staff member." };

@@ -363,6 +363,7 @@ export default function TechnicianWorkspace({
         }}
       >
         <Feedback
+          loading={!profile}
           error={error}
           retry={() => refresh().catch((e) => setError(e.message))}
         />
@@ -388,11 +389,7 @@ export default function TechnicianWorkspace({
           </Card>
         )}
         {!!queueMessage && <Copy>{queueMessage}</Copy>}
-        {!profile ? (
-          <Card>
-            <Copy>Loading your verified technician workspace…</Copy>
-          </Card>
-        ) : selected && !current ? (
+        {!profile ? null : selected && !current ? (
           <Card>
             <Copy>
               This job is no longer accessible. Refresh and contact operations.

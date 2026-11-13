@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { Pool } from "pg";
@@ -66,7 +67,7 @@ test(
             role,
             uid + "@example.test",
             hashPassword("Concurrency-fixture-only-123!"),
-            role,
+            consolidatedRole(role),
           ],
         );
         tokens[role] = await issueSession(db, uid);

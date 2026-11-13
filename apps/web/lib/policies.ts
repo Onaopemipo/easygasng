@@ -29,7 +29,7 @@ export async function policyAction(
     ).rows;
   if (action === "policies.manage") {
     if (!user) return undefined;
-    allow(user, ["owner", "administrator"]);
+    allow(user, ["owner"]);
     return (await tx.query("SELECT * FROM legal_documents ORDER BY title"))
       .rows;
   }

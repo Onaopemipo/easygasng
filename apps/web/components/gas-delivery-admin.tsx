@@ -30,18 +30,18 @@ export default function GasDeliveryAdmin({
     [tick, setTick] = useState(0);
   useEffect(() => {
     if (
-      ["owner", "manager", "dispatcher", "finance", "administrator"].includes(
+      ["owner", "manager", "finance"].includes(
         user.role,
       )
     )
       api("delivery.locations.manage")
         .then(setLocations)
         .catch((e) => setError(e.message));
-    if (["owner", "inventory"].includes(user.role))
+    if (["owner", "finance"].includes(user.role))
       api("gas.inspections")
         .then(setInspections)
         .catch((e) => setError(e.message));
-    if (["owner", "manager", "inventory", "finance"].includes(user.role))
+    if (["owner", "manager", "finance"].includes(user.role))
       api("gas.stock")
         .then(setStock)
         .catch((e) => setError(e.message));
@@ -86,7 +86,7 @@ export default function GasDeliveryAdmin({
             )
             .join(" · ") || "Not available to this role"}
         </p>
-        {["owner", "inventory"].includes(user.role) && (
+        {["owner", "finance"].includes(user.role) && (
           <ActionForm
             action="gas.stock.receive"
             title="Receive verified bulk gas"
@@ -103,7 +103,7 @@ export default function GasDeliveryAdmin({
             onDone={() => setTick((t) => t + 1)}
           />
         )}
-        {["owner", "inventory"].includes(user.role) && (
+        {["owner", "finance"].includes(user.role) && (
           <section>
             <h3>Gas filling inspections</h3>
             {inspections.map((g) => (
@@ -177,7 +177,7 @@ export default function GasDeliveryAdmin({
           </section>
         )}
         <h3>Delivery Locations</h3>
-        {["owner", "manager", "dispatcher"].includes(user.role) && (
+        {["owner", "manager"].includes(user.role) && (
           <button className="button secondary" onClick={() => setAdd(!add)}>
             Add delivery location
           </button>

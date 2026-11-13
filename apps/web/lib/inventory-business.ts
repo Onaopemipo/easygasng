@@ -9,7 +9,7 @@ import {
   digest,
   type Actor,
 } from "./auth";
-import { propose, decide, audit, ownerAutoApprovalEnabled, autoApproveOwnerRequest } from "./governance";
+import { propose, decide, audit, canAutoApproveDefinition, definition, autoApproveOwnerRequest } from "./governance";
 import { grams } from "../../../packages/business-rules/src/gas-pricing";
 import { applyBulkRecovery } from "./bulk-lpg-recovery";
 const reason = z.string().trim().min(5).max(1000),
@@ -20,7 +20,7 @@ const item = {
   productId: z.string().min(1).max(100).optional(),
   gas: z.boolean().default(false),
 };
-const writers = ["owner", "manager", "inventory"];
+const writers = ["owner", "manager", "finance"];
 export function validateInventoryValue(d: Row, value: unknown) {
   if (d.value_type === "inventory_operation")
     z.object({ operationId: z.string().uuid() }).strict().parse(value);
@@ -74,7 +74,7 @@ export async function inventoryQualification(
 ) {
   const q = await one(
     tx,
-    "SELECT q.id FROM technician_qualifications q JOIN users u ON u.id=q.user_id JOIN users v ON v.id=q.verified_by WHERE q.user_id=$1 AND q.code=$2 AND q.expires_at>now() AND u.active=true AND (u.role='owner' OR u.branch_id=$3) AND v.active=true AND v.role IN ('owner','safety_officer') AND (v.role='owner' OR v.branch_id=$3) AND q.user_id<>q.verified_by",
+    "SELECT q.id FROM technician_qualifications q JOIN users u ON u.id=q.user_id JOIN users v ON v.id=q.verified_by WHERE q.user_id=$1 AND q.code=$2 AND q.expires_at>now() AND u.active=true AND (u.role='owner' OR u.branch_id=$3) AND v.active=true AND v.role IN ('owner') AND (v.role='owner' OR v.branch_id=$3) AND q.user_id<>q.verified_by",
     [userId, code, b],
   );
   if (!q)
@@ -175,7 +175,7 @@ export async function requestOperation(
     roles = finance
       ? ["owner", "finance"]
       : kind === "purchase"
-        ? ["owner", "manager", "inventory"]
+        ? ["owner", "manager", "finance"]
         : writers;
   // Conservative owner-only independent approval. No financial/quantity limits are invented.
   await tx.query(
@@ -209,8 +209,11 @@ export async function requestOperation(
     req.id,
     oid,
   ]);
-  if (!draft && ownerAutoApprovalEnabled() && user.role === "owner")
-    req = await autoApproveOwnerRequest(tx, user, req.id) as typeof req;
+  if (!draft && user.role === "owner") {
+    const policy = await definition(tx, user, key, b, "propose");
+    if (canAutoApproveDefinition(policy))
+      req = await autoApproveOwnerRequest(tx, user, req.id) as typeof req;
+  }
   await audit(tx, user, "inventory.operation_requested", oid, "success", {
     kind,
     branch: b,

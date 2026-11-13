@@ -112,7 +112,7 @@ export async function bundleAction(
   }
   if (!user) return undefined;
   if (action === "bundles.manage") {
-    allow(user, ["owner", "service_manager"]);
+    allow(user, ["owner", "manager"]);
     return (
       await tx.query(
         `SELECT * FROM service_bundles WHERE ${user.role === "owner" ? "true" : "branch_id=$1"} ORDER BY name`,
@@ -135,7 +135,7 @@ export async function bundleAction(
       [bid, d.branchId, d.name],
     );
     await tx.query(
-      "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES ($1,$2,'Product & Service Bundles','Item quantities and service-only discount require independent owner approval.','owner',3,'bundle','[\"owner\",\"service_manager\"]','[\"owner\"]','[\"owner\",\"service_manager\"]','[]',true)",
+      "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES ($1,$2,'Product & Service Bundles','Item quantities and service-only discount require independent owner approval.','owner',3,'bundle','[\"owner\",\"manager\"]','[\"owner\"]','[\"owner\",\"manager\"]','[]',true)",
       ["bundle." + bid, d.name],
     );
     await tx.query(
@@ -159,7 +159,7 @@ export async function bundleAction(
       d.id,
     ]);
     if (!b) throw new AppError(404, "Bundle not found.");
-    allow(user, ["owner", "service_manager"], b.branch_id);
+    allow(user, ["owner", "manager"], b.branch_id);
     return propose(tx, user, {
       key: "bundle." + b.id,
       scope: b.branch_id,

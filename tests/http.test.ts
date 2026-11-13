@@ -11,7 +11,7 @@ before(async () => {
   (globalThis as any).easygasDb = Promise.resolve(db);
   const uid = id();
   await db.query(
-    "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,'HTTP Test Sales',$2,$3,'sales','lagos')",
+    "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,'HTTP Test Sales',$2,$3,'manager','lagos')",
     [uid, `${uid}@example.test`, hashPassword("Http-test-only-123!")],
   );
   salesToken = await issueSession(db, uid);

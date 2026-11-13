@@ -1,0 +1,314 @@
+{
+  "phase": "Staff role consolidation",
+  "productionDecision": "The isolated Vercel demo and installed emulator/simulator acceptance passed. Existing commercial production NO-GO remains in effect.",
+  "requirements": [
+    {
+      "id": "STAFF-ROLE01",
+      "requirement": "Use exactly five staff roles throughout account assignment and access checks.",
+      "priority": "P0",
+      "scope": "Staff Management and shared access catalogue",
+      "uiReference": "Approved five-role list and existing EasyGas web and mobile workspaces",
+      "route": "/admin/staff, /api/staff.access.request",
+      "implementationFiles": [
+        "packages/business-rules/src/staff-roles.ts",
+        "apps/web/components/staff-management.tsx",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/governance.ts",
+        "database/migrations/078_staff_role_consolidation.sql"
+      ],
+      "dataSource": "Users, roles and live setting definitions",
+      "securityControl": "Database role constraint and server-side input validation preserve customer and commercial account types.",
+      "testFiles": [
+        "tests/staff-role-consolidation.test.ts"
+      ],
+      "testIds": [
+        "STAFF-ROLE01–03"
+      ],
+      "negativeTests": [
+        "role: \"administrator\""
+      ],
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-ROLE-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Role catalogue, PostgreSQL constraint, legacy role assignment rejection and browser Staff Management reference.",
+      "testResult": "PASS: Role catalogue, PostgreSQL constraint, legacy role assignment rejection and browser Staff Management reference.",
+      "outstandingWork": "No outstanding local implementation for this requirement."
+    },
+    {
+      "id": "STAFF-ROLE02",
+      "requirement": "Move existing staff into the approved roles and give Administrators and Safety Officers business-wide owner access.",
+      "priority": "P0",
+      "scope": "Existing accounts and sessions",
+      "uiReference": "Approved five-role list and existing EasyGas web and mobile workspaces",
+      "route": "/login, /api/me, /api/navigation.access",
+      "implementationFiles": [
+        "database/migrations/078_staff_role_consolidation.sql",
+        "apps/web/lib/db.ts",
+        "apps/web/lib/auth.ts"
+      ],
+      "dataSource": "User identities, branch assignments and sessions",
+      "securityControl": "Atomic migration preserves identities and branches. Owner has cross-branch access. Consolidated management and finance sessions require a fresh sign-in.",
+      "testFiles": [
+        "tests/staff-role-consolidation.test.ts"
+      ],
+      "testIds": [
+        "STAFF-ROLE01–03"
+      ],
+      "negativeTests": [
+        "admin.token"
+      ],
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-ROLE-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PostgreSQL migration preserved identities. Hosted checks verified original Administrator and Safety Officer identities with owner access.",
+      "testResult": "PASS: PostgreSQL migration preserved identities. Hosted checks verified original Administrator and Safety Officer identities with owner access.",
+      "outstandingWork": "Staff in the three consolidated management roles sign in again."
+    },
+    {
+      "id": "STAFF-ROLE03",
+      "requirement": "Preserve active privilege overrides and approval history during migration.",
+      "priority": "P0",
+      "scope": "Staff access, audit and approval history",
+      "uiReference": "Approved five-role list and existing EasyGas web and mobile workspaces",
+      "route": "/admin/staff, /admin/approvals, /admin/audit",
+      "implementationFiles": [
+        "database/migrations/078_staff_role_consolidation.sql",
+        "database/bootstrap.sql",
+        "packages/business-rules/src/staff-privileges.ts",
+        "apps/web/lib/business-operation.ts"
+      ],
+      "dataSource": "Staff privilege overrides, change requests, recorded decisions, delegations and audit events",
+      "securityControl": "Keep applicable grants and existing denials. Supersede open requests affected by authority changes and revoke affected delegations with audit events. Keep original historical roles and decisions.",
+      "testFiles": [
+        "tests/staff-role-consolidation.test.ts"
+      ],
+      "testIds": [
+        "STAFF-ROLE01–03"
+      ],
+      "negativeTests": [
+        "overrides[0].invalidated_at"
+      ],
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-ROLE-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified override migration and historic decisions. Hosted migration recorded 11 role changes and flagged zero requests or delegations. The existing draft remained a draft.",
+      "testResult": "PASS: Verified override migration and historic decisions. Hosted migration recorded 11 role changes and flagged zero requests or delegations. The existing draft remained a draft.",
+      "outstandingWork": "No hosted item required resubmission."
+    },
+    {
+      "id": "STAFF-ROLE04",
+      "requirement": "Enforce branch boundaries for Finance and Branch Manager, with assigned workspaces for field staff.",
+      "priority": "P0",
+      "scope": "Grouped sidebar and branch data",
+      "uiReference": "Approved five-role list and existing EasyGas web and mobile workspaces",
+      "route": "/admin, /admin/finance, /admin/audit, /admin/pos, /admin/deliveries, /admin/bookings",
+      "implementationFiles": [
+        "packages/business-rules/src/admin-navigation.ts",
+        "apps/web/components/admin-navigation.tsx",
+        "apps/web/app/admin/[[...section]]/page.tsx",
+        "apps/web/lib/navigation.ts",
+        "apps/web/lib/audit-history.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "Authenticated role and assigned branch, action-specific data and authoritative audit events",
+      "securityControl": "Server-side route and action checks. Finance Audit History shows financial and stock events recorded with the user's assigned branch.",
+      "testFiles": [
+        "tests/staff-role-consolidation.test.ts"
+      ],
+      "testIds": [
+        "STAFF-ROLE04–06"
+      ],
+      "negativeTests": [
+        "branchId: \"other\""
+      ],
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-ROLE-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Hosted branch access passed for Finance and Branch Manager, including HTTP 403 outside the assigned branch. Field restrictions passed in hosted APIs and installed builds.",
+      "testResult": "PASS: Hosted branch access passed for Finance and Branch Manager, including HTTP 403 outside the assigned branch. Field restrictions passed in hosted APIs and installed builds.",
+      "outstandingWork": "Finance Audit History requires explicit branch attribution."
+    },
+    {
+      "id": "STAFF-ROLE05",
+      "requirement": "Keep independent approval and current qualifications for protected decisions.",
+      "priority": "P0",
+      "scope": "Approvals, expenses, qualifications and service checklists",
+      "uiReference": "Approved five-role list and existing EasyGas web and mobile workspaces",
+      "route": "/admin/approvals, /admin/finance, /admin/technicians",
+      "implementationFiles": [
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/approval-workflow.ts",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/catalogue.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "Live policy, captured request policy, independently verified qualifications and approval decisions",
+      "securityControl": "Preserve existing eligible owner auto-approval. Protected access and financial decisions retain independent review. A checklist requires distinct reviewers and a current independent safety qualification.",
+      "testFiles": [
+        "tests/staff-role-consolidation.test.ts"
+      ],
+      "testIds": [
+        "STAFF-ROLE04–06"
+      ],
+      "negativeTests": [
+        "/independent/i"
+      ],
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-ROLE-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Protected access request requires separate decisions, self-approval of an expense is rejected, and checklist review verifies qualification.",
+      "testResult": "PASS: Protected access request requires separate decisions, self-approval of an expense is rejected, and checklist review verifies qualification.",
+      "outstandingWork": "No outstanding local implementation for this requirement."
+    },
+    {
+      "id": "STAFF-ROLE06",
+      "requirement": "Show the consolidated roles and their authorised workspaces in the native app.",
+      "priority": "P0",
+      "scope": "Shared sign-in and role-based navigation",
+      "uiReference": "Approved five-role list and existing EasyGas web and mobile workspaces",
+      "route": "Native role homes and menus, /api/navigation.access",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "packages/business-rules/src/staff-roles.ts",
+        "packages/business-rules/src/admin-navigation.ts",
+        "apps/mobile/app.config.js",
+        "apps/mobile/plugins/with-workmanager-room.js",
+        "apps/mobile/plugins/with-local-android-network.js"
+      ],
+      "dataSource": "Shared role catalogue, authenticated session and server navigation",
+      "securityControl": "Use server navigation for authorised actions. Driver and technician sessions remain assignment-scoped.",
+      "testFiles": [
+        "tests/staff-role-consolidation.test.ts"
+      ],
+      "testIds": [
+        "STAFF-ROLE04–06"
+      ],
+      "negativeTests": [
+        "call(field, \"audit\")"
+      ],
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-ROLE-G06",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All five staff roles passed installed sign-in, role navigation and customer Wallet exclusion on iPhone 17 Pro Simulator and minified Pixel 8 emulator. Backend tests verified access restrictions.",
+      "testResult": "PASS: All five staff roles passed installed sign-in, role navigation and customer Wallet exclusion on iPhone 17 Pro Simulator and minified Pixel 8 emulator. Backend tests verified access restrictions.",
+      "outstandingWork": "Physical-device and app-store acceptance were outside the demo scope."
+    },
+    {
+      "id": "STAFF-ROLE07",
+      "requirement": "Verify the release cutover for consolidated roles.",
+      "priority": "P0",
+      "scope": "Release and migration",
+      "uiReference": "Approved five-role list and existing EasyGas web and mobile workspaces",
+      "route": "Schema 078 and existing release checks",
+      "implementationFiles": [
+        "database/migrations/078_staff_role_consolidation.sql",
+        "database/bootstrap.sql",
+        "apps/web/lib/release-checks.ts"
+      ],
+      "dataSource": "Migration ledger and release status",
+      "securityControl": "Use coordinated code and schema release. Preserve the existing production NO-GO decision.",
+      "testFiles": [
+        "tests/staff-role-consolidation.test.ts"
+      ],
+      "testIds": [
+        "STAFF-ROLE01–03"
+      ],
+      "negativeTests": [
+        "23514"
+      ],
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-ROLE-G07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authenticated and archive-verified backup before schema 077 and 078. Matching Vercel deployment is READY. All 13 retained test identities signed in with their expected roles.",
+      "testResult": "PASS: Authenticated and archive-verified backup before schema 077 and 078. Matching Vercel deployment is READY. All 13 retained test identities signed in with their expected roles.",
+      "outstandingWork": "A coordinated database restore was not exercised. Commercial production remains NO-GO."
+    }
+  ],
+  "gates": [
+    {
+      "id": "STAFF-ROLE-G01",
+      "status": "VERIFIED_COMPLETE",
+      "criteria": "Use exactly five staff roles throughout account assignment and access checks.",
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ]
+    },
+    {
+      "id": "STAFF-ROLE-G02",
+      "status": "VERIFIED_COMPLETE",
+      "criteria": "Move existing staff into the approved roles and give Administrators and Safety Officers business-wide owner access.",
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ]
+    },
+    {
+      "id": "STAFF-ROLE-G03",
+      "status": "VERIFIED_COMPLETE",
+      "criteria": "Preserve active privilege overrides and approval history during migration.",
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ]
+    },
+    {
+      "id": "STAFF-ROLE-G04",
+      "status": "VERIFIED_COMPLETE",
+      "criteria": "Enforce branch boundaries for Finance and Branch Manager, with assigned workspaces for field staff.",
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ]
+    },
+    {
+      "id": "STAFF-ROLE-G05",
+      "status": "VERIFIED_COMPLETE",
+      "criteria": "Keep independent approval and current qualifications for protected decisions.",
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ]
+    },
+    {
+      "id": "STAFF-ROLE-G06",
+      "status": "VERIFIED_COMPLETE",
+      "criteria": "Show the consolidated roles and their authorised workspaces in the native app.",
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ]
+    },
+    {
+      "id": "STAFF-ROLE-G07",
+      "status": "VERIFIED_COMPLETE",
+      "criteria": "Verify the release cutover for consolidated roles.",
+      "evidence": [
+        "docs/traceability/staff-role-consolidation-evidence.txt"
+      ]
+    }
+  ],
+  "coverage": {
+    "implementation": "7/7",
+    "verification": "7/7 for the demo rollout",
+    "critical": "7/7 verified for the demo rollout",
+    "routes": "Hosted web/API and installed simulator/emulator scope checked. Physical device and commercial production are outside the demo cutover.",
+    "gates": "7/7 for the demo rollout"
+  },
+  "changes": [
+    "User confirmed business-wide authority for existing Administrators and reassignment of Safety Officers to Admin / Business Owner.",
+    "Customer and commercial account types continue outside the five staff roles.",
+    "Finance audit reads are branch-scoped and require explicit audit-event branch attribution.",
+    "The authorised Vercel demo cutover completed. Installed iOS and minified Android validation completed against a synthetic local database."
+  ]
+}

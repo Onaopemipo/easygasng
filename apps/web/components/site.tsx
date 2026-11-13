@@ -280,13 +280,23 @@ export default function Site({
   };
   return (
     <Context.Provider value={ctx}>
-      {!workspace && <Header />}
+      {!workspace && <Header cataloguePending={!catalogue && !error} />}
       <CustomerFrame workspace={workspace} user={user} onLogout={signOut} cartCount={cart.reduce((n, i) => n + i.quantity, 0)}>
         <main
           id="main"
           className={!workspace && publicWidthPaths.has(pathname) ? "public-width" : undefined}
         >
-          {!ready || (protectedPath && !user) ? (
+          {pathname === "/about" ? (
+            <AboutPage />
+          ) : ["/forgot-password", "/reset-password", "/verify-email", "/accept-invitation"].includes(pathname) ? (
+            <Recovery key={pathname} mode={
+              pathname === "/forgot-password" ? "recover"
+                : pathname === "/reset-password" ? "reset"
+                  : pathname === "/accept-invitation" ? "invite" : "verify"
+            } />
+          ) : pathname === "/login" || pathname === "/register" ? (
+            <Auth key={pathname} register={pathname === "/register"} />
+          ) : !ready || (protectedPath && !user) ? (
             <Loading page />
           ) : pathname === "/account" && workspace ? (
             <CustomerDashboard user={user} />
@@ -415,25 +425,6 @@ export default function Site({
             <div className="container page">
               <RefillProfiles key={`${user?.id}:${user?.role}:${user?.branchId}`} />
             </div>
-          ) : [
-              "/forgot-password",
-              "/reset-password",
-              "/verify-email",
-              "/accept-invitation",
-            ].includes(pathname) ? (
-            <Recovery
-              mode={
-                pathname === "/forgot-password"
-                  ? "recover"
-                  : pathname === "/reset-password"
-                    ? "reset"
-                    : pathname === "/accept-invitation"
-                      ? "invite"
-                      : "verify"
-              }
-            />
-          ) : pathname === "/login" || pathname === "/register" ? (
-            <Auth register={pathname === "/register"} />
           ) : pathname === "/cart" || pathname === "/checkout" ? (
             <Cart checkout={pathname === "/checkout"} />
           ) : [
@@ -489,6 +480,8 @@ const publicWidthPaths = new Set([
   "/about",
   "/help",
   "/business",
+  "/login",
+  "/register",
 ]);
 
 function CustomerFrame({ workspace, user, onLogout, children, cartCount }: any) {
@@ -500,12 +493,13 @@ function CustomerFrame({ workspace, user, onLogout, children, cartCount }: any) 
     children
   );
 }
-function Header() {
+function Header({ cataloguePending }: { cataloguePending: boolean }) {
   const { user, cart, catalogue, signOut } = useShop();
   return (
     <PublicHeader
       user={user}
       catalogue={catalogue}
+      cataloguePending={cataloguePending}
       cartCount={cart.reduce(
         (n: number, item: CartItem) => n + item.quantity,
         0,
@@ -1210,7 +1204,7 @@ function ProductDetail({ id }: { id: string }) {
   );
 }
 function Auth({ register }: { register: boolean }) {
-  const [phoneLogin,setPhoneLogin]=useState(false);
+  const [passwordChangeRequired, setPasswordChangeRequired] = useState(false);
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   const { setUser, user, toast } = useShop(),
@@ -1233,7 +1227,11 @@ function Auth({ register }: { register: boolean }) {
     setError("");
     const values = Object.fromEntries(new FormData(e.currentTarget));
     try {
-      const r = await api(register ? "register" : phoneLogin ? "phone.login" : "login", values);
+      const r = await api(register ? "register" : "login", values);
+      if (r.passwordChangeRequired) {
+        setPasswordChangeRequired(true);
+        return;
+      }
       const me = await api("me");
       const referralCode = register
         ? new URLSearchParams(window.location.search).get("ref")
@@ -1299,13 +1297,18 @@ function Auth({ register }: { register: boolean }) {
             <FormInput name="name" autoComplete="name" required minLength={2} />
           </label>
         )}
-        {!register&&<label><FormInput type="checkbox" checked={phoneLogin} onChange={e=>setPhoneLogin(e.target.checked)}/> Sign in with my activated phone number</label>}
         <label>
-          {phoneLogin&&!register?'Phone number':'Email address'}
-          <FormInput name={phoneLogin&&!register?'phone':'email'} type={phoneLogin&&!register?'tel':'email'} autoComplete={phoneLogin&&!register?'tel':'email'} required />
+          {register ? "Email address" : "Email or phone number"}
+          <FormInput
+            name={register ? "email" : "identifier"}
+            type={register ? "email" : "text"}
+            autoComplete={register ? "email" : "username"}
+            autoCapitalize="none"
+            required
+          />
         </label>
         <label>
-          Password
+          {passwordChangeRequired ? "Temporary password" : "Password"}
           <FormInput
             name="password"
             type="password"
@@ -1314,10 +1317,27 @@ function Auth({ register }: { register: boolean }) {
             minLength={PASSWORD_MIN_LENGTH}
           />
         </label>
+        {passwordChangeRequired && (
+          <>
+            <Notice message="Choose a new password to finish your first sign-in." />
+            <label>
+              New password
+              <FormInput
+                name="newPassword"
+                type="password"
+                autoComplete="new-password"
+                minLength={PASSWORD_MIN_LENGTH}
+                maxLength={128}
+                required
+                autoFocus
+              />
+            </label>
+          </>
+        )}
         <small>Use at least {PASSWORD_MIN_LENGTH} characters.</small>
         {error && <Notice type="error" message={error} />}
         <button className="button full" disabled={busy}>
-          {busy ? "Please wait…" : register ? "Create Account" : "Sign In"}
+          {busy ? "Please wait…" : passwordChangeRequired ? "Change Password & Sign In" : register ? "Create Account" : "Sign In"}
           <ArrowRight size={18} />
         </button>
         <p className="auth-switch">
@@ -2074,6 +2094,46 @@ function Account({ section }: { section: string }) {
     </div>
   );
 }
+function AboutPage() {
+  return (
+    <div className="container page">
+      <div className="about-layout">
+        <div>
+          <span className="eyebrow">AFFORDABLE. FLEXIBLE. COMMITTED.</span>
+          <h1>
+            A little gas.
+            <br />A whole lot of possibility.
+          </h1>
+          <p>
+            From the first cup of tea to the family meal at the end of the
+            day, cooking is part of what makes a house a home.
+          </p>
+          <p>
+            EasyGas Energy Solutions is building a simpler way to buy cooking
+            gas and kitchen essentials in Nigeria, with clear pricing,
+            thoughtful service and care at every step.
+          </p>
+          <h2>More Cooking. Less Worry.</h2>
+          <Link href="/products" className="button">
+            Get to know our products <ArrowRight size={18} />
+          </Link>
+        </div>
+        <figure>
+          <img
+            src="/assets/about-delivery-768.webp"
+            srcSet="/assets/about-delivery-480.webp 480w, /assets/about-delivery-768.webp 768w, /assets/about-delivery-1440.webp 1440w"
+            sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1440px) 47vw, 650px"
+            width={768}
+            height={512}
+            fetchPriority="high"
+            alt="Illustrative gas delivery at a home"
+          />
+          <figcaption>Illustrative imagery</figcaption>
+        </figure>
+      </div>
+    </div>
+  );
+}
 function ContentPage({ path }: { path: string }) {
   const [sent, setSent] = useState(false),
     [supportOpen, setSupportOpen] = useState(false);
@@ -2170,40 +2230,6 @@ function ContentPage({ path }: { path: string }) {
               <p>{text}</p>
             </div>
           ))}
-        </div>
-      </div>
-    );
-  if (path === "/about")
-    return (
-      <div className="container page">
-        <div className="about-layout">
-          <div>
-            <span className="eyebrow">AFFORDABLE. FLEXIBLE. COMMITTED.</span>
-            <h1>
-              A little gas.
-              <br />A whole lot of possibility.
-            </h1>
-            <p>
-              From the first cup of tea to the family meal at the end of the
-              day, cooking is part of what makes a house a home.
-            </p>
-            <p>
-              EasyGas Energy Solutions is building a simpler way to buy cooking
-              gas and kitchen essentials in Nigeria, with clear pricing,
-              thoughtful service and care at every step.
-            </p>
-            <h2>More Cooking. Less Worry.</h2>
-            <Link href="/products" className="button">
-              Get to know our products <ArrowRight size={18} />
-            </Link>
-          </div>
-          <figure>
-            <img
-              src="/assets/delivery-illustration.png"
-              alt="Illustrative gas delivery at a home"
-            />
-            <figcaption>Illustrative imagery</figcaption>
-          </figure>
         </div>
       </div>
     );

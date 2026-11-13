@@ -97,7 +97,6 @@ test("ADD-02: customer, driver and cross-branch staff cannot quote or create add
       "customer",
       "commercial",
       "driver",
-      "dispatcher",
       "inventory",
     ])
       await assert.rejects(
@@ -109,7 +108,7 @@ test("ADD-02: customer, driver and cross-branch staff cannot quote or create add
       "INSERT INTO branches(id,name) VALUES('other','Other test branch')",
     );
     await f.db.query(
-      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Other sales',$2,$3,'sales','other')",
+      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Other sales',$2,$3,'manager','other')",
       [uid, `${uid}@example.test`, hashPassword("Test-only-123!")],
     );
     const token = await issueSession(f.db, uid);
@@ -253,7 +252,7 @@ test("ADD-UI: staff detail exposes quote/confirmation and history without custom
     "apps/web/components/order-additions.tsx",
     "utf8",
   );
-  assert.match(source, /\["owner",\s*"manager",\s*"sales"\]/);
+  assert.match(source, /\["owner",\s*"manager"\]/);
   assert.match(source, /if\s*\(!allowed\)\s*return null/);
   assert.match(source, /order.addition.quote/);
   assert.match(source, /quoteHash:\s*quote.quoteHash/);

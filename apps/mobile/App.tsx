@@ -81,7 +81,6 @@ export default function App() {
   const technicianShell = Constants.expoConfig?.extra?.technicianOnly === true;
   const driverShell = Constants.expoConfig?.extra?.driverOnly === true;
   const [driverRecover, setDriverRecover] = useState(false);
-  const [phoneLogin, setPhoneLogin] = useState(false);
   const [token, setToken] = useState<string | null>(null),
     [user, setUser] = useState<any>(null),
     [catalogue, setCatalogue] = useState<any>(null),
@@ -89,15 +88,18 @@ export default function App() {
     [ownerScope, setOwnerScope] = useState<OwnerScope>({ branchId: "", period: "month" }),
     [cart, setCart] = useState<Item[]>([]),
     [hydrated, setHydrated] = useState(false),
-    [orders, setOrders] = useState<any[]>([]),
+    [orders, setOrders] = useState<any[] | null>(null),
+    [ordersScope, setOrdersScope] = useState<string | null>(null),
     [pendingDeliveries, setPendingDeliveries] = useState<PendingDelivery[]>([]),
     [syncing, setSyncing] = useState(false),
     [wallet, setWallet] = useState<any>(null),
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
     [loginError, setLoginError] = useState(""),
-    [email, setEmail] = useState(""),
+    [identifier, setIdentifier] = useState(""),
     [password, setPassword] = useState(""),
+    [newPassword, setNewPassword] = useState(""),
+    [passwordChangeRequired, setPasswordChangeRequired] = useState(false),
     [name, setName] = useState(""),
     [register, setRegister] = useState(false),
     [search, setSearch] = useState(""),
@@ -181,6 +183,8 @@ export default function App() {
     return () => listener.remove();
   }, [hydrated, user?.id]);
   const trackingOperations = useRef(new Map<string, string>());
+  const [walletRevision, retryWallet] = useState(0);
+  const [ordersRevision, retryOrders] = useState(0);
   function trackingKey(action: string, o: any) {
     const identity = `${action}:${o.id}:${o.tracking_version}`;
     if (!trackingOperations.current.has(identity))
@@ -189,6 +193,9 @@ export default function App() {
   }
   const accountRef = useRef<string | null>(null);
   accountRef.current = user?.id ?? null;
+  const orderFilterRef = useRef(orderFilter);
+  orderFilterRef.current = orderFilter;
+  const lastScreen = useRef(screen);
   useEffect(() => { EasyGasAlert.dismissAll(); }, [user?.id]);
   function navigateCustomer(destination: string) {
     if (
@@ -215,7 +222,8 @@ export default function App() {
     setOwnerScope({ branchId: "", period: "month" });
     navHistory.current = ["home"];
     trackingOperations.current.clear();
-    setOrders([]);
+    setOrders(null);
+    setOrdersScope(null);
     setOrderFilter(null);
     setPendingDeliveries([]);
     setWallet(null);
@@ -275,6 +283,13 @@ export default function App() {
     }
     return body;
   }
+  const ordersAction = orderFilter ? "orders?id=" + encodeURIComponent(orderFilter) : "orders";
+  async function reloadOrders() {
+    const next = await api(ordersAction);
+    if (accountRef.current !== user?.id || orderFilterRef.current !== orderFilter) return;
+    setOrders(AppState.currentState === "active" ? next : withoutRiderLocations(next));
+    setOrdersScope(orderFilter ?? "");
+  }
   useEffect(() => {
     (async () => {
       try {
@@ -316,10 +331,17 @@ export default function App() {
       );
   }, [cart, hydrated]);
   useEffect(() => {
+    if (lastScreen.current !== screen) {
+      lastScreen.current = screen;
+      setError("");
+    }
+  }, [screen]);
+  useEffect(() => {
+    if (!hydrated) return;
     let active = true;
-    setError("");
     if (screen === "orders") return;
     if (user && ["wallet", "checkout"].includes(screen)) {
+      setError("");
       setLoading(true);
       api("wallet")
         .then((data) => { if (active) setWallet(data); })
@@ -329,7 +351,7 @@ export default function App() {
     return () => {
       active = false;
     };
-  }, [screen, user]);
+  }, [screen, user, hydrated, walletRevision]);
   useEffect(() => {
     let active = true;
     setPendingDeliveries([]);
@@ -347,20 +369,25 @@ export default function App() {
   }, [user?.id]);
   useEffect(() => {
     if (!user || screen !== "orders") return;
+    const scope = orderFilter ?? "";
     let active = true;
     let generation = 0;
     const clearLocations = () => {
       generation++;
-      setOrders((prior) => withoutRiderLocations(prior));
+      setOrders((prior) => prior && withoutRiderLocations(prior));
     };
     const refreshTracking = (initial = false) => {
       if (AppState.currentState !== "active" && !initial) return;
       const request = ++generation;
-      if (initial) setLoading(true);
-      api(orderFilter ? "orders?id=" + encodeURIComponent(orderFilter) : "orders")
+      if (initial) {
+        setError("");
+        setLoading(true);
+      }
+      api(ordersAction)
         .then((next) => {
           if (!active || request !== generation) return;
           setOrders(AppState.currentState === "active" ? next : withoutRiderLocations(next));
+          setOrdersScope(scope);
           setError("");
           setLoading(false);
         })
@@ -383,7 +410,7 @@ export default function App() {
       clearInterval(timer);
       listener.remove();
     };
-  }, [user?.id, token, screen, orderFilter]);
+  }, [user?.id, token, screen, orderFilter, ordersAction, ordersRevision]);
   async function syncDeliveries() {
     if (!user || syncing) return;
     setSyncing(true);
@@ -421,6 +448,10 @@ export default function App() {
     }
   }
   async function login() {
+    if (passwordChangeRequired && newPassword.length < PASSWORD_MIN_LENGTH) {
+      setLoginError(`Use at least ${PASSWORD_MIN_LENGTH} characters for your new password.`);
+      return;
+    }
     setLoading(true);
     setError("");
     setLoginError("");
@@ -432,22 +463,27 @@ export default function App() {
             ? "driver.login"
             : register
               ? "register"
-              : phoneLogin
-                ? "phone.login"
-                : "login",
+              : "login",
         {
-          ...(phoneLogin && !register ? { phone: email } : { email }),
+          ...(register ? { email: identifier } : { identifier }),
           password,
+          ...(passwordChangeRequired ? { newPassword } : {}),
           ...(register ? { name } : {}),
         },
         null,
       );
+      if (result.passwordChangeRequired) {
+        setPasswordChangeRequired(true);
+        return;
+      }
       await SecureStore.setItemAsync("easygas.session", result.token);
       clearPrivateState();
       setToken(result.token);
       const me = await api("me", undefined, result.token);
       setUser(me.user);
       setPassword("");
+      setNewPassword("");
+      setPasswordChangeRequired(false);
       const destination = pendingLink.current;
       const serviceId = pendingServiceSignIn.current;
       pendingLink.current = null;
@@ -565,6 +601,7 @@ export default function App() {
   }
   const products = catalogue?.products ?? [],
     driver = user?.role === "driver";
+  const visibleOrders = ordersScope === (orderFilter ?? "") ? orders : null;
   if (user?.role === "technician")
     return (
       <TechnicianWorkspace
@@ -579,9 +616,9 @@ export default function App() {
   if (technicianShell)
     return (
       <TechnicianSignIn
-        email={email}
+        identifier={identifier}
         password={password}
-        setEmail={setEmail}
+        setIdentifier={setIdentifier}
         setPassword={setPassword}
         submit={login}
         busy={loading}
@@ -590,6 +627,9 @@ export default function App() {
         setRecover={setDriverRecover}
         api={api}
         signout={user ? logout : undefined}
+        passwordChangeRequired={passwordChangeRequired}
+        newPassword={newPassword}
+        setNewPassword={setNewPassword}
       />
     );
   if (user?.role === "driver")
@@ -606,9 +646,9 @@ export default function App() {
   if (driverShell)
     return (
       <DriverSignIn
-        email={email}
+        identifier={identifier}
         password={password}
-        setEmail={setEmail}
+        setIdentifier={setIdentifier}
         setPassword={setPassword}
         submit={login}
         busy={loading || !hydrated}
@@ -617,23 +657,20 @@ export default function App() {
         setRecover={setDriverRecover}
         api={api}
         signout={user ? logout : undefined}
+        passwordChangeRequired={passwordChangeRequired}
+        newPassword={newPassword}
+        setNewPassword={setNewPassword}
       />
     );
   const customerView = !user || ["customer", "commercial"].includes(user.role);
   const staffHomeTitles: Record<string, string> = {
-    sales: "Sales Workspace",
-    inventory: "Stock Operations",
-    dispatcher: "Dispatch Centre",
-    service_manager: "Service Operations",
-    safety_officer: "Safety & Compliance",
     manager: "Branch Dashboard",
     finance: "Finance Overview",
-    administrator: "Administration",
-    admin: "Administration",
     owner: "Business Overview",
   };
   const headerTitle: Record<string, string> = {
     "sales-customers": "Customers",
+    "branch-dispatch": "Dispatch Centre",
     "retail-pos": "Retail POS",
     "gas-order": "Order Gas",
     checkout: "Checkout",
@@ -749,6 +786,7 @@ export default function App() {
           ref={scrollRef}
           contentContainerStyle={[
             s.content,
+            !hydrated && { flexGrow: 1, justifyContent: "center" },
             customerView && {
               padding: 16,
               width: "100%",
@@ -767,13 +805,15 @@ export default function App() {
                 button("Retry connection", refreshCatalogue, true, loading)}
             </View>
           ) : null}
-          {loading || !hydrated ? (
-            <EasyGasLoader color="#087a36" style={{ margin: 20 }} />
+          {!hydrated ? (
+            <EasyGasLoader variant="section" label="Loading EasyGas" />
+          ) : loading && (screen === "checkout" || (!catalogue && screen !== "orders" && screen !== "wallet")) ? (
+            <EasyGasLoader size="sm" variant="section" label="Refreshing EasyGas information" />
           ) : null}
-          {["gas-order", "combined-checkout", "products", "checkout"].includes(
+          {!hydrated ? null : ["gas-order", "combined-checkout", "products", "checkout"].includes(
             screen,
           ) && !catalogue ? (
-            <View style={s.notice}>
+            loading ? null : <View style={s.notice}>
               <Text style={s.title}>Catalogue unavailable</Text>
               <Text style={s.body}>
                 Reconnect and retry to check current prices and availability
@@ -920,34 +960,25 @@ export default function App() {
               <Text style={s.body}>More Cooking. Less Worry.</Text>
               {register &&
                 field("Full name", name, setName, { autoComplete: "name" })}
-              {!register &&
-                button(
-                  phoneLogin
-                    ? "Use email instead"
-                    : "Use activated phone number",
-                  () => {
-                    setLoginError("");
-                    setPhoneLogin((v) => !v);
-                  },
-                  true,
-                )}
-              {field(
-                phoneLogin && !register
-                  ? "Activated phone number"
-                  : "Email address",
-                email,
-                setEmail,
-                {
-                  autoCapitalize: "none",
-                  keyboardType:
-                    phoneLogin && !register ? "phone-pad" : "email-address",
-                  autoComplete: phoneLogin && !register ? "tel" : "email",
-                },
-              )}
-              {field("Password", password, setPassword, {
+              {field(register ? "Email address" : "Email or phone number", identifier, setIdentifier, {
+                autoCapitalize: "none",
+                autoCorrect: false,
+                keyboardType: register ? "email-address" : "default",
+                autoComplete: register ? "email" : "username",
+              })}
+              {field(passwordChangeRequired ? "Temporary password" : "Password", password, setPassword, {
                 secureTextEntry: true,
                 autoComplete: register ? "new-password" : "current-password",
               })}
+              {passwordChangeRequired && (
+                <>
+                  <Text style={s.caption}>Choose a new password to finish your first sign-in.</Text>
+                  {field("New password", newPassword, setNewPassword, {
+                    secureTextEntry: true,
+                    autoComplete: "new-password",
+                  })}
+                </>
+              )}
               {register && (
                 <Text style={s.caption}>
                   Use at least {PASSWORD_MIN_LENGTH} characters. No role selection is required.
@@ -961,7 +992,7 @@ export default function App() {
                 </View>
               ) : null}
               {button(
-                register ? "Create Account" : "Sign In",
+                passwordChangeRequired ? "Change Password & Sign In" : register ? "Create Account" : "Sign In",
                 login,
                 false,
                 loading || !hydrated,
@@ -972,11 +1003,18 @@ export default function App() {
                   : "New to EasyGas? Create an account",
                 () => {
                   setLoginError("");
+                  setPasswordChangeRequired(false);
+                  setNewPassword("");
                   setRegister(!register);
                 },
                 true,
               )}
-              {button("Forgot password?", () => setScreen("recovery"), true)}
+              {button("Forgot password?", () => {
+                setPassword("");
+                setNewPassword("");
+                setPasswordChangeRequired(false);
+                setScreen("recovery");
+              }, true)}
             </>
           ) : screen === "payment" ? (
             <NativePaymentReturn api={api} intentId={orderFilter} />
@@ -1047,14 +1085,20 @@ export default function App() {
               {user?.role !== "owner" && <Text style={s.title}>{staffHomeTitles[user?.role] ?? "Staff Workspace"}</Text>}
               {user?.role === "owner" && ownerWorkspace("home")}
               {user?.role === "manager" && <OwnerOverview key={user.id} api={api} branchManager />}
-              {user?.role === "dispatcher" && <FleetLocations key={user.id + user.branchId} api={api} />}
+              {user?.role === "manager" && button("Dispatch Centre", () => setScreen("branch-dispatch"))}
 
               <Text style={s.body}>{user?.name}</Text>
-              {user?.role === "finance" && <FinanceOverview key={user.id} api={api} />}
-              {user?.role === "sales" && button("Find a customer", () => setScreen("sales-customers"), true)}
+              {user?.role === "finance" && <>
+                <FinanceOverview key={user.id} api={api} />
+                {button("Audit History", () => setScreen("owner-audit"))}
+                {button("Inventory workspace", () => {
+                  void Linking.openURL(origin + "/admin/inventory").catch(() => setError("Could not open Inventory in your browser."));
+                })}
+              </>}
+              {user?.role === "manager" && button("Find a customer", () => setScreen("sales-customers"), true)}
               {canOpenRetailPos(user?.role) &&
                 button("Retail POS", () => setScreen("retail-pos"))}
-              {user && ["owner", "service_manager", "safety_officer", "inventory", "finance"].includes(user.role) &&
+              {user && ["owner", "manager", "finance"].includes(user.role) &&
                 button("Technicians & Availability", () => setScreen("technicians-management"))}
               {button("Account", () => setScreen("more"), true)}
             </>
@@ -1389,6 +1433,10 @@ export default function App() {
                     : !catalogue?.codEnabled),
               )}
             </>
+          ) : screen === "orders" && !visibleOrders ? (
+            error && !loading
+              ? button("Retry orders", () => retryOrders(value => value + 1), true)
+              : <EasyGasLoader variant="section" label="Loading orders" />
           ) : screen === "orders" ? (
             <>
               {orderFilter &&
@@ -1454,8 +1502,8 @@ export default function App() {
                   ))}
                 </View>
               )}
-              {orders.length ? (
-                orders.map((o) => (
+              {visibleOrders?.length ? (
+                visibleOrders.map((o) => (
                   <View style={s.card} key={o.id}>
                     {!driver &&
                     user &&
@@ -1473,7 +1521,7 @@ export default function App() {
                       driver={driver}
                       origin={origin}
                       token={token}
-                      onDone={async () => setOrders(await api("orders"))}
+                      onDone={reloadOrders}
                     />
                     <Text style={s.sectionTitle}>
                       {o.status.replaceAll("_", " ")}
@@ -1597,7 +1645,7 @@ export default function App() {
                             reason:
                               "Driver confirms arrival at the assigned delivery address",
                           });
-                          setOrders(await api("orders"));
+                          await reloadOrders();
                         } catch (e: any) {
                           setError(e.message);
                         }
@@ -1637,7 +1685,7 @@ export default function App() {
                                 "Physical quantity and serial inspection notes",
                             },
                           ]}
-                          onDone={async () => setOrders(await api("orders"))}
+                          onDone={reloadOrders}
                         />
                       )}
                     {driver &&
@@ -1661,7 +1709,7 @@ export default function App() {
                                   ? "Driver confirmed collection and dispatch."
                                   : "Driver reported unsuccessful delivery. Follow up required.",
                             });
-                            setOrders(await api("orders"));
+                            await reloadOrders();
                           } catch (e: any) {
                             setError(e.message);
                           }
@@ -1715,7 +1763,7 @@ export default function App() {
                               "Evidence, observed problem and required next step",
                           },
                         ]}
-                        onDone={async () => setOrders(await api("orders"))}
+                        onDone={reloadOrders}
                       />
                     )}
                     {driver && o.status === "out_for_delivery" && (
@@ -1724,7 +1772,7 @@ export default function App() {
                         submit={async (data) => {
                           try {
                             await api("delivery.complete", data);
-                            setOrders(await api("orders"));
+                            await reloadOrders();
                           } catch (e: any) {
                             if (e.status) throw e;
                             const q = await enqueueDelivery(user.id, data);
@@ -1769,6 +1817,10 @@ export default function App() {
                 setScreen(cart.length ? "checkout" : "products");
               }}
             />
+          ) : screen === "wallet" && !wallet ? (
+            error && !loading
+              ? button("Retry wallet", () => retryWallet(value => value + 1), true)
+              : <EasyGasLoader variant="section" label="Loading wallet" />
           ) : screen === "wallet" &&
             user &&
             ["customer", "commercial"].includes(user.role) ? (
@@ -1788,7 +1840,7 @@ export default function App() {
                   EasyGas purchase credit
                 </Text>
                 <Text style={s.balanceNumber}>
-                  {wallet ? currency(wallet.balanceKobo) : "Loading…"}
+                  {currency(wallet.balanceKobo)}
                 </Text>
               </View>
               <View style={s.notice}>
@@ -1823,7 +1875,7 @@ export default function App() {
               }} />
           ) : user?.role === "owner" && screen === "owner-profile" ? (
             <OwnerSupportWorkspace key={user.id + screen} user={user} screen={screen} api={api} navigate={setScreen} signOut={logout} />
-          ) : user?.role === "owner" && isOwnerGovernanceScreen(screen) ? (
+          ) : user && (user.role === "owner" || (user.role === "finance" && screen === "owner-audit")) && isOwnerGovernanceScreen(screen) ? (
             <OwnerGovernanceWorkspace key={user.id + screen} user={user} screen={screen} api={api} navigate={setScreen} />
           ) : user?.role === "owner" && screen === "owner-operations" ? (
             <>
@@ -1836,9 +1888,11 @@ export default function App() {
             ownerWorkspace("finance")
           ) : user?.role === "owner" && screen === "owner-reports" ? (
             ownerWorkspace("reports")
-          ) : screen === "technicians-management" && user && ["owner","service_manager","safety_officer","inventory","finance"].includes(user.role) ? (
+          ) : screen === "technicians-management" && user && ["owner", "manager", "finance"].includes(user.role) ? (
             <TechniciansManagement key={user.id} user={user} api={api} />
-          ) : screen === "sales-customers" && user?.role === "sales" ? (
+          ) : screen === "branch-dispatch" && user?.role === "manager" ? (
+            <FleetLocations key={user.id + user.branchId} api={api} />
+          ) : screen === "sales-customers" && user?.role === "manager" ? (
             <SalesCustomerLookup key={user.id} api={api} />
           ) : screen === "retail-pos" && canOpenRetailPos(user?.role) ? (
             <RetailPos key={user.id} api={api} />
@@ -1854,7 +1908,7 @@ export default function App() {
               {user?.role === "owner" && button("Profile & Security", () => setScreen("owner-profile"))}
               {user?.role === "owner" && button("Notifications", () => setScreen("owner-notifications"))}
               {canOpenRetailPos(user?.role) && button("Retail POS", () => setScreen("retail-pos"))}
-              {user && ["owner","service_manager","safety_officer","inventory","finance"].includes(user.role) && button("Technicians & Availability", () => setScreen("technicians-management"))}
+              {user && ["owner", "manager", "finance"].includes(user.role) && button("Technicians & Availability", () => setScreen("technicians-management"))}
               {[
                 ["Appearance", "appearance"],
                 ["Browse Products", "products"],
@@ -1890,7 +1944,7 @@ export default function App() {
         </ScrollView>
       </ScreenTitleContext.Provider>
       <View style={s.bottomNav}>
-        {(user?.role === "owner" ? [["Home", "home"], ["Operations", "owner-operations"], ["Approvals", "owner-approvals"], ["Reports", "owner-reports"], ["More", "more"]] : user?.role === "sales" ? [["Home", "home"], ["Customers", "sales-customers"], ["POS", "retail-pos"], ["Account", "more"]] : driver || (user && !["customer", "commercial"].includes(user.role))
+        {(user?.role === "owner" ? [["Home", "home"], ["Operations", "owner-operations"], ["Approvals", "owner-approvals"], ["Reports", "owner-reports"], ["More", "more"]] : user?.role === "manager" ? [["Home", "home"], ["Dispatch", "branch-dispatch"], ["Customers", "sales-customers"], ["POS", "retail-pos"], ["Account", "more"]] : driver || (user && !["customer", "commercial"].includes(user.role))
           ? [
               ["Home", "home"],
               ["Account", "more"],

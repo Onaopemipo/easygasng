@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { verifiedPickup } from "./helpers/tracking-fixture";
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -23,7 +24,7 @@ async function fixture() {
     const uid = id();
     await db.query(
       "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,$2,$3,$4,$5,'lagos')",
-      [uid, role, uid + "@example.test", hashPassword(password), role],
+      [uid, role, uid + "@example.test", hashPassword(password), consolidatedRole(role)],
     );
     users[role] = { id: uid, token: await issueSession(db, uid) };
   }
@@ -65,7 +66,7 @@ test("A–C,K: draft, permissions, status injection and independent review share
     assert.equal((await f.value("gas.price_per_kg"))!.value, 180000);
     await assert.rejects(
       () =>
-        f.call("sales", "setting.propose", {
+        f.call("driver", "setting.propose", {
           key: "gas.price_per_kg",
           scope: "lagos",
           value: 1,
@@ -295,7 +296,7 @@ test("F,L,M,N: fee rejection, expired request, revoked approver and governed loc
       [expired.id],
     );
     await assert.rejects(() => f.approve(expired.id));
-    await f.db.query("UPDATE users SET role='sales' WHERE id=$1", [
+    await f.db.query("UPDATE users SET role='manager' WHERE id=$1", [
       f.users.owner.id,
     ]);
     const newRequest = await f.propose("gas.price_per_kg", 205000);

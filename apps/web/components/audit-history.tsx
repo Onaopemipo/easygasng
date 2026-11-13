@@ -135,7 +135,7 @@ export default function AuditHistory({ refresh = 0 }: { refresh?: number }) {
             </button>
           </>
         ) : busy ? (
-          <Loading />
+          <Loading label="Loading audit history" />
         ) : data?.rows.length ? (
           <div className="table-scroll">
             <table>
@@ -187,13 +187,11 @@ export default function AuditHistory({ refresh = 0 }: { refresh?: number }) {
           </Empty>
         )}
         <nav className="iw-pager" aria-label="Audit history pagination">
-          <span role="status" aria-live="polite">
-            {data
-              ? `Showing ${data.total ? (data.page - 1) * data.pageSize + 1 : 0}–${Math.min(data.page * data.pageSize, data.total)} of ${data.total} records`
-              : busy
-                ? "Loading history…"
-                : "History unavailable"}
-          </span>
+          {data && (
+            <span role="status">
+              { `Showing ${data.total ? (data.page - 1) * data.pageSize + 1 : 0}–${Math.min(data.page * data.pageSize, data.total)} of ${data.total} records` }
+            </span>
+          )}
           <button
             className="button secondary"
             disabled={!data || data.page <= 1}

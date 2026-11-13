@@ -30,7 +30,7 @@ export async function driverOperations(
     const d = vehiclePayload
       .extend({ reason: z.string().trim().min(10).max(1000) })
       .parse(input);
-    allow(user, ["owner", "inventory"]);
+    allow(user, ["owner", "finance"]);
     recentVerification(user);
     const v = await one(
       tx,
@@ -38,10 +38,10 @@ export async function driverOperations(
       [d.vehicleId],
     );
     if (!v) throw new AppError(404, "Vehicle not found.");
-    allow(user, ["owner", "inventory"], v.branch_id);
+    allow(user, ["owner", "finance"], v.branch_id);
     const key = "vehicle_payload." + v.id;
     await tx.query(
-      "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,'Delivery','Measured/certified physical product payload capacity. Cannot be reduced below actual vehicle stock.','owner',3,'vehicle_payload','[\"owner\",\"inventory\"]','[\"owner\",\"safety_officer\"]','[\"owner\",\"inventory\",\"safety_officer\"]','[\"safety_officer\"]',true) ON CONFLICT(key) DO NOTHING",
+      "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,'Delivery','Measured/certified physical product payload capacity. Cannot be reduced below actual vehicle stock.','owner',3,'vehicle_payload','[\"owner\",\"finance\"]','[\"owner\"]','[\"owner\",\"finance\"]','[\"owner\"]',true) ON CONFLICT(key) DO NOTHING",
       [key, v.label + " physical payload"],
     );
     await tx.query(
@@ -133,7 +133,7 @@ export async function driverOperations(
     return { id: tid };
   }
   if (action === "fleet.summary") {
-    allow(user, ["owner", "manager", "dispatcher", "finance", "driver"]);
+    allow(user, ["owner", "manager", "finance", "driver"]);
     const vehicles = (
       await tx.query(
         "SELECT * FROM driver_vehicles WHERE ($1::boolean OR branch_id=$2)",
@@ -205,7 +205,7 @@ export async function driverOperations(
     };
   }
   if (action === "dispatch.board") {
-    allow(user, ["owner", "manager", "dispatcher"]);
+    allow(user, ["owner", "manager"]);
     const orders = (
       await tx.query(
         "SELECT o.id,o.reference,o.branch_id,o.address,o.delivery_date,o.delivery_window,o.status,o.driver_id,o.tracking_version,((SELECT COALESCE(sum(g.grams),0) FROM order_gas_lines g WHERE g.order_id=o.id)+(SELECT COALESCE(sum(i.quantity*i.gas_grams_per_unit),0) FROM order_items i WHERE i.order_id=o.id AND i.gas_grams_per_unit IS NOT NULL)) AS gas_grams FROM orders o WHERE ($1::boolean OR o.branch_id=$2) AND o.status IN ('accepted','preparing','assigned','out_for_delivery') GROUP BY o.id ORDER BY o.delivery_date,o.delivery_window,o.created_at",
@@ -263,7 +263,7 @@ export async function driverOperations(
     return { orders, drivers, autoAssignmentEnabled: false };
   }
   if (["dispatch.assign", "dispatch.reassign"].includes(action)) {
-    allow(user, ["owner", "manager", "dispatcher"]);
+    allow(user, ["owner", "manager"]);
     const d = z
       .object({
         orderId: uid,
@@ -278,7 +278,7 @@ export async function driverOperations(
       d.orderId,
     ]);
     if (!o) throw new AppError(404, "Order not found.");
-    allow(user, ["owner", "manager", "dispatcher"], o.branch_id);
+    allow(user, ["owner", "manager"], o.branch_id);
     const driver = await one(
       tx,
       "SELECT * FROM users WHERE id=$1 AND role='driver' AND active=true FOR UPDATE",
@@ -429,7 +429,7 @@ export async function driverOperations(
     );
     const dispatchers = (
       await tx.query(
-        "SELECT id FROM users WHERE active=true AND (role='owner' OR (role='dispatcher' AND branch_id=$1))",
+        "SELECT id FROM users WHERE active=true AND (role='owner' OR (role='manager' AND branch_id=$1))",
         [o.branch_id],
       )
     ).rows;

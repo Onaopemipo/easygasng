@@ -25,7 +25,7 @@ export async function escalateUnacknowledgedDispatch(
   for (const a of attempts) {
     const incident = await one(
       tx,
-      "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES($1,$2,'high','dispatch_ack_timeout',$3,$4,'dispatcher') ON CONFLICT(category,target) DO NOTHING RETURNING id",
+      "INSERT INTO operational_incidents(id,branch_id,severity,category,target,detail,owner_role) VALUES($1,$2,'high','dispatch_ack_timeout',$3,$4,'manager') ON CONFLICT(category,target) DO NOTHING RETURNING id",
       [
         id(),
         a.branch_id,
@@ -36,7 +36,7 @@ export async function escalateUnacknowledgedDispatch(
     if (!incident) continue;
     const recipients = (
       await tx.query(
-        "SELECT id FROM users WHERE active=true AND (role='owner' OR (branch_id=$1 AND role IN ('dispatcher','manager')))",
+        "SELECT id FROM users WHERE active=true AND (role='owner' OR (branch_id=$1 AND role IN ('manager')))",
         [a.branch_id],
       )
     ).rows;

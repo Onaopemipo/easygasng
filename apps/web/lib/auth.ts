@@ -52,7 +52,7 @@ export async function actor(tx: SQL, token: string | null): Promise<Actor> {
     throw new AppError(401, "Please sign in to continue.", "UNAUTHENTICATED");
   const user = await one<Actor>(
     tx,
-    "SELECT u.id,u.name,u.email,u.role,u.branch_id,s.verified_at,s.id AS session_id,s.driver_delivery_only,s.technician_service_only FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.id=$1 AND s.expires_at>now() AND s.revoked_at IS NULL AND u.active=true",
+    "SELECT u.id,u.name,u.email,u.role,u.branch_id,s.verified_at,s.id AS session_id,s.driver_delivery_only,s.technician_service_only FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.id=$1 AND s.expires_at>now() AND s.revoked_at IS NULL AND u.active=true AND u.temporary_password_expires_at IS NULL",
     [digest(token)],
   );
   if (!user)

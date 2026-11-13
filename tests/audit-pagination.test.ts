@@ -150,7 +150,7 @@ test("AUDIT-PAGE02: authorised administrator retains global read; customer/opera
   try {
     const uid = id();
     await f.db.query(
-      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Audit administrator',$2,$3,'administrator','lagos')",
+      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Audit administrator',$2,$3,'owner','lagos')",
       [
         uid,
         uid + "@audit.example.test",
@@ -171,7 +171,6 @@ test("AUDIT-PAGE02: authorised administrator retains global read; customer/opera
       "commercial",
       "driver",
       "dispatcher",
-      "inventory",
     ])
       await assert.rejects(
         () => f.call(role, "audit", { view: "paged" }),

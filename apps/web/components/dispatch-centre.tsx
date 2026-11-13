@@ -20,6 +20,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { api, Notice, Loading, money } from "./ui";
+import { ActionLoadingIndicator } from "./easygas-loader";
 import DispatchTracking from "./order-tracking";
 import { OperationsExtensions } from "./operations-completion";
 import {
@@ -332,7 +333,7 @@ export default function DispatchCentre({ user }: { user: any }) {
           <span className="dc-contact" aria-live="polite">
             <span className={error || !data ? "dc-dot stale" : "dc-dot"} />
             {busy
-              ? "Refreshing"
+              ? <ActionLoadingIndicator label="Refreshing dispatch records" />
               : error
                 ? "Updates unavailable"
                 : data
@@ -369,6 +370,7 @@ export default function DispatchCentre({ user }: { user: any }) {
         </div>
       </header>
       {error && <Notice type="error" message={error} />}
+      {!data ? (!error || busy) && <Loading page label="Loading dispatch records" /> : <>
       <div className="dc-kpis">
         {cards.map((c) => (
           <button
@@ -574,10 +576,7 @@ export default function DispatchCentre({ user }: { user: any }) {
                   <option value="customer">Customer name</option>
                 </select>
               </div>
-              {!data ? (
-                <Loading />
-              ) : (
-                <>
+              <>
                   <div className="dc-table-scroll">
                     <table>
                       <thead>
@@ -726,8 +725,7 @@ export default function DispatchCentre({ user }: { user: any }) {
                       </button>
                     </div>
                   </footer>
-                </>
-              )}
+              </>
             </section>
             <aside className="dc-panel dc-map">
               <h2>Delivery map</h2>
@@ -982,6 +980,7 @@ export default function DispatchCentre({ user }: { user: any }) {
           </div>
         </>
       )}
+      </>}
       {candidate && (
         <div className="dc-modal-backdrop">
           <section

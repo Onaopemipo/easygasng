@@ -1,4 +1,5 @@
 "use client";
+import { EasyGasLoader } from "./easygas-loader";
 
 import Link from "next/link";
 import {
@@ -218,7 +219,7 @@ export function NotificationsTray({
             </p>
           )}
           {readError && <p role="alert">{readError}</p>}
-          {loading && <p role="status">Loading notifications…</p>}
+          {loading && <EasyGasLoader size="sm" variant="section" label="Loading notifications" />}
           {!loading && !error && !inbox?.items.length && (
             <p>
               {filter === "unread"

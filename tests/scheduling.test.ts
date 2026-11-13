@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { before, test } from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate, one, type DB } from "../apps/web/lib/db";
@@ -18,7 +19,7 @@ before(async () => {
     ids[role] = id();
     await db.query(
       "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,$2,$3,$4,$5,'lagos')",
-      [ids[role], `Test ${role}`, `${role}@scheduling.test`, hash, role],
+      [ids[role], `Test ${role}`, `${role}@scheduling.test`, hash, consolidatedRole(role)],
     );
     tokens[role] = await issueSession(db, ids[role]);
   }

@@ -64,8 +64,8 @@ export async function authorizeMedia(
     allow(
       user,
       write
-        ? ["owner", "service_manager"]
-        : ["owner", "service_manager", "safety_officer"],
+        ? ["owner", "manager"]
+        : ["owner", "manager"],
       link.branchId,
     );
     if (
@@ -90,7 +90,7 @@ export async function authorizeMedia(
     if (
       !(await one(
         tx,
-        "SELECT q.id FROM technician_qualifications q JOIN users v ON v.id=q.verified_by JOIN branches br ON br.id=$3 AND br.active=true WHERE q.user_id=$1 AND q.code=$2 AND q.expires_at>now() AND v.active=true AND v.role IN ('owner','safety_officer') AND (v.role='owner' OR v.branch_id=$3)",
+        "SELECT q.id FROM technician_qualifications q JOIN users v ON v.id=q.verified_by JOIN branches br ON br.id=$3 AND br.active=true WHERE q.user_id=$1 AND q.code=$2 AND q.expires_at>now() AND v.active=true AND v.role IN ('owner') AND (v.role='owner' OR v.branch_id=$3)",
         [user.id, b.snapshot.qualification, b.branch_id],
       ))
     )
@@ -104,7 +104,7 @@ export async function authorizeMedia(
         "Only the assigned technician may access these images.",
       );
   } else
-    allow(user, ["owner", "service_manager", "safety_officer"], b.branch_id);
+    allow(user, ["owner", "manager"], b.branch_id);
   if (
     write &&
     (await one(tx, "SELECT id FROM service_reports WHERE booking_id=$1", [

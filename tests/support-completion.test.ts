@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { after, before, test } from "node:test";
 import assert from "node:assert/strict";
 import { NextRequest } from "next/server";
@@ -68,14 +69,14 @@ before(async () => {
         name,
         `${name}@support-fixture.invalid`,
         hash,
-        role,
+        consolidatedRole(role),
         branch,
       ],
     );
     tokens[name] = await issueSession(db, users[name]);
   }
   await db.query(
-    "INSERT INTO staff_privilege_overrides(user_id,privilege,effect,changed_by,role_at_change,branch_at_change) VALUES($1,'support.view','grant',$2,'inventory','lagos')",
+    "INSERT INTO staff_privilege_overrides(user_id,privilege,effect,changed_by,role_at_change,branch_at_change) VALUES($1,'support.view','grant',$2,'finance','lagos')",
     [users.readOnly, users.owner],
   );
   photo = await sharp({

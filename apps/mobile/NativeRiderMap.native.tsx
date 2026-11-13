@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import Constants from "expo-constants";
@@ -42,7 +43,7 @@ function MapCanvas({ points }: { points: NativeRiderMapPoint[] }) {
     );
   return (
     <>
-      {!ready && <Copy>Loading map…</Copy>}
+      {!ready && <EasyGasLoader size="sm" variant="section" label="Loading map" />}
       <Map
         ref={ref}
         provider={PROVIDER_GOOGLE}

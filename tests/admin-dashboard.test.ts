@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { fixture } from "./helpers/order-tracking-fixture";
@@ -19,7 +20,7 @@ async function account(f: any, role: string, branch = "lagos") {
       "Isolated " + role,
       uid + "@admin.example.test",
       hashPassword("Admin-tests-only-123!"),
-      role,
+      consolidatedRole(role),
       branch,
     ],
   );
@@ -238,7 +239,7 @@ test("ADM-AUTH01: single canonical login returns actual role, never accepts a re
         { email: row.email, password },
         f.db,
       );
-      assert.equal(result.role, role);
+      assert.equal(result.role, consolidatedRole(role));
       assert.ok(result.token);
       await assert.rejects(() =>
         dispatch(
@@ -254,9 +255,9 @@ test("ADM-AUTH01: single canonical login returns actual role, never accepts a re
         {},
         f.db,
       );
-      assert.equal(snapshot.user.role, role);
+      assert.equal(snapshot.user.role, consolidatedRole(role));
       if (role === "sales")
-        assert.equal(snapshot.allowed.includes("staff"), false);
+        assert.equal(snapshot.allowed.includes("staff"), true);
     }
   } finally {
     await f.db.close?.();

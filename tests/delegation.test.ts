@@ -6,6 +6,7 @@ import { id, hashPassword, issueSession } from "../apps/web/lib/auth";
 async function fixture() {
   const db = await createDatabase("memory://");
   await migrate(db);
+  await db.query("UPDATE setting_definitions SET view_roles=view_roles||jsonb_build_array($1::text) WHERE key='delivery.capacity'", ["finance"]);
   const ids: Record<string, string> = {},
     tokens: Record<string, string> = {},
     password = "Delegation-test-only-123!";
@@ -18,7 +19,7 @@ async function fixture() {
         `Test ${name}`,
         `${name}@delegation.test`,
         hashPassword(password),
-        name === "reviewer" ? "owner" : name,
+        name === "reviewer" ? "owner" : name === "dispatcher" ? "finance" : name,
       ],
     );
     tokens[name] = await issueSession(db, ids[name]);

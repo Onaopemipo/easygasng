@@ -21,6 +21,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { api, money, Notice, Loading } from "./ui";
+import { ActionLoadingIndicator } from "./easygas-loader";
 const labels = (s: string) =>
   s.replaceAll("_", " ").replace(/^./, (v) => v.toUpperCase());
 function period(range: string) {
@@ -118,23 +119,30 @@ export default function AdminOverview({ user }: { user: any }) {
     [page, setPage] = useState(1),
     [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
-    [loading, setLoading] = useState(false),
+    [loading, setLoading] = useState(true),
     [last, setLast] = useState("");
-  const [ownerFinance, setOwnerFinance] = useState<any>(null);
+  const [financeResult, setFinanceResult] = useState<{ query: string; snapshot: any }>();
   const [ownerPending, setOwnerPending] = useState<number | null>(null);
   const dates = period(range);
   const ownerQuery = new URLSearchParams({ ...dates, ...(branchId ? { branchId } : {}) }).toString();
+  const scopeMatches = data && (user.role !== "owner" || (data.scope.branchId ?? "") === branchId) &&
+    data.scope.from === dates.from && data.scope.to === dates.to;
+  const ownerFinance = financeResult?.query === ownerQuery ? financeResult.snapshot : null;
+  const financeLoading = scopeMatches && (data.allowed.includes("finance") ||
+    data.allowed.includes("inventory")) && financeResult?.query !== ownerQuery;
   useEffect(() => {
-    setOwnerFinance(null);
     setOwnerPending(null);
-    if (user.role !== "owner" || !data || (data.scope.branchId ?? "") !== branchId ||
-        data.scope.from !== dates.from || data.scope.to !== dates.to) return;
+    if (user.role !== "owner" || !scopeMatches) return;
     const controller = new AbortController();
     const options = { signal: controller.signal };
     if (data.allowed.includes("finance") || data.allowed.includes("inventory")) {
       api("business.snapshot?" + ownerQuery, undefined, options).then(value => {
-        if (!controller.signal.aborted) setOwnerFinance(value);
-      }).catch(() => {});
+        if (!controller.signal.aborted) setFinanceResult({ query: ownerQuery, snapshot: value });
+      }).catch((failure) => {
+        if (!controller.signal.aborted)
+          setFinanceResult(previous => previous?.query === ownerQuery && ![401, 403].includes(failure.status)
+            ? previous : { query: ownerQuery, snapshot: null });
+      });
     }
     if (data.allowed.includes("approvals")) {
       const query = new URLSearchParams({ view: "paged", filter: "pending", ...(branchId ? { branchId } : {}) });
@@ -257,36 +265,28 @@ export default function AdminOverview({ user }: { user: any }) {
     ["Delivery Operations", "deliveries", Truck, ["owner"]],
     ["Review Approvals", "approvals", ClipboardCheck, ["owner"]],
     ["Financial Summary", "finance", Coins, ["owner"]],
-    ["New Order", "orders", ShoppingCart, ["owner", "manager", "sales"]],
-    ["Retail POS", "pos", Monitor, ["owner", "manager", "sales"]],
+    ["New Order", "orders", ShoppingCart, ["owner", "manager"]],
+    ["Retail POS", "pos", Monitor, ["owner", "manager"]],
     [
       "Service Bookings",
       "bookings",
       CalendarDays,
-      ["owner", "service_manager"],
+      ["owner", "manager"],
     ],
-    ["Review Quotations", "quotations", Wrench, ["owner", "service_manager"]],
+    ["Review Quotations", "quotations", Wrench, ["owner", "manager"]],
     ["Add Customer", "customers", UserPlus, ["owner", "manager"]],
-    ["Receive Stock", "inventory", PackagePlus, ["owner", "inventory"]],
+    ["Receive Stock", "inventory", PackagePlus, ["owner", "finance"]],
     [
       "Review Incidents",
       "incidents",
       TriangleAlert,
-      ["owner", "manager", "service_manager", "safety_officer"],
+      ["owner", "manager"],
     ],
     [
       "View Reports",
       "reports",
       ChartNoAxesCombined,
-      [
-        "owner",
-        "manager",
-        "finance",
-        "inventory",
-        "sales",
-        "dispatcher",
-        "administrator",
-      ],
+      ["owner", "manager", "finance"],
     ],
   ] as const;
   let offset = 0;
@@ -355,24 +355,21 @@ export default function AdminOverview({ user }: { user: any }) {
           <RefreshCw size={16} />
           Refresh
         </button>
-        <span role="status">
-          {error
+        <span>
+          {loading ? <ActionLoadingIndicator label="Refreshing dashboard records" /> : <span role="status">{error
             ? "Stale / unavailable"
-            : loading
-              ? "Refreshing…"
-              : last
+            : last
                 ? "Updated " +
                   new Date(last).toLocaleTimeString("en-NG", {
                     timeZone: "Africa/Lagos",
                   })
-                : "Connecting…"}
+                : "Connecting…"}</span>}
         </span>
       </div>
       {error && <Notice type="error" message={error} />}{" "}
-      {!data && loading ? (
-        <Loading />
-      ) : !data ? (
-        <p>No dashboard snapshot available. Retry refresh.</p>
+      {!scopeMatches ? (
+        error && !loading ? <p>No dashboard snapshot available. Retry refresh.</p> :
+          <Loading page label="Loading dashboard records" />
       ) : (
         <>
           {user.role === "owner" && allowed("finance") && (
@@ -387,7 +384,7 @@ export default function AdminOverview({ user }: { user: any }) {
                 ["Recorded expenses", ownerFinance?.finance.recordedExpensesKobo],
                 ["Net profit", ownerFinance?.finance.netProfitKobo],
               ].map(([label, value]) => <Link href={"/admin/finance?" + ownerQuery} className="surface finance-metric" key={label}>
-                <span>{label}</span><strong>{value == null ? "Unavailable" : money(value)}</strong>
+                <span>{label}</span><strong>{financeLoading ? <ActionLoadingIndicator label={`Loading ${label}`} /> : value == null ? "Unavailable" : money(value)}</strong>
               </Link>)}
             </section>
           )}
@@ -395,7 +392,7 @@ export default function AdminOverview({ user }: { user: any }) {
             <h2>Priorities</h2>
             <div className="owner-priority-links">
               {allowed("approvals") && <Link href={branchId ? "/admin/approvals?" + new URLSearchParams({ branchId }) : "/admin/approvals"}>{ownerPending == null ? "Review approvals" : ownerPending + " requests awaiting review"}</Link>}
-              {allowed("inventory") && <Link href="/admin/inventory">Active stock holds · {ownerFinance?.holds?.length ?? "Unavailable"}</Link>}
+              {allowed("inventory") && <Link href="/admin/inventory">Active stock holds · {financeLoading ? <ActionLoadingIndicator label="Loading stock holds" /> : ownerFinance?.holds?.length ?? "Unavailable"}</Link>}
               {allowed("incidents") && <Link href="/admin/incidents">Open incidents · {data.incidents ?? "Unavailable"}</Link>}
               {allowed("deliveries") && <a href="#owner-operations-summary">Operations Summary ↓</a>}
             </div>
@@ -591,7 +588,7 @@ export default function AdminOverview({ user }: { user: any }) {
                       <Icon size={20} />
                       {route && allowed(route) ? <Link href={"/admin/" + route}>{label}</Link> : label}
                     </dt>
-                    <dd>{value ?? "Unavailable"}</dd>
+                  <dd>{route === "inventory" && financeLoading ? <ActionLoadingIndicator label={`Loading ${label}`} /> : value ?? "Unavailable"}</dd>
                   </div>
                 ))}
               </dl>

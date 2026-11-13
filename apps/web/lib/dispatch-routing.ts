@@ -29,7 +29,7 @@ export async function confirmDispatchDestination(
   user: Actor,
   input: unknown,
 ) {
-  allow(user, ["owner", "manager", "dispatcher"]);
+  allow(user, ["owner", "manager"]);
   recentVerification(user);
   const d = z
     .object({
@@ -46,7 +46,7 @@ export async function confirmDispatchDestination(
     d.orderId,
   ]);
   if (!o) throw new AppError(404, "Order not found.");
-  allow(user, ["owner", "manager", "dispatcher"], o.branch_id);
+  allow(user, ["owner", "manager"], o.branch_id);
   const prior = await one(
     tx,
     "SELECT revision FROM dispatch_destinations WHERE order_id=$1 ORDER BY revision DESC LIMIT 1",
@@ -90,10 +90,10 @@ export async function routingContext(
   orderId: string,
   driverId: string,
 ) {
-  allow(user, ["owner", "manager", "dispatcher"]);
+  allow(user, ["owner", "manager"]);
   const o = await one(tx, "SELECT * FROM orders WHERE id=$1", [orderId]);
   if (!o) throw new AppError(404, "Order not found.");
-  allow(user, ["owner", "manager", "dispatcher"], o.branch_id);
+  allow(user, ["owner", "manager"], o.branch_id);
   if (
     !["accepted", "preparing", "assigned", "out_for_delivery"].includes(
       o.status,
@@ -354,7 +354,7 @@ export async function estimateDispatchRoute(
     const u = await actor(tx, token);
     driverSessionPermission(u, "dispatch.route.estimate", input);
     technicianSessionPermission(u, "dispatch.route.estimate", input);
-    allow(u, ["owner", "manager", "dispatcher"]);
+    allow(u, ["owner", "manager"]);
     return u;
   };
   const prepared = await db.transaction(async (tx) => {

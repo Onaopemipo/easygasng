@@ -54,7 +54,7 @@ test("DOOR-01: exact consent, independent debit/cash verification and metered su
           approve: true,
           operationKey: id(),
         }),
-      /permission/,
+      /Independent finance\/owner decision required/,
     );
     await assert.rejects(
       () =>

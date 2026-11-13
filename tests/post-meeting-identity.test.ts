@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createDatabase, migrate, one } from "../apps/web/lib/db";
@@ -18,7 +19,7 @@ test("PM-T01: opaque immutable customer IDs, phone lookup, duplicate detection a
           role,
           uid + "@test.invalid",
           hashPassword("Fixture-password-123!"),
-          role,
+          consolidatedRole(role),
         ],
       );
       tokens[role] = await issueSession(db, uid);
@@ -105,8 +106,8 @@ test("PM-T09: assisted checkout preserves customer identity, operator attributio
     for (const role of ["owner", "manager", "sales", "customer"]) {
       ids[role] = id();
       await db.query(
-        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,'unusable',$2,'lagos')",
-        [ids[role], role, role + "@pm.test"],
+        "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,$2,$3,'unusable',$4,'lagos')",
+        [ids[role], role, role + "@pm.test", consolidatedRole(role)],
       );
       tokens[role] = await issueSession(db, ids[role]);
     }

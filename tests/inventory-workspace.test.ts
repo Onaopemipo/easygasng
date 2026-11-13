@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { fixture } from "./helpers/order-tracking-fixture";
@@ -12,7 +13,7 @@ async function actor(f: any, role: string, branch = "lagos") {
       "Isolated " + role,
       uid + "@inventory.example.test",
       hashPassword("Inventory-read-tests-123!"),
-      role,
+      consolidatedRole(role),
       branch,
     ],
   );
@@ -125,7 +126,7 @@ test("INV-030,051,052: roles, revoked sessions and branch IDOR fail closed witho
       "INSERT INTO branches(id,name) VALUES('inventory-other','Other isolated branch')",
     );
     const manager = await actor(f, "manager", "inventory-other"),
-      sales = await actor(f, "sales");
+      driver = await actor(f, "driver");
     await assert.rejects(() =>
       dispatch("inventory.workspace", manager, { branchId: "lagos" }, f.db),
     );
@@ -133,7 +134,7 @@ test("INV-030,051,052: roles, revoked sessions and branch IDOR fail closed witho
       dispatch("inventory.export", manager, { branchId: "lagos" }, f.db),
     );
     await assert.rejects(() => f.call("customer", "inventory.workspace"));
-    await assert.rejects(() => dispatch("inventory.export", sales, {}, f.db));
+    await assert.rejects(() => dispatch("inventory.export", driver, {}, f.db));
     const d = await dispatch("inventory.workspace", manager, {}, f.db);
     assert.equal(d.scope, "inventory-other");
     assert.equal(d.rows.length, 0);
@@ -208,7 +209,7 @@ test("INV-027–028: complete approved acquisition basis produces reconciled cat
         (r: any) => r.name === "Accessories" && r.value === 100000,
       ),
     );
-    const limited = await f.call("inventory", "inventory.workspace");
+    const limited = await f.call("dispatcher", "inventory.workspace");
     assert.equal(limited.valuation.totalKobo, null);
     assert.deepEqual(limited.valuation.categories, []);
   } finally {

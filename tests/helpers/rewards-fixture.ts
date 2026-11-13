@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../../packages/business-rules/src/staff-roles";
 import { fixture } from "./order-tracking-fixture";
 import { id, hashPassword, issueSession } from "../../apps/web/lib/auth";
 import { one, type DB } from "../../apps/web/lib/db";
@@ -12,7 +13,7 @@ export async function rewardsFixture(database?: DB) {
         role,
         uid + "@rewards.example.test",
         hashPassword("Tracking-fixture-only-123!"),
-        role === "owner2" ? "owner" : role,
+        consolidatedRole(role === "owner2" ? "owner" : role),
       ],
     );
     f.actors[role] = { id: uid, token: await issueSession(f.db, uid) };

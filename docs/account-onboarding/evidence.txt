@@ -1,0 +1,23 @@
+Local focused account, staff, customer, SMTP and approval regressions
+✔ ONBOARD-01: staff email acceptance, replacement before access and replay rejection (1479.499542ms)
+✔ ONBOARD-02: admin-created customer must accept and replace the emailed password (1058.685667ms)
+✔ ONBOARD-03: recovery covers staff and customers with bounded sends and single-use links (1020.91025ms)
+✔ CM-01: customer creation, scoped management and privilege rejection (949.235583ms)
+✔ staff invitations are manageable without granting privileges, renew invalidates old links and accepted accounts appear in staff management (1281.867042ms)
+✔ staff management invitation actions run with restricted runtime grants and moved administrators cannot validate old branch invitations (1014.2565ms)
+✔ PR-05: SMTP outbox sends once, never retries unknown outcomes, rejects unauthorised retry and preserves private message content (983.742125ms)
+✔ PR-06: expired recovery messages cancel, explicit SMTP rejection backs off, and insecure SMTP configuration is refused (713.429459ms)
+✔ recovery is non-enumerating, single-use, expires and revokes sessions (75.905375ms)
+✔ staff invitation acceptance cannot grant privileges and suspension revokes live sessions (74.267292ms)
+ℹ tests 37
+ℹ pass 37
+ℹ fail 0
+ℹ skipped 0
+
+Chrome desktop and mobile-width acceptance on isolated PostgreSQL 17 using the existing mail worker with a capture transport
+✔ ONBOARD-BROWSER-01: owner invites from Staff Management and mobile-width web forces a password change before issuing a session
+✔ ONBOARD-BROWSER-02: emailed recovery works without the catalogue, revokes the old session and enables sign-in with the new password
+✔ ONBOARD-BROWSER-03: owner creates a customer and the customer verifies their email and replaces the temporary password
+
+✔ ONBOARD-MIGRATION: Fresh bootstrap and upgrade from revision 076 reached revision 077 on PostgreSQL 17.
+Web production build and native TypeScript passed. No live SMTP delivery or installed native build was exercised.

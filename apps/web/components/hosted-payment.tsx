@@ -341,7 +341,7 @@ export function WalletFunding() {
             required
           />
         </label>
-        {reason && (
+        {!ready ? <ActionLoadingIndicator label="Loading payment methods" /> : reason && (
           <p className="muted" role="status">
             {reason}
           </p>

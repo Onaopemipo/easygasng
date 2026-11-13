@@ -49,7 +49,7 @@ export async function winbackCRM(
   action: string,
   input: unknown,
 ) {
-  allow(user, ["owner", "manager", "sales"]);
+  allow(user, ["owner", "manager"]);
   if (action === "crm.followups") return followupPage(tx, user, input);
   const d = z
     .object({
@@ -166,7 +166,7 @@ export async function winbackCRM(
       [d.followupId],
     );
     if (!f) throw new AppError(404, "Follow-up not found.");
-    allow(user, ["owner", "manager", "sales"], f.branch_id);
+    allow(user, ["owner", "manager"], f.branch_id);
     if (f.outcome) throw new AppError(409, "Outcome already recorded.");
     await tx.query("UPDATE crm_followups SET outcome=$1 WHERE id=$2", [
       d.outcome,
@@ -212,7 +212,7 @@ export async function winbackCRM(
       throw new AppError(400, "Owner, due date and next action required.");
     const owner = await one(
       tx,
-      "SELECT id FROM users WHERE id=$1 AND active=true AND role IN ('owner','manager','sales') AND (role='owner' OR branch_id=$2)",
+      "SELECT id FROM users WHERE id=$1 AND active=true AND role IN ('owner','manager') AND (role='owner' OR branch_id=$2)",
       [d.ownerId, c.branch_id],
     );
     if (!owner)

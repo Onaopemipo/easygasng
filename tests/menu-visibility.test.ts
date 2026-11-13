@@ -21,7 +21,7 @@ test('MENU-02: role and revoked privileges filter menus without granting backend
    const access=await f.call(role,'navigation.access');
    for(const route of ['orders','staff','inventory','finance','deliveries']) assert.equal(workspaceLinkVisible('/admin/'+route,access.allowed),access.allowed.includes(route));
   }
-  const actor:any={id:f.actors.inventory.id,name:'Inventory',role:'inventory',branch_id:'lagos',privilege_overrides:{'inventory.view':'deny'}};
+  const actor:any={id:f.actors.inventory.id,name:'Inventory',role:'finance',branch_id:'lagos',privilege_overrides:{'inventory.view':'deny'}};
   const access=await navigationAccess(f.db,actor);assert.ok(!access.allowed.includes('inventory'));
   await assert.rejects(()=>f.call('driver','staff.privileges'),(error:any)=>error.status===403);
  }finally{await f.db.close?.();}

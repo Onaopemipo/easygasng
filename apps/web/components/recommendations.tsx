@@ -2,10 +2,10 @@
 import {ProductHeading} from "./product-workspace";
 import React, { useEffect, useState } from "react";
 import Link from "./workspace-link";
-import { api, Notice } from "./ui";
+import { api, Loading, Notice } from "./ui";
 import { ServiceForm } from "./professional-services";
 export function Recommendations({ productId }: { productId?: string }) {
-  const [rows, setRows] = useState<any[]>([]);
+  const [rows, setRows] = useState<any[] | null>(null);
   useEffect(() => {
     api(
       "recommendations" +
@@ -21,10 +21,11 @@ export function Recommendations({ productId }: { productId?: string }) {
       })
       .catch(() => setRows([]));
   }, [productId]);
+  if (!rows) return <Loading label="Loading service recommendations" />;
   return rows.length ? (
     <section className="surface">
       <h2>Professional support for your equipment</h2>
-      {rows.map((r) => (
+      {rows?.map((r) => (
         <div key={r.id}>
           <h3>{r.service}</h3>
           <p>{r.message}</p>
@@ -46,7 +47,7 @@ export function Recommendations({ productId }: { productId?: string }) {
   ) : null;
 }
 export default function RecommendationAdmin({ user }: { user: any }) {
-  const [rows, setRows] = useState<any[]>([]),
+  const [rows, setRows] = useState<any[] | null>(null),
     [products, setProducts] = useState<any[]>([]),
     [services, setServices] = useState<any[]>([]),
     [error, setError] = useState(""),
@@ -73,8 +74,9 @@ export default function RecommendationAdmin({ user }: { user: any }) {
         automatically or assert unverified compatibility. Completed appointments
         are counted separately from clicks.
       </p>
-      {error && <Notice type="error" message={error} />}{" "}
-      {["owner", "service_manager"].includes(user.role) && (
+      {error && <Notice type="error" message={error} />}
+      {!rows && !error && <Loading label="Loading recommendation records" />}{" "}
+      {rows && ["owner", "manager"].includes(user.role) && (
         <ServiceForm
           title="Propose an assessment recommendation"
           done={reload}
@@ -121,7 +123,7 @@ export default function RecommendationAdmin({ user }: { user: any }) {
           }
         />
       )}{" "}
-      {rows.map((r) => (
+      {rows?.map((r) => (
         <article className="surface" key={r.id}>
           <h2>
             {r.product} → {r.service}
@@ -134,7 +136,7 @@ export default function RecommendationAdmin({ user }: { user: any }) {
             Displayed {r.displayed} · Selected {r.selected} · Booked {r.booked}{" "}
             · Completed {r.completed}
           </p>
-          {["owner", "safety_officer"].includes(user.role) &&
+          {["owner"].includes(user.role) &&
             user.id !== r.created_by && (
               <ServiceForm
                 title="Record independent review"

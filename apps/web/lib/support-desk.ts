@@ -26,7 +26,7 @@ export async function supportTicket(
   if (!row || (isSupportCustomer(user) && row.customer_id !== user.id))
     throw new AppError(404, "Support request not found.");
   if (!isSupportCustomer(user))
-    allow(user, ["owner", "manager", "sales"], row.branch_id);
+    allow(user, ["owner", "manager"], row.branch_id);
   return row;
 }
 export async function enrollSupportSla(

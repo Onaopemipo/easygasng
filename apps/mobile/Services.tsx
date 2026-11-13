@@ -673,7 +673,7 @@ function Booking({
         {error ? (
           <CustomerFeedback error={error} />
         ) : !current ? (
-          <CustomerCopy>Checking appointment availability…</CustomerCopy>
+          <EasyGasLoader size="sm" variant="section" label="Checking appointment availability" />
         ) : changed ? (
           <CustomerCopy>
             Service details or pricing changed. Refresh the service and review
@@ -885,8 +885,8 @@ export function Appointment({
     [paymentKey] = useState(randomUUID);
   const customer = b.customer_id === user.id,
     tech = user.role === "technician",
-    manager = ["owner", "service_manager"].includes(user.role),
-    store = ["owner", "inventory", "service_manager"].includes(user.role),
+    manager = ["owner", "manager"].includes(user.role),
+    store = ["owner", "finance", "manager"].includes(user.role),
     finance = ["owner", "finance"].includes(user.role),
     q = b.quotes[0];
   const operationKeys = useRef(new Map<string, string>());

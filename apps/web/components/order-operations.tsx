@@ -1,7 +1,7 @@
 "use client";
 import { DoorstepCylinderForm } from "./doorstep-cylinder-form";
 import { useState, type FormEvent } from "react";
-import { api, Notice, money } from "./ui";
+import { api, Loading, Notice, money } from "./ui";
 import { OperationForm } from "./operations-completion";
 import { DoorstepActions } from "./doorstep-actions";
 export function InvoiceCorrections({
@@ -198,7 +198,7 @@ export function OrderOperations({
       setDoorstepReady(a.commitEnabled === true);
       if (
         customer ||
-        ["owner", "manager", "dispatcher", "driver"].includes(user?.role)
+        ["owner", "manager", "driver"].includes(user?.role)
       ) {
         const p = await api("delivery.photos?orderId=" + order.id);
         setPhotos(p.photos);
@@ -230,6 +230,7 @@ export function OrderOperations({
     >
       <summary>Visit changes and photo history</summary>
       {error && <Notice type="error" message={error} />}{" "}
+      {!photos && !error && <Loading label="Loading visit and photo history" />}
       {photos?.length === 0 && <p>No eligible photos for this order.</p>}
       <div className="product-grid">
         {photos?.map((p) => (
@@ -374,7 +375,7 @@ export function OrderOperations({
           ]}
         />
       )}{" "}
-      {["owner", "manager", "sales"].includes(user?.role) && (
+      {["owner", "manager"].includes(user?.role) && (
         <>
           <OperationForm
             title="Record requested phone messaging consent"

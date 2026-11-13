@@ -173,7 +173,7 @@ export async function refillAction(
     return { ok: true, feedback };
   }
   if (action === "jobs") {
-    allow(user, ["owner", "administrator"]);
+    allow(user, ["owner"]);
     return (
       await tx.query("SELECT * FROM job_runs ORDER BY started_at DESC LIMIT 50")
     ).rows;

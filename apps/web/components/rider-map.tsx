@@ -1,4 +1,5 @@
 "use client";
+import { EasyGasLoader } from "./easygas-loader";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -146,7 +147,7 @@ function MapCanvas({ points }: { points: RiderMapPoint[] }) {
     );
   return (
     <>
-      {!maps && <p role="status">Loading map…</p>}
+      {!maps && <EasyGasLoader size="sm" variant="section" label="Loading map" />}
       <div
         ref={host}
         role="region"

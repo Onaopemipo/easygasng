@@ -436,16 +436,16 @@ export async function commerceAction(
     return { ok: true };
   }
   if (action === "pos") {
-    allow(user, ["owner", "manager", "sales", "finance"]);
-    const canSell = ["owner", "manager", "sales"].includes(user.role);
+    allow(user, ["owner", "manager", "finance"]);
+    const canSell = ["owner", "manager"].includes(user.role);
     const ownShift = await one(tx,
       "SELECT s.*,b.name AS branch_name,b.active AS branch_active,s.opening_kobo+(SELECT COALESCE(sum(total_kobo),0) FROM pos_sales WHERE shift_id=s.id) AS cash_in_till_kobo FROM pos_shifts s JOIN branches b ON b.id=s.branch_id WHERE s.cashier_id=$1 AND s.status='open' ORDER BY s.created_at DESC LIMIT 1",
       [user.id]);
     const branches = canSell ? (await tx.query(
       "SELECT id,name FROM branches WHERE active=true AND ($1::boolean OR id=$2) ORDER BY name",
       [user.role === "owner", user.branch_id])).rows : [];
-    const saleScope = user.role === "owner" ? "true" : user.role === "sales" ? "sh.cashier_id=$1" : "sh.branch_id=$1";
-    const params = user.role === "owner" ? [] : [user.role === "sales" ? user.id : user.branch_id];
+    const saleScope = user.role === "owner" ? "true" : "sh.branch_id=$1";
+    const params = user.role === "owner" ? [] : [user.branch_id];
     const today = await one(tx,
       `WITH sales_today AS (
         SELECT s.id,s.total_kobo FROM pos_sales s JOIN pos_shifts sh ON sh.id=s.shift_id
@@ -467,18 +467,18 @@ export async function commerceAction(
       ).rows,
       shifts: (
         await tx.query(
-          `SELECT s.*,u.name AS cashier FROM pos_shifts s JOIN users u ON u.id=s.cashier_id WHERE ${user.role === "owner" ? "true" : user.role === "sales" ? "s.cashier_id=$1" : "s.branch_id=$1"} ORDER BY s.created_at DESC LIMIT 100`,
+          `SELECT s.*,u.name AS cashier FROM pos_shifts s JOIN users u ON u.id=s.cashier_id WHERE ${user.role === "owner" ? "true" : "s.branch_id=$1"} ORDER BY s.created_at DESC LIMIT 100`,
           user.role === "owner"
             ? []
-            : [user.role === "sales" ? user.id : user.branch_id],
+            : [user.branch_id],
         )
       ).rows,
       sales: (
         await tx.query(
-          `SELECT s.*,sh.branch_id,sh.cashier_id,sh.status AS shift_status,u.name AS cashier FROM pos_sales s JOIN pos_shifts sh ON sh.id=s.shift_id JOIN users u ON u.id=sh.cashier_id WHERE ${user.role === "owner" ? "true" : user.role === "sales" ? "sh.cashier_id=$1" : "sh.branch_id=$1"} ORDER BY s.created_at DESC LIMIT 100`,
+          `SELECT s.*,sh.branch_id,sh.cashier_id,sh.status AS shift_status,u.name AS cashier FROM pos_sales s JOIN pos_shifts sh ON sh.id=s.shift_id JOIN users u ON u.id=sh.cashier_id WHERE ${user.role === "owner" ? "true" : "sh.branch_id=$1"} ORDER BY s.created_at DESC LIMIT 100`,
           user.role === "owner"
             ? []
-            : [user.role === "sales" ? user.id : user.branch_id],
+            : [user.branch_id],
         )
       ).rows,
     };
@@ -491,7 +491,7 @@ export async function commerceAction(
       })
       .strict()
       .parse(input);
-    allow(user, ["owner", "manager", "sales"], d.branchId);
+    allow(user, ["owner", "manager"], d.branchId);
     if (!(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true FOR UPDATE", [d.branchId])))
       throw new AppError(409, "This branch is not accepting till shifts.");
     // Serialize duplicate opens for this cashier even across authorised branches.
@@ -538,7 +538,7 @@ export async function commerceAction(
       [d.shiftId],
     );
     if (!shift) throw new AppError(404, "Shift not found.");
-    allow(user, ["owner", "manager", "sales"], shift.branch_id);
+    allow(user, ["owner", "manager"], shift.branch_id);
     if (shift.cashier_id !== user.id)
       throw new AppError(403, "Only the shift cashier can record its sales.");
     const hash = digest(JSON.stringify(d));
@@ -651,7 +651,7 @@ export async function commerceAction(
     ]);
     if (!s || s.cashier_id !== user.id)
       throw new AppError(404, "Your shift was not found.");
-    allow(user, ["owner", "manager", "sales"], s.branch_id);
+    allow(user, ["owner", "manager"], s.branch_id);
     if (s.status !== "open") {
       if (Number(s.counted_kobo) === d.countedKobo && s.note === d.note)
         return { ok: true, expectedKobo: Number(s.expected_kobo), varianceKobo: d.countedKobo - Number(s.expected_kobo) };

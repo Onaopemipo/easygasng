@@ -19,7 +19,8 @@ import {
   ArrowDownToLine,
 } from "lucide-react";
 import { BusinessCentre } from "./business-centre";
-import { money, ProductArt } from "./ui";
+import { Loading, Notice, money, ProductArt } from "./ui";
+import { ActionLoadingIndicator } from "./easygas-loader";
 const tabs = [
   "stock",
   "receipts",
@@ -77,7 +78,7 @@ export default function InventoryWorkspace({ user }: { user: any }) {
   const [data, setData] = useState<any>(null),
     [moves, setMoves] = useState<any>(null),
     [error, setError] = useState(""),
-    [loading, setLoading] = useState(false),
+    [loading, setLoading] = useState(true),
     [exporting, setExporting] = useState(false),
     [exportError, setExportError] = useState("");
   const version = useRef(0),
@@ -392,9 +393,18 @@ export default function InventoryWorkspace({ user }: { user: any }) {
       </div>
     );
   }
+  if (!data) {
+    return error && !loading ? (
+      <section className="inventory-workspace">
+        <h1>Inventory</h1>
+        <Notice type="error" message={error} />
+        <button className="button secondary" onClick={() => load()}>Retry inventory</button>
+      </section>
+    ) : <Loading page label="Loading inventory records" />;
+  }
   return (
     <div className="inventory-workspace">
-      {["owner", "inventory", "manager", "finance"].includes(user.role) && (
+      {["owner", "finance", "manager"].includes(user.role) && (
         <VehicleManifestPanel user={user} Form={OperationForm} />
       )}
       <section className="iw-heading">
@@ -441,12 +451,10 @@ export default function InventoryWorkspace({ user }: { user: any }) {
       </section>
       <div className="iw-freshness" role="status">
         {loading
-          ? "Refreshing authoritative stock…"
+          ? <ActionLoadingIndicator label="Refreshing inventory records" />
           : error
             ? "Stale / unavailable — " + error
-            : data
-              ? `As of ${new Date(data.generatedAt).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })} · Africa/Lagos · ${data.scope}`
-              : "Loading authoritative stock…"}
+            : `As of ${new Date(data.generatedAt).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })} · Africa/Lagos · ${data.scope}`}
         <button
           className="button secondary"
           disabled={loading}

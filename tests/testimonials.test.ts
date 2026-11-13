@@ -149,7 +149,7 @@ test("TM-02: ineligible, duplicate, ownership, consent and unsafe input are reje
         status: "APPROVED",
       }),
     );
-    await assert.rejects(f.call("administrator", "testimonials.manage"));
+    await assert.rejects(f.call("customer", "testimonials.manage"));
     await assert.rejects(
       f.call("customer", "testimonial.edit", {
         id: r.id,

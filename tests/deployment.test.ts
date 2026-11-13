@@ -1,3 +1,4 @@
+import { consolidatedRole } from "../packages/business-rules/src/staff-roles";
 import { verifiedPickup } from "./helpers/tracking-fixture";
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -97,7 +98,7 @@ test("the restricted trusted-server role can run the complete local order-to-cas
     ids[role] = uid;
     await db.query(
       "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,$2,$3,$4,$5,'lagos')",
-      [uid, `Test ${role}`, `${uid}@example.test`, hash, role],
+      [uid, `Test ${role}`, `${uid}@example.test`, hash, consolidatedRole(role)],
     );
     tokens[role] = await issueSession(db, uid);
   }
@@ -220,7 +221,7 @@ test("the restricted runtime role supports new accounts, catalogue, purchasing, 
         `Runtime ${role}`,
         `${role}@runtime.test`,
         hashPassword(password),
-        role,
+        consolidatedRole(role),
       ],
     );
     tokens[role] = await issueSession(db, ids[role]);

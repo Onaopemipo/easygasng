@@ -380,7 +380,7 @@ export function BulkLPGPanel({ user }: { user: any }) {
     };
   }, [tick]);
   const refresh = () => setTick((v) => v + 1);
-  const staff = ["owner", "inventory"].includes(user.role);
+  const staff = ["owner", "finance"].includes(user.role);
   return (
     <details className="panel">
       <summary>Bulk LPG loading, dispensing and returns</summary>
@@ -1068,30 +1068,23 @@ export function OperationsExtensions({
   if (section === "deliveries")
     return (
       <>
-        {[
-          "owner",
-          "manager",
-          "dispatcher",
-          "inventory",
-          "driver",
-          "finance",
-        ].includes(user.role) && (
+        {["owner", "manager", "finance", "driver"].includes(user.role) && (
           <VehicleManifestPanel user={user} Form={OperationForm} />
         )}
-        {["owner", "manager", "dispatcher", "inventory", "driver"].includes(
+        {["owner", "manager", "finance", "driver"].includes(
           user.role,
         ) && <BulkLPGPanel user={user} />}
-        {["owner", "manager", "dispatcher"].includes(user.role) && (
+        {["owner", "manager"].includes(user.role) && (
           <DispatchPanel />
         )}
-        {["owner", "manager", "dispatcher", "finance", "driver"].includes(
+        {["owner", "manager", "finance", "driver"].includes(
           user.role,
         ) && <FleetPanel user={user} />}
       </>
     );
   if (
     section === "customers" &&
-    ["owner", "manager", "sales"].includes(user.role)
+    ["owner", "manager"].includes(user.role)
   )
     return <CRMPanel user={user} />;
   return null;

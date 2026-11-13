@@ -1,4 +1,5 @@
 "use client";
+import { EasyGasLoader } from "./easygas-loader";
 import { useEffect, useState } from "react";
 import { api, Notice } from "./ui";
 import { paymentMoney as money } from "./hosted-payment";
@@ -22,7 +23,7 @@ export default function OrderAdditions({
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [requestKey] = useState(() => crypto.randomUUID());
-  const allowed = ["owner", "manager", "sales"].includes(user.role);
+  const allowed = ["owner", "manager"].includes(user.role);
   async function load() {
     try {
       setData(await api("order.additions", { orderId: order.id }));
@@ -85,7 +86,7 @@ export default function OrderAdditions({
         fee. Paid or invoiced orders require the existing correction process.
       </p>
       {error && <Notice type="error" message={error} />}
-      {!data && !error && <p>Checking whether additions are available…</p>}
+      {!data && !error && <EasyGasLoader size="sm" variant="section" label="Checking whether additions are available" />}
       {data?.blockedReason && <p>{data.blockedReason}</p>}
       {data?.history?.map((a: any) => (
         <div className="order-addition-history" key={a.id}>

@@ -1,10 +1,10 @@
 "use client";
 import {ProductHeading} from "./product-workspace";
 import React, { useEffect, useState } from "react";
-import { api, Notice, money } from "./ui";
+import { api, Loading, Notice, money } from "./ui";
 import { ServiceForm } from "./professional-services";
 export function BundleOffers({ select }: { select: (b: any) => void }) {
-  const [rows, setRows] = useState<any[]>([]),
+  const [rows, setRows] = useState<any[] | null>(null),
     [error, setError] = useState("");
   useEffect(() => {
     api("bundles")
@@ -13,10 +13,11 @@ export function BundleOffers({ select }: { select: (b: any) => void }) {
   }, []);
   return (
     <section>
-      {rows.length > 0 && <h2>Products & service bundles</h2>}
+      {(rows?.length ?? 0) > 0 && <h2>Products & service bundles</h2>}
       {error && <Notice type="error" message={error} />}
+      {!rows && !error && <Loading label="Loading bundles" />}
       <div className="service-grid">
-        {rows.map((b) => (
+        {rows?.map((b) => (
           <article className="surface" key={b.id}>
             <h3>{b.name}</h3>
             <p>{b.config.description}</p>
@@ -45,7 +46,7 @@ export function BundleOffers({ select }: { select: (b: any) => void }) {
   );
 }
 export default function BundleAdmin({ user }: { user: any }) {
-  const [rows, setRows] = useState<any[]>([]),
+  const [rows, setRows] = useState<any[] | null>(null),
     [error, setError] = useState(""),
     [version, setVersion] = useState(0);
   const reload = () => setVersion((v) => v + 1);
@@ -63,7 +64,8 @@ export default function BundleAdmin({ user }: { user: any }) {
         delivery and later approved additional work retain their separate
         charges.
       </p>
-      {error && <Notice type="error" message={error} />}{" "}
+      {error && <Notice type="error" message={error} />}
+      {!rows && !error && <Loading label="Loading bundles" />}{" "}
       {user.role === "owner" && (
         <ServiceForm
           title="Create a draft bundle"
@@ -74,7 +76,7 @@ export default function BundleAdmin({ user }: { user: any }) {
           }
         />
       )}{" "}
-      {rows.map((b) => (
+      {rows?.map((b) => (
         <details className="surface" key={b.id + ":" + version}>
           <summary>
             {b.name} · {b.config.active ? "Active" : "Draft"} · v{b.version}

@@ -118,12 +118,7 @@ export default function StaffPrivileges({
                   .includes(search.toLowerCase()),
               )
               .map((p: any) => {
-                const effect = changes[p.id] ?? p.effect,
-                  protectedControl =
-                    user.role === "administrator" &&
-                    ["Protected authority", "Finance & reporting"].includes(
-                      p.group,
-                    );
+                const effect = changes[p.id] ?? p.effect;
                 return (
                   <div className="staff-privilege-row" key={p.id}>
                     <div>
@@ -137,16 +132,13 @@ export default function StaffPrivileges({
                         Role default:{" "}
                         {p.roleDefault ? "Allowed" : "Not allowed"} · Current
                         access: {p.effective ? "Allowed" : "Not allowed"}
-                        {protectedControl
-                          ? " · Business Owner manages this privilege"
-                          : ""}
                       </small>
                     </div>
                     <label>
                       Access for {p.label}
                       <select
                         value={effect}
-                        disabled={busy || protectedControl}
+                        disabled={busy}
                         onChange={(e) =>
                           setChanges((old) => {
                             const next = { ...old };

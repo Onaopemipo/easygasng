@@ -26,6 +26,7 @@ type Field = {
   max?: number;
   minLength?: number;
   maxLength?: number;
+  autoComplete?: string;
   value?: any;
   required?: boolean;
   options?: { value: string; label: string }[];
@@ -189,7 +190,7 @@ export function ActionForm({
                 minLength={f.type === "password" ? PASSWORD_MIN_LENGTH : f.minLength}
                 maxLength={f.type === "password" ? 128 : (f.maxLength ?? 1000)}
                 autoComplete={
-                  f.type === "password" ? "new-password" : undefined
+                  f.autoComplete ?? (f.type === "password" ? "new-password" : undefined)
                 }
               />
             )}
@@ -469,58 +470,61 @@ export function Recovery({
 }: {
   mode: "recover" | "reset" | "verify" | "invite";
 }) {
-  const [token, setToken] = useState("");
+  const [link, setLink] = useState<{ token: string; temporary: boolean }>();
+  const [result, setResult] = useState("");
+  const linkRead = useRef(false);
   useEffect(() => {
-    setToken(
-      new URLSearchParams(window.location.hash.slice(1)).get("token") ?? "",
-    );
-    window.history.replaceState({}, "", window.location.pathname);
+    if (linkRead.current) return;
+    linkRead.current = true;
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    setLink({ token: params.get("token") ?? "", temporary: params.get("setup") === "temporary" });
+    if (window.location.hash)
+      window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
   }, []);
+  const title = {
+    recover: "Reset your password",
+    reset: "Choose a new password",
+    invite: "Accept your invitation",
+    verify: "Confirm your email address",
+  }[mode];
+  const action = {
+    recover: "account.recover",
+    reset: "account.reset",
+    invite: "invitation.accept",
+    verify: "account.verify",
+  }[mode];
+  const requiresLink = mode !== "recover";
   return (
     <div className="container page workflow-stack">
-      <h1>
-        {mode === "recover"
-          ? "Recover your account"
-          : mode === "reset"
-            ? "Choose a new password"
-            : mode === "invite"
-              ? "Accept your invitation"
-              : "Verify your email"}
-      </h1>
-      <ActionForm
-        key={token}
-        action={
-          mode === "recover"
-            ? "account.recover"
-            : mode === "reset"
-              ? "account.reset"
-              : mode === "invite"
-                ? "invitation.accept"
-                : "account.verify"
-        }
-        title={
-          mode === "recover"
-            ? "Enter your account email"
-            : "Use the secure token from your email"
-        }
-        fields={
-          mode === "recover"
-            ? [{ name: "email", label: "Email", type: "email" }]
-            : [
-                { name: "token", label: "Secure token", value: token },
-                {
-                  ...(mode === "verify"
-                    ? { name: "token", label: "Secure token", value: token }
-                    : {
-                        name: "password",
-                        label: `New password (at least ${PASSWORD_MIN_LENGTH} characters)`,
-                        type: "password",
-                      }),
-                },
-              ].filter((f, i) => mode !== "verify" || i === 0)
-        }
-        submit={mode === "recover" ? "Queue recovery email" : "Continue"}
-      />
+      <h1>{title}</h1>
+      {result ? (
+        <Notice type="success" message={result} />
+      ) : requiresLink && !link ? (
+        <Loading label="Preparing your secure link" />
+      ) : requiresLink && !/^[a-f0-9]{64}$/.test(link?.token ?? "") ? (
+        <Notice type="error" message={mode === "invite"
+          ? "Open the invitation link in your email. Ask your administrator for a new invitation if the link has expired."
+          : "Open the link in your EasyGas email. If your reset link has expired, request a new one."} />
+      ) : (
+        <ActionForm
+          action={action}
+          title={mode === "recover" ? "Enter your account email"
+            : link?.temporary ? "Enter the temporary password from your email"
+              : mode === "verify" ? "Confirm your address to continue" : "Set your password"}
+          fields={mode === "recover" ? [{ name: "email", label: "Email address", type: "email" }] : [
+            { name: "token", label: "", value: link?.token, type: "hidden" },
+            ...(mode === "verify" ? [] : [{
+              name: "password",
+              label: link?.temporary ? "Temporary password" : `New password (at least ${PASSWORD_MIN_LENGTH} characters)`,
+              type: "password",
+              autoComplete: link?.temporary ? "current-password" : "new-password",
+            }]),
+          ]}
+          submit={{ recover: "Send Reset Link", reset: "Reset Password", invite: "Accept Invitation", verify: "Confirm Email" }[mode]}
+          onResult={(response) => setResult(response.message)}
+        />
+      )}
+      {mode === "reset" && <Link href="/forgot-password">Request a new reset link</Link>}
       <Link href="/login">Return to sign in</Link>
     </div>
   );

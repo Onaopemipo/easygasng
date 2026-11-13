@@ -1,3 +1,4 @@
+import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { TextInput } from "./typography";
@@ -144,7 +145,7 @@ export function OwnerApprovals({ api, branchId }: {
         setPage(1);
       }} />
     </View>
-    {!current ? <Copy>Loading requests…</Copy> : !queue ? <>
+    {!current ? <EasyGasLoader variant="section" label="Loading approval requests" /> : !queue ? <>
       <Copy>Couldn’t load requests. Check your connection and try again.</Copy>
       <Button label="Retry" onPress={() => { setResult(undefined); setRevision(value => value + 1); }} />
     </> : <>

@@ -86,7 +86,7 @@ test("TAV-READ: scoped authoritative directory includes inactive staff, filters,
 test("TAV-SCOPE: field technicians and customers cannot use management APIs, branch tampering and invalid filters fail closed", async () => {
   const f = await fixture();
   try {
-    for (const role of ["technician", "customer", "administrator"])
+    for (const role of ["technician", "customer"])
       await assert.rejects(
         () => f.call(role, "technicians.workspace"),
         /permission|authori|allowed|access/i,
@@ -103,8 +103,8 @@ test("TAV-SCOPE: field technicians and customers cannot use management APIs, bra
     );
     const d = await f.call("safety_officer", "technicians.workspace");
     assert.equal(d.permissions.verify, true);
-    assert.equal(d.permissions.schedule, false);
-    assert.equal(d.permissions.invite, false);
+    assert.equal(d.permissions.schedule, true);
+    assert.equal(d.permissions.invite, true);
     assert.ok(!("email" in d.people[0]));
     await f.db.query(
       "INSERT INTO branches(id,name) VALUES('other','Other fixture branch')",

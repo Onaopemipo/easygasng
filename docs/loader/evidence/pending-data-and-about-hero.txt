@@ -1,0 +1,35 @@
+Local headless Chrome on an isolated synthetic demo backend, with browser-level request interception.
+✔ ABOUT-HERO-BROWSER: 390px DPR 1 downloaded 22894 bytes before catalogue response
+✔ ABOUT-HERO-BROWSER: 1440px DPR 1 downloaded 42044 bytes before catalogue response
+✔ ABOUT-HERO-BROWSER: 1440px DPR 2 downloaded 92110 bytes before catalogue response
+✔ DATA-LOADER-BROWSER: /admin delayed response shows branded loader, then confirmed metrics
+✔ DATA-LOADER-BROWSER: /admin/inventory delayed response shows branded loader, then confirmed metrics
+✔ DATA-LOADER-BROWSER: /admin/customers delayed response shows branded loader, then confirmed metrics
+✔ DATA-LOADER-BROWSER: secondary owner finance request shows loader before real value
+✔ DATA-LOADER-BROWSER: dashboard retains confirmed metrics during background fetch
+✔ DATA-LOADER-BROWSER: failed first inventory request shows the error and no false metrics
+✔ DATA-LOADER-BROWSER: a branch-scoped finance account sees confirmed dashboard metrics
+
+Focused automated suite
+
+node --import tsx --test --test-concurrency=1 tests/easygas-loader.test.ts tests/public-header.test.ts tests/customer-management.test.ts tests/admin-dashboard.test.ts tests/admin-dashboard-http.test.ts tests/inventory-workspace-http.test.ts
+✔ ADM-HTTP18: admin reads enforce authentication, read-only HTTP methods and a persistent per-user search budget (1434.304125ms)
+✔ ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero-data states (1078.772167ms)
+✔ ADM-AUTH03: dashboard and search reject customer, forged role and cross-branch scope (830.324458ms)
+✔ ADM-SEARCH12: search returns permitted records only and treats wildcards/injection as literal input (752.221541ms)
+✔ ADM-REL01: failed order widget is isolated without discarding other canonical widgets (725.858ms)
+✔ ADM-FILTER03: invalid dates, oversized ranges and excessive pages are rejected (701.743083ms)
+✔ ADM-BIZ02: receipts exclude unverified collections and match the existing finance definition after reconciliation (850.546833ms)
+✔ ADM-AUTH01: single canonical login returns actual role, never accepts a requested privilege (817.65075ms)
+✔ ADM-NOTIFY12: unread totals are not limited to display rows and links recheck branch and module access (780.8875ms)
+✔ LDR-SSR: central-only accessible SVG is deterministic and contains no visible text (0.443875ms)
+✔ HDR-03: all seven primary links retain approved order and verified destinations (0.608708ms)
+✔ HDR-05: exact, nested and anchor matches avoid false prefixes and duplicate Home selection (0.078042ms)
+✔ HDR-06: public search uses actual supplied names, safely encoded IDs and real help destinations (0.14075ms)
+✔ HDR-23: unpublished products never enter public search results (0.052459ms)
+✔ HDR-25: explicit server-authorised preview matches the local catalogue without treating drafts as published (0.081125ms)
+✔ HDR-26: catalogue authorises previews only in development and production still excludes unpublished products (1123.012125ms)
+ℹ tests 71
+ℹ pass 71
+ℹ fail 0
+ℹ skipped 0

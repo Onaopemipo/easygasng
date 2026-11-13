@@ -1,4 +1,5 @@
 "use client";
+import { staffRoleLabel } from "../../../packages/business-rules/src/staff-roles";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -74,22 +75,7 @@ const icons: Record<string, typeof House> = {
   ScrollText,
   Rocket,
 };
-export const roleLabel = (role: string) =>
-  (
-    ({
-      owner: "Business Owner",
-      administrator: "Technical Administrator",
-      manager: "Branch Manager",
-      inventory: "Inventory Officer",
-      sales: "Sales Attendant",
-      finance: "Finance Officer",
-      dispatcher: "Dispatcher",
-      driver: "Delivery Driver",
-      technician: "Service Technician",
-      service_manager: "Service Manager",
-      safety_officer: "Safety Officer",
-    }) as Record<string, string>
-  )[role] ?? role?.replaceAll("_", " ");
+export const roleLabel = staffRoleLabel;
 export default function AdminNavigation({
   user,
   access,

@@ -388,13 +388,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                   </p>
                 ))}
               </details>
-              {[
-                "owner",
-                "manager",
-                "dispatcher",
-                "driver",
-                "inventory",
-              ].includes(user.role) &&
+              {["owner", "manager", "driver", "finance"].includes(user.role) &&
                 !["delivered", "cancelled"].includes(o.status) && (
                   <form
                     onSubmit={(e) => {

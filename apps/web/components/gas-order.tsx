@@ -13,6 +13,7 @@ import {
   addressLocationMessage,
 } from "../../../packages/business-rules/src/address-location";
 import { api, Notice, Loading } from "./ui";
+import { ActionLoadingIndicator } from "./easygas-loader";
 import {
   ArrowRight,
   Cylinder,
@@ -84,6 +85,7 @@ export default function GasOrder({
     [method, setMethod] = useState("cash_on_delivery");
   const [compactKg, setCompactKg] = useState("");
   const [pricingBranch, setPricingBranch] = useState<string | null>(null);
+  const [pricingFailed, setPricingFailed] = useState<string | null>(null);
   const compactSubmit = useRef(false);
   const requestLock = useRef(false);
   const details = useRef<HTMLDetailsElement>(null);
@@ -127,9 +129,11 @@ export default function GasOrder({
   useEffect(() => {
     let live = true;
     setPricingBranch(null);
+    setPricingFailed(null);
     const controller = new AbortController();
     const timeout = setTimeout(() => {
       if (live) {
+        setPricingFailed(requestedBranch);
         setError("The gas catalogue request timed out. Please retry.");
         controller.abort();
       }
@@ -146,7 +150,10 @@ export default function GasOrder({
         }
       })
       .catch((e) => {
-        if (live && !controller.signal.aborted) setError(e.message);
+        if (live && !controller.signal.aborted) {
+          setPricingFailed(requestedBranch);
+          setError(e.message);
+        }
       })
       .finally(() => clearTimeout(timeout));
     return () => {
@@ -357,6 +364,7 @@ export default function GasOrder({
     ["minimumKg", "maximumKg", "incrementKg", "precision"].every(
       (k) => config.policy[k] != null,
     );
+  const pricingLoading = pricingBranch !== requestedBranch && pricingFailed !== requestedBranch;
   const priceReady =
     pricingBranch === requestedBranch &&
     Number.isSafeInteger(config.priceKobo) &&
@@ -537,7 +545,7 @@ export default function GasOrder({
             <Tag aria-hidden="true" />
             <span>
               <strong>
-                {pricingReady && config.priceKobo > 0
+                {pricingLoading ? <ActionLoadingIndicator label="Loading gas price" /> : pricingReady && config.priceKobo > 0
                   ? money(config.priceKobo) + "/kg"
                   : "Unavailable"}
               </strong>
@@ -548,7 +556,7 @@ export default function GasOrder({
             <Truck aria-hidden="true" />
             <span>
               <strong>
-                {pricingReady && feeReady
+                {pricingLoading ? <ActionLoadingIndicator label="Loading delivery fee" /> : pricingReady && feeReady
                   ? money(config.deliveryKobo)
                   : "Unavailable"}
               </strong>
@@ -712,8 +720,10 @@ export default function GasOrder({
               className="gas-estimate"
               aria-live="polite"
             >
-              {!pricingReady ? (
-                "Checking current prices…"
+              {pricingLoading ? (
+                <ActionLoadingIndicator label="Checking current prices" />
+              ) : !pricingReady ? (
+                "Current prices could not be loaded."
               ) : !configured || !feeReady ? (
                 "Ordering is unavailable until pricing and quantity limits are configured."
               ) : compactKg && !estimateValid ? (
@@ -1175,7 +1185,7 @@ export default function GasOrder({
             <div>
               <dt>Gas price</dt>
               <dd>
-                {priceReady ? money(config.priceKobo) + " / kg" : "Unavailable"}
+                {pricingLoading ? <ActionLoadingIndicator label="Loading gas price" /> : priceReady ? money(config.priceKobo) + " / kg" : "Unavailable"}
               </dd>
             </div>
             <div>
@@ -1212,7 +1222,7 @@ export default function GasOrder({
             <div>
               <dt>Delivery fee</dt>
               <dd>
-                {feeReady
+                {pricingLoading ? <ActionLoadingIndicator label="Loading delivery fee" /> : feeReady
                   ? money(currentQuote?.deliveryKobo ?? config.deliveryKobo)
                   : "Unavailable"}
               </dd>
@@ -1228,9 +1238,6 @@ export default function GasOrder({
               </dd>
             </div>
           </dl>
-          {pricingBranch !== requestedBranch && (
-            <p role="status">Checking prices for the selected area.</p>
-          )}
           {(rewardPoints > 0 || rewardOfferId) && (
             <p>Eligible rewards are applied by checkout.</p>
           )}

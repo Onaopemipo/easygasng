@@ -581,11 +581,11 @@ export default function TechniciansAvailability({ user }: { user: any }) {
                 send={(v) => api("staff.invite", v)}
                 done={() => {
                   setMessage(
-                    "Invitation created. Review its status and approved access in Staff Management.",
+                    "Invitation email queued. Review its status and staff access in Staff Management.",
                   );
                   close();
                 }}
-                submit="Create invitation"
+                submit="Send invitation"
               />
               <Link className="button secondary" href="/admin/staff">
                 Find existing account / review invitations

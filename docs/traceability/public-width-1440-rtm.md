@@ -39,3 +39,7 @@ See the [machine-readable mapping](public-width-1440-rtm.json), [source and scop
 | A20 | Changes, results and release decision reported | PASS |
 
 A14 has basic Chrome keyboard, focus and visual evidence. Cross-browser and screen-reader checks remain open. A15 compares customer, owner and excluded guest route widths and checks selector isolation in source. Driver, technician and native runtime testing was outside this frontend phase.
+
+## Sign-in and registration
+
+PUB-09 and gate A21 extend the same centred 1440px shell to both authentication pages, including the header and footer. Chrome verified widths of 1920, 1440, 768, 390 and 320px with no horizontal overflow. Hosted verification is pending. [Browser evidence](../public-width-1440/evidence/auth-browser.txt)

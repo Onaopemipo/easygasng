@@ -1,3 +1,4 @@
+import { normaliseCustomerPhone } from "../../../packages/business-rules/src/customer-identity";
 import { customerRiderLocation } from "./customer-rider-location";
 import { unavailableRiderLocation } from "../../../packages/business-rules/src/rider-location";
 import { notificationInbox, markNotificationsRead } from "./notification-inbox";
@@ -79,7 +80,8 @@ import {
   type Actor,
 } from "./auth";
 import {
-  ownerAutoApprovalEnabled,
+  canAutoApproveDefinition,
+  hasQualifiedSafetyReviewer,
   audit,
   propose,
   decide,
@@ -105,6 +107,26 @@ const credentials = z
     password: accountPassword,
   })
   .strict();
+const loginInput = z.object({
+  identifier: z.string().trim().min(1).max(200).optional(),
+  email: z.string().trim().min(1).max(200).optional(),
+  password: z.string().min(1).max(128),
+  newPassword: accountPassword.optional(),
+}).strict().refine(({ identifier, email }) => Boolean(identifier) !== Boolean(email), {
+  message: "Enter your email or phone number.",
+}).transform(({ identifier, email, password, newPassword }) => ({
+  identifier: identifier ?? email!,
+  password,
+  newPassword,
+}));
+const legacyPhoneLogin = z.object({
+  phone: z.string().max(40),
+  password: z.string().min(1).max(128),
+}).strict().transform(({ phone, password }) => ({
+  identifier: phone,
+  password,
+  newPassword: undefined,
+}));
 export async function dispatch(
   action: string,
   token: string | null,
@@ -229,73 +251,86 @@ export async function dispatch(
       if (
         action === "register" ||
         action === "login" ||
+        action === "phone.login" ||
         action === "driver.login" ||
         action === "technician.login"
       ) {
-        const data =
-          action === "register"
-            ? credentials
-                .extend({ name: z.string().trim().min(2).max(100) })
-                .strict()
-                .parse(input)
-            : credentials.parse(input);
-        const key = digest(`auth:${data.email}`);
-        const attempts = await one(
-          tx,
-          "SELECT * FROM auth_attempts WHERE key=$1 FOR UPDATE",
-          [key],
-        );
-        if (
-          attempts &&
-          new Date(attempts.reset_at) > new Date() &&
-          attempts.attempts >= 8
-        )
-          return {
-            authError: "Too many attempts. Please try again in 15 minutes.",
-            status: 429,
-          };
-        const existing = await one(tx, "SELECT * FROM users WHERE email=$1", [
-          data.email,
-        ]);
         if (action === "register") {
-          if (existing)
+          const data = credentials.extend({ name: z.string().trim().min(2).max(100) }).parse(input);
+          await tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", ["staff-invite:" + data.email]);
+          if (await one(tx, "SELECT 1 FROM auth_attempts WHERE key=$1 AND reset_at>now() AND attempts>=8", [digest("auth:" + data.email)]))
+            return { authError: "Too many attempts. Please try again in 15 minutes.", status: 429 };
+          const existing = await one(tx, "SELECT id FROM users WHERE email=$1", [data.email]);
+          if (existing || await one(tx, "SELECT id FROM staff_invitations WHERE email=$1 AND accepted_at IS NULL AND expires_at>now()", [data.email]))
             return {
-              authError:
-                "This email cannot be registered. Try signing in instead.",
+              authError: "This email cannot be registered. Try signing in instead.",
               status: 409,
             };
           const userId = id();
           await tx.query(
             "INSERT INTO users(id,name,email,password_hash,role) VALUES ($1,$2,$3,$4,'customer')",
-            [
-              userId,
-              "name" in data ? data.name : "Customer",
-              data.email,
-              hashPassword(data.password),
-            ],
+            [userId, data.name, data.email, hashPassword(data.password)],
           );
           const session = await issueSession(tx, userId);
           await audit(tx, null, "account.registered", userId);
           return { token: session, role: "customer" };
         }
-        // Equal-cost password hashing for unknown emails reduces account enumeration by timing.
-        const valid = passwordMatches(
-          data.password,
-          existing?.password_hash ?? absentAccountHash,
-        );
-        if (
-          !existing ||
-          !valid ||
-          !existing.active ||
-          (action === "driver.login" && existing.role !== "driver") ||
-          (action === "technician.login" && existing.role !== "technician")
-        ) {
+        const legacyPhone = action === "phone.login";
+        const data = (legacyPhone ? legacyPhoneLogin : loginInput).parse(input);
+        const identifier = data.identifier.trim().toLowerCase();
+        const byPhone = legacyPhone || !identifier.includes("@");
+        const phone = byPhone ? normaliseCustomerPhone(identifier) : null;
+        const key = digest(byPhone ? `phone-login:${phone ?? identifier}` : `auth:${identifier}`);
+        const incorrect = { authError: "Email, phone number or password is incorrect.", status: 401 };
+        if ((byPhone && !phone) || (!byPhone && !z.email().safeParse(identifier).success))
+          return incorrect;
+        await tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", [key]);
+        const attempts = await one(tx, "SELECT * FROM auth_attempts WHERE key=$1 FOR UPDATE", [key]);
+        if (attempts && new Date(attempts.reset_at) > new Date() && attempts.attempts >= 8)
+          return legacyPhone ? incorrect : {
+            authError: "Too many attempts. Please try again in 15 minutes.",
+            status: 429,
+          };
+        const matches = (await tx.query(
+          byPhone
+            ? `SELECT * FROM users WHERE contact_phone=$1 AND phone_verified_at IS NOT NULL
+                AND active=true AND provisional=false LIMIT 2 FOR UPDATE`
+            : "SELECT * FROM users WHERE email=$1 FOR UPDATE",
+          [phone ?? identifier],
+        )).rows;
+        const existing = matches.length === 1 ? matches[0] : undefined;
+        const valid = passwordMatches(data.password, existing?.password_hash ?? absentAccountHash);
+        if (!existing || !valid || !existing.active ||
+            (legacyPhone && (!["customer", "commercial"].includes(existing.role) || existing.temporary_password_expires_at))) {
           await tx.query(
             "INSERT INTO auth_attempts(key,attempts,reset_at) VALUES ($1,1,now()+interval '15 minutes') ON CONFLICT(key) DO UPDATE SET attempts=CASE WHEN auth_attempts.reset_at<now() THEN 1 ELSE auth_attempts.attempts+1 END,reset_at=CASE WHEN auth_attempts.reset_at<now() THEN now()+interval '15 minutes' ELSE auth_attempts.reset_at END",
             [key],
           );
           await audit(tx, null, "auth.failed", key, "denied");
-          return { authError: "Email or password is incorrect.", status: 401 };
+          return incorrect;
+        }
+        const correctWorkspace = (action !== "driver.login" || existing.role === "driver") &&
+          (action !== "technician.login" || existing.role === "technician");
+        if (!correctWorkspace) {
+          if (existing.temporary_password_expires_at)
+            return { authError: "Finish setting up your account on the EasyGas website. Ask your administrator to confirm access to this workspace.", status: 403 };
+          return incorrect;
+        }
+        if (existing.temporary_password_expires_at) {
+          if (new Date(existing.temporary_password_expires_at).getTime() <= Date.now())
+            return { authError: "Your temporary password has expired. Use Forgot password to set a new one.", status: 403 };
+          if (!existing.verified)
+            return { authError: "Accept the invitation in your email before signing in. If the link expired, use Forgot password.", status: 403 };
+          if (!data.newPassword)
+            return { passwordChangeRequired: true };
+          if (data.newPassword === data.password)
+            return { authError: "Choose a password different from your temporary password.", status: 400 };
+          await tx.query("UPDATE users SET password_hash=$1,temporary_password_expires_at=NULL WHERE id=$2", [hashPassword(data.newPassword), existing.id]);
+          await tx.query("UPDATE sessions SET revoked_at=now() WHERE user_id=$1 AND revoked_at IS NULL", [existing.id]);
+          await tx.query("UPDATE account_challenges SET consumed_at=now() WHERE user_id=$1 AND purpose='reset' AND consumed_at IS NULL", [existing.id]);
+          await audit(tx, null, "account.temporary_password_replaced", existing.id);
+        } else if (data.newPassword) {
+          return { authError: "Sign in with your current password. Use Forgot password if you need to reset it.", status: 400 };
         }
         await tx.query("DELETE FROM auth_attempts WHERE key=$1", [key]);
         if (token)
@@ -658,15 +693,7 @@ export async function dispatch(
       const workspaceResult = await workspaceAction(tx, action, user, input);
       if (workspaceResult !== undefined) return workspaceResult;
       if (action === "products.manage") {
-        allow(user, [
-          "owner",
-          "manager",
-          "sales",
-          "inventory",
-          "technician",
-          "service_manager",
-          "safety_officer",
-        ]);
+        allow(user, ["owner", "manager", "finance", "technician"]);
         const selection = z
           .object({ branchId: z.string().min(1).max(100).optional() })
           .strict()
@@ -674,15 +701,7 @@ export async function dispatch(
         const catalogueBranch = selection.branchId ?? user.branch_id ?? "lagos";
         allow(
           user,
-          [
-            "owner",
-            "manager",
-            "sales",
-            "inventory",
-            "technician",
-            "service_manager",
-            "safety_officer",
-          ],
+          ["owner", "manager", "finance", "technician"],
           catalogueBranch,
         );
         return {
@@ -780,14 +799,7 @@ export async function dispatch(
       if (action === "orders") {
         const staff = !["customer", "commercial"].includes(user.role);
         if (staff)
-          allow(user, [
-            "owner",
-            "manager",
-            "sales",
-            "dispatcher",
-            "driver",
-            "finance",
-          ]);
+          allow(user, ["owner", "manager", "driver", "finance"]);
         let filter = staff
           ? user.role === "owner"
             ? "true"
@@ -898,7 +910,7 @@ export async function dispatch(
         return orders;
       }
       if (action === "tracking.drivers") {
-        allow(user, ["owner", "manager", "dispatcher"]);
+        allow(user, ["owner", "manager"]);
         return (
           await tx.query(
             `SELECT u.id,u.name,u.branch_id,u.active,u.role,(SELECT count(*) FROM orders o WHERE o.driver_id=u.id AND o.status IN ('assigned','out_for_delivery')) AS active_stops FROM users u WHERE u.role='driver' AND u.active=true AND (${user.role === "owner" ? "true" : "u.branch_id=$1"}) ORDER BY u.name`,
@@ -1081,7 +1093,7 @@ export async function dispatch(
         let customerId = user.id;
         if (d.customerRef) {
           enforceStaffPrivilege(user, "support.update");
-          allow(user, ["owner", "manager", "sales"]);
+          allow(user, ["owner", "manager"]);
           const customer = await one(tx,
             "SELECT id,branch_id FROM users WHERE (public_customer_id=$1 OR id=$1) AND active=true AND role IN ('customer','commercial') AND ($2::boolean OR branch_id=$3)",
             [d.customerRef, user.role === "owner", user.branch_id]);
@@ -1098,7 +1110,7 @@ export async function dispatch(
           );
           if (!order)
             throw new AppError(404, "Order unavailable for this account.");
-          if (d.customerRef) allow(user, ["owner", "manager", "sales"], order.branch_id);
+          if (d.customerRef) allow(user, ["owner", "manager"], order.branch_id);
           branch = order.branch_id;
         }
         const requestId = id();
@@ -1114,19 +1126,7 @@ export async function dispatch(
         const d = z.object({ scope: scopeSchema }).strict().parse(input);
         allow(
           user,
-          [
-            "owner",
-            "manager",
-            "sales",
-            "inventory",
-            "dispatcher",
-            "finance",
-            "administrator",
-            "service_manager",
-            "safety_officer",
-            "service_manager",
-            "safety_officer",
-          ],
+          ["owner", "manager", "finance"],
           d.scope,
         );
         return (
@@ -1143,7 +1143,7 @@ export async function dispatch(
           .map((d) => ({
             ...d,
             owner_auto_approval:
-              user!.role === "owner" && ownerAutoApprovalEnabled(),
+              user!.role === "owner" && canAutoApproveDefinition(d),
           }));
       }
       if (action === "setting.propose")
@@ -1211,17 +1211,7 @@ export async function dispatch(
         });
       }
       if (action === "approvals") {
-        allow(user, [
-          "owner",
-          "manager",
-          "sales",
-          "inventory",
-          "dispatcher",
-          "finance",
-          "administrator",
-          "service_manager",
-          "safety_officer",
-        ]);
+        allow(user, ["owner", "manager", "finance"]);
         const paged = (input as any)?.view === "paged";
         const options = paged
           ? z
@@ -1338,8 +1328,13 @@ export async function dispatch(
               d?.value_type === "access" &&
               r.proposed_value?.userId === user!.id
             );
+          if (r.can_approve && d?.value_type === "checklist" && r.status === "partially_approved" &&
+              !(await hasQualifiedSafetyReviewer(tx, [user.id]))) {
+            const prior = await one(tx, "SELECT 1 FROM approval_decisions WHERE request_id=$1 AND revision=$2 AND decision='approve' LIMIT 1", [r.id, r.revision]);
+            if (!prior) r.can_approve = false;
+          }
           r.owner_auto_approval =
-            ownerAutoApprovalEnabled() && r.requester_role === "owner";
+            Boolean(d && canAutoApproveDefinition(d) && r.requester_role === "owner");
           r.can_owner_apply =
             r.owner_auto_approval &&
             user.role === "owner" &&
@@ -1364,16 +1359,6 @@ export async function dispatch(
               (a: any) =>
                 a.approver_id === user!.id && a.revision === r.revision,
             )
-          )
-            r.can_approve = false;
-          if (
-            d?.value_type === "checklist" &&
-            user.role === "safety_officer" &&
-            !(await one(
-              tx,
-              "SELECT q.id FROM technician_qualifications q JOIN users u ON u.id=q.verified_by WHERE q.user_id=$1 AND q.code='safety_review' AND q.expires_at>now() AND u.active=true AND u.role IN ('owner','safety_officer')",
-              [user.id],
-            ))
           )
             r.can_approve = false;
         }
@@ -1427,7 +1412,7 @@ export async function dispatch(
         return emergencyDisable(tx, user, d.key, d.scope, d.reason);
       }
       if (action === "inventory") {
-        allow(user, ["owner", "manager", "inventory", "sales"]);
+        allow(user, ["owner", "manager", "finance"]);
         return (
           await tx.query(
             `SELECT i.*,p.name,p.asset FROM inventory i JOIN products p ON p.id=i.product_id WHERE ${user.role === "owner" ? "true" : "i.branch_id=$1"} ORDER BY p.name`,
@@ -1461,7 +1446,7 @@ export async function dispatch(
         ).rows;
       }
       if (action === "staff") {
-        allow(user, ["owner", "manager", "dispatcher"]);
+        allow(user, ["owner", "manager"]);
         return (
           await tx.query(
             `SELECT id,name,email,role,branch_id,active FROM users WHERE role NOT IN ('customer','commercial') AND ${user.role === "owner" ? "true" : "branch_id=$1"} ORDER BY name`,
@@ -1470,7 +1455,7 @@ export async function dispatch(
         ).rows;
       }
       if (action === "cylinders") {
-        allow(user, ["owner", "manager", "inventory"]);
+        allow(user, ["owner", "manager", "finance"]);
         return (
           await tx.query(
             `SELECT * FROM cylinders WHERE ${user.role === "owner" ? "true" : "branch_id=$1"} ORDER BY created_at DESC`,
@@ -1496,7 +1481,7 @@ export async function dispatch(
           })
           .strict()
           .parse(input);
-        allow(user, ["owner", "manager", "inventory"], d.branchId);
+        allow(user, ["owner", "manager", "finance"], d.branchId);
         if (Date.parse(d.testDue) < Date.now() && d.status === "filled")
           throw new AppError(
             400,
@@ -1548,17 +1533,7 @@ export async function dispatch(
         return rows;
       }
       if (action === "dashboard") {
-        allow(user, [
-          "owner",
-          "manager",
-          "sales",
-          "inventory",
-          "dispatcher",
-          "finance",
-          "administrator",
-          "service_manager",
-          "safety_officer",
-        ]);
+        allow(user, ["owner", "manager", "finance"]);
         const global = user.role === "owner";
         const orders = (
           await tx.query(

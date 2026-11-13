@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Component, type ReactNode } from "react";
 import { money } from "./ui";
+import { EasyGasLoader } from "./easygas-loader";
 import { useCustomerResource } from "./customer-data";
 class WidgetBoundary extends Component<
   { children: ReactNode },
@@ -49,15 +50,7 @@ function Widget({
   children: ReactNode;
 }) {
   return resource.loading ? (
-    <div
-      className="customer-skeleton"
-      role="status"
-      aria-label="Loading dashboard card"
-    >
-      <span />
-      <span />
-      <span />
-    </div>
+    <EasyGasLoader variant="section" size="sm" label="Loading dashboard card" />
   ) : resource.error ? (
     <div className="customer-widget-error" role="alert">
       <p>{resource.error}</p>

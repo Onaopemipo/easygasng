@@ -1,4 +1,5 @@
 "use client";
+import { EasyGasLoader } from "./easygas-loader";
 import { friendlyMessage } from "../../../packages/business-rules/src/friendly-message";
 
 import { requestText } from "./app-dialog";
@@ -673,7 +674,7 @@ export function RewardCheckoutField({
         retry.
       </p>
     );
-  if (!data) return <p role="status">Checking rewards…</p>;
+  if (!data) return <EasyGasLoader size="sm" variant="section" label="Checking rewards" />;
   if (!data.redemptionEnabled)
     return (
       <p>Reward discounts are disabled; your history remains available.</p>

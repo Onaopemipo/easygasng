@@ -4,7 +4,7 @@ import { type DB } from "../../apps/web/lib/db";
 export async function bulkFixture(database?: DB) {
   const f = await fixture(database);
   process.env.EASYGAS_BULK_LPG_ENABLED = "true";
-  await f.db.query("UPDATE users SET role='safety_officer' WHERE id=$1", [
+  await f.db.query("UPDATE users SET role='owner' WHERE id=$1", [
     f.actors.dispatcher.id,
   ]);
   await f.db.query(

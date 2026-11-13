@@ -29,7 +29,7 @@ export function enforceStaffPrivilege(user: Actor, action: string) {
 }
 function administration(user: Actor) {
   // Explicit administrative identity: an operation grant can never grant privilege administration.
-  if (!["owner", "administrator"].includes(user.role))
+  if (user.role !== "owner")
     throw new AppError(
       403,
       "Only the Business Owner or an administrator can manage individual privileges.",
@@ -48,14 +48,6 @@ async function target(tx: SQL, user: Actor, userId: string, lock = false) {
     throw new AppError(
       403,
       "Ask another authorised administrator to change your privileges. You cannot change your own access.",
-    );
-  if (
-    user.role !== "owner" &&
-    (t.role === "owner" || t.branch_id !== user.branch_id)
-  )
-    throw new AppError(
-      403,
-      "Only the Business Owner can manage owner or cross-branch privileges.",
     );
   return t;
 }
@@ -192,15 +184,6 @@ export async function staffPrivilegeAction(
       throw new AppError(
         403,
         "This privilege requires an approved role or a qualified field identity. Change the role through the existing approval workflow.",
-      );
-    // Technical administration cannot alter owner-governed, financial or qualification authority.
-    if (
-      user.role === "administrator" &&
-      ["Protected authority", "Finance & reporting"].includes(p.group)
-    )
-      throw new AppError(
-        403,
-        "Only the Business Owner can change protected or financial privileges.",
       );
     if (c.effect === "default")
       await tx.query(
