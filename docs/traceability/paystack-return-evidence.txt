@@ -1,0 +1,35 @@
+✔ PAY-RETURN-01: native callback retains the merchant origin and intent without accepting a redirect URL (901.219084ms)
+✔ PAY-POST: exact principal wallet credit, stable init, authenticated duplicate webhook and ledger immutability (686.245958ms)
+✔ PAY-ZERO-EFFECT: forged events, wrong amount/currency/environment, cross-customer and driver requests never credit funds (3638.0155ms)
+✔ PAY-RECOVERY: initialization timeout never launches a second charge; fee variance is separate from principal (592.365375ms)
+✔ PAY-RESUME: failed provider states persist without wallet effects (590.019875ms)
+✔ PAY-EXPIRY: prepared quote expiry is visible and cannot initialize (575.5475ms)
+✔ PAY-INVOICE: verified collection allocates principal to existing immutable invoice, never fees or duplicate revenue (620.724792ms)
+✔ WALLET-CARD: wallet checkout restricts approved channels to card and rejects transfer-only policy (599.317333ms)
+✔ WALLET-INSTANT: signed webhook verifies and credits card funding without waiting for worker or manual approval (612.460041ms)
+✔ DOC-POSTING-SNAPSHOT: new receipt preserves captured identity and customer despite later changes (593.937291ms)
+✔ MWEB-03: direct card orders retain server totals, ownership, fee consent and exactly-once ledger posting (622.218833ms)
+✔ WALLET-CARD-BRANCH: new unassigned customer can fund once in a single active branch; ambiguous context and forged branch are rejected (597.295416ms)
+✔ WALLET-CONFIG-SCOPE: missing wallet context is reported without disabling existing invoice/order card capability (784.477667ms)
+✔ PAY-POLICY: missing merchant terms, dashboard fee double charge, live activation and undeclared secrets fail closed (2.535708ms)
+✔ PAY-LINK: native payment return carries only one opaque intent ID; success/amount/provider redirects cannot authorize payment (0.514042ms)
+✔ PAY-SIGNATURE: raw bytes, timestamp, rotation, malformed headers and no legacy downgrade (0.927958ms)
+✔ PAY-ADAPTER: hosted callback, test key, amount/currency/environment identity and transport validation (10.124125ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11719.363667
+PASS browser invoice automatically opened /orders
+PASS browser wallet automatically opened /wallet
+PASS browser order automatically opened /orders
+PASS browser service automatically opened /bookings
+PASS browser native stayed on the verification page
+PASS browser stay stayed on the verification page
+PASS browser forbidden stayed on the verification page
+PASS browser pending stayed on the verification page
+
+PASS web typecheck

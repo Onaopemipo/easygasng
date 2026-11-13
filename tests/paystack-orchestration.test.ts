@@ -65,12 +65,14 @@ async function fixture() {
     }),
   ]);
   let initializes = 0,
+    callbackUrl = "",
     unavailable = false,
     alter: any = {};
   const provider: any = {
     environment: "test",
-    initialize: async () => {
+    initialize: async (input: { callbackUrl: string }) => {
       initializes++;
+      callbackUrl = input.callbackUrl;
       if (unavailable)
         throw new Error("Simulated lost initialization response");
       return { checkoutUrl: "https://checkout.paystack.com/fixture" };
@@ -105,8 +107,30 @@ async function fixture() {
     setAlter: (v: any) => (alter = v),
     setUnavailable: () => (unavailable = true),
     initializes: () => initializes,
+    callbackUrl: () => callbackUrl,
   };
 }
+test("PAY-RETURN-01: native callback retains the merchant origin and intent without accepting a redirect URL", async () => {
+  const f = await fixture();
+  try {
+    const q = await preparePayment(f.db, f.token, {
+      purpose: "wallet", amountKobo: 20000, requestKey: id(),
+    });
+    const accepted = {
+      intentId: q.id,
+      acceptedGrossKobo: q.quote.grossKobo,
+      acceptedPolicyVersion: q.quote.gatewayPolicyVersion,
+    };
+    await assert.rejects(() =>
+      initializePayment(f.db, f.token, { ...accepted, returnTo: "https://example.test" }, f.runtime, true),
+    );
+    await initializePayment(f.db, f.token, accepted, f.runtime, true);
+    assert.equal(f.callbackUrl(), `${f.runtime.callbackOrigin}/payment-return?intent=${q.id}&client=native`);
+    assert.equal(f.initializes(), 1);
+  } finally {
+    await f.db.close?.();
+  }
+});
 test("PAY-POST: exact principal wallet credit, stable init, authenticated duplicate webhook and ledger immutability", async () => {
   const f = await fixture();
   try {
@@ -136,6 +160,7 @@ test("PAY-POST: exact principal wallet credit, stable init, authenticated duplic
     await initializePayment(f.db, f.token, accepted, f.runtime);
     await initializePayment(f.db, f.token, accepted, f.runtime);
     assert.equal(f.initializes(), 1);
+    assert.equal(f.callbackUrl(), `${f.runtime.callbackOrigin}/payment-return?intent=${q.id}`);
     const raw = Buffer.from(
       JSON.stringify({
         event: "charge.success",

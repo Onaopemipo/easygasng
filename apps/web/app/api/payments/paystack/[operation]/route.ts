@@ -140,7 +140,10 @@ async function handle(
     else if (operation === "quote" && req.method === "POST")
       result = await preparePayment(db, token, await req.json());
     else if (operation === "initialize" && req.method === "POST")
-      result = await initializePayment(db, token, await req.json(), provider);
+      result = await initializePayment(
+        db, token, await req.json(), provider,
+        req.headers.get("x-easygas-client") === "native",
+      );
     else if (operation === "verify" && req.method === "POST") {
       const d = z
         .object({ intentId: z.string().uuid() })
@@ -148,7 +151,10 @@ async function handle(
         .parse(await req.json());
       const own = await readPayment(db, token, d.intentId);
       if (!own.attempt) throw new AppError(409, "Payment attempt missing.");
-      result = await reconcilePayment(db, own.attempt.reference, provider);
+      result = {
+        ...await reconcilePayment(db, own.attempt.reference, provider),
+        purpose: own.purpose,
+      };
     } else throw new AppError(405, "Unsupported payment operation.");
     return NextResponse.json(result, {
       headers: { "Cache-Control": "no-store" },

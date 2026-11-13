@@ -201,3 +201,7 @@ User authorised a real test mailbox; existing synthetic customer email updated w
 Evidence: [initialization](../payments/paystack/evidence/merchant-real-test-initialization.txt), [verification and PDF](../payments/paystack/evidence/merchant-real-test-verification.txt), [decline](../payments/paystack/evidence/merchant-real-test-decline.txt), [actual database effects/webhook gap](../payments/paystack/evidence/merchant-real-test-posting-proof.txt), [success UI](../payments/paystack/evidence/merchant-test-payment-verified.png), [decline UI](../payments/paystack/evidence/merchant-test-payment-declined.png).
 
 Two clearly labelled sandbox order histories retained; neither authorises real dispatch. PDF stored privately under .data; no credentials/mailbox included in published evidence. Genuine automatic webhook delivery, hosted background processing, refund/settlement/full-scope and production gates remain open. No entire requirement promoted solely on this bounded test. Original production NO-GO/live unsupported/walletfundingfalse/import hold preserved.
+
+## Merchant return after verification
+
+PAY-RETURN-R01 adds a merchant return link and automatically continues to the corresponding EasyGas page after the server verifies payment. The native callback retains the app link, and pending verification retains a retry action. [Requirement and controls](paystack-return-rtm.json) · [Executed tests](paystack-return-evidence.txt)

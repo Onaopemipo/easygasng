@@ -448,14 +448,27 @@ export function WalletFunding() {
     </section>
   );
 }
+function paymentDestination(purpose: string) {
+  switch (purpose) {
+    case "wallet": return { href: "/wallet", label: "Go to my wallet" };
+    case "service": return { href: "/bookings", label: "Go to my appointments" };
+    case "order":
+    case "invoice": return { href: "/orders", label: "Go to my orders" };
+    default: return { href: "/", label: "Return to EasyGas website" };
+  }
+}
+
 export function PaymentReturn() {
   const [intent, setIntent] = useState(""),
-    [result, setResult] = useState<any>(null),
+    [result, setResult] = useState<{ status: string; purpose: string } | null>(null),
     [error, setError] = useState(""),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false),
+    [stay, setStay] = useState(false);
   useEffect(() => {
-    const v = new URLSearchParams(location.search).get("intent");
-    if (v && /^[a-f0-9-]{36}$/i.test(v)) setIntent(v);
+    const query = new URLSearchParams(location.search);
+    const v = query.get("intent");
+    setStay(query.get("client") === "native");
+    if (v && /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(v)) setIntent(v);
     else setError("Open the original payment return link.");
   }, []);
   async function check() {
@@ -472,49 +485,60 @@ export function PaymentReturn() {
   useEffect(() => {
     if (intent) void check();
   }, [intent]);
+  const paid = result?.status === "paid";
+  const destination = paymentDestination(paid ? result.purpose : "");
+  useEffect(() => {
+    if (!paid || stay) return;
+    const timer = window.setTimeout(() => window.location.replace(destination.href), 6000);
+    return () => window.clearTimeout(timer);
+  }, [paid, stay, destination.href]);
+
   return (
-    <main className="container page stack">
+    <main className="container page payment-return">
       <h1>Payment verification</h1>
-      <p>
-        A return from checkout does not prove payment. EasyGas checks the
-        provider and ledger independently.
-      </p>
-      {error && <Notice type="error" message={error} />}{" "}
+      {error && <Notice type="error" message={error} />}
       {result && (
         <p role="status">
-          {result.status === "paid"
-            ? "Sandbox payment verified and posted once."
+          {paid
+            ? "Sandbox payment verified."
             : `Payment ${result.status}. Do not make another payment until this attempt is reconciled.`}
         </p>
       )}
-      <button className="button" disabled={!intent || busy} onClick={check}>
-        {busy && (
-          <ActionLoadingIndicator label="Verifying payment with provider" />
+      {paid && !stay && <p>You’ll return to EasyGas in a few seconds.</p>}
+      <div className="payment-return-actions">
+        <a className="button" href={destination.href}>
+          {destination.label}
+        </a>
+        {!paid && intent && (
+          <button className="button secondary" disabled={busy} onClick={check}>
+            {busy && <ActionLoadingIndicator label="Verifying payment with provider" />}
+            {busy ? "Verifying payment…" : "Verify payment status"}
+          </button>
         )}
-        Verify payment status
-      </button>
-      {result?.status === "paid" && (
-        <a
-          className="button secondary"
-          href={
-            "/api/payments/paystack/receipt?format=pdf&intentId=" +
-            encodeURIComponent(intent)
-          }
-        >
-          Download sandbox payment receipt
-        </a>
-      )}
-      {intent && (
-        <a
-          className="button secondary"
-          href={"easygas://payment?intentId=" + encodeURIComponent(intent)}
-        >
-          Return to EasyGas mobile app
-        </a>
-      )}
-      <a href="/checkout">Return to your cart checkout</a>
-      <a href="/wallet">View wallet balance</a>
-      <a href="/orders">My orders and invoices</a>
+        {paid && (
+          <a
+            className="button secondary"
+            href={"/api/payments/paystack/receipt?format=pdf&intentId=" + encodeURIComponent(intent)}
+            onClick={() => setStay(true)}
+          >
+            Download sandbox receipt
+          </a>
+        )}
+        {paid && !stay && (
+          <button className="button secondary" onClick={() => setStay(true)}>
+            Stay on this page
+          </button>
+        )}
+        {intent && (
+          <a
+            className="button secondary"
+            href={"easygas://payment?intentId=" + encodeURIComponent(intent)}
+            onClick={() => setStay(true)}
+          >
+            Return to EasyGas mobile app
+          </a>
+        )}
+      </div>
     </main>
   );
 }

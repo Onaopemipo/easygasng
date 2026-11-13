@@ -444,6 +444,7 @@ export async function initializePayment(
   token: string | null,
   input: unknown,
   runtime: PaymentRuntime,
+  nativeReturn = false,
 ) {
   const d = z
     .object({
@@ -529,7 +530,8 @@ export async function initializePayment(
       email: prepared.i.email_snapshot,
       amountKobo: Number(prepared.i.quote.grossKobo),
       callbackUrl:
-        runtime.callbackOrigin + "/payment-return?intent=" + prepared.i.id,
+        runtime.callbackOrigin + "/payment-return?intent=" + prepared.i.id +
+        (nativeReturn ? "&client=native" : ""),
       attemptId: prepared.a.id,
       channels: prepared.i.quote.channels,
     });

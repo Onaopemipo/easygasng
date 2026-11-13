@@ -1,0 +1,47 @@
+{
+  "phase": "Paystack merchant return",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "PAY-RETURN-R01",
+      "requirement": "Return customers to EasyGas after verified payment and retain a manual return link.",
+      "priority": "P0",
+      "scope": "Paystack sandbox merchant return for web and native checkout",
+      "uiReference": "Payment verification page shown after hosted checkout",
+      "route": "/payment-return and /api/payments/paystack/verify",
+      "implementationFiles": [
+        "apps/web/components/hosted-payment.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/app/api/payments/paystack/[operation]/route.ts",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "dataSource": "Owned payment intent purpose and committed result from the existing reconciliation endpoint.",
+      "securityControl": "Automatic navigation requires paid status and uses fixed merchant routes. The callback ignores provider reference and redirect query values for authentication. Native callbacks keep the app link.",
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-RETURN-01",
+        "PAY-POST"
+      ],
+      "negativeTests": [
+        "without accepting a redirect URL"
+      ],
+      "evidence": [
+        "docs/traceability/paystack-return-evidence.txt"
+      ],
+      "acceptanceGate": "PAY-RETURN-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified in local Chrome for orders, invoices, wallet, appointments, pending, denied, native and stay scenarios. Provider and ledger regressions passed.",
+      "testResult": "PASS: eight browser scenarios with controlled verification responses and seventeen provider, policy and orchestration tests.",
+      "outstandingWork": "Hosted demo validation and installed native return checks."
+    }
+  ],
+  "gates": [
+    {
+      "id": "PAY-RETURN-G01",
+      "status": "PASS",
+      "gate": "Verify sandbox merchant navigation and preserve payment ownership and native return."
+    }
+  ]
+}
