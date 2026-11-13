@@ -35,6 +35,32 @@
       "reason": "Verified in local Chrome for orders, invoices, wallet, appointments, pending, denied, native and stay scenarios. Provider and ledger regressions passed. The existing authenticated sandbox payment returned to My Wallet on the hosted demo.",
       "testResult": "PASS: eight Chrome scenarios locally and on the demo, seventeen automated tests, and a hosted return to My Wallet using an existing verified sandbox payment.",
       "outstandingWork": "Verify handoff from Paystack to installed native apps and complete existing commercial production gates."
+    },
+    {
+      "id": "PAY-RETURN-R02",
+      "requirement": "Keep the dispatch source-integrity check aligned with the reviewed Paystack return change.",
+      "priority": "P1",
+      "scope": "Release validation for the existing merchant return flow",
+      "uiReference": "Paystack return to EasyGas on web and native",
+      "route": "/payment-return",
+      "implementationFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "apps/web/lib/payments/orchestrator.ts"
+      ],
+      "dataSource": "The orchestrator in commit 7f6c994 and the dispatch protected-file baseline.",
+      "securityControl": "The audit requires an exact reviewed SHA-256 hash. The checksum checks for the other protected files and all payment verification tests are retained.",
+      "testFiles": [
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": ["DDI-AUDIT01", "PAY-RETURN-01", "PAY-POST"],
+      "negativeTests": ["without accepting a redirect URL"],
+      "evidence": ["docs/traceability/paystack-return-ci-evidence.txt"],
+      "acceptanceGate": "PAY-RETURN-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "The two GitHub web jobs failed the same stale checksum. The corrected audit and the payment and dispatch suites passed locally.",
+      "testResult": "PASS: 30 focused tests locally. Full hosted CI validation is pending.",
+      "outstandingWork": "Verify the web and native jobs on the replacement GitHub Actions run."
     }
   ],
   "gates": [
@@ -42,6 +68,11 @@
       "id": "PAY-RETURN-G01",
       "status": "PASS",
       "gate": "Verify sandbox merchant navigation and preserve payment ownership and native return."
+    },
+    {
+      "id": "PAY-RETURN-G02",
+      "status": "OPEN",
+      "gate": "Verify the protected-file audit and complete web and native release validation."
     }
   ]
 }

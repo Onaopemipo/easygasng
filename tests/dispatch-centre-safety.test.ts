@@ -265,12 +265,10 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
       "utf8",
     ),
   );
-  // Preserve the original audit baseline. The later approved invoice phase
-  // added immutable descriptive document snapshots. MWEB-03 authorises direct order
-  // card obligations through the same verified ledger. WALLET-FIX01 reuses authoritative
-  // branch context for unassigned customers; original phase baselines remain archived.
-  const approvedCardCheckoutHash =
-    "20781703f0aa90b35e885921e72a69a389789ac32ecba9e6f95f01493ecda145";
+  // PAY-RETURN-R01 adds the native return marker to the existing Paystack callback.
+  // Earlier reviewed payment hashes remain in the dispatch and wallet evidence.
+  const approvedPaymentReturnHash =
+    "3e17b9fc735268a287c8228fd91601a6b4e9d78bc416abc357caa2402886f4ad";
   const approvedAlerts = JSON.parse(await readFile("docs/custom-alerts/approved-scope-change.json", "utf8"));
   const approvedNotificationSources = JSON.parse(await readFile(
     "docs/notifications-redesign/approved-field-source.json", "utf8",
@@ -289,7 +287,7 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   ));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
-      ? approvedCardCheckoutHash
+      ? approvedPaymentReturnHash
       : staffRoleNavigationSources[file] ?? approvedLoaderSources[file] ?? approvedDriverSources[file]
         ?? approvedHomepageSources[file] ?? approvedNotificationSources[file]
         ?? approvedAlerts[file]?.approvedHash ?? originalHash;
