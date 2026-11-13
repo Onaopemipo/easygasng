@@ -89,3 +89,11 @@ Related matrices: [public website width](../traceability/public-width-1440-rtm.m
 Source `6978765487c56061cc48c2ce4acbdeba7f8e3c4a` was pushed to `codex/driver-experience-redesign`. Vercel built the committed snapshot and promoted `dpl_FjxuUwUMtSpqKegZjD4pERdhWShJ` to the stable demo alias after verifying demo readiness. The prior alias rollback target is `dpl_2YCvePvu86S9a7Gs6aos7TD4x6CE`.
 
 Twelve focused local tests, the local typecheck and [GitHub Release validation](https://github.com/Onaopemipo/easygasng/actions/runs/43343661777) passed. After promotion, the stable alias passed the health and anonymous session checks. Authenticated Chrome passed both fixes at 1440px and 390px. See the [customer actions matrix](../traceability/customer-actions-menu-rtm.md) and [dashboard receipts matrix](../traceability/dashboard-receipts-contrast-rtm.md). Commercial production remains NO-GO.
+
+## 14 November sign-in and staff-role rollout
+
+Commit `086a1d0b6a790b05b954e05ea8dd9fc3d85ec944` is on `codex/driver-experience-redesign`. Vercel built that commit and promoted `dpl_7pmkarZ1MXXsg5A51A2nJ3nd1bcq` to the stable demo alias. The previous deployment was `dpl_wc7sEBwrmVp1CBthWHrNKYae8gRR`. The demo database already used schema 078.
+
+Hosted Chrome confirmed the shared 1440px width for sign-in and registration across five viewport widths. The demo passed readiness, no-index and anonymous access checks. Seven existing accounts signed in with their expected identities and roles. The local PostgreSQL run passed 712 tests and found one native configuration expectation that was updated to account for the Android demo plugins. The focused rerun passed all ten checks. Local web and mobile type checks and the Vercel build passed. Commercial production remains NO-GO.
+
+[Hosted smoke checks](evidence/redeploy-20261114-auth-hosted.txt) · [Layout evidence](../public-width-1440/evidence/auth-hosted.txt) · [GitHub release validation](https://github.com/Onaopemipo/easygasng/actions/runs/43463310860)

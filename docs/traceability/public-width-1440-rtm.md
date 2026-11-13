@@ -42,4 +42,4 @@ A14 has basic Chrome keyboard, focus and visual evidence. Cross-browser and scre
 
 ## Sign-in and registration
 
-PUB-09 and gate A21 extend the same centred 1440px shell to both authentication pages, including the header and footer. Chrome verified widths of 1920, 1440, 768, 390 and 320px with no horizontal overflow. Hosted verification is pending. [Browser evidence](../public-width-1440/evidence/auth-browser.txt)
+PUB-09 and gate A21 extend the same centred 1440px shell to both authentication pages, including the header and footer. Chrome verified widths of 1920, 1440, 768, 390 and 320px with no horizontal overflow. The same checks passed on the Vercel demo. [Local browser evidence](../public-width-1440/evidence/auth-browser.txt) · [Hosted browser evidence](../public-width-1440/evidence/auth-hosted.txt)

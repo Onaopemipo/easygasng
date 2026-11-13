@@ -3,10 +3,10 @@
   "releaseDecision": "NO-GO — Public Commercial Production",
   "coverage": {
     "implemented": "10/10 public destinations",
-    "verified": "5/9 complete requirement rows with 4 partial",
-    "routes": "10/10 layout-verified locally",
+    "verified": "6/9 complete requirement rows with 3 partial",
+    "routes": "10/10 layout-verified locally, including hosted verification of the two authentication pages",
     "criticalGates": "2/2 phase isolation and frontend-only gates, with bounded browser evidence for isolation",
-    "gates": "16/21 passed, 5/21 partial"
+    "gates": "17/21 passed, 4/21 partial"
   },
   "changeLog": [
     "Established exact public route scoping. Added a narrow-screen eyebrow fit and restored cross-route Home anchor scrolling observed during browser checks. Retained all original requirements and gates.",
@@ -408,13 +408,14 @@
       "testIds": [],
       "negativeTests": [],
       "evidence": [
-        "docs/public-width-1440/evidence/auth-browser.txt"
+        "docs/public-width-1440/evidence/auth-browser.txt",
+        "docs/public-width-1440/evidence/auth-hosted.txt"
       ],
       "acceptanceGate": "A21",
-      "status": "PARTIAL",
-      "reason": "Local Chrome confirmed alignment and no overflow at five widths.",
-      "testResult": "PASS: ten local browser checks.",
-      "outstandingWork": "Verify the hosted alias after promotion."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local and hosted Chrome confirmed alignment and no overflow at five widths.",
+      "testResult": "PASS: ten local and ten hosted Chrome layout checks.",
+      "outstandingWork": "None for this layout change."
     }
   ],
   "gates": [
@@ -541,7 +542,7 @@
     {
       "id": "A21",
       "gate": "Sign-in and registration match the public header and footer across viewport sizes.",
-      "status": "PARTIAL"
+      "status": "PASS"
     }
   ]
 }

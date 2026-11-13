@@ -11,4 +11,4 @@ The web and native forms send one identifier to the existing sign-in endpoints. 
 
 Three of four requirements have passed their local acceptance gates. [Implementation and security mapping](unified-sign-in-rtm.json) · [Executed evidence](unified-sign-in-evidence.txt)
 
-Hosted rollout is pending. The existing commercial production NO-GO remains in effect.
+The Vercel demo includes unified sign-in. Hosted checks verified email sign-in for seven existing demo identities and all five staff roles. Verified phone sign-in passed locally. The existing commercial production NO-GO remains in effect.
