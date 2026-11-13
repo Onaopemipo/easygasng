@@ -105,13 +105,19 @@ export async function assistedOrdering(
     const d = checkoutSchema.parse(input);
     const location = await one(
       tx,
-      "SELECT l.branch_id FROM delivery_locations l JOIN branches b ON b.id=l.branch_id WHERE b.active=true AND l.active=true AND l.visible=true AND l.archived=false AND (($1::text IS NOT NULL AND l.id=$1) OR ($1::text IS NULL AND lower(l.name)=lower($2)))",
+      "SELECT l.id,l.branch_id FROM delivery_locations l JOIN branches b ON b.id=l.branch_id WHERE b.active=true AND l.active=true AND l.visible=true AND l.archived=false AND (($1::text IS NOT NULL AND l.id=$1) OR ($1::text IS NULL AND lower(l.name)=lower($2)))",
       [d.address.locationId ?? null, d.address.zone],
     );
     if (!location)
       throw new AppError(409, "Choose an active supported delivery location.");
     allow(user, operators, location.branch_id);
-    return gasQuote(tx, d.gasLines ?? [], location.branch_id, d.items);
+    return gasQuote(
+      tx,
+      d.gasLines ?? [],
+      location.branch_id,
+      d.items,
+      location.id,
+    );
   }
   if (action === "order.assisted.create") {
     const d = z

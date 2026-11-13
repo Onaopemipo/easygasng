@@ -213,3 +213,5 @@ Account invitation and password recovery (13 November): [matrix](account-onboard
 Staff role consolidation (13 November). [Requirements matrix](staff-role-consolidation-rtm.md) and [machine-readable mapping](staff-role-consolidation-rtm.json). Five staff roles passed the Vercel demo cutover and installed iOS Simulator and minified Android emulator checks. Production remains NO-GO.
 
 Unified email and phone sign-in (14 November). [Requirements matrix](unified-sign-in-rtm.md) and [executed evidence](unified-sign-in-evidence.txt). Web browser and shared authentication checks passed locally. Installed mobile and hosted acceptance remain open.
+
+Phone-assisted delivery coverage (14 November). [Requirements matrix](assisted-order-coverage-rtm.json) and [test evidence](assisted-order-coverage-evidence.txt). Staff see pending areas before quotation. Order creation still checks the active coverage policy.

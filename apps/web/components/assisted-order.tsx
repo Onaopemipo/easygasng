@@ -1,6 +1,18 @@
 "use client";
 import { useState } from "react";
+import { hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
 import { api, Modal, Notice, money } from "./ui";
+
+type DeliveryLocation = {
+  id: string;
+  name: string;
+  branch_id: string;
+  coverage: string | null;
+};
+
+const coverageHelp =
+  "Choose a confirmed area that matches the caller’s address. If the correct area is pending, ask a Business Owner to confirm its boundary in Settings → Delivery Locations.";
+
 export default function AssistedOrder({
   user,
   onCreated,
@@ -13,22 +25,52 @@ export default function AssistedOrder({
     [matches, setMatches] = useState<any[]>([]),
     [customer, setCustomer] = useState<any>(null),
     [catalogue, setCatalogue] = useState<any>(null),
+    [locationId, setLocationId] = useState(""),
+    [coverageChanged, setCoverageChanged] = useState(false),
     [quote, setQuote] = useState<any>(null),
     [error, setError] = useState(""),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
+    [loadingCatalogue, setLoadingCatalogue] = useState(false),
     [key, setKey] = useState("");
-  async function start() {
+
+  const locations = (
+    (catalogue?.gas?.locations ?? []) as DeliveryLocation[]
+  ).filter(
+    (location) =>
+      user.role === "owner" ||
+      location.branch_id === (user.branchId ?? user.branch_id),
+  );
+  const selectedLocation = locations.find(
+    (location) => location.id === locationId,
+  );
+  const locationConfirmed = hasConfirmedDeliveryCoverage(
+    selectedLocation?.coverage,
+  );
+  const hasPendingLocations = locations.some(
+    (location) => !hasConfirmedDeliveryCoverage(location.coverage),
+  );
+
+  function start() {
     setOpen(true);
-    setError("");
     setCustomer(null);
     setMatches([]);
-    setQuote(null);
+    setCatalogue(null);
+    setLocationId("");
     setKey(crypto.randomUUID());
+    void loadCatalogue();
+  }
+  async function loadCatalogue() {
+    setError("");
+    setQuote(null);
+    setLoadingCatalogue(true);
     try {
       setCatalogue(await api("catalogue"));
+      setCoverageChanged(false);
     } catch (e: any) {
       setError(e.message);
+    } finally {
+      setLoadingCatalogue(false);
     }
   }
   async function lookup() {
@@ -79,10 +121,10 @@ export default function AssistedOrder({
   }
   function checkoutData(form: HTMLFormElement) {
     const f = new FormData(form);
-    const location = catalogue?.gas?.locations?.find(
-      (l: any) => l.id === f.get("location"),
-    );
-    if (!location) throw new Error("Choose an active delivery location.");
+    const location = selectedLocation;
+    if (!location || !locationConfirmed || coverageChanged) {
+      throw new Error(coverageHelp);
+    }
     const kg = Number(f.get("kg"));
     const product = String(f.get("product") || "");
     return {
@@ -149,7 +191,11 @@ export default function AssistedOrder({
       setOpen(false);
       onCreated();
     } catch (e: any) {
-      setError(e.message);
+      if (e.code === "DELIVERY_COVERAGE_PENDING") {
+        setCoverageChanged(true);
+      } else {
+        setError(e.message);
+      }
       setQuote(null);
     } finally {
       setBusy(false);
@@ -208,21 +254,13 @@ export default function AssistedOrder({
               <label>
                 Branch
                 <select name="branch">
-                  {(catalogue?.gas?.locations ?? [])
-                    .filter(
-                      (l: any) =>
-                        user.role === "owner" ||
-                        l.branch_id === (user.branchId ?? user.branch_id),
-                    )
-                    .filter(
-                      (l: any, i: number, a: any[]) =>
-                        a.findIndex((x) => x.branch_id === l.branch_id) === i,
-                    )
-                    .map((l: any) => (
-                      <option key={l.branch_id} value={l.branch_id}>
-                        {l.branch_id}
-                      </option>
-                    ))}
+                  {[
+                    ...new Set(locations.map((location) => location.branch_id)),
+                  ].map((branch) => (
+                    <option key={branch} value={branch}>
+                      {branch}
+                    </option>
+                  ))}
                 </select>
               </label>
               <button className="button secondary" disabled={busy}>
@@ -253,20 +291,66 @@ export default function AssistedOrder({
               </label>
               <label>
                 Delivery location
-                <select name="location" required>
-                  {(catalogue?.gas?.locations ?? [])
-                    .filter(
-                      (l: any) =>
-                        user.role === "owner" ||
-                        l.branch_id === (user.branchId ?? user.branch_id),
-                    )
-                    .map((l: any) => (
-                      <option key={l.id} value={l.id}>
-                        {l.name}
+                <select
+                  name="location"
+                  value={selectedLocation?.id ?? ""}
+                  disabled={busy || loadingCatalogue}
+                  onChange={(event) => {
+                    setLocationId(event.target.value);
+                    setCoverageChanged(false);
+                    setError("");
+                  }}
+                  aria-describedby={
+                    hasPendingLocations || coverageChanged
+                      ? "assisted-coverage-help"
+                      : undefined
+                  }
+                  required
+                >
+                  <option value="">
+                    {loadingCatalogue
+                      ? "Loading delivery areas…"
+                      : "Choose a confirmed delivery area"}
+                  </option>
+                  {locations.map((location) => {
+                    const confirmed = hasConfirmedDeliveryCoverage(
+                      location.coverage,
+                    );
+                    return (
+                      <option
+                        key={location.id}
+                        value={location.id}
+                        disabled={!confirmed}
+                      >
+                        {location.name}
+                        {confirmed ? "" : " (coverage pending)"}
                       </option>
-                    ))}
+                    );
+                  })}
                 </select>
               </label>
+              {(hasPendingLocations || coverageChanged) && (
+                <div id="assisted-coverage-help">
+                  <Notice
+                    type={coverageChanged ? "error" : undefined}
+                    message={
+                      coverageChanged
+                        ? `Coverage for this area has changed. Refresh the delivery areas. ${coverageHelp}`
+                        : coverageHelp
+                    }
+                  />
+                </div>
+              )}
+              {(!catalogue || hasPendingLocations || coverageChanged) && (
+                <button
+                  type="button"
+                  className="button secondary"
+                  disabled={busy || loadingCatalogue}
+                  onClick={loadCatalogue}
+                >
+                  Refresh delivery areas
+                </button>
+              )}
               <label>
                 Cylinder capacity (kg)
                 <input
@@ -346,7 +430,15 @@ export default function AssistedOrder({
                   )}
                 </p>
               )}
-              <button className="button" disabled={busy}>
+              <button
+                className="button"
+                disabled={
+                  busy ||
+                  loadingCatalogue ||
+                  !locationConfirmed ||
+                  coverageChanged
+                }
+              >
                 {busy
                   ? "Checking…"
                   : quote

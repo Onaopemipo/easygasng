@@ -1,0 +1,63 @@
+{
+  "phase": "Phone-assisted delivery coverage",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "ASSISTED-COVERAGE-R01",
+      "requirement": "Reject assisted quotes and orders for areas without confirmed coverage.",
+      "priority": "P0",
+      "scope": "Staff product and gas home-delivery quotes and confirmation",
+      "uiReference": "Phone-assisted home delivery in Admin Orders",
+      "route": "/api/order.assisted.quote and /api/order.assisted.create",
+      "implementationFiles": [
+        "apps/web/lib/assisted-ordering.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/operations.ts",
+        "packages/business-rules/src/delivery-coverage.ts"
+      ],
+      "dataSource": "Active branch-scoped delivery locations, pricing settings and inventory.",
+      "securityControl": "Staff and branch checks precede quotation. Order confirmation rechecks coverage under the existing location lock. Quotations do not reserve inventory.",
+      "testFiles": ["tests/post-meeting-identity.test.ts"],
+      "testIds": ["PM-T10"],
+      "negativeTests": ["A pending location ID must be rejected", "Coverage can change after review"],
+      "evidence": ["docs/traceability/assisted-order-coverage-evidence.txt"],
+      "acceptanceGate": "ASSISTED-COVERAGE-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The API regression checks a pending ID, changed coverage, a confirmed product-only quote without bulk gas stock and stale-price rejection.",
+      "testResult": "PASS: assisted ordering, gas checkout and governance regression suites.",
+      "outstandingWork": "Business review is required to activate coverage for Victoria Island and the other pending demo areas."
+    },
+    {
+      "id": "ASSISTED-COVERAGE-R02",
+      "requirement": "Identify pending areas in the staff form, allow a catalogue refresh and retain caller details.",
+      "priority": "P1",
+      "scope": "Web Orders staff modal",
+      "uiReference": "Delivery location field in Phone-assisted home delivery",
+      "route": "/admin/orders",
+      "implementationFiles": ["apps/web/components/assisted-order.tsx"],
+      "dataSource": "Public catalogue filtered to the staff member's authorised branch scope.",
+      "securityControl": "Only confirmed locations are selectable. Quote and create retain server-side enforcement.",
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": ["docs/traceability/assisted-order-coverage-evidence.txt"],
+      "acceptanceGate": "ASSISTED-COVERAGE-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "UI implementation typechecked. Authenticated browser verification is pending.",
+      "testResult": "PASS: web TypeScript check.",
+      "outstandingWork": "Check the form in a browser against the deployed demo."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ASSISTED-COVERAGE-G01",
+      "status": "PASS",
+      "gate": "Verify confirmed and pending coverage at review and confirmation."
+    },
+    {
+      "id": "ASSISTED-COVERAGE-G02",
+      "status": "OPEN",
+      "gate": "Verify labels, disabled actions and refresh in the staff order form."
+    }
+  ]
+}

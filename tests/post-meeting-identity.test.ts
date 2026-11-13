@@ -267,7 +267,7 @@ test("PM-T08: legacy checkout retry fingerprints survive the added source metada
     await db.close?.();
   }
 });
-test("PM-T10: assisted product quote uses branch prices and one fee, rejects stale totals and never reserves during review", async () => {
+test("PM-T10: assisted quotes require confirmed coverage, preserve branch prices and one fee, and never reserve during review", async () => {
   const { fixture } = await import("./helpers/order-tracking-fixture");
   const f = await fixture();
   try {
@@ -284,6 +284,20 @@ test("PM-T10: assisted product quote uses branch prices and one fee, rejects sta
       paymentMethod: "cash_on_delivery",
       idempotencyKey: id(),
     };
+    const location = await one(
+      f.db,
+      "UPDATE delivery_locations SET coverage='' WHERE name='Victoria Island' RETURNING id",
+    );
+    // A pending location ID must be rejected even with a confirmed zone name.
+    await assert.rejects(
+      () =>
+        f.call("owner", "order.assisted.quote", {
+          ...checkout,
+          address: { ...checkout.address, locationId: location!.id },
+        }),
+      { code: "DELIVERY_COVERAGE_PENDING" },
+    );
+    await f.db.query("DELETE FROM gas_stock WHERE branch_id='lagos'");
     const quote = await f.call("owner", "order.assisted.quote", checkout);
     assert.equal(quote.physicalSubtotalKobo, 700000);
     assert.equal(
@@ -311,6 +325,17 @@ test("PM-T10: assisted product quote uses branch prices and one fee, rejects sta
         },
       },
     };
+    // Coverage can change after review, so order creation must check it again.
+    await f.db.query(
+      "UPDATE delivery_locations SET coverage='' WHERE name='Lekki'",
+    );
+    await assert.rejects(
+      () => f.call("owner", "order.assisted.create", input),
+      { code: "DELIVERY_COVERAGE_PENDING" },
+    );
+    await f.db.query(
+      "UPDATE delivery_locations SET coverage='Synthetic fixture coverage only' WHERE name='Lekki'",
+    );
     await f.db.query(
       "UPDATE inventory SET price_kobo=400000 WHERE product_id='hose' AND branch_id='lagos'",
     );

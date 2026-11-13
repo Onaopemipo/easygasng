@@ -529,7 +529,7 @@ export async function gasQuote(
   if (!Number.isSafeInteger(subtotal + c.deliveryKobo))
     throw new AppError(400, "Total exceeds supported limits.");
   // Advisory only: checkout still atomically reserves stock under its existing locks.
-  if (locationId !== undefined) {
+  if (locationId !== undefined && calculated.length > 0) {
     const requested = calculated.reduce((mass, line) => mass + line.grams, 0);
     if (!(await one(tx, "SELECT branch_id FROM gas_stock WHERE branch_id=$1 AND grams-reserved_grams >= $2", [branch, requested])))
       throw new AppError(409, "Insufficient verified gas stock for this order.");
