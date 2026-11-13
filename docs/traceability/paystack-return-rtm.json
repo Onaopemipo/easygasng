@@ -57,10 +57,10 @@
       "negativeTests": ["without accepting a redirect URL"],
       "evidence": ["docs/traceability/paystack-return-ci-evidence.txt"],
       "acceptanceGate": "PAY-RETURN-G02",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "VERIFIED_COMPLETE",
       "reason": "The two GitHub web jobs failed the same stale checksum. The corrected audit and the payment and dispatch suites passed locally.",
-      "testResult": "PASS: 30 focused tests locally. Full hosted CI validation is pending.",
-      "outstandingWork": "Verify the web and native jobs on the replacement GitHub Actions run."
+      "testResult": "PASS: 30 focused tests locally and all 714 web regression tests in GitHub Actions run 43478471272. Web build, web and native type checks, and dependency audits passed.",
+      "outstandingWork": "Installed native payment-return acceptance remains tracked under PAY-RETURN-R01."
     },
     {
       "id": "PAY-RETURN-R03",
@@ -77,10 +77,10 @@
       "negativeTests": ["encrypted offline records reject tampering, wrong keys and cross-account decryption"],
       "evidence": ["docs/traceability/paystack-return-ci-evidence.txt"],
       "acceptanceGate": "PAY-RETURN-G02",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "VERIFIED_COMPLETE",
       "reason": "The failing run assigned a fixed byte that could match the original ciphertext. The revised fixture always makes a change.",
-      "testResult": "PASS: focused local tamper, checksum and payment regressions.",
-      "outstandingWork": "Confirm the repaired web job in GitHub Actions."
+      "testResult": "PASS: focused local tamper, checksum and payment regressions. The hosted web job passed with zero failures or skips.",
+      "outstandingWork": "Installed-device acceptance remains outside this CI repair."
     }
   ],
   "gates": [
@@ -91,7 +91,7 @@
     },
     {
       "id": "PAY-RETURN-G02",
-      "status": "OPEN",
+      "status": "PASS",
       "gate": "Verify the protected-file audit and complete web and native release validation."
     }
   ]
