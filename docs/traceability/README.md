@@ -215,3 +215,5 @@ Staff role consolidation (13 November). [Requirements matrix](staff-role-consoli
 Unified email and phone sign-in (14 November). [Requirements matrix](unified-sign-in-rtm.md) and [executed evidence](unified-sign-in-evidence.txt). Web browser and shared authentication checks passed locally. Installed mobile and hosted acceptance remain open.
 
 Phone-assisted delivery coverage (14 November). [Requirements matrix](assisted-order-coverage-rtm.json) and [test evidence](assisted-order-coverage-evidence.txt). Staff see pending areas before quotation. Order creation still checks the active coverage policy.
+
+Admin Dashboard landing (14 November). [Requirements matrix](admin-dashboard-landing-rtm.json) and [test evidence](admin-dashboard-landing-evidence.txt).

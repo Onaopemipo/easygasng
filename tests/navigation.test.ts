@@ -454,7 +454,7 @@ test("INV-BADGE-01: refresh and transient failure retain explicitly labelled con
   assert.equal(failedNavigationSnapshot(null), null);
 });
 
-test("permitted navigation maps actual backend read allowlists for every existing staff role", async () => {
+test("ADMIN-LANDING-01: permitted navigation maps actual backend read allowlists for every existing staff role", async () => {
   const f = await fixture();
   try {
     for (const role of ["manager", "sales", "dispatcher", "driver"]) {
@@ -469,6 +469,12 @@ test("permitted navigation maps actual backend read allowlists for every existin
       (r) => !["customer", "commercial"].includes(r),
     )) {
       const access = await f.call(role, "navigation.access");
+      if (["owner", "manager"].includes(role)) {
+        assert.ok(access.allowed.includes("dashboard"), role);
+      }
+      if (["driver", "technician"].includes(role)) {
+        assert.ok(!access.allowed.includes("dashboard"), role);
+      }
       if (role === "sales")
         assert.ok("orders" in (await f.call(role, "navigation")).counters);
       const actions = new Set<string>();

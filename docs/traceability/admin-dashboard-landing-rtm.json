@@ -1,0 +1,37 @@
+{
+  "phase": "Admin Dashboard landing",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "ADMIN-LANDING-R01",
+      "requirement": "Open and retain the authorised dashboard after sign-in, sidebar navigation and access refresh.",
+      "priority": "P1",
+      "scope": "Web admin home for Business Owner and Branch Manager, including dedicated field-role entry points",
+      "uiReference": "Dashboard sidebar link and Service Bookings shown in the report",
+      "route": "/admin, /admin/bookings and /admin/deliveries",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/app/admin/[[...section]]/page.tsx",
+        "apps/web/lib/navigation.ts"
+      ],
+      "dataSource": "Authenticated role and allowed route list returned by navigation.access and navigation.",
+      "securityControl": "Server authorisation and denied-route fallback still use the authenticated allowlist. Field roles use their existing server redirects.",
+      "testFiles": ["tests/navigation.test.ts", "tests/driver-workspace.test.ts", "tests/menu-visibility.test.ts"],
+      "testIds": ["ADMIN-LANDING-01", "DR-WEB-01", "MENU-02"],
+      "negativeTests": ["!access.allowed.includes(\"dashboard\")"],
+      "evidence": ["docs/traceability/admin-dashboard-landing-evidence.txt"],
+      "acceptanceGate": "ADMIN-LANDING-G01",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Hosted reproduction confirmed that the browser sent an authorised owner to Bookings after loading the Dashboard. The redirect was removed and local navigation tests passed.",
+      "testResult": "PASS: 28 focused automated tests. Hosted post-deployment acceptance pending.",
+      "outstandingWork": "Verify the dashboard and field-role landing routes on the deployed demo."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ADMIN-LANDING-G01",
+      "status": "OPEN",
+      "gate": "Check authenticated navigation for owners, managers and both field roles after deployment."
+    }
+  ]
+}

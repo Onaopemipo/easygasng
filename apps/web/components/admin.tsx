@@ -152,13 +152,6 @@ export default function Admin({
           const destination = navigationItems.find(n => d.allowed.includes(n.id));
           if (destination) router.replace(destination.href);
         }
-        if (
-          section === "dashboard" &&
-          ["driver", "technician", "manager", "owner"].includes(d.user.role)
-        )
-          router.replace(
-            d.user.role === "driver" ? "/admin/deliveries" : "/admin/bookings",
-          );
       } catch (e: any) {
         if (!live) return;
         setAccess(failedNavigationSnapshot);

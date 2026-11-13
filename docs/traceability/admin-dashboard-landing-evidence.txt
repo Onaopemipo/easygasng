@@ -1,0 +1,39 @@
+Admin isolated HTTP search60 request total ms: 272
+✔ ADM-HTTP18: admin reads enforce authentication, read-only HTTP methods and a persistent per-user search budget (1862.227375ms)
+✔ ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero-data states (1653.727708ms)
+✔ ADM-AUTH03: dashboard and search reject customer, forged role and cross-branch scope (886.396875ms)
+✔ ADM-SEARCH12: search returns permitted records only and treats wildcards/injection as literal input (819.95375ms)
+✔ ADM-REL01: failed order widget is isolated without discarding other canonical widgets (770.067375ms)
+✔ ADM-FILTER03: invalid dates, oversized ranges and excessive pages are rejected (779.551292ms)
+✔ ADM-BIZ02: receipts exclude unverified collections and match the existing finance definition after reconciliation (903.132042ms)
+✔ ADM-AUTH01: single canonical login returns actual role, never accepts a requested privilege (887.53725ms)
+✔ ADM-NOTIFY12: unread totals are not limited to display rows and links recheck branch and module access (778.8065ms)
+✔ DR-BOUNDARY-01 delivery-only sessions reject legacy cash, sales and stock endpoints (0.561416ms)
+✔ DR-GPS-BOUNDARY: trip GPS authority does not grant fuel, cash or fleet-wide reads (0.129209ms)
+✔ DR-BOUNDARY-02 delivery-only sessions reject skipped or invented order transitions (0.081542ms)
+✔ DR-BOUNDARY-03 canonical delivery reads and guarded completion remain available (0.057375ms)
+✔ DR-COMPAT-01 legacy session policy remains unchanged pending explicit cutover (0.048959ms)
+✔ DR-WEB-01: driver web navigation reaches only the authorised deliveries workspace (997.161167ms)
+✔ DR-INTEGRATION-01 restricted canonical session enforces role, availability and legacy completion denial (860.615292ms)
+✔ MENU-01: workspace links hide denied menus and preserve public links (4.326084ms)
+✔ MENU-02: role and revoked privileges filter menus without granting backend authority (983.729208ms)
+✔ RM-01–05,12,13: all 29 routes, exact groups/order, unique IDs and safe nested active matching (3.460417ms)
+✔ RM-06,08,09: mode-independent role visibility preserves dedicated assignment experiences (0.231667ms)
+✔ navigation preferences reject corrupt storage and badge overflow remains bounded (0.1125ms)
+✔ RM-07,10,11: fresh authentication, branch scope, counter aggregates and role/session revocation (1246.268417ms)
+✔ approval badge agrees with independent eligibility, excludes requester, recipient, expired and already-decided requests (926.063459ms)
+✔ counter accuracy covers actionable orders/deliveries, configured inventory thresholds and unresolved financial items (924.138708ms)
+✔ bounded delegation is included in approval counters only while independently valid (907.06675ms)
+✔ INV-BADGE-01: refresh and transient failure retain explicitly labelled confirmed counts without changing grants (0.324917ms)
+✔ ADMIN-LANDING-01: permitted navigation maps actual backend read allowlists for every existing staff role (1285.7815ms)
+Navigation restricted PGlite fixture aggregate timings (ms): {"samples":[3.725499999999556,3.996415999999954,3.9997080000002825,3.8047910000004777,3.8958339999999225,3.9700000000002547,4.197250000000167,3.8887500000000728,3.7632919999996375,3.9275840000000244],"median":3.9275840000000244,"max":4.197250000000167}
+✔ navigation aggregates run under the restricted private-schema runtime without new grants (898.325958ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12810.14625
+REPRODUCED: Business Owner sign-in redirects to Service Bookings.
