@@ -1,0 +1,85 @@
+Before, authenticated Chromium at 1440px
+QA Finance light {"link":null,"label":"Verified net receipts\n0\nSelected period","image":"none","colors":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"]}
+QA Finance dark {"link":null,"label":"Verified net receipts\n0\nSelected period","image":"none","colors":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"]}
+QA Owner light {"link":"/admin/finance?from=2026-11-01&to=2026-11-13","label":"Verified net receipts\n₦0\n2026-11-01 – 2026-11-13","image":"linear-gradient(120deg, rgb(0, 91, 53), rgb(6, 116, 71))","colors":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"]}
+QA Owner dark {"link":"/admin/finance?from=2026-11-01&to=2026-11-13","label":"Verified net receipts\n₦0\n2026-11-01 – 2026-11-13","image":"linear-gradient(120deg, rgb(0, 91, 53), rgb(6, 116, 71))","colors":["rgb(124, 235, 160)","rgb(244, 248, 245)","rgb(124, 235, 160)"]}
+
+After, authenticated Chromium at 1440px
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+QA Finance light {"link":"/admin/finance","label":"Verified net receipts\n₦0\nSelected period","image":"linear-gradient(120deg, rgb(0, 124, 120), rgb(0, 81, 92))","colors":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"]}
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+QA Finance dark {"link":"/admin/finance","label":"Verified net receipts\n₦0\nSelected period","image":"linear-gradient(120deg, rgb(0, 124, 120), rgb(0, 81, 92))","colors":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"]}
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+QA Owner light {"link":"/admin/finance?from=2026-11-01&to=2026-11-13","label":"Verified net receipts\n₦0\n2026-11-01 – 2026-11-13","image":"linear-gradient(120deg, rgb(0, 91, 53), rgb(6, 116, 71))","colors":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"]}
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+Contrast ratio: 7.69
+Contrast ratio: 5.45
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+QA Owner dark {"link":"/admin/finance?from=2026-11-01&to=2026-11-13","label":"Verified net receipts\n₦0\n2026-11-01 – 2026-11-13","image":"linear-gradient(120deg, rgb(0, 91, 53), rgb(6, 116, 71))","colors":["rgb(255, 255, 255)","rgb(244, 248, 245)","rgb(255, 255, 255)"]}
+
+After, authenticated Chromium at 390px
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+QA Finance light {"link":"/admin/finance","label":"Verified net receipts\n₦0\nSelected period","image":"linear-gradient(120deg, rgb(0, 124, 120), rgb(0, 81, 92))","colors":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"]}
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+Contrast ratio: 5.06
+Contrast ratio: 9.01
+QA Finance dark {"link":"/admin/finance","label":"Verified net receipts\n₦0\nSelected period","image":"linear-gradient(120deg, rgb(0, 124, 120), rgb(0, 81, 92))","colors":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"]}
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+QA Owner light {"link":"/admin/finance?from=2026-11-01&to=2026-11-13","label":"Verified net receipts\n₦0\n2026-11-01 – 2026-11-13","image":"linear-gradient(120deg, rgb(0, 91, 53), rgb(6, 116, 71))","colors":["rgb(255, 255, 255)","rgb(255, 255, 255)","rgb(255, 255, 255)"]}
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+Contrast ratio: 7.69
+Contrast ratio: 5.45
+Contrast ratio: 8.24
+Contrast ratio: 5.84
+QA Owner dark {"link":"/admin/finance?from=2026-11-01&to=2026-11-13","label":"Verified net receipts\n₦0\n2026-11-01 – 2026-11-13","image":"linear-gradient(120deg, rgb(0, 91, 53), rgb(6, 116, 71))","colors":["rgb(255, 255, 255)","rgb(244, 248, 245)","rgb(255, 255, 255)"]}
+
+Dashboard and HTTP regression tests
+Admin isolated HTTP search60 request total ms: 286
+✔ ADM-HTTP18: admin reads enforce authentication, read-only HTTP methods and a persistent per-user search budget (1803.307458ms)
+✔ ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero-data states (1545.410917ms)
+✔ ADM-AUTH03: dashboard and search reject customer, forged role and cross-branch scope (802.910041ms)
+✔ ADM-SEARCH12: search returns permitted records only and treats wildcards/injection as literal input (739.512833ms)
+✔ ADM-REL01: failed order widget is isolated without discarding other canonical widgets (733.831333ms)
+✔ ADM-FILTER03: invalid dates, oversized ranges and excessive pages are rejected (712.66975ms)
+✔ ADM-BIZ02: receipts exclude unverified collections and match the existing finance definition after reconciliation (828.989ms)
+✔ ADM-AUTH01: single canonical login returns actual role, never accepts a requested privilege (834.261875ms)
+✔ ADM-NOTIFY12: unread totals are not limited to display rows and links recheck branch and module access (749.189833ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7585.602375

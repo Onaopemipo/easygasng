@@ -240,7 +240,6 @@ export default function AdminOverview({ user }: { user: any }) {
         "Verified net receipts",
         data?.revenue,
         Coins,
-  ClipboardCheck,
         "finance",
         "teal",
         "Completed order/service receipts and verified POS, net of approved refunds",
@@ -253,7 +252,7 @@ export default function AdminOverview({ user }: { user: any }) {
         "pink",
         "Current open or acknowledged incidents",
       ],
-    ];
+    ] as const;
   const actions = [
     ["Delivery Operations", "deliveries", Truck, ["owner"]],
     ["Review Approvals", "approvals", ClipboardCheck, ["owner"]],
@@ -402,7 +401,7 @@ export default function AdminOverview({ user }: { user: any }) {
             </div>
           </section>}
           <section className="ac-kpis" aria-label="Workspace metrics">
-            {cards.filter(([, , , route]) => !(user.role === "owner" && allowed("finance") && route === "finance")).map(([label, value, Icon, route, colour, note]: any) => {
+            {cards.filter(([, , , route]) => !(user.role === "owner" && allowed("finance") && route === "finance")).map(([label, value, Icon, route, colour, note]) => {
               const content = (
                 <>
                   <span className="ac-kpi-icon">
@@ -448,7 +447,7 @@ export default function AdminOverview({ user }: { user: any }) {
           <details className="ac-definitions">
             <summary>Metric definitions and scope</summary>
             <dl>
-              {cards.map(([label, , , , , note]: any) => (
+              {cards.map(([label, , , , , note]) => (
                 <div key={label}>
                   <dt>{label}</dt>
                   <dd>{note}</dd>

@@ -1,0 +1,9 @@
+Authenticated Chrome against a local synthetic Owner fixture, viewport height 940px.
+Baseline opening Actions at 1440px and 390px changed the first row height from 120.5px to 230.890625px.
+
+1440 passed stable table, visible first and last row overlays, keyboard navigation, Escape and focus, outside click, details and edit
+390 passed stable table, visible first and last row overlays, keyboard navigation, Escape and focus, outside click, details and edit
+
+node --import tsx --test --test-concurrency=1 tests/customer-management.test.ts tests/customer-traceability.test.ts
+✔ CM-01: customer creation, scoped management and privilege rejection
+ℹ fail 0

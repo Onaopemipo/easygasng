@@ -201,3 +201,7 @@ Public website width (13 November): [matrix](public-width-1440-rtm.md) and [QA](
 Hosted demo readiness repair: [traceability](demo-readiness-rtm.md). The synthetic demo reports scoped schema readiness. Commercial production readiness still requires a recent maintenance heartbeat.
 
 Smart Refill demo CI repair: [matrix](smart-refill-ci-repair-rtm.md). Repairs the inherited legacy matrix schema and protected source checks on the isolated demo branch. Production remains NO-GO.
+
+Dashboard receipts contrast: [matrix](dashboard-receipts-contrast-rtm.md). Finance and Business Owner cards passed local browser checks in light and dark at desktop and mobile widths.
+
+Customers row Actions layout: [matrix](customer-actions-menu-rtm.md). Local desktop and mobile browser checks confirm the popover leaves table geometry intact.

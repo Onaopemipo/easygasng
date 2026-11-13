@@ -1,0 +1,36 @@
+{
+  "phase": "Customers row Actions layout",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "ADM-CUSTOMERS-ACTIONS-01",
+      "requirement": "Opening a customer row’s Actions menu must leave the directory layout intact and keep View details and Edit customer accessible.",
+      "priority": "P1",
+      "scope": "Desktop and mobile web customer directory",
+      "uiReference": "Before-and-after screenshots of the expanded Actions control changing row height and column widths",
+      "route": "/admin/customers",
+      "dataSource": "Existing customers.manage directory and customers.detail record",
+      "securityControl": "The existing customers.manage, customers.detail and customers.update server-side role and branch checks govern both actions.",
+      "implementationFiles": [
+        "apps/web/components/customer-management.tsx",
+        "apps/web/components/customer-management.css"
+      ],
+      "testFiles": ["tests/customer-management.test.ts"],
+      "testIds": ["CM-01"],
+      "negativeTests": [],
+      "evidence": ["docs/traceability/customer-actions-menu-evidence.txt"],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The popover is in the browser top layer and opens outside the table layout. Browser checks exercised both actions at desktop and mobile widths.",
+      "testResult": "PASS · Authenticated Chrome checks at 1440px and 390px and the customer-management regression.",
+      "outstandingWork": "Hosted demo verification awaits deployment.",
+      "acceptanceGate": "ADM-CUSTOMERS-ACTIONS-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "ADM-CUSTOMERS-ACTIONS-G01",
+      "requirement": "Opening Actions keeps directory, table, row, column and scroll dimensions stable. Menus fit the viewport on the first and last rows. Both existing actions and keyboard dismissal work.",
+      "status": "PASS"
+    }
+  ]
+}

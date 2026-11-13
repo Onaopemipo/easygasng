@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "./workspace-link";
 import {
   UsersRound,
@@ -14,10 +14,28 @@ import {
   Download,
   ChevronLeft,
   ChevronRight,
+  EllipsisVertical,
 } from "lucide-react";
 import { api, Modal, Notice, Loading, money } from "./ui";
 import "./customer-management.css";
+
+function positionActions(panel: HTMLElement) {
+  const trigger = panel.previousElementSibling;
+  if (!trigger) return;
+  const anchor = trigger.getBoundingClientRect();
+  const { width, height } = panel.getBoundingClientRect();
+  const viewport = document.documentElement;
+  const gap = 8;
+  const below = anchor.bottom + gap;
+  const above = anchor.top - height - gap;
+  const top = below + height <= viewport.clientHeight - gap ? below : above;
+  const left = Math.min(anchor.right - width, viewport.clientWidth - width - gap);
+  panel.style.left = `${Math.max(gap, left)}px`;
+  panel.style.top = `${Math.max(gap, Math.min(top, viewport.clientHeight - height - gap))}px`;
+}
+
 export default function CustomerManagement() {
+  const openActions = useRef<HTMLElement | null>(null);
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [query, setQuery] = useState(""),
@@ -41,6 +59,18 @@ export default function CustomerManagement() {
   }
   useEffect(() => {
     load();
+  }, []);
+  useEffect(() => {
+    const dismissActions = (event: Event) => {
+      const panel = openActions.current;
+      if (panel?.isConnected && event.target !== panel) panel.hidePopover();
+    };
+    window.addEventListener("scroll", dismissActions, true);
+    window.addEventListener("resize", dismissActions);
+    return () => {
+      window.removeEventListener("scroll", dismissActions, true);
+      window.removeEventListener("resize", dismissActions);
+    };
   }, []);
   useEffect(() => {
     setPage(1);
@@ -380,22 +410,49 @@ export default function CustomerManagement() {
                       </span>
                     </td>
                     <td>
-                      <details className="cm-actions">
-                        <summary aria-label={"Actions for " + c.name}>
-                          ⋮
-                        </summary>
-                        <button disabled={busy} onClick={() => detail(c.id)}>
+                      <button
+                        type="button"
+                        className="cm-action-trigger"
+                        aria-label={"Actions for " + c.name}
+                        popoverTarget={`customer-actions-${c.id}`}
+                      >
+                        <EllipsisVertical size={20} aria-hidden="true" />
+                      </button>
+                      <div
+                        id={`customer-actions-${c.id}`}
+                        className="cm-action-popover"
+                        popover="auto"
+                        onToggle={(event) => {
+                          const panel = event.currentTarget;
+                          if (event.newState === "open") {
+                            positionActions(panel);
+                            openActions.current = panel;
+                          } else if (openActions.current === panel) {
+                            openActions.current = null;
+                          }
+                        }}
+                      >
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={(event) => {
+                            event.currentTarget.parentElement?.hidePopover();
+                            detail(c.id);
+                          }}
+                        >
                           View details
                         </button>
                         <button
-                          onClick={() => {
+                          type="button"
+                          onClick={(event) => {
+                            event.currentTarget.parentElement?.hidePopover();
                             setMessage("");
                             setModal(c);
                           }}
                         >
                           Edit customer
                         </button>
-                      </details>
+                      </div>
                     </td>
                   </tr>
                 ))}

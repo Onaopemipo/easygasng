@@ -177,27 +177,49 @@
   background: #fff0f0;
   color: #b21c35;
 }
-.cm-actions {
-  position: relative;
-}
-.cm-actions summary {
-  list-style: none;
-  cursor: pointer;
-  border: 1px solid #e1e7ed;
+.cm-action-trigger {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 6px 17px;
-  font-size: 24px;
+  background: var(--surface);
+  color: var(--foreground);
 }
-.cm-actions[open] {
+.cm-action-popover {
+  display: none;
+  position: fixed;
+  inset: auto;
+  width: min(12rem, calc(100vw - 16px));
+  max-height: calc(100dvh - 16px);
+  overflow: auto;
+  margin: 0;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--popover);
+  color: var(--foreground);
+  box-shadow: 0 10px 30px #001b2330;
+}
+.cm-action-popover:popover-open {
   display: grid;
-  gap: 8px;
+  gap: 2px;
 }
-.cm-actions button {
-  border: 1px solid #e1e7ed;
+.cm-action-popover button {
+  min-height: 44px;
+  border: 0;
   border-radius: 7px;
-  padding: 9px;
-  background: white;
+  padding: 8px 12px;
+  background: transparent;
+  color: inherit;
+  text-align: start;
   font-size: 15px;
+}
+.cm-action-trigger:hover,
+.cm-action-popover button:not(:disabled):is(:hover, :focus-visible) {
+  background: var(--raised);
 }
 .cm-pagination {
   display: flex;

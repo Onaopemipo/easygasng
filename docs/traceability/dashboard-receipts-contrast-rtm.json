@@ -1,0 +1,33 @@
+{
+  "phase": "Dashboard receipts contrast",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "ADM-RECEIPTS-01",
+      "requirement": "Display the receipts label, currency value and period with readable contrast on the dashboard in light and dark themes.",
+      "priority": "P1",
+      "scope": "Finance and Business Owner web dashboards",
+      "uiReference": "Verified net receipts card reported as white on white",
+      "route": "/admin",
+      "dataSource": "The existing admin.dashboard revenue aggregate for the selected period",
+      "securityControl": "Card navigation follows dashboard module permissions and the Finance route enforces existing server authorization.",
+      "implementationFiles": ["apps/web/components/admin-overview.tsx", "apps/web/app/theme.css"],
+      "testFiles": ["tests/admin-dashboard.test.ts", "tests/admin-dashboard-http.test.ts"],
+      "testIds": ["ADM-BIZ02"],
+      "negativeTests": [],
+      "evidence": ["docs/traceability/dashboard-receipts-contrast-evidence.txt"],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The corrected Finance card uses the teal gradient, formats zero as ₦0 and links to Finance. The Owner card uses readable text over its green gradient in dark mode.",
+      "testResult": "PASS · Eight authenticated Chromium theme and viewport checks and nine dashboard regression tests.",
+      "outstandingWork": "Hosted verification awaits deployment.",
+      "acceptanceGate": "ADM-RECEIPTS-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "ADM-RECEIPTS-G01",
+      "requirement": "All card text exceeds 4.5:1 contrast on both gradient endpoints in light and dark themes at 1440px and 390px. Currency formatting and Finance link are present for the tested roles.",
+      "status": "PASS"
+    }
+  ]
+}
