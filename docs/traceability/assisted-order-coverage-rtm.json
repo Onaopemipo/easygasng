@@ -42,10 +42,10 @@
       "negativeTests": [],
       "evidence": ["docs/traceability/assisted-order-coverage-evidence.txt"],
       "acceptanceGate": "ASSISTED-COVERAGE-G02",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "UI implementation typechecked. Authenticated browser verification is pending.",
-      "testResult": "PASS: web TypeScript check.",
-      "outstandingWork": "Check the form in a browser against the deployed demo."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The deployed form passed desktop and mobile-width Chrome checks with an authenticated demo owner and a synthetic customer.",
+      "testResult": "PASS: web TypeScript and hosted Chrome at 1440px and 390px. Pending locations are disabled, confirmed locations enable review, and refresh preserves the entered address.",
+      "outstandingWork": "Victoria Island requires an approved boundary before staff can quote an order for that area."
     }
   ],
   "gates": [
@@ -56,7 +56,7 @@
     },
     {
       "id": "ASSISTED-COVERAGE-G02",
-      "status": "OPEN",
+      "status": "PASS",
       "gate": "Verify labels, disabled actions and refresh in the staff order form."
     }
   ]
