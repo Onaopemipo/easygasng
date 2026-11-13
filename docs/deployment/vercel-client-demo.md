@@ -83,3 +83,9 @@ Git source `5179c7a659922230d8ab88e95fa4c621825fec3b` on `codex/driver-experienc
 After promotion, Chrome verified all eight public destinations at 1920px and 390px, including the Home anchor. The demo health endpoint returned HTTP 200 with demo scope. Owner/customer sign-in, customer denial on the owner dashboard endpoint, the public catalogue and no-index controls passed. The 36 focused local tests and both typechecks passed. The [GitHub release validation run](https://github.com/Onaopemipo/easygasng/actions/runs/43322279192) passed both jobs. No database migration or app-store release was performed. Commercial production remains NO-GO.
 
 Related matrices: [public website width](../traceability/public-width-1440-rtm.md), [form contrast](../traceability/form-contrast-rtm.md), and [demo readiness](../traceability/demo-readiness-rtm.md).
+
+## 13 November Customers and dashboard fixes
+
+Source `6978765487c56061cc48c2ce4acbdeba7f8e3c4a` was pushed to `codex/driver-experience-redesign`. Vercel built the committed snapshot and promoted `dpl_FjxuUwUMtSpqKegZjD4pERdhWShJ` to the stable demo alias after verifying demo readiness. The prior alias rollback target is `dpl_2YCvePvu86S9a7Gs6aos7TD4x6CE`.
+
+Twelve focused local tests, the local typecheck and [GitHub Release validation](https://github.com/Onaopemipo/easygasng/actions/runs/43343661777) passed. After promotion, the stable alias passed the health and anonymous session checks. Authenticated Chrome passed both fixes at 1440px and 390px. See the [customer actions matrix](../traceability/customer-actions-menu-rtm.md) and [dashboard receipts matrix](../traceability/dashboard-receipts-contrast-rtm.md). Commercial production remains NO-GO.
