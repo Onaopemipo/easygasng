@@ -979,7 +979,9 @@ test("OPS-T10: encrypted offline records reject tampering, wrong keys and cross-
   assert.throws(() => openFieldRecord(raw, new Uint8Array(32).fill(4), user));
   assert.throws(() => openFieldRecord(raw, key, id()), /account/);
   const tampered = JSON.parse(raw);
-  tampered.cipher = "ff" + tampered.cipher.slice(2);
+  const firstByte = Number.parseInt(tampered.cipher.slice(0, 2), 16);
+  const modifiedByte = (firstByte ^ 1).toString(16).padStart(2, "0");
+  tampered.cipher = modifiedByte + tampered.cipher.slice(2);
   assert.throws(
     () => openFieldRecord(JSON.stringify(tampered), key, user),
     /authentication/,

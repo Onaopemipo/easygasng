@@ -61,6 +61,26 @@
       "reason": "The two GitHub web jobs failed the same stale checksum. The corrected audit and the payment and dispatch suites passed locally.",
       "testResult": "PASS: 30 focused tests locally. Full hosted CI validation is pending.",
       "outstandingWork": "Verify the web and native jobs on the replacement GitHub Actions run."
+    },
+    {
+      "id": "PAY-RETURN-R03",
+      "requirement": "Always alter the ciphertext in the offline record tampering regression.",
+      "priority": "P0",
+      "scope": "Release validation for encrypted offline field records",
+      "uiReference": "Driver and technician offline queue",
+      "route": "GitHub Actions Release validation",
+      "implementationFiles": ["tests/operations-completion.test.ts"],
+      "dataSource": "Synthetic encrypted record and the failure reported in GitHub Actions run 43476085809.",
+      "securityControl": "The test flips a bit in the first byte so the ciphertext always changes. Tampering must fail authentication. Wrong-key and cross-account checks still run.",
+      "testFiles": ["tests/operations-completion.test.ts"],
+      "testIds": ["OPS-T10"],
+      "negativeTests": ["encrypted offline records reject tampering, wrong keys and cross-account decryption"],
+      "evidence": ["docs/traceability/paystack-return-ci-evidence.txt"],
+      "acceptanceGate": "PAY-RETURN-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "The failing run assigned a fixed byte that could match the original ciphertext. The revised fixture always makes a change.",
+      "testResult": "PASS: focused local tamper, checksum and payment regressions.",
+      "outstandingWork": "Confirm the repaired web job in GitHub Actions."
     }
   ],
   "gates": [
