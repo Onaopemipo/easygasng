@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useEffect, useState } from "react";
 import { api, Loading, Notice } from "./ui";
 import { ServiceForm } from "./professional-services";
@@ -165,7 +166,7 @@ export default function StaffPrivileges({
               .includes(search.toLowerCase()),
           ) && <p role="status">No privileges match this search.</p>}
           <label>
-            Reason for privilege changes
+            <FieldCaption required={true}>Reason for privilege changes</FieldCaption>
             <textarea
               value={reason}
               onChange={(e) => setReason(e.target.value)}

@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useEffect, useState } from "react";
 import { api, Loading, Notice } from "./ui";
 export function MailDeliveryControls() {
@@ -83,7 +84,7 @@ export function MailDeliveryControls() {
                       }}
                     >
                       <label>
-                        Provider outcome
+                        <FieldCaption required={true}>Provider outcome</FieldCaption>
                         <select name="outcome">
                           <option value="unknown">
                             Unknown — keep under review
@@ -97,7 +98,7 @@ export function MailDeliveryControls() {
                         </select>
                       </label>
                       <label>
-                        Provider investigation evidence
+                        <FieldCaption required={true}>Provider investigation evidence</FieldCaption>
                         <textarea
                           name="reason"
                           minLength={20}
@@ -106,9 +107,9 @@ export function MailDeliveryControls() {
                         />
                       </label>
                       <label>
-                        <input type="checkbox" name="stopped" required /> I
+                        <input type="checkbox" name="stopped" required /> <FieldCaption required={true}>I
                         stopped the original sending worker and checked the
-                        provider record.
+                        provider record.</FieldCaption>
                       </label>
                       <button className="button secondary" disabled={busy}>
                         Record reconciliation
@@ -144,7 +145,7 @@ export function MailDeliveryControls() {
                     }}
                   >
                     <label>
-                      Review reason
+                      <FieldCaption required={true}>Review reason</FieldCaption>
                       <textarea
                         name="reason"
                         minLength={10}
@@ -153,9 +154,9 @@ export function MailDeliveryControls() {
                       />
                     </label>
                     <label>
-                      <input type="checkbox" name="ack" required /> I checked
+                      <input type="checkbox" name="ack" required /> <FieldCaption required={true}>I checked
                       the provider outcome and understand that retrying may send
-                      a duplicate.
+                      a duplicate.</FieldCaption>
                     </label>
                     <button
                       className="button secondary"

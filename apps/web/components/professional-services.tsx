@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { EasyGasLoader } from "./easygas-loader";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, ClipboardList, Clock3, Info, ListChecks, MapPin, ShieldCheck, Wrench, CircleMinus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
@@ -26,6 +27,7 @@ type Field = {
   value?: any;
   options?: { value: string; label: string }[];
   required?: boolean;
+  needsConsent?: boolean;
 };
 export function ServiceForm({
   title,
@@ -156,7 +158,7 @@ export function ServiceForm({
             />
           ) : (
             <label key={f.name} data-field-type={f.type ?? "text"}>
-              {f.label}
+              {f.type !== "hidden" && <FieldCaption required={f.type === "checkbox" ? f.needsConsent === true : f.required !== false}>{f.label}</FieldCaption>}
               {f.options ? (
                 <select
                   name={f.name}
@@ -785,7 +787,7 @@ function BookingForm({
       {(available || zone) && (
         <div className="service-detail-slot-fields">
           <label>
-            Service area
+            <FieldCaption required={true}>Service area</FieldCaption>
             <select
               value={zone}
               onChange={(event) => {
@@ -803,7 +805,7 @@ function BookingForm({
             </select>
           </label>
           <label>
-            Appointment date
+            <FieldCaption required={true}>Appointment date</FieldCaption>
             <select
               value={days.includes(day) ? day : ""}
               disabled={!available || !zone}
@@ -819,7 +821,7 @@ function BookingForm({
             </select>
           </label>
           <label>
-            Appointment time (Lagos)
+            <FieldCaption required={true}>Appointment time (Lagos)</FieldCaption>
             <select
               value={selected?.id ?? ""}
               disabled={!available || !day}
@@ -849,7 +851,7 @@ function BookingForm({
       <div hidden={!details} className="service-detail-contact-fields">
         {addresses.some((a) => a.zone.toLowerCase() === zone.toLowerCase()) && (
           <label className="surface" style={{ display: "grid", gap: 8 }}>
-            Use a saved address
+            <FieldCaption required={false}>Use a saved address</FieldCaption>
             <select
               aria-label="Saved service address"
               value={address?.id ?? ""}
@@ -941,7 +943,7 @@ function BookingForm({
             },
             {
               name: "brand",
-              label: "Equipment brand, if known",
+              label: "Equipment brand",
               required: false,
             },
             { name: "type", label: "Equipment type" },
@@ -1279,7 +1281,7 @@ function ChecklistEditor({
       {checks.map((c, i) => (
         <div key={c.id}>
           <label>
-            Inspection step {i + 1}
+            <FieldCaption required={true}>Inspection step {i + 1}</FieldCaption>
             <FormInput
               value={c.label}
               required
@@ -1305,8 +1307,8 @@ function ChecklistEditor({
                   ),
                 )
               }
-            />{" "}
-            Required
+            /><FieldCaption required={false}>{" "}
+            Required</FieldCaption>
           </label>
           <button
             type="button"
@@ -2169,6 +2171,7 @@ export function BookingCard({
               },
               {
                 name: "acceptWalletCredit",
+                needsConsent: true,
                 label:
                   "I accept restricted EasyGas purchase credit for an approved refund",
                 type: "checkbox",
@@ -2298,7 +2301,7 @@ function QuoteForm({ b, done }: { b: any; done: () => void }) {
         fields={[
           {
             name: "validUntil",
-            label: "Quotation valid until (optional, your local time)",
+            label: "Quotation valid until (your local time)",
             type: "datetime-local",
             required: false,
           },

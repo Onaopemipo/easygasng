@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { createDialogQueue } from "../../../packages/business-rules/src/dialog-queue";
@@ -147,7 +148,7 @@ function Dialog({
         {o.kind === "prompt" && (
           <>
             <label>
-              Reason and evidence
+              <FieldCaption required={true}>Reason and evidence</FieldCaption>
               <textarea
                 data-initial-focus
                 value={text}

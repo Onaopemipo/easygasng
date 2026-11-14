@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { EasyGasLoader } from "./easygas-loader";
 import { useEffect, useState, useRef, type FormEvent } from "react";
 import { ImageUpload } from "./image-upload";
@@ -260,7 +261,7 @@ export function CustomerTestimonials() {
               <h3>{editing ? "Edit your feedback" : "Share an experience"}</h3>
               {!editing && (
                 <label>
-                  Completed purchase or service
+                  <FieldCaption required={true}>Completed purchase or service</FieldCaption>
                   <select
                     name="transaction"
                     required
@@ -281,7 +282,7 @@ export function CustomerTestimonials() {
                 </label>
               )}
               <label>
-                Rating
+                <FieldCaption required={true}>Rating</FieldCaption>
                 <select name="rating" defaultValue={editing?.rating ?? 5}>
                   {[5, 4, 3, 2, 1].map((n) => (
                     <option key={n} value={n}>
@@ -291,7 +292,7 @@ export function CustomerTestimonials() {
                 </select>
               </label>
               <label>
-                Your experience
+                <FieldCaption required={true}>Your experience</FieldCaption>
                 <textarea
                   name="body"
                   required
@@ -305,7 +306,7 @@ export function CustomerTestimonials() {
                 details. All ratings are welcome.
               </p>
               <label>
-                Public name style
+                <FieldCaption required={true}>Public name style</FieldCaption>
                 <select
                   name="nameStyle"
                   value={nameStyle}
@@ -318,7 +319,7 @@ export function CustomerTestimonials() {
               </label>
               {nameStyle === "custom" && (
                 <label>
-                  Chosen display name
+                  <FieldCaption required={true}>Chosen display name</FieldCaption>
                   <input
                     name="displayName"
                     required
@@ -333,9 +334,9 @@ export function CustomerTestimonials() {
                   name="consent"
                   type="checkbox"
                   defaultChecked={editing?.consent ?? false}
-                />{" "}
+                /><FieldCaption required={true}>{" "}
                 I consent to this feedback and my selected display name being
-                published on EasyGas after review.
+                published on EasyGas after review.</FieldCaption>
               </label>
               <p>
                 Photo uploads can be added to a saved draft when enabled by the
@@ -725,7 +726,7 @@ export function TestimonialManagement() {
           <blockquote>{decision.row.body}</blockquote>
           <form onSubmit={confirmModeration}>
             <label>
-              Review category
+              <FieldCaption required={true}>Review category</FieldCaption>
               <select name="category" required>
                 <option value="Authenticity and consent">
                   Authenticity and consent
@@ -740,7 +741,7 @@ export function TestimonialManagement() {
               </select>
             </label>
             <label>
-              Moderation reason
+              <FieldCaption required={true}>Moderation reason</FieldCaption>
               <textarea name="reason" required minLength={5} maxLength={900} />
             </label>
             {error && <Notice message={error} />}

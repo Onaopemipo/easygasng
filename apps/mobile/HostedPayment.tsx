@@ -10,7 +10,7 @@ import {
   money,
   type CustomerAPI,
 } from "./CustomerUI";
-import { TextInput } from "./typography";
+import { FieldCaption, TextInput } from "./typography";
 import { useTheme } from "./theme";
 export function NativePaymentReturn({
   api,
@@ -236,8 +236,9 @@ export function NativeWalletFunding({
   return (
     <Card>
       <Title>Fund Purchase Credit</Title>
+      <FieldCaption required={true}>Amount (NGN)</FieldCaption>
       <TextInput
-        accessibilityLabel="Wallet credit amount in naira"
+        accessibilityLabel="Wallet credit amount in naira, required"
         placeholder="Amount (NGN)"
         keyboardType="decimal-pad"
         value={amount}

@@ -1,5 +1,6 @@
 "use client";
 
+import { FieldCaption } from "./field-caption";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   CalendarDays,
@@ -458,7 +459,7 @@ function ProfileCard({
             <div>
               {!smart && <h3>Tell us how much gas is left</h3>}
               <label>
-                Current supply
+                <FieldCaption required={true}>Current supply</FieldCaption>
                 <select
                   value={choice}
                   disabled={saving || disabled}

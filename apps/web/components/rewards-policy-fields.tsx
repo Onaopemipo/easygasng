@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 export function RewardsPolicyFields({
   value,
   onChange,
@@ -18,10 +19,10 @@ export function RewardsPolicyFields({
             onChange({ ...value, serviceEarningEnabled: e.target.checked })
           }
         />
-        Allow verified completed service labour to earn points
+        <FieldCaption required={false}>Allow verified completed service labour to earn points</FieldCaption>
       </label>
       <label>
-        Eligible service IDs (comma separated)
+        <FieldCaption required={false}>Eligible service IDs (comma separated)</FieldCaption>
         <input
           value={(value.eligibleServiceIds ?? []).join(", ")}
           onChange={(e) =>
@@ -46,10 +47,10 @@ export function RewardsPolicyFields({
           <legend>Offer {i + 1}</legend>
           {["id", "title", "description", "startsAt", "expiresAt"].map((k) => (
             <label key={k}>
-              {k}
+              <FieldCaption required={true}>{k}
               {k === "startsAt" || k === "expiresAt"
                 ? " (ISO date and time)"
-                : ""}
+                : ""}</FieldCaption>
               <input
                 required
                 value={o[k]}
@@ -71,7 +72,7 @@ export function RewardsPolicyFields({
             "frequencyDays",
           ].map((k) => (
             <label key={k}>
-              {k}
+              <FieldCaption required={true}>{k}</FieldCaption>
               <input
                 type="number"
                 required
@@ -103,9 +104,9 @@ export function RewardsPolicyFields({
                   })
                 }
               />
-              {k === "active"
+              <FieldCaption required={false}>{k === "active"
                 ? "Publish after approval"
-                : "Restrict to consented, eligible Smart Refill profiles"}
+                : "Restrict to consented, eligible Smart Refill profiles"}</FieldCaption>
             </label>
           ))}
           <button

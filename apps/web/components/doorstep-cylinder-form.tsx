@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useRef, useState, type FormEvent } from "react";
 import { api, Notice } from "./ui";
 export function DoorstepCylinderForm({
@@ -75,11 +76,11 @@ export function DoorstepCylinderForm({
           {amendment ? (
             <>
               <label>
-                Customer cylinder ID
+                <FieldCaption required={true}>Customer cylinder ID</FieldCaption>
                 <input name={"cylinder" + i} required />
               </label>
               <label>
-                Independently verified allowable fill (kg)
+                <FieldCaption required={true}>Independently verified allowable fill (kg)</FieldCaption>
                 <input
                   name={"allowance" + i}
                   type="number"
@@ -89,7 +90,7 @@ export function DoorstepCylinderForm({
                 />
               </label>
               <label>
-                Inspection evidence
+                <FieldCaption required={true}>Inspection evidence</FieldCaption>
                 <input
                   name={"evidence" + i}
                   minLength={10}
@@ -101,7 +102,7 @@ export function DoorstepCylinderForm({
           ) : (
             <>
               <label>
-                Cylinder capacity (kg)
+                <FieldCaption required={true}>Cylinder capacity (kg)</FieldCaption>
                 <input
                   name={"capacity" + i}
                   type="number"
@@ -111,7 +112,7 @@ export function DoorstepCylinderForm({
                 />
               </label>
               <label>
-                Gas required (kg)
+                <FieldCaption required={true}>Gas required (kg)</FieldCaption>
                 <input
                   name={"quantity" + i}
                   type="number"
@@ -146,7 +147,7 @@ export function DoorstepCylinderForm({
       )}
       {amendment && (
         <label>
-          Preparation evidence and reason
+          <FieldCaption required={true}>Preparation evidence and reason</FieldCaption>
           <input name="reason" minLength={10} maxLength={500} required />
         </label>
       )}

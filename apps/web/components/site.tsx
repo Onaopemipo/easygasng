@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { RefillProfiles } from "./refill-profiles";
 import { Wrench } from "lucide-react";
 import { hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
@@ -799,11 +800,11 @@ function QuickOrder() {
         ))}
       </div>
       <label>
-        {tab === "gas"
+        <FieldCaption required={true}>{tab === "gas"
           ? "Choose your cylinder size"
           : tab === "cylinders"
             ? "Choose your empty cylinder size"
-            : "Choose your kitchen essential"}
+            : "Choose your kitchen essential"}</FieldCaption>
       </label>
       <div className="size-options">
         {products.map((p: any) => (
@@ -824,7 +825,7 @@ function QuickOrder() {
         ))}
       </div>
       <div className="form-label-row">
-        <label htmlFor="quick-address">Delivery Address</label>
+        <label htmlFor="quick-address"><FieldCaption required={false}>Delivery Address</FieldCaption></label>
         <Link href="/delivery" className="orange-link">
           <MapPin size={13} />
           Service areas
@@ -839,7 +840,7 @@ function QuickOrder() {
           onChange={(e) => setAddress(e.target.value)}
         />
       </div>
-      <label>Preferred Delivery Time</label>
+      <label><FieldCaption required={false}>Preferred Delivery Time</FieldCaption></label>
       <div className="form-columns">
         <div className="input-icon">
           <CalendarDays size={17} />
@@ -1297,12 +1298,12 @@ function Auth({ register }: { register: boolean }) {
         </p>
         {register && (
           <label>
-            Full name
+            <FieldCaption required={true}>Full name</FieldCaption>
             <FormInput name="name" autoComplete="name" required minLength={2} />
           </label>
         )}
         <label>
-          {register ? "Email address" : "Email or phone number"}
+          <FieldCaption required={true}>{register ? "Email address" : "Email or phone number"}</FieldCaption>
           <FormInput
             name={register ? "email" : "identifier"}
             type={register ? "email" : "text"}
@@ -1312,7 +1313,7 @@ function Auth({ register }: { register: boolean }) {
           />
         </label>
         <label>
-          {passwordChangeRequired ? "Temporary password" : "Password"}
+          <FieldCaption required={true}>{passwordChangeRequired ? "Temporary password" : "Password"}</FieldCaption>
           <FormInput
             name="password"
             type="password"
@@ -1325,7 +1326,7 @@ function Auth({ register }: { register: boolean }) {
           <>
             <Notice message="Choose a new password to finish your first sign-in." />
             <label>
-              New password
+              <FieldCaption required={true}>New password</FieldCaption>
               <FormInput
                 name="newPassword"
                 type="password"
@@ -1545,7 +1546,7 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
                   <CheckoutDeliveryFields user={user} zones={catalogue.zones} draftStreet={draft.address} />
                   <div className="form-columns">
                     <label>
-                      Delivery date
+                      <FieldCaption required={true}>Delivery date</FieldCaption>
                       <FormInput
                         name="date"
                         defaultValue={draft.date}
@@ -1555,7 +1556,7 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
                       />
                     </label>
                     <label>
-                      Delivery window
+                      <FieldCaption required={true}>Delivery window</FieldCaption>
                       <select
                         name="window"
                         required
@@ -1568,14 +1569,13 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
                     </label>
                   </div>
                   <label>
-                    Delivery instructions{" "}
-                    <span className="muted">(optional)</span>
+                    <FieldCaption required={false}>Delivery instructions</FieldCaption>
                     <textarea name="instructions" maxLength={500} />
                   </label>
                   <RewardCheckoutField />
                   <h3>Payment</h3>
                   <label>
-                    Payment method
+                    <FieldCaption required={true}>Payment method</FieldCaption>
                     <select name="paymentMethod" required>
                       {cardEnabled && <option value="card">Credit / debit card · secure Paystack checkout (sandbox)</option>}
                       {catalogue.codEnabled && (
@@ -1931,7 +1931,7 @@ function Account({ section }: { section: string }) {
             <form className="surface product-form" onSubmit={createSchedule}>
               <h2>Plan your next refill</h2>
               <label>
-                Gas refill
+                <FieldCaption required={true}>Gas refill</FieldCaption>
                 <select name="productId" required>
                   <option value="">Choose an available product</option>
                   {catalogue.products
@@ -1947,7 +1947,7 @@ function Account({ section }: { section: string }) {
               </label>
               <div className="form-columns">
                 <label>
-                  Frequency
+                  <FieldCaption required={true}>Frequency</FieldCaption>
                   <select name="intervalDays">
                     {[7, 14, 28, 42].map((d) => (
                       <option key={d} value={d}>
@@ -1957,7 +1957,7 @@ function Account({ section }: { section: string }) {
                   </select>
                 </label>
                 <label>
-                  First refill date
+                  <FieldCaption required={true}>First refill date</FieldCaption>
                   <FormInput
                     name="nextDate"
                     type="date"

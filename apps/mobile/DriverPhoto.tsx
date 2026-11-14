@@ -5,7 +5,7 @@ import { Switch } from "react-native";
 import { View, Pressable } from "./surfaces";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system/legacy";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, Text, TextInput } from "./typography";
 import { captureFieldEvent, type FieldEvent } from "./field-queue";
 export function DriverPhoto({
   userId,
@@ -52,13 +52,14 @@ export function DriverPhoto({
   return (
     <View style={{ padding: 12, gap: 8 }}>
       <Text>Delivery evidence photo</Text>
+      <FieldCaption required={true}>Photo description</FieldCaption>
       <TextInput
-        accessibilityLabel="Photo description"
+        accessibilityLabel="Photo description, required"
         value={alt}
         onChangeText={setAlt}
         placeholder="Describe the evidence (avoid unnecessary personal data)"
       />
-      <Text>Customer consented to this evidence photo</Text>
+      <FieldCaption required={true}>Customer consented to this evidence photo</FieldCaption>
       <Switch value={consent} onValueChange={setConsent} />
       <Pressable accessibilityRole="button" onPress={choose}>
         <Text style={{ color: "#087a36", fontSize: 16 }}>

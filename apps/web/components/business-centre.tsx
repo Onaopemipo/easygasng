@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "./workspace-link";
 import { useSearchParams } from "next/navigation";
@@ -1796,8 +1797,8 @@ function StocktakeCounter({
       >
         {session.snapshot.map((r: any, i: number) => (
           <label key={r.productId ?? "gas"}>
-            {r.name} · {r.gas ? "kg" : "units"} · recorded{" "}
-            {r.quantity / (r.gas ? 1000 : 1)}
+            <FieldCaption required={true}>{r.name} · {r.gas ? "kg" : "units"} · recorded{" "}
+            {r.quantity / (r.gas ? 1000 : 1)}</FieldCaption>
             <input
               name={"count-" + i}
               defaultValue={
@@ -1822,11 +1823,11 @@ function StocktakeCounter({
         {session.status === "open" && (
           <>
             <label>
-              Count/variance explanation
+              <FieldCaption required={true}>Count/variance explanation</FieldCaption>
               <textarea name="reason" required minLength={5} />
             </label>
             <label>
-              Signed count sheet / supporting evidence
+              <FieldCaption required={true}>Signed count sheet / supporting evidence</FieldCaption>
               <textarea name="evidence" required minLength={5} />
             </label>
             <button className="button" disabled={busy}>

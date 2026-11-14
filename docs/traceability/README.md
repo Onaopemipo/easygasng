@@ -223,3 +223,5 @@ Staff invitation access and Drivers directory: [matrix](staff-invite-drivers-rtm
 Customer checkout delivery prefill: [matrix](checkout-delivery-rtm.md). Web prefill and one-order overrides verified on isolated data. Native installed-app acceptance remains open; production NO-GO unchanged.
 
 Cinematic customer introduction: [matrix](onboarding-redesign-rtm.md), [baseline](../onboarding-redesign/00-baseline-audit.md) and [test evidence](../onboarding-redesign/04-test-results.md). Frontend only; three scenes on web, iOS and Android. Existing commercial production NO-GO remains.
+
+Required and optional form labels: [matrix](field-markers-rtm.md), [machine-readable matrix](field-markers-rtm.json), and [evidence](field-markers-evidence.txt). Shared web and native forms updated; authenticated settings and approval browser checks passed. Native installed-app and wider role-specific runtime coverage remain open. Production NO-GO unchanged.

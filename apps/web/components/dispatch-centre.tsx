@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { RiderMap } from "./rider-map";
 import {
@@ -1014,7 +1015,7 @@ export default function DispatchCentre({ user }: { user: any }) {
               />
             )}
             <fieldset>
-              <legend>Branch drivers</legend>
+              <legend><FieldCaption required={true}>Branch drivers</FieldCaption></legend>
               {candidate.candidates.map((d: any) => (
                 <label key={d.id} className="dc-candidate">
                   <input
@@ -1040,7 +1041,7 @@ export default function DispatchCentre({ user }: { user: any }) {
               )}
             </fieldset>
             <label>
-              Assignment reason
+              <FieldCaption required={true}>Assignment reason</FieldCaption>
               <textarea
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}

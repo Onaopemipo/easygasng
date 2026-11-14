@@ -1,0 +1,11 @@
+Source audit: inspected visible JSX labels and direct input call sites; shared schemas, form metadata, and conditional business validation determined applicability.
+
+PASS — node --import tsx --test --test-concurrency=1 with effective-date, settings-cleanup, settings-datetime, settings-money, unified-sign-in, checkout-delivery, form-contrast, approval-pagination, shared-approval-gas and product-ui (34 of 34).
+PASS — npm run typecheck.
+PASS — npm --prefix apps/mobile run typecheck.
+PASS — EASYGAS_PREVIEW=true next build --webpack in an isolated workspace copy.
+PASS — Chromium with isolated local data: /login displayed required email/phone and password; existing sign-in succeeded.
+PASS — Chromium with synthetic owner at /admin/settings: gas price proposal displayed required reason and existing blank-value validation; effective date and draft labelled optional; draft checkbox stayed before caption; the modal fit a 390px viewport.
+PASS — Chromium in dark appearance at /admin/approvals: synthetic manager's request showed optional comments for approval; existing API returned 400 for a blank rejection reason and the reason error was visible in the dialog.
+PASS — git diff --check.
+NOT RUN — full suite, every authenticated state, assistive-technology walkthrough, installed iOS and Android builds and hosted rollout.

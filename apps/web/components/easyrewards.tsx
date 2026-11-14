@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { EasyGasLoader } from "./easygas-loader";
 import { friendlyMessage } from "../../../packages/business-rules/src/friendly-message";
 
@@ -682,7 +683,7 @@ export function RewardCheckoutField({
   return (
     <div>
       <label>
-        Reward offer (optional)
+        <FieldCaption required={false}>Reward offer</FieldCaption>
         <select
           name="rewardOfferId"
           value={offer}
@@ -794,7 +795,7 @@ function ReferralPanel({ refreshing }: { refreshing: boolean }) {
         Get my referral code
       </button>
       <label>
-        Referral code received
+        <FieldCaption required={true}>Code to apply</FieldCaption>
         <input
           autoCapitalize="none"
           autoComplete="off"
@@ -891,8 +892,8 @@ export function PartialRefundForm({ orderId }: { orderId: string }) {
       </p>
       {lines.map((l) => (
         <label key={l.source}>
-          {l.source} · {l.remaining} remaining{" "}
-          {l.source.startsWith("gas:") ? "grams" : "units"}
+          <FieldCaption required={false}>{l.source} · {l.remaining} remaining{" "}
+          {l.source.startsWith("gas:") ? "grams" : "units"}</FieldCaption>
           <input
             type="number"
             min="0"
@@ -907,7 +908,7 @@ export function PartialRefundForm({ orderId }: { orderId: string }) {
         </label>
       ))}
       <label>
-        Reason
+        <FieldCaption required={true}>Reason</FieldCaption>
         <textarea
           value={reason}
           minLength={10}
@@ -923,7 +924,7 @@ export function PartialRefundForm({ orderId }: { orderId: string }) {
           checked={consent}
           onChange={(e) => setConsent(e.target.checked)}
         />
-        I accept purchase credit if independently approved.
+        <FieldCaption required={true}>I accept purchase credit if independently approved.</FieldCaption>
       </label>
       <button
         className="button secondary"

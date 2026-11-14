@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
 import { useCardCheckout, OrderCardPayment } from "./hosted-payment";
 import { RewardCheckoutField } from "./easyrewards";
@@ -171,7 +172,7 @@ export default function CombinedCheckout({
               <h2>{a.name}</h2>
               <p>{a.label}</p>
               <label>
-                Contact mobile number for {a.name}
+                <FieldCaption required={true}>Contact mobile number for {a.name}</FieldCaption>
                 <input type="tel" autoComplete="tel" value={a.request?.address?.phone ?? ""}
                   aria-describedby={`appointment-phone-help-${i}`}
                   onChange={(e) => {
@@ -223,11 +224,11 @@ export default function CombinedCheckout({
               <h3>Product delivery</h3>
               <CheckoutDeliveryFields user={user} zones={catalogue.zones} />
               <label>
-                Delivery date
+                <FieldCaption required={true}>Delivery date</FieldCaption>
                 <input name="date" type="date" required />
               </label>
               <label>
-                Delivery window
+                <FieldCaption required={true}>Delivery window</FieldCaption>
                 <select name="window" required>
                   {catalogue.windows.map((w: string) => (
                     <option key={w}>{w}</option>
@@ -236,7 +237,7 @@ export default function CombinedCheckout({
               </label>
               <RewardCheckoutField />
               <label>
-                Product payment
+                <FieldCaption required={true}>Product payment</FieldCaption>
                 <select name="paymentMethod">
                   {cardEnabled && <option value="card">Credit / debit card · Paystack sandbox</option>}
                   {catalogue.codEnabled && <option value="cash_on_delivery">Cash on delivery</option>}

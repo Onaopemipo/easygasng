@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {   AppState } from "react-native";
 import { View, Pressable } from "./surfaces";
 import * as Location from "expo-location";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, Text, TextInput } from "./typography";
 import { NativeForm } from "./Workflows";
 import { captureFieldEvent, fieldQueue, syncFieldQueue } from "./field-queue";
 export default function DriverOperations({
@@ -222,22 +222,25 @@ export default function DriverOperations({
               : "Capture location on this screen",
             capturing ? stop : gps,
           )}
+          <FieldCaption required={true}>Fuel litres</FieldCaption>
           <TextInput
-            accessibilityLabel="Fuel litres"
+            accessibilityLabel="Fuel litres, required"
             placeholder="Litres purchased"
             keyboardType="decimal-pad"
             value={fuel.litres}
             onChangeText={(litres) => setFuel((v) => ({ ...v, litres }))}
           />
+          <FieldCaption required={true}>Fuel cost (₦)</FieldCaption>
           <TextInput
-            accessibilityLabel="Fuel cost in naira"
+            accessibilityLabel="Fuel cost in naira, required"
             placeholder="Cost (₦)"
             keyboardType="decimal-pad"
             value={fuel.cost}
             onChangeText={(cost) => setFuel((v) => ({ ...v, cost }))}
           />
+          <FieldCaption required={true}>Fuel receipt reference</FieldCaption>
           <TextInput
-            accessibilityLabel="Fuel receipt reference"
+            accessibilityLabel="Fuel receipt reference, required"
             placeholder="Receipt reference"
             value={fuel.receipt}
             onChangeText={(receipt) => setFuel((v) => ({ ...v, receipt }))}

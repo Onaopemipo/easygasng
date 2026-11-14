@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
 
 import { FormInput } from "./password-input";
@@ -72,7 +73,7 @@ export default function PhoneCompletion() {
       </button>
       <form className="panel stack product-form" onSubmit={review}>
         <label>
-          Six-digit code
+          <FieldCaption required={true}>Six-digit code</FieldCaption>
           <FormInput
             value={code}
             onChange={(e) => setCode(e.target.value)}
@@ -97,7 +98,7 @@ export default function PhoneCompletion() {
           </p>
           <form onSubmit={complete} className="stack product-form">
             <label>
-              Create a password
+              <FieldCaption required={true}>Create a password</FieldCaption>
               <FormInput
                 name="password"
                 type="password"
@@ -108,8 +109,8 @@ export default function PhoneCompletion() {
               />
             </label>
             <label>
-              <FormInput type="checkbox" name="terms" required /> I accept the{" "}
-              <a href="/terms">terms and conditions</a>.
+              <FormInput type="checkbox" name="terms" required /> <FieldCaption required={true}>I accept the{" "}
+              <a href="/terms">terms and conditions</a>.</FieldCaption>
             </label>
             <button className="button" disabled={busy}>
               Activate my account

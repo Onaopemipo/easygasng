@@ -1,0 +1,214 @@
+{
+  "phase": "Required and optional field labels",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "FIELD-MARK-01",
+      "requirement": "Admin settings and approval review labels",
+      "scope": "Admin settings and approval reviews",
+      "priority": "P1",
+      "uiReference": "User request: asterisks for compulsory fields and (optional) for other fields",
+      "route": "/admin/settings, /admin/approvals",
+      "dataSource": "Setting schemas, existing form validity and governance decision rules",
+      "securityControl": "Existing auth, scope and independent approval rules remain in force.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/rewards-policy-fields.tsx",
+        "apps/web/components/field-caption.tsx"
+      ],
+      "testFiles": [
+        "tests/settings-cleanup.test.ts",
+        "tests/settings-datetime.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "testIds": [
+        "SETUP-02",
+        "DATE-01",
+        "A–C,K"
+      ],
+      "negativeTests": [
+        "Chromium: blank required reason rejected; independent review with blank rejection reason refused",
+        "A–C,K"
+      ],
+      "evidence": [
+        "docs/traceability/field-markers-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "testResult": "Authenticated Chromium and existing governance regressions passed for the named flows.",
+      "reason": "Authenticated Chromium and existing governance regressions passed for the named flows.",
+      "outstandingWork": "Record-dependent and specialized forms remain tracked in FIELD-MARK-02.",
+      "acceptanceGate": "FIELD-MARK-G01"
+    },
+    {
+      "id": "FIELD-MARK-02",
+      "requirement": "Apply consistent marks to other web forms",
+      "scope": "Customer, staff and operations forms",
+      "priority": "P2",
+      "uiReference": "User request: asterisks for compulsory fields and (optional) for other fields",
+      "route": "/login, /checkout, /gas-order, /services, /admin/staff and role-specific web forms",
+      "dataSource": "Existing control attributes, shared form metadata and business rules",
+      "securityControl": "No changes to server validation, stored values, privileges or order processing.",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/checkout-delivery-fields.tsx",
+        "apps/web/components/staff-invitation.tsx"
+      ],
+      "testFiles": [
+        "tests/product-ui.test.ts",
+        "tests/checkout-delivery.test.ts",
+        "tests/unified-sign-in.test.ts"
+      ],
+      "testIds": [
+        "PRODUCT-UI01",
+        "CHECKOUT-PREFILL01",
+        "SIGNIN-01"
+      ],
+      "negativeTests": [
+        "SIGNIN-02",
+        "SIGNIN-03"
+      ],
+      "evidence": [
+        "docs/traceability/field-markers-evidence.txt"
+      ],
+      "status": "PARTIAL",
+      "testResult": "Sign-in smoke, web build, type check and focused regressions passed.",
+      "reason": "Sign-in smoke, web build, type check and focused regressions passed.",
+      "outstandingWork": "Open and replay remaining data-dependent forms across roles.",
+      "acceptanceGate": "FIELD-MARK-G02"
+    },
+    {
+      "id": "FIELD-MARK-03",
+      "requirement": "Apply consistent marks to native forms",
+      "scope": "Customer, driver, technician and staff workspaces",
+      "priority": "P2",
+      "uiReference": "User request: asterisks for compulsory fields and (optional) for other fields",
+      "route": "Native app: sign-in, account, checkout, service, delivery and governance screens",
+      "dataSource": "NativeForm metadata and direct field requirements from existing backend action contracts",
+      "securityControl": "Captions do not change payloads, auth, offline handling or safety checks.",
+      "implementationFiles": [
+        "apps/mobile/typography.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/OwnerApprovals.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/DriverWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/form-contrast.test.ts"
+      ],
+      "testIds": [
+        "FC-01",
+        "FC-02"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/field-markers-evidence.txt"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "testResult": "Native type check and existing contrast regressions passed.",
+      "reason": "Native type check and existing contrast regressions passed.",
+      "outstandingWork": "Check installed iOS and Android forms and conditional states.",
+      "acceptanceGate": "FIELD-MARK-G03"
+    },
+    {
+      "id": "FIELD-MARK-04",
+      "requirement": "Keep markers accessible and checkbox alignment intact",
+      "scope": "Shared form controls and responsive layouts",
+      "priority": "P2",
+      "uiReference": "User request: asterisks for compulsory fields and (optional) for other fields",
+      "route": "Web and iOS/Android",
+      "dataSource": "Existing label association, theme tokens and checkbox layout",
+      "securityControl": "Required captions include readable text equivalents; control behavior is preserved.",
+      "implementationFiles": [
+        "apps/web/components/field-caption.tsx",
+        "apps/web/app/globals.css",
+        "apps/mobile/typography.tsx"
+      ],
+      "testFiles": [
+        "tests/form-contrast.test.ts",
+        "tests/effective-date.test.ts"
+      ],
+      "testIds": [
+        "FC-03",
+        "DATE-03"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/field-markers-evidence.txt"
+      ],
+      "status": "PARTIAL",
+      "testResult": "Chromium passed visible and accessible label text association and 390px settings layout; dark review verified.",
+      "reason": "Chromium passed visible and accessible label text association and 390px settings layout; dark review verified.",
+      "outstandingWork": "Test with a screen reader and verify native at large text settings.",
+      "acceptanceGate": "FIELD-MARK-G04"
+    }
+  ],
+  "gates": [
+    {
+      "id": "FIELD-MARK-G01",
+      "requirement": "FIELD-MARK-01",
+      "status": "PASS",
+      "evidence": [
+        "docs/traceability/field-markers-evidence.txt"
+      ]
+    },
+    {
+      "id": "FIELD-MARK-G02",
+      "requirement": "FIELD-MARK-02",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/traceability/field-markers-evidence.txt"
+      ]
+    },
+    {
+      "id": "FIELD-MARK-G03",
+      "requirement": "FIELD-MARK-03",
+      "status": "PENDING",
+      "evidence": [
+        "docs/traceability/field-markers-evidence.txt"
+      ]
+    },
+    {
+      "id": "FIELD-MARK-G04",
+      "requirement": "FIELD-MARK-04",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/traceability/field-markers-evidence.txt"
+      ]
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "total": 4,
+      "implemented": 4,
+      "verifiedComplete": 1,
+      "partiallyVerified": 2,
+      "installedRuntimePending": 1
+    },
+    "critical": {
+      "total": 1,
+      "passed": 1
+    },
+    "routes": {
+      "fullRouteSweep": false,
+      "browserVerified": [
+        "/login",
+        "/admin/settings",
+        "/admin/approvals"
+      ],
+      "nativeInstalledVerified": []
+    },
+    "gates": {
+      "total": 4,
+      "passed": 1,
+      "partial": 2,
+      "pending": 1
+    }
+  },
+  "changeLog": [
+    "Added shared and standalone form markers based on current validation. Kept conditional requirements visible and excluded search, filters and read-only values. No deployment or native build."
+  ]
+}

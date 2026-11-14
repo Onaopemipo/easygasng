@@ -12,7 +12,7 @@ import { AppState, Image, Switch, StyleSheet, type ImageURISource } from "react-
 import * as ImagePicker from "expo-image-picker";
 import { SUPPORT_REFRESH_MS } from "../../packages/business-rules/src/support-refresh";
 import { View, Pressable } from "./surfaces";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, fieldAccessibilityLabel, Text, TextInput } from "./typography";
 import { ContextSheet } from "./ContextSheet";
 import { randomUUID } from "expo-crypto";
 type API = (action: string, data?: any) => Promise<any>;
@@ -20,6 +20,7 @@ type Field = {
   name: string;
   label: string;
   value?: any;
+  required?: boolean;
   type?: "email" | "number" | "password" | "checkbox" | "text" | "hidden" | "textarea";
   options?: { value: string; label: string }[];
 };
@@ -124,58 +125,61 @@ export function NativeForm({
       {!reviewed &&
         fields
           .filter((f) => f.type !== "hidden")
-          .map((f) => (
-            <View key={f.name}>
-              <Text style={s.label}>{f.label}</Text>
-              {f.options ? (
-                <View>
-                  {f.options.map((o) => (
-                    <Pressable
-                      key={o.value}
-                      style={[
-                        s.button,
-                        {
-                          backgroundColor:
-                            values[f.name] === o.value ? "#087a36" : "#edf6e9",
-                        },
-                      ]}
-                      onPress={() =>
-                        setValues({ ...values, [f.name]: o.value })
-                      }
-                    >
-                      <Text
-                        style={{
-                          color:
-                            values[f.name] === o.value ? "white" : "#07592e",
-                        }}
+          .map((f) => {
+            const required = f.required ?? f.type !== "checkbox";
+            return (
+              <View key={f.name}>
+                <FieldCaption style={s.label} required={required}>{f.label}</FieldCaption>
+                {f.options ? (
+                  <View>
+                    {f.options.map((o) => (
+                      <Pressable
+                        key={o.value}
+                        style={[
+                          s.button,
+                          {
+                            backgroundColor:
+                              values[f.name] === o.value ? "#087a36" : "#edf6e9",
+                          },
+                        ]}
+                        onPress={() =>
+                          setValues({ ...values, [f.name]: o.value })
+                        }
                       >
-                        {o.label}
-                      </Text>
-                    </Pressable>
-                  ))}
-                </View>
-              ) : f.type === "checkbox" ? (
-                <Switch
-                  accessibilityLabel={f.label}
-                  disabled={!draftReady}
-                  value={Boolean(values[f.name])}
-                  onValueChange={(v) => setValues({ ...values, [f.name]: v })}
-                />
-              ) : (
-                <TextInput
-                  accessibilityLabel={f.label}
-                  style={s.input}
-                  multiline={f.type === "textarea"}
-                  editable={draftReady}
-                  secureTextEntry={f.type === "password"}
-                  keyboardType={f.type === "email" ? "email-address" : f.type === "number" ? "numeric" : "default"}
-                  autoCapitalize="none"
-                  value={String(values[f.name] ?? "")}
-                  onChangeText={(v) => setValues({ ...values, [f.name]: v })}
-                />
-              )}
-            </View>
-          ))}
+                        <Text
+                          style={{
+                            color:
+                              values[f.name] === o.value ? "white" : "#07592e",
+                          }}
+                        >
+                          {o.label}
+                        </Text>
+                      </Pressable>
+                    ))}
+                  </View>
+                ) : f.type === "checkbox" ? (
+                  <Switch
+                    accessibilityLabel={fieldAccessibilityLabel(f.label, required)}
+                    disabled={!draftReady}
+                    value={Boolean(values[f.name])}
+                    onValueChange={(v) => setValues({ ...values, [f.name]: v })}
+                  />
+                ) : (
+                  <TextInput
+                    accessibilityLabel={fieldAccessibilityLabel(f.label, required)}
+                    style={s.input}
+                    multiline={f.type === "textarea"}
+                    editable={draftReady}
+                    secureTextEntry={f.type === "password"}
+                    keyboardType={f.type === "email" ? "email-address" : f.type === "number" ? "numeric" : "default"}
+                    autoCapitalize="none"
+                    value={String(values[f.name] ?? "")}
+                    onChangeText={(v) => setValues({ ...values, [f.name]: v })}
+                  />
+                )}
+              </View>
+            );
+          })}
       {reviewed && review && (
         <View style={{ gap: 8 }}>
           {review(reviewed)}
@@ -472,6 +476,7 @@ export default function Workflows({
                 { name: "phone", label: "Recipient phone", value: a.phone },
                 {
                   name: "building",
+                  required: false,
                   label: "House / building number",
                   value: a.details?.building,
                 },
@@ -509,9 +514,9 @@ export default function Workflows({
                 label: l.name,
               })),
             },
-            { name: "building", label: "Building / house number" },
-            { name: "landmark", label: "Estate / landmark" },
-            { name: "directions", label: "Additional directions" },
+            { name: "building", required: false, label: "Building / house number" },
+            { name: "landmark", required: false, label: "Estate / landmark" },
+            { name: "directions", required: false, label: "Additional directions" },
             {
               name: "isDefault",
               label: "Default delivery address",
@@ -668,6 +673,7 @@ export default function Workflows({
             },
             {
               name: "consent",
+              required: true,
               label:
                 "I authorise recurring cash-on-delivery orders within this maximum total and can revoke authorisation.",
               type: "checkbox",

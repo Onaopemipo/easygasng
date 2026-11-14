@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useEffect, useState } from "react";
 import { api, Loading, money, Notice } from "./ui";
 export default function PaystackReconciliation() {
@@ -79,7 +80,7 @@ export default function PaystackReconciliation() {
         }}
       >
         <label>
-          From (UTC)
+          <FieldCaption required={true}>From (UTC)</FieldCaption>
           <input
             type="date"
             required
@@ -88,7 +89,7 @@ export default function PaystackReconciliation() {
           />
         </label>
         <label>
-          Until, exclusive (UTC)
+          <FieldCaption required={true}>Until, exclusive (UTC)</FieldCaption>
           <input
             type="date"
             required
@@ -97,7 +98,7 @@ export default function PaystackReconciliation() {
           />
         </label>
         <label>
-          Purpose
+          <FieldCaption required={false}>Purpose</FieldCaption>
           <select value={purpose} onChange={(e) => setPurpose(e.target.value)}>
             <option value="">All purposes</option>
             <option value="invoice">Invoice</option>

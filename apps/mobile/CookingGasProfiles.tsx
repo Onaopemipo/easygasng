@@ -27,7 +27,7 @@ import {
 } from "./CustomerUI";
 import { ContextSheet } from "./ContextSheet";
 import { View } from "./surfaces";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, Text, TextInput } from "./typography";
 import { useTheme } from "./theme";
 
 export function CookingGasProfiles({
@@ -655,7 +655,7 @@ function AddProfileSheet({
       }}
     >
       <View style={styles.stack}>
-        <Text>Profile name</Text>
+        <FieldCaption required={true}>Profile name</FieldCaption>
         <TextInput
           accessibilityLabel="Profile name"
           style={inputStyle}
@@ -664,7 +664,7 @@ function AddProfileSheet({
           editable={!saving}
           maxLength={80}
         />
-        <Text>Refill size</Text>
+        <FieldCaption required={true}>Refill size</FieldCaption>
         {products.map((product) => (
           <Button
             key={product.id}
@@ -678,7 +678,7 @@ function AddProfileSheet({
             disabled={saving}
           />
         ))}
-        <Text>People served</Text>
+        <FieldCaption required={true}>People served</FieldCaption>
         <TextInput
           accessibilityLabel="People served"
           style={inputStyle}
@@ -687,7 +687,7 @@ function AddProfileSheet({
           keyboardType="number-pad"
           editable={!saving}
         />
-        <Text>Cooking days per week</Text>
+        <FieldCaption required={true}>Cooking days per week</FieldCaption>
         <TextInput
           accessibilityLabel="Cooking days per week"
           style={inputStyle}

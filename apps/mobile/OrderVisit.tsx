@@ -157,6 +157,7 @@ export default function OrderVisit({
                     },
                     {
                       name: "handover",
+                      required: true,
                       label:
                         "I handed over every reserved unit and exact serial",
                       type: "checkbox",
@@ -287,6 +288,7 @@ export default function OrderVisit({
                 },
                 {
                   name: "consent",
+                  required: true,
                   label: "I consent to the displayed proposed items and price",
                   type: "checkbox",
                 },
@@ -344,6 +346,7 @@ export default function OrderVisit({
             },
             {
               name: "acceptWalletCredit",
+              required: true,
               label: "I accept purchase wallet credit rather than cash",
               type: "checkbox",
             },

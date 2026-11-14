@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { FormInput } from "./password-input";
 import { VehicleManifestPanel } from "./vehicle-manifest-panel";
 import { useEffect, useRef, useState, type FormEvent } from "react";
@@ -74,7 +75,7 @@ export function OperationForm({
       <h3>{title}</h3>
       {fields.map((f) => (
         <label key={f.name} data-field-type={f.type ?? "text"}>
-          {f.label}
+          {f.type !== "hidden" && <FieldCaption required={f.type !== "checkbox" && !f.optional}>{f.label}</FieldCaption>}
           {f.options ? (
             <select
               name={f.name}
@@ -336,15 +337,15 @@ function TripInputs({ trip, onDone }: { trip: any; onDone: () => void }) {
       <form className="panel stack" onSubmit={fuel}>
         <h3>Fuel purchase</h3>
         <label>
-          Litres
+          <FieldCaption required={true}>Litres</FieldCaption>
           <FormInput type="number" name="litres" step="0.01" min="0.01" required />
         </label>
         <label>
-          Cost (₦)
+          <FieldCaption required={true}>Cost (₦)</FieldCaption>
           <FormInput type="number" name="cost" min="1" required />
         </label>
         <label>
-          Receipt reference
+          <FieldCaption required={true}>Receipt reference</FieldCaption>
           <FormInput name="receipt" minLength={5} required />
         </label>
         <button className="button">Record purchase</button>

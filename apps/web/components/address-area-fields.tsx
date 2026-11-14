@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useState } from "react";
 import {
   resolveAddressLocation,
@@ -30,7 +31,7 @@ export function AddressAreaFields({
   return (
     <>
       <label>
-        Complete house address
+        <FieldCaption required={true}>Complete house address</FieldCaption>
         <textarea
           name="street"
           autoComplete="street-address"
@@ -62,7 +63,7 @@ export function AddressAreaFields({
       </p>
       {!onRecognizedArea && (
         <label>
-          {areaLabel}
+          <FieldCaption required={true}>{areaLabel}</FieldCaption>
           <select
             name={areaName}
             value={selected}

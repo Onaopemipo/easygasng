@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import DriverExperience from "./driver-experience";
 import DriversWorkspace from "./drivers-workspace";
 import { privilegeById } from "../../../packages/business-rules/src/staff-privileges";
@@ -471,7 +472,7 @@ function VerifyForm({ onDone }: { onDone: () => void }) {
       }}
     >
       <label>
-        Password
+        <FieldCaption required={true}>Password</FieldCaption>
         <FormInput
           name="password"
           type="password"
@@ -1173,7 +1174,7 @@ function SettingForm({
       </div>
       {s.value_type === "boolean" ? (
         <label>
-          Proposed value
+          <FieldCaption required={true}>Proposed value</FieldCaption>
           <select
             value={String(value)}
             onChange={(e) => setValue(e.target.value === "true")}
@@ -1185,7 +1186,7 @@ function SettingForm({
       ) : s.value_type === "referral_review" ? (
         <div className="testimonial-form">
           <label>
-            Attribution ID
+            <FieldCaption required={true}>Attribution ID</FieldCaption>
             <FormInput
               required
               value={value.attributionId}
@@ -1195,7 +1196,7 @@ function SettingForm({
             />
           </label>
           <label>
-            Decision
+            <FieldCaption required={true}>Decision</FieldCaption>
             <select
               value={value.state}
               onChange={(e) => setValue({ ...value, state: e.target.value })}
@@ -1206,7 +1207,7 @@ function SettingForm({
             </select>
           </label>
           <label>
-            Evidence and reason
+            <FieldCaption required={true}>Evidence and reason</FieldCaption>
             <textarea
               required
               minLength={10}
@@ -1222,7 +1223,7 @@ function SettingForm({
       ) : s.value_type === "rewards_adjustment" ? (
         <div className="testimonial-form">
           <label>
-            Customer ID
+            <FieldCaption required={true}>Customer ID</FieldCaption>
             <FormInput
               required
               value={value.customerId}
@@ -1232,7 +1233,7 @@ function SettingForm({
             />
           </label>
           <label>
-            Points to add or reverse
+            <FieldCaption required={true}>Points to add or reverse</FieldCaption>
             <FormInput
               required
               type="number"
@@ -1246,7 +1247,7 @@ function SettingForm({
             />
           </label>
           <label>
-            Adjustment reason
+            <FieldCaption required={true}>Adjustment reason</FieldCaption>
             <textarea
               required
               minLength={10}
@@ -1255,7 +1256,7 @@ function SettingForm({
             />
           </label>
           <label>
-            Evidence reference
+            <FieldCaption required={true}>Evidence reference</FieldCaption>
             <textarea
               required
               minLength={10}
@@ -1282,7 +1283,7 @@ function SettingForm({
                 checked={!!value[k]}
                 onChange={(e) => setValue({ ...value, [k]: e.target.checked })}
               />
-              {label}
+              <FieldCaption required={false}>{label}</FieldCaption>
             </label>
           ))}
           {[
@@ -1296,7 +1297,7 @@ function SettingForm({
             ],
           ].map(([k, label]) => (
             <label key={k}>
-              {label}
+              <FieldCaption required={true}>{label}</FieldCaption>
               <FormInput
                 required
                 type="number"
@@ -1310,7 +1311,7 @@ function SettingForm({
             </label>
           ))}
           <label>
-            Eligible product categories (comma separated)
+            <FieldCaption required={true}>Eligible product categories (comma separated)</FieldCaption>
             <FormInput
               required
               value={value.eligibleCategories.join(", ")}
@@ -1350,7 +1351,7 @@ function SettingForm({
             ["verificationReference", "Verification evidence reference", true],
           ].map(([key, label, required]) => (
             <label key={String(key)}>
-              {String(label)}
+              <FieldCaption required={Boolean(required)}>{String(label)}</FieldCaption>
               <FormInput
                 value={value?.[String(key)] ?? ""}
                 required={Boolean(required)}
@@ -1397,7 +1398,7 @@ function SettingForm({
         <div className="testimonial-form">
           {Object.entries(value).map(([key, v]) => (
             <label key={key}>
-              {key.replace(/([A-Z])/g, " $1")}
+              <FieldCaption required={key !== "email"}>{key.replace(/([A-Z])/g, " $1")}</FieldCaption>
               <FormInput
                 required={key !== "email"}
                 value={String(v)}
@@ -1420,7 +1421,7 @@ function SettingForm({
                 setValue({ ...value, imagesEnabled: e.target.checked })
               }
             />
-            Allow separately consented customer photos
+            <FieldCaption required={false}>Allow separately consented customer photos</FieldCaption>
           </label>
           <label>
             <FormInput
@@ -1429,8 +1430,8 @@ function SettingForm({
               onChange={(e) =>
                 setValue({ ...value, enabled: e.target.checked })
               }
-            />{" "}
-            Enable customer testimonials
+            /><FieldCaption required={false}>{" "}
+            Enable customer testimonials</FieldCaption>
           </label>
           {[
             ["minimumLength", "Minimum characters", 20, 500],
@@ -1446,7 +1447,7 @@ function SettingForm({
             ["photoMaxMb", "Maximum photo size in MB", 1, 8],
           ].map(([key, label, min, max]) => (
             <label key={String(key)}>
-              {String(label)}
+              <FieldCaption required={true}>{String(label)}</FieldCaption>
               <FormInput
                 type="number"
                 min={Number(min)}
@@ -1474,10 +1475,10 @@ function SettingForm({
                 setValue({ ...value, notificationsEnabled: e.target.checked })
               }
             />
-            Enable in-app testimonial notifications
+            <FieldCaption required={false}>Enable in-app testimonial notifications</FieldCaption>
           </label>
           <fieldset>
-            <legend>Accepted photo formats</legend>
+            <legend><FieldCaption required={true}>Accepted photo formats (choose at least one)</FieldCaption></legend>
             {["image/jpeg", "image/png", "image/webp"].map((format) => (
               <label key={format}>
                 <FormInput
@@ -1503,7 +1504,7 @@ function SettingForm({
                     });
                   }}
                 />
-                {format}
+                <FieldCaption required={false}>{format}</FieldCaption>
               </label>
             ))}
           </fieldset>
@@ -1528,8 +1529,8 @@ function SettingForm({
               onChange={(e) =>
                 setValue({ ...value, enabled: e.target.checked })
               }
-            />{" "}
-            Enable independently approved road planning
+            /><FieldCaption required={false}>{" "}
+            Enable independently approved road planning</FieldCaption>
           </label>
           {[
             ["fuelKoboPerLitre", "Fuel cost per litre (kobo)"],
@@ -1538,7 +1539,7 @@ function SettingForm({
             ["maxSnapMetres", "Maximum road snap distance (metres)"],
           ].map(([key, label]) => (
             <label key={key}>
-              {label}
+              <FieldCaption required={Boolean(value.enabled)}>{label}</FieldCaption>
               <FormInput
                 type="number"
                 min="0"
@@ -1570,8 +1571,8 @@ function SettingForm({
               onChange={(e) =>
                 setValue({ ...value, enabled: e.target.checked })
               }
-            />{" "}
-            Enable approved win-back messaging
+            /><FieldCaption required={false}>{" "}
+            Enable approved win-back messaging</FieldCaption>
           </label>
           {[
             ["atRiskDays", "At-risk threshold (days)"],
@@ -1583,7 +1584,7 @@ function SettingForm({
             ],
           ].map(([key, label]) => (
             <label key={key}>
-              {label}
+              <FieldCaption required={true}>{label}</FieldCaption>
               <FormInput
                 type="number"
                 min={0}
@@ -1614,7 +1615,7 @@ function SettingForm({
         <Notice message="This is a one-time operation. Its recorded stock count, costs and evidence are reviewed below. To change business details, cancel it and create a new operation." />
       ) : s.value_type === "inventory_valuation" ? (
         <label>
-          Valuation method
+          <FieldCaption required={true}>Valuation method</FieldCaption>
           <select value={value} onChange={(e) => setValue(e.target.value)}>
             <option value="unconfigured">Unconfigured</option>
             <option value="weighted_average">
@@ -1626,14 +1627,14 @@ function SettingForm({
         <>
           {["minimumKg", "maximumKg", "incrementKg", "precision"].map((k) => (
             <label key={k}>
-              {
+              <FieldCaption required={false}>{
                 {
                   minimumKg: "Minimum quantity (kg)",
                   maximumKg: "Maximum quantity (kg)",
                   incrementKg: "Quantity increment (kg)",
                   precision: "Decimal places",
                 }[k]
-              }
+              }</FieldCaption>
               <FormInput
                 type="number"
                 step={k === "precision" ? "1" : "0.001"}
@@ -1647,8 +1648,9 @@ function SettingForm({
               />
             </label>
           ))}
+          <p>Fill in all gas limits before opening gas ordering.</p>
           <label>
-            Supported cylinder capacities (kg, comma separated)
+            <FieldCaption required={true}>Supported cylinder capacities (kg, comma separated)</FieldCaption>
             <FormInput
               defaultValue={value.capacitiesKg.join(", ")}
               onChange={(e) =>
@@ -1665,18 +1667,20 @@ function SettingForm({
           {["name", "city", "state", "country", "coverage", "description"].map(
             (k) => (
               <label key={k}>
-                {k === "coverage"
+                <FieldCaption required={k !== "description" && k !== "coverage"}>{k === "coverage"
                   ? "Confirmed delivery boundary"
-                  : k.charAt(0).toUpperCase() + k.slice(1)}
+                  : k.charAt(0).toUpperCase() + k.slice(1)}</FieldCaption>
                 <FormInput
                   value={value[k]}
+                  aria-describedby={k === "coverage" ? "delivery-boundary-help" : undefined}
                   onChange={(e) => setValue({ ...value, [k]: e.target.value })}
                 />
+                {k === "coverage" && <small id="delivery-boundary-help">Required before customers can order for this area.</small>}
               </label>
             ),
           )}
           <label>
-            Delivery coverage handling
+            <FieldCaption required={true}>Delivery coverage handling</FieldCaption>
             <select
               value={String(value.requiresAddressConfirmation ?? true)}
               onChange={(e) =>
@@ -1699,7 +1703,7 @@ function SettingForm({
             <FormInput value={value.branchId} readOnly />
           </label>
           <label>
-            Display order
+            <FieldCaption required={true}>Display order</FieldCaption>
             <FormInput
               type="number"
               min="0"
@@ -1711,7 +1715,7 @@ function SettingForm({
           </label>
           {["active", "visible", "archived"].map((k) => (
             <label key={k}>
-              {k}
+              <FieldCaption required={true}>{k}</FieldCaption>
               <select
                 value={String(value[k])}
                 onChange={(e) =>
@@ -1732,7 +1736,7 @@ function SettingForm({
             ["name", "Account holder"],
           ].map(([key, label]) => (
             <label key={key}>
-              {label}
+              <FieldCaption required={true}>{label}</FieldCaption>
               <FormInput
                 value={value?.[key] ?? ""}
                 onChange={(e) => setValue({ ...value, [key]: e.target.value })}
@@ -1745,7 +1749,7 @@ function SettingForm({
       ) : s.value_type === "access" ? (
         <>
           <label>
-            Existing account ID
+            <FieldCaption required={true}>Existing account ID</FieldCaption>
             <FormInput
               value={value.userId}
               onChange={(e) => setValue({ ...value, userId: e.target.value })}
@@ -1753,7 +1757,7 @@ function SettingForm({
             />
           </label>
           <label>
-            Assigned role
+            <FieldCaption required={true}>Assigned role</FieldCaption>
             <select
               value={value.role}
               onChange={(e) => setValue({ ...value, role: e.target.value })}
@@ -1768,7 +1772,7 @@ function SettingForm({
             </select>
           </label>
           <label>
-            Branch ID
+            <FieldCaption required={true}>Branch ID</FieldCaption>
             <FormInput
               value={value.branchId}
               onChange={(e) => setValue({ ...value, branchId: e.target.value })}
@@ -1778,7 +1782,7 @@ function SettingForm({
         </>
       ) : (
         <label>
-          Proposed {s.value_type === "money" ? "amount (₦)" : "value"}
+          <FieldCaption required={true}>Proposed {s.value_type === "money" ? "amount (₦)" : "value"}</FieldCaption>
           <FormInput
             value={value}
             onChange={(e) =>
@@ -1807,7 +1811,7 @@ function SettingForm({
         </label>
       )}
       <label>
-        Requested effective date (Africa/Lagos)
+        <FieldCaption required={false}>Requested effective date (Africa/Lagos)</FieldCaption>
         <FormInput
           type="date"
           value={effectiveAt}
@@ -1815,7 +1819,7 @@ function SettingForm({
         />
       </label>
       <p className="effective-date-help">
-        Optional. Takes effect from the start of the selected day in Lagos, once
+        Takes effect from the start of the selected day in Lagos, once
         all required approvals are complete.
       </p>
       {!requestId && (
@@ -1824,12 +1828,12 @@ function SettingForm({
             type="checkbox"
             checked={draft}
             onChange={(e) => setDraft(e.target.checked)}
-          />{" "}
-          Save as draft for later submission
+          /><FieldCaption required={false}>{" "}
+          Save as draft for later submission</FieldCaption>
         </label>
       )}
       <label>
-        Why is this change needed?
+        <FieldCaption required={true}>Why is this change needed?</FieldCaption>
         <textarea
           value={reason}
           onChange={(e) => setReason(e.target.value)}
@@ -1898,7 +1902,7 @@ function InlinePasswordVerification({ onVerified }: { onVerified: () => void }) 
       {verified ? <p role="status">Password verified. You can now save your changes.</p> : <>
         <p>Confirm your password here before saving. Your changes will stay in this form.</p>
         <label>
-          Current password
+          <FieldCaption required={true}>Current password</FieldCaption>
           <FormInput type="password" autoComplete="current-password" value={password}
             onChange={e => setPassword(e.target.value)}
             onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); if (password && !busy) void verify(); } }} />
@@ -2515,13 +2519,14 @@ function Approvals({
           selected.can_approve ? (
             <>
               <label>
-                Review comments
+                <FieldCaption required={false}>Review comments for approval</FieldCaption>
                 <textarea
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
-                  placeholder="A reason is required for rejection or requested changes."
+                  aria-describedby="approval-review-help"
                 />
               </label>
+              <small id="approval-review-help">Enter a reason if you reject the request or ask for changes.</small>
               <div className="decision-actions">
                 <button
                   className="button"
@@ -2679,7 +2684,7 @@ function Inventory({
         <Modal title="Receive stock" onClose={() => setReceive(false)}>
           <form onSubmit={submit}>
             <label>
-              Product
+              <FieldCaption required={true}>Product</FieldCaption>
               <select name="productId" required>
                 {data?.map((i: any) => (
                   <option value={i.product_id} key={i.product_id}>
@@ -2689,7 +2694,7 @@ function Inventory({
               </select>
             </label>
             <label>
-              Quantity received
+              <FieldCaption required={true}>Quantity received</FieldCaption>
               <FormInput
                 name="quantity"
                 type="number"
@@ -2699,7 +2704,7 @@ function Inventory({
               />
             </label>
             <label>
-              Unique receipt reference
+              <FieldCaption required={true}>Unique receipt reference</FieldCaption>
               <FormInput
                 name="reference"
                 required
@@ -2708,7 +2713,7 @@ function Inventory({
               />
             </label>
             <label>
-              Reason / supplier note
+              <FieldCaption required={true}>Reason / supplier note</FieldCaption>
               <textarea name="reason" required minLength={5} />
             </label>
             {failure && <Notice type="error" message={failure} />}
@@ -3252,7 +3257,7 @@ function Records({
                 }}
               >
                 <label>
-                  Next status
+                  <FieldCaption required={true}>Next status</FieldCaption>
                   <select name="status" required>
                     <option value="accepted">Accept Order</option>
                     <option value="preparing">Preparing</option>
@@ -3263,7 +3268,7 @@ function Records({
                   </select>
                 </label>
                 <label>
-                  Driver (required when assigning)
+                  <FieldCaption required={true}>Driver when assigning</FieldCaption>
                   <select name="driverId">
                     <option value="">No change</option>
                     {staff.data
@@ -3276,7 +3281,7 @@ function Records({
                   </select>
                 </label>
                 <label>
-                  Failure category (when reporting unsuccessful delivery)
+                  <FieldCaption required={true}>Failure category when reporting unsuccessful delivery</FieldCaption>
                   <select name="failureReason" defaultValue="other">
                     {deliveryFailureReasons.map((r) => (
                       <option key={r} value={r}>
@@ -3286,7 +3291,7 @@ function Records({
                   </select>
                 </label>
                 <label>
-                  Operational note
+                  <FieldCaption required={true}>Operational note</FieldCaption>
                   <textarea name="note" required minLength={5} />
                 </label>
                 <button className="button full">
@@ -3321,11 +3326,11 @@ function CylinderForm({ user, onDone }: { user: any; onDone: () => void }) {
       }}
     >
       <label>
-        Unique cylinder serial
+        <FieldCaption required={true}>Unique cylinder serial</FieldCaption>
         <FormInput name="serial" required minLength={4} />
       </label>
       <label>
-        Size (kg)
+        <FieldCaption required={true}>Size (kg)</FieldCaption>
         <FormInput
           name="sizeKg"
           type="number"
@@ -3336,14 +3341,14 @@ function CylinderForm({ user, onDone }: { user: any; onDone: () => void }) {
         />
       </label>
       <label>
-        Ownership
+        <FieldCaption required={true}>Ownership</FieldCaption>
         <select name="ownership">
           <option value="company">Company owned</option>
           <option value="supplier">Supplier owned</option>
         </select>
       </label>
       <label>
-        Physical condition
+        <FieldCaption required={true}>Physical condition</FieldCaption>
         <select name="status">
           {["filled", "empty", "damaged", "quarantined", "inspection_due"].map(
             (s) => (
@@ -3353,7 +3358,7 @@ function CylinderForm({ user, onDone }: { user: any; onDone: () => void }) {
         </select>
       </label>
       <label>
-        Next test due
+        <FieldCaption required={true}>Next test due</FieldCaption>
         <FormInput name="testDue" type="date" required />
       </label>
       {error && <Notice type="error" message={error} />}
@@ -3407,11 +3412,11 @@ function DeliveryCompletion({
         Open dispatch and pickup verification
       </Link>
       <label>
-        <FormInput type="checkbox" name="handover" required />I checked all
-        quantities and cylinder serials and handed over every item.
+        <FormInput type="checkbox" name="handover" required /><FieldCaption required={true}>I checked all
+        quantities and cylinder serials and handed over every item.</FieldCaption>
       </label>
       <label>
-        Customer confirmation code
+        <FieldCaption required={true}>Customer confirmation code</FieldCaption>
         <FormInput
           name="code"
           inputMode="numeric"
@@ -3424,7 +3429,7 @@ function DeliveryCompletion({
       <label>
         {["wallet", "card"].includes(order.payment_method)
           ? "Prepaid order — collect no cash"
-          : "Cash actually collected (₦)"}
+          : <FieldCaption required={true}>Cash actually collected (₦)</FieldCaption>}
         <FormInput
           name="amount"
           type="number"

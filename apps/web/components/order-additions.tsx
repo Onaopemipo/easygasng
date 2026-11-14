@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { EasyGasLoader } from "./easygas-loader";
 import { useEffect, useState } from "react";
 import { api, Notice } from "./ui";
@@ -116,7 +117,7 @@ export default function OrderAdditions({
           {items.map((line, i) => (
             <div key={i} className="service-actions">
               <label>
-                Product {i + 1}
+                <FieldCaption required={false}>Product {i + 1}</FieldCaption>
                 <select
                   value={line.productId}
                   onChange={(e) =>
@@ -138,7 +139,7 @@ export default function OrderAdditions({
                 </select>
               </label>
               <label>
-                Quantity {i + 1}
+                <FieldCaption required={true}>Quantity {i + 1}</FieldCaption>
                 <input
                   type="number"
                   min="1"
@@ -180,7 +181,7 @@ export default function OrderAdditions({
             Add another product
           </button>
           <label>
-            Additional gas (kg, optional)
+            <FieldCaption required={false}>Additional gas (kg)</FieldCaption>
             <input
               type="number"
               min="0.001"
@@ -190,7 +191,7 @@ export default function OrderAdditions({
             />
           </label>
           <label>
-            Cylinder capacity (kg)
+            <FieldCaption required={Boolean(kg.trim())}>Cylinder capacity (kg)</FieldCaption>
             <input
               type="number"
               min="0.001"
@@ -200,7 +201,7 @@ export default function OrderAdditions({
             />
           </label>
           <label>
-            Customer request and reason
+            <FieldCaption required={true}>Customer request and reason</FieldCaption>
             <input
               required
               minLength={10}

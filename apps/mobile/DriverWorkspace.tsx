@@ -20,7 +20,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import { randomUUID } from "expo-crypto";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, Text, TextInput } from "./typography";
 import { useTheme } from "./theme";
 import {
   Button,
@@ -629,8 +629,9 @@ export default function DriverWorkspace({
                     )}
                     {order.status === "assigned" && (
                       <>
+                        <FieldCaption required={true}>Acknowledgement or decline reason</FieldCaption>
                         <TextInput
-                          accessibilityLabel="Acknowledgement or decline reason"
+                          accessibilityLabel="Acknowledgement or decline reason, required"
                           placeholder="Acknowledgement / decline reason"
                           value={notes}
                           onChangeText={setNotes}
@@ -764,8 +765,9 @@ export default function DriverWorkspace({
                           onPress={() => setReason(r)}
                         />
                       ))}
+                      <FieldCaption required={true}>Failure evidence and dispatch notes</FieldCaption>
                       <TextInput
-                        accessibilityLabel="Failure evidence and dispatch notes"
+                        accessibilityLabel="Failure evidence and dispatch notes, required"
                         placeholder="Observed problem and next step"
                         value={notes}
                         onChangeText={setNotes}
@@ -807,8 +809,9 @@ export default function DriverWorkspace({
                     <Copy>
                       Completion requires a verified payment. Contact dispatch for payment review.
                     </Copy>
+                    <FieldCaption required={true}>Customer six-digit handover code</FieldCaption>
                     <TextInput
-                      accessibilityLabel="Customer six-digit handover code"
+                      accessibilityLabel="Customer six-digit handover code, required"
                       placeholder="Customer handover code"
                       keyboardType="number-pad"
                       value={code}
@@ -833,7 +836,7 @@ export default function DriverWorkspace({
                         value={handover}
                         onValueChange={setHandover}
                       />
-                      <Copy>All items and full gas quantity handed over</Copy>
+                      <FieldCaption required={true}>All items and full gas quantity handed over</FieldCaption>
                     </View>
                     <Button
                       label="Complete Delivery"

@@ -8499,3 +8499,17 @@ body label > input[type="checkbox"] {
   .driver-directory .staff-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .driver-directory .staff-stat { flex-direction: column; gap: 0.5rem; }
 }
+
+.field-caption > .field-required { color: var(--danger, #b42318); font-weight: 800; }
+.field-caption > .field-optional { color: var(--muted); font-weight: 400; }
+[data-theme="dark"] .field-caption > .field-required { color: #ff9c92; }
+.field-required-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -87,8 +87,12 @@ export default function VehicleManifest({ api }: { api: CustomerAPI }) {
                   },
                   {
                     name: "serialIds",
-                    label:
-                      "Cylinder IDs actually counted, comma separated (empty for accessories)",
+                    required: Boolean(l.serialized && action === "acknowledge"),
+                    label: l.serialized
+                      ? action === "acknowledge"
+                        ? "Cylinder IDs actually counted, comma separated"
+                        : "Cylinder IDs, required for each returned cylinder"
+                      : "Cylinder IDs (leave blank for accessories)",
                   },
                   { name: "evidence", label: "Count evidence" },
                   { name: "reason", label: "Reason" },

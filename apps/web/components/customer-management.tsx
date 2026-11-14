@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "./workspace-link";
 import {
@@ -585,7 +586,7 @@ export default function CustomerManagement() {
           ) : (
             <form onSubmit={save} className="cm-form">
               <label>
-                Full name
+                <FieldCaption required={true}>Full name</FieldCaption>
                 <input
                   name="name"
                   required
@@ -597,11 +598,11 @@ export default function CustomerManagement() {
               {!modal.id && (
                 <>
                   <label>
-                    Email
+                    <FieldCaption required={true}>Email</FieldCaption>
                     <input name="email" type="email" required maxLength={200} />
                   </label>
                   <label>
-                    Branch
+                    <FieldCaption required={true}>Branch</FieldCaption>
                     <select name="branchId" required>
                       <option value="">Choose branch</option>
                       {data?.branches.map((b: any) => (

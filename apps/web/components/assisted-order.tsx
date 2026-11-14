@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useState } from "react";
 import { hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
 import { api, Modal, Notice, money } from "./ui";
@@ -218,7 +219,7 @@ export default function AssistedOrder({
             or verify phone ownership. Online payments are unconnected.
           </p>
           <label>
-            Caller phone or public customer ID
+            <FieldCaption required={true}>Caller phone or public customer ID</FieldCaption>
             <input
               value={query}
               onChange={(e) => {
@@ -248,11 +249,11 @@ export default function AssistedOrder({
             <form onSubmit={provision}>
               <h3>New caller</h3>
               <label>
-                Name
+                <FieldCaption required={true}>Name</FieldCaption>
                 <input required name="name" minLength={2} />
               </label>
               <label>
-                Branch
+                <FieldCaption required={true}>Branch</FieldCaption>
                 <select name="branch">
                   {[
                     ...new Set(locations.map((location) => location.branch_id)),
@@ -274,11 +275,11 @@ export default function AssistedOrder({
                 {customer.name} · {customer.public_customer_id}
               </h3>
               <label>
-                Recipient name
+                <FieldCaption required={true}>Recipient name</FieldCaption>
                 <input required name="name" defaultValue={customer.name} />
               </label>
               <label>
-                Recipient phone
+                <FieldCaption required={true}>Recipient phone</FieldCaption>
                 <input
                   required
                   name="phone"
@@ -286,11 +287,11 @@ export default function AssistedOrder({
                 />
               </label>
               <label>
-                Complete house address
+                <FieldCaption required={true}>Complete house address</FieldCaption>
                 <textarea name="street" required minLength={8} />
               </label>
               <label>
-                Delivery location
+                <FieldCaption required={true}>Delivery location</FieldCaption>
                 <select
                   name="location"
                   value={selectedLocation?.id ?? ""}
@@ -352,7 +353,7 @@ export default function AssistedOrder({
                 </button>
               )}
               <label>
-                Cylinder capacity (kg)
+                <FieldCaption required={false}>Cylinder capacity (kg)</FieldCaption>
                 <input
                   name="capacity"
                   type="number"
@@ -362,7 +363,7 @@ export default function AssistedOrder({
                 />
               </label>
               <label>
-                Gas quantity (kg; 0 for products only)
+                <FieldCaption required={false}>Gas quantity (kg; 0 for products only)</FieldCaption>
                 <input
                   name="kg"
                   type="number"
@@ -372,7 +373,7 @@ export default function AssistedOrder({
                 />
               </label>
               <label>
-                Additional product
+                <FieldCaption required={false}>Additional product</FieldCaption>
                 <select name="product">
                   <option value="">None</option>
                   {(catalogue?.products ?? [])
@@ -387,7 +388,7 @@ export default function AssistedOrder({
                 </select>
               </label>
               <label>
-                Product quantity
+                <FieldCaption required={false}>Product quantity</FieldCaption>
                 <input
                   name="quantity"
                   type="number"
@@ -397,11 +398,11 @@ export default function AssistedOrder({
                 />
               </label>
               <label>
-                Date
+                <FieldCaption required={true}>Date</FieldCaption>
                 <input name="date" type="date" required />
               </label>
               <label>
-                Delivery window
+                <FieldCaption required={true}>Delivery window</FieldCaption>
                 <select name="window">
                   {String(catalogue?.windows ?? "")
                     .split(",")
@@ -411,11 +412,11 @@ export default function AssistedOrder({
                 </select>
               </label>
               <label>
-                Staff reason / caller request
+                <FieldCaption required={true}>Staff reason / caller request</FieldCaption>
                 <textarea required name="reason" minLength={10} />
               </label>
               <label>
-                Delivery instructions
+                <FieldCaption required={false}>Delivery instructions</FieldCaption>
                 <textarea name="instructions" />
               </label>
               {quote && (

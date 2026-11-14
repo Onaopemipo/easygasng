@@ -1,5 +1,6 @@
 "use client";
 
+import { FieldCaption } from "./field-caption";
 import { useRef, useState, type FormEvent } from "react";
 import { api, Loading, Notice } from "./ui";
 import { FormInput } from "./password-input";
@@ -86,7 +87,7 @@ export default function StaffInvitation({
       <h3>Invite a colleague</h3>
       <fieldset className="staff-invite-fields" disabled={busy}>
         <label>
-          Full name
+          <FieldCaption required={true}>Full name</FieldCaption>
           <input
             name="name"
             required
@@ -96,7 +97,7 @@ export default function StaffInvitation({
           />
         </label>
         <label>
-          Email address
+          <FieldCaption required={true}>Email address</FieldCaption>
           <input
             name="email"
             type="email"
@@ -106,7 +107,7 @@ export default function StaffInvitation({
           />
         </label>
         <label>
-          Branch
+          <FieldCaption required={true}>Branch</FieldCaption>
           <select
             value={branchId}
             required
@@ -121,7 +122,7 @@ export default function StaffInvitation({
           </select>
         </label>
         <label>
-          Staff role
+          <FieldCaption required={true}>Staff role</FieldCaption>
           <select
             value={role}
             required
@@ -188,7 +189,7 @@ export default function StaffInvitation({
       {error && <Notice type="error" message={error} />}
       {verify && (
         <label>
-          Verify your password{" "}
+          <FieldCaption required={true}>Verify your password{" "}</FieldCaption>
           <FormInput
             name="verifyPassword"
             type="password"

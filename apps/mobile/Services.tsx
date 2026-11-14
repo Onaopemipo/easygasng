@@ -29,7 +29,7 @@ import {
   Switch,
 } from "react-native";
 import { View, Pressable } from "./surfaces";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, Text, TextInput } from "./typography";
 import { randomUUID } from "expo-crypto";
 import * as Print from "expo-print";
 import * as ImagePicker from "expo-image-picker";
@@ -832,7 +832,7 @@ function Booking({
                 label: "Contact mobile number",
                 value: address?.phone,
               },
-              { name: "brand", label: "Equipment brand, if known" },
+              { name: "brand", label: "Equipment brand", required: false },
               { name: "equipmentType", label: "Equipment type" },
               {
                 name: "burners",
@@ -851,7 +851,7 @@ function Booking({
                 type: "checkbox",
               },
               { name: "concerns", label: "Describe equipment and concerns" },
-              { name: "notes", label: "Additional instructions" },
+              { name: "notes", label: "Additional instructions", required: false },
               {
                 name: "combineWithProducts",
                 label: "Confirm together with my product cart",
@@ -1285,6 +1285,7 @@ export function Appointment({
               },
               {
                 name: c.id + "_notes",
+                required: false,
                 label: "Evidence / notes for " + c.label,
               },
             ]),
@@ -1292,6 +1293,7 @@ export function Appointment({
             { name: "workPerformed", label: "Work actually performed" },
             {
               name: "recommendations",
+              required: false,
               label: "Qualified recommendations / follow-up",
             },
           ]}
@@ -1446,6 +1448,7 @@ export function Appointment({
               },
               {
                 name: "acceptWalletCredit",
+                required: true,
                 label:
                   "I accept restricted purchase credit for an approved refund",
                 type: "checkbox",
@@ -1659,8 +1662,9 @@ function BookingPhotos({
             requires a photograph from the authorised visit. Submitted report
             evidence cannot be silently changed.
           </Text>
+          <FieldCaption required={true}>Photograph description</FieldCaption>
           <TextInput
-            accessibilityLabel="Photograph description"
+            accessibilityLabel="Photograph description, required"
             style={{
               borderWidth: 1,
               borderColor: "#bbcbbb",
@@ -1670,8 +1674,9 @@ function BookingPhotos({
             value={alt}
             onChangeText={setAlt}
           />
+          <FieldCaption required={true}>Customer consent for private service evidence</FieldCaption>
           <Switch
-            accessibilityLabel="Customer consents to private service evidence"
+            accessibilityLabel="Customer consents to private service evidence, required"
             value={consent}
             onValueChange={setConsent}
           />

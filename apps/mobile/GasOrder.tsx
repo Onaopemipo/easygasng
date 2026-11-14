@@ -20,7 +20,7 @@ import * as SecureStore from "expo-secure-store";
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { View, Pressable } from "./surfaces";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, Text, TextInput } from "./typography";
 import { NativeForm } from "./Workflows";
 import {
   gasLine,
@@ -302,10 +302,10 @@ export default function GasOrder({
           const raw = quantityText[i] ?? (l.kg ? String(l.kg) : "");
           return (
             <View key={i} style={{ gap: 5, marginBottom: 10 }}>
-              <Text>{label}</Text>
+              <FieldCaption required={true}>{label}</FieldCaption>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel={`${label}, ${l.capacityKg} kg`}
+                accessibilityLabel={`${label}, required, ${l.capacityKg} kg`}
                 accessibilityState={{ expanded: picker === field }}
                 disabled={loadingQuote || !capacities.length}
                 style={[
@@ -346,7 +346,7 @@ export default function GasOrder({
                     <Text>{c} kg</Text>
                   </Pressable>
                 ))}
-              <Text>Gas quantity (kg)</Text>
+              <FieldCaption required={true}>Gas quantity (kg)</FieldCaption>
               <View
                 style={[
                   s.stepper,
@@ -420,7 +420,7 @@ export default function GasOrder({
             setLines([...lines, { capacityKg: capacities[0], kg: 0 }]);
             setQuote(null);
           })}
-        <Text>Delivery location</Text>
+        <FieldCaption required={true}>Delivery location</FieldCaption>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Delivery location"
@@ -461,7 +461,7 @@ export default function GasOrder({
               <Text>{l.name}</Text>
             </Pressable>
           ))}
-        <Text>House address</Text>
+        <FieldCaption required={true}>House address</FieldCaption>
         <TextInput
           accessibilityLabel="House address"
           editable={!loadingQuote}
@@ -707,16 +707,19 @@ export default function GasOrder({
             },
             {
               name: "address.building",
+              required: false,
               label: "House / building number",
               value: recipient.building,
             },
             {
               name: "address.landmark",
+              required: false,
               label: "Estate / landmark",
               value: recipient.landmark,
             },
             {
               name: "address.directions",
+              required: false,
               label: "Additional directions",
               value: recipient.directions,
             },

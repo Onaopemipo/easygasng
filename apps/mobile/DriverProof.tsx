@@ -3,7 +3,7 @@ import { View, Image, Switch } from "react-native";
 import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system/legacy";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, Text, TextInput } from "./typography";
 import { useTheme } from "./theme";
 import { Button, Card, Copy, Title } from "./CustomerUI";
 import { captureFieldEvent } from "./field-queue";
@@ -100,8 +100,9 @@ export default function DriverProof({
         home interiors. Retaking adds a new historical record; it never
         overwrites prior proof.
       </Copy>
+      <FieldCaption required={true}>Proof description</FieldCaption>
       <TextInput
-        accessibilityLabel="Proof description"
+        accessibilityLabel="Proof description, required"
         placeholder="Describe delivered items"
         value={alt}
         onChangeText={setAlt}
@@ -121,7 +122,7 @@ export default function DriverProof({
           onValueChange={setConsent}
         />
         <Text preserveColor style={{ color: colors.text, flex: 1 }}>
-          Customer consented to this photo
+          Customer consented to this photo *
         </Text>
       </View>
       {preview && (

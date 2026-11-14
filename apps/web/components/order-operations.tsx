@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { DoorstepCylinderForm } from "./doorstep-cylinder-form";
 import { useState, type FormEvent } from "react";
 import { api, Loading, Notice, money } from "./ui";
@@ -253,7 +254,7 @@ export function OrderOperations({
           <form className="panel stack" onSubmit={photo}>
             <h3>Add proof photo</h3>
             <label>
-              Photo
+              <FieldCaption required={true}>Photo</FieldCaption>
               <input
                 type="file"
                 name="image"
@@ -262,12 +263,12 @@ export function OrderOperations({
               />
             </label>
             <label>
-              Description
+              <FieldCaption required={true}>Description</FieldCaption>
               <input name="alt" minLength={3} maxLength={250} required />
             </label>
             <label>
-              <input type="checkbox" name="photoConsent" required /> Customer
-              consented to this evidence photo.
+              <input type="checkbox" name="photoConsent" required /> <FieldCaption required={true}>Customer
+              consented to this evidence photo.</FieldCaption>
             </label>
             <button className="button">Upload evidence</button>
           </form>

@@ -112,3 +112,27 @@ export const TextInput = forwardRef<
     </View>
   );
 });
+
+export function FieldCaption({
+  children,
+  required,
+  style,
+}: {
+  children: string;
+  required: boolean;
+  style?: StyleProp<TextStyle>;
+}) {
+  const { colors } = useTheme();
+  return (
+    <Text style={style} accessibilityLabel={fieldAccessibilityLabel(children, required)}>
+      {children}
+      <Text preserveColor style={{ color: required ? colors.error : colors.muted }}>
+        {required ? " *" : " (optional)"}
+      </Text>
+    </Text>
+  );
+}
+
+export function fieldAccessibilityLabel(label: string, required: boolean) {
+  return `${label}, ${required ? "required" : "optional"}`;
+}

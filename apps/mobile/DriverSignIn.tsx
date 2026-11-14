@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, ScrollView, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, Text, TextInput } from "./typography";
 import { useTheme } from "./theme";
 import { Card, Copy, Title, Button, Feedback } from "./CustomerUI";
 import { NativeForm } from "./Workflows";
@@ -89,8 +89,9 @@ export default function DriverSignIn({
           </>
         ) : (
           <>
+            <FieldCaption required={true}>Email or phone number</FieldCaption>
             <TextInput
-              accessibilityLabel="Email or phone number"
+              accessibilityLabel="Email or phone number, required"
               autoComplete="username"
               keyboardType="default"
               autoCorrect={false}
@@ -107,8 +108,9 @@ export default function DriverSignIn({
                 borderRadius: 14,
               }}
             />
+            <FieldCaption required={true}>Password</FieldCaption>
             <TextInput
-              accessibilityLabel="Driver password"
+              accessibilityLabel="Driver password, required"
               autoComplete="current-password"
               secureTextEntry
               value={password}
@@ -126,8 +128,9 @@ export default function DriverSignIn({
             {passwordChangeRequired && (
               <>
                 <Copy>Choose a new password to finish your first sign-in.</Copy>
+                <FieldCaption required={true}>New password</FieldCaption>
                 <TextInput
-                  accessibilityLabel="New password"
+                  accessibilityLabel="New password, required"
                   autoComplete="new-password"
                   secureTextEntry
                   value={newPassword}

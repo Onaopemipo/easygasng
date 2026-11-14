@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useEffect, useState, type FormEvent } from "react";
 import { api, Notice } from "./ui";
 import { FormInput } from "./password-input";
@@ -145,7 +146,7 @@ export function SupportAttachmentForm({
         request.
       </p>
       <label>
-        Image
+        <FieldCaption required={true}>Image</FieldCaption>
         <input
           required
           type="file"
@@ -154,12 +155,12 @@ export function SupportAttachmentForm({
         />
       </label>
       <label>
-        Description
+        <FieldCaption required={true}>Description</FieldCaption>
         <input name="alt" minLength={3} maxLength={250} required />
       </label>
       {staff && (
         <label className="check">
-          <input name="internal" type="checkbox" value="true" /> Staff only
+          <input name="internal" type="checkbox" value="true" /> <FieldCaption required={false}>Staff only</FieldCaption>
         </label>
       )}
       {error && <Notice type="error" message={error} />}
@@ -228,7 +229,7 @@ export function SupportSlaForm({
   return (
     <div className="workflow-form">
       <label>
-        Branch
+        <FieldCaption required={true}>Branch</FieldCaption>
         <select value={selected} onChange={(e) => select(e.target.value)}>
           <option value="">Choose branch</option>
           {(branches ?? []).map((b: any) => (
@@ -246,7 +247,7 @@ export function SupportSlaForm({
             requests. Existing requests can be enrolled separately.
           </p>
           <label>
-            First response target (minutes)
+            <FieldCaption required={true}>First response target (minutes)</FieldCaption>
             <input
               required
               name="response"
@@ -257,7 +258,7 @@ export function SupportSlaForm({
             />
           </label>
           <label>
-            Resolution target (minutes)
+            <FieldCaption required={true}>Resolution target (minutes)</FieldCaption>
             <input
               required
               name="resolution"
@@ -268,7 +269,7 @@ export function SupportSlaForm({
             />
           </label>
           <fieldset>
-            <legend>Working days</legend>
+            <legend><FieldCaption required={true}>Working days (select at least one)</FieldCaption></legend>
             {days.map((day, i) => (
               <label className="check" key={day}>
                 <input
@@ -282,7 +283,7 @@ export function SupportSlaForm({
             ))}
           </fieldset>
           <label>
-            Opening hour (0–23)
+            <FieldCaption required={true}>Opening hour (0–23)</FieldCaption>
             <input
               required
               name="start"
@@ -293,7 +294,7 @@ export function SupportSlaForm({
             />
           </label>
           <label>
-            Closing hour (1–24)
+            <FieldCaption required={true}>Closing hour (1–24)</FieldCaption>
             <input
               required
               name="end"
@@ -304,7 +305,7 @@ export function SupportSlaForm({
             />
           </label>
           <label>
-            Verify your password
+            <FieldCaption required={true}>Verify your password</FieldCaption>
             <FormInput
               required
               name="password"

@@ -1,7 +1,7 @@
 import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { TextInput } from "./typography";
+import { FieldCaption, fieldAccessibilityLabel, TextInput } from "./typography";
 import { Pressable } from "./surfaces";
 import { Button, Card, Copy, Title } from "./CustomerUI";
 import { gasMoney } from "../../packages/business-rules/src/gas-pricing";
@@ -113,7 +113,9 @@ export function OwnerApprovals({ api, branchId }: {
     {selected.failure_reason && <Copy>{selected.failure_reason}</Copy>}
     {selected.decisions.map((item, index) => <Copy key={index}>{item.approver} · {item.decision.replaceAll("_", " ")} · {item.reason}</Copy>)}
     {selected.can_approve && <>
-      <TextInput accessibilityLabel="Decision reason" placeholder="Reason for decision" style={inputStyle}
+      <FieldCaption required={decision !== undefined && decision !== "approve"}>Decision reason</FieldCaption>
+      {!decision && <Copy>Required when rejecting a request or asking for changes.</Copy>}
+      <TextInput accessibilityLabel={fieldAccessibilityLabel("Decision reason", decision !== undefined && decision !== "approve")} placeholder="Reason for decision" style={inputStyle}
         value={reason} maxLength={1000} onChangeText={setReason} multiline />
       {!decision ? <>
         <Button label="Approve" onPress={() => setDecision("approve")} />
@@ -121,8 +123,11 @@ export function OwnerApprovals({ api, branchId }: {
         <Button label="Request changes" onPress={() => setDecision("request_changes")} />
       </> : <>
         <Copy>Confirm {decision.replaceAll("_", " ")}. Execution follows the request’s approval rules.</Copy>
-        {verify && <TextInput accessibilityLabel="Verify password" placeholder="Enter your password"
-          secureTextEntry style={inputStyle} value={password} onChangeText={setPassword} />}
+        {verify && <>
+          <FieldCaption required={true}>Verify password</FieldCaption>
+          <TextInput accessibilityLabel="Verify password, required" placeholder="Enter your password"
+            secureTextEntry style={inputStyle} value={password} onChangeText={setPassword} />
+        </>}
         <Button label={busy ? "Saving…" : verify ? "Verify and confirm" : "Confirm decision"} disabled={busy || (verify && !password)} onPress={() => void submit()} />
         <Button label="Cancel decision" disabled={busy} onPress={() => { setDecision(undefined); setVerify(false); setPassword(""); setMessage(""); }} />
       </>}

@@ -72,7 +72,7 @@ import {
   AppState,
 } from "react-native";
 import { View, ScrollView, Pressable } from "./surfaces";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, fieldAccessibilityLabel, Text, TextInput } from "./typography";
 import * as SecureStore from "expo-secure-store";
 import { SafeAreaView } from "react-native-safe-area-context";
 const origin = process.env.EXPO_PUBLIC_API_URL ?? "http://127.0.0.1:3003";
@@ -579,11 +579,12 @@ export default function App() {
     value: string,
     set: (v: string) => void,
     props: any = {},
+    required: boolean | null = true,
   ) => (
     <View style={s.field}>
-      <Text style={s.label}>{label}</Text>
+      {required === null ? <Text style={s.label}>{label}</Text> : <FieldCaption style={s.label} required={required}>{label}</FieldCaption>}
       <TextInput
-        accessibilityLabel={label}
+        accessibilityLabel={required === null ? label : fieldAccessibilityLabel(label, required)}
         style={s.input}
         value={value}
         onChangeText={set}
@@ -1146,7 +1147,7 @@ export default function App() {
               <Text style={s.title}>For your kitchen.</Text>
               {field("Search products", search, setSearch, {
                 placeholder: "Search gas and accessories…",
-              })}
+              }, null)}
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -1376,7 +1377,7 @@ export default function App() {
               {field("Street address", address.street, (v) =>
                 setAddress({ ...address, street: v }),
               )}
-              <Text style={s.label}>Delivery area</Text>
+              <FieldCaption style={s.label} required={true}>Delivery area</FieldCaption>
               <View style={s.wrap}>
                 {(catalogue?.zones ?? []).map((z: string) => (
                   <Pressable
@@ -1397,7 +1398,7 @@ export default function App() {
               {field("Delivery date (YYYY-MM-DD)", date, setDate, {
                 placeholder: "2026-11-01",
               })}
-              <Text style={s.label}>Delivery window</Text>
+              <FieldCaption style={s.label} required={true}>Delivery window</FieldCaption>
               <View style={s.wrap}>
                 {(catalogue?.windows ?? []).map((w: string) => (
                   <Pressable
@@ -1627,6 +1628,7 @@ export default function App() {
                               },
                               {
                                 name: "acceptWalletCredit",
+                                required: true,
                                 label:
                                   "I agree to receive an approved refund as purchase credit",
                                 type: "checkbox",
@@ -2291,20 +2293,20 @@ function NativeDelivery({
         Ask for the customer's code after handing over all items. Cash will need
         independent finance verification.
       </Text>
-      <Text style={s.label}>Customer confirmation code</Text>
+      <FieldCaption style={s.label} required={true}>Customer confirmation code</FieldCaption>
       <TextInput
         style={s.input}
-        accessibilityLabel="Customer confirmation code"
+        accessibilityLabel="Customer confirmation code, required"
         value={code}
         onChangeText={setCode}
         keyboardType="number-pad"
         maxLength={6}
       />
-      <Text style={s.label}>
-        {order.payment_method === "wallet"
-          ? "Paid with purchase credit — collect no cash"
-          : "Cash actually collected (₦)"}
-      </Text>
+      {order.payment_method === "wallet" ? (
+        <Text style={s.label}>Paid with purchase credit — collect no cash</Text>
+      ) : (
+        <FieldCaption style={s.label} required={true}>Cash actually collected (₦)</FieldCaption>
+      )}
       <TextInput
         style={s.input}
         accessibilityLabel="Cash collected in naira"
@@ -2314,13 +2316,14 @@ function NativeDelivery({
       />
       <Pressable
         accessibilityRole="checkbox"
+        accessibilityLabel="I checked all quantities and serials and handed over every item, required"
         accessibilityState={{ checked: handover }}
         onPress={() => setHandover(!handover)}
         style={s.button}
       >
         <Text style={s.buttonText}>
           {handover ? "✓ " : ""}I checked all quantities and serials and handed
-          over every item
+          over every item *
         </Text>
       </Pressable>
       {error ? <Text style={s.noticeText}>{friendlyMessage(error)}</Text> : null}

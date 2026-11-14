@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AppState, StyleSheet } from "react-native";
 import { View, Pressable } from "./surfaces";
-import { Text, TextInput } from "./typography";
+import { FieldCaption, fieldAccessibilityLabel, Text, TextInput } from "./typography";
 import { useTheme, type Preference } from "./theme";
 import { EasyGasLoader } from "./EasyGasLoader";
 import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
@@ -187,8 +187,8 @@ export default function OwnerSupportWorkspace({ user, screen, api, navigate, sig
   );
   const input = (title: string, value: string, update: (v: string) => void, secure = false) => (
     <View style={s.field}>
-      <Text style={{ color: text, fontWeight: "700" }}>{title}</Text>
-      <TextInput accessibilityLabel={title} value={value} onChangeText={update} secureTextEntry={secure}
+      <FieldCaption required={true} style={{ color: text, fontWeight: "700" }}>{title}</FieldCaption>
+      <TextInput accessibilityLabel={fieldAccessibilityLabel(title, true)} value={value} onChangeText={update} secureTextEntry={secure}
         autoCapitalize="none" style={[s.input, { borderColor: colors.border, color: text, backgroundColor: colors.input }]} />
     </View>
   );

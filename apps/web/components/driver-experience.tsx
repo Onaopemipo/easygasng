@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { CalendarDays, ChevronRight, CircleCheck, Clock3, MapPin, Package, Radio, Truck, UserRound } from "lucide-react";
@@ -204,7 +205,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
               <Assignment order={current} decision={response(current.id)} stale={stale} />
               {current.status === "assigned" && current.attempt?.state === "assigned" && current.assignment_response_open && !response(current.id) && (
                 <>
-                  <label>Reason or acknowledgement note<textarea value={notes} onChange={(event) => setNotes(event.target.value)} minLength={5} maxLength={500} /></label>
+                  <label><FieldCaption required={true}>Reason or acknowledgement note</FieldCaption><textarea value={notes} onChange={(event) => setNotes(event.target.value)} minLength={5} maxLength={500} /></label>
                   <div className={styles.actions}>
                     {([["acknowledged", "Acknowledge assignment"], ["rejected", "Decline and notify dispatch"]] as const).map(([decision, label]) => (
                       <button key={decision} className={decision === "acknowledged" ? "button" : "button secondary"} type="button"

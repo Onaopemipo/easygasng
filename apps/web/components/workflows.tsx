@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import CreditCustomerSearch, {type CreditCustomer} from "./credit-customer-search";
 import { confirmAction } from "./app-dialog";
 import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
@@ -29,6 +30,8 @@ type Field = {
   autoComplete?: string;
   value?: any;
   required?: boolean;
+  captionRequired?: boolean;
+  needsConsent?: boolean;
   options?: { value: string; label: string }[];
 };
 export function ActionForm({
@@ -142,7 +145,11 @@ export function ActionForm({
           />
         ) : (
           <label key={f.name} data-field-type={f.type ?? "text"}>
-            {!["hidden", "boolean-hidden", "number-hidden"].includes(f.type ?? "") && f.label}
+            {!["hidden", "boolean-hidden", "number-hidden"].includes(f.type ?? "") && (
+              <FieldCaption required={f.captionRequired ?? (f.type === "checkbox" ? f.needsConsent === true : f.required !== false)}>
+                {f.label}
+              </FieldCaption>
+            )}
             {f.options ? (
               <select
                 name={f.name}
@@ -698,7 +705,7 @@ export function SupportDesk({ staff = false }: { staff?: boolean }) {
             { name: "id", label: "", type: "hidden", value: ticket.id },
             { name: "version", label: "", type: "number-hidden", value: editVersion },
             { name: "status", label: "Status", value: ticket.status, options: [...supportStatuses.slice(1).map(([value, label]) => ({ value, label })), { value: "closed", label: "Closed" }] },
-            { name: "assigneeId", label: "Assign to staff account ID (optional)", required: false },
+            { name: "assigneeId", label: "Assign to staff account ID", required: false },
           ] : [
             { name: "id", label: "", type: "hidden", value: ticket.id },
             { name: "operationId", label: "", type: "hidden", value: operationId },
@@ -849,8 +856,9 @@ function Purchasing() {
                 },
                 {
                   name: "invoiceReference",
-                  label: "Supplier invoice reference (required for receipt)",
+                  label: "Supplier invoice reference",
                   required: false,
+                  captionRequired: p.status !== "draft",
                 },
               ]}
               onDone={reload}
@@ -1459,15 +1467,15 @@ export function PointOfSale() {
       <form className="surface workflow-form product-form support-dialog-form" onSubmit={sell}>
         {lines.map((line, i) => <fieldset key={i} disabled={busy}>
           <legend>Item {i + 1}</legend>
-          <label>Product<select required value={line.productId} onChange={e => setLines(lines.map((l, n) => n === i ? { ...l, productId: e.target.value } : l))}>
+          <label><FieldCaption required={true}>Product</FieldCaption><select required value={line.productId} onChange={e => setLines(lines.map((l, n) => n === i ? { ...l, productId: e.target.value } : l))}>
             <option value="">Choose a product</option>{products.map((p: any) => <option key={p.id} value={p.id}>{p.name} · {gasMoney(p.price_kobo)}</option>)}
           </select></label>
-          <label>Quantity<FormInput required type="number" min={1} max={100} value={line.quantity} onChange={e => setLines(lines.map((l,n) => n === i ? { ...l, quantity: e.target.value } : l))} /></label>
+          <label><FieldCaption required={true}>Quantity</FieldCaption><FormInput required type="number" min={1} max={100} value={line.quantity} onChange={e => setLines(lines.map((l,n) => n === i ? { ...l, quantity: e.target.value } : l))} /></label>
           {lines.length > 1 && <button type="button" className="button secondary" onClick={() => setLines(lines.filter((_, n) => n !== i))}>Remove item</button>}
         </fieldset>)}
         {lines.length < 30 && <button type="button" className="button secondary" disabled={busy} onClick={() => setLines([...lines, { productId: "", quantity: "1" }])}>Add item</button>}
         <p aria-live="polite">Estimated total: {gasMoney(estimate)}. The server confirms prices and stock.</p>
-        <label>Cash tendered (₦)<FormInput required name="tender" inputMode="decimal" disabled={busy} /></label>
+        <label><FieldCaption required={true}>Cash tendered (₦)</FieldCaption><FormInput required name="tender" inputMode="decimal" disabled={busy} /></label>
         {saleError && <Notice type="error" message={saleError} />}
         <button className="button" disabled={busy}>{busy ? "Recording…" : "Record cash sale"}</button>
       </form>
@@ -1570,6 +1578,7 @@ export function RecurringOrders() {
           },
           {
             name: "consent",
+            needsConsent: true,
             label:
               "I authorise these recurring cash-on-delivery orders within my maximum total. I can pause the plan or revoke authorisation.",
             type: "checkbox",

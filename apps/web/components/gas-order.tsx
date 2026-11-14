@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress } from "../../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../../packages/business-rules/src/booking-contact";
 import { useCheckoutProfile } from "./checkout-delivery-fields";
@@ -290,7 +291,7 @@ export default function GasOrder({
   const completeAddress = (
     <>
       <label>
-        Complete house address
+        <FieldCaption required={!compact}>Complete house address</FieldCaption>
         <textarea
           autoComplete="street-address"
           rows={2}
@@ -623,7 +624,7 @@ export default function GasOrder({
           }}
         >
           <fieldset disabled={busy}>
-            <label htmlFor="compact-capacity">Cylinder capacity</label>
+            <label htmlFor="compact-capacity"><FieldCaption required={true}>Cylinder capacity</FieldCaption></label>
             <div className="compact-gas-control">
               <Cylinder aria-hidden="true" />
               <select
@@ -643,7 +644,7 @@ export default function GasOrder({
                 ))}
               </select>
             </div>
-            <label htmlFor="compact-kg">Gas quantity (kg)</label>
+            <label htmlFor="compact-kg"><FieldCaption required={true}>Gas quantity (kg)</FieldCaption></label>
             <div className="quantity-stepper compact-gas-stepper">
               <button
                 type="button"
@@ -676,7 +677,7 @@ export default function GasOrder({
                 +
               </button>
             </div>
-            <label htmlFor="compact-location">Delivery location</label>
+            <label htmlFor="compact-location"><FieldCaption required={true}>Delivery location</FieldCaption></label>
             <div className="compact-gas-control">
               <MapPin aria-hidden="true" />
               <select
@@ -707,7 +708,7 @@ export default function GasOrder({
               </select>
             </div>
             {coveragePending && <CoverageHelp />}
-            <label htmlFor="compact-address">House address</label>
+            <label htmlFor="compact-address"><FieldCaption required={true}>House address</FieldCaption></label>
             <div className="compact-gas-control">
               <House aria-hidden="true" />
               <input
@@ -840,7 +841,7 @@ export default function GasOrder({
               return (
                 <fieldset key={i} className="gas-cylinder-line">
                   <legend>Cylinder {i + 1}</legend>
-                  <p id={`gas-capacity-${i}`}>Cylinder capacity guidance</p>
+                  <p id={`gas-capacity-${i}`}><FieldCaption required={true}>Cylinder capacity guidance</FieldCaption></p>
                   <div
                     className="gas-capacity-tiles"
                     role="group"
@@ -872,7 +873,7 @@ export default function GasOrder({
                     ))}
                   </div>
                   <label>
-                    Requested gas (kg)
+                    <FieldCaption required={true}>Requested gas (kg)</FieldCaption>
                   <input
                       type="number"
                       min={config.policy.minimumKg ?? undefined}
@@ -1001,8 +1002,8 @@ export default function GasOrder({
                   type="checkbox"
                   checked={includeAppointments}
                   onChange={(e) => setIncludeAppointments(e.target.checked)}
-                />{" "}
-                Include my separately configured service appointments
+                /><FieldCaption required={false}>{" "}
+                Include my separately configured service appointments</FieldCaption>
               </label>
               {appointments.map((a, i) => (
                 <p key={i}>
@@ -1027,7 +1028,7 @@ export default function GasOrder({
             {loadingDelivery && <ActionLoadingIndicator label="Loading your delivery details" />}
             {saved.length > 0 && (
               <label>
-                Saved address
+                <FieldCaption required={false}>Saved address</FieldCaption>
                 <select
                   value={saved.find((a) => a.street === address.street && a.location_id === address.locationId)?.id ?? ""}
                   onChange={(e) => {
@@ -1050,7 +1051,7 @@ export default function GasOrder({
             )}
             <div className="gas-address-grid">
               <label>
-                Delivery location
+                <FieldCaption required={true}>Delivery location</FieldCaption>
                 <select
                   required
                   value={address.locationId}
@@ -1100,7 +1101,7 @@ export default function GasOrder({
                   ["directions", "Additional directions (optional)"],
                 ] as const).map(([k, label]) => (
                   <label key={k}>
-                    {label}
+                    <FieldCaption required={k === "name" || k === "phone"}>{label}</FieldCaption>
                     <input
                       type={k === "phone" ? "tel" : "text"}
                       value={address[k]}
@@ -1121,7 +1122,7 @@ export default function GasOrder({
             </h2>
             <div className="gas-address-grid">
               <label>
-                Delivery date
+                <FieldCaption required={true}>Delivery date</FieldCaption>
                 <input
                   type="date"
                   required
@@ -1130,7 +1131,7 @@ export default function GasOrder({
                 />
               </label>
               <label>
-                Delivery window
+                <FieldCaption required={true}>Delivery window</FieldCaption>
                 <select
                   required
                   value={window}
@@ -1147,7 +1148,7 @@ export default function GasOrder({
               onOfferChange={setRewardOfferId}
             />
             <label id="gas-order-payment">
-              Payment arrangement
+              <FieldCaption required={true}>Payment arrangement</FieldCaption>
               <select
                 value={method}
                 onChange={(e) => setMethod(e.target.value)}

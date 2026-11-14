@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useState, type FormEvent } from "react";
 import { Notice } from "./ui";
 export function ImageUpload({
@@ -60,20 +61,20 @@ export function ImageUpload({
       </p>
       {bookingId && (
         <label className="testimonial-consent">
-          <input type="checkbox" name="photoConsent" required />I have consent
+          <input type="checkbox" name="photoConsent" required /><FieldCaption required={true}>I have consent
           to attach this private service evidence. Avoid faces and unrelated
-          personal details.
+          personal details.</FieldCaption>
         </label>
       )}
       {testimonialId && (
         <label className="testimonial-consent">
-          <input type="checkbox" name="photoConsent" required />I consent to
+          <input type="checkbox" name="photoConsent" required /><FieldCaption required={true}>I consent to
           this photo being published alongside my testimonial after moderation.
-          I have permission from everyone pictured.
+          I have permission from everyone pictured.</FieldCaption>
         </label>
       )}
       <label>
-        Image
+        <FieldCaption required={true}>Image</FieldCaption>
         <input
           type="file"
           name="image"
@@ -82,7 +83,7 @@ export function ImageUpload({
         />
       </label>
       <label>
-        Description
+        <FieldCaption required={true}>Description</FieldCaption>
         <input name="alt" required minLength={3} maxLength={250} />
       </label>
       {error && <Notice type="error" message={error} />}

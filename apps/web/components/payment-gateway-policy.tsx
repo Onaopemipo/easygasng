@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 export default function PaymentGatewayPolicy({
   value,
   setValue,
@@ -8,9 +9,9 @@ export default function PaymentGatewayPolicy({
   ownerAutoApproval?: boolean;
   setValue: (v: any) => void;
 }) {
-  const field = (key: string, label: string, type = "text") => (
+  const field = (key: string, label: string, type = "text", required = true) => (
     <label key={key}>
-      {label}
+      <FieldCaption required={required}>{label}</FieldCaption>
       <input
         type={type}
         value={value[key] ?? ""}
@@ -23,14 +24,14 @@ export default function PaymentGatewayPolicy({
       />
     </label>
   );
-  const toggle = (key: string, label: string) => (
+  const toggle = (key: string, label: string, required = false) => (
     <label key={key}>
       <input
         type="checkbox"
         checked={Boolean(value[key])}
         onChange={(e) => setValue({ ...value, [key]: e.target.checked })}
       />
-      {label}
+      <FieldCaption required={required}>{label}</FieldCaption>
     </label>
   );
   return (
@@ -43,9 +44,11 @@ export default function PaymentGatewayPolicy({
       {field(
         "merchantApprovalReference",
         "Merchant configuration and approval reference",
+        "text",
+        Boolean(value.enabled),
       )}
       <label>
-        Paystack dashboard automatic fee collection
+        <FieldCaption required={Boolean(value.enabled)}>Paystack dashboard automatic fee collection</FieldCaption>
         <select
           value={value.providerAutomaticFees}
           onChange={(e) =>
@@ -59,9 +62,10 @@ export default function PaymentGatewayPolicy({
       {toggle(
         "passThroughApproved",
         "Customer fee pass-through independently verified and permitted",
+        Boolean(value.enabled && value.fee?.bearer === "customer"),
       )}
       <fieldset>
-        <legend>Approved payment channels</legend>
+        <legend><FieldCaption required={Boolean(value.enabled)}>Approved payment channels</FieldCaption></legend>
         {["card", "bank", "ussd", "bank_transfer"].map((c) => (
           <label key={c}>
             <input
@@ -105,7 +109,7 @@ export default function PaymentGatewayPolicy({
         </button>
       ) : (
         <fieldset>
-          <legend>Fee schedule — NGN minor units (kobo)</legend>
+          <legend><FieldCaption required={Boolean(value.enabled)}>Fee schedule — NGN minor units (kobo)</FieldCaption></legend>
           <p>
             Do not copy an advertised rate without merchant verification. The
             active approval version is snapshotted on each quote.
@@ -120,7 +124,7 @@ export default function PaymentGatewayPolicy({
             ["maximumGrossKobo", "Maximum permitted charge (kobo)"],
           ].map(([key, label]) => (
             <label key={key}>
-              {label}
+              <FieldCaption required={true}>{label}</FieldCaption>
               <input
                 type="number"
                 min="0"
@@ -136,7 +140,7 @@ export default function PaymentGatewayPolicy({
             </label>
           ))}
           <label>
-            Fee cap (kobo); blank means uncapped
+            <FieldCaption required={false}>Fee cap (kobo); blank means uncapped</FieldCaption>
             <input
               type="number"
               min="0"
@@ -155,7 +159,7 @@ export default function PaymentGatewayPolicy({
             />
           </label>
           <label>
-            Fee bearer
+            <FieldCaption required={true}>Fee bearer</FieldCaption>
             <select
               value={value.fee.bearer}
               onChange={(e) =>
@@ -172,7 +176,7 @@ export default function PaymentGatewayPolicy({
             </select>
           </label>
           <label>
-            Provider rounding
+            <FieldCaption required={true}>Provider rounding</FieldCaption>
             <select
               value={value.fee.rounding}
               onChange={(e) =>

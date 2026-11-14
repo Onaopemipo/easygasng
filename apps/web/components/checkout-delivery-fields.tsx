@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useEffect, useState } from "react";
 import {
   checkoutAddresses,
@@ -62,7 +63,7 @@ function DeliveryFields({ profile, name, zones, draftStreet }: {
     <>
       {addresses.length > 0 && (
         <label>
-          Saved address
+          <FieldCaption required={false}>Saved address</FieldCaption>
           <select value={choice} onChange={(e) => setChoice(e.target.value)}>
             {draftStreet.trim() && <option value="draft">Use the address entered earlier</option>}
             <option value="">Use a different address</option>
@@ -74,11 +75,11 @@ function DeliveryFields({ profile, name, zones, draftStreet }: {
       <div key={choice}>
         <div className="form-columns">
           <label>
-            Recipient name
+            <FieldCaption required={true}>Recipient name</FieldCaption>
             <FormInput name="name" required defaultValue={address.name} minLength={2} maxLength={100} autoComplete="shipping name" />
           </label>
           <label>
-            Phone number
+            <FieldCaption required={true}>Phone number</FieldCaption>
             <FormInput name="phone" required defaultValue={address.phone} type="tel" autoComplete="shipping tel" />
           </label>
         </div>

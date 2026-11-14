@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { useEffect, useState } from "react";
 import Link from "./workspace-link";
 import {
@@ -534,7 +535,7 @@ export default function ProductCatalogue({ user }: { user: any }) {
                 imported.
               </p>
               <label>
-                Upload CSV or JSON file
+                <FieldCaption required={false}>Upload CSV or JSON file</FieldCaption>
                 <input
                   type="file"
                   accept=".csv,text/csv,.json,application/json"
@@ -561,7 +562,7 @@ export default function ProductCatalogue({ user }: { user: any }) {
                 />
               </label>
               <label>
-                CSV or JSON contents
+                <FieldCaption required={true}>CSV or JSON contents</FieldCaption>
                 <textarea
                   rows={8}
                   value={importText}

@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { ActionLoadingIndicator } from "./easygas-loader";
 import React, { useEffect, useRef, useState } from "react";
 import { api, money, Notice } from "./ui";
@@ -155,7 +156,7 @@ export function HostedPayment({
               disabled={pending}
               onChange={(e) => setAccepted(e.target.checked)}
             />
-            I accept this amount and the separately disclosed processing charge.
+            <FieldCaption required={true}>I accept this amount and the separately disclosed processing charge.</FieldCaption>
           </label>
           {pending ? (
             <>
@@ -312,7 +313,7 @@ export function WalletFunding() {
         }}
       >
         <label>
-          Payment method
+          <FieldCaption required={true}>Payment method</FieldCaption>
           <select
             value={method}
             onChange={(e) => {
@@ -329,7 +330,7 @@ export function WalletFunding() {
           </select>
         </label>
         <label>
-          Amount (NGN)
+          <FieldCaption required={true}>Amount (NGN)</FieldCaption>
           <input
             inputMode="decimal"
             value={amount}
@@ -396,11 +397,11 @@ export function WalletFunding() {
               balance is added until owner/finance verifies actual receipt.
             </p>
             <label>
-              Sender name
+              <FieldCaption required={true}>Sender name</FieldCaption>
               <input name="sender" required minLength={2} maxLength={150} />
             </label>
             <label>
-              Bank transaction reference
+              <FieldCaption required={true}>Bank transaction reference</FieldCaption>
               <input
                 name="reference"
                 required
@@ -410,7 +411,7 @@ export function WalletFunding() {
               />
             </label>
             <label>
-              Transfer date
+              <FieldCaption required={true}>Transfer date</FieldCaption>
               <input
                 type="date"
                 name="date"

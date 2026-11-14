@@ -19,7 +19,7 @@ import { Button, Card, Copy, Feedback, Title } from "./CustomerUI";
 import { ContextSheet } from "./ContextSheet";
 import { useTheme } from "./theme";
 import { View, Pressable } from "./surfaces";
-import { Text as BaseText, TextInput as BaseInput } from "./typography";
+import { FieldCaption, Text as BaseText, TextInput as BaseInput } from "./typography";
 function Text(props: React.ComponentProps<typeof BaseText>) {
   const dark = useColorScheme() === "dark";
   return (
@@ -415,9 +415,9 @@ function NativeReferralSheet({
             }}
           />
         )}
-        <BaseText>Referral code received</BaseText>
+        <FieldCaption required={true}>Code to apply</FieldCaption>
         <BaseInput
-          accessibilityLabel="Referral code received"
+          accessibilityLabel="Code to apply, required"
           autoCapitalize="none"
           autoCorrect={false}
           value={code}
@@ -520,8 +520,9 @@ export function NativePartialRefund({
           />
         </View>
       ))}
+      <FieldCaption required={true}>Refund reason</FieldCaption>
       <TextInput
-        accessibilityLabel="Refund reason"
+        accessibilityLabel="Refund reason, required"
         value={reason}
         onChangeText={(v) => {
           setReason(v);
@@ -674,8 +675,9 @@ export function NativeRewardSelector({
           </Text>
         </Pressable>
       ))}
+      <FieldCaption required={false}>Reward points to use</FieldCaption>
       <TextInput
-        accessibilityLabel="Reward points to use"
+        accessibilityLabel="Reward points to use, optional"
         keyboardType="numeric"
         value={points}
         onChangeText={(v) => {

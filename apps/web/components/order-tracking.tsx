@@ -1,4 +1,5 @@
 "use client";
+import { FieldCaption } from "./field-caption";
 import { OrderCardPayment } from "./hosted-payment";
 import { useEffect, useMemo, useState, useRef } from "react";
 import Link from "./workspace-link";
@@ -431,7 +432,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                     }}
                   >
                     <label>
-                      Action
+                      <FieldCaption required={true}>Action</FieldCaption>
                       <select name="action">
                         <option value="order.transition">
                           {driver
@@ -472,7 +473,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                       </select>
                     </label>
                     <label>
-                      Next status
+                      <FieldCaption required={true}>Next status when updating a delivery</FieldCaption>
                       <select name="status">
                         {(orderTransitions[o.status] ?? [])
                           .filter(
@@ -493,7 +494,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                     </label>
                     {!driver && (
                       <label>
-                        Assign driver
+                        <FieldCaption required={true}>Driver when assigning</FieldCaption>
                         <select name="driverId">
                           <option value="">Choose when assigning</option>
                           {drivers
@@ -512,7 +513,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                       </label>
                     )}
                     <label>
-                      Failure category (when reporting unsuccessful delivery)
+                      <FieldCaption required={true}>Failure category when reporting unsuccessful delivery</FieldCaption>
                       <select name="failureReason" defaultValue="other">
                         {deliveryFailureReasons.map((r) => (
                           <option key={r} value={r}>
@@ -522,7 +523,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                       </select>
                     </label>
                     <label>
-                      Operational reason / failure details
+                      <FieldCaption required={true}>Operational reason / failure details</FieldCaption>
                       <textarea
                         name="reason"
                         required
@@ -533,7 +534,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                     <details>
                       <summary>Handover proof / reschedule fields</summary>
                       <label>
-                        Customer one-time delivery code
+                        <FieldCaption required={true}>Customer one-time code for handover</FieldCaption>
                         <input
                           name="code"
                           autoComplete="off"
@@ -543,22 +544,21 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                         />
                       </label>
                       <label>
-                        {["wallet", "card"].includes(o.payment_method) ? "Prepaid order — collect no cash" : "Cash actually collected (₦)"}
+                        {["wallet", "card"].includes(o.payment_method) ? "Prepaid order — collect no cash" : <FieldCaption required={true}>Cash actually collected for handover (₦)</FieldCaption>}
                         <input name="cash" type="number" min="0" step="0.01" defaultValue={["wallet", "card"].includes(o.payment_method) ? 0 : undefined} readOnly={["wallet", "card"].includes(o.payment_method)} />
                       </label>
                       <label>
-                        <input type="checkbox" name="handover" />I physically
-                        checked every quantity and serial and handed over all
-                        items. No partial delivery.
+                        <input type="checkbox" name="handover" />
+                        <FieldCaption required={true}>I physically checked every quantity and serial and handed over all items. No partial delivery.</FieldCaption>
                       </label>
                       {!driver && (
                         <>
                           <label>
-                            New delivery date
+                            <FieldCaption required={true}>New date when rescheduling</FieldCaption>
                             <input name="date" type="date" />
                           </label>
                           <label>
-                            Configured delivery window
+                            <FieldCaption required={true}>Delivery window when rescheduling</FieldCaption>
                             <input
                               name="window"
                               placeholder="Use the configured delivery window"
