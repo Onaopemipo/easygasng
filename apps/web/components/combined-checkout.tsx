@@ -4,7 +4,7 @@ import { useCardCheckout, OrderCardPayment } from "./hosted-payment";
 import { RewardCheckoutField } from "./easyrewards";
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "./workspace-link";
-import { AddressAreaFields } from "./address-area-fields";
+import { CheckoutDeliveryFields, readCheckoutDelivery } from "./checkout-delivery-fields";
 import { api, money, Notice, Loading } from "./ui";
 export default function CombinedCheckout({
   user,
@@ -96,12 +96,7 @@ export default function CombinedCheckout({
           ? {
               products: {
                 items: cart,
-                address: {
-                  name: values.name,
-                  phone: bookingPhone(String(values.phone ?? "")) ?? String(values.phone ?? ""),
-                  street: values.street,
-                  zone: values.zone,
-                },
+                address: readCheckoutDelivery(values),
                 date: values.date,
                 window: values.window,
                 ...(values.rewardOfferId
@@ -226,18 +221,7 @@ export default function CombinedCheckout({
           {cart.length > 0 && (
             <>
               <h3>Product delivery</h3>
-              <label>
-                Name
-                <input name="name" required minLength={2} />
-              </label>
-              <label>
-                Mobile number
-                <input name="phone" required type="tel" />
-              </label>
-              <AddressAreaFields
-                areas={catalogue.zones.map((z: string) => ({ id: z, name: z }))}
-                areaLabel="Area"
-              />
+              <CheckoutDeliveryFields user={user} zones={catalogue.zones} />
               <label>
                 Delivery date
                 <input name="date" type="date" required />

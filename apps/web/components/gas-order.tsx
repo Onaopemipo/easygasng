@@ -1,4 +1,7 @@
 "use client";
+import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress } from "../../../packages/business-rules/src/checkout-delivery";
+import { bookingPhone } from "../../../packages/business-rules/src/booking-contact";
+import { useCheckoutProfile } from "./checkout-delivery-fields";
 import { useCardCheckout, OrderCardPayment } from "./hosted-payment";
 import { RewardCheckoutField } from "./easyrewards";
 import {
@@ -68,7 +71,6 @@ export default function GasOrder({
     [rewardOfferId, setRewardOfferId] = useState(""),
     [appointments, setAppointments] = useState<any[]>([]),
     [includeAppointments, setIncludeAppointments] = useState(false),
-    [saved, setSaved] = useState<any[]>([]),
     [key] = useState(() => crypto.randomUUID());
   const [address, setAddress] = useState({
       name: user?.name ?? "",
@@ -86,6 +88,9 @@ export default function GasOrder({
   const [compactKg, setCompactKg] = useState("");
   const [pricingBranch, setPricingBranch] = useState<string | null>(null);
   const [pricingFailed, setPricingFailed] = useState<string | null>(null);
+  const { profile, loading: loadingDelivery } = useCheckoutProfile(compact ? undefined : user?.id);
+  const saved = checkoutAddresses(profile);
+  const deliveryEdited = useRef(false);
   const compactSubmit = useRef(false);
   const requestLock = useRef(false);
   const details = useRef<HTMLDetailsElement>(null);
@@ -165,20 +170,21 @@ export default function GasOrder({
   useEffect(() => {
     const identity = user?.id ?? "guest";
     const apply = (id: string) => {
-      if (!id) {
-        setAddress((a) => ({ ...a, locationId: "", zone: "" }));
-        return;
-      }
       const location = config?.locations?.find((l: any) => l.id === id);
-      if (location)
+      if (location || !id)
         setAddress((a) => ({
           ...a,
-          locationId: location.id,
-          zone: location.name,
+          locationId: location?.id ?? "",
+          zone: location?.name ?? "",
         }));
     };
     const preferred = readDeliveryArea(identity);
-    if (preferred) apply(preferred);
+    if (preferred)
+      setAddress((a) => {
+        if (a.street || a.locationId || deliveryEdited.current) return a;
+        const l = config?.locations?.find((item: any) => item.id === preferred);
+        return l ? { ...a, locationId: l.id, zone: l.name } : a;
+      });
     const change = (event: Event) => {
       const detail = (event as CustomEvent).detail;
       if (detail?.identity === identity) apply(detail.id);
@@ -199,37 +205,12 @@ export default function GasOrder({
     }
   }, [user?.id]);
   useEffect(() => {
-    if (user)
-      api("account.profile")
-        .then((p) => {
-          setSaved(p.addresses);
-          const savedDefault = p.addresses.find(
-            (a: any) => a.is_default && a.location_available,
-          );
-          if (savedDefault)
-            setAddress((a) =>
-              a.locationId
-                ? a
-                : {
-                    ...a,
-                    ...savedDefault.details,
-                    name: savedDefault.details?.recipient ?? user.name,
-                    phone: savedDefault.phone,
-                    street: savedDefault.street,
-                    zone: savedDefault.zone,
-                    locationId: savedDefault.location_id,
-                  },
-            );
-        })
-        .catch(() => {});
-  }, [user?.id]);
-  useEffect(() => {
     if (compact) return;
     try {
       const draft = JSON.parse(
         sessionStorage.getItem("easygas.gasDraft") ?? "null",
       );
-      if (draft) {
+      if (draft && (!draft.customerId || draft.customerId === user?.id)) {
         if (
           Array.isArray(draft.lines) &&
           draft.lines.length &&
@@ -240,10 +221,30 @@ export default function GasOrder({
         if (typeof draft.window === "string") setWindow(draft.window);
         if (typeof draft.method === "string") setMethod(draft.method);
         setAddress((a) => ({ ...a, ...draft.address }));
-        sessionStorage.removeItem("easygas.gasDraft");
       }
+      if (!draft?.customerId || user?.id)
+        sessionStorage.removeItem("easygas.gasDraft");
     } catch {}
-  }, [compact]);
+  }, [compact, user?.id]);
+  useEffect(() => {
+    if (!profile || deliveryEdited.current) return;
+    const addresses = checkoutAddresses(profile);
+    setAddress((current) => {
+      const selected = current.street
+        ? addresses.find((a) => a.street === current.street && a.location_id === current.locationId)
+        : defaultCheckoutAddress(addresses);
+      const defaults = checkoutDelivery(profile, selected, user?.name);
+      if (!current.street && selected) return defaults;
+      return {
+        ...current,
+        name: current.name || defaults.name,
+        phone: current.phone || defaults.phone,
+        building: current.building || defaults.building,
+        landmark: current.landmark || defaults.landmark,
+        directions: current.directions || defaults.directions,
+      };
+    });
+  }, [profile, user?.name]);
   useEffect(() => {
     const capacities = config?.policy?.capacitiesKg;
     if (capacities?.length)
@@ -269,11 +270,15 @@ export default function GasOrder({
   );
   const [addressHint, setAddressHint] = useState("");
   function enterAddress(street: string) {
+    deliveryEdited.current = true;
     const result = resolveAddressLocation(street, config?.locations ?? []);
     const locationId = result.location?.id ?? "";
     setAddress((a) => ({
       ...a,
       street,
+      building: "",
+      landmark: "",
+      directions: "",
       locationId,
       zone: result.location?.name ?? "",
     }));
@@ -289,7 +294,7 @@ export default function GasOrder({
         <textarea
           autoComplete="street-address"
           rows={2}
-          maxLength={1000}
+          maxLength={250}
           placeholder="House/flat number, street, estate, area, city"
           value={address.street}
           required={!compact}
@@ -383,6 +388,7 @@ export default function GasOrder({
   );
   const currentQuote = quote?.inputKey === quoteKey ? quote : null;
   const canReview =
+    !loadingDelivery &&
     !!areaBranch &&
     !coveragePending &&
     configured &&
@@ -454,7 +460,7 @@ export default function GasOrder({
           policyVersion: currentQuote.policyVersion,
           totalKobo: currentQuote.totalKobo,
         },
-        address,
+        address: { ...address, phone: bookingPhone(address.phone) ?? address.phone },
         date,
         window,
         ...(rewardPoints ? { rewardPoints } : {}),
@@ -599,6 +605,7 @@ export default function GasOrder({
                 "easygas.gasDraft",
                 JSON.stringify({
                   lines: draftLines,
+                  customerId: user?.id,
                   address: { ...address, street: address.street.trim() },
                 }),
               );
@@ -800,7 +807,7 @@ export default function GasOrder({
       <form onSubmit={review} className="gas-order-grid">
         <fieldset
           className="surface gas-order-editor"
-          disabled={busy}
+          disabled={busy || loadingDelivery}
           onInvalid={() => {
             if (details.current?.querySelector(":invalid"))
               details.current.open = true;
@@ -866,7 +873,7 @@ export default function GasOrder({
                   </div>
                   <label>
                     Requested gas (kg)
-                    <input
+                  <input
                       type="number"
                       min={config.policy.minimumKg ?? undefined}
                       max={Math.min(
@@ -1017,34 +1024,25 @@ export default function GasOrder({
             <h2>
               <span>2</span> Delivery details
             </h2>
+            {loadingDelivery && <ActionLoadingIndicator label="Loading your delivery details" />}
             {saved.length > 0 && (
               <label>
-                Use a saved address
+                Saved address
                 <select
-                  defaultValue=""
+                  value={saved.find((a) => a.street === address.street && a.location_id === address.locationId)?.id ?? ""}
                   onChange={(e) => {
-                    const a = saved.find((a) => a.id === e.target.value);
-                    if (a)
-                      setAddress({
-                        ...address,
-                        ...a.details,
-                        name: a.details?.recipient ?? user.name,
-                        phone: a.phone,
-                        street: a.street,
-                        zone: a.zone,
-                        locationId: a.location_id,
-                      });
+                    deliveryEdited.current = true;
+                    setAddress(checkoutDelivery(profile, saved.find((a) => a.id === e.target.value), user?.name));
+                    setAddressHint("");
                   }}
                 >
-                  <option value="">Enter a new address</option>
+                  <option value="">Use a different address</option>
                   {saved.map((a) => (
                     <option
                       key={a.id}
                       value={a.id}
-                      disabled={!a.location_available}
                     >
                       {a.label} · {a.zone}
-                      {!a.location_available ? " (unavailable)" : ""}
                     </option>
                   ))}
                 </select>
@@ -1057,6 +1055,7 @@ export default function GasOrder({
                   required
                   value={address.locationId}
                   onChange={(e) => {
+                    deliveryEdited.current = true;
                     const l = config.locations.find(
                       (l: any) => l.id === e.target.value,
                     );
@@ -1069,6 +1068,9 @@ export default function GasOrder({
                       ...address,
                       locationId: e.target.value,
                       zone: l?.name ?? "",
+                      building: "",
+                      landmark: "",
+                      directions: "",
                     });
                   }}
                 >
@@ -1087,28 +1089,26 @@ export default function GasOrder({
             </div>
             {coveragePending && <CoverageHelp />}
             <details ref={details} className="gas-delivery-details">
-              <summary>Additional delivery details</summary>
+              <summary>Recipient and delivery notes</summary>
+              <p className="muted">You can edit these details for this order.</p>
               <div className="gas-address-grid">
-                {[
+                {([
                   ["name", "Recipient name"],
                   ["phone", "Recipient phone"],
-                  ["building", "Building / house number"],
-                  ["landmark", "Estate / landmark"],
-                  ["directions", "Additional directions"],
-                ].map(([k, label]) => (
+                  ["building", "Building / house number (optional)"],
+                  ["landmark", "Estate / landmark (optional)"],
+                  ["directions", "Additional directions (optional)"],
+                ] as const).map(([k, label]) => (
                   <label key={k}>
                     {label}
                     <input
-                      value={(address as any)[k]}
-                      required={[
-                        "name",
-                        "phone",
-                        "street",
-                        "building",
-                      ].includes(k)}
-                      onChange={(e) =>
-                        setAddress({ ...address, [k]: e.target.value })
-                      }
+                      type={k === "phone" ? "tel" : "text"}
+                      value={address[k]}
+                      required={k === "name" || k === "phone"}
+                      onChange={(e) => {
+                        deliveryEdited.current = true;
+                        setAddress({ ...address, [k]: e.target.value });
+                      }}
                     />
                   </label>
                 ))}

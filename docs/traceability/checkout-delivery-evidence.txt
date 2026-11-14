@@ -1,0 +1,46 @@
+✔ CHECKOUT-PREFILL01: prefer the saved default, fall back to a usable legacy address and then to the account contact (0.712417ms)
+✔ LINK-CONTACT01: server normalizes equivalent Nigerian formats and rejects invalid or foreign contacts with actionable text (2.721208ms)
+✔ LINK-CONTACT02: saved linked appointments expose correction and validate before API submission (2.37575ms)
+✔ A–C,K: draft, permissions, status injection and independent review share one authoritative workflow (1134.54825ms)
+✔ D,G: distinct dual approval and revisions invalidate prior decisions by revision (881.368084ms)
+✔ E,H,J,O: schedule, stale requests, idempotent activation and append-only reversal (836.760041ms)
+✔ F,L,M,N: fee rejection, expired request, revoked approver and governed location lifecycle (818.575ms)
+✔ I: activation database failure leaves active value intact, records failure, and revalidates a retry (797.906125ms)
+✔ decimal calculator matches confirmed gas quantities and rejects unsafe precision (0.349875ms)
+✔ COVERAGE-01: gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety (855.920625ms)
+✔ delivery fee is once per order in every area; inactive locations retain addresses and flag affected orders (806.911917ms)
+✔ verified gas-cylinder filling and delivery consume bulk stock once and preserve custody restrictions (913.474083ms)
+✔ gas report exports preserve totals and escape untrusted spreadsheet and HTML text (2.474041ms)
+✔ confirmed cylinder maintenance is an unpublished draft governed by the existing service and safety approvals (764.536042ms)
+✔ COMPACT-QUOTE01: selected location gates a read-only fractional quote without reserving stock (754.42775ms)
+✔ addresses, preferences and sessions are customer-owned (783.883708ms)
+✔ recovery is non-enumerating, single-use, expires and revokes sessions (69.294458ms)
+✔ verification cannot be forged, reused or consumed for password reset (8.985875ms)
+✔ support persists replies, hides staff notes and rejects cross-customer access (16.117333ms)
+✔ new products remain unpriced and unpublished with approval definitions (5.050583ms)
+✔ supplier purchasing requires independent approval and receives stock once (71.304083ms)
+✔ cylinder inspections quarantine failures and prevent unsafe filling or custody (32.735583ms)
+✔ branch transfers remove source stock and destination receipt is independent and idempotent (133.466875ms)
+✔ refill profiles require owned eligible data and report insufficient history honestly (11.182041ms)
+✔ staff invitation acceptance cannot grant privileges and suspension revokes live sessions (66.618333ms)
+✔ maintenance expires requests, activates scheduled routine values and flags overdue cylinders once (53.333375ms)
+✔ product import creates protected drafts and cannot overwrite existing catalogue records (41.063834ms)
+✔ catalogue branch browsing enforces current user scope (4.39225ms)
+✔ SUPPORT-DESK01: staff intake reuses scoped customer identity and inbox totals preserve private notes (58.305167ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10981.682875
+
+Authenticated Chrome browser checks against an isolated database with synthetic customers, confirmed coverage and demo stock:
+CART: saved default, saved alternative, account phone fallback and confirmed order using edited details
+LINKED: saved defaults persist after alternate-address order
+GAS MOBILE WEB: saved default, different address fallback, no horizontal overflow
+
+Web TypeScript: passed.
+Web production compilation (EASYGAS_PREVIEW=true npm run build): passed. Browser checks used the development server for the isolated local database.
+Native TypeScript: passed. No installed iOS or Android runtime check was performed.

@@ -17,7 +17,7 @@ import {
   trackingLabels,
   trackingEventLabel,
 } from "../../../packages/business-rules/src/order-tracking";
-import { AddressAreaFields } from "./address-area-fields";
+import { CheckoutDeliveryFields, readCheckoutDelivery } from "./checkout-delivery-fields";
 import PublicHeader from "./public-header";
 import {
   useTrackingOrders,
@@ -343,6 +343,7 @@ export default function Site({
           ) : pathname === "/gas-order" ? (
             <div className="container page">
               <GasOrder
+                key={user?.id ?? "guest"}
                 catalogue={catalogue}
                 user={user}
                 items={cart}
@@ -352,6 +353,7 @@ export default function Site({
           ) : pathname === "/combined-checkout" ? (
             <div className="container page">
               <CombinedCheckout
+                key={user?.id ?? "guest"}
                 user={user}
                 cart={cart}
                 catalogue={catalogue}
@@ -426,7 +428,7 @@ export default function Site({
               <RefillProfiles key={`${user?.id}:${user?.role}:${user?.branchId}`} />
             </div>
           ) : pathname === "/cart" || pathname === "/checkout" ? (
-            <Cart checkout={pathname === "/checkout"} />
+            <Cart key={pathname + ":" + (user?.id ?? "guest")} checkout={pathname === "/checkout"} />
           ) : [
               "/account",
               "/orders",
@@ -728,7 +730,7 @@ function Home() {
   );
 }
 function QuickOrder() {
-  const { catalogue, add } = useShop(),
+  const { catalogue, add, user } = useShop(),
     [tab, setTab] = useState("gas"),
     [selected, setSelected] = useState("refill-6"),
     [address, setAddress] = useState(""),
@@ -768,7 +770,7 @@ function QuickOrder() {
     try {
       sessionStorage.setItem(
         "easygas.deliveryDraft",
-        JSON.stringify({ address, date, window }),
+        JSON.stringify({ address, date, window, customerId: user?.id }),
       );
     } catch {}
     router.push("/cart");
@@ -1357,8 +1359,6 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
     [busy, setBusy] = useState(false),
     [order, setOrder] = useState<any>(null),
     [draft, setDraft] = useState({ address: "", date: "", window: "" }),
-    [savedAddresses, setSavedAddresses] = useState<any[]>([]),
-    [selectedAddress, setSelectedAddress] = useState<any>(null),
     [key] = useState(() => crypto.randomUUID());
   const cardEnabled = useCardCheckout(user?.id);
   useEffect(() => {
@@ -1366,33 +1366,13 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
       const d = JSON.parse(
         sessionStorage.getItem("easygas.deliveryDraft") ?? "{}",
       );
+      if (d.customerId && d.customerId !== user?.id) return;
       setDraft({
         address: d.address ?? "",
         date: d.date ?? "",
         window: d.window ?? "",
       });
     } catch {}
-  }, []);
-  useEffect(() => {
-    let active = true;
-    setSavedAddresses([]);
-    setSelectedAddress(null);
-    if (user)
-      api("account.profile")
-        .then((d) => {
-          if (active) {
-            setSavedAddresses(d.addresses);
-            setSelectedAddress(
-              d.addresses.find(
-                (a: any) => a.is_default && a.location_available,
-              ) ?? null,
-            );
-          }
-        })
-        .catch(() => {});
-    return () => {
-      active = false;
-    };
   }, [user?.id]);
   const items = cart
       .map((i: CartItem) => ({
@@ -1421,12 +1401,7 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
     try {
       const payload = {
         items: cart,
-        address: {
-          name: d.name,
-          phone: d.phone,
-          street: d.street,
-          zone: d.zone,
-        },
+        address: readCheckoutDelivery(d),
         date: d.date,
         window: d.window,
         ...(d.rewardOfferId ? { rewardOfferId: String(d.rewardOfferId) } : {}),
@@ -1560,68 +1535,12 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
             {checkout &&
               (user ? (
                 <form
-                  key={selectedAddress?.id ?? "manual-address"}
+                  key={user.id}
                   className="surface checkout-form"
                   onSubmit={submit}
                 >
                   <h2>Where are we delivering?</h2>
-                  {savedAddresses.length > 0 && (
-                    <label>
-                      Saved address
-                      <select
-                        value={selectedAddress?.id ?? ""}
-                        onChange={(e) =>
-                          setSelectedAddress(
-                            savedAddresses.find(
-                              (a) => a.id === e.target.value,
-                            ) ?? null,
-                          )
-                        }
-                      >
-                        <option value="">Enter an address</option>
-                        {savedAddresses.map((a) => (
-                          <option
-                            key={a.id}
-                            value={a.id}
-                            disabled={!a.location_available}
-                          >
-                            {a.label} · {a.street}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                  )}
-                  <div className="form-columns">
-                    <label>
-                      Recipient name
-                      <FormInput
-                        name="name"
-                        required
-                        defaultValue={user.name}
-                        minLength={2}
-                      />
-                    </label>
-                    <label>
-                      Phone number
-                      <FormInput
-                        name="phone"
-                        defaultValue={selectedAddress?.phone ?? ""}
-                        type="tel"
-                        required
-                        placeholder="08012345678"
-                      />
-                    </label>
-                  </div>
-                  <AddressAreaFields
-                    key={selectedAddress?.id ?? `new:${draft.address}`}
-                    street={selectedAddress?.street ?? draft.address}
-                    area={selectedAddress?.zone ?? ""}
-                    areaLabel="Delivery area"
-                    areas={catalogue.zones.map((z: string) => ({
-                      id: z,
-                      name: z,
-                    }))}
-                  />
+                  <CheckoutDeliveryFields user={user} zones={catalogue.zones} draftStreet={draft.address} />
                   <div className="form-columns">
                     <label>
                       Delivery date

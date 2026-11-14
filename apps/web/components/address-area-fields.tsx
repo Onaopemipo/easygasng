@@ -11,6 +11,7 @@ export function AddressAreaFields({
   area = "",
   areaName = "zone",
   areaLabel = "Delivery location",
+  maxLength = 1000,
   onRecognizedArea,
 }: {
   areas: { id: string; name: string }[];
@@ -18,6 +19,7 @@ export function AddressAreaFields({
   area?: string;
   areaName?: string;
   areaLabel?: string;
+  maxLength?: number;
   onRecognizedArea?: (area: string) => void;
 }) {
   const [text, setText] = useState(street);
@@ -34,7 +36,7 @@ export function AddressAreaFields({
           autoComplete="street-address"
           required
           minLength={8}
-          maxLength={1000}
+          maxLength={maxLength}
           rows={3}
           placeholder="House/flat number, street, estate, area, city"
           value={text}

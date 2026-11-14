@@ -217,3 +217,5 @@ Unified email and phone sign-in (14 November). [Requirements matrix](unified-sig
 Phone-assisted delivery coverage (14 November). [Requirements matrix](assisted-order-coverage-rtm.json) and [test evidence](assisted-order-coverage-evidence.txt). Staff see pending areas before quotation. Order creation still checks the active coverage policy.
 
 Admin Dashboard landing (14 November). [Requirements matrix](admin-dashboard-landing-rtm.json) and [test evidence](admin-dashboard-landing-evidence.txt).
+
+Customer checkout delivery prefill: [matrix](checkout-delivery-rtm.md). Web prefill and one-order overrides verified on isolated data. Native installed-app acceptance remains open; production NO-GO unchanged.

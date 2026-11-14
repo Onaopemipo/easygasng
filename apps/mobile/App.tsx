@@ -1,3 +1,6 @@
+import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress } from "../../packages/business-rules/src/checkout-delivery";
+import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
+import { useCheckoutProfile } from "./useCheckoutProfile";
 import { CookingGasProfiles } from "./CookingGasProfiles";
 import OwnerSupportWorkspace from "./OwnerSupportWorkspace";
 import OwnerGovernanceWorkspace, { isOwnerGovernanceScreen } from "./OwnerGovernanceWorkspace";
@@ -336,6 +339,23 @@ export default function App() {
       setError("");
     }
   }, [screen]);
+  const checkoutCustomerId = screen === "checkout" ? user?.id : undefined;
+  const { profile: checkoutProfile, loading: loadingDelivery } = useCheckoutProfile(api, checkoutCustomerId);
+  const savedCheckoutAddresses = checkoutAddresses(checkoutProfile).filter(
+    (item) => catalogue?.zones?.includes(item.zone),
+  );
+  const [checkoutAddressId, setCheckoutAddressId] = useState<string>();
+  useEffect(() => {
+    if (!checkoutCustomerId) {
+      setCheckoutAddressId(undefined);
+      return;
+    }
+    if (loadingDelivery || !catalogue || checkoutAddressId !== undefined) return;
+    const chosen = defaultCheckoutAddress(savedCheckoutAddresses);
+    setCheckoutAddressId(chosen?.id ?? "");
+    const { name, phone, street, zone } = checkoutDelivery(checkoutProfile, chosen, user?.name);
+    setAddress({ name, phone, street, zone });
+  }, [checkoutCustomerId, checkoutProfile, loadingDelivery, catalogue, checkoutAddressId, user?.name]);
   useEffect(() => {
     if (!hydrated) return;
     let active = true;
@@ -823,6 +843,7 @@ export default function App() {
             </View>
           ) : screen === "gas-order" ? (
             <GasOrder
+              key={user?.id ?? "guest"}
               viewServices={() => setScreen("services")}
               onPlaced={() => setCart([])}
               api={api}
@@ -836,6 +857,7 @@ export default function App() {
             />
           ) : screen === "combined-checkout" ? (
             <CombinedCheckout
+              key={user?.id ?? "guest"}
               orderGas={() => setScreen("gas-order")}
               api={api}
               user={user}
@@ -1288,7 +1310,6 @@ export default function App() {
                         setScreen("login");
                         return;
                       }
-                      setAddress({ ...address, name: user.name });
                       setScreen("checkout");
                     },
                   )}
@@ -1296,13 +1317,36 @@ export default function App() {
               )}
             </>
           ) : screen === "checkout" ? (
-            <>
+            checkoutAddressId === undefined ? (
+              <EasyGasLoader variant="section" label="Loading your delivery details" />
+            ) : <>
+
               <Text style={s.greeting}>ORDER → REVIEW → CONFIRM</Text>
               <Text style={s.body}>
                 Online payments are unconnected. Only enabled payment methods
                 are shown below.
               </Text>
               <Text style={s.title}>Where are we delivering?</Text>
+              <Text style={s.body}>Edit the recipient, phone or address for this order.</Text>
+              {savedCheckoutAddresses.length > 0 && (
+                <View style={s.wrap}>
+                  {[...savedCheckoutAddresses, null].map((item) => (
+                    <Pressable
+                      key={item?.id ?? "new"}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: checkoutAddressId === (item?.id ?? "") }}
+                      style={s.chip}
+                      onPress={() => {
+                        setCheckoutAddressId(item?.id ?? "");
+                        const { name, phone, street, zone } = checkoutDelivery(checkoutProfile, item ?? undefined, user?.name);
+                        setAddress({ name, phone, street, zone });
+                      }}
+                    >
+                      <Text>{item ? item.label : "Use a different address"}</Text>
+                    </Pressable>
+                  ))}
+                </View>
+              )}
               {field("Recipient name", address.name, (v) =>
                 setAddress({ ...address, name: v }),
               )}
@@ -1401,7 +1445,7 @@ export default function App() {
                     setKey(requestKey);
                     const o = await api("checkout", {
                       items: cart,
-                      address,
+                      address: { ...address, phone: bookingPhone(address.phone) ?? address.phone },
                       date,
                       window,
                       instructions: "",

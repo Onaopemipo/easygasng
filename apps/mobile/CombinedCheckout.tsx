@@ -1,3 +1,6 @@
+import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress } from "../../packages/business-rules/src/checkout-delivery";
+import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
+import { useCheckoutProfile } from "./useCheckoutProfile";
 import { EasyGasLoader } from "./EasyGasLoader";
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { NativeRewardSelector } from "./EasyRewards";
@@ -27,6 +30,11 @@ export default function CombinedCheckout({
   const [rewardSelection, setRewardSelection] = useState<any>({});
   const [appointments, setAppointments] = useState<any[] | null>(null),
     [error, setError] = useState("");
+  const { profile, loading: loadingDelivery } = useCheckoutProfile(api, cart.length ? user?.id : undefined);
+  const addresses = checkoutAddresses(profile).filter((address) => catalogue.zones.includes(address.zone));
+  const [addressId, setAddressId] = useState<string>();
+  const selectedAddress = addressId === undefined ? defaultCheckoutAddress(addresses) : addresses.find((address) => address.id === addressId);
+  const delivery = checkoutDelivery(profile, selectedAddress, user?.name);
   const storage = "easygas.serviceDrafts." + user?.id;
   useEffect(() => {
     SecureStore.getItemAsync(storage)
@@ -38,7 +46,7 @@ export default function CombinedCheckout({
   }, [storage]);
   if (!user) return <Text>Sign in to confirm a linked request.</Text>;
   if (error) return <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>;
-  if (!appointments) return <EasyGasLoader variant="section" label="Loading appointment drafts" />;
+  if (!appointments || loadingDelivery) return <EasyGasLoader variant="section" label="Loading your linked request" />;
   return (
     <View>
       <Text style={{ fontSize: 28, fontWeight: "800", color: "#073b27" }}>
@@ -87,12 +95,29 @@ export default function CombinedCheckout({
           {!!cart.length && (
             <NativeRewardSelector api={api} onChange={setRewardSelection} />
           )}
+          {cart.length > 0 && addresses.length > 0 && (
+            <View>
+              <Text>Saved address</Text>
+              {[...addresses, null].map((address) => (
+                <Pressable
+                  key={address?.id ?? "new"}
+                  accessibilityRole="radio"
+                  accessibilityState={{ selected: (selectedAddress?.id ?? "") === (address?.id ?? "") }}
+                  onPress={() => setAddressId(address?.id ?? "")}
+                  style={{ paddingVertical: 10 }}
+                >
+                  <Text>{address?.label ?? "Use a different address"}</Text>
+                </Pressable>
+              ))}
+            </View>
+          )}
           <NativeForm
+            key={selectedAddress?.id ?? "new"}
             api={async (_, v) => {
               const productBase = cart.length
                 ? {
                     items: cart,
-                    address: v.address,
+                    address: { ...v.address, phone: bookingPhone(v.address.phone ?? "") ?? v.address.phone },
                     date: v.date,
                     window: v.window,
                     paymentMethod: v.paymentMethod,
@@ -142,18 +167,21 @@ export default function CombinedCheckout({
             fields={
               cart.length
                 ? [
-                    { name: "address.name", label: "Product recipient name" },
+                    { name: "address.name", label: "Product recipient name", value: delivery.name },
                     {
                       name: "address.phone",
                       label: "Product delivery mobile number",
+                      value: delivery.phone,
                     },
                     {
                       name: "address.street",
                       label: "Product delivery street",
+                      value: delivery.street,
                     },
                     {
                       name: "address.zone",
                       label: "Product delivery area",
+                      value: delivery.zone,
                       options: catalogue.zones.map((z: string) => ({
                         value: z,
                         label: z,

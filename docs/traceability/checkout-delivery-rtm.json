@@ -1,0 +1,101 @@
+{
+  "phase": "Customer checkout delivery prefill",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "priority": "P1",
+      "dataSource": "Authenticated account.profile, containing account contact, owned active saved addresses and active delivery locations. Checkout uses the existing order and coverage services.",
+      "testFiles": [
+        "tests/checkout-delivery.test.ts",
+        "tests/linked-request-contact.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/workflows.test.ts"
+      ],
+      "testIds": [
+        "CHECKOUT-PREFILL01"
+      ],
+      "negativeTests": [
+        "inactive saved location ID cannot be replaced by a name match"
+      ],
+      "evidence": [
+        "docs/traceability/checkout-delivery-evidence.txt"
+      ],
+      "id": "CHECKOUT-PREFILL-R01",
+      "requirement": "Prefill saved delivery address and recipient contact on signed-in web cart, gas and linked product checkout. Let customers use a different address or edit the recipient for this order.",
+      "scope": "Desktop and mobile web customer checkout",
+      "uiReference": "Saved address and editable recipient details",
+      "route": "/checkout, /gas-order, /combined-checkout (product delivery)",
+      "implementationFiles": [
+        "packages/business-rules/src/checkout-delivery.ts",
+        "apps/web/components/checkout-delivery-fields.tsx",
+        "apps/web/components/address-area-fields.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/combined-checkout.tsx"
+      ],
+      "securityControl": "Only accept data for the current authenticated customer and scope checkout and drafts to that identity. Order recipient edits submit to checkout only. Server coverage, stock and payment checks still apply.",
+      "acceptanceGate": "CHECKOUT-PREFILL-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authenticated Chrome confirmed default and alternate address use and account-phone fallback. A cash-on-delivery test order used edited details; linked checkout still displayed the original saved details. Gas checkout prefill and alternate-address selection passed at 390 px.",
+      "testResult": "PASS: 29 targeted automated tests, Chrome browser checks, web TypeScript and build.",
+      "outstandingWork": "No deployment in this phase."
+    },
+    {
+      "priority": "P1",
+      "dataSource": "Authenticated account.profile, containing account contact, owned active saved addresses and active delivery locations. Checkout uses the existing order and coverage services.",
+      "testFiles": [
+        "tests/checkout-delivery.test.ts",
+        "tests/linked-request-contact.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/workflows.test.ts"
+      ],
+      "testIds": [
+        "CHECKOUT-PREFILL01"
+      ],
+      "negativeTests": [
+        "inactive saved location ID cannot be replaced by a name match"
+      ],
+      "evidence": [
+        "docs/traceability/checkout-delivery-evidence.txt"
+      ],
+      "id": "CHECKOUT-PREFILL-R02",
+      "requirement": "Prefill saved recipient and address on native customer checkout, with an editable one-order override.",
+      "scope": "Native iOS and Android customer checkout",
+      "uiReference": "Saved address options, editable recipient fields and existing gas quote confirmation",
+      "route": "Checkout, Gas Order, Combined Checkout (product delivery)",
+      "implementationFiles": [
+        "packages/business-rules/src/checkout-delivery.ts",
+        "apps/mobile/App.tsx",
+        "apps/mobile/useCheckoutProfile.ts",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/CombinedCheckout.tsx"
+      ],
+      "securityControl": "Discard cross-account reads and clear profile state after checkout exit/sign-out. Use order endpoints only and retain server validation.",
+      "acceptanceGate": "CHECKOUT-PREFILL-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Shared selection logic has automated coverage and mobile code type checks. Installed-app checkout requires device validation.",
+      "testResult": "PASS: shared logic test and native TypeScript; iOS and Android UI runs pending.",
+      "outstandingWork": "Verify native checkout on installed iOS and Android builds."
+    }
+  ],
+  "gates": [
+    {
+      "id": "CHECKOUT-PREFILL-G01",
+      "status": "PASS",
+      "gate": "Verify customer checkout prefill, alternate recipient submission, profile retention and mobile web layout."
+    },
+    {
+      "id": "CHECKOUT-PREFILL-G02",
+      "status": "OPEN",
+      "gate": "Verify checkout prefill and overrides in installed iOS and Android builds."
+    }
+  ],
+  "coverage": {
+    "implemented": "2/2",
+    "verified": "1/2",
+    "critical": "No P0 requirements added in this phase",
+    "routes": "3/3 web routes exercised; 0/3 native runtime journeys",
+    "gates": "1/2 passed"
+  },
+  "changes": "Added checkout-only delivery prefill. Existing persisted profile data and payment, reservation and coverage policies are unchanged."
+}

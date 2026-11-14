@@ -1,3 +1,6 @@
+import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress, type CheckoutAddress } from "../../packages/business-rules/src/checkout-delivery";
+import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
+import { useCheckoutProfile } from "./useCheckoutProfile";
 import { EasyGasLoader } from "./EasyGasLoader";
 import {
   deliveryCoveragePending,
@@ -54,8 +57,11 @@ export default function GasOrder({
     [appointments, setAppointments] = useState<any[]>([]),
     [includeAppointments, setIncludeAppointments] = useState(false),
     [locationId, setLocationId] = useState(""),
-    [saved, setSaved] = useState<any[]>([]),
-    [picked, setPicked] = useState<any>(null);
+    [picked, setPicked] = useState<CheckoutAddress>();
+  const { profile, loading: loadingDelivery } = useCheckoutProfile(api, user?.id);
+  const saved = checkoutAddresses(profile);
+  const deliveryEdited = useRef(false);
+  const recipient = checkoutDelivery(profile, picked, user?.name);
   const [picker, setPicker] = useState<string | null>(null);
   const [street, setStreet] = useState("");
   const [catalogueRevision, refreshCatalogue] = useState(0);
@@ -127,21 +133,14 @@ export default function GasOrder({
         .catch(() => {});
   }, [user]);
   useEffect(() => {
-    if (user)
-      api("account.profile")
-        .then((p) => {
-          setSaved(p.addresses);
-          const primary = p.addresses.find(
-            (a: any) => a.is_default && a.location_available,
-          );
-          if (primary) {
-            setPicked((current: any) => current ?? primary);
-            setStreet((current) => current || primary.street);
-            setLocationId((current) => current || primary.location_id);
-          }
-        })
-        .catch(() => {});
-  }, [user]);
+    if (!profile || deliveryEdited.current) return;
+    const primary = defaultCheckoutAddress(checkoutAddresses(profile));
+    if (primary) {
+      setPicked(primary);
+      setStreet(primary.street);
+      setLocationId(primary.location_id ?? "");
+    }
+  }, [profile]);
   if (!config)
     return error ? (
       <View>
@@ -452,6 +451,8 @@ export default function GasOrder({
                 { borderColor: colors.border, backgroundColor: colors.surface },
               ]}
               onPress={() => {
+                deliveryEdited.current = true;
+                setPicked(undefined);
                 setLocationId(l.id);
                 setQuote(null);
                 setPicker(null);
@@ -472,20 +473,29 @@ export default function GasOrder({
           ]}
           placeholder="House number, street, estate, area"
           onChangeText={(value) => {
+            deliveryEdited.current = true;
+            setPicked(undefined);
             setStreet(value);
             setQuote(null);
           }}
         />
-        {saved
-          .filter((a) => a.location_available)
-          .map((a) =>
+        {loadingDelivery && <EasyGasLoader size="sm" variant="section" label="Loading your delivery details" />}
+        {saved.map((a) =>
             button(`Use ${a.label}`, () => {
+              deliveryEdited.current = true;
               setPicked(a);
               setStreet(a.street);
-              setLocationId(a.location_id);
+              setLocationId(a.location_id ?? "");
               setQuote(null);
             }),
           )}
+        {!!saved.length && button("Use a different address", () => {
+          deliveryEdited.current = true;
+          setPicked(undefined);
+          setStreet("");
+          setLocationId("");
+          setQuote(null);
+        })}
         {pendingCoverage && (
           <Text accessibilityRole="alert">{deliveryCoveragePending}</Text>
         )}
@@ -584,6 +594,7 @@ export default function GasOrder({
               setLoadingQuote(false);
             }
           },
+          loadingDelivery ||
           !ready ||
             !pricingReady ||
             !feeReady ||
@@ -630,6 +641,7 @@ export default function GasOrder({
             );
             if (!l) throw new Error("Select an active location.");
             data.address.zone = l.name;
+            data.address.phone = bookingPhone(data.address.phone ?? "") ?? data.address.phone;
             const payload = {
               ...data,
               ...rewardSelection,
@@ -681,12 +693,12 @@ export default function GasOrder({
             {
               name: "address.name",
               label: "Recipient name",
-              value: picked?.details?.recipient ?? user.name,
+              value: recipient.name,
             },
             {
               name: "address.phone",
               label: "Nigerian mobile number",
-              value: picked?.phone,
+              value: recipient.phone,
             },
             {
               name: "address.street",
@@ -696,17 +708,17 @@ export default function GasOrder({
             {
               name: "address.building",
               label: "House / building number",
-              value: picked?.details?.building,
+              value: recipient.building,
             },
             {
               name: "address.landmark",
               label: "Estate / landmark",
-              value: picked?.details?.landmark,
+              value: recipient.landmark,
             },
             {
               name: "address.directions",
               label: "Additional directions",
-              value: picked?.details?.directions,
+              value: recipient.directions,
             },
             { name: "date", label: "Delivery date YYYY-MM-DD" },
             {
