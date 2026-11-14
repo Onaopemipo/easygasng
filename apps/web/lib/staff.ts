@@ -28,7 +28,7 @@ export async function staffAction(
       ).rows,
       invitations: (
         await tx.query(
-          `SELECT i.id,i.name,i.email,i.branch_id,i.expires_at,i.accepted_at FROM staff_invitations i WHERE ${global ? "true" : "i.branch_id=$1"} ORDER BY i.created_at DESC LIMIT 200`,
+          `SELECT i.id,i.name,i.email,i.branch_id,i.expires_at,i.accepted_at,i.requested_access->>'role' AS requested_role FROM staff_invitations i WHERE ${global ? "true" : "i.branch_id=$1"} ORDER BY i.created_at DESC LIMIT 200`,
           args,
         )
       ).rows,

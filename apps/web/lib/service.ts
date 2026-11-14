@@ -382,7 +382,7 @@ export async function dispatch(
         ].includes(action)
       )
         return inventoryWorkspace(tx, user, action, input);
-      if (["dispatch.centre", "dispatch.candidates"].includes(action))
+      if (["dispatch.centre", "dispatch.candidates", "drivers.workspace"].includes(action))
         return dispatchCentre(tx, user, action, input);
       if (action === "admin.dashboard") return adminDashboard(tx, user, input);
       if (action === "admin.search") return adminSearch(tx, user, input);
@@ -1290,7 +1290,7 @@ export async function dispatch(
           : null;
         const rows = (
           await tx.query(
-            "SELECT r.*,d.label,d.description,d.value_type,d.minimum,d.maximum,d.category,d.approve_roles,d.view_roles,d.required_roles,u.name AS requester " +
+            "SELECT r.*,d.label,d.description,d.value_type,d.minimum,d.maximum,d.category,d.approve_roles,d.view_roles,d.required_roles,u.name AS requester  ,(SELECT jsonb_build_object('name',i.name,'changes',i.requested_access->'changes') FROM staff_invitations i WHERE i.access_request_id=r.id) AS invitation_access " +
               (options ? filtered : base) +
               " ORDER BY r.created_at DESC,r.id DESC " +
               (options ? "LIMIT $5 OFFSET $6" : "LIMIT 200"),

@@ -65,11 +65,12 @@ export const staffPrivileges: readonly Privilege[] = [
     roles: ["owner", "manager"],
     actions: [
       "dispatch.centre",
+      "drivers.workspace",
       "dispatch.candidates",
       "dispatch.assign",
       "dispatch.reassign",
     ],
-    routes: ["deliveries"],
+    routes: ["deliveries", "drivers"],
   },
   {
     id: "bookings.manage",
@@ -335,3 +336,12 @@ export function privilegeForAction(action: string) {
 }
 export const isBusinessStaff = (role: string) =>
   ["owner", "manager", "finance"].includes(role);
+
+export function canGrantStaffPrivilege(
+  privilege: Privilege,
+  role: string,
+  branchId: string | null,
+) {
+  return privilege.roles.includes(role) ||
+    Boolean(privilege.grantRole && isBusinessStaff(role) && branchId);
+}

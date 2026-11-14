@@ -14,7 +14,8 @@ import {
   recentVerification,
   allow,
 } from "./auth";
-import { audit, notify } from "./governance";
+import { audit, notify, propose } from "./governance";
+import { staffInvitationAccess, validateInvitationAccess } from "./staff-invitation-access";
 import { sealMessage, requireMessageEncryption } from "./channel-messaging";
 const email = z
   .email()
@@ -131,7 +132,7 @@ export async function accountAction(
       .parse(input);
     const invitation = await one(
       tx,
-      "SELECT i.*,u.active,u.role,u.branch_id AS inviter_branch_id,b.active AS branch_active FROM staff_invitations i JOIN users u ON u.id=i.invited_by JOIN branches b ON b.id=i.branch_id WHERE token_hash=$1 FOR UPDATE OF i",
+      "SELECT i.*,u.active,u.role,u.name AS inviter_name,u.email AS inviter_email,u.branch_id AS inviter_branch_id,b.active AS branch_active FROM staff_invitations i JOIN users u ON u.id=i.invited_by JOIN branches b ON b.id=i.branch_id WHERE token_hash=$1 FOR UPDATE OF i",
       [digest(d.token)],
     );
     if (
@@ -164,18 +165,57 @@ export async function accountAction(
       "UPDATE staff_invitations SET accepted_at=now() WHERE id=$1",
       [invitation.id],
     );
-    await audit(tx, null, "invitation.accepted", uid);
+    let accessRequestId: string | undefined;
+    if (invitation.requested_access) {
+      const plan = validateInvitationAccess(invitation.requested_access, invitation.branch_id);
+      const inviter: Actor = {
+        id: invitation.invited_by,
+        name: invitation.inviter_name,
+        email: invitation.inviter_email,
+        role: invitation.role,
+        branch_id: invitation.inviter_branch_id,
+        verified_at: null,
+        session_id: "",
+      };
+      const revoked = await one(tx,
+        "SELECT 1 FROM staff_privilege_overrides WHERE user_id=$1 AND privilege='staff.manage' AND effect='deny'",
+        [inviter.id],
+      );
+      if (revoked) throw new AppError(400, "This invitation is no longer valid.");
+      const setting = await one(tx,
+        "SELECT version FROM settings WHERE key='security.permissions' AND scope=$1 FOR UPDATE",
+        [invitation.branch_id],
+      );
+      if (!setting) throw new AppError(409, "Staff access is not configured for this branch. Ask your administrator for help.");
+      // The owner authorised this exact plan when sending the invite. Acceptance
+      // submits it for review; it does not verify or impersonate an owner session.
+      const request = await propose(tx, inviter, {
+        key: "security.permissions",
+        scope: invitation.branch_id,
+        version: setting.version,
+        value: { userId: uid, role: plan.role, branchId: invitation.branch_id },
+        reason: "Initial staff access selected on the accepted invitation.",
+      });
+      accessRequestId = request.id;
+      await tx.query("UPDATE staff_invitations SET access_request_id=$1 WHERE id=$2", [
+        accessRequestId, invitation.id,
+      ]);
+    }
+    await audit(tx, null, "invitation.accepted", uid, "success", { accessRequestId });
     await notify(
       tx,
       invitation.invited_by,
       "Invitation accepted",
-      `${invitation.name} accepted the invitation. Submit a staff access request for independent approval.`,
-      uid,
+      accessRequestId
+        ? `${invitation.name} accepted the invitation. Their requested staff access is awaiting independent approval.`
+        : `${invitation.name} accepted the invitation. Submit a staff access request for independent approval.`,
+      accessRequestId ?? uid,
     );
     return {
       ok: true,
       message: invitation.temporary_password_hash
-        ? "Invitation accepted. Sign in with your temporary password, then choose a new password."
+        ? "Invitation accepted. Sign in with your temporary password, then choose a new password." +
+          (accessRequestId ? " Your staff access is awaiting independent approval." : "")
         : "Invitation accepted. Sign in with the password you just set.",
     };
   }
@@ -646,6 +686,7 @@ export async function accountAction(
         email,
         name: z.string().trim().min(2).max(100),
         branchId: z.string().min(1).max(100),
+        access: staffInvitationAccess.optional(),
       })
       .strict()
       .parse(input);
@@ -656,6 +697,11 @@ export async function accountAction(
     )
       throw new AppError(400, "Choose an active branch.");
     allow(user, ["owner"], d.branchId);
+    const access = d.access ? validateInvitationAccess(d.access, d.branchId) : null;
+    if (access && !(await one(tx,
+      "SELECT 1 FROM settings WHERE key='security.permissions' AND scope=$1",
+      [d.branchId],
+    ))) throw new AppError(409, "Staff access is not configured for this branch. Choose a configured branch or contact your administrator.");
     await tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
       "staff-invite:" + d.email,
     ]);
@@ -678,8 +724,8 @@ export async function accountAction(
     const { token, password: temporaryPassword } = invitationCredentials();
     const iid = id();
     await tx.query(
-      "INSERT INTO staff_invitations(id,email,name,branch_id,invited_by,token_hash,expires_at,temporary_password_hash) VALUES ($1,$2,$3,$4,$5,$6,now()+interval '48 hours',$7)",
-      [iid, d.email, d.name, d.branchId, user.id, digest(token), hashPassword(temporaryPassword)],
+      "INSERT INTO staff_invitations(id,email,name,branch_id,invited_by,token_hash,expires_at,temporary_password_hash,requested_access) VALUES ($1,$2,$3,$4,$5,$6,now()+interval '48 hours',$7,$8)",
+      [iid, d.email, d.name, d.branchId, user.id, digest(token), hashPassword(temporaryPassword), access ? JSON.stringify(access) : null],
     );
     await queueMessage(
       tx,
@@ -690,11 +736,13 @@ export async function accountAction(
       `invite:${iid}:${digest(token)}`,
       true,
     );
-    await audit(tx, user, "staff.invited", iid);
+    await audit(tx, user, "staff.invited", iid, "success", { role: access?.role, changes: access?.changes });
     return {
       ok: true,
       invitationId: iid,
-      message: "Invitation email queued. The recipient has 48 hours to accept and use their temporary password.",
+      message: access
+        ? "Invitation email queued. The selected access will go for independent approval after acceptance."
+        : "Invitation email queued. The recipient has 48 hours to accept and use their temporary password.",
     };
   }
   if (

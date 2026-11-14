@@ -519,6 +519,7 @@ export async function migrate(db: DB) {
       ["076", "database/migrations/076_support_completion.sql"],
       ["077", "database/migrations/077_temporary_passwords.sql"],
       ["078", "database/migrations/078_staff_role_consolidation.sql"],
+      ["079", "database/migrations/079_staff_invitation_access.sql"],
     ]) {
       if (
         version === "044" &&
@@ -565,7 +566,7 @@ export async function migrate(db: DB) {
     }
   });
 }
-export const localSchemaRevision = 78;
+export const localSchemaRevision = 79;
 export async function getDb() {
   const db = await (globalDb.easygasDb ??= createDatabase());
   // Apply local upgrades once after development hot reload, on the existing DB connection.

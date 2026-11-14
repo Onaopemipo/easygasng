@@ -282,13 +282,16 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   const staffRoleNavigationSources = JSON.parse(await readFile(
     "docs/traceability/staff-role-navigation-hashes.json", "utf8",
   ));
+  const staffInviteDriversSources = JSON.parse(await readFile(
+    "docs/traceability/staff-invite-drivers-navigation-hashes.json", "utf8",
+  ));
   const approvedLoaderSources = JSON.parse(await readFile(
     "docs/loader/approved-field-source.json", "utf8",
   ));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
       ? approvedPaymentReturnHash
-      : staffRoleNavigationSources[file] ?? approvedLoaderSources[file] ?? approvedDriverSources[file]
+      : staffInviteDriversSources[file] ?? staffRoleNavigationSources[file] ?? approvedLoaderSources[file] ?? approvedDriverSources[file]
         ?? approvedHomepageSources[file] ?? approvedNotificationSources[file]
         ?? approvedAlerts[file]?.approvedHash ?? originalHash;
     const source = await readFile(file);

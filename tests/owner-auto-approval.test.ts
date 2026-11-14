@@ -34,4 +34,65 @@ test('OWNER-AUTO05: governed inventory request binds immutable operation before 
 }finally{await f.db.close?.();}}));
 test('OWNER-AUTO06: owner rollback uses the same audited policy and preserves historical versions',()=>enabled(async()=>{const f=await fixture();try{const r=await f.propose();const version=await one(f.db,'SELECT id FROM setting_versions WHERE request_id=$1',[r.id]);assert.ok(version);const reversed=await f.call('owner','setting.rollback',{versionId:version!.id,reason:'Restore preceding owner-approved price'});assert.equal(reversed.status,'active');assert.equal(reversed.autoApproved,true);assert.equal((await f.current())!.value,180000);assert.equal((await f.current())!.version,3);assert.equal((await one(f.db,'SELECT status FROM change_requests WHERE id=$1',[r.id]))!.status,'rolled_back');assert.equal(Number((await one(f.db,'SELECT count(*) n FROM setting_versions'))!.n),2);}finally{await f.db.close?.();}}));
 
+test('OWNER-AUTO07: verified owners can confirm delivery coverage; staff requests and blank boundaries still block ordering', () => enabled(async () => {
+  const f = await fixture();
+  try {
+    const propose = async (role: string, key: string, value: unknown) =>
+      f.call(role, 'setting.propose', { key, scope: 'lagos', version: (await f.current(key))!.version, value, reason: 'Synthetic demo-only approval test' });
+    const policy = { minimumKg: 0.5, maximumKg: 50, incrementKg: 0.5, precision: 1, capacitiesKg: [3, 6, 12.5, 25, 50] };
+    await f.db.query("UPDATE settings SET value='true' WHERE key='delivery.enabled' AND scope='lagos'");
+    await f.call('owner', 'gas.stock.receive', {
+      branchId: 'lagos', grams: 10000, reference: 'OWNER-COVERAGE-TEST', reason: 'Synthetic measured receipt',
+    });
+    assert.equal((await propose('owner', 'gas.quantity_policy', policy)).status, 'active');
+    assert.equal((await propose('owner', 'delivery.fee', 530000)).status, 'active');
+    const ownerSettings = await f.call('owner', 'settings', { scope: 'lagos' });
+    assert.equal(ownerSettings.find((s: any) => s.key === 'location.lekki').owner_auto_approval, true);
+    for (const key of ['security.permissions', 'payment.gateway', 'payment.integration']) {
+      assert.equal(ownerSettings.find((s: any) => s.key === key).owner_auto_approval, false);
+    }
+    const original = (await f.current('location.lekki'))!.value;
+    const confirmed = { ...original, coverage: 'Synthetic district boundary confirmed for fixture only' };
+    const quote = (locationId = 'lekki') => dispatch('gas.quote', null, { locationId, lines: [{ capacityKg: 12.5, kg: 4.5 }] }, f.db);
+    await assert.rejects(quote, { code: 'DELIVERY_COVERAGE_PENDING' });
+    assert.equal((await propose('manager', 'location.lekki', confirmed)).status, 'pending_approval');
+    await assert.rejects(quote, { code: 'DELIVERY_COVERAGE_PENDING' });
+    await f.db.query("UPDATE sessions SET verified_at=NULL WHERE user_id=$1", [f.actors.administrator.id]);
+    await assert.rejects(() => propose('administrator', 'location.lekki', confirmed), /verif/i);
+    await f.call('administrator', 'reauth', { password: f.password });
+    const result = await propose('administrator', 'location.lekki', confirmed);
+    assert.equal(result.status, 'active');
+    assert.equal(result.autoApproved, true);
+    assert.equal((await quote()).deliveryKobo, 530000);
+    assert.equal((await one(f.db, "SELECT coverage FROM delivery_locations WHERE id='lekki'"))!.coverage, confirmed.coverage);
+    const catalogue = await dispatch('gas.catalogue', null, {}, f.db);
+    assert.equal(catalogue.locations.find((l: any) => l.id === 'lekki').requires_address_confirmation, true);
+    assert.equal((await one(f.db, "SELECT actor_id FROM audit_events WHERE target=$1 AND action='approval.owner_auto_approved'", [result.id]))!.actor_id, f.actors.administrator.id);
+    const created = await f.call('owner', 'delivery.location.create', {
+      config: { ...original, name: 'Synthetic Area', coverage: '' },
+      reason: 'Test that an approved area can still lack coverage',
+    });
+    assert.equal(created.request.status, 'active');
+    await assert.rejects(() => quote(created.id), { code: 'DELIVERY_COVERAGE_PENDING' });
+  } finally { await f.db.close?.(); }
+}));
+
+test('OWNER-AUTO08: an existing owner coverage request can be approved by its requester without approving other pending requests', () => enabled(async () => {
+  const f = await fixture();
+  try {
+    process.env.EASYGAS_OWNER_AUTO_APPROVAL = 'false';
+    const key = 'location.victoria-island';
+    const current = (await f.current(key))!;
+    const input = { key, scope: 'lagos', version: current.version, value: { ...current.value, coverage: 'Synthetic approved boundary for Victoria Island fixture' }, reason: 'Synthetic operational confirmation' };
+    const request = await f.call('owner', 'setting.propose', input);
+    const staff = await f.call('manager', 'setting.propose', input);
+    assert.equal(request.status, 'pending_approval');
+    process.env.EASYGAS_OWNER_AUTO_APPROVAL = 'true';
+    assert.equal((await f.call('owner', 'approvals')).find((r: any) => r.id === request.id).can_owner_apply, true);
+    await assert.rejects(() => f.call('otherOwner', 'approval.owner_apply', { id: request.id, reason: 'Only the requester may use automatic approval' }), /your own/);
+    assert.equal((await f.call('owner', 'approval.owner_apply', { id: request.id, reason: 'Confirm the original proposal' })).status, 'active');
+    assert.equal((await one(f.db, 'SELECT status FROM change_requests WHERE id=$1', [staff.id]))!.status, 'pending_approval');
+  } finally { await f.db.close?.(); }
+}));
+
 test('OWNER-AUTO-UI: owner apply action and status-specific guidance replace unconditional independent-review messaging',()=>{const s=readFileSync('apps/web/components/admin.tsx','utf8');assert.ok(s.includes('selected.can_owner_apply'));assert.ok(s.includes('Use Approve above. Verify your identity first if prompted.'));assert.ok(s.includes('Saved drafts must be submitted; qualified safety reviews and activation checks still apply.'));assert.ok(s.includes('approval.owner_apply'));});

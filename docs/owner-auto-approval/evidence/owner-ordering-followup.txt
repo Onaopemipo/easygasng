@@ -1,0 +1,40 @@
+Hosted demo baseline (read only): synthetic owner sign-in 200; authorized settings 200. Gas price automatic approval true. Delivery location (Lekki), flat fee, gas quantity policy and payment gateway false. Public catalogue: Lagos Island, Victoria Island, Lekki and Ajah all had blank coverage, version 1. No operational data was changed.
+
+Local command: node --import tsx --test --test-concurrency=1 tests/owner-auto-approval.test.ts tests/shared-approval-gas.test.ts tests/post-meeting-identity.test.ts
+✔ OWNER-AUTO01: owner submissions auto-apply once with immutable authority proof; staff remain independently reviewed (1140.267ms)
+✔ OWNER-AUTO02: old pending requests are actionable only by their verified owner; drafts stay inactive until submission (925.726875ms)
+✔ OWNER-AUTO03: scheduling, current authority, stale versions, expiry, self privileges and live-payment blockers survive auto approval (922.436875ms)
+✔ OWNER-AUTO04: owner approval does not replace independent qualified safety review or invent safety evidence (844.877041ms)
+✔ OWNER-AUTO05: governed inventory request binds immutable operation before automatic application and never posts twice (823.134083ms)
+✔ OWNER-AUTO06: owner rollback uses the same audited policy and preserves historical versions (791.681ms)
+✔ OWNER-AUTO07: verified owners can confirm delivery coverage; staff requests and blank boundaries still block ordering (848.92375ms)
+✔ OWNER-AUTO08: an existing owner coverage request can be approved by its requester without approving other pending requests (840.639333ms)
+✔ OWNER-AUTO-UI: owner apply action and status-specific guidance replace unconditional independent-review messaging (0.438166ms)
+✔ PM-T01: opaque immutable customer IDs, phone lookup, duplicate detection and branch privacy (945.668292ms)
+✔ PM-T09: assisted checkout preserves customer identity, operator attribution, one fee, retry and failure rollback (617.30775ms)
+✔ PM-T08: legacy checkout retry fingerprints survive the added source metadata (597.682833ms)
+✔ PM-T10: assisted quotes require confirmed coverage, preserve branch prices and one fee, and never reserve during review (695.220083ms)
+✔ A–C,K: draft, permissions, status injection and independent review share one authoritative workflow (1038.684125ms)
+✔ D,G: distinct dual approval and revisions invalidate prior decisions by revision (875.930584ms)
+✔ E,H,J,O: schedule, stale requests, idempotent activation and append-only reversal (876.808125ms)
+✔ F,L,M,N: fee rejection, expired request, revoked approver and governed location lifecycle (838.744834ms)
+✔ I: activation database failure leaves active value intact, records failure, and revalidates a retry (830.60325ms)
+✔ decimal calculator matches confirmed gas quantities and rejects unsafe precision (0.373833ms)
+✔ COVERAGE-01: gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety (854.770167ms)
+✔ delivery fee is once per order in every area; inactive locations retain addresses and flag affected orders (849.71475ms)
+✔ verified gas-cylinder filling and delivery consume bulk stock once and preserve custody restrictions (928.755167ms)
+✔ gas report exports preserve totals and escape untrusted spreadsheet and HTML text (2.161917ms)
+✔ confirmed cylinder maintenance is an unpublished draft governed by the existing service and safety approvals (817.4705ms)
+✔ COMPACT-QUOTE01: selected location gates a read-only fractional quote without reserving stock (789.90125ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19772.128
+
+Web typecheck: passed (npm run typecheck). Web production build: passed (npm run build).
+
+Owner approval matrix: all 4 requirement rows/gates and source, negative-test and executed-evidence mappings passed. Repository-wide matrix validation remains blocked by the separate uncommitted staff-invite-drivers-rtm.json: its requirements reference gate IDs that are missing from the matrix.

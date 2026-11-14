@@ -45,7 +45,7 @@ async function studio() {
   vm.runInContext(await readFile(base + "app.js", "utf8"), context);
   return context;
 }
-test("MUI-01: all 99 screens map the existing customer routes and every administration navigation entry", async () => {
+test("MUI-01: all 99 screens map the original customer and administration navigation; later additions are traced", async () => {
   const d = JSON.parse(await readFile(base + "screen-manifest.json", "utf8"));
   assert.equal(d.screens.length, 99);
   assert.equal(new Set(d.screens.map((s: any) => s.id)).size, 99);
@@ -55,7 +55,11 @@ test("MUI-01: all 99 screens map the existing customer routes and every administ
       d.screens.some((s: any) => s.webRoute === r.href),
       r.href,
     );
-  for (const r of adminNavigation.flatMap((g) => g.items))
+  const laterWebRoutes = new Map([["/admin/drivers", "DRIVER-NAV-01"]]);
+  const followUp = JSON.parse(await readFile("docs/traceability/staff-invite-drivers-rtm.json", "utf8"));
+  for (const [route, requirement] of laterWebRoutes)
+    assert.ok(followUp.requirements.some((r: any) => r.route === route && r.id === requirement));
+  for (const r of adminNavigation.flatMap((g) => g.items).filter(item => !laterWebRoutes.has(item.href)))
     assert.ok(
       d.screens.some(
         (s: any) =>

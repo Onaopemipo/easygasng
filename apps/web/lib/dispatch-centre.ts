@@ -36,6 +36,22 @@ export async function dispatchCentre(
   input: unknown,
 ) {
   allow(user, ["owner", "manager"]);
+  if (action === "drivers.workspace") {
+    z.object({}).strict().parse(input ?? {});
+    if (user.role !== "owner" && !(await one(tx,
+      "SELECT id FROM branches WHERE id=$1 AND active", [user.branch_id],
+    ))) throw new AppError(403, "No active authorised branch assigned.");
+    return { drivers: (await tx.query(
+      `SELECT u.id,u.name,u.active,u.driver_available,b.name AS branch,
+              (SELECT count(*)::int FROM orders o
+               WHERE o.driver_id=u.id AND o.branch_id=u.branch_id
+                 AND o.status IN ('assigned','out_for_delivery')) AS active_deliveries
+       FROM users u LEFT JOIN branches b ON b.id=u.branch_id
+       WHERE u.role='driver' AND ($1::boolean OR u.branch_id=$2)
+       ORDER BY lower(u.name),u.id`,
+      [user.role === "owner", user.branch_id],
+    )).rows };
+  }
   if (action === "dispatch.candidates") {
     const d = z.object({ orderId: z.string().uuid() }).strict().parse(input);
     const order = await one(tx, "SELECT * FROM orders WHERE id=$1", [

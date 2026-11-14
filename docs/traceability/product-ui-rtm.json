@@ -540,6 +540,37 @@
       "acceptanceGate": "PRODUCT-UI-G02"
     },
     {
+      "id": "PRODUCT-ADMIN-DRIVERS",
+      "requirement": "Drivers uses the responsive administration workspace and preserves the grouped sidebar",
+      "priority": "P1",
+      "scope": "Web Drivers directory added after the original product audit",
+      "uiReference": "Staff invitation and Drivers sidebar request; existing Technicians workspace",
+      "route": "/admin/drivers",
+      "dataSource": "drivers.workspace: staff identities, branches and active orders",
+      "securityControl": "Authenticated owner or branch manager; dispatch privilege and branch checks",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Added to the route audit; hosted acceptance remains open.",
+      "testResult": "See the staff-invite-drivers matrix for local evidence.",
+      "outstandingWork": "Hosted and physical-device verification.",
+      "implementationFiles": [
+        "apps/web/components/drivers-workspace.tsx",
+        "apps/web/lib/dispatch-centre.ts"
+      ],
+      "testFiles": [
+        "tests/navigation.test.ts"
+      ],
+      "testIds": [
+        "DRIVER-NAV-01"
+      ],
+      "negativeTests": [
+        "Cross-branch selection and revoked dispatch privilege"
+      ],
+      "evidence": [
+        "docs/traceability/staff-invite-drivers-rtm.md"
+      ],
+      "acceptanceGate": "PRODUCT-UI-G02"
+    },
+    {
       "id": "PRODUCT-ADMIN-TECHNICIANS",
       "requirement": "Technicians retains a coherent product layout",
       "priority": "P1",

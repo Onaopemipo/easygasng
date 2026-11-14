@@ -1,5 +1,7 @@
 "use client";
 import DriverExperience from "./driver-experience";
+import DriversWorkspace from "./drivers-workspace";
+import { privilegeById } from "../../../packages/business-rules/src/staff-privileges";
 import { NotificationsTray } from "./notifications-tray";
 import { effectiveDateInLagos } from "../../../packages/business-rules/src/effective-date";
 import { appAlert } from "./app-dialog";
@@ -318,6 +320,8 @@ export default function Admin({
             <p role="status">{access?.allowed?.length ? "Opening your workspace…" : "No workspace menus are assigned. Contact your administrator to arrange access."}</p>
           ) : section === "deliveries" && user.role === "driver" ? (
             <DriverExperience userId={user.id} />
+          ) : section === "drivers" ? (
+            <DriversWorkspace refresh={refresh} />
           ) : section === "testimonials" ? (
             <TestimonialManagement />
           ) : section === "policies" ? (
@@ -1661,7 +1665,9 @@ function SettingForm({
           {["name", "city", "state", "country", "coverage", "description"].map(
             (k) => (
               <label key={k}>
-                {k}
+                {k === "coverage"
+                  ? "Confirmed delivery boundary"
+                  : k.charAt(0).toUpperCase() + k.slice(1)}
                 <FormInput
                   value={value[k]}
                   onChange={(e) => setValue({ ...value, [k]: e.target.value })}
@@ -1837,7 +1843,9 @@ function SettingForm({
       <Notice
         message={
           s.owner_auto_approval
-            ? "Business Owner requests are approved automatically. Effective dates, identity verification and activation checks still apply. Saved drafts remain inactive."
+            ? s.value_type === "location"
+              ? "Your change is approved automatically after you verify your identity. Enter the confirmed delivery boundary so the area can accept orders once the change takes effect and the other delivery checks pass. Saved drafts remain inactive."
+              : "Your change is approved automatically. Effective dates, identity verification and activation checks still apply. Saved drafts remain inactive."
             : s.risk === 1
               ? "This authorised routine change will take effect immediately and create an audit record."
               : "The current value remains active until all independent approvals have passed and activation succeeds."
@@ -2280,6 +2288,21 @@ function Approvals({
               </strong>
             </div>
           </div>
+          {selected.invitation_access && (
+            <section className="surface">
+              <h3>Staff invitation access</h3>
+              <p>{selected.invitation_access.name} · {roleLabel(selected.proposed_value.role)}</p>
+              {selected.invitation_access.changes?.length ? (
+                <ul>
+                  {selected.invitation_access.changes.map((change: { privilege: string; effect: string }) => (
+                    <li key={change.privilege}>
+                      {change.effect === "grant" ? "Grant" : "Remove"}: {privilegeById.get(change.privilege)?.label ?? change.privilege}
+                    </li>
+                  ))}
+                </ul>
+              ) : <p>Use the selected role’s default privileges.</p>}
+            </section>
+          )}
           {selected.business_operation && (
             <section className="surface">
               <h3>Business operation details</h3>

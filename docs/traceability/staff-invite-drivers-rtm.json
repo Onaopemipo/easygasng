@@ -1,0 +1,152 @@
+{
+  "phase": "Staff invitation access and Drivers directory",
+  "productionDecision": "NO-GO",
+  "scopeChange": "Adds one web route and extends staff invitations. The archived 99-screen mobile design, existing live routes, five staff roles and existing production gates are retained.",
+  "requirements": [
+    {
+      "id": "STAFF-INV-01",
+      "requirement": "Choose a role and its default or customised privileges in Add New Staff.",
+      "priority": "P1",
+      "scope": "Staff onboarding and Drivers web workspace",
+      "uiReference": "User request and attached Add New Staff screenshot; grouped Delivery & Services sidebar",
+      "route": "/admin/staff",
+      "implementationFiles": [
+        "apps/web/components/staff-invitation.tsx",
+        "apps/web/components/staff-management.tsx",
+        "packages/business-rules/src/staff-roles.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Shared five-role and privilege catalogues; active scoped branch records.",
+      "securityControl": "Owner-only submission with fresh verification and a one-time invitation.",
+      "testFiles": [
+        "tests/staff-management.test.ts",
+        "tests/account-onboarding.test.ts"
+      ],
+      "testIds": [
+        "STAFF-INV-01/02"
+      ],
+      "negativeTests": [
+        "Role switch discards overrides from the previous role",
+        "A stale verification requires password reentry"
+      ],
+      "evidence": [
+        "docs/traceability/staff-invite-drivers-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-INV-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Chrome verified all five roles, inherited versus optional access, grant/deny choices, role reset and inline verification; the invitation queued successfully.",
+      "testResult": "PASS: Chrome verified all five roles, inherited versus optional access, grant/deny choices, role reset and inline verification; the invitation queued successfully.",
+      "outstandingWork": "Apply migration 079 and smoke-test the demo when released."
+    },
+    {
+      "id": "STAFF-INV-02",
+      "requirement": "Carry the selected plan to independent review on acceptance and activate approved access atomically.",
+      "priority": "P0",
+      "scope": "Staff onboarding and Drivers web workspace",
+      "uiReference": "User request and attached Add New Staff screenshot; grouped Delivery & Services sidebar",
+      "route": "/admin/approvals",
+      "implementationFiles": [
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/approval-workflow.ts",
+        "apps/web/lib/staff-invitation-access.ts",
+        "database/migrations/079_staff_invitation_access.sql",
+        "apps/web/lib/release-checks.ts"
+      ],
+      "dataSource": "Accepted invitation, branch, governed access request and decisions, users, sessions, privilege ledger and audit history.",
+      "securityControl": "Invite cannot directly grant staff authority; protected roles cannot acquire unsupported privileges; existing independent approver and stale-version checks remain.",
+      "testFiles": [
+        "tests/staff-management.test.ts",
+        "tests/account-onboarding.test.ts",
+        "tests/staff-privileges.test.ts",
+        "tests/production-release.test.ts"
+      ],
+      "testIds": [
+        "STAFF-INV-02"
+      ],
+      "negativeTests": [
+        "await check(\"customer\", 0)",
+        "/no longer valid/",
+        "/independent|own/i",
+        "/cannot be granted|recognised/i",
+        "/permission denied/i"
+      ],
+      "evidence": [
+        "docs/traceability/staff-invite-drivers-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-INV-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Restricted runtime tests verified the proposal, applied privilege and explicit denial after activation, and preserved old invitation and temporary password flows.",
+      "testResult": "PASS: Restricted runtime tests verified the proposal, applied privilege and explicit denial after activation, and preserved old invitation and temporary password flows.",
+      "outstandingWork": "Apply migration 079 and smoke-test the demo when released."
+    },
+    {
+      "id": "DRIVER-NAV-01",
+      "requirement": "Add a Drivers entry by Technicians and display actual driver status, branch and current assignments.",
+      "priority": "P0",
+      "scope": "Staff onboarding and Drivers web workspace",
+      "uiReference": "User request and attached Add New Staff screenshot; grouped Delivery & Services sidebar",
+      "route": "/admin/drivers",
+      "implementationFiles": [
+        "packages/business-rules/src/admin-navigation.ts",
+        "packages/business-rules/src/staff-privileges.ts",
+        "apps/web/components/drivers-workspace.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "dataSource": "Driver user records, branches and assigned or out-for-delivery orders.",
+      "securityControl": "Owner business scope; managers restricted to active assigned branch. Dispatch privilege revocation hides menu and blocks endpoint. Directory is read-only.",
+      "testFiles": [
+        "tests/navigation.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "tests/product-ui.test.ts"
+      ],
+      "testIds": [
+        "DRIVER-NAV-01"
+      ],
+      "negativeTests": [
+        "[\"finance\", \"technician\", \"customer\"]",
+        "branchId: \"directory-other\"",
+        "/revoked/i"
+      ],
+      "evidence": [
+        "docs/traceability/staff-invite-drivers-evidence.txt"
+      ],
+      "acceptanceGate": "DRIVER-NAV-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Navigation and API tests verified role and branch scoping and revocation; Chrome verified the directory, filtering and 390px layout.",
+      "testResult": "PASS: Navigation and API tests verified role and branch scoping and revocation; Chrome verified the directory, filtering and 390px layout.",
+      "outstandingWork": "Apply migration 079 and smoke-test the demo when released."
+    }
+  ],
+  "gates": [
+    {
+      "id": "STAFF-INV-G01",
+      "status": "PASS",
+      "gate": "Local invitation form, role defaults and customised privileges."
+    },
+    {
+      "id": "STAFF-INV-G02",
+      "status": "PASS",
+      "gate": "Local restricted database and independent approval workflow."
+    },
+    {
+      "id": "DRIVER-NAV-G01",
+      "status": "PASS",
+      "gate": "Local branch-scoped directory and responsive navigation."
+    },
+    {
+      "id": "STAFF-INV-G03",
+      "status": "PENDING",
+      "gate": "Demo migration, release and authenticated smoke checks."
+    }
+  ],
+  "coverage": {
+    "implementation": "3/3",
+    "verification": "3/3 in local scope",
+    "critical": "2/2 locally",
+    "routes": "3/3 locally",
+    "gates": "3/4"
+  }
+}

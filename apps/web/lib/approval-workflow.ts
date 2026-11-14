@@ -108,6 +108,14 @@ export async function approvalWorkflowAction(
     if (d.value === undefined)
       throw new AppError(400, "Provide the revised value.");
     validateValue(def, d.value);
+    if (def.value_type === "access" && await one(tx,
+      "SELECT id FROM staff_invitations WHERE access_request_id=$1", [r.id],
+    )) {
+      const value = d.value as typeof r.proposed_value;
+      if (["userId", "role", "branchId"].some(key => value[key] !== r.proposed_value[key]))
+        throw new AppError(400, "This request is tied to the accepted staff invitation. Use Staff Management to request different access.");
+    }
+
     const current = await one(
       tx,
       "SELECT * FROM settings WHERE key=$1 AND scope=$2",

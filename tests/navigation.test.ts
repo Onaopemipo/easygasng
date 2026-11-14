@@ -17,15 +17,15 @@ import { id, hashPassword, issueSession } from "../apps/web/lib/auth";
 import { dispatch } from "../apps/web/lib/service";
 import { one } from "../apps/web/lib/db";
 const password = "Services-fixture-only-123!";
-test("RM-01–05,12,13: all 29 routes, exact groups/order, unique IDs and safe nested active matching", async () => {
+test("RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe nested active matching", async () => {
   assert.equal(adminNavigation.length, 7);
   assert.deepEqual(
     adminNavigation.map((g) => g.items.length),
-    [1, 4, 4, 5, 4, 3, 8],
+    [1, 4, 4, 6, 4, 3, 8],
   );
-  assert.equal(navigationItems.length, 29);
-  assert.equal(new Set(navigationItems.map((i) => i.id)).size, 29);
-  assert.equal(new Set(navigationItems.map((i) => i.href)).size, 29);
+  assert.equal(navigationItems.length, 30);
+  assert.equal(new Set(navigationItems.map((i) => i.id)).size, 30);
+  assert.equal(new Set(navigationItems.map((i) => i.href)).size, 30);
   assert.deepEqual(
     adminNavigation.map((g) => g.label),
     [
@@ -52,6 +52,7 @@ test("RM-01–05,12,13: all 29 routes, exact groups/order, unique IDs and safe n
     "bookings",
     "services",
     "technicians",
+    "drivers",
     "quotations",
     "finance",
     "reconciliation",
@@ -113,7 +114,7 @@ test("RM-06,08,09: mode-independent role visibility preserves dedicated assignme
   }
   assert.equal(
     roleNavigation("owner", "lagos").flatMap((g) => g.items).length,
-    29,
+    30,
   );
   assert.deepEqual(
     roleNavigation("driver", "lagos")
@@ -175,7 +176,7 @@ test("RM-07,10,11: fresh authentication, branch scope, counter aggregates and ro
       /authenticated workspace/,
     );
     const owner = await f.call("owner", "navigation");
-    assert.equal(owner.allowed.length, 29);
+    assert.equal(owner.allowed.length, 30);
     assert.ok(owner.generatedAt);
     assert.equal(owner.user.id, f.actors.owner.id);
     const tech = await f.call("technician", "navigation");
@@ -532,5 +533,44 @@ test("navigation aggregates run under the restricted private-schema runtime with
     );
   } finally {
     await db.close?.();
+  }
+});
+
+test("DRIVER-NAV-01: driver directory and sidebar follow branch, role and dispatch privilege", async () => {
+  const f = await fixture();
+  try {
+    await f.db.query("INSERT INTO branches(id,name) VALUES('directory-other','Other directory branch')");
+    const lagosDriver = id();
+    for (const [name, branch, available, driverId] of [
+      ["Directory Lagos", "lagos", true, lagosDriver],
+      ["Directory Other", "directory-other", false, id()],
+    ]) {
+      await f.db.query("INSERT INTO users(id,name,email,password_hash,role,branch_id,driver_available) VALUES($1,$2,$3,$4,'driver',$5,$6)",
+        [driverId, name, id() + "@example.test", hashPassword(password), branch, available]);
+    }
+    for (const [branch, status] of [["lagos", "assigned"], ["lagos", "out_for_delivery"], ["lagos", "delivered"], ["directory-other", "assigned"]]) {
+      const oid = id();
+      await f.db.query(`INSERT INTO orders(id,reference,customer_id,branch_id,status,payment_method,subtotal_kobo,delivery_kobo,total_kobo,address,delivery_date,delivery_window,driver_id,idempotency_key,request_hash,delivery_code_hash,delivery_code_expires_at)
+        VALUES($1,$1,$2,$3,$4,'cash',0,0,0,'{}','2026-11-14','09:00–12:00',$5,$1,$1,$1,now())`,
+        [oid, f.actors.customer.id, branch, status, lagosDriver]);
+    }
+    const owner = await f.call("owner", "drivers.workspace");
+    assert.deepEqual(owner.drivers.map((d: any) => d.name), ["Directory Lagos", "Directory Other"]);
+    assert.equal(owner.drivers[0].driver_available, true);
+    assert.equal(owner.drivers[0].active_deliveries, 2);
+    const manager = await f.call("service_manager", "drivers.workspace");
+    assert.deepEqual(manager.drivers.map((d: any) => d.name), ["Directory Lagos"]);
+    for (const role of ["finance", "technician", "customer"])
+      await assert.rejects(f.call(role, "drivers.workspace"), /permission|technician/i);
+    await assert.rejects(f.call("service_manager", "drivers.workspace", { branchId: "directory-other" }));
+    assert.ok((await f.call("service_manager", "navigation.access")).allowed.includes("drivers"));
+    await f.call("owner", "staff.privileges.save", {
+      userId: f.actors.service_manager.id, version: 0,
+      changes: [{ privilege: "dispatch.manage", effect: "deny" }], reason: "Test directory access revocation",
+    });
+    assert.ok(!(await f.call("service_manager", "navigation.access")).allowed.includes("drivers"));
+    await assert.rejects(f.call("service_manager", "drivers.workspace"), /revoked/i);
+  } finally {
+    await f.db.close?.();
   }
 });

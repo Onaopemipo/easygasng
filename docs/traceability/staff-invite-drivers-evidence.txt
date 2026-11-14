@@ -1,0 +1,25 @@
+EasyGas staff invitation access and Drivers directory — 14 Nov 2026
+Environment: local synthetic fixtures, isolated development browser, PostgreSQL 17 and restricted-runtime bootstrap checks. No external invitation delivery or hosted write.
+
+PASS: 46 focused staff management, onboarding, navigation, dispatch safety, privileges and role-consolidation tests after the grant-activation ordering fix.
+PASS: 34 final focused tests covering onboarding, invitation, navigation, product route audit, mobile design route mapping and release schema requirements. No skips or failures.
+PASS: latest DRIVER-NAV-01 includes two active orders, a delivered order and a cross-branch order; only the two current same-branch assignments are counted.
+PASS: Chromium owner sign-in and Add New Staff form; five registered roles, finance defaults, optional grant, default privilege removal, role switch resets choices, inline password re-verification, confirmed queued invitation. The 390px dialog stayed within the viewport and the submit button was reachable.
+PASS: Chromium Drivers entry in Delivery & Services, real fixture driver, availability filters and 390px layout without document-level horizontal overflow. The table scrolls within its container.
+PASS: PostgreSQL clean bootstrap records schema 079, restricted runtime can update access_request_id and cannot update requested_access. Existing schema 078 upgraded to 079 while preserving an unaccepted legacy invitation.
+PASS: web build, typecheck and traceability validation (3 unique stable requirement IDs, 3 gates, verified source/test/evidence paths).
+
+The broad local run preceding route audit and schema registry updates passed 714 of 717 (0 skips), with the three failing new-route/schema registrations subsequently verified by the final focused run. Do not treat this as a clean final full-suite run. Demo migration and hosted smoke remain outstanding; commercial production NO-GO is unchanged.
+
+Release focused run (staff, drivers, approvals, checkout and release regressions):
+✔ DRIVER-NAV-01: driver directory and sidebar follow branch, role and dispatch privilege (918.473959ms)
+✔ STAFF-INV-01/02: selected privileges are reviewed, never applied before independent approval, and enforced after activation (997.235334ms)
+✔ STAFF-INV-02: inviting owners cannot attach protected grants to driver roles or provide arbitrary privileges (862.319875ms)
+ℹ tests 85
+ℹ suites 0
+ℹ pass 85
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58270.320542

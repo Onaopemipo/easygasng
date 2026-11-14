@@ -1,3 +1,4 @@
+import { validateInvitationAccess } from "./staff-invitation-access";
 import { accountRoles } from "../../../packages/business-rules/src/staff-roles";
 import { documentIdentitySchema } from "./document-identity";
 import { serviceMaterialRecovery } from "./service-recovery-schema";
@@ -363,8 +364,16 @@ export async function propose(
 export function canAutoApproveDefinition(d: Row) {
   if (!ownerAutoApprovalEnabled() || d.value_type === "access" || d.category === "Finance Operations")
     return false;
+  // These settings require the owner's business decision, with no separate
+  // finance or safety reviewer. Address and dispatch checks run independently.
+  const ownerOnlyOrderingSetting =
+    d.required_roles.length === 1 &&
+    d.required_roles[0] === "owner" &&
+    (d.key === "delivery.fee" ||
+      d.key === "gas.quantity_policy" ||
+      (d.value_type === "location" && d.key.startsWith("location.")));
   return d.key === "gas.price_per_kg" || d.value_type === "checklist" ||
-    (d.risk < 4 && d.required_roles.length === 0);
+    (d.risk < 4 && (d.required_roles.length === 0 || ownerOnlyOrderingSetting));
 }
 export function ownerAutoApprovalEnabled() {
   return process.env.EASYGAS_OWNER_AUTO_APPROVAL === "true";
@@ -688,7 +697,7 @@ async function applyApproved(
   if (d.value_type === "access") {
     if (r.proposed_value.userId === r.requester_id)
       throw new AppError(403, "Self-promotion is prohibited.");
-    const exists = await one(tx, "SELECT id FROM users WHERE id=$1", [
+    const exists = await one(tx, "SELECT id,email,role,branch_id,active FROM users WHERE id=$1 FOR UPDATE", [
       r.proposed_value.userId,
     ]);
     if (!exists) throw new AppError(404, "The target account does not exist.");
@@ -702,11 +711,44 @@ async function applyApproved(
         403,
         "The account receiving privileges cannot approve this request.",
       );
+    const invite = await one(tx,
+      "SELECT email,branch_id,requested_access FROM staff_invitations WHERE access_request_id=$1",
+      [r.id],
+    );
+    const plan = invite ? validateInvitationAccess(invite.requested_access, invite.branch_id) : null;
+    if (invite && plan) {
+      const revoked = await one(tx,
+        "SELECT 1 FROM staff_privilege_overrides WHERE user_id=$1 AND privilege='staff.manage' AND effect='deny'",
+        [r.requester_id],
+      );
+      if (requester.role !== "owner" || revoked ||
+          exists.email !== invite.email || !exists.active || exists.role !== "customer" ||
+          exists.branch_id !== invite.branch_id || r.scope !== invite.branch_id ||
+          r.proposed_value.branchId !== invite.branch_id || plan.role !== r.proposed_value.role)
+        throw new AppError(409, "The staff account or inviter changed. Review the current staff record before requesting access again.", "ACTIVATION_FAILED");
+      if (plan.changes.length) {
+        const version = await one(tx, "SELECT version FROM staff_privilege_versions WHERE user_id=$1", [exists.id]);
+        if (version) throw new AppError(409, "This account already has privilege changes. Review those changes before requesting access again.", "ACTIVATION_FAILED");
+      }
+    }
     await tx.query("UPDATE users SET role=$1,branch_id=$2 WHERE id=$3", [
       r.proposed_value.role,
       r.proposed_value.branchId,
       r.proposed_value.userId,
     ]);
+    // The identity change invalidates prior grants and advances the version.
+    // Write the newly approved grants only after that trigger has run.
+    if (invite && plan?.changes.length) {
+      for (const c of plan.changes)
+        await tx.query(
+          "INSERT INTO staff_privilege_overrides(user_id,privilege,effect,changed_by,role_at_change,branch_at_change) VALUES($1,$2,$3,$4,$5,$6)",
+          [exists.id, c.privilege, c.effect, r.requester_id, plan.role, invite.branch_id],
+        );
+      await audit(tx, user, "staff.privileges.changed", exists.id, "success", {
+        requestId: r.id, before: [], changes: plan.changes, reason: r.reason,
+        version: 1, targetRole: plan.role, targetBranch: invite.branch_id,
+      });
+    }
     await tx.query("UPDATE sessions SET revoked_at=now() WHERE user_id=$1", [
       r.proposed_value.userId,
     ]);

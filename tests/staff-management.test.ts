@@ -292,3 +292,63 @@ test("staff management invitation actions run with restricted runtime grants and
     await db.close?.();
   }
 });
+
+test("STAFF-INV-01/02: selected privileges are reviewed, never applied before independent approval, and enforced after activation", async () => {
+  const { createDatabase } = await import("../apps/web/lib/db");
+  const { readFile } = await import("node:fs/promises");
+  const db = await createDatabase("memory://");
+  try {
+    await db.exec(await readFile("database/bootstrap.sql", "utf8"));
+    await db.exec("SET search_path TO easygas_private,pg_catalog; SET ROLE easygas_server");
+    const f = await fixture(db);
+    await f.call("administrator", "reauth", { password });
+    const data = { name: "New Finance Colleague", email: id() + "@example.test", branchId: "lagos" };
+    const changes = [
+      { privilege: "customers.view", effect: "grant" },
+      { privilege: "audit.view", effect: "deny" },
+    ];
+    const invite = await f.call("administrator", "staff.invite", { ...data, access: { role: "finance", changes } });
+    assert.equal((await f.call("owner", "staff.manage")).invitations.find((row: any) => row.id === invite.invitationId).requested_role, "finance");
+    const creds = await invitationCredentials(f.db, invite.invitationId);
+    await f.call("customer", "invitation.accept", creds);
+    await assert.rejects(f.call("customer", "invitation.accept", creds), /no longer valid/);
+    const { id: uid } = (await one(f.db, "SELECT id FROM users WHERE email=$1", [data.email]))!;
+    const requestId = (await one(f.db, "SELECT access_request_id FROM staff_invitations WHERE id=$1", [invite.invitationId]))!.access_request_id;
+    const check = async (role: string, expected: number) => {
+      assert.equal((await one(f.db, "SELECT role FROM users WHERE id=$1", [uid]))!.role, role);
+      assert.equal((await f.db.query("SELECT privilege FROM staff_privilege_overrides WHERE user_id=$1", [uid])).rows.length, expected);
+    };
+    await check("customer", 0);
+    const approval = (await f.call("finance", "approvals")).find((r: any) => r.id === requestId);
+    assert.deepEqual(approval.invitation_access, { name: data.name, changes });
+    const decision = { id: requestId, decision: "approve", reason: "Independent staff invitation review" };
+    await assert.rejects(f.call("administrator", "approval.decide", decision), /independent|own/i);
+    await f.call("owner", "approval.decide", decision);
+    await check("customer", 0);
+    await f.call("finance", "approval.decide", decision);
+    await check("finance", 2);
+    const { dispatch } = await import("../apps/web/lib/service");
+    const session = await dispatch("login", null, { email: data.email, password: creds.password, newPassword: "Test-replacement8" }, f.db);
+    assert.ok(session.token);
+    assert.ok((await dispatch("customers.manage", session.token, {}, f.db)).customers);
+    await assert.rejects(dispatch("audit", session.token, {}, f.db), /revoked/i);
+    await assert.rejects(db.query("UPDATE staff_invitations SET requested_access=NULL WHERE id=$1", [invite.invitationId]), /permission denied/i);
+  } finally {
+    await db.close?.();
+  }
+});
+
+test("STAFF-INV-02: inviting owners cannot attach protected grants to driver roles or provide arbitrary privileges", async () => {
+  const f = await fixture();
+  try {
+    const data = { name: "Invited Driver", email: id() + "@example.test", branchId: "lagos" };
+    for (const privilege of ["finance.manage", "dispatch.manage", "no.such.privilege"]) {
+      await assert.rejects(f.call("owner", "staff.invite", {
+        ...data, access: { role: "driver", changes: [{ privilege, effect: "grant" }] },
+      }), /cannot be granted|recognised/i);
+    }
+    assert.equal(await one(f.db, "SELECT id FROM staff_invitations WHERE email=$1", [data.email]), undefined);
+  } finally {
+    await f.db.close?.();
+  }
+});

@@ -4,6 +4,7 @@ import {
   privilegeById,
   privilegeForAction,
   isBusinessStaff,
+  canGrantStaffPrivilege,
 } from "../../../packages/business-rules/src/staff-privileges";
 import { AppError, recentVerification, type Actor } from "./auth";
 import { one, type SQL } from "./db";
@@ -97,17 +98,12 @@ export async function staffPrivilegeAction(
         stale: stale.has(p.id),
         effect: overrides[p.id] ?? "default",
         roleDefault: p.roles.includes(t.role),
-        canGrant:
-          p.roles.includes(t.role) ||
-          Boolean(p.grantRole && isBusinessStaff(t.role) && t.branch_id),
+        canGrant: canGrantStaffPrivilege(p, t.role, t.branch_id),
         effective:
           overrides[p.id] === "deny"
             ? false
             : overrides[p.id] === "grant" &&
-                (p.roles.includes(t.role) ||
-                  Boolean(
-                    p.grantRole && isBusinessStaff(t.role) && t.branch_id,
-                  ))
+                canGrantStaffPrivilege(p, t.role, t.branch_id)
               ? true
               : p.roles.includes(t.role),
       })),
@@ -178,8 +174,7 @@ export async function staffPrivilegeAction(
       );
     if (
       c.effect === "grant" &&
-      !p.roles.includes(t.role) &&
-      !(p.grantRole && isBusinessStaff(t.role) && t.branch_id)
+      !canGrantStaffPrivilege(p, t.role, t.branch_id)
     )
       throw new AppError(
         403,

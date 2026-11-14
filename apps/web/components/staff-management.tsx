@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { api, Modal, Notice, Loading } from "./ui";
 import StaffPrivileges from "./staff-privileges";
+import StaffInvitation from "./staff-invitation";
 import { ServiceForm } from "./professional-services";
 import { accountRoles, staffRoleDetails, staffRoleLabel, staffRoles } from "../../../packages/business-rules/src/staff-roles";
 export default function StaffManagement({
@@ -109,7 +110,7 @@ export default function StaffManagement({
       .map((i: any) => ({
         ...i,
         kind: "invitation",
-        role: "",
+        role: i.requested_role ?? "",
         status: new Date(i.expires_at) > new Date() ? "pending" : "expired",
       })),
   ];
@@ -229,8 +230,8 @@ export default function StaffManagement({
           <div>
             <strong>Important Information</strong>
             <p>
-              Invitations create an account without staff privileges. Role and
-              branch changes require independent owner/finance approvals. Verify
+              Choose staff access when sending an invitation. After the recipient accepts,
+              the request goes to the Approval Centre for independent review. Verify
               your password before sensitive actions.
             </p>
           </div>
@@ -605,20 +606,10 @@ export default function StaffManagement({
               submit="Verify Password"
             />
           ) : modal === "invite" ? (
-            <ServiceForm
-              title="Invite a colleague"
-              fields={[
-                { name: "name", label: "Full name" },
-                { name: "email", label: "Email address", type: "email" },
-                {
-                  name: "branchId",
-                  label: "Branch",
-                  options: branches,
-                  value: user.branchId ?? "lagos",
-                },
-              ]}
+            <StaffInvitation
+              branches={branches}
+              defaultBranch={user.branchId}
               send={(v) => inviteAction("staff.invite", v)}
-              submit="Send Staff Invitation"
             />
           ) : modal === "lookup" ? (
             <ServiceForm

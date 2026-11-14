@@ -24,6 +24,7 @@ const reads = new Set([
   "delivery.photos",
   "dispatch.board",
   "dispatch.centre",
+  "drivers.workspace",
   "dispatch.candidates",
   "fleet.summary",
   "manifest.summary",

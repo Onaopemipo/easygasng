@@ -154,6 +154,7 @@ export const adminNavigation: NavigationGroup[] = [
         ["owner", "manager", "finance"],
         "services.manage",
       ),
+      item("drivers", "Drivers", "Truck", ["owner", "manager"], "drivers.workspace"),
       item(
         "quotations",
         "Quotations",

@@ -12,7 +12,7 @@
       "securityControl": "Server-only explicit opt-in; current owner/requester/revision/base-version-bound immutable authority record; existing role/branch/version/expiry/validation and qualified safety/payment checks retained",
       "status": "VERIFIED_COMPLETE",
       "reason": "Backend, UI wiring and actual owner browser/read-only hosted acceptance verified. Existing pending request remains unchanged until explicit user action; new owner submissions auto-approve under the enabled demo policy.",
-      "testResult": "PASS \u2014 40 scoped checks;605 full-suite passes/20 environment skips/0failures; separate PostgreSQL concurrency;21 final follow-ups; refreshed web types/build; hosted role/access and actual owner UI.",
+      "testResult": "PASS — 40 scoped checks;605 full-suite passes/20 environment skips/0failures; separate PostgreSQL concurrency;21 final follow-ups; refreshed web types/build; hosted role/access and actual owner UI.",
       "outstandingWork": "None for bounded web-demo policy and pending-request action. Existing qualified safety/payment/physical/native/full-business production gates and NO-GO remain; no actual hosted operational request applied by verification. Other installations retain default OFF unless explicitly enabled.",
       "implementationFiles": [
         "apps/web/lib/governance.ts",
@@ -60,7 +60,7 @@
       "securityControl": "Server-only explicit opt-in; current owner/requester/revision/base-version-bound immutable authority record; existing role/branch/version/expiry/validation and qualified safety/payment checks retained",
       "status": "VERIFIED_COMPLETE",
       "reason": "Backend, UI wiring and actual owner browser/read-only hosted acceptance verified. Existing pending request remains unchanged until explicit user action; new owner submissions auto-approve under the enabled demo policy.",
-      "testResult": "PASS \u2014 40 scoped checks;605 full-suite passes/20 environment skips/0failures; separate PostgreSQL concurrency;21 final follow-ups; refreshed web types/build; hosted role/access and actual owner UI.",
+      "testResult": "PASS — 40 scoped checks;605 full-suite passes/20 environment skips/0failures; separate PostgreSQL concurrency;21 final follow-ups; refreshed web types/build; hosted role/access and actual owner UI.",
       "outstandingWork": "None for bounded web-demo policy and pending-request action. Existing qualified safety/payment/physical/native/full-business production gates and NO-GO remain; no actual hosted operational request applied by verification. Other installations retain default OFF unless explicitly enabled.",
       "implementationFiles": [
         "apps/web/lib/governance.ts",
@@ -108,7 +108,7 @@
       "securityControl": "Server-only explicit opt-in; current owner/requester/revision/base-version-bound immutable authority record; existing role/branch/version/expiry/validation and qualified safety/payment checks retained",
       "status": "VERIFIED_COMPLETE",
       "reason": "Backend, UI wiring and actual owner browser/read-only hosted acceptance verified. Existing pending request remains unchanged until explicit user action; new owner submissions auto-approve under the enabled demo policy.",
-      "testResult": "PASS \u2014 40 scoped checks;605 full-suite passes/20 environment skips/0failures; separate PostgreSQL concurrency;21 final follow-ups; refreshed web types/build; hosted role/access and actual owner UI.",
+      "testResult": "PASS — 40 scoped checks;605 full-suite passes/20 environment skips/0failures; separate PostgreSQL concurrency;21 final follow-ups; refreshed web types/build; hosted role/access and actual owner UI.",
       "outstandingWork": "None for bounded web-demo policy and pending-request action. Existing qualified safety/payment/physical/native/full-business production gates and NO-GO remain; no actual hosted operational request applied by verification. Other installations retain default OFF unless explicitly enabled.",
       "implementationFiles": [
         "apps/web/lib/governance.ts",
@@ -151,6 +151,49 @@
         "OWNER-AUTO-PG"
       ],
       "acceptanceGate": "OWNER-AUTO03-G"
+    },
+    {
+      "id": "OWNER-AUTO07",
+      "requirement": "Automatically approve eligible Admin / Business Owner submissions for delivery coverage, flat delivery fee and gas quantity policy, with a recovery action for the owner’s own existing requests.",
+      "priority": "P0",
+      "scope": "Admin settings and Approval Centre; gas quotation and checkout. Owner policy must be enabled.",
+      "uiReference": "Pending delivery coverage blocks ordering; approved owner authority applies without a second owner.",
+      "route": "/admin/settings; /admin/approvals; setting.propose; delivery.location.create; approval.owner_apply; gas.quote",
+      "dataSource": "setting_definitions, change_requests, audit_events, settings and delivery_locations; existing public quotation and checkout checks.",
+      "securityControl": "Current owner role, recent password verification, matching version and effective date. The new exception is limited to these owner-only ordering settings under risk level 4. Staff, financial and access approvals, quotation/stock checks and address confirmation before dispatch retain their existing rules.",
+      "implementationFiles": [
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/gas-delivery-admin.tsx"
+      ],
+      "testFiles": [
+        "tests/owner-auto-approval.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/post-meeting-identity.test.ts"
+      ],
+      "testIds": [
+        "OWNER-AUTO07",
+        "OWNER-AUTO08",
+        "COVERAGE-01",
+        "PM-T10"
+      ],
+      "negativeTests": [
+        "owner_auto_approval, false",
+        "'pending_approval'",
+        "/verif/i",
+        "Only the requester may use automatic approval",
+        "quote(created.id), { code: 'DELIVERY_COVERAGE_PENDING' }"
+      ],
+      "evidence": [
+        "docs/owner-auto-approval/evidence/owner-ordering-followup.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified locally for new and existing requests, including owners migrated from Administrator. The hosted demo still has the previous policy.",
+      "testResult": "PASS — 25/25 targeted approval, gas ordering and phone-assisted order checks; web typecheck and build passed.",
+      "outstandingWork": "Deploy to the demo and verify authenticated settings. The business must still confirm and enter actual coverage. No existing request or boundary was changed in the demo.",
+      "acceptanceGate": "OWNER-AUTO07-G"
     }
   ],
   "gates": [
@@ -168,23 +211,30 @@
       "id": "OWNER-AUTO03-G",
       "status": "PASS",
       "scope": "Retain current authority, scheduling, expiry, version, safety and exactly-once inventory controls"
+    },
+    {
+      "id": "OWNER-AUTO07-G",
+      "status": "PASS",
+      "scope": "Local: owner ordering-setting approval and recovery, with delivery coverage and independent financial/safety controls retained."
     }
   ],
   "scopeChanges": [
     "User explicitly supersedes independent business approval for authorised owner-origin requests. This is not technical administrator privilege escalation.",
     "Qualified independent safety review and downstream customer agreement/payment/stock constraints remain.",
-    "Policy opt-in enabled only for authorised demo rollout; existing installations remain unchanged by default. No mass approval/backfill of pending records."
+    "Policy opt-in enabled only for authorised demo rollout; existing installations remain unchanged by default. No mass approval/backfill of pending records.",
+    "14 November: extend the existing owner rule to delivery coverage, flat delivery fee and gas quantity policy, whose only designated reviewer is the owner. Keep the specific exclusions and leave existing business records unchanged."
   ],
   "coverage": {
-    "implemented": "3/3",
-    "verified": "3/3 for bounded web-demo scope",
-    "gates": "3/3"
+    "implemented": "4/4",
+    "verified": "4/4 (OWNER-AUTO07 locally; original three in their prior demo scope)",
+    "gates": "4/4 within each gate’s specified scope; hosted rollout of OWNER-AUTO07 outstanding"
   },
   "deployment": {
     "sourceCommit": "67d94cc",
     "id": "dpl_AMwAo4VzXVKn7ewqvCZ7P3g8WXj6",
     "url": "https://easygas-client-demo.vercel.app",
     "ownerPolicy": "enabled on linked demo only",
-    "businessMutationPerformed": false
+    "businessMutationPerformed": false,
+    "ownerOrderingFollowup": "Local only; no deployment or hosted business data changes."
   }
 }

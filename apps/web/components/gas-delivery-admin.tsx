@@ -50,8 +50,8 @@ export default function GasDeliveryAdmin({
     <section className="surface">
       <h2>Gas pricing & delivery</h2>
       <p>
-        Home delivery only. Prices and coverage use the same independent
-        Approval Centre as other protected business settings.
+        Manage home delivery prices and confirmed coverage. The Approval Centre
+        records changes and any reviews they require.
       </p>
       <div className="metric-grid">
         {["gas.price_per_kg", "delivery.fee"].map((k) => {
