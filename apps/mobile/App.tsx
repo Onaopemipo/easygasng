@@ -66,6 +66,7 @@ import {
   StyleSheet,
   Platform,
   Linking,
+  Keyboard,
   StatusBar,
   BackHandler,
   AppState,
@@ -503,6 +504,7 @@ export default function App() {
       clearPrivateState();
       setToken(result.token);
       const me = await api("me", undefined, result.token);
+      Keyboard.dismiss();
       setUser(me.user);
       setPassword("");
       setNewPassword("");
@@ -712,7 +714,7 @@ export default function App() {
   return (
     <SafeAreaView style={[s.app, { backgroundColor: colors.background }]}>
       {initialLinkResolved && introductionAudience(user ? (user.role ?? "unknown") : token ? "unverified" : null) !== "excluded" && (
-        <Onboarding request={intro} automatic={canAutoShowIntroduction({
+        <Onboarding key={user?.id ?? "guest"} request={intro} automatic={canAutoShowIntroduction({
           role: user?.role, initialLinkResolved, home: screen === "home",
           dedicatedStaffShell: driverShell || technicianShell,
         })} />

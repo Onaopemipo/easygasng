@@ -134,8 +134,8 @@
       ],
       "acceptanceGate": "G16",
       "reason": "Existing seen key, negative role and deep-link unit coverage, and native package launches.",
-      "testResult": "Executed evidence: Existing seen key, negative role and deep-link unit coverage, and native package launches.",
-      "outstandingWork": "Run first-run, Skip, replay, Android Back, storage failure and native role-switch journeys."
+      "testResult": "iOS guest completion, authenticated relaunch, Skip, replay, and signed-in restart exercised. Signed-out initial install tested with a synthetic customer. The immediate sign-in fix remains to be retested.",
+      "outstandingWork": "Confirm automatic presentation on the first iOS sign-in with the updated build, and run Android and native role-switch journeys."
     },
     {
       "id": "ONB-005",
@@ -298,7 +298,7 @@
     {
       "id": "G13",
       "gate": "first run",
-      "status": "PENDING"
+      "status": "PARTIAL"
     },
     {
       "id": "G14",
@@ -390,14 +390,16 @@
     {
       "id": "T01",
       "scenario": "native first run",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "iPhone 15 opened the tour on the first signed-in relaunch. Immediate sign-in had an issue on the initial build. Android remains open."
     },
     {
       "id": "T02",
       "scenario": "returning bypass",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "iPhone 15 returned to signed-in Home without reopening the tour after Skip and restart."
     },
     {
       "id": "T03",
@@ -408,32 +410,37 @@
     {
       "id": "T04",
       "scenario": "replay from Settings",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "iPhone 15 replay via My Account > Appearance opened scene 1."
     },
     {
       "id": "T05",
       "scenario": "replay keeps seen",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "Completing the iPhone 15 replay did not clear the seen preference. Verified by restarting the app."
     },
     {
       "id": "T06",
       "scenario": "skip first",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "Skip on the first scene returned to signed-in Home on iPhone 15."
     },
     {
       "id": "T07",
       "scenario": "skip middle",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "Skip on the second replay scene returned to Appearance on iPhone 15."
     },
     {
       "id": "T08",
       "scenario": "final CTA",
       "status": "PARTIAL",
-      "evidence": "docs/onboarding-redesign/04-test-results.md"
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "Get Started returned to guest Home with storage working on the signed iPhone 17 Pro build."
     },
     {
       "id": "T09",
@@ -468,14 +475,16 @@
     {
       "id": "T14",
       "scenario": "iOS navigation",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "Next, Back, progress selections, Skip and Get Started exercised on iPhone 17 Pro or iPhone 15."
     },
     {
       "id": "T15",
       "scenario": "process restart",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "The iPhone 15 session and seen preference survived process restart."
     },
     {
       "id": "T16",
@@ -486,8 +495,9 @@
     {
       "id": "T17",
       "scenario": "storage error",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "Unsigned iOS Simulator build triggered the storage error and offered retry and recovery."
     },
     {
       "id": "T18",
@@ -498,8 +508,9 @@
     {
       "id": "T19",
       "scenario": "continue without saving",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "Continue without saving returned to guest Home on the unsigned iOS Simulator build."
     },
     {
       "id": "T20",
@@ -570,14 +581,16 @@
     {
       "id": "T31",
       "scenario": "small iPhone",
-      "status": "PENDING",
-      "evidence": "Not yet exercised on the required platform or device."
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "iPhone 15 rendered the first-run and replay controls."
     },
     {
       "id": "T32",
       "scenario": "large iPhone",
       "status": "PARTIAL",
-      "evidence": "docs/onboarding-redesign/04-test-results.md"
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "iPhone 17 Pro rendered all three scenes with visible final CTA."
     },
     {
       "id": "T33",
@@ -637,7 +650,8 @@
       "id": "T42",
       "scenario": "existing customer auth",
       "status": "PARTIAL",
-      "evidence": "docs/onboarding-redesign/04-test-results.md"
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "Synthetic customer signed in on iPhone 15 against the isolated local backend."
     },
     {
       "id": "T43",
@@ -745,15 +759,16 @@
       "id": "T60",
       "scenario": "native builds and regression",
       "status": "PARTIAL",
-      "evidence": "docs/onboarding-redesign/04-test-results.md"
+      "evidence": "docs/onboarding-redesign/04-test-results.md",
+      "observation": "Fresh Xcode Simulator build and Android release APK compiled and installed. Focused mobile tests passed after the first sign-in change."
     }
   ],
   "coverage": {
     "implementation": "7/7 with source changes (cross-platform acceptance incomplete)",
     "verified": "1/7 bounded web entry verified",
     "critical": "0/1 fully verified; local role negatives passed",
-    "routes": "Existing web / verified; iOS and Android shells launched, interactive acceptance pending",
+    "routes": "Existing web / verified. iOS onboarding interactions and persistence exercised. Android launch verified.",
     "gates": "15/30 passed",
-    "scenarios": "9/60 passed"
+    "scenarios": "10/60 passed"
   }
 }
