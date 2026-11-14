@@ -221,3 +221,5 @@ Admin Dashboard landing (14 November). [Requirements matrix](admin-dashboard-lan
 Staff invitation access and Drivers directory: [matrix](staff-invite-drivers-rtm.md) and [machine-readable scope](staff-invite-drivers-rtm.json). Adds one web route without changing the five staff roles or bypassing independent access approvals. Local tests verified the invitation and branch-scoped directory; hosted migration and rollout remain separate. Production NO-GO remains.
 
 Customer checkout delivery prefill: [matrix](checkout-delivery-rtm.md). Web prefill and one-order overrides verified on isolated data. Native installed-app acceptance remains open; production NO-GO unchanged.
+
+Cinematic customer introduction: [matrix](onboarding-redesign-rtm.md), [baseline](../onboarding-redesign/00-baseline-audit.md) and [test evidence](../onboarding-redesign/04-test-results.md). Frontend only; three scenes on web, iOS and Android. Existing commercial production NO-GO remains.

@@ -49,6 +49,7 @@ import { randomUUID } from "expo-crypto";
 import GasOrder from "./GasOrder";
 import CombinedCheckout from "./CombinedCheckout";
 import Onboarding from "./Onboarding";
+import { canAutoShowIntroduction, introductionAudience } from "../../packages/business-rules/src/customer-introduction";
 import Services from "./Services";
 import TechniciansManagement from "./TechniciansManagement";
 import {
@@ -80,7 +81,7 @@ type Item = { productId: string; quantity: number };
 export default function App() {
   const { dark, colors, preference, setPreference } = useTheme();
   const scrollRef = useRef<React.ComponentRef<typeof ScrollView>>(null);
-  const [introReplay, setIntroReplay] = useState(0);
+  const [intro, setIntro] = useState({ revision: 0, preview: false });
   const technicianShell = Constants.expoConfig?.extra?.technicianOnly === true;
   const driverShell = Constants.expoConfig?.extra?.driverOnly === true;
   const [driverRecover, setDriverRecover] = useState(false);
@@ -130,6 +131,7 @@ export default function App() {
   const [initialServiceId, setInitialServiceId] = useState<string | undefined>();
   const pendingLink = useRef<{ screen: string; id?: string } | null>(null);
   const initialLink = useRef(false);
+  const [initialLinkResolved, setInitialLinkResolved] = useState(false);
   useEffect(() => {
     if (screen !== "services") setInitialServiceId(undefined);
     if (screen !== "login") pendingServiceSignIn.current = null;
@@ -178,7 +180,8 @@ export default function App() {
         .then((url) => {
           if (url) handle(url);
         })
-        .catch(() => {});
+        .catch(() => {})
+        .finally(() => setInitialLinkResolved(true));
     }
     const listener = Linking.addEventListener("url", (event) =>
       handle(event.url),
@@ -311,11 +314,11 @@ export default function App() {
               )
               .slice(0, 30),
           );
+        const saved = await SecureStore.getItemAsync("easygas.session");
+        if (saved) setToken(saved);
         const c = await api("catalogue", undefined, null);
         setCatalogue(c);
-        const saved = await SecureStore.getItemAsync("easygas.session");
         if (saved) {
-          setToken(saved);
           const me = await api("me", undefined, saved);
           setUser(me.user);
         }
@@ -708,7 +711,12 @@ export default function App() {
   };
   return (
     <SafeAreaView style={[s.app, { backgroundColor: colors.background }]}>
-      <Onboarding replay={introReplay} />
+      {initialLinkResolved && introductionAudience(user ? (user.role ?? "unknown") : token ? "unverified" : null) !== "excluded" && (
+        <Onboarding request={intro} automatic={canAutoShowIntroduction({
+          role: user?.role, initialLinkResolved, home: screen === "home",
+          dedicatedStaffShell: driverShell || technicianShell,
+        })} />
+      )}
       <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
       {customerView && screen !== "home" && screen !== "login" && (
         <View
@@ -1086,22 +1094,29 @@ export default function App() {
                   </Text>
                 </Pressable>
               ))}
-              {button(
+              {customerView && button(
                 "View introduction",
-                () => setIntroReplay((value) => value + 1),
+                () => setIntro((value) => ({ revision: value.revision + 1, preview: false })),
                 true,
               )}
             </>
           ) : screen === "home" &&
             (!user || ["customer", "commercial"].includes(user.role)) ? (
-            <CustomerHome
-              key={user?.id ?? "guest"}
-              user={user}
-              api={api}
-              navigate={(destination) =>
-                navigateCustomer(destination === "consumption" ? "smart-refill" : destination)
-              }
-            />
+            <>
+              <CustomerHome
+                key={user?.id ?? "guest"}
+                user={user}
+                api={api}
+                navigate={(destination) =>
+                  navigateCustomer(destination === "consumption" ? "smart-refill" : destination)
+                }
+              />
+              {!user && !token && initialLinkResolved && button(
+                "Take a quick EasyGas tour",
+                () => setIntro((value) => ({ revision: value.revision + 1, preview: true })),
+                true,
+              )}
+            </>
           ) : screen === "home" ? (
             <>
               {user?.role !== "owner" && <Text style={s.title}>{staffHomeTitles[user?.role] ?? "Staff Workspace"}</Text>}

@@ -19,6 +19,7 @@ import {
 } from "../../../packages/business-rules/src/order-tracking";
 import { CheckoutDeliveryFields, readCheckoutDelivery } from "./checkout-delivery-fields";
 import PublicHeader from "./public-header";
+import CustomerIntroduction from "./customer-introduction";
 import {
   useTrackingOrders,
   TrackingConnection,
@@ -569,6 +570,7 @@ function Home() {
                 Track Order
               </Link>
             </div>
+            <CustomerIntroduction role={user ? (user.role ?? "unknown") : undefined} />
             <div className="hero-trust">
               <ShieldCheck size={17} />
               <span>Your kitchen is in good hands.</span>

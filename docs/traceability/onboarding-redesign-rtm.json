@@ -1,0 +1,759 @@
+{
+  "phase": "Cinematic customer onboarding",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "ONB-001",
+      "requirement": "Cooking Gas Delivered to Your Home",
+      "status": "PARTIAL",
+      "priority": "P1",
+      "scope": "Customer onboarding on web, iOS and Android",
+      "uiReference": "Approved Cinematic Three-Scene Onboarding; Web Mobile Handoff Concept",
+      "route": "Web /; native Home and customer Appearance",
+      "implementationFiles": [
+        "packages/business-rules/src/customer-introduction.ts",
+        "apps/web/components/customer-introduction.tsx",
+        "apps/mobile/Onboarding.tsx"
+      ],
+      "dataSource": "Static approved marketing copy; existing local seen preference and verified session role, where applicable",
+      "securityControl": "No authority granted, no new network/permission/payment action, and verified customer role required to open automatically.",
+      "testFiles": [
+        "tests/customer-introduction.test.ts",
+        "tests/customer-mobile.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [
+        "ONB-001/002/003"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/onboarding-redesign/evidence/focused-tests.txt",
+        "docs/onboarding-redesign/04-test-results.md"
+      ],
+      "acceptanceGate": "G04",
+      "reason": "Shared scene, original EasyGas kitchen image and tested supported-area copy.",
+      "testResult": "Executed evidence: Shared scene, original EasyGas kitchen image and tested supported-area copy.",
+      "outstandingWork": "Installed emulator scene interaction and physical-device visual checks."
+    },
+    {
+      "id": "ONB-002",
+      "requirement": "Fast & Reliable Delivery",
+      "status": "PARTIAL",
+      "priority": "P1",
+      "scope": "Customer onboarding on web, iOS and Android",
+      "uiReference": "Approved Cinematic Three-Scene Onboarding; Web Mobile Handoff Concept",
+      "route": "Web /; native Home and customer Appearance",
+      "implementationFiles": [
+        "packages/business-rules/src/customer-introduction.ts",
+        "apps/web/components/customer-introduction.tsx",
+        "apps/mobile/Onboarding.tsx"
+      ],
+      "dataSource": "Static approved marketing copy; existing local seen preference and verified session role, where applicable",
+      "securityControl": "No authority granted, no new network/permission/payment action, and verified customer role required to open automatically.",
+      "testFiles": [
+        "tests/customer-introduction.test.ts",
+        "tests/customer-mobile.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [
+        "ONB-001/002/003"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/onboarding-redesign/evidence/focused-tests.txt",
+        "docs/onboarding-redesign/04-test-results.md"
+      ],
+      "acceptanceGate": "G05",
+      "reason": "Existing EasyGas delivery imagery and verified recorded-tracking copy.",
+      "testResult": "Executed evidence: Existing EasyGas delivery imagery and verified recorded-tracking copy.",
+      "outstandingWork": "Installed emulator scene interaction and physical-device visual checks."
+    },
+    {
+      "id": "ONB-003",
+      "requirement": "More Than Just Gas",
+      "status": "PARTIAL",
+      "priority": "P1",
+      "scope": "Customer onboarding on web, iOS and Android",
+      "uiReference": "Approved Cinematic Three-Scene Onboarding; Web Mobile Handoff Concept",
+      "route": "Web /; native Home and customer Appearance",
+      "implementationFiles": [
+        "packages/business-rules/src/customer-introduction.ts",
+        "apps/web/components/customer-introduction.tsx",
+        "apps/mobile/Onboarding.tsx"
+      ],
+      "dataSource": "Static approved marketing copy; existing local seen preference and verified session role, where applicable",
+      "securityControl": "No authority granted, no new network/permission/payment action, and verified customer role required to open automatically.",
+      "testFiles": [
+        "tests/customer-introduction.test.ts",
+        "tests/customer-mobile.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [
+        "ONB-001/002/003"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/onboarding-redesign/evidence/focused-tests.txt",
+        "docs/onboarding-redesign/04-test-results.md"
+      ],
+      "acceptanceGate": "G21",
+      "reason": "Live interface lists conditional services, rewards policy and verified-history estimates.",
+      "testResult": "Executed evidence: Live interface lists conditional services, rewards policy and verified-history estimates.",
+      "outstandingWork": "Installed emulator scene interaction and physical-device visual checks."
+    },
+    {
+      "id": "ONB-004",
+      "requirement": "Native entry, identity, links and persistence",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "scope": "Customer onboarding on web, iOS and Android",
+      "uiReference": "Approved Cinematic Three-Scene Onboarding; Web Mobile Handoff Concept",
+      "route": "Web /; native Home and customer Appearance",
+      "implementationFiles": [
+        "packages/business-rules/src/customer-introduction.ts",
+        "apps/mobile/Onboarding.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "dataSource": "Static approved marketing copy; existing local seen preference and verified session role, where applicable",
+      "securityControl": "No authority granted, no new network/permission/payment action, and verified customer role required to open automatically.",
+      "testFiles": [
+        "tests/customer-introduction.test.ts",
+        "tests/customer-mobile.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [
+        "ONB-004"
+      ],
+      "negativeTests": [
+        "\"unknown\",",
+        "initialLinkResolved: false"
+      ],
+      "evidence": [
+        "docs/onboarding-redesign/evidence/focused-tests.txt",
+        "docs/onboarding-redesign/04-test-results.md"
+      ],
+      "acceptanceGate": "G16",
+      "reason": "Existing seen key, negative role and deep-link unit coverage, and native package launches.",
+      "testResult": "Executed evidence: Existing seen key, negative role and deep-link unit coverage, and native package launches.",
+      "outstandingWork": "Run first-run, Skip, replay, Android Back, storage failure and native role-switch journeys."
+    },
+    {
+      "id": "ONB-005",
+      "requirement": "Optional responsive web entry",
+      "status": "VERIFIED_COMPLETE",
+      "priority": "P1",
+      "scope": "Customer onboarding on web, iOS and Android",
+      "uiReference": "Approved Cinematic Three-Scene Onboarding; Web Mobile Handoff Concept",
+      "route": "Web /; native Home and customer Appearance",
+      "implementationFiles": [
+        "packages/business-rules/src/customer-introduction.ts",
+        "apps/web/components/customer-introduction.tsx",
+        "apps/web/app/customer-introduction.css",
+        "apps/web/components/site.tsx"
+      ],
+      "dataSource": "Static approved marketing copy; existing local seen preference and verified session role, where applicable",
+      "securityControl": "No authority granted, no new network/permission/payment action, and verified customer role required to open automatically.",
+      "testFiles": [
+        "tests/customer-introduction.test.ts",
+        "tests/customer-mobile.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/onboarding-redesign/evidence/focused-tests.txt",
+        "docs/onboarding-redesign/04-test-results.md"
+      ],
+      "acceptanceGate": "G20",
+      "reason": "Browser verified all three scenes, seven widths, Escape/focus return, skip persistence, and intact home links.",
+      "testResult": "PASS: Browser verified all three scenes, seven widths, Escape/focus return, skip persistence, and intact home links.",
+      "outstandingWork": "None for bounded desktop/mobile Chromium storefront behavior."
+    },
+    {
+      "id": "ONB-006",
+      "requirement": "Accessible motion and recovery",
+      "status": "PARTIAL",
+      "priority": "P1",
+      "scope": "Customer onboarding on web, iOS and Android",
+      "uiReference": "Approved Cinematic Three-Scene Onboarding; Web Mobile Handoff Concept",
+      "route": "Web /; native Home and customer Appearance",
+      "implementationFiles": [
+        "apps/web/components/customer-introduction.tsx",
+        "apps/mobile/Onboarding.tsx",
+        "apps/web/app/customer-introduction.css"
+      ],
+      "dataSource": "Static approved marketing copy; existing local seen preference and verified session role, where applicable",
+      "securityControl": "No authority granted, no new network/permission/payment action, and verified customer role required to open automatically.",
+      "testFiles": [
+        "tests/customer-introduction.test.ts",
+        "tests/customer-mobile.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/onboarding-redesign/evidence/focused-tests.txt",
+        "docs/onboarding-redesign/04-test-results.md"
+      ],
+      "acceptanceGate": "G19",
+      "reason": "Keyboard, focus trap and responsive web checked. Native accessibility, recovery and reduced-motion code is included.",
+      "testResult": "Executed evidence: Keyboard, focus trap and responsive web checked. Native accessibility, recovery and reduced-motion code is included.",
+      "outstandingWork": "Exercise web reduced-motion setting and native 200 percent text, VoiceOver/TalkBack, simulated errors and motion."
+    },
+    {
+      "id": "ONB-007",
+      "requirement": "Regression, release and rollback",
+      "status": "PARTIAL",
+      "priority": "P1",
+      "scope": "Customer onboarding on web, iOS and Android",
+      "uiReference": "Approved Cinematic Three-Scene Onboarding; Web Mobile Handoff Concept",
+      "route": "Web / and existing public routes; native customer entry",
+      "implementationFiles": [
+        "packages/business-rules/src/customer-introduction.ts",
+        "apps/web/components/customer-introduction.tsx",
+        "apps/mobile/Onboarding.tsx",
+        "apps/mobile/App.tsx",
+        "docs/onboarding-redesign/05-rollback-and-release.md"
+      ],
+      "dataSource": "Static approved marketing copy; existing local seen preference and verified session role, where applicable",
+      "securityControl": "No authority granted, no new network/permission/payment action, and verified customer role required to open automatically.",
+      "testFiles": [
+        "tests/customer-introduction.test.ts",
+        "tests/customer-mobile.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/onboarding-redesign/evidence/focused-tests.txt",
+        "docs/onboarding-redesign/04-test-results.md"
+      ],
+      "acceptanceGate": "G29",
+      "reason": "Focused regressions and build checks passed; first broad run only failed on an incomplete traceability matrix.",
+      "testResult": "Executed evidence: Focused regressions and build checks passed; first broad run only failed on an incomplete traceability matrix.",
+      "outstandingWork": "Physical-device and product sign-off remain; no deployment or production activation."
+    }
+  ],
+  "gates": [
+    {
+      "id": "G01",
+      "gate": "baseline audit",
+      "status": "PASS"
+    },
+    {
+      "id": "G02",
+      "gate": "exact source mapping",
+      "status": "PASS"
+    },
+    {
+      "id": "G03",
+      "gate": "native persistence",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G04",
+      "gate": "three scenes",
+      "status": "PASS"
+    },
+    {
+      "id": "G05",
+      "gate": "approved assets",
+      "status": "PASS"
+    },
+    {
+      "id": "G06",
+      "gate": "iOS",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G07",
+      "gate": "Android",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G08",
+      "gate": "compatible web entry",
+      "status": "PASS"
+    },
+    {
+      "id": "G09",
+      "gate": "homepage preserved",
+      "status": "PASS"
+    },
+    {
+      "id": "G10",
+      "gate": "smooth animation",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G11",
+      "gate": "reduced motion",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G12",
+      "gate": "performance",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G13",
+      "gate": "first run",
+      "status": "PENDING"
+    },
+    {
+      "id": "G14",
+      "gate": "skip",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G15",
+      "gate": "replay",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G16",
+      "gate": "role bypass",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G17",
+      "gate": "authentication preserved",
+      "status": "PASS"
+    },
+    {
+      "id": "G18",
+      "gate": "theme preserved",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G19",
+      "gate": "accessibility",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G20",
+      "gate": "responsive web",
+      "status": "PASS"
+    },
+    {
+      "id": "G21",
+      "gate": "truthful copy",
+      "status": "PASS"
+    },
+    {
+      "id": "G22",
+      "gate": "backend unchanged",
+      "status": "PASS"
+    },
+    {
+      "id": "G23",
+      "gate": "finance stock dispatch unchanged",
+      "status": "PASS"
+    },
+    {
+      "id": "G24",
+      "gate": "no surprise permissions",
+      "status": "PASS"
+    },
+    {
+      "id": "G25",
+      "gate": "fallbacks",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G26",
+      "gate": "test evidence",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G27",
+      "gate": "traceability",
+      "status": "PASS"
+    },
+    {
+      "id": "G28",
+      "gate": "rollback",
+      "status": "PASS"
+    },
+    {
+      "id": "G29",
+      "gate": "regression",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "G30",
+      "gate": "release decision",
+      "status": "PASS"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "T01",
+      "scenario": "native first run",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T02",
+      "scenario": "returning bypass",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T03",
+      "scenario": "legacy seen key",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T04",
+      "scenario": "replay from Settings",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T05",
+      "scenario": "replay keeps seen",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T06",
+      "scenario": "skip first",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T07",
+      "scenario": "skip middle",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T08",
+      "scenario": "final CTA",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T09",
+      "scenario": "swipe next",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T10",
+      "scenario": "swipe previous",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T11",
+      "scenario": "rapid swipes",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T12",
+      "scenario": "rapid actions",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T13",
+      "scenario": "Android back",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T14",
+      "scenario": "iOS navigation",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T15",
+      "scenario": "process restart",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T16",
+      "scenario": "background and resume",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T17",
+      "scenario": "storage error",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T18",
+      "scenario": "retry storage",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T19",
+      "scenario": "continue without saving",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T20",
+      "scenario": "image fallback",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T21",
+      "scenario": "no blank frame",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T22",
+      "scenario": "reduced motion",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T23",
+      "scenario": "200 percent type",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T24",
+      "scenario": "screen reader headings",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T25",
+      "scenario": "progress announcement",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T26",
+      "scenario": "focus order",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T27",
+      "scenario": "touch targets",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T28",
+      "scenario": "light",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T29",
+      "scenario": "dark",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T30",
+      "scenario": "system",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T31",
+      "scenario": "small iPhone",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T32",
+      "scenario": "large iPhone",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T33",
+      "scenario": "Android compact",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T34",
+      "scenario": "Android tablet",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T35",
+      "scenario": "iPad",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T36",
+      "scenario": "landscape",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T37",
+      "scenario": "slow device",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T38",
+      "scenario": "offline startup",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T39",
+      "scenario": "no GPS prompt",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T40",
+      "scenario": "no notification prompt",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T41",
+      "scenario": "no invented auth",
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T42",
+      "scenario": "existing customer auth",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T43",
+      "scenario": "driver bypass",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T44",
+      "scenario": "technician bypass",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T45",
+      "scenario": "admin bypass",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T46",
+      "scenario": "owner bypass",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T47",
+      "scenario": "role change",
+      "status": "PENDING",
+      "evidence": "Not yet exercised on the required platform or device."
+    },
+    {
+      "id": "T48",
+      "scenario": "deep link",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T49",
+      "scenario": "web first visit",
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T50",
+      "scenario": "web returning",
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T51",
+      "scenario": "web skip",
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T52",
+      "scenario": "web Escape and focus",
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T53",
+      "scenario": "web widths",
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T54",
+      "scenario": "web no overflow",
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T55",
+      "scenario": "homepage unaffected",
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T56",
+      "scenario": "public navigation",
+      "status": "PASS",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T57",
+      "scenario": "order and checkout",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T58",
+      "scenario": "reward policy",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T59",
+      "scenario": "service and refill claims",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    },
+    {
+      "id": "T60",
+      "scenario": "native builds and regression",
+      "status": "PARTIAL",
+      "evidence": "docs/onboarding-redesign/04-test-results.md"
+    }
+  ],
+  "coverage": {
+    "implementation": "7/7 with source changes (cross-platform acceptance incomplete)",
+    "verified": "1/7 bounded web entry verified",
+    "critical": "0/1 fully verified; local role negatives passed",
+    "routes": "Existing web / verified; iOS and Android shells launched, interactive acceptance pending",
+    "gates": "15/30 passed",
+    "scenarios": "9/60 passed"
+  }
+}

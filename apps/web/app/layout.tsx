@@ -10,6 +10,7 @@ import "./gas-order.css";
 import "./service-details.css";
 import "./easyrewards.css";
 import "./public-width.css";
+import "./customer-introduction.css";
 
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };
