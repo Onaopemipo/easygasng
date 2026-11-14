@@ -38,7 +38,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Authenticated Chrome confirmed default and alternate address use and account-phone fallback. A cash-on-delivery test order used edited details; linked checkout still displayed the original saved details. Gas checkout prefill and alternate-address selection passed at 390 px.",
       "testResult": "PASS: 29 targeted automated tests, Chrome browser checks, web TypeScript and build.",
-      "outstandingWork": "No deployment in this phase."
+      "outstandingWork": "Hosted checkout prefill and editing were verified without submitting an order to the demo."
     },
     {
       "priority": "P1",
@@ -88,6 +88,11 @@
       "id": "CHECKOUT-PREFILL-G02",
       "status": "OPEN",
       "gate": "Verify checkout prefill and overrides in installed iOS and Android builds."
+    },
+    {
+      "id": "CHECKOUT-PREFILL-G03",
+      "status": "PASS",
+      "gate": "Push the checkout source, verify demo readiness, promote the Vercel deployment and verify signed-in checkout."
     }
   ],
   "coverage": {
@@ -95,7 +100,15 @@
     "verified": "1/2",
     "critical": "No P0 requirements added in this phase",
     "routes": "3/3 web routes exercised; 0/3 native runtime journeys",
-    "gates": "1/2 passed"
+    "gates": "2/3 passed"
   },
-  "changes": "Added checkout-only delivery prefill. Existing persisted profile data and payment, reservation and coverage policies are unchanged."
+  "changes": "Added checkout-only delivery prefill. Existing persisted profile data and payment, reservation and coverage policies are unchanged.",
+  "deployment": {
+    "source": "d25f4a1ecfbacd9f0c3fc131909f6177e32a7009",
+    "branch": "codex/driver-experience-redesign",
+    "demo": "https://easygas-client-demo.vercel.app",
+    "deploymentId": "dpl_66yjHqj6oL4TQTvr3Tv7iLw5TUsA",
+    "previousDeploymentId": "dpl_6vESL71VhyqyRpum6FjyzskFMJpf",
+    "evidence": "docs/traceability/checkout-delivery-evidence.txt"
+  }
 }
