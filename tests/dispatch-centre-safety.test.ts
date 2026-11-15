@@ -288,10 +288,14 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   const approvedLoaderSources = JSON.parse(await readFile(
     "docs/loader/approved-field-source.json", "utf8",
   ));
+  // FIELD-MARK-03 adds driver form labels; the dispatch and custody handlers are unchanged.
+  const approvedFieldMarkerSources = JSON.parse(await readFile(
+    "docs/traceability/field-markers-reviewed-hashes.json", "utf8",
+  ));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
       ? approvedPaymentReturnHash
-      : staffInviteDriversSources[file] ?? staffRoleNavigationSources[file] ?? approvedLoaderSources[file] ?? approvedDriverSources[file]
+      : approvedFieldMarkerSources[file] ?? staffInviteDriversSources[file] ?? staffRoleNavigationSources[file] ?? approvedLoaderSources[file] ?? approvedDriverSources[file]
         ?? approvedHomepageSources[file] ?? approvedNotificationSources[file]
         ?? approvedAlerts[file]?.approvedHash ?? originalHash;
     const source = await readFile(file);

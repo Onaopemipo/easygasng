@@ -29,3 +29,9 @@ Release focused run (staff, drivers, approvals, checkout and release regressions
 - Vercel built dpl_EMKNMVmnKTSCR8v5HNrNGFKtyZH3 (READY, stable alias skipped).
 - Stable demo dpl_66yjHqj6oL4TQTvr3Tv7iLw5TUsA returned HTTP 200 with ready status. The candidate returned HTTP 503; readiness requires migration 079.
 - Located the existing Neon database through the Vercel project. Vercel requested authenticator verification before exporting its database connection. The pre-migration backup, migration and hosted checks remain pending. The stable alias was not changed.
+
+15 November release continuation
+- The demo Neon database was reached through the existing project integration using a temporary development-only connection, which was disconnected. Its encrypted, pre-079 PostgreSQL 18 archive authenticated and passed pg_restore --list. No restore test was run against the live demo.
+- Approved schema owner advanced 078 to 079. Before/after counts remained 28 users, 0 staff invitations, 2 orders and 21 change requests. The restricted runtime can update the access request link and cannot update the proposed access.
+- Vercel candidate dpl_FCWRC7KVJHHVTiQCp7hNraeqmf2U returned ready/demo after migration and was promoted. Stable hosted Chromium checks passed for owner sign-in, Staff Management invitation role field, Approval Centre and Drivers. No invitation, approval or order was submitted.
+- Verified manager sign-in, the assigned Lagos branch on the session, and the hosted Drivers workspace.

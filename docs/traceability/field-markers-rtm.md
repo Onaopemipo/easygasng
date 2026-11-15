@@ -16,3 +16,5 @@ Verification: 34 focused automated tests passed across settings dates and money,
 Change log: Added visual and accessible markers to shared and standalone forms. Added contextual help where checkout or a review action has additional prerequisites. Search, filter and read-only controls retain their existing labels. No migration, package upgrade, native build or deployment was made in this phase.
 
 [Machine-readable matrix](field-markers-rtm.json)
+
+15 November release: web source `f75473a` is live on the [client demo](https://easygas-client-demo.vercel.app). Hosted checks passed for sign-in and Admin Settings. The existing local decision test remains the evidence for rejection behavior. The remaining role-specific and installed mobile checks are unchanged.

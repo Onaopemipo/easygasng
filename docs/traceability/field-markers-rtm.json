@@ -35,7 +35,7 @@
         "docs/traceability/field-markers-evidence.txt"
       ],
       "status": "VERIFIED_COMPLETE",
-      "testResult": "Authenticated Chromium and existing governance regressions passed for the named flows.",
+      "testResult": "PASS: Authenticated Chromium and existing governance regressions passed for the named flows.",
       "reason": "Authenticated Chromium and existing governance regressions passed for the named flows.",
       "outstandingWork": "Record-dependent and specialized forms remain tracked in FIELD-MARK-02.",
       "acceptanceGate": "FIELD-MARK-G01"
@@ -199,7 +199,11 @@
         "/admin/settings",
         "/admin/approvals"
       ],
-      "nativeInstalledVerified": []
+      "nativeInstalledVerified": [],
+      "hostedBrowserVerified": [
+        "/login",
+        "/admin/settings"
+      ]
     },
     "gates": {
       "total": 4,
@@ -209,6 +213,8 @@
     }
   },
   "changeLog": [
-    "Added shared and standalone form markers based on current validation. Kept conditional requirements visible and excluded search, filters and read-only values. No deployment or native build."
+    "Added shared and standalone form markers based on current validation. Kept conditional requirements visible and excluded search, filters and read-only values. No deployment or native build.",
+    "Reviewed DriverWorkspace presentation-only changes for DDI-AUDIT01 and recorded the exact source hash separately.",
+    "15 November: Vercel demo promoted from source f75473a after backup, migration 079 and demo readiness checks. Hosted sign-in and settings labels verified."
   ]
 }

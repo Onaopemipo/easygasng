@@ -36,7 +36,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Chrome verified all five roles, inherited versus optional access, grant/deny choices, role reset and inline verification; the invitation queued successfully.",
       "testResult": "PASS: Chrome verified all five roles, inherited versus optional access, grant/deny choices, role reset and inline verification; the invitation queued successfully.",
-      "outstandingWork": "Vercel candidate built; verify identity for database access, verify the encrypted backup, apply migration 079, then run hosted smoke checks and promote."
+      "outstandingWork": "Demo backup verified, migration 079 applied, and hosted owner smoke passed. Full hosted invitation delivery and decision flows were not replayed."
     },
     {
       "id": "STAFF-INV-02",
@@ -79,7 +79,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Restricted runtime tests verified the proposal, applied privilege and explicit denial after activation, and preserved old invitation and temporary password flows.",
       "testResult": "PASS: Restricted runtime tests verified the proposal, applied privilege and explicit denial after activation, and preserved old invitation and temporary password flows.",
-      "outstandingWork": "Vercel candidate built; verify identity for database access, verify the encrypted backup, apply migration 079, then run hosted smoke checks and promote."
+      "outstandingWork": "Demo backup verified, migration 079 applied, and hosted owner smoke passed. Full hosted invitation delivery and decision flows were not replayed."
     },
     {
       "id": "DRIVER-NAV-01",
@@ -117,7 +117,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Navigation and API tests verified role and branch scoping and revocation; Chrome verified the directory, filtering and 390px layout.",
       "testResult": "PASS: Navigation and API tests verified role and branch scoping and revocation; Chrome verified the directory, filtering and 390px layout.",
-      "outstandingWork": "Vercel candidate built; verify identity for database access, verify the encrypted backup, apply migration 079, then run hosted smoke checks and promote."
+      "outstandingWork": "Demo backup verified, migration 079 applied, and hosted owner smoke passed. Full hosted invitation delivery and decision flows were not replayed."
     }
   ],
   "gates": [
@@ -138,8 +138,8 @@
     },
     {
       "id": "STAFF-INV-G03",
-      "status": "BLOCKED",
-      "gate": "Demo backup, migration 079, authenticated smoke checks and promotion remain blocked on Vercel authenticator verification."
+      "status": "PASS",
+      "gate": "Verified encrypted demo backup, migration 079, authenticated owner smoke and promotion."
     }
   ],
   "coverage": {
@@ -147,6 +147,6 @@
     "verification": "3/3 in local scope",
     "critical": "2/2 locally",
     "routes": "3/3 locally",
-    "gates": "3/4"
+    "gates": "4/4"
   }
 }
