@@ -119,7 +119,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Local desktop owner and narrow-web manager navigation confirmed placement and access. Finance direct access was denied.",
       "testResult": "PASS: Navigation and branch scope regression plus authenticated Chromium at 1440px and 390px.",
-      "outstandingWork": "Hosted verification of the revised placement is tracked in DRIVER-MGMT-G02."
+      "outstandingWork": "Local and hosted navigation verified. Commercial production remains NO-GO."
     },
     {
       "id": "DRIVER-MGMT-01",
@@ -157,7 +157,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Authenticated Chromium completed manager profile editing and owner suspension, reinstatement and queueing an invitation in isolated data.",
       "testResult": "PASS: Browser controls, fresh verification, branch scope, owner-only account actions, stale driver role, active assignment guard, session revocation, audit and invitation persistence.",
-      "outstandingWork": "Hosted controls are tracked under DRIVER-MGMT-G02. External email delivery and commercial operation are outside this pass."
+      "outstandingWork": "Hosted controls verified read-only. Account writes and invitation queueing passed in isolated local data. External email delivery and commercial operation were outside this pass."
     }
   ],
   "gates": [
@@ -193,7 +193,7 @@
     },
     {
       "id": "DRIVER-MGMT-G02",
-      "status": "PENDING",
+      "status": "PASS",
       "gate": "Hosted demo navigation and driver management controls for owner and manager, with Finance access denied."
     }
   ],
@@ -202,6 +202,6 @@
     "verification": "4/4 in local scope",
     "critical": "3/3 locally",
     "routes": "3/3 locally",
-    "gates": "6/7, including a historical gate superseded for current placement"
+    "gates": "7/7 in documented local and demo scope, including the historical superseded placement gate"
   }
 }
