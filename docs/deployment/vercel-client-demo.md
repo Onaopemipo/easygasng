@@ -103,3 +103,11 @@ Hosted Chrome confirmed the shared 1440px width for sign-in and registration acr
 Vercel built source commit `f5fd3bc520e1e9f30eb31201d10cee3ac96f8c2f` from `codex/cinematic-customer-onboarding` and promoted deployment `dpl_6LY41UVnrAiSagVbgQygZ9HCrZ3L`. The stable demo returned the same Ready deployment and passed role/access and receipt authentication checks. Hosted driver availability writes remain behind the existing field operations gate. See [executed checks](evidence/redeploy-20261116-driver-receipts.txt) and the [demo traceability matrix](../traceability/vercel-client-demo-rtm.json).
 
 If the demo release must be rolled back, promote the previous Ready deployment `dpl_8CNze9oNhyP7n1UhJm5q8H6AANQx` in the same Vercel project, then verify the stable alias with Vercel Inspect and check that `/api/status` returns demo readiness. This release did not migrate the demo database. Commercial production remains NO-GO.
+
+## 17 November checkout details rollout
+
+Source `73979cf` is on `codex/cinematic-customer-onboarding`. Vercel deployment `dpl_2mkFLAuUvEgQyzEyCueZ3SkADeok` serves the stable demo alias. An encrypted backup authenticated and its archive was readable before additive migration 080. The migration preserved the counts of users, orders and wallet entries. GitHub Release validation and all 732 local regression tests passed.
+
+For a web rollback, use `vercel rollback dpl_6LY41UVnrAiSagVbgQygZ9HCrZ3L --yes --scope onaopemipos-projects` and verify the stable alias and `/api/status`. Leave migration 080 in place during a web rollback so saved delivery numbers are available when the new release returns. Backup verification checked archive readability. A restore drill was outside this rollout.
+
+[Release evidence](evidence/redeploy-20261117-checkout-details.txt) · [Checkout traceability](../traceability/checkout-details-save-rtm.md)

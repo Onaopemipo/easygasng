@@ -1,0 +1,50 @@
+17 November 2026 · EasyGas client demo release
+Source 73979cfa46cd355a3c408786529c9480686db46e
+Stable https://easygas-client-demo.vercel.app
+Vercel Ready dpl_2mkFLAuUvEgQyzEyCueZ3SkADeok
+Previous deployment dpl_6LY41UVnrAiSagVbgQygZ9HCrZ3L
+GitHub Release validation succeeded https://github.com/Onaopemipo/easygasng/actions/runs/43902759716
+Vercel web build and type checking passed.
+
+Full regression on isolated local PostgreSQL
+ℹ tests 732
+ℹ suites 0
+ℹ pass 732
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 467403.405417
+
+Encrypted backup and migration 080
+Preflight: {"server_major":18,"version":"079","users":33,"orders":4,"wallet_entries":2,"delivery_phone":0,"restricted_runtime":true,"runtime_no_create":true,"owner_and_rls":true}
+{"bytes":872172,"created":true}
+{"authenticated":true,"archiveReadable":true,"restored":false}
+Preflight: {"server_major":18,"version":"079","users":33,"orders":4,"wallet_entries":2,"delivery_phone":0,"restricted_runtime":true,"runtime_no_create":true,"owner_and_rls":true}
+{"authenticated":true,"archiveReadable":true,"restored":false}
+Committed: {"server_major":18,"version":"080","users":33,"orders":4,"wallet_entries":2,"delivery_phone":1,"restricted_runtime":true,"runtime_no_create":true,"owner_and_rls":true,"grants":{"read_delivery_phone":true,"update_delivery_phone":true,"wallet_immutable":true,"payments_immutable":true}}
+
+Candidate smoke
+PASS demo health and required schema
+PASS public site and web checkout routes
+PASS anonymous checkout profile access denied
+PASS signed-in profile and missing-order exclusion
+INFO no existing synthetic web or mobile order on this customer account
+PASS staff checkout profile access denied
+
+Promoted alias smoke
+PASS demo health and required schema
+PASS public site and web checkout routes
+PASS anonymous checkout profile access denied
+PASS signed-in profile and missing-order exclusion
+INFO no existing synthetic web or mobile order on this customer account
+PASS staff checkout profile access denied
+
+Promoted alias Chrome verification
+PASS desktop homepage: inferred area updates and clears, manual area survives partial, conflicting and blank addresses
+PASS mobile web /gas-order: typing does not unselect the area, conflict appears and manual correction works
+PASS homepage choice carries over to gas order and survives address edits
+PASS explicit header location updates the gas form and survives a conflicting address
+PASS restored gas draft: a suggested area clears and updates after an address edit
+
+Local authenticated checkout verified the save and skip choices. Hosted smoke covered routes, profile reads and access controls without submitting orders or updating profiles. Installed iOS and Android verification remains open. Commercial production remains NO-GO.

@@ -1,6 +1,6 @@
 {
   "phase": "Complete customer addresses and automatic location assistance",
-  "releaseDecision": "NO-GO \u2014 existing production decision unchanged",
+  "releaseDecision": "NO-GO — existing production decision unchanged",
   "scopeChanges": [
     "Shared matching added to homepage calculator, gas ordering, product checkout, combined checkout, service requests and saved addresses. Existing area choices remain editable.",
     "Uses current API-supplied locations/checkout zones/service coverage. No external geocoder, GPS, postal verification, new DB schema or automatic operational coverage approval.",
@@ -226,8 +226,8 @@
       "securityControl": "The selector uses the configured area list. Server delivery coverage, fulfilment and booking checks still apply.",
       "status": "VERIFIED_COMPLETE",
       "reason": "Verified manually chosen and saved areas through desktop and narrow web flows, including partial, blank and conflicting address text.",
-      "testResult": "PASS: focused regression suite and local browser checks recorded in the evidence.",
-      "outstandingWork": "Hosted deployment and hosted smoke checks are pending. Product, combined checkout and service pages share the tested selection logic, with no new signed-in browser check on those routes.",
+      "testResult": "PASS: focused regression, local browser and hosted homepage and gas-order checks.",
+      "outstandingWork": "Hosted homepage and mobile-web gas-order checks passed. Signed-in hosted product, combined checkout, service and saved-address flows were outside this deployment smoke.",
       "implementationFiles": [
         "packages/business-rules/src/address-location.ts",
         "apps/web/components/gas-order.tsx",
@@ -238,7 +238,8 @@
         "tests/address-location.test.ts"
       ],
       "evidence": [
-        "docs/testing/easygas-address-selection-tests.txt"
+        "docs/testing/easygas-address-selection-tests.txt",
+        "docs/deployment/evidence/redeploy-20261117-checkout-details.txt"
       ],
       "testIds": [
         "ADR-07"
@@ -259,8 +260,8 @@
       "securityControl": "The selector uses the configured area list. Server delivery coverage, fulfilment and booking checks still apply.",
       "status": "VERIFIED_COMPLETE",
       "reason": "Verified that inferred areas update when the address changes and clear when there is no current match. Gas drafts retain the origin of the selection.",
-      "testResult": "PASS: focused regression suite and local browser checks recorded in the evidence.",
-      "outstandingWork": "Hosted deployment and hosted smoke checks are pending. Product, combined checkout and service pages share the tested selection logic, with no new signed-in browser check on those routes.",
+      "testResult": "PASS: focused regression, local browser and hosted homepage and gas-order checks.",
+      "outstandingWork": "Hosted homepage and mobile-web gas-order checks passed. Signed-in hosted product, combined checkout, service and saved-address flows were outside this deployment smoke.",
       "implementationFiles": [
         "packages/business-rules/src/address-location.ts",
         "apps/web/components/gas-order.tsx",
@@ -271,7 +272,8 @@
         "tests/address-location.test.ts"
       ],
       "evidence": [
-        "docs/testing/easygas-address-selection-tests.txt"
+        "docs/testing/easygas-address-selection-tests.txt",
+        "docs/deployment/evidence/redeploy-20261117-checkout-details.txt"
       ],
       "testIds": [
         "ADR-08"
@@ -296,7 +298,7 @@
     {
       "id": "ADR-G3",
       "status": "PASS",
-      "description": "Local homepage, gas order, saved address and focused regression checks for sticky selections, reversible suggestions and visible conflicts."
+      "description": "Local browser and focused regression checks, plus hosted homepage and mobile-web gas order checks for preserved selections, reversible suggestions and visible conflicts."
     }
   ]
 }
