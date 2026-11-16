@@ -1,0 +1,14 @@
+Local validation: node --import tsx --test --test-concurrency=1 --test-reporter=spec tests/navigation.test.ts tests/dispatch-centre-safety.test.ts tests/staff-management.test.ts tests/account-onboarding.test.ts tests/product-ui.test.ts
+✔ RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe nested active matching (3.519458ms)
+✔ DRIVER-NAV-01: driver directory and sidebar follow branch, role and dispatch privilege (884.353333ms)
+✔ DRIVER-MGMT-01: directory management reuses audited staff actions and protects active assignments (1140.688208ms)
+✔ STAFF-INV-01/02: selected privileges are reviewed, never applied before independent approval, and enforced after activation (931.183375ms)
+✔ STAFF-INV-02: inviting owners cannot attach protected grants to driver roles or provide arbitrary privileges (821.940667ms)
+ℹ tests 42
+ℹ pass 42
+ℹ fail 0
+ℹ skipped 0
+PASS mobile-width branch manager: sidebar placement, inline re-verification, saved edit and owner controls hidden.
+PASS desktop owner: sidebar placement, suspend, reinstate, and queue a role-locked driver invitation.
+PASS Finance: no Drivers sidebar link and the directory endpoint denies access.
+PASS web TypeScript check.

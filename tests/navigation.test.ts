@@ -21,7 +21,7 @@ test("RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe n
   assert.equal(adminNavigation.length, 7);
   assert.deepEqual(
     adminNavigation.map((g) => g.items.length),
-    [2, 4, 4, 5, 4, 3, 8],
+    [1, 4, 4, 6, 4, 3, 8],
   );
   assert.equal(navigationItems.length, 30);
   assert.equal(new Set(navigationItems.map((i) => i.id)).size, 30);
@@ -40,7 +40,6 @@ test("RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe n
   );
   const expected = [
     "dashboard",
-    "drivers",
     "orders",
     "pos",
     "customers",
@@ -53,6 +52,7 @@ test("RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe n
     "bookings",
     "services",
     "technicians",
+    "drivers",
     "quotations",
     "finance",
     "reconciliation",
@@ -577,6 +577,74 @@ test("DRIVER-NAV-01: driver directory and sidebar follow branch, role and dispat
     assert.ok(!(await f.call("service_manager", "navigation.access")).allowed.includes("drivers"));
     await assert.rejects(f.call("service_manager", "drivers.workspace"), /revoked/i);
   } finally {
+    await f.db.close?.();
+  }
+});
+
+test("DRIVER-MGMT-01: directory management reuses audited staff actions and protects active assignments", async () => {
+  const f = await fixture();
+  const originalMessageKey = process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY;
+  try {
+    const driverId = id(), otherId = id();
+    await f.db.query("INSERT INTO branches(id,name) VALUES('driver-other','Other driver branch')");
+    for (const [driver, branch] of [[driverId, "lagos"], [otherId, "driver-other"]]) {
+      await f.db.query(
+        "INSERT INTO users(id,name,email,password_hash,role,branch_id,driver_available) VALUES($1,'Test driver',$2,$3,'driver',$4,true)",
+        [driver, driver + "@example.test", hashPassword(password), branch],
+      );
+    }
+    const reason = "Driver directory test";
+    const target = { userId: driverId, expectedRole: "driver", reason };
+    const edit = { ...target, name: "Updated driver" };
+    const manager = await f.call("service_manager", "drivers.workspace");
+    const owner = await f.call("owner", "drivers.workspace");
+    assert.equal(manager.canEdit, true);
+    assert.equal(manager.canManageAccounts, false);
+    assert.deepEqual(manager.branches, []);
+    assert.equal(owner.canManageAccounts, true);
+    assert.ok(owner.branches.some((branch: any) => branch.value === "lagos"));
+    await assert.rejects(f.call("service_manager", "staff.edit", edit), { code: "REAUTH_REQUIRED" });
+    await f.call("service_manager", "reauth", { password });
+    await assert.rejects(f.call("service_manager", "staff.edit", { ...edit, userId: otherId }), /another branch/);
+    await assert.rejects(f.call("service_manager", "staff.suspend", target), /permission/);
+    await f.call("service_manager", "staff.edit", edit);
+    assert.equal((await f.call("service_manager", "drivers.workspace")).drivers[0].name, edit.name);
+    await assert.rejects(f.call("owner", "staff.edit", { ...edit, userId: f.actors.technician.id }), /no longer a driver/);
+    await assert.rejects(f.call("owner", "staff.suspend", { ...target, userId: f.actors.technician.id }), /no longer a driver/);
+    await assert.rejects(f.call("owner", "staff.reinstate", { ...target, userId: f.actors.technician.id }), /no longer a driver/);
+    const orderId = id();
+    await f.db.query(`INSERT INTO orders(id,reference,customer_id,branch_id,status,payment_method,subtotal_kobo,delivery_kobo,total_kobo,address,delivery_date,delivery_window,driver_id,idempotency_key,request_hash,delivery_code_hash,delivery_code_expires_at)
+      VALUES($1,$1,$2,'lagos','assigned','cash',0,0,0,'{}','2026-11-14','09:00–12:00',$3,$1,$1,$1,now())`,
+      [orderId, f.actors.customer.id, driverId]);
+    await assert.rejects(f.call("owner", "staff.suspend", target), /active deliveries/);
+    assert.equal((await one(f.db, "SELECT status FROM orders WHERE id=$1", [orderId]))?.status, "assigned");
+    await f.db.query("UPDATE orders SET status='delivered' WHERE id=$1", [orderId]);
+    const driverToken = await issueSession(f.db, driverId);
+    await f.call("owner", "staff.suspend", target);
+    await f.call("owner", "staff.reinstate", target);
+    const driver = await one(f.db, "SELECT active,driver_available FROM users WHERE id=$1", [driverId]);
+    assert.deepEqual(driver, { active: true, driver_available: false });
+    await assert.rejects(dispatch("me", driverToken, {}, f.db), /sign in|session/i);
+    const events = await f.db.query("SELECT action FROM audit_events WHERE target=$1 ORDER BY action", [driverId]);
+    assert.deepEqual(events.rows.map((row) => row.action), ["staff.profile_updated", "staff.reinstated", "staff.suspended"]);
+    process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY ??= "7".repeat(64);
+    const invitation = await f.call("owner", "staff.invite", {
+      name: "New Test Driver", email: "new-directory-driver@example.test", branchId: "lagos",
+      access: { role: "driver", changes: [] },
+    });
+    assert.match(invitation.message, /queued/i);
+    const pending = await one(f.db, "SELECT requested_access,accepted_at FROM staff_invitations WHERE email='new-directory-driver@example.test'");
+    assert.equal(pending?.requested_access?.role, "driver");
+    assert.equal(pending?.accepted_at, null);
+    await f.call("owner", "staff.privileges.save", {
+      userId: f.actors.service_manager.id, version: 0,
+      changes: [{ privilege: "staff.manage", effect: "deny" }], reason,
+    });
+    assert.equal((await f.call("service_manager", "drivers.workspace")).canEdit, false);
+    await assert.rejects(f.call("service_manager", "staff.edit", edit), /revoked/i);
+  } finally {
+    if (originalMessageKey === undefined) delete process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY;
+    else process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY = originalMessageKey;
     await f.db.close?.();
   }
 });

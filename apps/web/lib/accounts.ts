@@ -818,18 +818,34 @@ export async function accountAction(
       .object({
         userId: z.string().uuid(),
         reason: z.string().min(10).max(1000),
+        expectedRole: z.literal("driver").optional(),
       })
       .strict()
       .parse(input);
     const target = await one(
       tx,
-      "SELECT role FROM users WHERE id=$1 FOR UPDATE",
+      "SELECT role,active FROM users WHERE id=$1 FOR UPDATE",
       [d.userId],
     );
     if (!target || target.role === "owner" || d.userId === user.id)
       throw new AppError(403, "Owner and self suspension are prohibited.");
     if (["customer", "commercial"].includes(target.role))
       throw new AppError(400, "Use the customer account review process.");
+    if (d.expectedRole && target.role !== d.expectedRole)
+      throw new AppError(409, "This account is no longer a driver. Refresh the directory.");
+    if (target.role === "driver") {
+      if (!target.active) return { ok: true };
+      if (await one(
+        tx,
+        "SELECT id FROM orders WHERE driver_id=$1 AND status IN ('assigned','out_for_delivery') LIMIT 1",
+        [d.userId],
+      ))
+        throw new AppError(409, "Resolve the driver's active deliveries in Dispatch Centre before suspending the account.");
+      await tx.query(
+        "UPDATE users SET driver_available=false,driver_availability_updated_at=now() WHERE id=$1 AND driver_available",
+        [d.userId],
+      );
+    }
     await tx.query("UPDATE users SET active=false WHERE id=$1", [d.userId]);
     await tx.query("UPDATE sessions SET revoked_at=now() WHERE user_id=$1", [
       d.userId,

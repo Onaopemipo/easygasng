@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   CircleCheck,
   Search,
@@ -9,7 +9,10 @@ import {
   UsersRound,
 } from "lucide-react";
 import Link from "./workspace-link";
-import { api, Loading, Notice } from "./ui";
+import { FieldCaption } from "./field-caption";
+import { FormInput } from "./password-input";
+import StaffInvitation from "./staff-invitation";
+import { api, Loading, Modal, Notice } from "./ui";
 
 type Driver = {
   id: string;
@@ -19,6 +22,155 @@ type Driver = {
   driver_available: boolean;
   active_deliveries: number;
 };
+type Directory = {
+  drivers: Driver[];
+  canEdit: boolean;
+  canManageAccounts: boolean;
+  branches: { value: string; label: string }[];
+};
+
+function DriverManagement({
+  driver,
+  canManageAccounts,
+  onSaved,
+}: {
+  driver: Driver;
+  canManageAccounts: boolean;
+  onSaved: (message: string) => void;
+}) {
+  const [action, setAction] = useState("staff.edit");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [verify, setVerify] = useState(false);
+  const [dirty, setDirty] = useState(false);
+  const inFlight = useRef(false);
+  const edit = action === "staff.edit";
+  const suspend = action === "staff.suspend";
+  const label = edit
+    ? "Save driver profile"
+    : suspend
+      ? "Suspend account"
+      : "Reinstate account";
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (inFlight.current) return;
+    const form = new FormData(event.currentTarget);
+    inFlight.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      if (verify) {
+        await api("reauth", { password: form.get("password") });
+        setVerify(false);
+      }
+      await api(action, {
+        userId: driver.id,
+        expectedRole: "driver",
+        reason: form.get("reason"),
+        ...(edit ? { name: form.get("name") } : {}),
+      });
+      onSaved(
+        edit
+          ? "Driver profile updated."
+          : suspend
+            ? "Driver account suspended."
+            : "Driver account reinstated.",
+      );
+    } catch (e) {
+      const problem = e as Error & { code?: string };
+      setError(problem.message);
+      if (problem.code === "REAUTH_REQUIRED") setVerify(true);
+    } finally {
+      inFlight.current = false;
+      setBusy(false);
+    }
+  }
+
+  return (
+    <form
+      className="surface service-form product-form"
+      onSubmit={submit}
+      onChange={() => setDirty(true)}
+      data-unsaved={dirty ? "true" : undefined}
+    >
+      <p className="muted">
+        {driver.name} · {driver.branch ?? "No assigned branch"}
+      </p>
+      {canManageAccounts && (
+        <label>
+          <FieldCaption required>Action</FieldCaption>
+          <select
+            value={action}
+            disabled={busy}
+            onChange={(e) => {
+              setAction(e.target.value);
+              setError("");
+            }}
+          >
+            <option value="staff.edit">Edit driver profile</option>
+            {driver.active ? (
+              <option value="staff.suspend">Suspend account</option>
+            ) : (
+              <option value="staff.reinstate">Reinstate account</option>
+            )}
+          </select>
+        </label>
+      )}
+      {edit ? (
+        <label>
+          <FieldCaption required>Full name</FieldCaption>
+          <input
+            name="name"
+            defaultValue={driver.name}
+            minLength={2}
+            maxLength={100}
+            required
+            disabled={busy}
+          />
+        </label>
+      ) : (
+        <Notice
+          message={
+            suspend
+              ? "Suspending this driver signs them out and removes them from future dispatch. Resolve any active deliveries first."
+              : "Reinstating this driver restores sign-in. The driver can set their availability in their workspace."
+          }
+        />
+      )}
+      <label>
+        <FieldCaption required>Reason for change</FieldCaption>
+        <textarea
+          name="reason"
+          minLength={10}
+          maxLength={1000}
+          required
+          disabled={busy}
+        />
+        <small className="muted">
+          Enter at least 10 characters for Audit History.
+        </small>
+      </label>
+      {error && <Notice type="error" message={error} />}
+      {verify && (
+        <label>
+          <FieldCaption required>Current password</FieldCaption>
+          <FormInput
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            required
+            disabled={busy}
+          />
+        </label>
+      )}
+      {busy && <Loading />}
+      <button className="button" disabled={busy}>
+        {verify ? "Verify and continue" : label}
+      </button>
+    </form>
+  );
+}
+
 const perPage = 12;
 const status = (driver: Driver) =>
   !driver.active
@@ -28,7 +180,10 @@ const status = (driver: Driver) =>
       : "Unavailable";
 
 export default function DriversWorkspace({ refresh }: { refresh: number }) {
-  const [drivers, setDrivers] = useState<Driver[] | null>(null);
+  const [directory, setDirectory] = useState<Directory | null>(null);
+  const [selected, setSelected] = useState<Driver | null>(null);
+  const [invite, setInvite] = useState(false);
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
   const [query, setQuery] = useState("");
@@ -40,16 +195,20 @@ export default function DriversWorkspace({ refresh }: { refresh: number }) {
     api("drivers.workspace", undefined, { signal: controller.signal })
       .then((result) => {
         if (!controller.signal.aborted) {
-          setDrivers(result.drivers);
+          setDirectory(result);
           setError("");
         }
       })
       .catch((e) => {
-        if (!controller.signal.aborted) setError(e.message);
+        if (!controller.signal.aborted) {
+          if (e.status === 401 || e.status === 403) setDirectory(null);
+          setError(e.message);
+        }
       });
     return () => controller.abort();
   }, [refresh, retry]);
 
+  const drivers = directory?.drivers;
   const filtered =
     drivers?.filter(
       (driver) =>
@@ -94,7 +253,7 @@ export default function DriversWorkspace({ refresh }: { refresh: number }) {
         <div>
           <h1>Drivers</h1>
           <p>
-            View delivery drivers, their dispatch availability and current
+            Manage delivery drivers and review their availability and current
             assignments.
           </p>
         </div>
@@ -102,11 +261,14 @@ export default function DriversWorkspace({ refresh }: { refresh: number }) {
           <Link className="button secondary" href="/admin/deliveries">
             Dispatch Centre
           </Link>
-          <Link className="button" href="/admin/staff">
-            Manage staff
-          </Link>
+          {directory?.canManageAccounts && directory.branches.length > 0 && (
+            <button className="button" onClick={() => setInvite(true)}>
+              Invite driver
+            </button>
+          )}
         </div>
       </div>
+      {message && <Notice type="success" message={message} />}
       {error && (
         <div>
           <Notice type="error" message={error} />
@@ -176,6 +338,7 @@ export default function DriversWorkspace({ refresh }: { refresh: number }) {
                         <th scope="col">Branch</th>
                         <th scope="col">Status</th>
                         <th scope="col">Active deliveries</th>
+                        {directory?.canEdit && <th scope="col">Actions</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -187,12 +350,26 @@ export default function DriversWorkspace({ refresh }: { refresh: number }) {
                           <td>{driver.branch ?? "No assigned branch"}</td>
                           <td>
                             <span
-                              className={`staff-status ${!driver.active ? "suspended" : driver.driver_available ? "active" : ""}`}
+                              className={`staff-status ${!driver.active ? "suspended" : driver.driver_available ? "active" : "driver-unavailable"}`}
                             >
                               {status(driver)}
                             </span>
                           </td>
                           <td>{driver.active_deliveries}</td>
+                          {directory?.canEdit && (
+                            <td>
+                              <button
+                                className="button secondary"
+                                aria-label={`Manage ${driver.name}`}
+                                onClick={() => {
+                                  setMessage("");
+                                  setSelected(driver);
+                                }}
+                              >
+                                Manage
+                              </button>
+                            </td>
+                          )}
                         </tr>
                       ))}
                     </tbody>
@@ -235,6 +412,28 @@ export default function DriversWorkspace({ refresh }: { refresh: number }) {
             eligibility is checked in Dispatch Centre.
           </p>
         </>
+      )}
+      {invite && directory?.canManageAccounts && (
+        <Modal title="Invite driver" onClose={() => setInvite(false)}>
+          <StaffInvitation
+            branches={directory.branches}
+            fixedRole="driver"
+            send={(value) => api("staff.invite", value)}
+          />
+        </Modal>
+      )}
+      {selected && directory?.canEdit && (
+        <Modal title="Manage driver" onClose={() => setSelected(null)}>
+          <DriverManagement
+            driver={selected}
+            canManageAccounts={directory.canManageAccounts}
+            onSaved={(notice) => {
+              setSelected(null);
+              setMessage(notice);
+              setRetry((v) => v + 1);
+            }}
+          />
+        </Modal>
       )}
     </section>
   );

@@ -68,6 +68,7 @@ export async function staffAction(
         userId: z.string().uuid(),
         name: z.string().trim().min(2).max(100),
         reason: z.string().trim().min(10).max(1000),
+        expectedRole: z.literal("driver").optional(),
       })
       .strict()
       .parse(input);
@@ -80,6 +81,12 @@ export async function staffAction(
     if (user.role !== "owner" && t.branch_id !== user.branch_id)
       throw new AppError(403, "This record belongs to another branch.");
     allow(user, ["owner", "manager"], t.branch_id);
+    if (d.expectedRole && t.role !== d.expectedRole)
+      throw new AppError(409, "This account is no longer a driver. Refresh the directory.");
+    if (d.expectedRole && user.role !== "owner" && !(await one(
+      tx, "SELECT id FROM branches WHERE id=$1 AND active", [user.branch_id],
+    )))
+      throw new AppError(403, "No active authorised branch assigned.");
     if (
       (t.role === "owner" && user.role !== "owner") ||
       (["customer", "commercial"].includes(t.role) &&
@@ -107,6 +114,7 @@ export async function staffAction(
       .object({
         userId: z.string().uuid(),
         reason: z.string().trim().min(10).max(1000),
+        expectedRole: z.literal("driver").optional(),
       })
       .strict()
       .parse(input);
@@ -120,6 +128,8 @@ export async function staffAction(
       t.id === user.id
     )
       throw new AppError(403, "Choose an eligible suspended staff account.");
+    if (d.expectedRole && t.role !== d.expectedRole)
+      throw new AppError(409, "This account is no longer a driver. Refresh the directory.");
     if (t.active) return { ok: true };
     await tx.query("UPDATE users SET active=true WHERE id=$1", [t.id]);
     await tx.query(

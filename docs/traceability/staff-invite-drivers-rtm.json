@@ -1,7 +1,7 @@
 {
   "phase": "Staff invitation access and Drivers directory",
   "productionDecision": "NO-GO",
-  "scopeChange": "Adds one web route and extends staff invitations. The archived 99-screen mobile design, existing live routes, five staff roles and existing production gates are retained. On 16 November the user clarified that Drivers must be a standalone sidebar link. DRIVER-NAV-01 moves it from Delivery & Services to the always-visible links below Dashboard; existing grouped navigation, routes and directory authorisation are unchanged.",
+  "scopeChange": "The original staff invitation and driver directory scope remains. The latest 16 November request supersedes the standalone placement and moves Drivers next to Technicians within Delivery & Services. It adds management to the existing web directory without changing its route, the five staff roles, the mobile design, or the commercial release decision.",
   "requirements": [
     {
       "id": "STAFF-INV-01",
@@ -83,10 +83,10 @@
     },
     {
       "id": "DRIVER-NAV-01",
-      "requirement": "Show Drivers as a top-level sidebar link for authorised staff and display actual driver status, branch and current assignments.",
+      "requirement": "Show Drivers next to Technicians under Delivery & Services for authorised staff, with actual driver status, branch and current assignments.",
       "priority": "P0",
       "scope": "Staff onboarding and Drivers web workspace",
-      "uiReference": "Original Add New Staff screenshot; 16 November clarification requires Drivers to be a main sidebar link.",
+      "uiReference": "Latest user request and screenshot of the Drivers workspace with Delivery & Services expanded.",
       "route": "/admin/drivers",
       "implementationFiles": [
         "packages/business-rules/src/admin-navigation.ts",
@@ -98,7 +98,7 @@
         "apps/web/app/api/[action]/route.ts"
       ],
       "dataSource": "Driver user records, branches and assigned or out-for-delivery orders.",
-      "securityControl": "Owner business scope; managers restricted to active assigned branch. Dispatch privilege revocation hides menu and blocks endpoint. Directory is read-only.",
+      "securityControl": "Owner business scope; managers restricted to their active assigned branch. Dispatch privilege revocation hides the menu and denies directory reads.",
       "testFiles": [
         "tests/navigation.test.ts",
         "tests/dispatch-centre-safety.test.ts",
@@ -113,14 +113,51 @@
         "/revoked/i"
       ],
       "evidence": [
-        "docs/traceability/staff-invite-drivers-evidence.txt",
-        "docs/traceability/drivers-main-nav-evidence.txt"
+        "docs/traceability/driver-management-evidence.txt"
       ],
       "acceptanceGate": "DRIVER-NAV-G01",
       "status": "VERIFIED_COMPLETE",
-      "reason": "The live demo nested Drivers under Delivery & Services. The link now renders directly below Dashboard in the existing always-open section. Hosted Chrome confirmed the link stays visible with Delivery & Services collapsed.",
-      "testResult": "PASS: Route and sidebar regression, restricted branch scope, unauthorised roles, and dispatch privilege revocation passed locally. Hosted Chrome verified desktop owner and mobile manager navigation, active link and directory access; Finance sees no link and direct access is denied.",
-      "outstandingWork": "Standalone navigation is deployed to the Vercel client demo. Commercial production remains NO-GO."
+      "reason": "Local desktop owner and narrow-web manager navigation confirmed placement and access. Finance direct access was denied.",
+      "testResult": "PASS: Navigation and branch scope regression plus authenticated Chromium at 1440px and 390px.",
+      "outstandingWork": "Hosted verification of the revised placement is tracked in DRIVER-MGMT-G02."
+    },
+    {
+      "id": "DRIVER-MGMT-01",
+      "requirement": "Manage drivers from the directory. Branch managers can edit in-branch driver profiles. Owners can edit, invite, suspend and reinstate driver accounts.",
+      "priority": "P0",
+      "scope": "Drivers web workspace",
+      "uiReference": "Latest user request and screenshot of the Drivers workspace with Delivery & Services expanded.",
+      "route": "/admin/drivers",
+      "implementationFiles": [
+        "apps/web/components/drivers-workspace.tsx",
+        "apps/web/components/staff-invitation.tsx",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/lib/staff.ts",
+        "apps/web/lib/accounts.ts"
+      ],
+      "dataSource": "User and branch records, orders, staff invitations, sessions and audit events.",
+      "securityControl": "Dispatch permission gates directory reads. Staff management authority gates edits and account controls. Fresh verification, branch and driver-role validation, and existing invitation approvals are enforced. Active assignments block suspension.",
+      "testFiles": [
+        "tests/navigation.test.ts",
+        "tests/staff-management.test.ts"
+      ],
+      "testIds": [
+        "DRIVER-MGMT-01"
+      ],
+      "negativeTests": [
+        "/another branch/",
+        "/active deliveries/",
+        "/no longer a driver/",
+        "/revoked/i"
+      ],
+      "evidence": [
+        "docs/traceability/driver-management-evidence.txt"
+      ],
+      "acceptanceGate": "DRIVER-MGMT-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authenticated Chromium completed manager profile editing and owner suspension, reinstatement and queueing an invitation in isolated data.",
+      "testResult": "PASS: Browser controls, fresh verification, branch scope, owner-only account actions, stale driver role, active assignment guard, session revocation, audit and invitation persistence.",
+      "outstandingWork": "Hosted controls are tracked under DRIVER-MGMT-G02. External email delivery and commercial operation are outside this pass."
     }
   ],
   "gates": [
@@ -147,14 +184,24 @@
     {
       "id": "DRIVER-NAV-G02",
       "status": "PASS",
-      "gate": "Hosted owner and branch manager reach Drivers with Delivery & Services collapsed, including mobile web; Finance remains denied."
+      "gate": "Historical Vercel test for standalone placement passed before the user superseded it. Latest placement is tracked under DRIVER-MGMT-G02."
+    },
+    {
+      "id": "DRIVER-MGMT-G01",
+      "status": "PASS",
+      "gate": "Local authenticated driver profile and owner account controls, permissions and dispatch protection."
+    },
+    {
+      "id": "DRIVER-MGMT-G02",
+      "status": "PENDING",
+      "gate": "Hosted demo navigation and driver management controls for owner and manager, with Finance access denied."
     }
   ],
   "coverage": {
-    "implementation": "3/3",
-    "verification": "3/3 in local scope",
-    "critical": "2/2 locally",
+    "implementation": "4/4",
+    "verification": "4/4 in local scope",
+    "critical": "3/3 locally",
     "routes": "3/3 locally",
-    "gates": "5/5 in local and demo scope"
+    "gates": "6/7, including a historical gate superseded for current placement"
   }
 }

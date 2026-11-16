@@ -18,13 +18,15 @@ type Effect = "grant" | "deny";
 export default function StaffInvitation({
   branches,
   defaultBranch,
+  fixedRole,
   send,
 }: {
   branches: { value: string; label: string }[];
   defaultBranch?: string;
+  fixedRole?: StaffRole;
   send: (value: unknown) => Promise<{ message: string }>;
 }) {
-  const [role, setRole] = useState<StaffRole | "">("");
+  const [role, setRole] = useState<StaffRole | "">(fixedRole ?? "");
   const [branchId, setBranch] = useState(
     branches.find((b) => b.value === defaultBranch)?.value ??
       (branches.length === 1 ? branches[0].value : ""),
@@ -84,7 +86,11 @@ export default function StaffInvitation({
       data-unsaved={dirty ? "true" : undefined}
       onChange={() => setDirty(true)}
     >
-      <h3>Invite a colleague</h3>
+      <h3>
+        {fixedRole === "driver"
+          ? "Delivery Driver invitation"
+          : "Invite a colleague"}
+      </h3>
       <fieldset className="staff-invite-fields" disabled={busy}>
         <label>
           <FieldCaption required={true}>Full name</FieldCaption>
@@ -121,24 +127,26 @@ export default function StaffInvitation({
             ))}
           </select>
         </label>
-        <label>
-          <FieldCaption required={true}>Staff role</FieldCaption>
-          <select
-            value={role}
-            required
-            onChange={(e) => {
-              setRole(e.target.value as StaffRole | "");
-              setChanges({});
-            }}
-          >
-            <option value="">Choose a role</option>
-            {staffRoles.map((key) => (
-              <option key={key} value={key}>
-                {staffRoleDetails[key].label}
-              </option>
-            ))}
-          </select>
-        </label>
+        {!fixedRole && (
+          <label>
+            <FieldCaption required={true}>Staff role</FieldCaption>
+            <select
+              value={role}
+              required
+              onChange={(e) => {
+                setRole(e.target.value as StaffRole | "");
+                setChanges({});
+              }}
+            >
+              <option value="">Choose a role</option>
+              {staffRoles.map((key) => (
+                <option key={key} value={key}>
+                  {staffRoleDetails[key].label}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
       </fieldset>
       {role && (
         <>
