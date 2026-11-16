@@ -137,6 +137,7 @@ export function ServiceForm({
             <AddressAreaFields
               key={f.name}
               street={f.value ?? ""}
+              area={String(bookingSelection?.zone ?? "")}
               areaLabel="Service area"
               areas={bookingAreas.values.map((value) => ({
                 id: value,

@@ -4,7 +4,8 @@
   "scopeChanges": [
     "Shared matching added to homepage calculator, gas ordering, product checkout, combined checkout, service requests and saved addresses. Existing area choices remain editable.",
     "Uses current API-supplied locations/checkout zones/service coverage. No external geocoder, GPS, postal verification, new DB schema or automatic operational coverage approval.",
-    "Exact comma-separated locality names, or locality plus Lagos/Nigeria suffix without commas, are supported. Other address formats require manual location selection."
+    "Exact comma-separated locality names, or locality plus Lagos/Nigeria suffix without commas, are supported. Other address formats require manual location selection.",
+    "Homepage and checkout now distinguish explicitly selected areas from address-based suggestions. Suggestions stay local to the address and do not update the shared manual preference."
   ],
   "requirements": [
     {
@@ -213,6 +214,72 @@
       "negativeTests": [
         "unknown and street-name matches require confirmation"
       ]
+    },
+    {
+      "id": "ADR-07",
+      "requirement": "Preserve explicit and saved area selections during address edits and flag conflicting area names",
+      "priority": "P1",
+      "scope": "Customer web address entry",
+      "uiReference": "Customer reported that typing an address clears the selected delivery location.",
+      "route": "/; /gas-order; /checkout; /combined-checkout; /services/[id]; /account-settings",
+      "dataSource": "Configured gas catalogue location IDs and labels, checkout and service zone lists, and owned saved addresses.",
+      "securityControl": "The selector uses the configured area list. Server delivery coverage, fulfilment and booking checks still apply.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified manually chosen and saved areas through desktop and narrow web flows, including partial, blank and conflicting address text.",
+      "testResult": "PASS: focused regression suite and local browser checks recorded in the evidence.",
+      "outstandingWork": "Hosted deployment and hosted smoke checks are pending. Product, combined checkout and service pages share the tested selection logic, with no new signed-in browser check on those routes.",
+      "implementationFiles": [
+        "packages/business-rules/src/address-location.ts",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/address-area-fields.tsx",
+        "apps/web/components/professional-services.tsx"
+      ],
+      "testFiles": [
+        "tests/address-location.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-address-selection-tests.txt"
+      ],
+      "testIds": [
+        "ADR-07"
+      ],
+      "acceptanceGate": "ADR-G3",
+      "negativeTests": [
+        "ADR-08: an automatic suggestion follows the address and respects current choices"
+      ]
+    },
+    {
+      "id": "ADR-08",
+      "requirement": "Suggest a configured area while leaving explicit choices in control",
+      "priority": "P1",
+      "scope": "Customer web address entry",
+      "uiReference": "Customer reported that typing an address clears the selected delivery location.",
+      "route": "/; /gas-order; /checkout; /combined-checkout; /account-settings",
+      "dataSource": "Configured gas catalogue location IDs and labels, checkout and service zone lists, and owned saved addresses.",
+      "securityControl": "The selector uses the configured area list. Server delivery coverage, fulfilment and booking checks still apply.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified that inferred areas update when the address changes and clear when there is no current match. Gas drafts retain the origin of the selection.",
+      "testResult": "PASS: focused regression suite and local browser checks recorded in the evidence.",
+      "outstandingWork": "Hosted deployment and hosted smoke checks are pending. Product, combined checkout and service pages share the tested selection logic, with no new signed-in browser check on those routes.",
+      "implementationFiles": [
+        "packages/business-rules/src/address-location.ts",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/address-area-fields.tsx",
+        "apps/web/components/professional-services.tsx"
+      ],
+      "testFiles": [
+        "tests/address-location.test.ts"
+      ],
+      "evidence": [
+        "docs/testing/easygas-address-selection-tests.txt"
+      ],
+      "testIds": [
+        "ADR-08"
+      ],
+      "acceptanceGate": "ADR-G3",
+      "negativeTests": [
+        "ADR-08: an automatic suggestion follows the address and respects current choices"
+      ]
     }
   ],
   "gates": [
@@ -225,6 +292,11 @@
       "id": "ADR-G2",
       "status": "PASS",
       "description": "Browser verification of address selection, manual correction, per-service coverage and saved-address persistence"
+    },
+    {
+      "id": "ADR-G3",
+      "status": "PASS",
+      "description": "Local homepage, gas order, saved address and focused regression checks for sticky selections, reversible suggestions and visible conflicts."
     }
   ]
 }

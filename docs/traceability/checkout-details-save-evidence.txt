@@ -1,0 +1,22 @@
+Checkout consent | Local isolated synthetic data
+Web TypeScript passed (npm run typecheck).
+Native TypeScript passed (npm exec --prefix apps/mobile -- tsc --noEmit -p apps/mobile/tsconfig.json).
+PASS mobile Chrome gas checkout: skip leaves account phone and saved addresses untouched
+PASS mobile Chrome gas checkout: explicit consent saves phone and address and prefills the next checkout
+PASS mobile Chrome gas checkout: changed phone prompts for phone only and updates the existing address
+PASS mobile Chrome /checkout: order with changed contact prompts for consent and skip preserves account
+PASS desktop Chrome linked checkout: committed product and service request prompts, and consent updates only the delivery phone
+
+Web production-mode build passed (npm run build).
+
+✔ mixed checkout is atomic across product reservations, technician availability and replay (2796.77625ms)
+✔ CHECKOUT-SAVE01: preferred delivery phone fills new and default addresses while alternate addresses keep their contact (0.094ms)
+✔ CHECKOUT-SAVE02: checkout contact and address are opt-in, scoped, retry-safe and independent of sign-in (53.492916ms)
+ℹ tests 43
+ℹ pass 43
+ℹ fail 0
+✔ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (1215.050875ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (9.472583ms)
+ℹ tests 45
+ℹ pass 45
+ℹ fail 0

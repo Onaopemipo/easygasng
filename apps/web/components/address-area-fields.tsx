@@ -1,10 +1,7 @@
 "use client";
 import { FieldCaption } from "./field-caption";
 import { useState } from "react";
-import {
-  resolveAddressLocation,
-  addressLocationMessage,
-} from "../../../packages/business-rules/src/address-location";
+import { selectAddressLocation } from "../../../packages/business-rules/src/address-location";
 /** Native named fields preserve the existing FormData and server validation contracts. */
 export function AddressAreaFields({
   areas,
@@ -24,9 +21,11 @@ export function AddressAreaFields({
   onRecognizedArea?: (area: string) => void;
 }) {
   const [text, setText] = useState(street);
-  const [selected, setSelected] = useState(area);
-  const [hint, setHint] = useState(
-    "Include your house/flat number, street, estate and area, separated by commas.",
+  const [chosen, setChosen] = useState<string | null>(area || null);
+  const selection = selectAddressLocation(
+    !onRecognizedArea && chosen === "" ? "" : text,
+    areas,
+    onRecognizedArea ? area : (chosen ?? undefined),
   );
   return (
     <>
@@ -43,37 +42,28 @@ export function AddressAreaFields({
           value={text}
           onChange={(e) => {
             const value = e.target.value;
-            const result = resolveAddressLocation(value, areas);
             setText(value);
-            if (onRecognizedArea && result.location)
-              onRecognizedArea(result.location.id);
-            else setSelected(result.location?.id ?? "");
-            const message = addressLocationMessage(
-              result.status,
-              result.location?.name,
-            );
-            setHint(
-              onRecognizedArea ? message.replace("below", "above") : message,
-            );
+            if (chosen === "") setChosen(null);
+            if (onRecognizedArea && !area) {
+              const { location } = selectAddressLocation(value, areas);
+              if (location) onRecognizedArea(location.id);
+            }
           }}
         />
       </label>
-      <p className="address-location-feedback" role="status">
-        {hint}
-      </p>
+      {selection.message && (
+        <p className="address-location-feedback" role="status">
+          {selection.message}
+        </p>
+      )}
       {!onRecognizedArea && (
         <label>
           <FieldCaption required={true}>{areaLabel}</FieldCaption>
           <select
             name={areaName}
-            value={selected}
+            value={selection.location?.id ?? ""}
             required
-            onChange={(e) => {
-              setSelected(e.target.value);
-              setHint(
-                "Delivery location chosen manually. Please check it matches your address.",
-              );
-            }}
+            onChange={(e) => setChosen(e.target.value)}
           >
             <option value="">Choose your location</option>
             {areas.map((a) => (

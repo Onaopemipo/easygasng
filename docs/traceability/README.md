@@ -239,3 +239,5 @@ Hosted demo delivery areas. [Requirements matrix](demo-delivery-activation-rtm.m
 EasyGas merchant receipts and invoices: [matrix](merchant-documents-rtm.md) and [evidence](merchant-documents-evidence.txt). Local receipt ownership, EasyGas branding and the mail outbox passed; hosted rollout, real inbox verification and Paystack's external receipt preference remain open.
 
 Driver availability and staff onboarding: [matrix](driver-availability-rtm.md) and [evidence](driver-availability-evidence.txt). Approved drivers default to available, and authorised staff can set availability from the directory. Local settings and browser checks passed; hosted acceptance remains open.
+
+Checkout delivery details consent. [Matrix](checkout-details-save-rtm.md). Gas, cart and linked product checkout verified locally in Chrome. Hosted rollout and native installed-app checks are pending.

@@ -42,7 +42,7 @@ export default function GasOrder({
   user: any;
   cart: any[];
   done: () => void;
-  onPlaced: () => void;
+  onPlaced: (orderId: string) => void;
   viewServices: () => void;
 }) {
   const { colors } = useTheme();
@@ -678,7 +678,7 @@ export default function GasOrder({
                   }
                 : result,
             );
-            onPlaced();
+            onPlaced(result.order?.id ?? result.id);
             return result;
           }}
           action="checkout"

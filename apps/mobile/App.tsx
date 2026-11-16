@@ -1,4 +1,4 @@
-import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress } from "../../packages/business-rules/src/checkout-delivery";
+import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress, type CheckoutDetailsOffer } from "../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
 import { useCheckoutProfile } from "./useCheckoutProfile";
 import { CookingGasProfiles } from "./CookingGasProfiles";
@@ -289,6 +289,48 @@ export default function App() {
       setScreen("login");
     }
     return body;
+  }
+  async function offerCheckoutDetails(orderId?: string) {
+    const customerId = user?.id;
+    if (!orderId || !customerId || accountRef.current !== customerId) return;
+    let offer: CheckoutDetailsOffer;
+    try {
+      offer = await api("account.checkout-details", { orderId });
+    } catch {
+      return;
+    }
+    if (accountRef.current !== customerId || (!offer.phone && !offer.address)) return;
+
+    const keep = (phone: boolean, address: boolean) => async () => {
+      if (accountRef.current !== customerId) return;
+      try {
+        await api("account.checkout-details", { orderId, save: { phone, address, version: offer.version } });
+        if (accountRef.current === customerId) EasyGasAlert.alert("Delivery details saved", "We’ll use them for future orders.");
+      } catch (error) {
+        if (accountRef.current === customerId) EasyGasAlert.alert(
+          "Delivery details weren’t saved",
+          friendlyMessage(error),
+          [
+            { text: "Try again", onPress: () => offerCheckoutDetails(orderId) },
+            { text: "Keep for this order only", style: "cancel" },
+          ],
+        );
+      }
+    };
+    const address = offer.address;
+    EasyGasAlert.alert(
+      "Save delivery details for next time?",
+      [
+        offer.phone && `Delivery phone number: ${offer.phone}`,
+        address && `Address: ${address.street}, ${address.zone}. Recipient: ${address.recipient}. A saved address includes its contact number.`,
+      ].filter(Boolean).join("\n"),
+      [
+        ...(offer.phone && address ? [{ text: "Save phone and address", onPress: keep(true, true) }] : []),
+        ...(offer.phone ? [{ text: address ? "Save phone only" : "Save phone number", onPress: keep(true, false) }] : []),
+        ...(address ? [{ text: offer.phone ? "Save address only" : "Save address", onPress: keep(false, true) }] : []),
+        { text: "Use for this order only", style: "cancel" },
+      ],
+    );
   }
   const ordersAction = orderFilter ? "orders?id=" + encodeURIComponent(orderFilter) : "orders";
   async function reloadOrders() {
@@ -856,7 +898,10 @@ export default function App() {
             <GasOrder
               key={user?.id ?? "guest"}
               viewServices={() => setScreen("services")}
-              onPlaced={() => setCart([])}
+              onPlaced={(orderId) => {
+                setCart([]);
+                void offerCheckoutDetails(orderId);
+              }}
               api={api}
               catalogue={catalogue}
               user={user}
@@ -874,8 +919,9 @@ export default function App() {
               user={user}
               cart={cart}
               catalogue={catalogue}
-              done={() => {
+              done={(orderId) => {
                 setCart([]);
+                void offerCheckoutDetails(orderId);
                 setScreen("bookings");
               }}
             />
@@ -1480,6 +1526,7 @@ export default function App() {
                       "Order received",
                       `${o.reference} · ${paymentMethod === "wallet" ? "Paid using purchase credit" : "Payment due on delivery"}`,
                     );
+                    void offerCheckoutDetails(o.id);
                     setScreen("orders");
                   } catch (e: any) {
                     setError(e.message);

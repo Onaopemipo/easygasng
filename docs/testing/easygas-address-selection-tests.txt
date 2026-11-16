@@ -1,0 +1,47 @@
+Focused regression suite: address matching, checkout delivery, professional services and booking recovery.
+✔ ADR-01: full house addresses identify a single configured locality (1.3045ms)
+✔ ADR-04: addresses without commas match only explicit locality and city suffixes (0.09425ms)
+✔ ADR-02: ambiguous, unknown and street-name matches require confirmation (0.126542ms)
+✔ ADR-03: changing or deleting an address cannot reuse a previous automatic match (0.057416ms)
+✔ ADR-07: address edits preserve explicitly selected and saved areas (0.196542ms)
+✔ ADR-08: an automatic suggestion follows the address and respects current choices (0.067209ms)
+✔ CHECKOUT-PREFILL01: prefer the saved default, fall back to a usable legacy address and then to the account contact (0.796458ms)
+✔ service drafts are not sellable; checklist and price activation require independent qualified approval (2052.83125ms)
+✔ booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve (956.866084ms)
+✔ qualification expiry, stale service versions and out-of-area addresses reject booking without side effects (976.55175ms)
+✔ quotation revisions preserve price history; only latest customer approval reserves materials (1025.570292ms)
+✔ approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once (1092.465875ms)
+✔ unsafe inspection cannot become safety clearance or customer-acknowledged success (959.262584ms)
+✔ service deposit uses existing wallet ledger and cancellation refund requires separate finance approval (922.451375ms)
+✔ EO-01: sequential and concurrent same-key retries recover one authoritative booking; conflicts and cross-customer reuse reject (1242.514583ms)
+✔ EO-03: injected failure after outbox write rolls back booking, capacity, operation result, notifications and money (910.292875ms)
+✔ EO-04: lost commit acknowledgement is reconciled using the persisted result without another business event (917.738166ms)
+✔ RC-04: failed and competing rescheduling preserve a single capacity allocation and reject stale cancellation (950.711584ms)
+✔ RC-15: encrypted backup restores booking, operation, quotation, inventory, notifications and audit relationships (1649.719375ms)
+✔ BK-23: communication opt-out is respected while in-app history remains authoritative (892.698416ms)
+✔ EO-09: approval and material issue retries have one inventory effect; expired quotations cannot authorise work (1028.337917ms)
+✔ RC-10: interrupted report publication preserves in-progress work; unsafe completion is rejected; permission revocation blocks recovery (952.824875ms)
+✔ BK-quiet: durable service events are scheduled after overnight and same-day quiet periods (0.484083ms)
+✔ EO-10: wallet and independently approved refund failures roll back and replay without duplicate money (959.600416ms)
+✔ RC-13: failed additive migration rolls back DDL without losing a valid booking (881.18075ms)
+✔ BK-private: operation persistence works under the restricted trusted server role and committed results are immutable (932.315917ms)
+✔ EO-contract: public service mutations require a stable identity and stale-sensitive changes require a version (1.051167ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20539.446583
+
+Local Chromium desktop and narrow viewport using a synthetic account and an in-memory database.
+PASS desktop homepage: inferred area updates and clears, manual area survives partial, conflicting and blank addresses
+PASS mobile web /gas-order: typing does not unselect the area, conflict appears and manual correction works
+PASS homepage choice carries over to gas order and survives address edits
+PASS explicit header location updates the gas form and survives a conflicting address
+PASS restored gas draft: a suggested area clears and updates after an address edit
+PASS authenticated saved address: manual choice survives address entry, saving and reload, and stays selected when editing a prefilled gas order
+
+PASS web TypeScript check (npm run typecheck)
+PASS traceability validation (2 tests)

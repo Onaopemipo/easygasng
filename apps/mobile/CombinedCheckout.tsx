@@ -24,7 +24,7 @@ export default function CombinedCheckout({
   api: API;
   cart: any[];
   catalogue: any;
-  done: () => void;
+  done: (orderId?: string) => void;
   orderGas: () => void;
 }) {
   const [rewardSelection, setRewardSelection] = useState<any>({});
@@ -159,7 +159,7 @@ export default function CombinedCheckout({
               });
               await SecureStore.deleteItemAsync(storage);
               await SecureStore.deleteItemAsync(pendingKey);
-              done();
+              done(result.order?.id);
               return result;
             }}
             action="checkout.mixed"

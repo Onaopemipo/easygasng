@@ -1,4 +1,5 @@
 "use client";
+import { SaveCheckoutDetails } from "./save-checkout-details";
 import { FieldCaption } from "./field-caption";
 import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
 import { useCardCheckout, OrderCardPayment } from "./hosted-payment";
@@ -46,6 +47,7 @@ export default function CombinedCheckout({
         <h1>Your linked request is recorded</h1>
         <p>{result.reference}</p>
         <OrderCardPayment order={result.order} />
+        {result.order?.id && <SaveCheckoutDetails key={result.order?.id} orderId={result.order?.id} />}
         <p>
           Product delivery and service appointments keep separate completion and
           payment records. A booking request is not a verified payment or safety

@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveAddressLocation } from "../packages/business-rules/src/address-location";
+import {
+  resolveAddressLocation,
+  selectAddressLocation,
+} from "../packages/business-rules/src/address-location";
 const locations = [
   { id: "vi", name: "Victoria Island" },
   { id: "lekki", name: "Lekki" },
@@ -64,4 +67,55 @@ test("ADR-03: changing or deleting an address cannot reuse a previous automatic 
     null,
   );
   assert.equal(resolveAddressLocation("", locations).location, null);
+});
+
+test("ADR-07: address edits preserve explicitly selected and saved areas", () => {
+  for (const address of [
+    "",
+    "27 Adeola Street",
+    "27 Adeola Street, Victoria I",
+  ])
+    assert.equal(
+      selectAddressLocation(address, locations, "vi").location?.id,
+      "vi",
+    );
+
+  const conflict = selectAddressLocation(
+    "27 Adeola Street, Lekki",
+    locations,
+    "vi",
+  );
+  assert.equal(conflict.location?.id, "vi");
+  assert.match(conflict.message, /mentions Lekki.*selected Victoria Island/);
+  const ambiguous = selectAddressLocation(
+    "27 Adeola Street, Lekki, Ajah",
+    locations,
+    "vi",
+  );
+  assert.equal(ambiguous.location?.id, "vi");
+  assert.match(ambiguous.message, /more than one area/);
+});
+
+test("ADR-08: an automatic suggestion follows the address and respects current choices", () => {
+  assert.equal(
+    selectAddressLocation("27 Adeola Street, Lekki", locations).location?.id,
+    "lekki",
+  );
+  assert.equal(
+    selectAddressLocation("27 Adeola Street, Ajah", locations).location?.id,
+    "ajah",
+  );
+  assert.equal(
+    selectAddressLocation("27 Adeola Street", locations).location,
+    null,
+  );
+  assert.equal(
+    selectAddressLocation("27 Adeola Street", locations, "retired-area")
+      .location,
+    null,
+  );
+  assert.equal(
+    selectAddressLocation("27 Lekki Street, Abuja", locations).location,
+    null,
+  );
 });

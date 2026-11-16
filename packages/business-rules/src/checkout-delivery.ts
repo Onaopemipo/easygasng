@@ -13,9 +13,15 @@ export type CheckoutAddress = {
 };
 
 export type CheckoutProfile = {
-  user?: { id: string; name?: string; contact_phone?: string | null };
+  user?: { id: string; name?: string; contact_phone?: string | null; delivery_phone?: string | null };
   addresses?: CheckoutAddress[];
   deliveryLocations?: { id: string; name: string }[];
+};
+
+export type CheckoutDetailsOffer = {
+  version: string;
+  phone: string | null;
+  address: { street: string; zone: string; recipient: string; phone: string } | null;
 };
 
 export function checkoutAddresses(profile?: CheckoutProfile | null) {
@@ -39,9 +45,17 @@ export function checkoutDelivery(
   address?: CheckoutAddress,
   accountName = "",
 ) {
+  const deliveryPhone = bookingPhone(profile?.user?.delivery_phone ?? "");
+  const preferredAddress = profile?.addresses && defaultCheckoutAddress(
+    profile.deliveryLocations ? checkoutAddresses(profile) : profile.addresses,
+  );
   return {
     name: address?.details?.recipient?.trim() || profile?.user?.name || accountName,
-    phone: bookingPhone(address?.phone ?? "") ?? bookingPhone(profile?.user?.contact_phone ?? "") ?? "",
+    phone: (address?.is_default || (address && address.id === preferredAddress?.id) ? deliveryPhone : null)
+      ?? bookingPhone(address?.phone ?? "")
+      ?? deliveryPhone
+      ?? bookingPhone(profile?.user?.contact_phone ?? "")
+      ?? "",
     street: address?.street ?? "",
     zone: address?.zone ?? "",
     locationId: address?.location_id ?? "",

@@ -55,10 +55,32 @@ export function resolveAddressLocation(
         location: null,
       };
 }
-export function addressLocationMessage(status: string, name?: string) {
-  return status === "matched"
-    ? `Delivery location selected: ${name}. Please confirm it below.`
-    : status === "ambiguous"
-      ? "More than one delivery area appears in this address. Please choose the correct location below."
-      : "Enter your house/flat number, street, estate and area, separated by commas. If the area cannot be identified, choose it below.";
+export function selectAddressLocation(
+  address: string,
+  locations: { id: string; name: string }[],
+  chosenId = "",
+) {
+  const chosen = locations.find((location) => location.id === chosenId);
+  const result = resolveAddressLocation(address, locations);
+  if (chosen) {
+    if (result.location && result.location.id !== chosen.id)
+      return {
+        location: chosen,
+        message: `Your address mentions ${result.location.name}. You selected ${chosen.name}. Check which area is correct.`,
+      };
+    if (result.status === "ambiguous")
+      return {
+        location: chosen,
+        message: `Your address mentions more than one area. Check that ${chosen.name} is correct.`,
+      };
+    return { location: chosen, message: "" };
+  }
+  return {
+    location: result.location,
+    message: result.location
+      ? `Suggested location: ${result.location.name}. You can change it if needed.`
+      : result.status === "ambiguous"
+        ? "Your address mentions more than one area. Choose the correct location."
+        : "Add your area after a comma or choose it from the list.",
+  };
 }

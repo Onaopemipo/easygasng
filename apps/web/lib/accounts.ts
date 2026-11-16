@@ -17,6 +17,9 @@ import {
 import { audit, notify, propose } from "./governance";
 import { staffInvitationAccess, validateInvitationAccess } from "./staff-invitation-access";
 import { sealMessage, requireMessageEncryption } from "./channel-messaging";
+import { bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
+import { normaliseCustomerPhone } from "../../../packages/business-rules/src/customer-identity";
+import { checkoutDelivery, defaultCheckoutAddress, type CheckoutAddress, type CheckoutDetailsOffer, type CheckoutProfile } from "../../../packages/business-rules/src/checkout-delivery";
 const email = z
   .email()
   .max(200)
@@ -224,7 +227,7 @@ export async function accountAction(
     return {
       user: await one(
         tx,
-        "SELECT id,name,email,verified,public_customer_id,contact_phone,phone_verified_at,onboarding_version,provisional FROM users WHERE id=$1",
+        "SELECT id,name,email,verified,public_customer_id,contact_phone,delivery_phone,phone_verified_at,onboarding_version,provisional FROM users WHERE id=$1",
         [user.id],
       ),
       latestDeliveryPhoto: ["customer", "commercial"].includes(user.role)
@@ -264,12 +267,86 @@ export async function accountAction(
         )
       ).rows,
     };
+  if (action === "account.checkout-details") {
+    allow(user, ["customer", "commercial"]);
+    const d = z.object({
+      orderId: z.uuid(),
+      save: z.object({ phone: z.boolean(), address: z.boolean(), version: z.string().length(64) }).strict().optional(),
+    }).strict().parse(input);
+    const account = await one<NonNullable<CheckoutProfile["user"]> & { active: boolean; provisional: boolean }>(tx,
+      "SELECT id,name,active,provisional,contact_phone,delivery_phone FROM users WHERE id=$1" + (d.save ? " FOR UPDATE" : ""),
+      [user.id],
+    );
+    if (!account?.active || account.provisional) throw new AppError(403, "Sign in to an active customer account to save delivery details.");
+    const order = await one(tx,
+      "SELECT address, location_id FROM orders WHERE id=$1 AND customer_id=$2 AND order_source IN ('WEB','MOBILE')",
+      [d.orderId, user.id],
+    );
+    if (!order) throw new AppError(404, "This order could not be found.");
+    const address = order.address;
+    const phone = normaliseCustomerPhone(address?.phone ?? "");
+    if (!phone) throw new AppError(400, bookingPhoneMessage);
+    const version = digest(JSON.stringify([d.orderId, order.location_id, address]));
+    const savedAddresses = (await tx.query(
+      "SELECT id,label,street,zone,phone,location_id,is_default,details FROM account_addresses WHERE customer_id=$1 AND archived=false ORDER BY is_default DESC,created_at,id",
+      [user.id],
+    )).rows as CheckoutAddress[];
+    const normalise = (value: string) => value.trim().replace(/\s+/g, " ").toLowerCase();
+    const saved = savedAddresses.find(item =>
+      (item.location_id ? item.location_id === order.location_id : normalise(item.zone) === normalise(address.zone)) &&
+      normalise(item.street) === normalise(address.street)
+    );
+    const current = checkoutDelivery({ user: account, addresses: savedAddresses }, saved ?? defaultCheckoutAddress(savedAddresses));
+    const details = {
+      recipient: address.name.trim(),
+      building: address.building?.trim() || saved?.details?.building,
+      landmark: address.landmark?.trim() || saved?.details?.landmark,
+      directions: address.directions?.trim() || saved?.details?.directions,
+    };
+    const offer: CheckoutDetailsOffer = {
+      version,
+      phone: phone !== normaliseCustomerPhone(current.phone) ? phone : null,
+      address: !saved || details.recipient !== current.name ||
+        details.building !== saved.details?.building || details.landmark !== saved.details?.landmark ||
+        details.directions !== saved.details?.directions
+        ? { street: address.street.trim(), zone: address.zone, recipient: details.recipient, phone: saved?.phone ?? phone }
+        : null,
+    };
+    if (!d.save) return offer;
+    if (d.save.version !== version) throw new AppError(409, "The delivery details changed. Review the current details before saving.");
+    const savePhone = Boolean(d.save.phone && offer.phone);
+    const saveAddress = Boolean(d.save.address && offer.address);
+    if (saveAddress) {
+      await accountAction(tx, "address.save", user, {
+        id: saved?.id,
+        label: saved?.label ?? "Delivery address",
+        street: address.street,
+        zone: address.zone,
+        locationId: order.location_id ?? undefined,
+        phone: savePhone ? phone : offer.address!.phone,
+        isDefault: savedAddresses.length === 0,
+        ...details,
+      });
+    }
+    if (savePhone) {
+      await tx.query("UPDATE users SET delivery_phone=$1 WHERE id=$2", [phone, user.id]);
+      if (saved && !saveAddress) await tx.query(
+        "UPDATE account_addresses SET phone=$1 WHERE id=$2 AND customer_id=$3 AND archived=false",
+        [phone, saved.id, user.id],
+      );
+    }
+    if (savePhone || saveAddress) await audit(tx, user, "account.checkout_details_saved", d.orderId, "success", {
+      phone: savePhone,
+      address: saveAddress,
+    });
+    return { ok: true };
+  }
   if (action === "account.export") {
     z.object({}).strict().parse(input);
     recentVerification(user);
     const profile = await one(
       tx,
-      "SELECT id,name,email,role,verified,created_at FROM users WHERE id=$1",
+      "SELECT id,name,email,role,verified,delivery_phone,created_at FROM users WHERE id=$1",
       [user.id],
     );
     const addresses = (

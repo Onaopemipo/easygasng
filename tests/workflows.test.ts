@@ -559,3 +559,61 @@ test("SUPPORT-DESK01: staff intake reuses scoped customer identity and inbox tot
   assert.equal(backlog.totals.total, own.totals.total + 101);
   assert.ok(await one(db, "SELECT actor_id FROM audit_events WHERE target=$1 AND action='support.created' AND actor_id=$2", [created.id, staffId]));
 });
+
+test("CHECKOUT-SAVE02: checkout contact and address are opt-in, scoped, retry-safe and independent of sign-in", async () => {
+  const actor = ids.customer;
+  const snapshot = { name: "Delivery Recipient", phone: "08033333333", street: "15 Checkout Test Road", zone: "Lekki", building: "15" };
+  await db.query("UPDATE users SET contact_phone='+2348011111111' WHERE id=$1", [actor]);
+  await db.query("UPDATE users SET phone_verified_at=now() WHERE id=$1", [actor]);
+  const orderId = id();
+  await db.query(
+    `INSERT INTO orders(id,reference,customer_id,branch_id,payment_method,subtotal_kobo,delivery_kobo,total_kobo,
+     address,delivery_date,delivery_window,idempotency_key,request_hash,delivery_code_hash,delivery_code_expires_at,order_source,location_id)
+     VALUES($1,$1,$2,'lagos','cash',100,0,100,$3,'2026-11-18','test',$1,'test','test',now()+interval '1 day','WEB',
+     (SELECT id FROM delivery_locations WHERE name='Lekki'))`,
+    [orderId, actor, JSON.stringify(snapshot)],
+  );
+  const action = "account.checkout-details";
+  const offer = await call("customer", action, { orderId });
+  assert.equal(offer.phone, "+2348033333333");
+  assert.equal(offer.address.street, snapshot.street);
+  const original = await call("customer", "account.profile");
+  assert.equal(original.user.delivery_phone, null);
+  assert.equal(original.addresses.length, 0);
+  await call("customer", action, { orderId, save: { version: offer.version, phone: false, address: false } });
+  assert.equal((await call("customer", "account.profile")).user.delivery_phone, null);
+  await assert.rejects(call("other", action, {
+    orderId,
+    save: { version: offer.version, phone: true, address: true },
+  }), /order could not be found/i);
+  await assert.rejects(call("owner", action, { orderId }), /permission/i);
+  await assert.rejects(call("customer", action, {
+    orderId,
+    save: { version: "0".repeat(64), phone: true, address: true },
+  }), /delivery details changed/i);
+  const phoneOnly = { orderId, save: { version: offer.version, phone: true, address: false } };
+  await call("customer", action, phoneOnly);
+  await call("customer", action, phoneOnly);
+  const phoneSaved = await call("customer", "account.profile");
+  assert.equal(phoneSaved.user.delivery_phone, "+2348033333333");
+  assert.equal(phoneSaved.user.contact_phone, "+2348011111111");
+  assert.equal(String(phoneSaved.user.phone_verified_at), String(original.user.phone_verified_at));
+  assert.equal(phoneSaved.user.name, original.user.name);
+  assert.equal(phoneSaved.addresses.length, 0);
+  const addressOnly = { orderId, save: { version: offer.version, phone: false, address: true } };
+  await call("customer", action, addressOnly);
+  await call("customer", action, addressOnly);
+  const addressSaved = await call("customer", "account.profile");
+  assert.equal(addressSaved.addresses.length, 1);
+  assert.equal(addressSaved.addresses[0].is_default, true);
+  assert.equal(addressSaved.addresses[0].details.recipient, snapshot.name);
+  assert.equal(addressSaved.addresses[0].details.building, snapshot.building);
+  assert.deepEqual(await call("customer", action, { orderId }), { version: offer.version, phone: null, address: null });
+  assert.deepEqual((await one(db, "SELECT address FROM orders WHERE id=$1", [orderId]))?.address, snapshot);
+  const { rows } = await db.query(
+    "SELECT detail FROM audit_events WHERE action='account.checkout_details_saved' AND target=$1",
+    [orderId],
+  );
+  assert.equal(rows.length, 2);
+  assert.ok(rows.every(({ detail }) => typeof detail.phone === "boolean" && typeof detail.address === "boolean"));
+});

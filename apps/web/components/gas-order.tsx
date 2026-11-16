@@ -1,4 +1,5 @@
 "use client";
+import { SaveCheckoutDetails } from "./save-checkout-details";
 import { FieldCaption } from "./field-caption";
 import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress } from "../../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../../packages/business-rules/src/booking-contact";
@@ -12,10 +13,7 @@ import {
 } from "./delivery-area-preference";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "./workspace-link";
-import {
-  resolveAddressLocation,
-  addressLocationMessage,
-} from "../../../packages/business-rules/src/address-location";
+import { selectAddressLocation } from "../../../packages/business-rules/src/address-location";
 import { api, Notice, Loading } from "./ui";
 import { ActionLoadingIndicator } from "./easygas-loader";
 import {
@@ -92,6 +90,7 @@ export default function GasOrder({
   const { profile, loading: loadingDelivery } = useCheckoutProfile(compact ? undefined : user?.id);
   const saved = checkoutAddresses(profile);
   const deliveryEdited = useRef(false);
+  const automaticLocationId = useRef("");
   const compactSubmit = useRef(false);
   const requestLock = useRef(false);
   const details = useRef<HTMLDetailsElement>(null);
@@ -172,12 +171,15 @@ export default function GasOrder({
     const identity = user?.id ?? "guest";
     const apply = (id: string) => {
       const location = config?.locations?.find((l: any) => l.id === id);
-      if (location || !id)
+      if (location || !id) {
+        deliveryEdited.current = true;
+        automaticLocationId.current = "";
         setAddress((a) => ({
           ...a,
           locationId: location?.id ?? "",
           zone: location?.name ?? "",
         }));
+      }
     };
     const preferred = readDeliveryArea(identity);
     if (preferred)
@@ -221,6 +223,8 @@ export default function GasOrder({
         if (typeof draft.date === "string") setDate(draft.date);
         if (typeof draft.window === "string") setWindow(draft.window);
         if (typeof draft.method === "string") setMethod(draft.method);
+        if (draft.automaticLocation === true)
+          automaticLocationId.current = draft.address?.locationId ?? "";
         setAddress((a) => ({ ...a, ...draft.address }));
       }
       if (!draft?.customerId || user?.id)
@@ -233,7 +237,9 @@ export default function GasOrder({
     setAddress((current) => {
       const selected = current.street
         ? addresses.find((a) => a.street === current.street && a.location_id === current.locationId)
-        : defaultCheckoutAddress(addresses);
+        : defaultCheckoutAddress(current.locationId
+          ? addresses.filter((a) => a.location_id === current.locationId)
+          : addresses);
       const defaults = checkoutDelivery(profile, selected, user?.name);
       if (!current.street && selected) return defaults;
       return {
@@ -269,11 +275,22 @@ export default function GasOrder({
       includeAppointments,
     ],
   );
-  const [addressHint, setAddressHint] = useState("");
+  const chosenLocationId =
+    address.locationId === automaticLocationId.current ? "" : address.locationId;
+  const { message: addressHint } = selectAddressLocation(
+    address.street,
+    config?.locations ?? [],
+    chosenLocationId,
+  );
   function enterAddress(street: string) {
     deliveryEdited.current = true;
-    const result = resolveAddressLocation(street, config?.locations ?? []);
-    const locationId = result.location?.id ?? "";
+    const { location } = selectAddressLocation(
+      street,
+      config?.locations ?? [],
+      chosenLocationId,
+    );
+    const locationId = location?.id ?? "";
+    automaticLocationId.current = chosenLocationId ? "" : locationId;
     setAddress((a) => ({
       ...a,
       street,
@@ -281,13 +298,30 @@ export default function GasOrder({
       landmark: "",
       directions: "",
       locationId,
-      zone: result.location?.name ?? "",
+      zone: location?.name ?? "",
     }));
-    setAddressHint(
-      addressLocationMessage(result.status, result.location?.name),
-    );
-    writeDeliveryArea(user?.id ?? "guest", locationId);
+    setError("");
   }
+  function chooseDeliveryLocation(locationId: string) {
+    deliveryEdited.current = true;
+    automaticLocationId.current = "";
+    const location = config.locations.find((entry: any) => entry.id === locationId);
+    setAddress((current) => ({
+      ...current,
+      locationId,
+      zone: location?.name ?? "",
+      building: "",
+      landmark: "",
+      directions: "",
+    }));
+    writeDeliveryArea(user?.id ?? "guest", locationId);
+    setError("");
+  }
+  const addressFeedback = addressHint && (
+    <span className="address-location-feedback" role="status">
+      {addressHint}
+    </span>
+  );
   const completeAddress = (
     <>
       <label>
@@ -302,10 +336,7 @@ export default function GasOrder({
           onChange={(e) => enterAddress(e.target.value)}
         />
       </label>
-      <span className="address-location-feedback" role="status">
-        {addressHint ||
-          "Include your area after a comma to select the delivery location automatically."}
-      </span>
+      {addressFeedback}
     </>
   );
   if (!config)
@@ -514,6 +545,7 @@ export default function GasOrder({
           cylinder must pass operational inspection before dispatch.
         </p>
         <OrderCardPayment order={order} />
+        {order.id && <SaveCheckoutDetails key={order.id} orderId={order.id} />}
         <Link href="/orders">View and track your order</Link>
       </section>
     );
@@ -614,6 +646,7 @@ export default function GasOrder({
                   lines: draftLines,
                   customerId: user?.id,
                   address: { ...address, street: address.street.trim() },
+                  automaticLocation: !chosenLocationId,
                 }),
               );
               globalThis.window.location.assign("/gas-order");
@@ -689,18 +722,7 @@ export default function GasOrder({
               <select
                 id="compact-location"
                 value={address.locationId}
-                onChange={(e) => {
-                  const location = config.locations.find(
-                    (l: any) => l.id === e.target.value,
-                  );
-                  writeDeliveryArea(user?.id ?? "guest", e.target.value);
-                  setAddress({
-                    ...address,
-                    locationId: e.target.value,
-                    zone: location?.name ?? "",
-                  });
-                  setError("");
-                }}
+                onChange={(e) => chooseDeliveryLocation(e.target.value)}
               >
                 <option value="">Select location</option>
                 {config.locations.map((l: any) => (
@@ -723,12 +745,10 @@ export default function GasOrder({
                 maxLength={250}
                 placeholder="House/flat number, street, estate, area, city"
                 value={address.street}
-                onChange={(e) => {
-                  setAddress({ ...address, street: e.target.value });
-                  setError("");
-                }}
+                onChange={(e) => enterAddress(e.target.value)}
               />
             </div>
+            {addressFeedback}
             <div
               id="compact-estimate"
               className="gas-estimate"
@@ -1039,8 +1059,8 @@ export default function GasOrder({
                   value={saved.find((a) => a.street === address.street && a.location_id === address.locationId)?.id ?? ""}
                   onChange={(e) => {
                     deliveryEdited.current = true;
+                    automaticLocationId.current = "";
                     setAddress(checkoutDelivery(profile, saved.find((a) => a.id === e.target.value), user?.name));
-                    setAddressHint("");
                   }}
                 >
                   <option value="">Use a different address</option>
@@ -1061,25 +1081,7 @@ export default function GasOrder({
                 <select
                   required
                   value={address.locationId}
-                  onChange={(e) => {
-                    deliveryEdited.current = true;
-                    const l = config.locations.find(
-                      (l: any) => l.id === e.target.value,
-                    );
-                    setError("");
-                    setAddressHint(
-                      "Delivery location chosen manually. Please check it matches your address.",
-                    );
-                    writeDeliveryArea(user?.id ?? "guest", e.target.value);
-                    setAddress({
-                      ...address,
-                      locationId: e.target.value,
-                      zone: l?.name ?? "",
-                      building: "",
-                      landmark: "",
-                      directions: "",
-                    });
-                  }}
+                  onChange={(e) => chooseDeliveryLocation(e.target.value)}
                 >
                   <option value="">Choose your location</option>
                   {config.locations.map((l: any) => (
@@ -1269,7 +1271,14 @@ export default function GasOrder({
                 try {
                   sessionStorage.setItem(
                     "easygas.gasDraft",
-                    JSON.stringify({ lines, address, date, window, method }),
+                    JSON.stringify({
+                      lines,
+                      address,
+                      date,
+                      window,
+                      method,
+                      automaticLocation: Boolean(address.locationId && !chosenLocationId),
+                    }),
                   );
                 } catch {}
               }}

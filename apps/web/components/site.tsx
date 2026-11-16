@@ -1,4 +1,5 @@
 "use client";
+import { SaveCheckoutDetails } from "./save-checkout-details";
 import { FieldCaption } from "./field-caption";
 import { RefillProfiles } from "./refill-profiles";
 import { Wrench } from "lucide-react";
@@ -1453,6 +1454,7 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
         </p>
         <Notice message={order.payment_status === "verified" ? "Payment is recorded in the verified ledger." : order.payment_method === "card" ? "Your order is awaiting secure card payment." : "Payment is due on delivery. It has not been marked as paid."} />
         <OrderCardPayment order={order} />
+        {order.id && <SaveCheckoutDetails key={order.id} orderId={order.id} />}
         <Link href="/track" className="button">
           Track your order <ArrowRight size={18} />
         </Link>

@@ -1,0 +1,152 @@
+{
+  "phase": "Save delivery details with customer consent",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "CHECKOUT-SAVE-R01",
+      "requirement": "Offer to save new or changed delivery details for future orders. Let customers save phone, address, or both, or keep the details for the current order.",
+      "priority": "P1",
+      "scope": "Signed-in customer delivery checkout",
+      "uiReference": "Save delivery details for next time?",
+      "route": "/checkout, /gas-order, /combined-checkout (product delivery)",
+      "implementationFiles": [
+        "apps/web/components/save-checkout-details.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/combined-checkout.tsx"
+      ],
+      "dataSource": "Offer from authenticated account.checkout-details using the confirmed delivery order and current account records.",
+      "securityControl": "Checkout records the order through the existing path. Settings changes require a separate explicit choice.",
+      "testFiles": [
+        "tests/checkout-delivery.test.ts",
+        "tests/workflows.test.ts"
+      ],
+      "testIds": [
+        "CHECKOUT-SAVE01",
+        "CHECKOUT-SAVE02"
+      ],
+      "negativeTests": [
+        "phone: false, address: false",
+        "assert.rejects(call(\"other\", action",
+        "assert.rejects(call(\"owner\", action",
+        "version: \"0\".repeat(64)"
+      ],
+      "evidence": [
+        "docs/traceability/checkout-details-save-evidence.txt"
+      ],
+      "acceptanceGate": "CHECKOUT-SAVE-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authenticated Chrome verified the gas, cart and linked product checkout journeys with committed test orders.",
+      "testResult": "PASS for gas save, skip, phone changes and next-order prefill, cart skip, linked checkout phone-only save, and web TypeScript.",
+      "outstandingWork": "Verify the deployed demo after migration 080."
+    },
+    {
+      "id": "CHECKOUT-SAVE-R02",
+      "requirement": "Use the committed order as the source for approved profile updates. Prefill future deliveries while preserving the verified sign-in identity.",
+      "priority": "P0",
+      "scope": "Signed-in customer delivery checkout",
+      "uiReference": "Save delivery details for next time?",
+      "route": "/checkout, /gas-order, /combined-checkout (product delivery)",
+      "implementationFiles": [
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/checkout-delivery.ts",
+        "apps/web/lib/db.ts",
+        "apps/web/lib/release-checks.ts",
+        "database/migrations/080_checkout_delivery_phone.sql",
+        "database/bootstrap.sql"
+      ],
+      "dataSource": "Owned WEB/MOBILE order ID and delivery snapshot, account addresses, users.delivery_phone, and active delivery locations where address saving requires one.",
+      "securityControl": "Authenticated customer access, order ownership, snapshot verification, transactional account lock, audit events with consent flags, and separate verified sign-in fields.",
+      "testFiles": [
+        "tests/checkout-delivery.test.ts",
+        "tests/workflows.test.ts"
+      ],
+      "testIds": [
+        "CHECKOUT-SAVE01",
+        "CHECKOUT-SAVE02"
+      ],
+      "negativeTests": [
+        "phone: false, address: false",
+        "assert.rejects(call(\"other\", action",
+        "assert.rejects(call(\"owner\", action",
+        "version: \"0\".repeat(64)"
+      ],
+      "evidence": [
+        "docs/traceability/checkout-details-save-evidence.txt"
+      ],
+      "acceptanceGate": "CHECKOUT-SAVE-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Dispatch regression verifies normalization, consent, ownership, sign-in isolation, stale snapshot rejection, audit scope and repeat requests.",
+      "testResult": "PASS on isolated Postgres-compatible PGlite and through the local HTTP/browser gas flow.",
+      "outstandingWork": "Apply migration 080 and verify with the hosted release candidate."
+    },
+    {
+      "id": "CHECKOUT-SAVE-R03",
+      "requirement": "Offer the same save or skip choice on native customer checkout, with retry after a save failure.",
+      "priority": "P1",
+      "scope": "Signed-in customer delivery checkout",
+      "uiReference": "Save delivery details for next time?",
+      "route": "Native cart checkout, Gas Order, Combined Checkout (product delivery)",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/CombinedCheckout.tsx",
+        "packages/business-rules/src/checkout-delivery.ts"
+      ],
+      "dataSource": "Existing authenticated native API and committed order ID.",
+      "securityControl": "Discard responses after account changes. Server checks identity and explicit consent before writes.",
+      "testFiles": [
+        "tests/checkout-delivery.test.ts",
+        "tests/workflows.test.ts"
+      ],
+      "testIds": [
+        "CHECKOUT-SAVE01",
+        "CHECKOUT-SAVE02"
+      ],
+      "negativeTests": [
+        "phone: false, address: false",
+        "assert.rejects(call(\"other\", action",
+        "assert.rejects(call(\"owner\", action",
+        "version: \"0\".repeat(64)"
+      ],
+      "evidence": [
+        "docs/traceability/checkout-details-save-evidence.txt"
+      ],
+      "acceptanceGate": "CHECKOUT-SAVE-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Native flows are wired and type checked. Installed-device behavior remains unverified.",
+      "testResult": "PASS native TypeScript and shared logic tests.",
+      "outstandingWork": "Verify all checkout entries on installed iOS and Android."
+    }
+  ],
+  "gates": [
+    {
+      "id": "CHECKOUT-SAVE-G01",
+      "status": "PASS",
+      "gate": "Verify the save or skip choices and future prefill through authenticated web gas, cart and linked product checkout."
+    },
+    {
+      "id": "CHECKOUT-SAVE-G02",
+      "status": "PASS",
+      "gate": "Verify explicit consent, ownership, replay, stale snapshot and separation from sign-in identity locally."
+    },
+    {
+      "id": "CHECKOUT-SAVE-G03",
+      "status": "OPEN",
+      "gate": "Verify native consent and error recovery in installed iOS and Android apps."
+    },
+    {
+      "id": "CHECKOUT-SAVE-G04",
+      "status": "OPEN",
+      "gate": "Apply migration 080 with the deployed code and verify the hosted customer journey."
+    }
+  ],
+  "coverage": {
+    "implemented": "3/3",
+    "verified": "2/3",
+    "critical": "1/1 locally verified",
+    "routes": "3/3 web runtime journeys, 0/3 native runtime journeys",
+    "gates": "2/4 passed"
+  },
+  "changes": "Extends CHECKOUT-PREFILL-R01 and R02 with post-confirmation persistence, limited to signed-in customer deliveries. Standalone service appointments and phone-assisted staff orders retain their existing paths. The earlier prefill matrix and release decision stay in effect."
+}

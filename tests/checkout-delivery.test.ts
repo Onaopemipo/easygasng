@@ -43,3 +43,15 @@ test("CHECKOUT-PREFILL01: prefer the saved default, fall back to a usable legacy
     locationId: "", building: "", landmark: "", directions: "",
   });
 });
+
+test("CHECKOUT-SAVE01: preferred delivery phone fills new and default addresses while alternate addresses keep their contact", () => {
+  const updated = {
+    ...profile,
+    user: { ...profile.user!, delivery_phone: "+2348011111111" },
+  };
+  assert.equal(checkoutDelivery(updated).phone, "+2348011111111");
+  assert.equal(checkoutDelivery(updated, home).phone, "+2348011111111");
+  assert.equal(checkoutDelivery(updated, { ...legacy, phone: "08022222222" }).phone, "08022222222");
+  const withoutDefault = { ...home, is_default: false };
+  assert.equal(checkoutDelivery({ ...updated, addresses: [withoutDefault, legacy] }, withoutDefault).phone, "+2348011111111");
+});
