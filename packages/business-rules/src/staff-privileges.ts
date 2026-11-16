@@ -305,6 +305,7 @@ export const staffPrivileges: readonly Privilege[] = [
       "staff.manage",
       "staff.lookup",
       "staff.edit",
+      "staff.driver.availability",
       "staff.invite",
       "staff.access.request",
       "staff.suspend",

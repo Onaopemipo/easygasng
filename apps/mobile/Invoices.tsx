@@ -124,9 +124,9 @@ export default function Invoices({
             retry={receipts.reload}
           />
           <Copy>
-            Payment receipts come only from verified Paystack postings. Sandbox
-            documents do not represent live funds. Manual credits and POS
-            records remain in their existing histories.
+            EasyGas issues receipts after verifying payment. Test receipts do
+            not represent live funds. Manual credits and POS records remain in
+            their existing histories.
           </Copy>
           {receipts.data?.rows?.length === 0 && (
             <Card>
@@ -246,7 +246,7 @@ export default function Invoices({
             <Copy key={i}>{n}</Copy>
           ))}
           <Button
-            label="Download / share receipt PDF"
+            label="Download or share EasyGas receipt"
             disabled={busy}
             onPress={download}
           />

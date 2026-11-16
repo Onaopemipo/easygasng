@@ -15,25 +15,25 @@ export const staffRoleDetails: Record<
   { label: string; description: string }
 > = {
   owner: {
-    label: "Admin / Business Owner",
+    label: "Admin",
     description:
       "Business-wide administration, governance and qualified safety oversight.",
   },
   finance: {
-    label: "Finance / Auditor / Inventory",
+    label: "Inventory",
     description:
       "Branch finance, audit history, inventory and eligible independent reviews.",
   },
   manager: {
-    label: "Branch Manager / Sales Rep / Dispatcher / Service Manager",
+    label: "Service Manager",
     description: "Branch operations, sales, dispatch and service coordination.",
   },
   driver: {
-    label: "Delivery Driver",
+    label: "Driver",
     description: "Assigned deliveries and authorised delivery updates.",
   },
   technician: {
-    label: "Service Technician",
+    label: "Technician",
     description:
       "Assigned jobs. Technical work requires current qualifications.",
   },

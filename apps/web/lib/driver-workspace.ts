@@ -4,6 +4,7 @@ import { one, type SQL } from "./db";
 import { audit } from "./governance";
 import { completeDelivery } from "./delivery";
 import { invoiceBalance } from "./invoice-corrections";
+import { driverAvailabilityWritesEnabled, setDriverAvailability } from "./driver-availability";
 const allowed = new Set([
   "me",
   // The web shell still applies role/branch navigation checks to these reads.
@@ -183,44 +184,14 @@ export async function driverWorkspace(
       paymentCollection: false,
     };
   }
-  if (
-    process.env.NODE_ENV === "production" &&
-    process.env.EASYGAS_FIELD_OPERATIONS_ENABLED !== "true"
-  )
+  if (!driverAvailabilityWritesEnabled())
     throw new AppError(
       503,
       "Driver mutations require operational release approval.",
     );
   if (action === "driver.availability") {
     const d = z.object({ available: z.boolean() }).strict().parse(input);
-    await tx.query("SELECT id FROM users WHERE id=$1 FOR UPDATE", [user.id]);
-    const active = await one(
-      tx,
-      "SELECT id FROM branches WHERE id=$1 AND active=true FOR UPDATE",
-      [user.branch_id],
-    );
-    if (!active)
-      throw new AppError(409, "Your branch is inactive. Contact dispatch.");
-    if (
-      !d.available &&
-      (await one(
-        tx,
-        "SELECT id FROM orders WHERE driver_id=$1 AND status IN ('assigned','out_for_delivery') LIMIT 1",
-        [user.id],
-      ))
-    )
-      throw new AppError(
-        409,
-        "Contact dispatch to reconcile active assignments before going unavailable.",
-      );
-    await tx.query(
-      "UPDATE users SET driver_available=$1,driver_availability_updated_at=now() WHERE id=$2",
-      [d.available, user.id],
-    );
-    await audit(tx, user, "driver.availability.changed", user.id, "success", {
-      available: d.available,
-    });
-    return { available: d.available };
+    return setDriverAvailability(tx, user, user.id, d.available);
   }
   if (action === "driver.complete") {
     if (

@@ -77,6 +77,51 @@ test("inactive branch and cross-branch staff checkout fail before any reservatio
     await db.close?.();
   }
 });
+test("GAS-CYL-01: quote checks inspected empty-cylinder stock separately from a refill", async () => {
+  const { db, call, input } = await fixture();
+  try {
+    const location = await one(db, "SELECT id FROM delivery_locations WHERE branch_id='lagos' AND name='Lekki'");
+    assert.ok(location);
+    await db.query("UPDATE settings SET value=$1 WHERE key='gas.quantity_policy' AND scope='lagos'", [
+      JSON.stringify({ minimumKg: 0.5, maximumKg: 50, incrementKg: 0.5, precision: 1, capacitiesKg: [6, 12.5] }),
+    ]);
+    await db.query("UPDATE gas_stock SET grams=10000 WHERE branch_id='lagos'");
+    const productId = "cylinder-empty-6";
+    const quote = (items?: { productId: string; quantity: number }[]) =>
+      call("customer", "gas.quote", {
+        locationId: location.id,
+        lines: [{ capacityKg: 6, kg: 2.5 }],
+        items,
+      });
+    const basket = [{ productId, quantity: 1 }];
+    const unavailable = { status: 409, code: "EMPTY_CYLINDER_UNAVAILABLE" };
+    assert.equal((await quote()).physicalSubtotalKobo, 0);
+    await assert.rejects(() => quote(basket), unavailable);
+
+    await call("owner", "cylinder.create", {
+      serial: "TEST-QUOTE-EMPTY",
+      branchId: "lagos",
+      sizeKg: 6,
+      ownership: "company",
+      status: "empty",
+      testDue: new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10),
+    });
+    const result = await quote(basket);
+    assert.ok(result.physicalSubtotalKobo > 0);
+    await assert.rejects(() => quote([{ productId, quantity: 2 }]), unavailable);
+    assert.equal((await one(db, "SELECT count(*)::int n FROM cylinder_allocations"))!.n, 0);
+    assert.equal(Number((await one(db, "SELECT reserved_grams FROM gas_stock WHERE branch_id='lagos'"))!.reserved_grams), 0);
+
+    await call("customer", "checkout", input(productId));
+    await assert.rejects(() => quote(basket), unavailable);
+    assert.equal((await quote()).physicalSubtotalKobo, 0);
+    await assert.rejects(() => call("customer", "checkout", input(productId)), unavailable);
+    assert.equal((await one(db, "SELECT count(*)::int n FROM orders"))!.n, 1);
+  } finally {
+    await db.close?.();
+  }
+});
+
 test("cylinder sales require eligible serials, preserve reservation and transfer actual ownership once", async () => {
   const { db, actors, call, input } = await fixture();
   try {

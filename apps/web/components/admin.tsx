@@ -969,7 +969,7 @@ function Settings({
                       <LockKeyhole size={12} />
                       Owner: {d.owner_role} ·{" "}
                       {d.owner_auto_approval
-                        ? "Business Owner requests: automatic approval; activation checks remain"
+                        ? "Admin requests: automatic approval; activation checks remain"
                         : d.risk === 4
                           ? "Two distinct authorised approvers + identity verification"
                           : d.risk === 1
@@ -2356,7 +2356,7 @@ function Approvals({
           <Notice
             message={
               selected.owner_auto_approval
-                ? "Business Owner requests are approved automatically. Existing pending requests can be applied below. Current authority, effective date and activation checks remain enforced."
+                ? "Admin requests are approved automatically. Existing pending requests can be approved below. Current authority, effective date and activation checks remain enforced."
                 : selected.risk === 4
                   ? "Two distinct authorised approvers are required, including the specified owner and finance roles. Each must verify their identity."
                   : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
@@ -2373,7 +2373,7 @@ function Approvals({
                   const result = await api("approval.owner_apply", {
                     id: selected.id,
                     reason:
-                      "Apply my existing request under Business Owner authority",
+                      "Approve my existing request as an Admin",
                   });
                   if (["failed", "superseded"].includes(result.status)) {
                     setFailure(
@@ -2995,7 +2995,7 @@ function Records({
                         <td>
                           <strong>{r.name}</strong>
                         </td>
-                        <td>{r.role}</td>
+                        <td>{roleLabel(r.role)}</td>
                         <td>{r.branch_id ?? "—"}</td>
                         <td>
                           <span className="status">

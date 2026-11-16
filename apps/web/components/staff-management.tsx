@@ -646,7 +646,7 @@ export default function StaffManagement({
               <details className="staff-role-change"><summary>Change role or branch</summary>
               <p>
                 Changing a role updates the user’s default permissions.
-                Admin / Business Owner has business-wide access. Other staff
+                {roleName("owner")} has business-wide access. Other staff
                 roles use their assigned branch and work. Technical
                 qualifications and independent financial approvals still apply.
               </p>

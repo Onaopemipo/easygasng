@@ -87,6 +87,17 @@ export async function deliverTransactionalMail(
         "SELECT m.* FROM message_outbox m JOIN users u ON u.id=m.user_id WHERE m.channel='email' AND m.status='pending' AND m.next_attempt_at<=now() AND m.attempts<5 AND u.active=true ORDER BY m.created_at,m.id LIMIT 1 FOR UPDATE OF m SKIP LOCKED",
       );
       if (!row) return null;
+      if (row.dedupe_key.startsWith("payment-receipt:")) {
+        const recipient = await one(
+          tx,
+          "SELECT id FROM users WHERE id=$1 AND verified=true AND lower(email)=lower($2)",
+          [row.user_id, row.recipient],
+        );
+        if (!recipient) {
+          await tx.query("UPDATE message_outbox SET status='cancelled' WHERE id=$1", [row.id]);
+          return { cancelled: true as const };
+        }
+      }
       if (row.dedupe_key.startsWith("challenge:")) {
         const challenge = await one(
           tx,

@@ -4,7 +4,7 @@ import { type SQL, one } from "./db";
 import { invoiceAction } from "./invoices";
 import { serviceInvoiceAction } from "./service-invoices";
 import { paymentReceipt } from "./payments/documents";
-import { financialDocument } from "../../../packages/business-rules/src/financial-document";
+import { financialDocument, easyGasReceiptDownloadUrl } from "../../../packages/business-rules/src/financial-document";
 import { audit } from "./governance";
 export async function financialDocuments(tx: SQL, user: Actor, input: unknown) {
   allow(user, ["customer", "commercial", "owner", "finance"]);
@@ -102,7 +102,7 @@ export async function financialDocuments(tx: SQL, user: Actor, input: unknown) {
       model,
       downloadUrl:
         r.type === "receipt"
-          ? `/api/payments/paystack/receipt?format=pdf&intentId=${r.intent_id}`
+          ? easyGasReceiptDownloadUrl(r.intent_id)
           : `/api/invoices/${r.booking_id ?? r.order_id}${r.booking_id ? "?source=service" : ""}`,
     });
   }

@@ -1,6 +1,7 @@
 import { deliveryCoveragePending, hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
 import { z } from "zod";
 import { bulkReservation } from "./bulk-lpg-reservation";
+import { requireAvailableEmptyCylinders } from "./cylinder-allocation";
 import { one, type SQL } from "./db";
 import { allow, AppError, id, recentVerification, type Actor } from "./auth";
 import { propose, audit } from "./governance";
@@ -536,6 +537,7 @@ export async function gasQuote(
   }
   let physicalSubtotalKobo = 0;
   const physicalLines = [];
+  const emptyCylindersBySize = new Map<number, number>();
   for (const item of items) {
     const p = await one(
       tx,
@@ -550,6 +552,12 @@ export async function gasQuote(
       p.category === "Gas refills"
     )
       throw new AppError(409, "A physical product is unavailable.");
+    if (locationId !== undefined && p.category === "Empty cylinders") {
+      const size = Number(p.size_kg);
+      const quantity = (emptyCylindersBySize.get(size) ?? 0) + item.quantity;
+      await requireAvailableEmptyCylinders(tx, branch, p.name, p.size_kg, quantity);
+      emptyCylindersBySize.set(size, quantity);
+    }
     physicalSubtotalKobo += Number(p.price_kobo) * item.quantity;
     physicalLines.push({
       productId: item.productId,

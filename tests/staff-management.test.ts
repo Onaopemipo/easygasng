@@ -352,3 +352,43 @@ test("STAFF-INV-02: inviting owners cannot attach protected grants to driver rol
     await f.db.close?.();
   }
 });
+
+test("DRIVER-AVAIL-01: invited drivers default to available only on approved activation and keep later choices", async () => {
+  const f = await fixture();
+  try {
+    await f.call("administrator", "reauth", { password });
+    const email = id() + "@example.test";
+    const { invitationId } = await f.call("administrator", "staff.invite", {
+      name: "Invited Driver", email, branchId: "lagos",
+      access: { role: "driver", changes: [] },
+    });
+    await f.call("customer", "invitation.accept", await invitationCredentials(f.db, invitationId));
+    const request = (await one(f.db, "SELECT access_request_id FROM staff_invitations WHERE id=$1", [invitationId]))!.access_request_id;
+    const account = () => one(f.db, "SELECT id,role,driver_available,driver_availability_updated_at FROM users WHERE email=$1", [email]);
+    const pending = (await account())!;
+    assert.equal(pending.role, "customer");
+    assert.equal(pending.driver_available, false);
+    const approval = (id: string) => ({ id, decision: "approve", reason: "Independent review of driver access" });
+    await f.call("owner", "approval.decide", approval(request));
+    // A single approval does not open dispatch availability.
+    assert.deepEqual(await account(), pending);
+    await f.call("finance", "approval.decide", approval(request));
+    const active = (await account())!;
+    assert.equal(active.role, "driver");
+    assert.equal(active.driver_available, true);
+    assert.ok(active.driver_availability_updated_at);
+    assert.ok(await one(f.db, "SELECT id FROM audit_events WHERE action='driver.availability.initialised' AND target=$1", [active.id]));
+    await f.call("administrator", "staff.driver.availability", {
+      userId: active.id, available: false, reason: "Driver requested time away",
+    });
+    const afterOptOut = await account();
+    const review = await f.call("administrator", "staff.access.request", {
+      userId: active.id, role: "driver", branchId: "lagos", reason: "Review existing driver access",
+    });
+    for (const reviewer of ["owner", "finance"])
+      await f.call(reviewer, "approval.decide", approval(review.id));
+    assert.deepEqual(await account(), afterOptOut);
+  } finally {
+    await f.db.close?.();
+  }
+});

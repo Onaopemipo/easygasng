@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import {
   accountRoles,
+  staffRoleLabel,
   staffRoles,
 } from "../packages/business-rules/src/staff-roles";
 import { createDatabase, migrate, one, type DB } from "../apps/web/lib/db";
@@ -11,6 +12,15 @@ import { dispatch } from "../apps/web/lib/service";
 
 const password = "Staff-roles-fixture-123!";
 const passwordHash = hashPassword(password);
+
+test("STAFF-ROLE08: staff roles have short display names and keep their canonical identities", () => {
+  assert.deepEqual(staffRoles, ["owner", "finance", "manager", "driver", "technician"]);
+  assert.deepEqual(staffRoles.map(staffRoleLabel), ["Admin", "Inventory", "Service Manager", "Driver", "Technician"]);
+  assert.equal(staffRoleLabel("administrator"), "Admin");
+  assert.equal(staffRoleLabel("auditor"), "Inventory");
+  assert.equal(staffRoleLabel("dispatcher"), "Service Manager");
+  assert.equal(staffRoleLabel("customer"), "customer");
+});
 
 async function addAccount(
   db: DB,

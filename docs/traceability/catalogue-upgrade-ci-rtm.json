@@ -1,0 +1,32 @@
+{
+  "phase": "Catalogue upgrade regression repair",
+  "date": "2026-11-16",
+  "productionDecision": "NO-GO unchanged",
+  "requirements": [
+    {
+      "id": "CATALOGUE-UPGRADE-R01",
+      "requirement": "Exercise the upgrade from the historical catalogue schema and preserve stock, reservations, confirmed prices and one-time import behavior.",
+      "priority": "P1",
+      "scope": "Existing release-validation test; no application or migration changes.",
+      "uiReference": "GitHub Actions run 43781526814, web job 133019579827",
+      "route": "GitHub Actions / Release validation / web",
+      "dataSource": "Hosted regression log, checked-in migrations, and isolated synthetic customer, order, and stock records.",
+      "securityControl": "Build fixtures in an isolated database; keep runtime authentication, stock controls and existing assertions intact.",
+      "implementationFiles": ["tests/catalogue-import.test.ts"],
+      "testFiles": ["tests/catalogue-import.test.ts"],
+      "testIds": ["CATALOGUE-UPGRADE01"],
+      "negativeTests": ["only imports once"],
+      "evidence": ["docs/traceability/catalogue-upgrade-ci-evidence.txt"],
+      "testResult": "PASS: both focused catalogue checks passed; the historical fixture reproduced PostgreSQL 42703 before the fix.",
+      "acceptanceGate": "CATALOGUE-UPGRADE-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The old-schema test now creates its synthetic customer directly without invoking the current registration/session flow; the original migration assertions pass.",
+      "outstandingWork": "Hosted release validation of a commit containing the repair."
+    }
+  ],
+  "gates": [
+    {"id": "CATALOGUE-UPGRADE-G01", "scope": "Focused catalogue tests complete with historical stock and pricing assertions intact.", "status": "PASS"},
+    {"id": "CATALOGUE-UPGRADE-G02", "scope": "Replacement GitHub Actions web validation, including build, typecheck and dependency audit.", "status": "PENDING"}
+  ],
+  "scopeChanges": ["Repair the historical catalogue test setup. Release gates, migrations, runtime registration, and production NO-GO remain in force."]
+}

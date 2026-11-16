@@ -11,6 +11,7 @@ import { Text, TextInput } from "./typography";
 import { NativeForm } from "./Workflows";
 import { EasyGasLoader } from "./EasyGasLoader";
 import { useTheme } from "./theme";
+import { staffRoleLabel } from "../../packages/business-rules/src/staff-roles";
 import {
   lagosAppointment,
   type TechnicianWorkspaceData,
@@ -489,7 +490,7 @@ export default function TechniciansManagement({
                             .filter((p) => p.id !== user.id)
                             .map((p) => ({
                               value: p.id,
-                              label: p.name + " · " + p.role,
+                              label: p.name + " · " + staffRoleLabel(p.role),
                             })),
                         },
                         { name: "code", label: "Qualification code" },

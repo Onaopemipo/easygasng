@@ -8,6 +8,7 @@ import { one, type DB, type SQL } from "../db";
 import { actor, allow, AppError, id, digest, type Actor } from "../auth";
 import { invoiceBalance } from "../invoice-corrections";
 import { audit, notify } from "../governance";
+import { queueMessage } from "../accounts";
 import { gatewayPolicy, type GatewayPolicy } from "./policy";
 import { quotePaymentFee } from "../../../../packages/business-rules/src/payment-fees";
 import {
@@ -657,7 +658,7 @@ export async function reconcilePayment(
     }
     const user = await one(
       tx,
-      "SELECT id,name,email,role,branch_id,active FROM users WHERE id=$1 FOR UPDATE",
+      "SELECT id,name,email,role,branch_id,active,verified FROM users WHERE id=$1 FOR UPDATE",
       [i!.customer_id],
     );
     if (attempt?.state === "under_review") return { status: "under_review" };
@@ -792,6 +793,26 @@ export async function reconcilePayment(
       "Test-mode payment was verified. This is not a live-money receipt.",
       i!.id,
     );
+    if (
+      process.env.EASYGAS_EMAIL_ENABLED === "true" &&
+      process.env.EASYGAS_CLIENT_DEMO !== "true" &&
+      process.env.EASYGAS_PREVIEW !== "true" &&
+      user?.verified &&
+      user.email.toLowerCase() === i!.email_snapshot.toLowerCase()
+    ) {
+      const library = i!.purpose === "wallet" ? "/wallet" : "/orders";
+      await queueMessage(
+        tx,
+        user.id,
+        user.email,
+        "Your EasyGas test payment receipt",
+        [
+          "Your EasyGas payment receipt is ready. This was a test payment. No live funds were collected.",
+          `Sign in to EasyGas to view or download your receipt: ${runtime.callbackOrigin}${library}`,
+        ].join("\n\n"),
+        `payment-receipt:${posting}`,
+      );
+    }
     await audit(tx, null, "payment.sandbox_posted", i!.id, "success", {
       environment: "test",
       principalKobo: i!.quote.baseKobo,

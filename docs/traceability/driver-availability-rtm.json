@@ -1,0 +1,50 @@
+{
+  "phase": "Driver availability and staff onboarding",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "DRIVER-AVAIL-R01",
+      "requirement": "Default a newly approved active Driver account to available for dispatch and preserve the choice of existing drivers.",
+      "priority": "P0",
+      "scope": "Staff activation and existing driver preference",
+      "uiReference": "Invite driver, Approval Centre and Drivers directory",
+      "route": "/admin/drivers, /admin/approvals",
+      "dataSource": "The approved Driver role on users, its branch and request; users.driver_available.",
+      "securityControl": "Initialise only on an authorised role transition to Driver. Do not grant early dispatch access or bypass staff approval.",
+      "implementationFiles": ["apps/web/lib/governance.ts"],
+      "testFiles": ["tests/staff-management.test.ts"],
+      "testIds": ["DRIVER-AVAIL-01"],
+      "negativeTests": ["A single approval does not open dispatch availability."],
+      "evidence": ["docs/traceability/driver-availability-evidence.txt"],
+      "acceptanceGate": "DRIVER-AVAIL-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local service regression verified both independent approvals, the initial audit record and preservation of an existing opt-out.",
+      "testResult": "PASS: invitation, pending role, final activation and existing choice.",
+      "outstandingWork": "Deploy and verify onboarding in the hosted demo."
+    },
+    {
+      "id": "DRIVER-AVAIL-R02",
+      "requirement": "Let authorised staff change dispatch availability from the Drivers directory and explain where drivers change their own preference.",
+      "priority": "P0",
+      "scope": "Web driver directory and shared backend used by driver workspaces",
+      "uiReference": "Delivery & Services → Drivers → Manage; driver Home",
+      "route": "/admin/drivers, /admin/deliveries, /api/[action]",
+      "dataSource": "Current driver account and branch, stored dispatch preference, active order assignments and the staff privilege registry.",
+      "securityControl": "Staff management privilege, branch scope, password re-verification, active accounts and branches, audit reason, and existing field-operation release and assignment safeguards.",
+      "implementationFiles": ["apps/web/components/drivers-workspace.tsx", "apps/web/lib/staff.ts", "apps/web/lib/dispatch-centre.ts", "apps/web/lib/driver-availability.ts", "apps/web/lib/driver-workspace.ts", "packages/business-rules/src/staff-privileges.ts"],
+      "testFiles": ["tests/navigation.test.ts", "tests/driver-workspace.test.ts", "tests/dispatch-centre-safety.test.ts"],
+      "testIds": ["DRIVER-MGMT-01"],
+      "negativeTests": ["Another branch and a non-manager cannot change this preference.", "Active deliveries block changing the driver to unavailable."],
+      "evidence": ["docs/traceability/driver-availability-evidence.txt"],
+      "acceptanceGate": "DRIVER-AVAIL-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local backend coverage passed, including the driver toggle, and authenticated Chromium exercised the directory form at desktop and phone widths.",
+      "testResult": "PASS: local service, type checks and authenticated browser actions with inline password re-verification.",
+      "outstandingWork": "Repeat authenticated checks after hosted deployment."
+    }
+  ],
+  "gates": [
+    {"id": "DRIVER-AVAIL-G01", "description": "Approved active drivers start available without modifying existing choices.", "status": "PASS_LOCAL"},
+    {"id": "DRIVER-AVAIL-G02", "description": "Staff can change an active driver's availability from the directory and existing dispatch safeguards still hold.", "status": "PASS_LOCAL"}
+  ]
+}

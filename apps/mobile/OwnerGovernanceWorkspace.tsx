@@ -140,7 +140,7 @@ export default function OwnerGovernanceWorkspace({ user, screen, api, navigate }
   if (!authorised) return <Text accessibilityRole="alert">Your staff role does not have access to this workspace.</Text>;
   return (
     <View style={styles.wrap}>
-      <Text style={[styles.eyebrow, { color: colors.primary }]}>EASYGAS · BUSINESS OWNER</Text>
+      <Text style={[styles.eyebrow, { color: colors.primary }]}>EASYGAS · {staffRoleLabel("owner").toUpperCase()}</Text>
       <Text style={[styles.heading, { color: foreground }]}>{relevant?.label ?? "Management & Governance"}</Text>
 
       {allowed === null && !error ? <EasyGasLoader color={colors.primary} /> : null}

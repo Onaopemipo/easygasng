@@ -87,8 +87,8 @@ export default function StaffInvitation({
       onChange={() => setDirty(true)}
     >
       <h3>
-        {fixedRole === "driver"
-          ? "Delivery Driver invitation"
+        {fixedRole
+          ? `${staffRoleDetails[fixedRole].label} invitation`
           : "Invite a colleague"}
       </h3>
       <fieldset className="staff-invite-fields" disabled={busy}>

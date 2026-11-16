@@ -269,6 +269,9 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   // Earlier reviewed payment hashes remain in the dispatch and wallet evidence.
   const approvedPaymentReturnHash =
     "3e17b9fc735268a287c8228fd91601a6b4e9d78bc416abc357caa2402886f4ad";
+  const approvedMerchantDocumentSources = JSON.parse(await readFile(
+    "docs/traceability/merchant-documents-reviewed-hashes.json", "utf8",
+  ));
   const approvedAlerts = JSON.parse(await readFile("docs/custom-alerts/approved-scope-change.json", "utf8"));
   const approvedNotificationSources = JSON.parse(await readFile(
     "docs/notifications-redesign/approved-field-source.json", "utf8",
@@ -294,7 +297,7 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   ));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
-      ? approvedPaymentReturnHash
+      ? approvedMerchantDocumentSources[file] ?? approvedPaymentReturnHash
       : approvedFieldMarkerSources[file] ?? staffInviteDriversSources[file] ?? staffRoleNavigationSources[file] ?? approvedLoaderSources[file] ?? approvedDriverSources[file]
         ?? approvedHomepageSources[file] ?? approvedNotificationSources[file]
         ?? approvedAlerts[file]?.approvedHash ?? originalHash;

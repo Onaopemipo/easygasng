@@ -1,5 +1,6 @@
 "use client";
 import { FieldCaption } from "./field-caption";
+import { staffRoleLabel } from "../../../packages/business-rules/src/staff-roles";
 import { EasyGasLoader } from "./easygas-loader";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, ClipboardList, Clock3, Info, ListChecks, MapPin, ShieldCheck, Wrench, CircleMinus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
@@ -1404,7 +1405,7 @@ function Technicians({
                 label: "Technician / reviewer",
                 options: data.staff.map((u: any) => ({
                   value: u.id,
-                  label: u.name + " · " + u.role,
+                  label: u.name + " · " + staffRoleLabel(u.role),
                 })),
               },
               {

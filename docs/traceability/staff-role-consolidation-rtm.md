@@ -1,6 +1,6 @@
 # Staff role consolidation
 
-Implementation and verification cover all seven requirements, seven critical requirements and seven acceptance gates for the demo rollout. Hosted web and API checks and installed simulator and emulator checks passed. Commercial production remains NO-GO.
+Eight of eight requirements and gates have verification in their recorded scopes. The original demo rollout covered seven critical requirements through hosted web and API checks and installed simulator and emulator checks. The role display names were verified locally. Commercial production remains NO-GO.
 
 [Machine-readable matrix](staff-role-consolidation-rtm.json) · [Executed evidence](staff-role-consolidation-evidence.txt)
 
@@ -13,11 +13,12 @@ Implementation and verification cover all seven requirements, seven critical req
 | STAFF-ROLE05 Keep independent approval and current qualifications for protected decisions. | STAFF-ROLE-G05 | VERIFIED_COMPLETE | Protected access request requires separate decisions, self-approval of an expense is rejected, and checklist review verifies qualification. No outstanding local implementation for this requirement. |
 | STAFF-ROLE06 Show the consolidated roles and their authorised workspaces in the native app. | STAFF-ROLE-G06 | VERIFIED_COMPLETE | All five staff roles passed installed sign-in, role navigation and customer Wallet exclusion on iPhone 17 Pro Simulator and minified Pixel 8 emulator. Backend tests verified access restrictions. Physical-device and app-store acceptance were outside the demo scope. |
 | STAFF-ROLE07 Verify the release cutover for consolidated roles. | STAFF-ROLE-G07 | VERIFIED_COMPLETE | Authenticated and archive-verified backup before schema 077 and 078. Matching Vercel deployment is READY. All 13 retained test identities signed in with their expected roles. A coordinated database restore was not exercised. Commercial production remains NO-GO. |
+| STAFF-ROLE08 Show Admin, Inventory, Service Manager, Driver and Technician as the five staff role names. | STAFF-ROLE-G08 | VERIFIED_COMPLETE | The role catalogue, staff invitation dropdown, fixed-role driver invitation and three signed-in admin profiles passed local checks. Both type checks and 63 targeted tests passed. Hosted and installed-app verification of these names remains open. [Label verification](staff-role-labels-evidence.txt) |
 
 ## Cutover and recovery
 
-Take a pre-upgrade backup and record the deployed commit. Apply schema 078 with the matching release. Staff in Admin / Business Owner, Finance / Auditor / Inventory, and Branch Manager / Sales Rep / Dispatcher / Service Manager must sign in again. Use Audit History to identify open requests and delegations affected by the role change. Review and submit those again under the current policy.
+For the role consolidation migration, take a pre-upgrade backup and record the deployed commit. Apply schema 078 with the matching release. Staff in Admin, Inventory and Service Manager must sign in again after the migration. Use Audit History to identify open requests and delegations affected by the role change. Review and submit those again under the current policy. The display-name update requires only application code.
 
 To roll back, stop writes and coordinate the restoration of the pre-upgrade schema and data with the matching pre-upgrade code. Preserve a copy of any post-upgrade records for reconciliation before restoring. Multiple previous roles map to the same new role, so the current role value alone cannot recover the previous assignment.
 
-The deployed demo is [EasyGas client demo](https://easygas-client-demo.vercel.app). The current deployment is `dpl_wc7sEBwrmVp1CBthWHrNKYae8gRR`. The previous deployment is `dpl_FjxuUwUMtSpqKegZjD4pERdhWShJ`. The verified encrypted archive is stored privately in `.backups/easygas-demo-pre078-20261114-cutover.egbackup`.
+The role consolidation deployment was `dpl_wc7sEBwrmVp1CBthWHrNKYae8gRR`. Its predecessor was `dpl_FjxuUwUMtSpqKegZjD4pERdhWShJ`. The verified encrypted archive is stored privately in `.backups/easygas-demo-pre078-20261114-cutover.egbackup`. [EasyGas client demo](https://easygas-client-demo.vercel.app)

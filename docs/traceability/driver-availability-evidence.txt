@@ -1,0 +1,54 @@
+Scoped local regression: staff-management, navigation, driver-workspace and staff-privileges
+✔ DR-BOUNDARY-01 delivery-only sessions reject legacy cash, sales and stock endpoints (0.56ms)
+✔ DR-GPS-BOUNDARY: trip GPS authority does not grant fuel, cash or fleet-wide reads (0.12425ms)
+✔ DR-BOUNDARY-02 delivery-only sessions reject skipped or invented order transitions (0.075541ms)
+✔ DR-BOUNDARY-03 canonical delivery reads and guarded completion remain available (0.0605ms)
+✔ DR-COMPAT-01 legacy session policy remains unchanged pending explicit cutover (0.051ms)
+✔ DR-WEB-01: driver web navigation reaches only the authorised deliveries workspace (1159.880375ms)
+✔ DR-INTEGRATION-01 restricted canonical session enforces role, availability and legacy completion denial (958.916625ms)
+✔ RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe nested active matching (3.661292ms)
+✔ RM-06,08,09: mode-independent role visibility preserves dedicated assignment experiences (0.241083ms)
+✔ navigation preferences reject corrupt storage and badge overflow remains bounded (0.126084ms)
+✔ RM-07,10,11: fresh authentication, branch scope, counter aggregates and role/session revocation (1395.082667ms)
+✔ approval badge agrees with independent eligibility, excludes requester, recipient, expired and already-decided requests (1147.97175ms)
+✔ counter accuracy covers actionable orders/deliveries, configured inventory thresholds and unresolved financial items (1068.199167ms)
+✔ bounded delegation is included in approval counters only while independently valid (983.1215ms)
+✔ INV-BADGE-01: refresh and transient failure retain explicitly labelled confirmed counts without changing grants (0.374417ms)
+✔ ADMIN-LANDING-01: permitted navigation maps actual backend read allowlists for every existing staff role (1442.424458ms)
+Navigation restricted PGlite fixture aggregate timings (ms): {"samples":[4.808542000000671,4.2679580000003625,4.1689580000002024,4.431375000000116,7.698666999999659,4.578292000000147,4.154374999999163,4.309417000000394,3.9279999999998836,3.9224160000003394],"median":4.309417000000394,"max":7.698666999999659}
+✔ navigation aggregates run under the restricted private-schema runtime without new grants (1026.977375ms)
+✔ DRIVER-NAV-01: driver directory and sidebar follow branch, role and dispatch privilege (1000.743917ms)
+✔ DRIVER-MGMT-01: directory management reuses audited staff actions and protects active assignments (1000.633833ms)
+✔ staff invitations are manageable without granting privileges, renew invalidates old links and accepted accounts appear in staff management (1317.422542ms)
+✔ staff edits, suspension, reinstatement and invitation revocation enforce authority, branch and session safeguards (1016.825458ms)
+✔ staff management invitation actions run with restricted runtime grants and business-wide administrators retain access to previous branch invitations (1150.272666ms)
+✔ STAFF-INV-01/02: selected privileges are reviewed, never applied before independent approval, and enforced after activation (991.501458ms)
+✔ STAFF-INV-02: inviting owners cannot attach protected grants to driver roles or provide arbitrary privileges (870.606417ms)
+✔ DRIVER-AVAIL-01: invited drivers default to available only on approved activation and keep later choices (969.547708ms)
+✔ STAFF-PRIV01: per-user grant, deny and role default work end to end without changing roles; existing sessions recheck every request (1230.724416ms)
+✔ STAFF-PRIV02: privilege changes require fresh administrative identity and reject self escalation, forged fields, stale versions and protected-role grants (935.322041ms)
+✔ STAFF-PRIV03: merged administrators can edit cross-branch users; protected approval, qualification and runtime session boundaries remain intact (900.232459ms)
+✔ STAFF-PRIV04: restricted database runtime can grant, revoke and reset privileges with append-only audited history (827.055625ms)
+✔ STAFF-PRIV05: privilege endpoints require authenticated read/write methods and reject unverified HTTP mutations (953.152333ms)
+✔ STAFF-PRIV06: invalid batches roll back all changes, cached outcomes obey revocation, and field-only sessions cannot administer privileges (897.177209ms)
+✔ STAFF-PRIV07: role or branch changes invalidate additional grants while explicit revocations remain enforced (915.399291ms)
+✔ STAFF-PRIV08: reverting an identity change cannot silently reactivate an old grant, and identity changes invalidate an open editor revision (877.891958ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26909.819708
+
+Broader run: 49 passed of 50. The only failure was DDI-AUDIT01, which expects the previously reviewed hash of apps/web/lib/payments/orchestrator.ts. That file already had receipt-branding changes and was not edited for driver availability.
+✔ DDI-S024: unavailable drivers cannot receive a legacy manual assignment (1249.12825ms)
+✔ DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection (838.710125ms)
+✔ DDI-CONTACT01: foreground contact is independently measured, scoped and expires without changing availability (725.737417ms)
+✔ DDI-PAY01: unverified payment and revoked COD exception block canonical assignment with no attempt (713.252458ms)
+✔ DDI-S084: production assignment stays disabled without both explicit release approvals (691.740583ms)
+✔ DDI-S060: missing serialized cylinder allocation blocks dispatch before a delivery attempt (682.663458ms)
+
+PASS owner at 1440px: Mark available for dispatch, inline re-verification and refreshed status; no page overflow.
+PASS manager at 390px: Mark unavailable, inline re-verification and refreshed status; no page overflow.

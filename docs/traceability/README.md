@@ -231,3 +231,11 @@ Technician access repair (16 November). [Requirements matrix](technician-access-
 Business Overview layout (16 November). [Requirements matrix](admin-dashboard-alignment-rtm.md) and [executed evidence](admin-dashboard-alignment-evidence.txt) cover the aligned toolbar and KPI cards on the web dashboard.
 
 Dashboard metric visibility (16 November). [Requirements matrix and evidence](admin-dashboard-metric-access-rtm.md) cover Finance and owner KPI visibility and the dashboard retry state.
+
+Catalogue upgrade CI repair: [matrix](catalogue-upgrade-ci-rtm.md). Historical customer fixtures no longer call current registration before the session migrations; the replacement GitHub check remains pending.
+
+Hosted demo delivery areas. [Requirements matrix](demo-delivery-activation-rtm.md) and [executed evidence](demo-delivery-activation-evidence.txt) cover four newly quotable Lagos areas and staff address confirmation.
+
+EasyGas merchant receipts and invoices: [matrix](merchant-documents-rtm.md) and [evidence](merchant-documents-evidence.txt). Local receipt ownership, EasyGas branding and the mail outbox passed; hosted rollout, real inbox verification and Paystack's external receipt preference remain open.
+
+Driver availability and staff onboarding: [matrix](driver-availability-rtm.md) and [evidence](driver-availability-evidence.txt). Approved drivers default to available, and authorised staff can set availability from the directory. Local settings and browser checks passed; hosted acceptance remains open.

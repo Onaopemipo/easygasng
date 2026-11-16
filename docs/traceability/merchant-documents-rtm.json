@@ -1,0 +1,118 @@
+{
+  "phase": "EasyGas merchant-issued payment receipts and invoices",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "MERCHANT-DOC-R01",
+      "requirement": "Issue EasyGas invoices and make the verified EasyGas receipt the canonical download. Keep the documents and their states distinct.",
+      "priority": "P0",
+      "scope": "Web and shared mobile download contract",
+      "uiReference": "Payment return, orders and wallet document libraries",
+      "route": "/payment-return, /api/receipts, /api/payments/paystack/receipt, /api/invoices/[orderId]",
+      "dataSource": "Versioned invoice snapshots and committed payment postings. Existing approved identity and EasyGas branding assets.",
+      "securityControl": "Authenticated customer or authorised staff scope; pending/cross-account references are denied and document responses are private.",
+      "implementationFiles": [
+        "apps/web/app/api/receipts/route.ts",
+        "apps/web/lib/payments/receipt-response.ts",
+        "apps/web/lib/payments/documents.ts",
+        "apps/web/lib/invoice-pdf.ts",
+        "apps/web/lib/financial-documents.ts",
+        "apps/web/next.config.ts",
+        "apps/web/components/hosted-payment.tsx",
+        "apps/web/components/document-library.tsx",
+        "apps/mobile/Invoices.tsx",
+        "docs/traceability/merchant-documents-reviewed-hashes.json"
+      ],
+      "testFiles": [
+        "tests/financial-document-integration.test.ts",
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "DOC-LIBRARY",
+        "MERCHANT-DOC-01"
+      ],
+      "negativeTests": [
+        "Pending and cross-customer requests cannot download a receipt."
+      ],
+      "evidence": [
+        "docs/traceability/merchant-documents-evidence.txt"
+      ],
+      "acceptanceGate": "MERCHANT-DOC-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local production-shaped build and HTTP integration generated and verified branded PDFs for invoice and receipt. Old links produced the same authorised receipt.",
+      "testResult": "PASS: document downloads, legacy receipt link compatibility, ownership and brand; build and asset trace passed.",
+      "outstandingWork": "Hosted deployment and installed native visual acceptance remain open."
+    },
+    {
+      "id": "MERCHANT-DOC-R02",
+      "requirement": "Offer an EasyGas-branded receipt notice for independently verified payments.",
+      "priority": "P0",
+      "scope": "Existing transactional email worker",
+      "uiReference": "Verified sandbox payment and authorised customer inbox",
+      "route": "/api/payments/paystack/verify, /api/payments/paystack/webhook, /orders, /wallet",
+      "dataSource": "Committed payment posting, current verified email, configured merchant origin and mail outbox.",
+      "securityControl": "Receipt email is deduplicated per posting, available only on mail-enabled non-demo/non-preview environments, and canceled if verification/address changes. No attached financial data in email.",
+      "implementationFiles": [
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/web/lib/transactional-mail.ts",
+        "apps/web/lib/document-brand.ts"
+      ],
+      "testFiles": [
+        "tests/paystack-orchestration.test.ts",
+        "tests/transactional-mail.test.ts"
+      ],
+      "testIds": [
+        "MERCHANT-DOC-01",
+        "PR-05"
+      ],
+      "negativeTests": [
+        "Removing email verification after posting prevents a pending message from sending."
+      ],
+      "evidence": [
+        "docs/traceability/merchant-documents-evidence.txt"
+      ],
+      "acceptanceGate": "MERCHANT-DOC-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Synthetic payment verification and a fake transport demonstrated one notification, cancellation and no client-demo email.",
+      "testResult": "PASS: committed payment, replay, verified recipients, mock mail, no duplicate send and demo suppression.",
+      "outstandingWork": "Verify an actual EasyGas sender and inbox in an authorised mail-enabled test environment."
+    },
+    {
+      "id": "MERCHANT-DOC-R03",
+      "requirement": "Ensure customers do not receive Paystack’s separate automatic receipt email.",
+      "priority": "P1",
+      "scope": "Paystack merchant dashboard and hosted merchant mail",
+      "uiReference": "Paystack Settings → Preferences",
+      "route": "Paystack merchant settings (external)",
+      "dataSource": "Paystack merchant receipt recipient preference and merchant inbox validation.",
+      "securityControl": "Apply merchant-only delivery after verifying the EasyGas receipt channel for the intended environment.",
+      "implementationFiles": [],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "MERCHANT-DOC-G03",
+      "status": "BLOCKED",
+      "reason": "The Paystack receipt preference is merchant-managed and no merchant dashboard change or real inbox delivery was verified in this phase.",
+      "testResult": "Not executed: external merchant preference and inbox.",
+      "outstandingWork": "Deploy and verify the merchant receipt path, then set Paystack receipt recipients to business only and confirm with an approved test payment."
+    }
+  ],
+  "gates": [
+    {
+      "id": "MERCHANT-DOC-G01",
+      "description": "Issue EasyGas invoices and make the verified EasyGas receipt the canonical download. Keep the documents and their states distinct.",
+      "status": "PASS_LOCAL"
+    },
+    {
+      "id": "MERCHANT-DOC-G02",
+      "description": "Offer an EasyGas-branded receipt notice for independently verified payments.",
+      "status": "PASS_LOCAL"
+    },
+    {
+      "id": "MERCHANT-DOC-G03",
+      "description": "Ensure customers do not receive Paystack’s separate automatic receipt email.",
+      "status": "OPEN"
+    }
+  ]
+}

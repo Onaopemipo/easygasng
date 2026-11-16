@@ -1,0 +1,63 @@
+{
+  "phase": "Gas-order empty-cylinder availability",
+  "productionDecision": "NO-GO",
+  "requirements": [
+    {
+      "id": "GAS-CYL-01",
+      "requirement": "Report unavailable empty cylinders during gas-order review. Keep refill-only quotation independent of company empty-cylinder stock and check physical availability again at checkout.",
+      "priority": "P1",
+      "scope": "Selected-area gas quotations, gas-order web feedback, and existing physical-cylinder checkout",
+      "uiReference": "Customer report of an inspected empty-cylinder allocation error while trying to pay",
+      "route": "/gas-order, /api/gas.quote, /api/checkout",
+      "dataSource": "Published branch products, the cylinder register, existing allocations and vehicle custody records",
+      "securityControl": "Quotation reads eligibility without reserving stock. Checkout retains locked allocation and the existing inspection, branch and custody checks.",
+      "implementationFiles": [
+        "apps/web/lib/cylinder-allocation.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/components/gas-order.tsx"
+      ],
+      "testFiles": [
+        "tests/integrity-regressions.test.ts",
+        "tests/doorstep-products.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "testIds": [
+        "GAS-CYL-01",
+        "DOOR-PRODUCT02",
+        "COMPACT-QUOTE01"
+      ],
+      "negativeTests": [
+        "GAS-CYL-01: no eligible stock, insufficient quantity and previously reserved stock reject the empty-cylinder purchase",
+        "DOOR-PRODUCT02: stock manifested on a vehicle cannot be allocated from the branch"
+      ],
+      "evidence": [
+        "docs/traceability/gas-cylinder-availability-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Local API integration confirmed the unavailable product is detected at quote time, a refill-only quote succeeds, and an eligible cylinder remains unreserved until checkout.",
+      "testResult": "PASS: 20 targeted regression tests and the web type check.",
+      "outstandingWork": "Hosted verification, live stock review and installed application checks remain open.",
+      "acceptanceGate": "GAS-CYL-G01"
+    }
+  ],
+  "gates": [
+    {
+      "id": "GAS-CYL-G01",
+      "status": "PASS",
+      "criteria": "Selected-area quote detects missing or reserved empty cylinders without affecting refill-only quotes. Checkout still checks and reserves physical serials.",
+      "evidence": [
+        "docs/traceability/gas-cylinder-availability-evidence.txt"
+      ]
+    }
+  ],
+  "coverage": {
+    "implementation": "1/1 scoped requirements",
+    "verification": "1/1 scoped requirements at local API level",
+    "critical": "No P0 requirements added. Existing cylinder-safety requirements remain tracked separately.",
+    "routes": "Gas quote and checkout API paths verified locally. Updated gas-order web copy was type-checked. Hosted and installed-app verification remains open.",
+    "gates": "1/1 scoped local gates"
+  },
+  "changes": [
+    "Added an advisory eligibility check for physical empty cylinders in gas quotes tied to a delivery location. Shared the existing allocation criteria and named the unavailable product in checkout feedback."
+  ]
+}

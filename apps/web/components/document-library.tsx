@@ -59,9 +59,9 @@ export function DocumentLibrary({
     >
       <h2>Invoices & Payment Receipts</h2>
       <p>
-        Invoices show amounts owed. Receipts are available only for committed
-        verified Paystack collections; sandbox receipts are labelled. Manual
-        credits and POS records remain in their existing histories.
+        EasyGas invoices show what you owe. EasyGas receipts confirm verified
+        payments. Test receipts are clearly labelled. Manual credits and POS
+        records remain in their existing histories.
       </p>
       <form
         className="document-library-filters"

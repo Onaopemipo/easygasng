@@ -2,6 +2,7 @@ import { localSchemaRevision } from "../apps/web/lib/db";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { NextRequest } from "next/server";
+import { PDFDocument } from "pdf-lib";
 import { fixture } from "./helpers/order-tracking-fixture";
 import { id, hashPassword, issueSession, actor } from "../apps/web/lib/auth";
 import {
@@ -185,6 +186,16 @@ test("DOC-LIBRARY: authenticated HTTP own/scoped documents, filters, source tota
       0,
     );
     const params = { params: Promise.resolve({ orderId: o.id }) };
+    const invoiceDownload = await invoiceGET(
+      new NextRequest("http://localhost:3003" + list.rows[0].downloadUrl, {
+        headers: {authorization: "Bearer " + f.actors.customer.token},
+      }),
+      params,
+    );
+    assert.equal(invoiceDownload.status, 200);
+    const invoicePdf = await PDFDocument.load(await invoiceDownload.arrayBuffer());
+    assert.equal(invoicePdf.getAuthor(), "EasyGas Energy Solutions");
+    assert.equal(invoicePdf.getTitle(), "Invoice " + issued.invoice.invoice_number);
     const request = (note: string, role = "customer") =>
       new NextRequest(
         `http://localhost:3003/api/invoices/${o.id}?note=${note}`,

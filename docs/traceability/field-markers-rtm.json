@@ -144,6 +144,37 @@
       "reason": "Chromium passed visible and accessible label text association and 390px settings layout; dark review verified.",
       "outstandingWork": "Test with a screen reader and verify native at large text settings.",
       "acceptanceGate": "FIELD-MARK-G04"
+    },
+    {
+      "id": "FIELD-MARK-05",
+      "requirement": "Show one optional marker on Building / house number, Estate / landmark and Additional directions.",
+      "scope": "Web gas-order recipient and delivery notes",
+      "priority": "P2",
+      "uiReference": "User report of duplicate optional labels on three gas-order fields",
+      "route": "/gas-order",
+      "dataSource": "Existing field requirements in the gas-order form and the shared FieldCaption component",
+      "securityControl": "Server validation and order processing continue to use the existing rules.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/field-caption.tsx"
+      ],
+      "testFiles": [
+        "tests/checkout-delivery.test.ts",
+        "tests/public-header.test.ts"
+      ],
+      "testIds": [
+        "FIELD-MARK-05",
+        "CHECKOUT-PREFILL01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/gas-order-optional-labels-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "testResult": "PASS: Local Chrome at 1440px and 390px confirmed one visible and accessible marker per optional field and required recipient controls. Seven automated tests and the web type check passed.",
+      "reason": "The gas-order fields now use the shared caption as the source of the optional marker.",
+      "outstandingWork": "Hosted deployment and verification remain open.",
+      "acceptanceGate": "FIELD-MARK-G05"
     }
   ],
   "gates": [
@@ -178,13 +209,21 @@
       "evidence": [
         "docs/traceability/field-markers-evidence.txt"
       ]
+    },
+    {
+      "id": "FIELD-MARK-G05",
+      "requirement": "FIELD-MARK-05",
+      "status": "PASS",
+      "evidence": [
+        "docs/traceability/gas-order-optional-labels-evidence.txt"
+      ]
     }
   ],
   "coverage": {
     "requirements": {
-      "total": 4,
-      "implemented": 4,
-      "verifiedComplete": 1,
+      "total": 5,
+      "implemented": 5,
+      "verifiedComplete": 2,
       "partiallyVerified": 2,
       "installedRuntimePending": 1
     },
@@ -197,7 +236,8 @@
       "browserVerified": [
         "/login",
         "/admin/settings",
-        "/admin/approvals"
+        "/admin/approvals",
+        "/gas-order"
       ],
       "nativeInstalledVerified": [],
       "hostedBrowserVerified": [
@@ -206,8 +246,8 @@
       ]
     },
     "gates": {
-      "total": 4,
-      "passed": 1,
+      "total": 5,
+      "passed": 2,
       "partial": 2,
       "pending": 1
     }
@@ -215,6 +255,7 @@
   "changeLog": [
     "Added shared and standalone form markers based on current validation. Kept conditional requirements visible and excluded search, filters and read-only values. No deployment or native build.",
     "Reviewed DriverWorkspace presentation-only changes for DDI-AUDIT01 and recorded the exact source hash separately.",
-    "15 November: Vercel demo promoted from source f75473a after backup, migration 079 and demo readiness checks. Hosted sign-in and settings labels verified."
+    "15 November: Vercel demo promoted from source f75473a after backup, migration 079 and demo readiness checks. Hosted sign-in and settings labels verified.",
+    "Removed embedded optional markers from three labels on the gas-order page and confirmed the shared caption renders each marker once."
   ]
 }

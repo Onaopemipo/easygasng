@@ -731,11 +731,21 @@ async function applyApproved(
         if (version) throw new AppError(409, "This account already has privilege changes. Review those changes before requesting access again.", "ACTIVATION_FAILED");
       }
     }
-    await tx.query("UPDATE users SET role=$1,branch_id=$2 WHERE id=$3", [
+    const initialDriverAvailability = r.proposed_value.role === "driver" &&
+      exists.role !== "driver" && exists.active;
+    await tx.query(`UPDATE users SET role=$1,branch_id=$2,
+      driver_available=CASE WHEN $4::boolean THEN true ELSE driver_available END,
+      driver_availability_updated_at=CASE WHEN $4::boolean THEN now() ELSE driver_availability_updated_at END
+      WHERE id=$3`, [
       r.proposed_value.role,
       r.proposed_value.branchId,
       r.proposed_value.userId,
+      initialDriverAvailability,
     ]);
+    if (initialDriverAvailability)
+      await audit(tx, user, "driver.availability.initialised", exists.id, "success", {
+        requestId: r.id, available: true,
+      });
     // The identity change invalidates prior grants and advances the version.
     // Write the newly approved grants only after that trigger has run.
     if (invite && plan?.changes.length) {

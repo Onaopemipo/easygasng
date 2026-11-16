@@ -15,8 +15,7 @@ import {
   initializePayment,
   reconcilePayment,
 } from "../../../../../lib/payments/orchestrator";
-import { paymentReceipt } from "../../../../../lib/payments/documents";
-import { invoicePdf } from "../../../../../lib/invoice-pdf";
+import { receiptResponse } from "../../../../../lib/payments/receipt-response";
 import { receiveAndVerifyPaystackEvent } from "../../../../../lib/payments/webhooks";
 export const runtime = "nodejs";
 async function handle(
@@ -25,6 +24,7 @@ async function handle(
 ) {
   try {
     const { operation } = await params;
+    if (operation === "receipt" && req.method === "GET") return receiptResponse(req);
     const db = await getDb();
     if (operation === "configuration" && req.method === "GET") {
       const token =
@@ -44,38 +44,6 @@ async function handle(
           },
         },
       );
-    }
-    if (operation === "receipt" && req.method === "GET") {
-      const token =
-        req.headers.get("authorization")?.replace(/^Bearer /i, "") ??
-        req.cookies.get("easygas_session")?.value ??
-        null;
-      const receipt = await db.transaction(async (tx) =>
-        paymentReceipt(
-          tx,
-          await actor(tx, token),
-          z.string().uuid().parse(req.nextUrl.searchParams.get("intentId")),
-        ),
-      );
-      if (req.nextUrl.searchParams.get("format") === "pdf") {
-        const bytes = await invoicePdf(receipt);
-        return new NextResponse(new Uint8Array(bytes), {
-          headers: {
-            "Content-Type": "application/pdf",
-            "Content-Disposition": `attachment; filename="${receipt.invoice_number}.pdf"`,
-            "Cache-Control": "private, no-store",
-            "X-Content-Type-Options": "nosniff",
-            "Content-Security-Policy": "default-src 'none'; sandbox",
-            Vary: "Cookie, Authorization",
-          },
-        });
-      }
-      return NextResponse.json(receipt, {
-        headers: {
-          "Cache-Control": "private, no-store",
-          Vary: "Cookie, Authorization",
-        },
-      });
     }
     const provider = paystackRuntime();
     if (operation === "webhook") {

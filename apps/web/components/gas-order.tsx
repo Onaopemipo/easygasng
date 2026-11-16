@@ -407,6 +407,12 @@ export default function GasOrder({
       ?.focus();
   }
 
+  function orderError(error: { message: string; code?: string }) {
+    return error.code === "EMPTY_CYLINDER_UNAVAILABLE"
+      ? `${error.message} If you already have a cylinder, use Edit cart under Included products to remove the empty cylinder and continue with the refill.`
+      : error.message;
+  }
+
   async function review(e: FormEvent) {
     e.preventDefault();
     if (!canReview || requestLock.current) return;
@@ -437,7 +443,7 @@ export default function GasOrder({
       setError(
         e.name === "TimeoutError"
           ? "The quotation timed out. Try again."
-          : e.message,
+          : orderError(e),
       );
       if (e.code === "DELIVERY_COVERAGE_PENDING")
         retryCatalogue((revision) => revision + 1);
@@ -492,7 +498,7 @@ export default function GasOrder({
       onDone?.();
     } catch (e: any) {
       setQuote(null);
-      setError(e.message);
+      setError(orderError(e));
       retryCatalogue((revision) => revision + 1);
     } finally {
       requestLock.current = false;
@@ -1096,9 +1102,9 @@ export default function GasOrder({
                 {([
                   ["name", "Recipient name"],
                   ["phone", "Recipient phone"],
-                  ["building", "Building / house number (optional)"],
-                  ["landmark", "Estate / landmark (optional)"],
-                  ["directions", "Additional directions (optional)"],
+                  ["building", "Building / house number"],
+                  ["landmark", "Estate / landmark"],
+                  ["directions", "Additional directions"],
                 ] as const).map(([k, label]) => (
                   <label key={k}>
                     <FieldCaption required={k === "name" || k === "phone"}>{label}</FieldCaption>

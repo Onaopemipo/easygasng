@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { createDatabase, migrate, one } from "../apps/web/lib/db";
 import { seed } from "../apps/web/lib/seed";
 import { dispatch } from "../apps/web/lib/service";
-import { id } from "../apps/web/lib/auth";
+import { hashPassword, id } from "../apps/web/lib/auth";
 const requested: Record<string, number> = {
   "cylinder-empty-6": 2600000,
   "cylinder-empty-12": 4200000,
@@ -49,7 +49,7 @@ test("requested catalogue prices are exact, separate empty cylinders from refill
   );
   await db.close?.();
 });
-test("upgrade preserves stock, reservations and confirmed order prices and only imports once", async () => {
+test("CATALOGUE-UPGRADE01: upgrade preserves stock, reservations and confirmed order prices and only imports once", async () => {
   const db = await createDatabase("memory://");
   await db.exec(await readFile("database/migrations/001_initial.sql", "utf8"));
   await seed(db);
@@ -75,27 +75,23 @@ test("upgrade preserves stock, reservations and confirmed order prices and only 
   await db.query(
     "UPDATE settings SET value='true' WHERE key IN ('delivery.enabled','payment.cod','publish.refill-6') AND scope='lagos'",
   );
-  const customer = await dispatch(
-    "register",
-    null,
-    {
-      name: "Catalogue migration test",
-      email: "catalogue-migration@example.test",
-      password: "Catalogue-test-only-123!",
-    },
-    db,
-  );
-  // Historical fixture uses the pre-011 schema directly. The current application
-  // correctly requires current schema; it must not be invoked against old tables.
+  // Set up historical records using their original schema. Current registration
+  // creates a session using columns introduced after this upgrade starting point.
+  const customerId = id();
   const order = { id: id() };
-  const historicalCustomer = (await one(
-    db,
-    "SELECT id FROM users WHERE email='catalogue-migration@example.test'",
-  ))!;
   await db.transaction(async (tx) => {
     await tx.query(
+      "INSERT INTO users(id,name,email,password_hash,role) VALUES ($1,$2,$3,$4,'customer')",
+      [
+        customerId,
+        "Catalogue migration test",
+        "catalogue-migration@example.test",
+        hashPassword("Catalogue-test-only-123!"),
+      ],
+    );
+    await tx.query(
       "INSERT INTO orders(id,reference,customer_id,branch_id,delivery_code_hash,delivery_code_expires_at,payment_method,subtotal_kobo,delivery_kobo,total_kobo,address,delivery_date,delivery_window,idempotency_key,request_hash) VALUES ($1,$2,$3,'lagos','historical-test-hash',now()+interval '2 days','cash_on_delivery',700000,100000,800000,'{}','2026-10-30','14:00–18:00',$4,'historical-test-request')",
-      [order.id, "HISTORICAL-" + order.id, historicalCustomer.id, id()],
+      [order.id, "HISTORICAL-" + order.id, customerId, id()],
     );
     await tx.query(
       "INSERT INTO order_items(order_id,product_id,name,quantity,unit_price_kobo) VALUES ($1,'refill-6','Historical 6kg refill',1,700000)",
@@ -106,7 +102,7 @@ test("upgrade preserves stock, reservations and confirmed order prices and only 
     );
     await tx.query(
       "INSERT INTO stock_movements(id,branch_id,product_id,quantity,kind,reason,actor_id,reference) VALUES ($1,'lagos','refill-6',1,'reserved','Historical fixture reservation',$2,$3)",
-      [id(), historicalCustomer.id, order.id + ":reserve"],
+      [id(), customerId, order.id + ":reserve"],
     );
   });
   await migrate(db);

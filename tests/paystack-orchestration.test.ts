@@ -3,7 +3,13 @@ import test from "node:test";
 import { invoiceAction } from "../apps/web/lib/invoices";
 import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
-import { createDatabase, migrate, one } from "../apps/web/lib/db";
+import { createDatabase, localSchemaRevision, migrate, one } from "../apps/web/lib/db";
+import { PDFDocument } from "pdf-lib";
+import { NextRequest } from "next/server";
+import { GET as receiptGET } from "../apps/web/app/api/receipts/route";
+import { GET as legacyReceiptGET } from "../apps/web/app/api/payments/paystack/[operation]/route";
+import { financialDocuments } from "../apps/web/lib/financial-documents";
+import { deliverTransactionalMail } from "../apps/web/lib/transactional-mail";
 import { id, hashPassword, issueSession } from "../apps/web/lib/auth";
 import {
   preparePayment,
@@ -110,6 +116,89 @@ async function fixture() {
     callbackUrl: () => callbackUrl,
   };
 }
+test("MERCHANT-DOC-01: verified payment produces a private EasyGas receipt and at most one branded email", async () => {
+  const f = await fixture();
+  const g = globalThis as any;
+  const oldDb = g.easygasDb, oldVersion = g.easygasLocalVersion;
+  const config = {
+    EASYGAS_EMAIL_ENABLED: "true",
+    EASYGAS_CLIENT_DEMO: "false",
+    EASYGAS_PREVIEW: "false",
+    EASYGAS_DOCUMENT_TEMPLATE_V2: "true",
+  };
+  const previous = Object.fromEntries(Object.keys(config).map((k) => [k, process.env[k]]));
+  Object.assign(process.env, config);
+  g.easygasDb = Promise.resolve(f.db);
+  g.easygasLocalVersion = localSchemaRevision;
+  try {
+    await f.db.query("UPDATE users SET verified=true WHERE id=$1", [f.uid]);
+    const initialize = async () => {
+      const q = await preparePayment(f.db, f.token, {
+        purpose: "wallet", amountKobo: 20000, requestKey: id(),
+      });
+      await initializePayment(f.db, f.token, {
+        intentId: q.id, acceptedGrossKobo: q.quote.grossKobo,
+        acceptedPolicyVersion: q.quote.gatewayPolicyVersion,
+      }, f.runtime);
+      return q;
+    };
+    const q = await initialize();
+    const receiptPath = "/api/receipts?format=pdf&intentId=" + q.id;
+    const request = (route: string, token?: string) => new NextRequest(
+      f.runtime.callbackOrigin + route,
+      token ? {headers: {authorization: "Bearer " + token}} : undefined,
+    );
+    // Pending and cross-customer requests cannot download a receipt.
+    assert.equal((await receiptGET(request(receiptPath, f.token))).status, 404);
+    assert.equal((await receiptGET(request(receiptPath))).status, 401);
+    assert.equal((await reconcilePayment(f.db, q.attempt.reference, f.runtime)).status, "paid");
+    assert.equal((await reconcilePayment(f.db, q.attempt.reference, f.runtime)).replayed, true);
+    const list = await financialDocuments(f.db, await actor(f.db, f.token), {type: "receipt"});
+    assert.equal(list.total, 1);
+    assert.equal(list.rows[0].downloadUrl, receiptPath);
+    assert.equal((await receiptGET(request(receiptPath, f.otherToken))).status, 404);
+    const download = await receiptGET(request(receiptPath, f.token));
+    assert.equal(download.status, 200);
+    assert.match(download.headers.get("cache-control")!, /private, no-store/);
+    const pdf = await PDFDocument.load(await download.arrayBuffer());
+    assert.equal(pdf.getAuthor(), "EasyGas Energy Solutions");
+    assert.equal(pdf.getTitle(), "Payment Receipt " + list.rows[0].number);
+    const legacyPath = receiptPath.replace("/api/receipts", "/api/payments/paystack/receipt");
+    const legacyParams = {params: Promise.resolve({operation: "receipt"})};
+    assert.equal((await legacyReceiptGET(request(legacyPath, f.otherToken), legacyParams)).status, 404);
+    assert.equal((await legacyReceiptGET(request(legacyPath, f.token), legacyParams)).status, 200);
+    const mail = await f.db.query("SELECT subject,body FROM message_outbox WHERE dedupe_key LIKE 'payment-receipt:%'");
+    assert.equal(mail.rows.length, 1);
+    assert.equal(mail.rows[0].subject, "Your EasyGas test payment receipt");
+    assert.match(mail.rows[0].body, /No live funds were collected/);
+    assert.ok(mail.rows[0].body.includes(f.runtime.callbackOrigin + "/wallet"));
+    const sent: string[] = [];
+    const transport = { send: async (message: { subject: string }) => { sent.push(message.subject); } };
+    assert.equal((await deliverTransactionalMail(f.db, transport)).accepted, 1);
+    assert.equal((await deliverTransactionalMail(f.db, transport)).accepted, 0);
+    assert.deepEqual(sent, ["Your EasyGas test payment receipt"]);
+    // Removing email verification after posting prevents a pending message from sending.
+    const pendingMail = await initialize();
+    assert.equal((await reconcilePayment(f.db, pendingMail.attempt.reference, f.runtime)).status, "paid");
+    await f.db.query("UPDATE users SET verified=false WHERE id=$1", [f.uid]);
+    const blocked = await deliverTransactionalMail(f.db, { send: async () => assert.fail("Unverified receipt email") });
+    assert.equal(blocked.accepted, 0);
+    assert.equal((await one(f.db, "SELECT count(*)::int n FROM message_outbox WHERE dedupe_key LIKE 'payment-receipt:%' AND status='cancelled'"))?.n, 1);
+    await f.db.query("UPDATE users SET verified=true WHERE id=$1", [f.uid]);
+    process.env.EASYGAS_CLIENT_DEMO = "true";
+    const demo = await initialize();
+    assert.equal((await reconcilePayment(f.db, demo.attempt.reference, f.runtime)).status, "paid");
+    assert.equal((await f.db.query("SELECT id FROM message_outbox WHERE dedupe_key LIKE 'payment-receipt:%'")).rows.length, 2);
+  } finally {
+    g.easygasDb = oldDb;
+    g.easygasLocalVersion = oldVersion;
+    for (const [k,v] of Object.entries(previous)) {
+      if (v === undefined) delete process.env[k];
+      else process.env[k] = v;
+    }
+    await f.db.close?.();
+  }
+});
 test("PAY-RETURN-01: native callback retains the merchant origin and intent without accepting a redirect URL", async () => {
   const f = await fixture();
   try {

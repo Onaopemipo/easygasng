@@ -12,7 +12,7 @@ type DeliveryLocation = {
 };
 
 const coverageHelp =
-  "Choose a confirmed area that matches the caller’s address. If the correct area is pending, ask a Business Owner to confirm its boundary in Settings → Delivery Locations.";
+  "Choose a confirmed area that matches the caller’s address. If the correct area is pending, ask an Admin to confirm its boundary in Settings → Delivery Locations.";
 
 export default function AssistedOrder({
   user,

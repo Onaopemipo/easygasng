@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "./workspace-link";
 import { navigationItems } from "../../../packages/business-rules/src/admin-navigation";
+import { staffRoleLabel } from "../../../packages/business-rules/src/staff-roles";
 import {
   CalendarDays,
   CheckCircle2,
@@ -686,7 +687,7 @@ export default function TechniciansAvailability({ user }: { user: any }) {
                       .filter((o) => o.id !== user.id)
                       .map((o) => ({
                         value: o.id,
-                        label: o.name + " · " + pretty(o.role),
+                        label: o.name + " · " + staffRoleLabel(o.role),
                       })),
                     value: target?.id,
                   },

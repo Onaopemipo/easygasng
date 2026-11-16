@@ -20,9 +20,9 @@ export default function OwnerGovernanceLinks({
   const permitted = pages.filter((item) => allowed.includes(item.id));
   if (!permitted.some((item) => item.id === section)) return null;
   return (
-    <nav aria-label="Business Owner management shortcuts" style={{ margin: "12px 0 20px" }}>
+    <nav aria-label="Admin management shortcuts" style={{ margin: "12px 0 20px" }}>
       <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 800, letterSpacing: ".06em", color: "var(--text-muted, #53665b)" }}>
-        BUSINESS OWNER · MANAGEMENT & GOVERNANCE
+        ADMIN · MANAGEMENT & GOVERNANCE
       </p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
         {permitted.map((item) => <Link

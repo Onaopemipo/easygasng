@@ -7,6 +7,7 @@ const config: NextConfig = {
   outputFileTracingRoot: path.resolve(process.cwd(), "../.."),
   outputFileTracingIncludes: {
     "/api/payments/paystack/*": ["./assets/fonts/*.ttf", "./public/assets/easygas-logo-hd.png"],
+    "/api/receipts": ["./assets/fonts/*.ttf", "./public/assets/easygas-logo-hd.png"],
     "/api/invoices/*": [
       "./assets/fonts/*.ttf",
       "./public/assets/easygas-logo-hd.png",

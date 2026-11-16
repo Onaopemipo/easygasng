@@ -1,0 +1,36 @@
+✔ DOC-IDENTITY-email: malformed or unsupported identity cannot activate (1.699208ms)
+✔ DOC-IDENTITY-site: malformed or unsupported identity cannot activate (0.212375ms)
+✔ DOC-IDENTITY-site-credentials: malformed or unsupported identity cannot activate (0.088167ms)
+✔ DOC-IDENTITY-unverified: malformed or unsupported identity cannot activate (0.072208ms)
+✔ DOC-IDENTITY-script: malformed or unsupported identity cannot activate (0.055209ms)
+✔ DOC-IDENTITY-unknown-key: malformed or unsupported identity cannot activate (0.060042ms)
+✔ DOC-IDENTITY-phone: malformed or unsupported identity cannot activate (0.053916ms)
+✔ DOC-IDENTITY-APPROVAL: legal identity requires independent approval and never rewrites issued documents (1202.020875ms)
+✔ DOC-LIBRARY: authenticated HTTP own/scoped documents, filters, source totals, note privacy and no financial side effects (1430.119042ms)
+✔ DOC-STATUS-BUDGET: status filtering refuses incomplete page-only counts above its canonical read budget (779.908666ms)
+✔ MERCHANT-DOC-01: verified payment produces a private EasyGas receipt and at most one branded email (1617.234458ms)
+✔ PAY-RETURN-01: native callback retains the merchant origin and intent without accepting a redirect URL (680.761542ms)
+✔ PAY-POST: exact principal wallet credit, stable init, authenticated duplicate webhook and ledger immutability (684.229584ms)
+✔ PAY-ZERO-EFFECT: forged events, wrong amount/currency/environment, cross-customer and driver requests never credit funds (3962.72425ms)
+✔ PAY-RECOVERY: initialization timeout never launches a second charge; fee variance is separate from principal (655.838541ms)
+✔ PAY-RESUME: failed provider states persist without wallet effects (672.872666ms)
+✔ PAY-EXPIRY: prepared quote expiry is visible and cannot initialize (650.571958ms)
+✔ PAY-INVOICE: verified collection allocates principal to existing immutable invoice, never fees or duplicate revenue (697.80025ms)
+✔ WALLET-CARD: wallet checkout restricts approved channels to card and rejects transfer-only policy (632.977167ms)
+✔ WALLET-INSTANT: signed webhook verifies and credits card funding without waiting for worker or manual approval (638.048541ms)
+✔ DOC-POSTING-SNAPSHOT: new receipt preserves captured identity and customer despite later changes (668.211666ms)
+✔ MWEB-03: direct card orders retain server totals, ownership, fee consent and exactly-once ledger posting (698.884959ms)
+✔ WALLET-CARD-BRANCH: new unassigned customer can fund once in a single active branch; ambiguous context and forged branch are rejected (680.869916ms)
+✔ WALLET-CONFIG-SCOPE: missing wallet context is reported without disabling existing invoice/order card capability (648.837375ms)
+✔ PR-05: SMTP outbox sends once, never retries unknown outcomes, rejects unauthorised retry and preserves private message content (1022.915833ms)
+✔ PR-06: expired recovery messages cancel, explicit SMTP rejection backs off, and insecure SMTP configuration is refused (735.345875ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20495.469084
+
+Additional checks: web and mobile TypeScript passed. The web preview build passed and listed /api/receipts as a dynamic route. The generated receipt route trace contained the EasyGas logo and both Noto Sans font files. No external email or payment was sent.

@@ -5,6 +5,7 @@ import { FieldCaption, fieldAccessibilityLabel, Text, TextInput } from "./typogr
 import { useTheme, type Preference } from "./theme";
 import { EasyGasLoader } from "./EasyGasLoader";
 import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
+import { staffRoleLabel } from "../../packages/business-rules/src/staff-roles";
 
 type API = (action: string, data?: any) => Promise<any>;
 type Owner = { id: string; role: string; name?: string; email?: string };
@@ -81,7 +82,7 @@ export default function OwnerSupportWorkspace({ user, screen, api, navigate, sig
         setDenied(true);
         setSnapshot(null);
         setProfile(null);
-        setError("Your Business Owner access has changed. Sign out and sign back in to refresh your workspace.");
+        setError("Your Admin access has changed. Sign out and sign back in to refresh your workspace.");
         return;
       }
       const nextProfile = screen === "owner-profile" ? await apiRef.current("account.profile") : null;
@@ -195,7 +196,7 @@ export default function OwnerSupportWorkspace({ user, screen, api, navigate, sig
   const notices = snapshot?.notifications ?? [];
   return (
     <View style={s.wrap}>
-      <Text style={{ color: colors.primary, fontSize: 12, fontWeight: "800", letterSpacing: 1 }}>EASYGAS · BUSINESS OWNER</Text>
+      <Text style={{ color: colors.primary, fontSize: 12, fontWeight: "800", letterSpacing: 1 }}>EASYGAS · {staffRoleLabel("owner").toUpperCase()}</Text>
       <Text style={{ color: text, fontSize: 25, fontWeight: "800" }}>
         {screen === "owner-profile" ? "Profile & Security" : "Notifications"}
       </Text>

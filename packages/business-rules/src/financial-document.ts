@@ -248,3 +248,7 @@ export function financialDocument(invoice: any): FinancialDocument {
     throw new Error("Document content limit exceeded.");
   return model;
 }
+
+export function easyGasReceiptDownloadUrl(intentId: string) {
+  return "/api/receipts?format=pdf&intentId=" + encodeURIComponent(intentId);
+}

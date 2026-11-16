@@ -1,5 +1,34 @@
 import { one, type SQL } from "./db";
 import { id, AppError, type Actor } from "./auth";
+
+export async function requireAvailableEmptyCylinders(
+  tx: SQL,
+  branch: string,
+  productName: string,
+  sizeKg: number | string | null,
+  quantity: number,
+  lock = false,
+) {
+  const units = (
+    await tx.query(
+      `SELECT c.id FROM cylinders c
+       WHERE c.branch_id=$1 AND c.size_kg=$2 AND c.status='empty'
+       AND c.ownership='company' AND c.customer_id IS NULL AND c.test_due>CURRENT_DATE
+       AND NOT EXISTS(SELECT 1 FROM cylinder_allocations a WHERE a.cylinder_id=c.id AND a.state IN ('reserved','issued'))
+       AND NOT EXISTS(SELECT 1 FROM vehicle_product_serials v WHERE v.cylinder_id=c.id AND v.state IN ('loaded','reserved'))
+       ORDER BY c.id LIMIT $3${lock ? " FOR UPDATE OF c" : ""}`,
+      [branch, sizeKg, quantity],
+    )
+  ).rows;
+  if (units.length !== quantity)
+    throw new AppError(
+      409,
+      `${productName} is currently unavailable. Not enough inspected empty cylinders are in stock.`,
+      "EMPTY_CYLINDER_UNAVAILABLE",
+    );
+  return units;
+}
+
 export async function allocateCylinders(
   tx: SQL,
   user: Actor,
@@ -10,21 +39,13 @@ export async function allocateCylinders(
   for (const item of items) {
     const p = await one(
       tx,
-      "SELECT category,size_kg FROM products WHERE id=$1",
+      "SELECT name,category,size_kg FROM products WHERE id=$1",
       [item.productId],
     );
     if (p?.category !== "Empty cylinders") continue;
-    const units = (
-      await tx.query(
-        "SELECT c.id FROM cylinders c WHERE c.branch_id=$1 AND c.size_kg=$2 AND c.status='empty' AND c.ownership='company' AND c.customer_id IS NULL AND c.test_due>CURRENT_DATE AND NOT EXISTS(SELECT 1 FROM cylinder_allocations a WHERE a.cylinder_id=c.id AND a.state IN ('reserved','issued')) AND NOT EXISTS(SELECT 1 FROM vehicle_product_serials v WHERE v.cylinder_id=c.id AND v.state IN ('loaded','reserved')) ORDER BY c.id LIMIT $3 FOR UPDATE OF c",
-        [branch, p.size_kg, item.quantity],
-      )
-    ).rows;
-    if (units.length !== item.quantity)
-      throw new AppError(
-        409,
-        "Not enough inspected empty cylinders are available for allocation.",
-      );
+    const units = await requireAvailableEmptyCylinders(
+      tx, branch, p.name, p.size_kg, item.quantity, true,
+    );
     for (const c of units)
       await tx.query(
         "INSERT INTO cylinder_allocations(id,cylinder_id,order_id,sale_id,state) VALUES ($1,$2,$3,$4,'reserved')",

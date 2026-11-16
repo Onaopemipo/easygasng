@@ -238,6 +238,47 @@
       "reason": "Authenticated and archive-verified backup before schema 077 and 078. Matching Vercel deployment is READY. All 13 retained test identities signed in with their expected roles.",
       "testResult": "PASS: Authenticated and archive-verified backup before schema 077 and 078. Matching Vercel deployment is READY. All 13 retained test identities signed in with their expected roles.",
       "outstandingWork": "A coordinated database restore was not exercised. Commercial production remains NO-GO."
+    },
+    {
+      "id": "STAFF-ROLE08",
+      "requirement": "Display the five staff roles as Admin, Inventory, Service Manager, Driver and Technician.",
+      "priority": "P1",
+      "scope": "Shared staff role catalogue and its web and native presentation",
+      "uiReference": "Five display names specified by the user",
+      "route": "/admin, /admin/staff, /admin/drivers and native role workspaces",
+      "implementationFiles": [
+        "packages/business-rules/src/staff-roles.ts",
+        "apps/web/components/admin-navigation.tsx",
+        "apps/web/components/staff-management.tsx",
+        "apps/web/components/staff-invitation.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/assisted-order.tsx",
+        "apps/web/components/owner-governance-links.tsx",
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/technicians-availability.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/OwnerSupportWorkspace.tsx",
+        "apps/mobile/TechniciansManagement.tsx"
+      ],
+      "dataSource": "Canonical role code from the account and shared staff role catalogue",
+      "securityControl": "Display labels resolve the existing role codes and legacy aliases. Existing privilege and branch checks enforce access.",
+      "testFiles": [
+        "tests/staff-role-consolidation.test.ts",
+        "tests/navigation.test.ts",
+        "tests/staff-privileges.test.ts"
+      ],
+      "testIds": [
+        "STAFF-ROLE08"
+      ],
+      "evidence": [
+        "docs/traceability/staff-role-labels-evidence.txt"
+      ],
+      "acceptanceGate": "STAFF-ROLE-G08",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The local staff invitation dropdown uses all five requested names. Authenticated portal checks confirmed the displayed names and canonical role codes for all three administrative roles. The fixed-role driver invitation uses the short label.",
+      "testResult": "PASS: 63 targeted tests, web and mobile type checks, and authenticated local Chrome checks.",
+      "outstandingWork": "New labels await hosted and installed-app verification."
     }
   ],
   "gates": [
@@ -296,19 +337,28 @@
       "evidence": [
         "docs/traceability/staff-role-consolidation-evidence.txt"
       ]
+    },
+    {
+      "id": "STAFF-ROLE-G08",
+      "status": "VERIFIED_COMPLETE",
+      "criteria": "Verify all five names in the shared catalogue and staff invitation UI, and verify canonical codes and access through automated tests.",
+      "evidence": [
+        "docs/traceability/staff-role-labels-evidence.txt"
+      ]
     }
   ],
   "coverage": {
-    "implementation": "7/7",
-    "verification": "7/7 for the demo rollout",
+    "implementation": "8/8",
+    "verification": "8/8 in their recorded scopes, including local evidence for STAFF-ROLE08",
     "critical": "7/7 verified for the demo rollout",
-    "routes": "Hosted web/API and installed simulator/emulator scope checked. Physical device and commercial production are outside the demo cutover.",
-    "gates": "7/7 for the demo rollout"
+    "routes": "Hosted web/API and installed simulator/emulator checks covered the original demo cutover. The new labels were checked in the local web portal. Hosted and installed-app verification of the new labels remains open.",
+    "gates": "8/8 in their recorded scopes"
   },
   "changes": [
     "User confirmed business-wide authority for existing Administrators and reassignment of Safety Officers to Admin / Business Owner.",
     "Customer and commercial account types continue outside the five staff roles.",
     "Finance audit reads are branch-scoped and require explicit audit-event branch attribution.",
-    "The authorised Vercel demo cutover completed. Installed iOS and minified Android validation completed against a synthetic local database."
+    "The authorised Vercel demo cutover completed. Installed iOS and minified Android validation completed against a synthetic local database.",
+    "The five staff role display labels were shortened. Canonical role codes, aliases and access rules still govern assignments and permissions."
   ]
 }

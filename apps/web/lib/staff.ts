@@ -3,6 +3,7 @@ import { z } from "zod";
 import { one, type SQL } from "./db";
 import { allow, AppError, recentVerification, type Actor } from "./auth";
 import { audit, propose } from "./governance";
+import { setDriverAvailability } from "./driver-availability";
 export async function staffAction(
   tx: SQL,
   action: string,
@@ -59,6 +60,16 @@ export async function staffAction(
     )
       throw new AppError(404, "No eligible account found in your branch.");
     return target;
+  }
+  if (action === "staff.driver.availability") {
+    allow(user, ["owner", "manager"]);
+    recentVerification(user);
+    const d = z.object({
+      userId: z.string().uuid(),
+      available: z.boolean(),
+      reason: z.string().trim().min(10).max(1000),
+    }).strict().parse(input);
+    return setDriverAvailability(tx, user, d.userId, d.available, d.reason);
   }
   if (action === "staff.edit") {
     allow(user, ["owner", "manager"]);

@@ -600,11 +600,21 @@ test("DRIVER-MGMT-01: directory management reuses audited staff actions and prot
     const owner = await f.call("owner", "drivers.workspace");
     assert.equal(manager.canEdit, true);
     assert.equal(manager.canManageAccounts, false);
+    assert.equal(manager.canChangeAvailability, true);
     assert.deepEqual(manager.branches, []);
     assert.equal(owner.canManageAccounts, true);
     assert.ok(owner.branches.some((branch: any) => branch.value === "lagos"));
+    const availability = { userId: driverId, available: false, reason };
+    await assert.rejects(f.call("service_manager", "staff.driver.availability", availability), { code: "REAUTH_REQUIRED" });
     await assert.rejects(f.call("service_manager", "staff.edit", edit), { code: "REAUTH_REQUIRED" });
     await f.call("service_manager", "reauth", { password });
+    // Another branch and a non-manager cannot change this preference.
+    await assert.rejects(f.call("service_manager", "staff.driver.availability", { ...availability, userId: otherId }), /another branch/);
+    await assert.rejects(f.call("finance", "staff.driver.availability", availability), /permission|authorised/i);
+    await f.call("service_manager", "staff.driver.availability", availability);
+    assert.equal((await f.call("service_manager", "drivers.workspace")).drivers[0].driver_available, false);
+    await f.call("service_manager", "staff.driver.availability", { ...availability, available: true });
+    assert.equal((await f.call("service_manager", "drivers.workspace")).drivers[0].driver_available, true);
     await assert.rejects(f.call("service_manager", "staff.edit", { ...edit, userId: otherId }), /another branch/);
     await assert.rejects(f.call("service_manager", "staff.suspend", target), /permission/);
     await f.call("service_manager", "staff.edit", edit);
@@ -617,16 +627,23 @@ test("DRIVER-MGMT-01: directory management reuses audited staff actions and prot
       VALUES($1,$1,$2,'lagos','assigned','cash',0,0,0,'{}','2026-11-14','09:00–12:00',$3,$1,$1,$1,now())`,
       [orderId, f.actors.customer.id, driverId]);
     await assert.rejects(f.call("owner", "staff.suspend", target), /active deliveries/);
+    // Active deliveries block changing the driver to unavailable.
+    await assert.rejects(f.call("owner", "staff.driver.availability", availability), /active assignments/);
     assert.equal((await one(f.db, "SELECT status FROM orders WHERE id=$1", [orderId]))?.status, "assigned");
     await f.db.query("UPDATE orders SET status='delivered' WHERE id=$1", [orderId]);
     const driverToken = await issueSession(f.db, driverId);
     await f.call("owner", "staff.suspend", target);
+    await assert.rejects(f.call("owner", "staff.driver.availability", { ...availability, available: true }), /active driver account/);
     await f.call("owner", "staff.reinstate", target);
     const driver = await one(f.db, "SELECT active,driver_available FROM users WHERE id=$1", [driverId]);
     assert.deepEqual(driver, { active: true, driver_available: false });
     await assert.rejects(dispatch("me", driverToken, {}, f.db), /sign in|session/i);
-    const events = await f.db.query("SELECT action FROM audit_events WHERE target=$1 ORDER BY action", [driverId]);
-    assert.deepEqual(events.rows.map((row) => row.action), ["staff.profile_updated", "staff.reinstated", "staff.suspended"]);
+    const events = await f.db.query("SELECT action,actor_id,detail FROM audit_events WHERE target=$1 ORDER BY action", [driverId]);
+    assert.deepEqual(events.rows.map((row) => row.action), ["driver.availability.changed", "driver.availability.changed", "staff.profile_updated", "staff.reinstated", "staff.suspended"]);
+    for (const event of events.rows.filter((row) => row.action === "driver.availability.changed")) {
+      assert.equal(event.actor_id, f.actors.service_manager.id);
+      assert.equal(event.detail.reason, reason);
+    }
     process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY ??= "7".repeat(64);
     const invitation = await f.call("owner", "staff.invite", {
       name: "New Test Driver", email: "new-directory-driver@example.test", branchId: "lagos",
@@ -641,6 +658,8 @@ test("DRIVER-MGMT-01: directory management reuses audited staff actions and prot
       changes: [{ privilege: "staff.manage", effect: "deny" }], reason,
     });
     assert.equal((await f.call("service_manager", "drivers.workspace")).canEdit, false);
+    assert.equal((await f.call("service_manager", "drivers.workspace")).canChangeAvailability, false);
+    await assert.rejects(f.call("service_manager", "staff.driver.availability", availability), /revoked/i);
     await assert.rejects(f.call("service_manager", "staff.edit", edit), /revoked/i);
   } finally {
     if (originalMessageKey === undefined) delete process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY;

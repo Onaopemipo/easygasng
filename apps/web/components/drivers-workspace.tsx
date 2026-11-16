@@ -26,16 +26,19 @@ type Directory = {
   drivers: Driver[];
   canEdit: boolean;
   canManageAccounts: boolean;
+  canChangeAvailability: boolean;
   branches: { value: string; label: string }[];
 };
 
 function DriverManagement({
   driver,
   canManageAccounts,
+  canChangeAvailability,
   onSaved,
 }: {
   driver: Driver;
   canManageAccounts: boolean;
+  canChangeAvailability: boolean;
   onSaved: (message: string) => void;
 }) {
   const [action, setAction] = useState("staff.edit");
@@ -46,11 +49,27 @@ function DriverManagement({
   const inFlight = useRef(false);
   const edit = action === "staff.edit";
   const suspend = action === "staff.suspend";
-  const label = edit
-    ? "Save driver profile"
-    : suspend
-      ? "Suspend account"
-      : "Reinstate account";
+  const changeAvailability = action === "staff.driver.availability";
+  const nextAvailable = !driver.driver_available;
+  const availabilityLabel = nextAvailable
+    ? "Mark available for dispatch"
+    : "Mark unavailable";
+  const label = changeAvailability
+    ? availabilityLabel
+    : edit
+      ? "Save driver profile"
+      : suspend
+        ? "Suspend account"
+        : "Reinstate account";
+  const success = changeAvailability
+    ? nextAvailable
+      ? "Driver marked available for dispatch."
+      : "Driver marked unavailable."
+    : edit
+      ? "Driver profile updated."
+      : suspend
+        ? "Driver account suspended."
+        : "Driver account reinstated.";
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (inFlight.current) return;
@@ -65,17 +84,11 @@ function DriverManagement({
       }
       await api(action, {
         userId: driver.id,
-        expectedRole: "driver",
         reason: form.get("reason"),
+        ...(changeAvailability ? { available: nextAvailable } : { expectedRole: "driver" }),
         ...(edit ? { name: form.get("name") } : {}),
       });
-      onSaved(
-        edit
-          ? "Driver profile updated."
-          : suspend
-            ? "Driver account suspended."
-            : "Driver account reinstated.",
-      );
+      onSaved(success);
     } catch (e) {
       const problem = e as Error & { code?: string };
       setError(problem.message);
@@ -96,7 +109,7 @@ function DriverManagement({
       <p className="muted">
         {driver.name} · {driver.branch ?? "No assigned branch"}
       </p>
-      {canManageAccounts && (
+      {(canManageAccounts || (canChangeAvailability && driver.active)) && (
         <label>
           <FieldCaption required>Action</FieldCaption>
           <select
@@ -108,10 +121,13 @@ function DriverManagement({
             }}
           >
             <option value="staff.edit">Edit driver profile</option>
-            {driver.active ? (
-              <option value="staff.suspend">Suspend account</option>
-            ) : (
-              <option value="staff.reinstate">Reinstate account</option>
+            {canChangeAvailability && driver.active && (
+              <option value="staff.driver.availability">{availabilityLabel}</option>
+            )}
+            {canManageAccounts && (
+              driver.active
+                ? <option value="staff.suspend">Suspend account</option>
+                : <option value="staff.reinstate">Reinstate account</option>
             )}
           </select>
         </label>
@@ -131,9 +147,13 @@ function DriverManagement({
       ) : (
         <Notice
           message={
-            suspend
-              ? "Suspending this driver signs them out and removes them from future dispatch. Resolve any active deliveries first."
-              : "Reinstating this driver restores sign-in. The driver can set their availability in their workspace."
+            changeAvailability
+              ? nextAvailable
+                ? "Dispatch can consider this driver for new assignments. An active account and dispatch eligibility checks still apply."
+                : "Pause new assignments for this driver. Resolve any active deliveries first."
+              : suspend
+                ? "Suspending this driver signs them out and removes them from future dispatch. Resolve any active deliveries first."
+                : "Reinstating this driver restores sign-in. Set availability separately when the driver is ready."
           }
         />
       )}
@@ -408,8 +428,10 @@ export default function DriversWorkspace({ refresh }: { refresh: number }) {
             )}
           </div>
           <p className="muted">
-            Availability is the driver’s dispatch preference. Assignment
-            eligibility is checked in Dispatch Centre.
+            Unavailable means new assignments are paused. Drivers can change
+            their availability from Home in the driver workspace.
+            {directory?.canChangeAvailability && " Authorised staff can also change it from Manage."}
+            {" "}Dispatch Centre checks assignment eligibility separately.
           </p>
         </>
       )}
@@ -427,6 +449,7 @@ export default function DriversWorkspace({ refresh }: { refresh: number }) {
           <DriverManagement
             driver={selected}
             canManageAccounts={directory.canManageAccounts}
+            canChangeAvailability={directory.canChangeAvailability}
             onSaved={(notice) => {
               setSelected(null);
               setMessage(notice);

@@ -38,7 +38,7 @@ export default function PaymentGatewayPolicy({
     <div className="stack">
       <p role="note">
         Sandbox only. Live payments remain disabled. No API keys belong in this
-        form. {ownerAutoApproval ? "Business Owner submissions are approved automatically; merchant verification and payment activation checks remain required." : "Changes require independent owner and finance approval."}
+        form. {ownerAutoApproval ? "Admin submissions are approved automatically. Merchant verification and payment activation checks still apply." : "Changes require independent approval from authorised Admin and Inventory staff."}
       </p>
       {toggle("enabled", "Enable approved sandbox checkout")}
       {field(

@@ -1,0 +1,75 @@
+{
+  "phase": "Activate delivery areas on the hosted client demo",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "DEMO-DELIVERY-R01",
+      "requirement": "Enable demo gas quotes for Lagos Island, Victoria Island, Lekki and Ajah.",
+      "priority": "P1",
+      "scope": "Hosted Vercel client demo, Lagos branch",
+      "uiReference": "Homepage gas-order delivery location dropdown",
+      "route": "/, /api/gas.catalogue, /api/gas.quote",
+      "dataSource": "Versioned location settings and published delivery locations for the Lagos branch in the hosted demo database.",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/gas-delivery-config.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "packages/business-rules/src/delivery-coverage.ts"
+      ],
+      "securityControl": "Verify the demo environment before making changes. Use the authenticated, reverified owner session and the versioned settings approval workflow.",
+      "acceptanceGate": "DEMO-DELIVERY-G01",
+      "testIds": ["DEMO-DELIVERY-01", "DEMO-DELIVERY-02"],
+      "negativeTests": ["Baseline quote attempts returned HTTP 409 with pending coverage for all four areas."],
+      "testFiles": [],
+      "evidence": ["docs/traceability/demo-delivery-activation-evidence.txt"],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All four areas returned successful gas quotes and appeared without pending labels in the hosted homepage order widget.",
+      "testResult": "PASS: hosted API and Chrome dropdown checks.",
+      "outstandingWork": "Commercial delivery boundaries require separately verified business coverage."
+    },
+    {
+      "id": "DEMO-DELIVERY-R02",
+      "requirement": "Use demo-only coverage and require staff to confirm each delivery address before dispatch.",
+      "priority": "P1",
+      "scope": "Four changed locations on the hosted Vercel client demo",
+      "uiReference": "Delivery Locations settings and dispatch address review",
+      "route": "/admin/settings, /api/settings, /api/setting.history",
+      "dataSource": "Governed settings versions and public delivery location configuration for the demo Lagos branch.",
+      "implementationFiles": [
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/gas-delivery-config.ts",
+        "apps/web/lib/gas-delivery.ts"
+      ],
+      "securityControl": "Require address confirmation for all four locations. The existing dispatch guard requires an authorised address-confirmation audit event for the current location version.",
+      "acceptanceGate": "DEMO-DELIVERY-G02",
+      "testIds": ["DEMO-DELIVERY-01"],
+      "negativeTests": [],
+      "testFiles": [],
+      "evidence": ["docs/traceability/demo-delivery-activation-evidence.txt"],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Read-back confirmed four activated setting versions, the address review requirement, and the same payment-test entry as before the changes.",
+      "testResult": "PASS: hosted settings history and catalogue read-back. The hosted checks verified the homepage dropdown and exercised quotes through the public API.",
+      "outstandingWork": "Order creation and dispatch were outside this configuration verification."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DEMO-DELIVERY-G01",
+      "status": "PASS",
+      "gate": "Verify the four areas are selectable in the hosted homepage order widget and return quotes."
+    },
+    {
+      "id": "DEMO-DELIVERY-G02",
+      "status": "PASS",
+      "gate": "Verify owner-approved setting history, demo scope and the address review setting for all four locations."
+    }
+  ],
+  "coverage": {
+    "implemented": "2/2",
+    "verified": "2/2",
+    "critical": "No P0 requirements added in this phase",
+    "routes": "5/6 listed routes exercised. Settings were updated via the governed API.",
+    "gates": "2/2 passed"
+  },
+  "changes": "Added demo-only coverage descriptions to the four existing location settings. Enabled address review in Ajah to match the other three areas."
+}

@@ -7,6 +7,7 @@ import { one, type SQL } from "./db";
 import { fulfilmentReady } from "./order-tracking";
 import { invoiceBalance } from "./invoice-corrections";
 import { vehicleReady } from "./fleet-constraints";
+import { driverAvailabilityWritesEnabled } from "./driver-availability";
 import {
   dispatchTab,
   dispatchOrderTab,
@@ -60,7 +61,7 @@ export async function dispatchCentre(
        ORDER BY lower(u.name),u.id`,
       [user.role === "owner", user.branch_id],
     );
-    return { drivers, canEdit, canManageAccounts, branches };
+    return { drivers, canEdit, canManageAccounts, canChangeAvailability: canEdit && driverAvailabilityWritesEnabled(), branches };
   }
   if (action === "dispatch.candidates") {
     const d = z.object({ orderId: z.string().uuid() }).strict().parse(input);

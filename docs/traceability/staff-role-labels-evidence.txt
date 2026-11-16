@@ -1,0 +1,86 @@
+Staff role labels, 16 November 2026
+
+Targeted role, navigation, staff management, privileges, mobile UI, approvals, technician and dispatch tests
+✔ DDI-S024: unavailable drivers cannot receive a legacy manual assignment (1789.566584ms)
+✔ DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection (1200.367542ms)
+✔ DDI-READ01: scoped counts include every matching record and pagination never changes totals (1169.877542ms)
+✔ DDI-READ02: dispatch reads reject customer/driver access and cross-branch filters (823.950417ms)
+✔ DDI-READ03: empty-date dashboard reports actual zeros and unknown contact (809.802125ms)
+✔ DDI-CONTACT01: foreground contact is independently measured, scoped and expires without changing availability (824.323584ms)
+✔ DDI-PAY01: unverified payment and revoked COD exception block canonical assignment with no attempt (938.208167ms)
+✔ DDI-S031: expired authorisation prevents driver acknowledgement without a response (884.32325ms)
+✔ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes (5.827375ms)
+✔ DDI-S016: Lagos date boundaries and contact freshness never use upload time or future observations (0.657208ms)
+✔ DDI-READ04: literal search and status filters share scope and hide private order internals (861.951375ms)
+✔ DDI-KPI01: completed counts use actual Lagos delivery date rather than scheduled date (892.591708ms)
+✔ DDI-MASS01: vehicle mass is read once from custody and never added to inclusive branch stock (862.546917ms)
+✔ DDI-DECLINE01: declined assignments surface in exceptions and replay retains one response (1190.538167ms)
+✔ DDI-S084: production assignment stays disabled without both explicit release approvals (984.68475ms)
+✔ DDI-PAY02: legacy invoice-less fulfilment uses the shared net-payment authority after an approved refund (894.7475ms)
+✔ DDI-S060: missing serialized cylinder allocation blocks dispatch before a delivery attempt (759.8265ms)
+✔ MUI-01: all 99 screens map the original customer and administration navigation; later additions are traced (3.8265ms)
+✔ MUI-02: every screen renders populated and five alternate states without missing navigation targets (16.63ms)
+✔ MUI-03: field roles retain dedicated navigation through shared account screens and business visibility cannot grant excluded routes (1.541167ms)
+✔ MUI-04: prototype never calls live APIs and preserves unavailable payment/GPS and physical safety boundaries (1.262125ms)
+✔ MUI-05: design type stays at least 15px and declares compact layouts, reduced motion and keyboard focus (0.455ms)
+✔ RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe nested active matching (3.704083ms)
+✔ RM-06,08,09: mode-independent role visibility preserves dedicated assignment experiences (0.268417ms)
+✔ navigation preferences reject corrupt storage and badge overflow remains bounded (0.12025ms)
+✔ RM-07,10,11: fresh authentication, branch scope, counter aggregates and role/session revocation (1394.882125ms)
+✔ approval badge agrees with independent eligibility, excludes requester, recipient, expired and already-decided requests (1044.132416ms)
+✔ counter accuracy covers actionable orders/deliveries, configured inventory thresholds and unresolved financial items (1014.654417ms)
+✔ bounded delegation is included in approval counters only while independently valid (990.068667ms)
+✔ INV-BADGE-01: refresh and transient failure retain explicitly labelled confirmed counts without changing grants (0.334584ms)
+✔ ADMIN-LANDING-01: permitted navigation maps actual backend read allowlists for every existing staff role (1440.06025ms)
+Navigation restricted PGlite fixture aggregate timings (ms): {"samples":[4.206833000000188,4.03808300000037,4.046999999999571,4.570125000000189,4.0219999999999345,4.001666000000114,4.042666000000281,3.966707999999926,4.010167000000365,4.628791000000092],"median":4.042666000000281,"max":4.628791000000092}
+✔ navigation aggregates run under the restricted private-schema runtime without new grants (977.014583ms)
+✔ DRIVER-NAV-01: driver directory and sidebar follow branch, role and dispatch privilege (1146.9845ms)
+✔ DRIVER-MGMT-01: directory management reuses audited staff actions and protects active assignments (1150.43575ms)
+✔ OWNER-AUTO01: owner submissions auto-apply once with immutable authority proof; staff remain independently reviewed (1181.2135ms)
+✔ OWNER-AUTO02: old pending requests are actionable only by their verified owner; drafts stay inactive until submission (971.321958ms)
+✔ OWNER-AUTO03: scheduling, current authority, stale versions, expiry, self privileges and live-payment blockers survive auto approval (1028.331334ms)
+✔ OWNER-AUTO04: owner approval does not replace independent qualified safety review or invent safety evidence (934.362416ms)
+✔ OWNER-AUTO05: governed inventory request binds immutable operation before automatic application and never posts twice (941.965375ms)
+✔ OWNER-AUTO06: owner rollback uses the same audited policy and preserves historical versions (914.019959ms)
+✔ OWNER-AUTO07: verified owners can confirm delivery coverage; staff requests and blank boundaries still block ordering (1001.268709ms)
+✔ OWNER-AUTO08: an existing owner coverage request can be approved by its requester without approving other pending requests (975.08725ms)
+✔ OWNER-AUTO-UI: owner apply action and status-specific guidance replace unconditional independent-review messaging (1.274667ms)
+✔ staff invitations are manageable without granting privileges, renew invalidates old links and accepted accounts appear in staff management (1393.811166ms)
+✔ staff edits, suspension, reinstatement and invitation revocation enforce authority, branch and session safeguards (1010.908375ms)
+✔ staff management invitation actions run with restricted runtime grants and business-wide administrators retain access to previous branch invitations (1043.811ms)
+✔ STAFF-INV-01/02: selected privileges are reviewed, never applied before independent approval, and enforced after activation (1051.686625ms)
+✔ STAFF-INV-02: inviting owners cannot attach protected grants to driver roles or provide arbitrary privileges (957.821833ms)
+✔ STAFF-PRIV01: per-user grant, deny and role default work end to end without changing roles; existing sessions recheck every request (1282.962375ms)
+✔ STAFF-PRIV02: privilege changes require fresh administrative identity and reject self escalation, forged fields, stale versions and protected-role grants (1017.130958ms)
+✔ STAFF-PRIV03: merged administrators can edit cross-branch users; protected approval, qualification and runtime session boundaries remain intact (965.00775ms)
+✔ STAFF-PRIV04: restricted database runtime can grant, revoke and reset privileges with append-only audited history (1096.793333ms)
+✔ STAFF-PRIV05: privilege endpoints require authenticated read/write methods and reject unverified HTTP mutations (1152.831834ms)
+✔ STAFF-PRIV06: invalid batches roll back all changes, cached outcomes obey revocation, and field-only sessions cannot administer privileges (908.604416ms)
+✔ STAFF-PRIV07: role or branch changes invalidate additional grants while explicit revocations remain enforced (916.100875ms)
+✔ STAFF-PRIV08: reverting an identity change cannot silently reactivate an old grant, and identity changes invalidate an open editor revision (922.830042ms)
+✔ STAFF-ROLE08: staff roles have short display names and keep their canonical identities (0.646834ms)
+✔ STAFF-ROLE01–03: legacy identities upgrade atomically with overrides, session renewal and approval history (860.321875ms)
+✔ STAFF-ROLE04–06: branch isolation, qualified checklist review and independent financial approvals (803.358958ms)
+✔ TAV-READ: scoped authoritative directory includes inactive staff, filters, paging and honest schedule states (1216.38075ms)
+✔ TAV-SCOPE: field technicians and customers cannot use management APIs, branch tampering and invalid filters fail closed (938.506459ms)
+✔ TAV-SCHEDULE: overlap, unavailable technician, self verification, revoked qualifications and booked blocking cannot bypass backend (975.391459ms)
+✔ TAV-TIME: Lagos conversion is device-independent and rejects invalid dates; navigation and field shell are preserved (1.127875ms)
+ℹ tests 63
+ℹ suites 0
+ℹ pass 63
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54373.089583
+
+Web type check (npm run typecheck): PASS
+Mobile type check (npm --prefix apps/mobile run typecheck): PASS
+
+Local Chrome with isolated test accounts
+PASS authenticated web owner Admin
+PASS authenticated web finance Inventory
+PASS authenticated web manager Service Manager
+PASS Staff invitation listed Admin, Inventory, Service Manager, Driver and Technician.
+PASS Drivers directory showed Driver invitation for its fixed-role action.
+PASS Session role codes remained owner, finance and manager for the tested accounts.

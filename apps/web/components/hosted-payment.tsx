@@ -1,4 +1,5 @@
 "use client";
+import { easyGasReceiptDownloadUrl } from "../../../packages/business-rules/src/financial-document";
 import { FieldCaption } from "./field-caption";
 import { ActionLoadingIndicator } from "./easygas-loader";
 import React, { useEffect, useRef, useState } from "react";
@@ -519,10 +520,10 @@ export function PaymentReturn() {
         {paid && (
           <a
             className="button secondary"
-            href={"/api/payments/paystack/receipt?format=pdf&intentId=" + encodeURIComponent(intent)}
+            href={easyGasReceiptDownloadUrl(intent)}
             onClick={() => setStay(true)}
           >
-            Download sandbox receipt
+            Download EasyGas test receipt
           </a>
         )}
         {paid && !stay && (

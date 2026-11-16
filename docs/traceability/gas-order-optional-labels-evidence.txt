@@ -1,0 +1,25 @@
+Gas-order optional labels
+
+Before the fix, local Chrome rendered “Building / house number (optional) (optional)”.
+
+✔ FIELD-MARK-05: /gas-order at 1440px. Three optional labels each have one marker in visible and accessible text. Recipient fields remain required.
+✔ FIELD-MARK-05: /gas-order at 390px. Three optional labels each have one marker in visible and accessible text. Recipient fields remain required.
+
+Checkout prefill and public header regression suites
+✔ CHECKOUT-PREFILL01: prefer the saved default, fall back to a usable legacy address and then to the account contact (0.923292ms)
+✔ HDR-03: all seven primary links retain approved order and verified destinations (0.850084ms)
+✔ HDR-05: exact, nested and anchor matches avoid false prefixes and duplicate Home selection (0.142583ms)
+✔ HDR-06: public search uses actual supplied names, safely encoded IDs and real help destinations (0.180458ms)
+✔ HDR-23: unpublished products never enter public search results (0.087708ms)
+✔ HDR-25: explicit server-authorised preview matches the local catalogue without treating drafts as published (0.101917ms)
+✔ HDR-26: catalogue authorises previews only in development and production still excludes unpublished products (3364.73225ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3696.218209
+
+Web type check (npm run typecheck) passed.
