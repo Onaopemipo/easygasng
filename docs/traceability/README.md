@@ -225,3 +225,9 @@ Customer checkout delivery prefill: [matrix](checkout-delivery-rtm.md). Web pref
 Cinematic customer introduction: [matrix](onboarding-redesign-rtm.md), [baseline](../onboarding-redesign/00-baseline-audit.md) and [test evidence](../onboarding-redesign/04-test-results.md). Frontend only; three scenes on web, iOS and Android. Existing commercial production NO-GO remains.
 
 Required and optional form labels: [matrix](field-markers-rtm.md), [machine-readable matrix](field-markers-rtm.json), and [evidence](field-markers-evidence.txt). Shared web and native forms updated; authenticated settings and approval browser checks passed. Native installed-app and wider role-specific runtime coverage remain open. Production NO-GO unchanged.
+
+Technician access repair (16 November). [Requirements matrix](technician-access-repair-rtm.md) and [executed checks](technician-access-repair-evidence.txt) cover the deployed Vercel demo web and sign-in API fixes. Installed mobile and commercial production acceptance remain open.
+
+Business Overview layout (16 November). [Requirements matrix](admin-dashboard-alignment-rtm.md) and [executed evidence](admin-dashboard-alignment-evidence.txt) cover the aligned toolbar and KPI cards on the web dashboard.
+
+Dashboard metric visibility (16 November). [Requirements matrix and evidence](admin-dashboard-metric-access-rtm.md) cover Finance and owner KPI visibility and the dashboard retry state.

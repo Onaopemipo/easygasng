@@ -236,6 +236,7 @@ export default function ProfessionalServices({
   publicPage?: boolean;
 }) {
   const search = useSearchParams();
+  const technician = !publicPage && user?.role === "technician";
   const staff = Boolean(
       !publicPage &&
         user &&
@@ -243,11 +244,15 @@ export default function ProfessionalServices({
     ),
     manager = staff && ["owner", "manager"].includes(user?.role);
   const canBook =
-    user && (!publicPage || ["customer", "commercial"].includes(user.role));
+    !technician &&
+    user &&
+    (!publicPage || ["customer", "commercial"].includes(user.role));
   const loadBookings =
     Boolean(user) &&
     mode !== "incidents" &&
     !(publicPage && mode === "catalogue");
+  const showCatalogue = !technician || mode === "catalogue";
+  const catalogueBranch = technician ? user.branchId : undefined;
   const redesigned =
     mode === "technicians" &&
     process.env.NEXT_PUBLIC_EASYGAS_TECHNICIANS_UI !== "legacy" &&
@@ -265,9 +270,15 @@ export default function ProfessionalServices({
     setLoading(true);
     setError("");
     Promise.all([
-      api("services.catalogue"),
+      showCatalogue
+        ? api(
+            catalogueBranch
+              ? "services.catalogue?branch=" + encodeURIComponent(catalogueBranch)
+              : "services.catalogue",
+          )
+        : Promise.resolve([]),
       loadBookings ? api("bookings") : Promise.resolve([]),
-      staff && mode !== "incidents"
+      staff && !technician && mode !== "incidents"
         ? api("services.manage")
         : Promise.resolve(null),
     ])
@@ -287,7 +298,7 @@ export default function ProfessionalServices({
     return () => {
       active = false;
     };
-  }, [user?.id, version, staff, mode, redesigned, loadBookings]);
+  }, [user?.id, catalogueBranch, showCatalogue, version, staff, technician, mode, redesigned, loadBookings]);
   if (redesigned) return <TechniciansAvailability user={user} />;
   const currentDetail =
     publicPage &&
@@ -350,7 +361,7 @@ export default function ProfessionalServices({
         </span>
         <h1>
           {mode === "catalogue"
-            ? staff
+            ? staff && !technician
               ? "Manage services"
               : "Professional services"
             : mode === "quotations"
@@ -359,10 +370,14 @@ export default function ProfessionalServices({
                 ? "Technicians & availability"
                 : mode === "incidents"
                   ? "Operational incidents"
-                  : "Service bookings"}
+                  : technician
+                    ? "Assigned service bookings"
+                    : "Service bookings"}
         </h1>
         <p>
-          {staff
+          {technician
+            ? "View your assigned appointments and available services."
+            : staff
             ? mode === "incidents"
               ? "Review incidents, follow up on evidence and manage authorised responses."
               : mode === "quotations"
@@ -371,7 +386,7 @@ export default function ProfessionalServices({
             : "Book installation, maintenance and safety services for your kitchen."}
         </p>
       </div>
-      {mode === "catalogue" && !serviceId && (
+      {mode === "catalogue" && !serviceId && !technician && (
         <div className="button-row" aria-label="Service booking actions">
           <Link className="button" href="#available-services">
             Browse services &amp; book
@@ -385,9 +400,11 @@ export default function ProfessionalServices({
         </div>
       )}
       <nav className="service-tabs" aria-label="Professional services">
-        <Link href="/services">Services</Link>
-        <Link href={staff ? "/admin/bookings" : "/bookings"}>My bookings</Link>
-        {staff && (
+        <Link href={technician ? "/admin/services" : "/services"}>Services</Link>
+        <Link href={staff ? "/admin/bookings" : "/bookings"}>
+          {technician ? "Assigned bookings" : "My bookings"}
+        </Link>
+        {staff && !technician && (
           <>
             <Link href="/admin/services">Manage services</Link>
             <Link href="/admin/technicians">Technicians</Link>
@@ -448,9 +465,11 @@ export default function ProfessionalServices({
                       ? "Assessment and quotation required"
                       : money(s.config.priceKobo)}
                   </p>
-                  <Link className="button" href={"/services/" + s.id}>
-                    View service & book →
-                  </Link>
+                  {!technician && (
+                    <Link className="button" href={"/services/" + s.id}>
+                      View service & book →
+                    </Link>
+                  )}
                 </article>
               ))}
               {!catalogue.length && (
@@ -497,11 +516,17 @@ export default function ProfessionalServices({
             </Link>
           ) : !bookings.length ? (
             <div className="surface">
-              <h2>No appointments yet</h2>
-              <p>Your confirmed records will appear here.</p>
-              <Link href="/services" className="button secondary">
-                Explore services
-              </Link>
+              <h2>{technician ? "No assigned appointments yet" : "No appointments yet"}</h2>
+              <p>
+                {technician
+                  ? "Your assigned appointments will appear here."
+                  : "Your confirmed records will appear here."}
+              </p>
+              {!technician && (
+                <Link href="/services" className="button secondary">
+                  Explore services
+                </Link>
+              )}
             </div>
           ) : (
             bookings

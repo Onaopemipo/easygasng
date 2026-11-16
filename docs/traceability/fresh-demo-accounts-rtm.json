@@ -11,7 +11,7 @@
       "securityControl": "Dedicated project/host/database/runtime checks; salted password hashes; no old identity/reset/role mutation; private0600 handover; no qualifications, payments or stock fabricated; customer/commercial admin denial verified",
       "status": "VERIFIED_COMPLETE",
       "reason": "Thirteen fresh hosted role identities inserted with audit records. All thirteen logins and returned identities verified; customer/commercial admin rejection passed. Existing accounts/orders/wallet/verified-payment counts preserved except thirteen new users.",
-      "testResult": "PASS \u2014 DEMO-LOGIN01 hosted test verifies13/13 new role identities and two admin-denial checks.",
+      "testResult": "PASS — DEMO-LOGIN01 hosted test verifies13/13 new role identities and two admin-denial checks.",
       "outstandingWork": "No remaining bounded login-handover work. New field staff still require valid assignments and governed qualifications for protected work; no full feature/production acceptance inferred. Existing production NO-GO and pending local changes remain.",
       "implementationFiles": [
         "scripts/provision-fresh-demo-accounts.ts",
@@ -45,7 +45,7 @@
       "securityControl": "Dedicated project/host/database/runtime checks; salted password hashes; no old identity/reset/role mutation; private0600 handover; no qualifications, payments or stock fabricated; customer/commercial admin denial verified",
       "status": "VERIFIED_COMPLETE",
       "reason": "Thirteen fresh hosted role identities inserted with audit records. All thirteen logins and returned identities verified; customer/commercial admin rejection passed. Existing accounts/orders/wallet/verified-payment counts preserved except thirteen new users.",
-      "testResult": "PASS \u2014 DEMO-LOGIN01 hosted test verifies13/13 new role identities and two admin-denial checks.",
+      "testResult": "PASS — DEMO-LOGIN01 hosted test verifies13/13 new role identities and two admin-denial checks.",
       "outstandingWork": "No remaining bounded login-handover work. New field staff still require valid assignments and governed qualifications for protected work; no full feature/production acceptance inferred. Existing production NO-GO and pending local changes remain.",
       "implementationFiles": [
         "scripts/provision-fresh-demo-accounts.ts",
@@ -95,5 +95,65 @@
     "User explicitly requests new synthetic accounts; old accounts authenticate in audit and are retained.",
     "New passwords satisfy the currently deployed12-character minimum and approved forthcoming8-character minimum; no deployment required.",
     "Native builds, missing provider/business configuration and pending local order-addition/password changes are not activated by account creation."
+  ],
+  "followUpRuns": [
+    {
+      "date": "2026-11-15",
+      "scope": "Five consolidated default staff roles on the existing isolated Vercel demo",
+      "route": "/login, /admin, /admin/deliveries, /admin/bookings, /api/login, /api/me, /api/driver.login, /api/technician.login",
+      "requirementIds": [
+        "DEMO-LOGIN01",
+        "DEMO-LOGIN02"
+      ],
+      "implementationFiles": [
+        "packages/business-rules/src/staff-roles.ts",
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/technician-session.ts",
+        "apps/web/app/admin/[[...section]]/page.tsx"
+      ],
+      "dataSource": "Demo schema 079 users, branches, sessions and audit events",
+      "securityControl": "Demo project and verified TLS checks, synthetic emails, salted independent passwords, unchanged default role policy and no custom grants, verified session revocation and access denials",
+      "status": "PARTIAL",
+      "reason": "Both provisioning and shared identity checks passed. Two workspace entry points failed.",
+      "outstandingWork": "Technician web navigation returns 403 and renders 404. Dedicated field-app login actions return 500. Installed app testing was outside the credential refresh.",
+      "evidence": [
+        "docs/traceability/fresh-demo-staff-20261115-evidence.txt"
+      ],
+      "gates": [
+        {
+          "id": "DLOGIN-G03",
+          "status": "PASS",
+          "scope": "Provision five audited synthetic identities with private credentials"
+        },
+        {
+          "id": "DLOGIN-G04",
+          "status": "PASS",
+          "scope": "Shared hosted login, role, branch and representative scoped permissions"
+        },
+        {
+          "id": "DLOGIN-G05",
+          "status": "FAIL",
+          "scope": "Web workspace landing across five roles"
+        },
+        {
+          "id": "DLOGIN-G06",
+          "status": "PASS",
+          "scope": "Shared mobile API authentication and scoped field workspaces"
+        },
+        {
+          "id": "DLOGIN-G07",
+          "status": "FAIL",
+          "scope": "Dedicated field-app login endpoints"
+        }
+      ],
+      "coverage": {
+        "sharedRoleLogins": "5/5",
+        "webWorkspaceLandings": "4/5",
+        "sharedMobileApiLogins": "5/5",
+        "dedicatedFieldApiLogins": "0/2",
+        "gatesPassed": "3/5"
+      }
+    }
   ]
 }

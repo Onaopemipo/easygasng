@@ -1,0 +1,32 @@
+Executed 16 November 2026 against the local web app and an isolated synthetic database.
+
+PASS npm run typecheck
+PASS node --import tsx --test --test-concurrency=1 tests/admin-dashboard.test.ts tests/admin-dashboard-http.test.ts
+9 passed, 0 failed, 0 skipped.
+
+PASS authenticated Chromium on /admin in light and dark at 320, 390, 768, 1024, 1280, 1440 and 1728 CSS pixels.
+All 14 combinations passed matching 44px control heights, toolbar containment, no horizontal page overflow, equal KPI heights and matching value positions within each row, identical font sizes for each metric text tier, KPI text containment and white text on the green receipts card.
+The date, period, branch, scope and refresh shared a centre line at 1440 and 1728.
+Desktop and mobile light-theme screenshots were visually reviewed.
+
+PASS authenticated browser interaction and API responses for Last 7 Days, Lagos branch selection and manual refresh.
+The toolbar summary matched the committed API date range in Africa/Lagos. The verified net receipts link carried the selected branch and date range to Finance.
+
+Release regression check, including dashboard HTTP tests
+✔ ADM-HTTP18: admin reads enforce authentication, read-only HTTP methods and a persistent per-user search budget (1358.523834ms)
+✔ ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero-data states (985.825625ms)
+✔ ADM-AUTH03: dashboard and search reject customer, forged role and cross-branch scope (871.151875ms)
+✔ ADM-SEARCH12: search returns permitted records only and treats wildcards/injection as literal input (762.697333ms)
+✔ ADM-REL01: failed order widget is isolated without discarding other canonical widgets (734.600334ms)
+✔ ADM-FILTER03: invalid dates, oversized ranges and excessive pages are rejected (736.552333ms)
+✔ ADM-BIZ02: receipts exclude unverified collections and match the existing finance definition after reconciliation (883.403208ms)
+✔ ADM-AUTH01: single canonical login returns actual role, never accepts a requested privilege (860.776542ms)
+✔ ADM-NOTIFY12: unread totals are not limited to display rows and links recheck branch and module access (764.535208ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34481.502208

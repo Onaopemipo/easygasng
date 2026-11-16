@@ -49,6 +49,7 @@ test("ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero
       to: "2000-01-02",
     });
     assert.equal(empty.orders.count, 0);
+    assert.equal(empty.customers, 0);
     assert.equal(empty.revenue, 0);
     assert.equal(empty.trend.length, 0);
   } finally {
@@ -59,6 +60,17 @@ test("ADM-AUTH03: dashboard and search reject customer, forged role and cross-br
   const f = await fixture();
   try {
     await f.make();
+    const finance = await f.call("inventory", "admin.dashboard", {
+      from: today(),
+      to: today(),
+    });
+    assert.equal(finance.orders.count, 1);
+    assert.ok(!finance.allowed.includes("customers"));
+    assert.equal(finance.customers, null);
+    assert.equal(finance.errors.customers, undefined);
+    assert.ok(!finance.allowed.includes("deliveries"));
+    assert.equal(finance.operations.deliveries, null);
+    assert.equal(finance.operations.drivers, null);
     await f.db.query(
       "INSERT INTO branches(id,name) VALUES('admin-other','Isolated other branch')",
     );
@@ -150,31 +162,38 @@ test("ADM-REL01: failed order widget is isolated without discarding other canoni
   const f = await fixture();
   try {
     await f.make();
-    const broken: any = {
+    const withFailedRead = (fragment: string) => ({
       ...f.db,
       transaction: (fn: any) =>
         f.db.transaction((tx) =>
           fn({
             ...tx,
             query: (q: string, p: any[]) => {
-              if (q.includes("GROUP BY o.status"))
+              if (q.includes(fragment))
                 throw new Error("Isolated test read failure");
               return tx.query(q, p);
             },
           }),
         ),
-    };
-    const result = await dispatch(
+    });
+    const dashboard = (fragment: string) => dispatch(
       "admin.dashboard",
       f.actors.owner.token,
       { from: today(), to: today() },
-      broken,
+      withFailedRead(fragment),
     );
+    const result = await dashboard("GROUP BY o.status");
     assert.equal(result.orders, null);
     assert.ok(result.errors.orders);
     assert.equal(result.customers, 1);
     assert.equal(result.recent.rows.length, 1);
     assert.equal(result.revenue, 0);
+
+    const customerFailure = await dashboard("count(DISTINCT o.customer_id)");
+    assert.equal(customerFailure.orders.count, 1);
+    assert.ok(customerFailure.allowed.includes("customers"));
+    assert.equal(customerFailure.customers, null);
+    assert.ok(customerFailure.errors.customers);
   } finally {
     await f.db.close?.();
   }

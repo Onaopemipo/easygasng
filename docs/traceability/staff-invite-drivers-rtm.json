@@ -1,7 +1,7 @@
 {
   "phase": "Staff invitation access and Drivers directory",
   "productionDecision": "NO-GO",
-  "scopeChange": "Adds one web route and extends staff invitations. The archived 99-screen mobile design, existing live routes, five staff roles and existing production gates are retained.",
+  "scopeChange": "Adds one web route and extends staff invitations. The archived 99-screen mobile design, existing live routes, five staff roles and existing production gates are retained. On 16 November the user clarified that Drivers must be a standalone sidebar link. DRIVER-NAV-01 moves it from Delivery & Services to the always-visible links below Dashboard; existing grouped navigation, routes and directory authorisation are unchanged.",
   "requirements": [
     {
       "id": "STAFF-INV-01",
@@ -83,13 +83,15 @@
     },
     {
       "id": "DRIVER-NAV-01",
-      "requirement": "Add a Drivers entry by Technicians and display actual driver status, branch and current assignments.",
+      "requirement": "Show Drivers as a top-level sidebar link for authorised staff and display actual driver status, branch and current assignments.",
       "priority": "P0",
       "scope": "Staff onboarding and Drivers web workspace",
-      "uiReference": "User request and attached Add New Staff screenshot; grouped Delivery & Services sidebar",
+      "uiReference": "Original Add New Staff screenshot; 16 November clarification requires Drivers to be a main sidebar link.",
       "route": "/admin/drivers",
       "implementationFiles": [
         "packages/business-rules/src/admin-navigation.ts",
+        "apps/web/components/admin-navigation.tsx",
+        "apps/web/lib/navigation.ts",
         "packages/business-rules/src/staff-privileges.ts",
         "apps/web/components/drivers-workspace.tsx",
         "apps/web/lib/dispatch-centre.ts",
@@ -111,13 +113,14 @@
         "/revoked/i"
       ],
       "evidence": [
-        "docs/traceability/staff-invite-drivers-evidence.txt"
+        "docs/traceability/staff-invite-drivers-evidence.txt",
+        "docs/traceability/drivers-main-nav-evidence.txt"
       ],
       "acceptanceGate": "DRIVER-NAV-G01",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Navigation and API tests verified role and branch scoping and revocation; Chrome verified the directory, filtering and 390px layout.",
-      "testResult": "PASS: Navigation and API tests verified role and branch scoping and revocation; Chrome verified the directory, filtering and 390px layout.",
-      "outstandingWork": "Demo backup verified, migration 079 applied, and hosted owner smoke passed. Full hosted invitation delivery and decision flows were not replayed."
+      "reason": "The live demo nested Drivers under Delivery & Services. The link now renders directly below Dashboard in the existing always-open section. Hosted Chrome confirmed the link stays visible with Delivery & Services collapsed.",
+      "testResult": "PASS: Route and sidebar regression, restricted branch scope, unauthorised roles, and dispatch privilege revocation passed locally. Hosted Chrome verified desktop owner and mobile manager navigation, active link and directory access; Finance sees no link and direct access is denied.",
+      "outstandingWork": "Standalone navigation is deployed to the Vercel client demo. Commercial production remains NO-GO."
     }
   ],
   "gates": [
@@ -140,6 +143,11 @@
       "id": "STAFF-INV-G03",
       "status": "PASS",
       "gate": "Verified encrypted demo backup, migration 079, authenticated owner smoke and promotion."
+    },
+    {
+      "id": "DRIVER-NAV-G02",
+      "status": "PASS",
+      "gate": "Hosted owner and branch manager reach Drivers with Delivery & Services collapsed, including mobile web; Finance remains denied."
     }
   ],
   "coverage": {
@@ -147,6 +155,6 @@
     "verification": "3/3 in local scope",
     "critical": "2/2 locally",
     "routes": "3/3 locally",
-    "gates": "4/4"
+    "gates": "5/5 in local and demo scope"
   }
 }

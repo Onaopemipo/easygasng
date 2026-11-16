@@ -45,6 +45,7 @@ export const adminNavigation: NavigationGroup[] = [
     label: "Overview",
     items: [
       item("dashboard", "Dashboard", "House", operational, "business.snapshot"),
+      item("drivers", "Drivers", "Truck", ["owner", "manager"], "drivers.workspace"),
     ],
   },
   {
@@ -154,7 +155,6 @@ export const adminNavigation: NavigationGroup[] = [
         ["owner", "manager", "finance"],
         "services.manage",
       ),
-      item("drivers", "Drivers", "Truck", ["owner", "manager"], "drivers.workspace"),
       item(
         "quotations",
         "Quotations",

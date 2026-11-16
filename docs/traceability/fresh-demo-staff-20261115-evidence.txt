@@ -1,0 +1,16 @@
+15 November 2026, isolated Vercel client demo, migration 079.
+
+DLOGIN-G03 PASS. The linked project, demo flag, verified Neon TLS, existing synthetic owner, active Lagos branch and restricted hosted runtime were checked before writing. One transaction inserted five synthetic staff identities and five creation audit events. The transaction checked that orders, wallet entries and verified-payment counts matched. The temporary development integration connection was disconnected and environment files were removed. Credentials were saved in a Git-ignored mode 0600 file.
+
+DLOGIN-G04 PASS. All five accounts passed the shared cookie sign-in, identity and Lagos branch checks. Signing out returned 200 and subsequent session lookup returned 401 for each test session.
+- Owner received 200 for the dashboard and staff directory.
+- Finance received 200 for finance summary and inventory, and 403 for the staff directory.
+- Branch manager received 200 for dispatch and the Lagos-only staff directory, and 403 for a different dashboard branch and finance summary.
+- Driver received 200 for the driver snapshot and 403 for finance and technician jobs.
+- Technician received 200 for technician jobs and 403 for finance and driver snapshot.
+
+DLOGIN-G05 FAIL. Hosted Chrome reached /admin for owner, finance and branch manager, and /admin/deliveries for driver. Technician credentials authenticated. Its navigation access request returned 403 and Chrome rendered a 404 at both /admin and /admin/bookings.
+
+DLOGIN-G06 PASS. Shared mobile API sign-in returned the expected identity for all five roles. Driver snapshot and technician jobs each returned 200 in the respective session, and finance summary returned 403. This was API testing.
+
+DLOGIN-G07 FAIL. The dedicated driver.login and technician.login mobile API actions each returned 500 with the same credentials that passed shared sign-in.

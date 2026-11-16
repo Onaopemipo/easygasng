@@ -21,7 +21,7 @@ test("RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe n
   assert.equal(adminNavigation.length, 7);
   assert.deepEqual(
     adminNavigation.map((g) => g.items.length),
-    [1, 4, 4, 6, 4, 3, 8],
+    [2, 4, 4, 5, 4, 3, 8],
   );
   assert.equal(navigationItems.length, 30);
   assert.equal(new Set(navigationItems.map((i) => i.id)).size, 30);
@@ -40,6 +40,7 @@ test("RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe n
   );
   const expected = [
     "dashboard",
+    "drivers",
     "orders",
     "pos",
     "customers",
@@ -52,7 +53,6 @@ test("RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe n
     "bookings",
     "services",
     "technicians",
-    "drivers",
     "quotations",
     "finance",
     "reconciliation",
@@ -560,8 +560,14 @@ test("DRIVER-NAV-01: driver directory and sidebar follow branch, role and dispat
     assert.equal(owner.drivers[0].active_deliveries, 2);
     const manager = await f.call("service_manager", "drivers.workspace");
     assert.deepEqual(manager.drivers.map((d: any) => d.name), ["Directory Lagos"]);
-    for (const role of ["finance", "technician", "customer"])
+    for (const role of ["finance", "technician", "customer"]) {
       await assert.rejects(f.call(role, "drivers.workspace"), /permission|technician/i);
+    }
+    for (const role of ["finance", "technician"])
+      assert.ok(!(await f.call(role, "navigation.access")).allowed.includes("drivers"), role);
+    const driverToken = await issueSession(f.db, lagosDriver);
+    assert.deepEqual((await dispatch("navigation.access", driverToken, {}, f.db)).allowed, ["deliveries"]);
+    await assert.rejects(dispatch("drivers.workspace", driverToken, {}, f.db), /permission|driver/i);
     await assert.rejects(f.call("service_manager", "drivers.workspace", { branchId: "directory-other" }));
     assert.ok((await f.call("service_manager", "navigation.access")).allowed.includes("drivers"));
     await f.call("owner", "staff.privileges.save", {

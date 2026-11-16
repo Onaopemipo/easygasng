@@ -1,6 +1,8 @@
 import { AppError, type Actor } from "./auth";
 const allowed = new Set([
   "me",
+  "navigation.access",
+  "navigation",
   "bookings",
   "logout",
   "reauth",

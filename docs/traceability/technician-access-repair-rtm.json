@@ -1,0 +1,143 @@
+{
+  "phase": "Technician access repair",
+  "date": "2026-11-16",
+  "relatedRequirements": [
+    "DEMO-LOGIN02",
+    "SIGNIN-REQ-03",
+    "ADMIN-LANDING-R01"
+  ],
+  "releaseDecision": "Commercial production NO-GO",
+  "requirements": [
+    {
+      "id": "TECH-ACCESS-R01",
+      "requirement": "Open the assigned service workspace from the technician’s web sign-in.",
+      "priority": "P0",
+      "scope": "Technician access repair and shared driver session compatibility",
+      "uiReference": "Hosted 404 and dedicated field sign-in errors recorded in DEMO-LOGIN02",
+      "route": "/login, /admin, /admin/bookings, /admin/services, /api/navigation.access, /api/navigation, /api/bookings",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/lib/technician-session.ts",
+        "apps/web/lib/navigation.ts",
+        "apps/web/app/admin/[[...section]]/page.tsx"
+      ],
+      "dataSource": "The authenticated account, active branch, role navigation, published service catalogue and technician assignments.",
+      "securityControl": "Existing branch and menu checks apply. Bookings are selected by assigned technician. Management, finance, inventory and driver actions remain barred.",
+      "testIds": [
+        "SIGNIN-03",
+        "SBV-002"
+      ],
+      "evidence": [
+        "docs/traceability/technician-access-repair-evidence.txt"
+      ],
+      "acceptanceGate": "TECH-ACCESS-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified on the staged release and stable client demo for the bounded access repair.",
+      "testResult": "PASS · Hosted Chrome reached assigned bookings and the technician service list, checked the empty state and confirmed finance denial. API calls confirmed the scoped allowlist.",
+      "outstandingWork": "Installed iOS and Android tests and commercial operational acceptance remain outside this fix.",
+      "testFiles": [
+        "tests/unified-sign-in.test.ts",
+        "tests/technician-work.test.ts"
+      ],
+      "negativeTests": [
+        "management remains protected",
+        "cannot collect or fake payments"
+      ]
+    },
+    {
+      "id": "TECH-ACCESS-R02",
+      "requirement": "Restore dedicated technician sign-in and workspace initialization under the hosted database grants.",
+      "priority": "P0",
+      "scope": "Technician access repair and shared driver session compatibility",
+      "uiReference": "Hosted 404 and dedicated field sign-in errors recorded in DEMO-LOGIN02",
+      "route": "/api/technician.login, /api/technician.restrict, /api/technician.jobs",
+      "implementationFiles": [
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/professional-services.ts",
+        "database/policies/server-access.sql"
+      ],
+      "dataSource": "Existing users and sessions tables, including session restriction flags, and the existing technician jobs service.",
+      "securityControl": "The dedicated route validates the account role before creating a scoped session. Restriction initialization is idempotent. Database UPDATE grants remain narrow.",
+      "testIds": [
+        "SIGNIN-03",
+        "FIELD-SCOPE-01"
+      ],
+      "evidence": [
+        "docs/traceability/technician-access-repair-evidence.txt"
+      ],
+      "acceptanceGate": "TECH-ACCESS-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified on the staged release and stable client demo for the bounded access repair.",
+      "testResult": "PASS · Candidate and stable Vercel demos passed dedicated and shared technician sign-in, repeated initialization, assigned job reads and denied mismatched workspaces.",
+      "outstandingWork": "Installed iOS and Android tests and commercial operational acceptance remain outside this fix.",
+      "testFiles": [
+        "tests/unified-sign-in.test.ts",
+        "tests/technician-recovery.test.ts",
+        "tests/technician-work.test.ts"
+      ],
+      "negativeTests": [
+        "temporary password requirements",
+        "unpaid work start fails"
+      ]
+    },
+    {
+      "id": "TECH-ACCESS-R03",
+      "requirement": "Preserve driver field access and restrictions through the shared session fix.",
+      "priority": "P0",
+      "scope": "Technician access repair and shared driver session compatibility",
+      "uiReference": "Hosted 404 and dedicated field sign-in errors recorded in DEMO-LOGIN02",
+      "route": "/api/driver.login, /api/driver.restrict, /api/driver.snapshot, /admin/deliveries",
+      "implementationFiles": [
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/driver-workspace.ts"
+      ],
+      "dataSource": "Existing driver accounts, scoped sessions and driver snapshot.",
+      "securityControl": "The driver route requires a driver account. Delivery-only session and existing financial and technician denials remain enforced.",
+      "testIds": [
+        "DR-WEB-01",
+        "FIELD-SCOPE-01"
+      ],
+      "evidence": [
+        "docs/traceability/technician-access-repair-evidence.txt"
+      ],
+      "acceptanceGate": "TECH-ACCESS-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified on the staged release and stable client demo for the bounded access repair.",
+      "testResult": "PASS · Staged and stable demo API checks passed dedicated and shared driver sign-in and repeated initialization. Hosted Chrome opened the delivery workspace.",
+      "outstandingWork": "Installed iOS and Android tests and commercial operational acceptance remain outside this fix.",
+      "testFiles": [
+        "tests/driver-workspace.test.ts",
+        "tests/technician-recovery.test.ts"
+      ],
+      "negativeTests": [
+        "legacy completion denial",
+        "scoped financial and unsafe completion boundaries"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "TECH-ACCESS-G01",
+      "status": "PASS",
+      "gate": "Open the assigned service workspace from the technician’s web sign-in."
+    },
+    {
+      "id": "TECH-ACCESS-G02",
+      "status": "PASS",
+      "gate": "Restore dedicated technician sign-in and workspace initialization under the hosted database grants."
+    },
+    {
+      "id": "TECH-ACCESS-G03",
+      "status": "PASS",
+      "gate": "Preserve driver field access and restrictions through the shared session fix."
+    }
+  ],
+  "coverage": {
+    "implemented": "3/3",
+    "verified": "3/3",
+    "critical": "3/3",
+    "gates": "3/3"
+  }
+}

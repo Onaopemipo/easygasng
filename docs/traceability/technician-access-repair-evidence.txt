@@ -1,0 +1,54 @@
+16 November 2026, Vercel client demo.
+
+Baseline: fresh-demo-staff-20261115-evidence.txt records technician web navigation returning 403 and rendering a 404, and dedicated driver and technician sign-in returning 500. The restricted SQL runtime grants UPDATE only on session verification and revocation timestamps. The two dedicated sign-in handlers previously tried to update a restriction flag after inserting the session. The workspace initialization endpoints also attempted the same update for already-scoped sessions. Technician web navigation was missing from the restricted session allowlist, and the bookings page requested the service-management dataset.
+
+Local checks: 26/26 passed in tests/unified-sign-in.test.ts, tests/technician-work.test.ts, tests/technician-recovery.test.ts, tests/driver-workspace.test.ts and tests/account-onboarding.test.ts. npm run typecheck and git diff --check passed. Tests covered scoped navigation, assigned bookings, role rejection, temporary-password replacement, safety and payment gates.
+
+Staged Vercel build and stable alias verified, deployment dpl_G7fv1q48vawxnn1ZnhW26pus2dmJ. Both environments passed shared and dedicated technician and driver sign-in, two consecutive restrict calls per login, the appropriate job or delivery reads, navigation, sign-out, and rejection of driver credentials on the technician endpoint and vice versa. Technician management, finance, inventory and driver reads returned 403. Driver finance and technician reads returned 403. The deployment reports readiness in demo scope.
+
+On the stable alias, Chrome signed in with the existing technician demo credentials and reached /admin/bookings. It confirmed the assigned bookings heading, scoped tabs, clear empty state, branch service catalogue without customer booking actions, and the denial of /admin/finance. Chrome also confirmed the driver delivery route and owner dashboard. The demo technician had no assignments. Assigned booking visibility was verified against the local restricted-session fixture.
+
+No schema or database grant change. To roll back the Vercel demo code, promote dpl_FCWRC7KVJHHVTiQCp7hNraeqmf2U in the existing project and check /api/status and owner sign-in. That deployment still has the reported technician access defects. Installed mobile apps and commercial production are outside this fix.
+
+Release sign-in regression check
+✔ SIGNIN-01: email and verified phone resolve to the same account and retain legacy login (1361.012791ms)
+✔ SIGNIN-02: unverified and ambiguous numbers fail closed and phone variants share a retry limit (1267.484875ms)
+✔ SIGNIN-03: verified phone cannot bypass field role or temporary password requirements (1150.90525ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34481.502208
+
+Release field workspace regression check
+✔ DR-BOUNDARY-01 delivery-only sessions reject legacy cash, sales and stock endpoints (0.605125ms)
+✔ DR-GPS-BOUNDARY: trip GPS authority does not grant fuel, cash or fleet-wide reads (0.140625ms)
+✔ DR-BOUNDARY-02 delivery-only sessions reject skipped or invented order transitions (0.079083ms)
+✔ DR-BOUNDARY-03 canonical delivery reads and guarded completion remain available (0.05775ms)
+✔ DR-COMPAT-01 legacy session policy remains unchanged pending explicit cutover (0.051208ms)
+✔ DR-WEB-01: driver web navigation reaches only the authorised deliveries workspace (2197.277292ms)
+✔ DR-INTEGRATION-01 restricted canonical session enforces role, availability and legacy completion denial (1134.591666ms)
+✔ FIELD-RECOVERY-01: interrupted acknowledgement recovers committed receipt without a second mutation (0.617083ms)
+✔ FIELD-RECOVERY-02: changed assignment/version, closed job, cross-account and work authorisation never replay (0.634792ms)
+✔ FIELD-RECOVERY-03: expired credentials stop replay and retain later records; stable fingerprints ignore transport operation keys (6.235ms)
+✔ FIELD-PHOTO-01: queued photograph version is rechecked in the canonical locked booking before bytes or history change (1280.696375ms)
+✔ FIELD-SCOPE-01: production field roles cannot use legacy tokens to bypass scoped financial and unsafe completion boundaries (1071.072584ms)
+✔ TECH-T26 unpaid work start fails at backend and changes no booking state (1453.178042ms)
+✔ TECH-T21 quotation needs independent owner decision, customer approval and verified payment (1147.081459ms)
+✔ TECH-T02 technician capability excludes finance, approvals, delivery and unrestricted stock (0.296667ms)
+✔ TECH-T08 restricted session enforces assignment scope and cannot collect or fake payments (1070.86325ms)
+✔ TECH-T04 suspended, wrong-branch and expired-qualification actors cannot authorise paid work (1052.746208ms)
+✔ TECH-T40 successful report requires current consented private proof; retries retain one image (1121.989042ms)
+✔ TECH-T09 assignment response is versioned, idempotent and required before restricted visit progression (1030.870833ms)
+✔ SBV-002: a restricted session can browse the public catalogue while management remains protected (960.520459ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14961.547583

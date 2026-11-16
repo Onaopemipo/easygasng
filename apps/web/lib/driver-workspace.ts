@@ -94,10 +94,11 @@ export async function driverWorkspace(
   allow(user, ["driver"]);
   if (action === "driver.restrict") {
     z.object({}).strict().parse(input);
-    await tx.query(
-      "UPDATE sessions SET driver_delivery_only=true WHERE id=$1 AND user_id=$2",
-      [user.session_id, user.id],
-    );
+    if (!user.driver_delivery_only)
+      await tx.query(
+        "UPDATE sessions SET driver_delivery_only=true WHERE id=$1 AND user_id=$2",
+        [user.session_id, user.id],
+      );
     await audit(tx, user, "driver.session.restricted", user.session_id);
     return { ok: true };
   }

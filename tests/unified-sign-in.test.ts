@@ -116,6 +116,17 @@ test("SIGNIN-03: verified phone cannot bypass field role or temporary password r
       f.db,
     );
     assert.equal(result.role, "technician");
+    await dispatch("technician.restrict", result.token, {}, f.db);
+    const access = await dispatch("navigation.access", result.token, {}, f.db);
+    assert.deepEqual(access.allowed, ["bookings", "services"]);
+    const navigation = await dispatch("navigation", result.token, {}, f.db);
+    assert.deepEqual(navigation.allowed, access.allowed);
+    assert.deepEqual(await dispatch("bookings", result.token, {}, f.db), []);
+    for (const action of ["services.manage", "finance.summary", "driver.snapshot"])
+      await assert.rejects(
+        dispatch(action, result.token, {}, f.db),
+        { status: 403 },
+      );
     assert.equal(
       (
         await one(

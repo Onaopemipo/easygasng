@@ -337,17 +337,13 @@ export async function dispatch(
           await tx.query("UPDATE sessions SET revoked_at=now() WHERE id=$1", [
             digest(token),
           ]);
-        const session = await issueSession(tx, existing.id);
-        if (action === "driver.login")
-          await tx.query(
-            "UPDATE sessions SET driver_delivery_only=true WHERE id=$1",
-            [digest(session)],
-          );
-        if (action === "technician.login")
-          await tx.query(
-            "UPDATE sessions SET technician_service_only=true WHERE id=$1",
-            [digest(session)],
-          );
+        const workspace =
+          action === "driver.login"
+            ? "driver"
+            : action === "technician.login"
+              ? "technician"
+              : undefined;
+        const session = await issueSession(tx, existing.id, workspace);
         await audit(tx, null, "auth.signed_in", existing.id);
         return { token: session, role: existing.role };
       }

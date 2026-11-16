@@ -261,6 +261,23 @@ export default function AdminOverview({ user }: { user: any }) {
         "Current open or acknowledged incidents",
       ],
     ] as const;
+  const visibleCards = cards.filter(([, , , route]) => allowed(route));
+  const workspaceCards = visibleCards.filter(
+    ([, , , route]) => user.role !== "owner" || route !== "finance",
+  );
+  const operationMetrics = [
+    ["Active deliveries", data?.operations?.deliveries, Truck, "deliveries"],
+    ["Appointments in period", data?.operations?.appointments, CalendarDays, "bookings"],
+    ["Technicians on authorised work", data?.operations?.technicians, HardHat, "bookings"],
+    ["Drivers on delivery", data?.operations?.drivers, Truck, "deliveries"],
+    ["Open incidents", data?.incidents, TriangleAlert, "incidents"],
+    ...(user.role === "owner" ? [
+      ["Orders in period", data?.orders?.count, ShoppingCart, "orders"],
+      ["Stock exceptions", ownerFinance?.alerts?.filter((item: any) => ["low_stock", "low_gas"].includes(item.kind)).length, PackagePlus, "inventory"],
+      ["Active stock holds", ownerFinance?.holds?.length, PackagePlus, "inventory"],
+    ] as const : []),
+  ] as const;
+  const visibleOperations = operationMetrics.filter(([, , , route]) => allowed(route));
   const actions = [
     ["Delivery Operations", "deliveries", Truck, ["owner"]],
     ["Review Approvals", "approvals", ClipboardCheck, ["owner"]],
@@ -298,36 +315,32 @@ export default function AdminOverview({ user }: { user: any }) {
           <h1>{user.role === "owner" ? "Business Overview" : user.role === "manager" ? "Branch Dashboard" : `Hello, ${user.name?.split(" ")[0] ?? "there"}`}</h1>
           <p>Here’s what’s happening across your authorised workspace.</p>
         </div>
-        <div className="ac-period">
-          <span>
-            <CalendarDays size={18} />
+      </section>
+      <div className="ac-toolbar">
+        <div className="ac-toolbar-filters" role="group" aria-label="Dashboard filters">
+          <time className="ac-toolbar-date" dateTime={dates.to}>
+            <CalendarDays size={18} aria-hidden="true" />
             {new Intl.DateTimeFormat("en-NG", {
               dateStyle: "medium",
               timeZone: "Africa/Lagos",
-            }).format(new Date())}
-          </span>
-          <label>
-            <span className="sr-only">Dashboard period</span>
+            }).format(new Date(dates.to + "T12:00:00Z"))}
+          </time>
+          <select
+            aria-label="Dashboard period"
+            value={range}
+            onChange={(e) => {
+              setRange(e.target.value);
+              setPage(1);
+              setData(null);
+            }}
+          >
+            <option value="month">This Month</option>
+            <option value="7">Last 7 Days</option>
+            <option value="30">Last 30 Days</option>
+          </select>
+          {user.role === "owner" && (
             <select
-              value={range}
-              onChange={(e) => {
-                setRange(e.target.value);
-                setPage(1);
-                setData(null);
-              }}
-            >
-              <option value="month">This Month</option>
-              <option value="7">Last 7 Days</option>
-              <option value="30">Last 30 Days</option>
-            </select>
-          </label>
-        </div>
-      </section>
-      <div className="ac-snapshot">
-        {user.role === "owner" && (
-          <label className="ac-branch-filter">
-            <span className="sr-only">Dashboard branch</span>
-            <select
+              aria-label="Dashboard branch"
               value={branchId}
               onChange={(e) => {
                 setBranchId(e.target.value);
@@ -341,30 +354,35 @@ export default function AdminOverview({ user }: { user: any }) {
                 </option>
               ))}
             </select>
-          </label>
-        )}
-        <span>
-          {data?.scope.label ?? "Authorised scope"} · {dates.from} – {dates.to}{" "}
+          )}
+        </div>
+        <p className="ac-toolbar-scope">
+          {scopeMatches ? data.scope.label : "Authorised scope"} · {dates.from} – {dates.to}{" "}
           · Africa/Lagos
-        </span>
-        <button
-          className="button secondary"
-          onClick={() => refresh()}
-          disabled={loading}
-        >
-          <RefreshCw size={16} />
-          Refresh
-        </button>
-        <span>
-          {loading ? <ActionLoadingIndicator label="Refreshing dashboard records" /> : <span role="status">{error
-            ? "Stale / unavailable"
-            : last
-                ? "Updated " +
-                  new Date(last).toLocaleTimeString("en-NG", {
+        </p>
+        <div className="ac-toolbar-refresh">
+          <button
+            className="button secondary"
+            onClick={() => refresh()}
+            disabled={loading}
+          >
+            <RefreshCw size={16} aria-hidden="true" />
+            Refresh
+          </button>
+          {loading ? (
+            <ActionLoadingIndicator label="Refreshing dashboard records" />
+          ) : (
+            <span role="status">
+              {error
+                ? "Stale / unavailable"
+                : last
+                  ? "Updated " + new Date(last).toLocaleTimeString("en-NG", {
                     timeZone: "Africa/Lagos",
                   })
-                : "Connecting…"}</span>}
-        </span>
+                  : "Connecting…"}
+            </span>
+          )}
+        </div>
       </div>
       {error && <Notice type="error" message={error} />}{" "}
       {!scopeMatches ? (
@@ -373,19 +391,27 @@ export default function AdminOverview({ user }: { user: any }) {
       ) : (
         <>
           {user.role === "owner" && allowed("finance") && (
-            <section className="finance-primary" aria-label="Business financial indicators">
-              <Link href={"/admin/finance?" + ownerQuery} className="ac-owner-receipts">
-                <span>Verified net receipts</span>
-                <strong>{data.revenue == null ? "Unavailable" : money(data.revenue)}</strong>
-                <span>{data.scope.from} – {data.scope.to}</span>
-              </Link>
+            <section className="ac-financial-kpis" aria-label="Business financial indicators">
               {[
-                ["Verified completed revenue", ownerFinance?.finance.verifiedCompletedRevenueKobo],
-                ["Recorded expenses", ownerFinance?.finance.recordedExpensesKobo],
-                ["Net profit", ownerFinance?.finance.netProfitKobo],
-              ].map(([label, value]) => <Link href={"/admin/finance?" + ownerQuery} className="surface finance-metric" key={label}>
-                <span>{label}</span><strong>{financeLoading ? <ActionLoadingIndicator label={`Loading ${label}`} /> : value == null ? "Unavailable" : money(value)}</strong>
-              </Link>)}
+                { label: "Verified net receipts", value: data.revenue, featured: true },
+                { label: "Verified completed revenue", value: ownerFinance?.finance.verifiedCompletedRevenueKobo },
+                { label: "Recorded expenses", value: ownerFinance?.finance.recordedExpensesKobo },
+                { label: "Net profit", value: ownerFinance?.finance.netProfitKobo },
+              ].map(({ label, value, featured }) => (
+                <Link
+                  href={"/admin/finance?" + ownerQuery}
+                  className={featured ? "ac-financial-kpi ac-owner-receipts" : "ac-financial-kpi"}
+                  key={label}
+                >
+                  <span className="ac-metric-label">{label}</span>
+                  <strong className="ac-metric-value">
+                    {!featured && financeLoading
+                      ? <ActionLoadingIndicator label={`Loading ${label}`} />
+                      : value == null ? "Unavailable" : money(value)}
+                  </strong>
+                  <small className="ac-metric-note">Selected period</small>
+                </Link>
+              ))}
             </section>
           )}
           {user.role === "owner" && <section className="ac-panel owner-priorities">
@@ -397,74 +423,61 @@ export default function AdminOverview({ user }: { user: any }) {
               {allowed("deliveries") && <a href="#owner-operations-summary">Operations Summary ↓</a>}
             </div>
           </section>}
-          <section className="ac-kpis" aria-label="Workspace metrics">
-            {cards.filter(([, , , route]) => !(user.role === "owner" && allowed("finance") && route === "finance")).map(([label, value, Icon, route, colour, note]) => {
-              const content = (
-                <>
-                  <span className="ac-kpi-icon">
-                    <Icon size={29} />
-                  </span>
-                  <div>
-                    <span>{label}</span>
-                    <strong>
-                      {value === null || value === undefined
-                        ? "Unavailable"
-                        : route === "finance"
-                          ? money(value)
-                          : Number(value).toLocaleString("en-NG")}
-                    </strong>
-                    <small>
-                      {["cylinders", "incidents"].includes(route)
-                        ? "Current snapshot"
-                        : "Selected period"}
-                    </small>
-                  </div>
-                </>
-              );
-              return allowed(route) ? (
+          {workspaceCards.length > 0 && (
+            <section className="ac-kpis" aria-label="Workspace metrics">
+              {workspaceCards.map(([label, value, Icon, route, colour, note]) => (
                 <Link
                   className={"ac-kpi " + colour}
                   key={label}
                   href={"/admin/" + route}
                   title={note}
                 >
-                  {content}
+                  <span className="ac-kpi-icon">
+                    <Icon size={29} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <span className="ac-metric-label">{label}</span>
+                    <strong className={value == null
+                      ? "ac-metric-value ac-metric-status"
+                      : "ac-metric-value"}>
+                      {value == null
+                        ? "Couldn’t load"
+                        : route === "finance"
+                          ? money(value)
+                          : Number(value).toLocaleString("en-NG")}
+                    </strong>
+                    <small className="ac-metric-note">
+                      {["cylinders", "incidents"].includes(route)
+                        ? "Current snapshot"
+                        : "Selected period"}
+                    </small>
+                  </div>
                 </Link>
-              ) : (
-                <div
-                  className={"ac-kpi " + colour}
-                  key={label}
-                  title="Unavailable for this account"
-                >
-                  {content}
-                </div>
-              );
-            })}
-          </section>
-          <details className="ac-definitions">
-            <summary>Metric definitions and scope</summary>
-            <dl>
-              {cards.map(([label, , , , , note]) => (
-                <div key={label}>
-                  <dt>{label}</dt>
-                  <dd>{note}</dd>
-                </div>
               ))}
-            </dl>
-            <p>
-              Previous-period comparisons are unavailable. Values use authorised
-              canonical records; receipts are not profit or a settlement
-              statement.
-            </p>
-          </details>
+            </section>
+          )}
+          {visibleCards.length > 0 && (
+            <details className="ac-definitions">
+              <summary>Metric definitions and scope</summary>
+              <dl>
+                {visibleCards.map(([label, , , , , note]) => (
+                  <div key={label}>
+                    <dt>{label}</dt>
+                    <dd>{note}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p>
+                Previous-period comparisons are unavailable. Values use authorised
+                canonical records; receipts are not profit or a settlement
+                statement.
+              </p>
+            </details>
+          )}
           {!!Object.keys(data.errors).length && (
             <Notice
               type="error"
-              message={
-                "Some widgets are unavailable: " +
-                Object.keys(data.errors).join(", ") +
-                ". Other widgets remain usable."
-              }
+              message="Some dashboard data couldn’t load. Select Refresh to try again."
             />
           )}
           <div className="ac-top-grid">
@@ -560,43 +573,30 @@ export default function AdminOverview({ user }: { user: any }) {
                 </div>
               )}
             </section>
-            <section className="ac-panel" id="owner-operations-summary">
-              <h2>{user.role === "owner" ? "Operations Summary" : "Operations Overview"}</h2>
-              <dl className="ac-operations">
-                {[
-                  ["Active deliveries", data.operations?.deliveries, Truck, "deliveries"],
-                  [
-                    "Appointments in period",
-                    data.operations?.appointments,
-                    CalendarDays, "bookings",
-                  ],
-                  [
-                    "Technicians on authorised work",
-                    data.operations?.technicians,
-                    HardHat,
-                  ],
-                  ["Drivers on delivery", data.operations?.drivers, Truck],
-                  ["Open incidents", data.incidents, TriangleAlert, "incidents"],
-                  ...(user.role === "owner" ? [
-                    ["Orders in period", data.orders?.count, ShoppingCart, "orders"],
-                    ["Stock exceptions", ownerFinance?.alerts?.filter((item: any) => ["low_stock", "low_gas"].includes(item.kind)).length, PackagePlus, "inventory"],
-                    ["Active stock holds", ownerFinance?.holds?.length, PackagePlus, "inventory"],
-                  ] : []),
-                ].map(([label, value, Icon, route]: any) => (
-                  <div key={label}>
-                    <dt>
-                      <Icon size={20} />
-                      {route && allowed(route) ? <Link href={"/admin/" + route}>{label}</Link> : label}
-                    </dt>
-                  <dd>{route === "inventory" && financeLoading ? <ActionLoadingIndicator label={`Loading ${label}`} /> : value ?? "Unavailable"}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="ac-note">
-                Current operations except appointments, which follow the
-                selected period.
-              </p>
-            </section>
+            {visibleOperations.length > 0 && (
+              <section className="ac-panel" id="owner-operations-summary">
+                <h2>{user.role === "owner" ? "Operations Summary" : "Operations Overview"}</h2>
+                <dl className="ac-operations">
+                  {visibleOperations.map(([label, value, Icon, route]) => (
+                    <div key={label}>
+                      <dt>
+                        <Icon size={20} aria-hidden="true" />
+                        <Link href={"/admin/" + route}>{label}</Link>
+                      </dt>
+                      <dd>
+                        {route === "inventory" && financeLoading
+                          ? <ActionLoadingIndicator label={`Loading ${label}`} />
+                          : value ?? "Couldn’t load"}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="ac-note">
+                  Order and appointment counts follow the selected period.
+                  Other metrics show the current snapshot.
+                </p>
+              </section>
+            )}
           </div>
           <div className="ac-lower-grid">
             <section className="ac-panel">

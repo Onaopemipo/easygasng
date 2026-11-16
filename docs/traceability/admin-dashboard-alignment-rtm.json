@@ -1,0 +1,98 @@
+{
+  "phase": "Business Overview layout cleanup",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "changeLog": [
+    "Added bounded web layout acceptance under OWN-001. The wider Business Owner requirements and existing acceptance gaps retain their original scope and status."
+  ],
+  "requirements": [
+    {
+      "id": "OWN-001-LAYOUT-01",
+      "parentRequirement": "OWN-001",
+      "requirement": "Align the dashboard date, period, branch selector and scoped date range in one desktop toolbar with responsive wrapping.",
+      "priority": "P1",
+      "scope": "Business Overview web UI",
+      "uiReference": "Administrator screenshot reporting misaligned date, duration, branch and scope",
+      "route": "/admin",
+      "implementationFiles": [
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "Africa/Lagos dates and the authorised scope and branches returned by admin.dashboard",
+      "securityControl": "Existing server authentication, branch scope and permission checks continue to govern dashboard reads and drill-downs.",
+      "testFiles": [
+        "tests/admin-dashboard.test.ts",
+        "tests/admin-dashboard-http.test.ts"
+      ],
+      "testIds": [
+        "ADM-BIZ01",
+        "ADM-AUTH03",
+        "ADM-FILTER03",
+        "ADM-HTTP18"
+      ],
+      "negativeTests": [
+        "Customer denial, cross-branch denial and invalid dashboard filters"
+      ],
+      "evidence": [
+        "docs/traceability/admin-dashboard-alignment-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Centres align at the tested 1440px and 1728px desktop widths in both themes. Narrower widths wrap controls within the page.",
+      "testResult": "PASS · Authenticated Chromium viewport and filter interaction checks plus dashboard regressions.",
+      "outstandingWork": "Hosted verification follows deployment.",
+      "acceptanceGate": "OWN-001-LAYOUT-G01"
+    },
+    {
+      "id": "OWN-001-LAYOUT-02",
+      "parentRequirement": "OWN-001",
+      "requirement": "Use consistent KPI typography and align card heights and values within each row.",
+      "priority": "P1",
+      "scope": "Business Overview financial and operational KPI cards",
+      "uiReference": "Administrator screenshot reporting inconsistent card font sizes",
+      "route": "/admin",
+      "implementationFiles": [
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "admin.dashboard operational counts and verified net receipts, and business.snapshot financial totals",
+      "securityControl": "Existing permission checks govern card visibility and Finance drill-downs.",
+      "testFiles": [
+        "tests/admin-dashboard.test.ts"
+      ],
+      "testIds": [
+        "ADM-BIZ01",
+        "ADM-BIZ02",
+        "ADM-REL01"
+      ],
+      "negativeTests": [
+        "Exclude unverified collections and preserve unavailable finance states"
+      ],
+      "evidence": [
+        "docs/traceability/admin-dashboard-alignment-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Matching label, value and note sizes and aligned cards passed across all seven widths in both themes.",
+      "testResult": "PASS · 14 authenticated Chromium layout checks and nine dashboard regressions.",
+      "outstandingWork": "Hosted verification follows deployment.",
+      "acceptanceGate": "OWN-001-LAYOUT-G02"
+    }
+  ],
+  "gates": [
+    {
+      "id": "OWN-001-LAYOUT-G01",
+      "requirement": "Desktop controls share a centre line. Responsive controls wrap without horizontal overflow. Period, branch and refresh still query the existing scoped API.",
+      "status": "PASS"
+    },
+    {
+      "id": "OWN-001-LAYOUT-G02",
+      "requirement": "KPI typography and within-row geometry match in light and dark. Receipts remain legible and the Finance link preserves branch and period.",
+      "status": "PASS"
+    }
+  ],
+  "coverage": {
+    "implementation": "2/2 scoped requirements",
+    "verification": "2/2 scoped requirements",
+    "criticalRequirement": "2/2 P1 requirements",
+    "route": "1/1 local web route",
+    "gate": "2/2 local gates"
+  }
+}

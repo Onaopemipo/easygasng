@@ -1,0 +1,95 @@
+{
+  "phase": "Dashboard metric visibility",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "changeLog": [
+    "Added role-aware visibility and a failed-read state to the web dashboard. The Business Owner and dashboard layout requirements retain their existing scope and status."
+  ],
+  "requirements": [
+    {
+      "id": "ADM-METRIC-ACCESS-01",
+      "requirement": "Hide dashboard KPI cards, their definitions and operations metrics when the current account lacks access to their source module.",
+      "priority": "P1",
+      "scope": "Web dashboard KPI cards and Operations Overview",
+      "route": "/admin",
+      "uiReference": "Finance dashboard screenshot showing Active customers, Active deliveries and Drivers on delivery as unavailable",
+      "implementationFiles": [
+        "apps/web/components/admin-overview.tsx"
+      ],
+      "dataSource": "The admin.dashboard response and its allowed module list from navigationAccess",
+      "securityControl": "Existing server-side branch and module authorisation. The API omits restricted values and the UI uses the current permissions returned by the server.",
+      "testFiles": [
+        "tests/admin-dashboard.test.ts"
+      ],
+      "testIds": [
+        "ADM-AUTH03",
+        "ADM-BIZ01"
+      ],
+      "negativeTests": [
+        "Finance receives null customer and delivery metrics despite a real order in its branch",
+        "Restricted metrics and the Active customers definition are absent in the Finance dashboard"
+      ],
+      "evidence": [
+        "docs/traceability/admin-dashboard-metric-access-rtm.md",
+        "docs/traceability/admin-dashboard-alignment-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Finance shows permitted records at desktop and mobile widths. The owner sees the real Active customers count and its link.",
+      "testResult": "PASS · local authenticated Chromium and backend scoping tests",
+      "outstandingWork": "Hosted verification follows deployment.",
+      "acceptanceGate": "ADM-METRIC-ACCESS-G01"
+    },
+    {
+      "id": "ADM-METRIC-ACCESS-02",
+      "requirement": "Distinguish a confirmed zero from a failed read for permitted dashboard KPIs and provide a clear retry instruction.",
+      "priority": "P1",
+      "scope": "Web dashboard KPI state and refresh",
+      "route": "/admin",
+      "uiReference": "Reported dashboard placeholder text",
+      "implementationFiles": [
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/app/theme.css"
+      ],
+      "dataSource": "Authorised admin.dashboard totals and widget error results",
+      "securityControl": "Refresh rereads the scoped server response using the authenticated account.",
+      "testFiles": [
+        "tests/admin-dashboard.test.ts"
+      ],
+      "testIds": [
+        "ADM-BIZ01",
+        "ADM-REL01"
+      ],
+      "negativeTests": [
+        "Falling back to a fabricated zero on a failed permitted read",
+        "A single failed widget discarding healthy results"
+      ],
+      "evidence": [
+        "docs/traceability/admin-dashboard-metric-access-rtm.md",
+        "docs/traceability/admin-dashboard-alignment-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "A permitted zero displays as zero. An isolated failure shows a compact message and a successful refresh restores the actual count.",
+      "testResult": "PASS · dashboard regressions and local Chromium zero, failure and retry checks",
+      "outstandingWork": "Hosted verification follows deployment.",
+      "acceptanceGate": "ADM-METRIC-ACCESS-G02"
+    }
+  ],
+  "gates": [
+    {
+      "id": "ADM-METRIC-ACCESS-G01",
+      "requirement": "Restricted Finance widgets are omitted and authorised owner metrics remain accessible.",
+      "status": "PASS"
+    },
+    {
+      "id": "ADM-METRIC-ACCESS-G02",
+      "requirement": "An authorised zero, failed read and successful retry have distinct states.",
+      "status": "PASS"
+    }
+  ],
+  "coverage": {
+    "implementation": "2/2 scoped requirements",
+    "verification": "2/2 scoped requirements",
+    "criticalRequirement": "2/2 P1 requirements",
+    "route": "1/1 local web route",
+    "gate": "2/2 local gates"
+  }
+}

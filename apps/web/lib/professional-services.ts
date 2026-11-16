@@ -386,10 +386,11 @@ export async function professionalServiceAction(
     if (!user) throw new AppError(401, "Sign in first.");
     allow(user, ["technician"]);
     z.object({}).strict().parse(input);
-    await tx.query(
-      "UPDATE sessions SET technician_service_only=true WHERE id=$1 AND user_id=$2",
-      [user.session_id, user.id],
-    );
+    if (!user.technician_service_only)
+      await tx.query(
+        "UPDATE sessions SET technician_service_only=true WHERE id=$1 AND user_id=$2",
+        [user.session_id, user.id],
+      );
     return { ok: true };
   }
   if (["technician.snapshot", "technician.availability"].includes(action)) {

@@ -95,11 +95,16 @@ export function recentVerification(user: Actor) {
       "REAUTH_REQUIRED",
     );
 }
-export async function issueSession(tx: SQL, userId: string) {
+export async function issueSession(
+  tx: SQL,
+  userId: string,
+  workspace?: "driver" | "technician",
+) {
   const token = randomBytes(32).toString("hex");
   await tx.query(
-    "INSERT INTO sessions(id,user_id,expires_at) VALUES ($1,$2,now()+interval '12 hours')",
-    [digest(token), userId],
+    `INSERT INTO sessions(id,user_id,expires_at,driver_delivery_only,technician_service_only)
+     VALUES ($1,$2,now()+interval '12 hours',$3,$4)`,
+    [digest(token), userId, workspace === "driver", workspace === "technician"],
   );
   return token;
 }
