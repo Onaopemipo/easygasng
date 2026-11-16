@@ -1,0 +1,51 @@
+16 November 2026 · EasyGas client demo release
+Source: f5fd3bc520e1e9f30eb31201d10cee3ac96f8c2f (pushed to codex/cinematic-customer-onboarding)
+Candidate: dpl_6LY41UVnrAiSagVbgQygZ9HCrZ3L · https://easygas-client-demo-cgl2sh5n9-onaopemipos-projects.vercel.app
+Previous alias target (rollback): dpl_8CNze9oNhyP7n1UhJm5q8H6AANQx
+Stable: https://easygas-client-demo.vercel.app
+
+Local web regression (isolated PostgreSQL 17):
+ℹ tests 728
+ℹ suites 0
+ℹ pass 728
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 426206.39075
+
+Focused regressions:
+ℹ tests 42
+ℹ suites 0
+ℹ pass 42
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36252.413458
+
+Mobile type check: passed. Vercel web build and TypeScript: passed.
+
+Candidate smoke:
+PASS demo-only readiness
+PASS EasyGas receipt route requires authentication
+PASS demo banner and noindex
+INFO owner availability can be changed: false
+PASS owner navigation access, directory endpoint and route
+INFO manager availability can be changed: false
+PASS manager navigation access, directory endpoint and route
+PASS finance navigation access, directory endpoint and route
+
+Stable demo after promotion (Vercel inspect: same deployment ID, Ready):
+PASS demo-only readiness
+PASS EasyGas receipt route requires authentication
+PASS demo banner and noindex
+INFO owner availability can be changed: false
+PASS owner navigation access, directory endpoint and route
+INFO manager availability can be changed: false
+PASS manager navigation access, directory endpoint and route
+PASS finance navigation access, directory endpoint and route
+
+GitHub Actions push run 43811884418 was in progress at the last check.
+
+No schema, provider, financial, staff or operational records changed during rollout verification. Hosted driver availability writes remain disabled by the existing field operations gate. Commercial production remains NO-GO.

@@ -97,3 +97,9 @@ Commit `086a1d0b6a790b05b954e05ea8dd9fc3d85ec944` is on `codex/driver-experience
 Hosted Chrome confirmed the shared 1440px width for sign-in and registration across five viewport widths. The demo passed readiness, no-index and anonymous access checks. Seven existing accounts signed in with their expected identities and roles. The local PostgreSQL run passed 712 tests and found one native configuration expectation that was updated to account for the Android demo plugins. The focused rerun passed all ten checks. Local web and mobile type checks and the Vercel build passed. Commercial production remains NO-GO.
 
 [Hosted smoke checks](evidence/redeploy-20261114-auth-hosted.txt) · [Layout evidence](../public-width-1440/evidence/auth-hosted.txt) · [GitHub release validation](https://github.com/Onaopemipo/easygasng/actions/runs/43463310860)
+
+## 16 November driver availability and branded documents rollout
+
+Vercel built source commit `f5fd3bc520e1e9f30eb31201d10cee3ac96f8c2f` from `codex/cinematic-customer-onboarding` and promoted deployment `dpl_6LY41UVnrAiSagVbgQygZ9HCrZ3L`. The stable demo returned the same Ready deployment and passed role/access and receipt authentication checks. Hosted driver availability writes remain behind the existing field operations gate. See [executed checks](evidence/redeploy-20261116-driver-receipts.txt) and the [demo traceability matrix](../traceability/vercel-client-demo-rtm.json).
+
+If the demo release must be rolled back, promote the previous Ready deployment `dpl_8CNze9oNhyP7n1UhJm5q8H6AANQx` in the same Vercel project, then verify the stable alias with Vercel Inspect and check that `/api/status` returns demo readiness. This release did not migrate the demo database. Commercial production remains NO-GO.
