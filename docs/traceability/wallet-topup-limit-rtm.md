@@ -8,6 +8,6 @@ The gateway caps the full charge. The previous displayed maximum allowed a NGN 1
 
 Coverage includes one implemented and verified requirement, one verified critical requirement, three verified routes and one passed gate. Desktop and mobile wallet forms accepted supported amounts and prevented oversized funding. A hosted sandbox payment charged NGN 1,015.23, credited NGN 1,000 exactly once and generated the matching EasyGas receipt.
 
-A separate native dependency audit failed on picomatch advisory GHSA-fc5q-39xc-vjpf, with no published patch at verification. Commercial production remains NO-GO.
+The separate native dependency audit failure is resolved by the [reviewed mobile security repair](mobile-dependency-audit-rtm.md). Its historical failure remains in the evidence. Commercial production remains NO-GO.
 
 [Implementation and security mappings](wallet-topup-limit-rtm.json) · [Evidence](wallet-topup-limit-evidence.txt)

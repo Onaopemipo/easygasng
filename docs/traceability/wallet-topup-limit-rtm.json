@@ -1,5 +1,5 @@
 {
-  "phase": "Wallet top-up amount limit repair — 18 November 2026",
+  "phase": "Wallet top-up amount limit repair \u2014 18 November 2026",
   "releaseDecision": "Commercial production NO-GO remains in force",
   "requirements": [
     {
@@ -37,8 +37,8 @@
       "acceptanceGate": "WALLET-TOPUP-G01",
       "status": "VERIFIED_COMPLETE",
       "reason": "Corrected the displayed maximum to the principal that fits the fee-inclusive transaction cap and confirmed a hosted Paystack sandbox funding credited the wallet once.",
-      "testResult": "PASS — 22 focused tests, web TypeScript, Vercel build, desktop/mobile wallet limits, exact upper boundary and hosted sandbox payment with receipt and idempotent wallet credit.",
-      "outstandingWork": "Existing production gates apply. Separate native CI audit fails on picomatch advisory GHSA-fc5q-39xc-vjpf with no published patch at verification."
+      "testResult": "PASS \u2014 22 focused tests, web TypeScript, Vercel build, desktop/mobile wallet limits, exact upper boundary and hosted sandbox payment with receipt and idempotent wallet credit.",
+      "outstandingWork": "Existing production gates apply. The separate native dependency audit gap is resolved by MOBILE-AUDIT-R01; demo release acceptance is tracked by MOBILE-AUDIT-R02."
     }
   ],
   "gates": [
@@ -75,6 +75,11 @@
       "previousHash": "b6fe943d820290532dab5233b3a09f103b9d2ad688c28985a374833fd52ce08b",
       "reviewedHash": "99b0eaedf3be7ede4d6474f474bbe220d3a4c75f7ad115cedb8b30e3677ef13c",
       "evidence": "22 focused payment checks, successful hosted sandbox top-up and 734 other full-suite checks."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Resolved the independent picomatch audit gap through MOBILE-AUDIT-R01. The mobile GitHub job passes at the existing audit threshold; historical failure evidence remains preserved.",
+      "evidence": "docs/traceability/mobile-dependency-audit-evidence.txt"
     }
   ]
 }

@@ -51,18 +51,21 @@
         "docs/deployment/vercel-client-demo.md"
       ],
       "testFiles": [
-        "tests/mobile-dependencies.test.ts"
+        "tests/mobile-dependencies.test.ts",
+        "scripts/check-vercel-demo.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "VDEMO-HTTP01"
+      ],
       "negativeTests": [],
       "evidence": [
         "docs/traceability/mobile-dependency-audit-evidence.txt"
       ],
       "acceptanceGate": "MOBILE-AUDIT-G02",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Repair is implemented; acceptance checks are in progress.",
-      "testResult": "PENDING final tests and deployment",
-      "outstandingWork": "CI, native bundle exports and hosted release verification pending. Installed binaries are not replaced by this dependency/source release. Existing commercial production NO-GO and physical-device gates remain."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source e658126 passed both GitHub jobs and is deployed Ready at the stable demo alias. Authenticated hosted checks verify demo isolation, fulfilment, sandbox mode and responsive Incidents.",
+      "testResult": "PASS \u2014 GitHub web 738/738 tests, no skips, web build/types/audit and native job. Hosted readiness, access denials, persistent project settings, fulfilment, sandbox payments and Incidents sizing pass.",
+      "outstandingWork": "No remaining scoped release gap. Installed binaries are not replaced by this source/dependency release. Existing physical-device, real-provider, historical-import and commercial production NO-GO gates remain."
     }
   ],
   "gates": [
@@ -73,25 +76,30 @@
     },
     {
       "id": "MOBILE-AUDIT-G02",
-      "status": "PENDING",
+      "status": "PASS",
       "requirement": "GitHub jobs pass, committed source deployed Ready, demo fulfilment and Paystack sandbox verified."
     }
   ],
   "coverage": {
     "implemented": 2,
-    "verified": 1,
+    "verified": 2,
     "total": 2,
     "criticalVerified": 1,
     "criticalTotal": 1,
-    "routesVerified": 0,
+    "routesVerified": 4,
     "routesTotal": 4,
-    "gatesPassed": 1,
+    "gatesPassed": 2,
     "gatesTotal": 2
   },
   "changeLog": [
     {
       "date": "2026-11-18",
       "change": "Added MOBILE-AUDIT-R01/R02 and G01/G02. Reviewed an exact security fork because upstream has no patched release. Existing production NO-GO, historical-import hold and installed-device gates remain in scope."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Both GitHub jobs pass for e658126; web 738/738 tests with zero skips. Deployment dpl_DL5z6veUhAVM5YaTYnMkePtLA3wr is Ready and hosted acceptance passed with persistent demo fulfilment and Paystack sandbox. Historical native-audit gap in wallet phase is resolved without removing its original evidence.",
+      "evidence": "docs/traceability/mobile-dependency-audit-evidence.txt"
     }
   ]
 }

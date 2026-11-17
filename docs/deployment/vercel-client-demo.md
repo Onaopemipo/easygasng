@@ -142,3 +142,13 @@ The `easygas-client-demo` project's Production slot now defines `EASYGAS_FIELD_O
 Deployment `dpl_EbG8KzgKKLA4FqVNm4qCbqs2ctof` was built without per-deployment overrides and promoted after readiness and sandbox checks. The alias confirmed runtime fulfilment, the delivered synthetic order and Incidents sizing at 320 and 1440 px. Roll back to `dpl_54faTTn8ihHpn3UXcMnscHY9p8uU` to restore the prior Ready build with its equivalent runtime settings. Future builds still inherit the project defaults after a deployment rollback.
 
 [Configuration and hosted verification](evidence/20261117-demo-fulfilment-defaults.txt)
+
+## 18 November mobile dependency security repair
+
+Source `e658126` replaces vulnerable mobile glob matchers with an exact reviewed security fork. GitHub's native job passes the unchanged moderate audit, and local iOS/Android exports and dependency regressions pass. GitHub Release validation run [44191246673](https://github.com/Onaopemipo/easygasng/actions/runs/44191246673) passed both jobs, including 738/738 web tests with zero skips, web build and TypeScript.
+
+Deployment `dpl_DL5z6veUhAVM5YaTYnMkePtLA3wr` is Ready at the stable demo alias. It inherited the permanent project settings without per-deployment overrides. Authenticated hosted checks confirm field fulfilment, tracking writes, bulk LPG, one-day proof visibility and the paid/delivered synthetic order. Paystack remains in test mode. Incidents fits at 320 and 1440 px, and Finance retains read-only actions.
+
+To roll back this web deployment, promote `dpl_3iL3ow2UTkPmy1qveM5qSuhvcqSe` in the same project and repeat readiness and sandbox checks. No schema migration or installed phone replacement was performed. Commercial production remains NO-GO.
+
+[Repair traceability and release evidence](../traceability/mobile-dependency-audit-rtm.md) · [Reviewed dependency](../security/mobile-glob-review.md)
