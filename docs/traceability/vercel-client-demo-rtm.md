@@ -5,8 +5,11 @@
 | VDEMO-01 | Separate temporary Vercel project and persistent isolated database | VERIFIED_COMPLETE |
 | VDEMO-02 | Usable branded web demo and synthetic test access | VERIFIED_COMPLETE |
 | VDEMO-03 | Preserve production/import/retention decisions and document teardown | VERIFIED_COMPLETE |
+| VDEMO-04 | Inherit demo fulfilment defaults and keep Paystack in sandbox mode | VERIFIED_COMPLETE |
 
-3/3 bounded temporary-demo requirements and gates passed on the actual hosted URL; this is not whole-application or production acceptance. [Detailed source, data, security, named tests and evidence](vercel-client-demo-rtm.json), [deployment/access/limits runbook](../deployment/vercel-client-demo.md). Seven local checks plus hosted VDEMO-HTTP01 pass; real browser cart addition/owner sign-in/services verified. All prior production NO-GO, real-import confirmation, retain-all and native-build decisions remain.
+4/4 bounded temporary-demo requirements and gates passed on the actual hosted URL; this is not whole-application or production acceptance. [Detailed source, data, security, named tests and evidence](vercel-client-demo-rtm.json), [deployment/access/limits runbook](../deployment/vercel-client-demo.md). Seven local checks plus hosted VDEMO-HTTP01 pass; real browser cart addition/owner sign-in/services verified. All prior production NO-GO, real-import confirmation, retain-all and native-build decisions remain.
+
+Persistent configuration implemented and verified 4/4 demo requirements, including 2/2 critical requirements and 4/4 gates. Five runtime endpoints verified the persistent rollout. [Hosted evidence](../deployment/evidence/20261117-demo-fulfilment-defaults.txt).
 
 ## 9 November redeployment continuation
 

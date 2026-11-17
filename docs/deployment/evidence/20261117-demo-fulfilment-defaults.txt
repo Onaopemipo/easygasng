@@ -1,0 +1,34 @@
+17 November 2026 · persistent fulfilment settings
+Project easygas-client-demo · Production slot for the stable synthetic demo alias
+Stable https://easygas-client-demo.vercel.app
+Ready dpl_EbG8KzgKKLA4FqVNm4qCbqs2ctof · source 581656cbd2b9241503e8af32dedc21b3a221a8dc
+Previous Ready demo deployment dpl_54faTTn8ihHpn3UXcMnscHY9p8uU
+Built from a clean Git archive with no deployment-level environment overrides. Candidate readiness and Paystack test mode passed before promotion.
+EASYGAS_FIELD_OPERATIONS_ENABLED existing value scoped to Preview.
+EASYGAS_FIELD_OPERATIONS_ENABLED added to demo Production.
+EASYGAS_BULK_LPG_ENABLED existing value scoped to Preview.
+EASYGAS_BULK_LPG_ENABLED added to demo Production.
+EASYGAS_TRACKING_MUTATIONS_ENABLED added to demo Production.
+EASYGAS_PROOF_RETENTION_DAYS added to demo Production.
+PASS all four keys are project-level Production entries. Prior Preview values and Paystack entries are preserved.
+PASS all four inherited demo project values match, including one-day proof visibility.
+PASS stable demo readiness, driver availability enabled, tracking writes enabled, bulk LPG enabled, one-day proof visibility, verified paid and delivered test order, Paystack sandbox.
+PASS hosted chromium 320px: grid, no horizontal overflow, six fields and Actions visible, details fit.
+PASS hosted chromium 1440px: table-row, no horizontal overflow, six fields and Actions visible, details fit.
+PASS hosted chromium Finance can view incident details at 390px with read-only actions.
+The runtime tracking probe rejected a nonexistent order without committing a transition. No test charge or new delivery was created. Commercial production remains NO-GO.
+
+✔ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (451.7115ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (1.593875ms)
+✔ PAY-POLICY: missing merchant terms, dashboard fee double charge, live activation and undeclared secrets fail closed (2.369375ms)
+✔ PAY-LINK: native payment return carries only one opaque intent ID; success/amount/provider redirects cannot authorize payment (0.516292ms)
+✔ VDEMO-SEC01: Source bundle excludes local environment and data files (2.478208ms)
+✔ VDEMO-SEC02: hosted demo bootstrap fails before connecting without explicit dedicated-resource confirmation (165.341ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 577.195709

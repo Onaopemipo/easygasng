@@ -122,6 +122,44 @@
       "reason": "Bounded temporary client demo deployed and checked on the actual hosted URL. This does not close the original production requirements/gates.",
       "testResult": "PASS:7/7 local deployment/security/traceability checks, hosted VDEMO-HTTP01, actual remote restricted-runtime checks and browser catalogue/cart/owner sign-in/services checks. Cloud build READY. No production release or full-business/device acceptance inferred.",
       "outstandingWork": "None for this bounded temporary-demo requirement. Original production/provider/device/operational and historical-import gates remain tracked in prior matrices."
+    },
+    {
+      "id": "VDEMO-04",
+      "requirement": "Future client-demo releases inherit fulfilment while Paystack stays in sandbox mode.",
+      "priority": "P0",
+      "scope": "Dedicated easygas-client-demo Vercel project, stable public demo slot",
+      "uiReference": "17 November request to persist demo fulfilment",
+      "route": "/api/status, /api/drivers.workspace, /api/order.transition, /api/bulk.summary, /api/payments/paystack/configuration",
+      "dataSource": "Vercel project configuration and hosted runtime responses from the isolated demo",
+      "securityControl": "Demo-only project scope, unchanged sandbox credentials, test-mode runtime guard and driver/staff authority",
+      "implementationFiles": [
+        "docs/deployment/vercel-client-demo.md",
+        "apps/web/lib/driver-availability.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/payments/runtime.ts"
+      ],
+      "testFiles": [
+        "tests/paystack-policy.test.ts",
+        "tests/vercel-demo.test.ts"
+      ],
+      "testIds": [
+        "PAY-POLICY",
+        "VDEMO-SEC01"
+      ],
+      "negativeTests": [
+        "live activation",
+        "Source bundle excludes local environment and data files"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261117-demo-fulfilment-defaults.txt"
+      ],
+      "acceptanceGate": "VDEMO-G4",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Set all four fulfilment values on the isolated demo project and verified a new deployment inherited them without overrides.",
+      "testResult": "PASS \u2014 project-level values and preserved Preview/Paystack settings, hosted readiness, driver controls, tracking, bulk LPG, existing proof and sandbox payment mode.",
+      "outstandingWork": "Retain normal demo readiness and sandbox checks on future releases. Existing physical, provider and commercial production gates carry forward."
     }
   ],
   "gates": [
@@ -166,12 +204,32 @@
         "docs/deployment/evidence/vercel-demo-home.png",
         "docs/deployment/evidence/vercel-demo-admin.png"
       ]
+    },
+    {
+      "id": "VDEMO-G4",
+      "status": "PASS",
+      "evidence": [
+        "docs/deployment/evidence/20261117-demo-fulfilment-defaults.txt"
+      ]
     }
   ],
   "coverage": {
-    "denominator": 3,
-    "verified": 3,
-    "note": "3/3 bounded temporary-demo requirements verified; all original application/release matrices and gates remain authoritative. No whole-app production completion claim."
+    "denominator": 4,
+    "verified": 4,
+    "implementation": {
+      "covered": 4,
+      "total": 4
+    },
+    "criticalVerified": {
+      "covered": 2,
+      "total": 2
+    },
+    "gatesPassed": {
+      "covered": 4,
+      "total": 4
+    },
+    "routeCoverage": "Existing demo route coverage carried forward. Five scoped runtime endpoints verified for the persistent settings.",
+    "note": "4/4 demo-specific requirements verified. Commercial release and original application gates continue to apply."
   },
   "changeLog": [
     {
@@ -181,6 +239,10 @@
     {
       "date": "2026-11-09",
       "change": "Deployed and checked actual isolated Vercel/Neon demo; Free database selected, application owner secrets removed, normal runtime/auth preserved. No local/business data imported, providers OFF and existing NO-GO/retention/import holds retained."
+    },
+    {
+      "date": "2026-11-17",
+      "change": "VDEMO-04/G4 records persistent fulfilment on the dedicated demo project, deployment with no runtime overrides and preserved sandbox mode."
     }
   ],
   "redeployment20261109": {
