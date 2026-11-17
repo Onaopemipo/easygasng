@@ -36,6 +36,16 @@ export function providerFee(gross: number, policy: PaymentFeePolicy): number {
         : fee,
   );
 }
+export function maximumPaymentPrincipal(policy: PaymentFeePolicy): number {
+  const p = paymentFeePolicy.parse(policy);
+  if (p.bearer === "merchant") return p.maximumGrossKobo;
+  // The fixed fee can make net proceeds drop at the waiver threshold.
+  const candidates = [
+    p.maximumGrossKobo,
+    Math.max(0, Math.min(p.maximumGrossKobo, p.fixedWaivedBelowKobo - 1)),
+  ];
+  return Math.max(0, ...candidates.map((gross) => gross - providerFee(gross, p)));
+}
 export function quotePaymentFee(baseKobo: number, policy: PaymentFeePolicy) {
   const p = paymentFeePolicy.parse(policy);
   minor.parse(baseKobo);

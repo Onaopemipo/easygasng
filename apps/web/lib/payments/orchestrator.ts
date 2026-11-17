@@ -10,7 +10,7 @@ import { invoiceBalance } from "../invoice-corrections";
 import { audit, notify } from "../governance";
 import { queueMessage } from "../accounts";
 import { gatewayPolicy, type GatewayPolicy } from "./policy";
-import { quotePaymentFee } from "../../../../packages/business-rules/src/payment-fees";
+import { maximumPaymentPrincipal, quotePaymentFee } from "../../../../packages/business-rules/src/payment-fees";
 import {
   type PaymentProvider,
   PaymentProviderError,
@@ -306,14 +306,27 @@ export async function preparePayment(
     )
       throw new AppError(409, "Branch is inactive.");
     let base = o.base;
+    const maximumPrincipal = maximumPaymentPrincipal(p.fee!);
     if (d.purpose === "wallet") {
-      if (
-        !p.walletFunding ||
-        !p.channels.includes("card") ||
-        base < p.walletMinimumKobo ||
-        base > p.walletMaximumKobo
-      )
+      const maximumTopUp = Math.min(p.walletMaximumKobo, maximumPrincipal);
+      if (!p.walletFunding || !p.channels.includes("card"))
         throw new AppError(409, "Wallet funding is outside approved limits.");
+      if (
+        base < p.walletMinimumKobo ||
+        base > maximumTopUp
+      ) {
+        const currency = new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+        throw new AppError(
+          409,
+          `Enter a wallet top-up between ${currency.format(p.walletMinimumKobo / 100)} and ${currency.format(maximumTopUp / 100)}. The processing fee must fit within the payment limit.`,
+          "PAYMENT_AMOUNT_LIMIT",
+        );
+      }
       const balance = Number(
         (await one(
           tx,
@@ -334,6 +347,12 @@ export async function preparePayment(
         );
       base = d.amountKobo;
     }
+    if (base > maximumPrincipal)
+      throw new AppError(
+        409,
+        "This payment plus its processing fee exceeds the approved transaction limit.",
+        "PAYMENT_AMOUNT_LIMIT",
+      );
     if (!z.email().safeParse(u.email).success || u.email.endsWith(".invalid"))
       throw new AppError(
         409,

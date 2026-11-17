@@ -25,7 +25,7 @@ import {
 import { paymentReceipt } from "../apps/web/lib/payments/documents";
 import { paystackReport } from "../apps/web/lib/payments/reporting";
 import { actor } from "../apps/web/lib/auth";
-import { paystackRuntime } from "../apps/web/lib/payments/runtime";
+import { paystackAvailability, paystackRuntime } from "../apps/web/lib/payments/runtime";
 async function fixture() {
   const db = await createDatabase("memory://");
   await migrate(db);
@@ -116,6 +116,36 @@ async function fixture() {
     callbackUrl: () => callbackUrl,
   };
 }
+test("PAY-WALLET-LIMIT: configuration and quote include the fee in the transaction limit without creating failed intents", async () => {
+  const f = await fixture();
+  try {
+    await f.db.query(
+      "UPDATE settings SET value=jsonb_set(jsonb_set(value,'{fee,maximumGrossKobo}','100000'::jsonb),'{walletMaximumKobo}','100000'::jsonb) WHERE key='payment.gateway'",
+    );
+    const config = await paystackAvailability(f.db, "lagos");
+    assert.equal(config.walletMaximumKobo, 98190);
+    for (const amountKobo of [98191, 100000]) {
+      await assert.rejects(
+        () => preparePayment(f.db, f.token, {
+          purpose: "wallet", amountKobo, requestKey: id(),
+        }),
+        (error: any) => error.status === 409 &&
+          error.code === "PAYMENT_AMOUNT_LIMIT" &&
+          error.message.includes("981.90"),
+      );
+    }
+    assert.equal(Number((await one(f.db, "SELECT count(*) AS n FROM payment_intents"))!.n), 0);
+    assert.equal(Number((await one(f.db, "SELECT count(*) AS n FROM payment_attempts"))!.n), 0);
+    const quote = await preparePayment(f.db, f.token, {
+      purpose: "wallet", amountKobo: config.walletMaximumKobo, requestKey: id(),
+    });
+    assert.equal(quote.quote.baseKobo, 98190);
+    assert.equal(quote.quote.grossKobo, 100000);
+    assert.equal(f.initializes(), 0);
+  } finally {
+    await f.db.close?.();
+  }
+});
 test("MERCHANT-DOC-01: verified payment produces a private EasyGas receipt and at most one branded email", async () => {
   const f = await fixture();
   const g = globalThis as any;

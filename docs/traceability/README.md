@@ -245,3 +245,5 @@ Checkout delivery details consent. [Matrix](checkout-details-save-rtm.md). Gas, 
 Operational Incidents register: [requirements matrix](operational-incidents-rtm.md), [machine-readable scope](operational-incidents-rtm.json), and [test evidence](operational-incidents-evidence.txt). Desktop and mobile web checks passed locally; hosted rollout remains pending.
 
 Holistic release QA (17 November). [Requirements matrix](holistic-qa-rtm.md) and [executed evidence](../releases/20261117-holistic-qa/evidence.txt) cover local PostgreSQL regression, desktop and mobile checkout, synthetic staff fulfilment and installed native smoke checks. Commercial production remains NO-GO.
+
+Wallet top-up amount repair. [Matrix](wallet-topup-limit-rtm.md) maps the fee-inclusive funding maximum and oversized-payment validation. Demo and live payment decisions continue to apply.

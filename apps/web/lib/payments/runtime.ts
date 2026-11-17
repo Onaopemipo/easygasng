@@ -1,6 +1,7 @@
 import { AppError } from "../auth";
 import { appOrigin } from "../request-origin";
 import { PaystackProvider, type WebhookKeys } from "./paystack-provider";
+import { maximumPaymentPrincipal } from "../../../../packages/business-rules/src/payment-fees";
 export function paystackRuntime(env: NodeJS.ProcessEnv = process.env) {
   if (
     env.EASYGAS_PAYSTACK_ENABLED !== "true" ||
@@ -65,6 +66,8 @@ export async function paystackAvailability(
     channels: p?.channels ?? [],
     environment: "test",
     walletMinimumKobo: p?.walletMinimumKobo ?? null,
-    walletMaximumKobo: p?.walletMaximumKobo ?? null,
+    walletMaximumKobo: p?.fee
+      ? Math.min(p.walletMaximumKobo, maximumPaymentPrincipal(p.fee))
+      : p?.walletMaximumKobo ?? null,
   };
 }

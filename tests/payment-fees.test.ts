@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   providerFee,
+  maximumPaymentPrincipal,
   quotePaymentFee,
   type PaymentFeePolicy,
 } from "../packages/business-rules/src/payment-fees";
@@ -47,4 +48,25 @@ test("PAY-FEE-LIMIT: merchant absorption, maximum/invalid amounts and exact wall
   assert.throws(() => quotePaymentFee(Number.MAX_SAFE_INTEGER, p));
   assert.throws(() => quotePaymentFee(100000, p));
   assert.throws(() => quotePaymentFee(100, { ...p, percentageBps: 10000 }));
+});
+test("PAY-FEE-PRINCIPAL-MAX: payable limits include fees, caps, rounding and the waiver discontinuity", () => {
+  for (const rounding of ["ceil", "floor", "nearest"] as const) {
+    for (const policy of [
+      { ...p, rounding, maximumGrossKobo: 100000 },
+      { ...p, rounding, maximumGrossKobo: 2500, fixedKobo: 1000 },
+      { ...p, rounding, maximumGrossKobo: 2500, fixedKobo: 1000, capKobo: null },
+      { ...p, rounding, bearer: "merchant" as const },
+    ]) {
+      const maximum = maximumPaymentPrincipal(policy);
+      let expected = policy.maximumGrossKobo;
+      if (policy.bearer === "customer") {
+        expected = 0;
+        for (let gross = 0; gross <= policy.maximumGrossKobo; gross++)
+          expected = Math.max(expected, gross - providerFee(gross, policy));
+      }
+      assert.equal(maximum, expected);
+      assert.ok(quotePaymentFee(maximum, policy).grossKobo <= policy.maximumGrossKobo);
+      assert.throws(() => quotePaymentFee(maximum + 1, policy));
+    }
+  }
 });

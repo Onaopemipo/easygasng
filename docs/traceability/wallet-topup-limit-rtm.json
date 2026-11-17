@@ -1,0 +1,63 @@
+{
+  "phase": "Wallet top-up amount limit repair — 18 November 2026",
+  "releaseDecision": "Commercial production NO-GO remains in force",
+  "requirements": [
+    {
+      "id": "WALLET-TOPUP-R01",
+      "requirement": "Include processing charges in the maximum payable wallet top-up and show a validation error when it is exceeded.",
+      "priority": "P0",
+      "scope": "Web and native card wallet funding, sandbox client demo",
+      "uiReference": "Customer reported temporary-unavailability error while topping up, 18 November",
+      "route": "/wallet, /api/payments/paystack/configuration, /api/payments/paystack/quote",
+      "dataSource": "Governed branch payment.gateway fee policy and wallet limits; committed wallet payment records",
+      "securityControl": "Server validates current fee and wallet limits, customer scope and exact payment consent. Invalid amounts create no payment intents or attempts.",
+      "implementationFiles": [
+        "packages/business-rules/src/payment-fees.ts",
+        "apps/web/lib/payments/runtime.ts",
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/web/components/hosted-payment.tsx"
+      ],
+      "testFiles": [
+        "tests/payment-fees.test.ts",
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PAY-FEE-PRINCIPAL-MAX",
+        "PAY-WALLET-LIMIT"
+      ],
+      "negativeTests": [
+        "PAY-WALLET-LIMIT"
+      ],
+      "evidence": [
+        "docs/traceability/wallet-topup-limit-evidence.txt"
+      ],
+      "acceptanceGate": "WALLET-TOPUP-G01",
+      "status": "PARTIAL",
+      "reason": "The transaction cap includes the processing fee. The payable principal calculation and server validation passed local regression. Hosted acceptance pending.",
+      "testResult": "PASS — 22 fee, payment, scope and traceability checks and web TypeScript. Hosted acceptance pending.",
+      "outstandingWork": "Finish regression, deploy to demo with persistent fulfilment and verify browser and sandbox wallet flow."
+    }
+  ],
+  "gates": [
+    {
+      "id": "WALLET-TOPUP-G01",
+      "status": "OPEN",
+      "requirement": "Verify fee-inclusive limits, clear denial of oversized funding with no payment effects, and supported sandbox wallet payment."
+    }
+  ],
+  "coverage": {
+    "implemented": 1,
+    "verified": 0,
+    "total": 1,
+    "criticalVerified": 0,
+    "criticalTotal": 1,
+    "gatesPassed": 0,
+    "gatesTotal": 1
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-18",
+      "change": "Added WALLET-TOPUP-R01/G01 for the reproduced top-up failure. Existing payment and commercial launch gates carry forward."
+    }
+  ]
+}
