@@ -111,3 +111,11 @@ Source `73979cf` is on `codex/cinematic-customer-onboarding`. Vercel deployment 
 For a web rollback, use `vercel rollback dpl_6LY41UVnrAiSagVbgQygZ9HCrZ3L --yes --scope onaopemipos-projects` and verify the stable alias and `/api/status`. Leave migration 080 in place during a web rollback so saved delivery numbers are available when the new release returns. Backup verification checked archive readability. A restore drill was outside this rollout.
 
 [Release evidence](evidence/redeploy-20261117-checkout-details.txt) · [Checkout traceability](../traceability/checkout-details-save-rtm.md)
+
+## 17 November Operational Incidents rollout
+
+Source `65ae678` is on `codex/cinematic-customer-onboarding`. Vercel deployment `dpl_GXGapwq4nWpKCfCJZ8GYQ88QGrfL` serves the stable demo alias. Authenticated Chrome verified the register and popup for Admin at 1440px and read-only Finance at 390px. Customer and anonymous incident access were denied.
+
+To roll back the demo web release, use `vercel rollback dpl_2mkFLAuUvEgQyzEyCueZ3SkADeok --yes --scope onaopemipos-projects`, inspect the stable alias and check `/api/status`. This rollout required no migration. Commercial production remains NO-GO.
+
+[Deployment evidence](evidence/redeploy-20261117-operational-incidents.txt) · [Incident traceability](../traceability/operational-incidents-rtm.md) · [GitHub Release validation](https://github.com/Onaopemipo/easygasng/actions/runs/43989158764)
