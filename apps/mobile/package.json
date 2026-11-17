@@ -9,7 +9,8 @@
     "ios": "expo run:ios",
     "typecheck": "tsc --noEmit",
     "ios:local": "EAS_BUILD_PROFILE=local-demo EXPO_PUBLIC_API_URL=http://127.0.0.1:3003 expo run:ios --configuration Release",
-    "android:local": "EAS_BUILD_PROFILE=local-demo EXPO_PUBLIC_API_URL=http://10.0.2.2:3003 expo run:android --variant release"
+    "android:local": "EAS_BUILD_PROFILE=local-demo EXPO_PUBLIC_API_URL=http://10.0.2.2:3003 expo run:android --variant release",
+    "test:dependencies": "node --test ../../tests/mobile-dependencies.test.ts"
   },
   "dependencies": {
     "@expo/vector-icons": "15.0.2",
@@ -37,6 +38,7 @@
   },
   "overrides": {
     "glob": "14.0.4",
-    "minimatch": "11.0.5"
+    "minimatch": "11.0.5",
+    "picomatch": "npm:@ryotsu/picomatch@4.0.7-a"
   }
 }

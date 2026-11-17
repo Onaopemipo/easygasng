@@ -247,3 +247,5 @@ Operational Incidents register: [requirements matrix](operational-incidents-rtm.
 Holistic release QA (17 November). [Requirements matrix](holistic-qa-rtm.md) and [executed evidence](../releases/20261117-holistic-qa/evidence.txt) cover local PostgreSQL regression, desktop and mobile checkout, synthetic staff fulfilment and installed native smoke checks. Commercial production remains NO-GO.
 
 Wallet top-up amount repair. [Matrix](wallet-topup-limit-rtm.md) maps the fee-inclusive funding maximum and oversized-payment validation. Demo and live payment decisions continue to apply.
+
+Mobile dependency audit repair (18 November). [Matrix](mobile-dependency-audit-rtm.md) and [executed evidence](mobile-dependency-audit-evidence.txt) track the reviewed glob security patch and demo release. Commercial production NO-GO remains.

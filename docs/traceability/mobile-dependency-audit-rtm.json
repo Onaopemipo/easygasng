@@ -1,0 +1,97 @@
+{
+  "phase": "Mobile dependency audit repair \u2014 18 November 2026",
+  "releaseDecision": "Commercial production NO-GO remains; Paystack sandbox only on the client demo.",
+  "requirements": [
+    {
+      "id": "MOBILE-AUDIT-R01",
+      "requirement": "Remove the vulnerable picomatch implementations from every mobile dependency path using the reviewed CVE-2026-112366 security patch.",
+      "priority": "P0",
+      "scope": "Expo/Metro/Jest/React Native codegen dependencies; no app API or business-rule changes.",
+      "uiReference": "User request to fix remaining mobile dependency audit, push/deploy and preserve demo fulfilment and Paystack sandbox, 18 November 2026.",
+      "route": "Native dependency graph",
+      "dataSource": "npm registry signed package metadata, exact lockfile integrity, reviewed fork commit 3ab5a7627d480259e3d9ca67fbc14c125d374f0e; GitHub CI and authenticated hosted demo records.",
+      "securityControl": "Exact dependency override, SHA-512 lock integrity, checked installed JavaScript hashes and bounded attack tests; audit thresholds preserved. Existing demo access controls and sandbox restrictions remain.",
+      "implementationFiles": [
+        "apps/mobile/package.json",
+        "apps/mobile/package-lock.json",
+        "docs/security/mobile-glob-review.json",
+        ".github/workflows/release-validation.yml"
+      ],
+      "testFiles": [
+        "tests/mobile-dependencies.test.ts"
+      ],
+      "testIds": [
+        "MOBILE-DEP-01",
+        "MOBILE-DEP-02",
+        "MOBILE-DEP-03"
+      ],
+      "negativeTests": [
+        "MOBILE-DEP-02"
+      ],
+      "evidence": [
+        "docs/traceability/mobile-dependency-audit-evidence.txt"
+      ],
+      "acceptanceGate": "MOBILE-AUDIT-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All five installed consumer paths use the reviewed security patch. Bounded attack regressions, clean audit and native exports pass.",
+      "testResult": "PASS \u2014 clean npm ci, zero native audit findings at unchanged threshold, 3 dependency checks, 2,004 fork checks, mobile TypeScript and iOS/Android Hermes exports.",
+      "outstandingWork": "GitHub and hosted release acceptance are tracked by R02. Replace the explicit fork when a reviewed official security release becomes available. Installed phones are not updated by source export; physical-device and commercial production gates remain."
+    },
+    {
+      "id": "MOBILE-AUDIT-R02",
+      "requirement": "Push the repair and make a new demo deployment that retains fulfilment and sandbox payments.",
+      "priority": "P1",
+      "scope": "GitHub release validation and the existing isolated Vercel client demo.",
+      "uiReference": "User request to fix remaining mobile dependency audit, push/deploy and preserve demo fulfilment and Paystack sandbox, 18 November 2026.",
+      "route": "/api/status, /api/drivers.workspace, /api/payments/paystack/configuration, /admin/incidents",
+      "dataSource": "npm registry signed package metadata, exact lockfile integrity, reviewed fork commit 3ab5a7627d480259e3d9ca67fbc14c125d374f0e; GitHub CI and authenticated hosted demo records.",
+      "securityControl": "Exact dependency override, SHA-512 lock integrity, checked installed JavaScript hashes and bounded attack tests; audit thresholds preserved. Existing demo access controls and sandbox restrictions remain.",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "docs/deployment/vercel-client-demo.md"
+      ],
+      "testFiles": [
+        "tests/mobile-dependencies.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/mobile-dependency-audit-evidence.txt"
+      ],
+      "acceptanceGate": "MOBILE-AUDIT-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Repair is implemented; acceptance checks are in progress.",
+      "testResult": "PENDING final tests and deployment",
+      "outstandingWork": "CI, native bundle exports and hosted release verification pending. Installed binaries are not replaced by this dependency/source release. Existing commercial production NO-GO and physical-device gates remain."
+    }
+  ],
+  "gates": [
+    {
+      "id": "MOBILE-AUDIT-G01",
+      "status": "PASS",
+      "requirement": "Clean mobile npm ci and unchanged moderate audit, attack/compatibility tests, types and iOS/Android exports."
+    },
+    {
+      "id": "MOBILE-AUDIT-G02",
+      "status": "PENDING",
+      "requirement": "GitHub jobs pass, committed source deployed Ready, demo fulfilment and Paystack sandbox verified."
+    }
+  ],
+  "coverage": {
+    "implemented": 2,
+    "verified": 1,
+    "total": 2,
+    "criticalVerified": 1,
+    "criticalTotal": 1,
+    "routesVerified": 0,
+    "routesTotal": 4,
+    "gatesPassed": 1,
+    "gatesTotal": 2
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-18",
+      "change": "Added MOBILE-AUDIT-R01/R02 and G01/G02. Reviewed an exact security fork because upstream has no patched release. Existing production NO-GO, historical-import hold and installed-device gates remain in scope."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# Mobile glob dependency security review
+
+18 November 2026. The mobile audit reported 21 high entries propagated from picomatch's [single-branch repeated-extglob advisory](https://github.com/advisories/GHSA-fc5q-39xc-vjpf). The original registry package still has no patched release. The audit's suggested Expo/React Native downgrades would change the supported native stack.
+
+The mobile override pins `picomatch` to `npm:@ryotsu/picomatch@4.0.7-a`, an explicitly named security fork. The lockfile fixes its registry URL and SHA-512 integrity. [The fork commit](https://github.com/ryotsu-kankichi/secured-picomatch/commit/3ab5a7627d480259e3d9ca67fbc14c125d374f0e) matches the downloaded JavaScript byte for byte. It has no runtime dependencies or installation scripts. MIT notices are preserved. All five installed consumer paths are checked by `tests/mobile-dependencies.test.ts` against the [reviewed hashes](mobile-glob-review.json).
+
+Compared with original 4.0.7, the fork changes `lib/parse.js` and `lib/constants.js`. Its security analyzer collapses redundant outer repetition for simple star-containing branches and literalizes complex branches that it cannot prove safe. Escaped and quoted stars retain literal semantics. Existing explicit `maxExtglobRecursion: false` disables safeguards; EasyGas does not set that option. Other changes cover POSIX punctuation escaping, bracket negation, newline-aware globstars and the `**.ext` fast path. Entry points, matcher APIs, scanner, utilities and licence match the original files. The patch can change captured substrings for repeated extglobs; tests cover the consumers' normal capture, glob, negation and file-discovery behavior.
+
+The separate `@depup/picomatch` package was also examined and rejected because its runtime source was unchanged from the vulnerable original. The selected fork changes the failing implementation. The regression invokes attack inputs in bounded subprocesses so a reintroduced exponential matcher fails without hanging CI. Clean installation, the unchanged npm audit threshold, fork tests and native bundle exports provide separate acceptance evidence.
+
+This is a maintained dependency override, not an upstream fix. Review and replace it when an official compatible security release becomes available. Keep the attack and compatibility tests during that replacement. This source release does not update installed phone binaries or waive physical-device and commercial launch gates.
+
+[Requirement mappings and acceptance](../traceability/mobile-dependency-audit-rtm.json) · [Executed evidence](../traceability/mobile-dependency-audit-evidence.txt)
