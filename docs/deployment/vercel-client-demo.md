@@ -125,3 +125,11 @@ To roll back the demo web release, use `vercel rollback dpl_2mkFLAuUvEgQyzEyCueZ
 Deployment `dpl_GfJyTjpgWKXz1a4wnmgzwjsSeQLi` serves the stable client demo. Field operations, tracking writes, bulk LPG and one day of proof visibility are set on this deployment. A future replacement deployment needs these overrides again to keep demo fulfilment enabled. Paystack remains in test mode. To restore the previous demo settings, roll back to `dpl_GXGapwq4nWpKCfCJZ8GYQ88QGrfL`. The test order and audit history persist in the demo database. Commercial production remains NO-GO.
 
 [Hosted sandbox order evidence](../releases/20261117-holistic-qa/paystack-demo-order.txt)
+
+## 17 November responsive Incidents rollout
+
+Source `59eb8a7` is on `codex/cinematic-customer-onboarding`. Deployment `dpl_54faTTn8ihHpn3UXcMnscHY9p8uU` serves the stable demo alias. Chrome and Firefox at 320–1920px verified the register and Actions popup without horizontal scrolling. The active deployment carries field operations, tracking writes, bulk LPG and one-day proof visibility. Paystack reports test mode and the verified synthetic order remains delivered.
+
+To keep these demo settings on a replacement deployment, pass `--env EASYGAS_FIELD_OPERATIONS_ENABLED=true --env EASYGAS_TRACKING_MUTATIONS_ENABLED=true --env EASYGAS_PROOF_RETENTION_DAYS=1 --env EASYGAS_BULK_LPG_ENABLED=true` to the client-demo deployment command. Verify Paystack test mode before promotion. Roll back to `dpl_GfJyTjpgWKXz1a4wnmgzwjsSeQLi` to restore the prior layout with the same fulfilment settings. Commercial production remains NO-GO.
+
+[Deployment evidence](evidence/redeploy-20261117-incidents-responsive.txt) · [Incident traceability](../traceability/operational-incidents-rtm.md) · [GitHub Release validation](https://github.com/Onaopemipo/easygasng/actions/runs/44003844326)

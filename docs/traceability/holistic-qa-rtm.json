@@ -81,7 +81,8 @@
       ],
       "evidence": [
         "docs/releases/20261117-holistic-qa/evidence.txt",
-        "docs/releases/20261117-holistic-qa/paystack-demo-order.txt"
+        "docs/releases/20261117-holistic-qa/paystack-demo-order.txt",
+        "docs/deployment/evidence/redeploy-20261117-incidents-responsive.txt"
       ],
       "status": "VERIFIED_COMPLETE",
       "reason": "Hosted browser order EG-2026-E8ED8AE8 completed with the same Paystack sandbox payment through inspected cylinder allocation, assigned-driver pickup, metered custody and customer-code handover. The first simulated attempt returned before reissue. Earlier local return and cash tests remain mapped.",
@@ -266,7 +267,8 @@
       ],
       "evidence": [
         "docs/releases/20261117-holistic-qa/evidence.txt",
-        "docs/releases/20261117-holistic-qa/paystack-demo-order.txt"
+        "docs/releases/20261117-holistic-qa/paystack-demo-order.txt",
+        "docs/deployment/evidence/redeploy-20261117-incidents-responsive.txt"
       ],
       "status": "BLOCKED",
       "reason": "Live activation is intentionally disabled. Merchant acceptance and fee pass-through terms have not been verified.",
@@ -456,6 +458,14 @@
     {
       "date": "2026-11-17",
       "change": "User authorised demo-only fulfilment. Promoted deployment-scoped demo settings and verified the same Paystack sandbox order through simulated cylinder inspection, assignment, pickup, metered custody, handover and one verified financial posting. Closed the scoped synthetic journey gate QA-20261117-G02. Preserved broader physical, production and payment gates.",
+      "requirements": [
+        "QA-20261117-R02",
+        "QA-20261117-R07"
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "change": "Responsive incidents redeployment preserved demo fulfilment, bulk LPG, one-day proof visibility, same delivered test order and Paystack test mode. Production gate statuses unchanged.",
       "requirements": [
         "QA-20261117-R02",
         "QA-20261117-R07"

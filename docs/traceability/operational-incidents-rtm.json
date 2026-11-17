@@ -113,12 +113,13 @@
       "testIds": [],
       "negativeTests": [],
       "evidence": [
-        "docs/traceability/operational-incidents-evidence.txt"
+        "docs/traceability/operational-incidents-evidence.txt",
+        "docs/deployment/evidence/redeploy-20261117-incidents-responsive.txt"
       ],
       "status": "VERIFIED_COMPLETE",
       "reason": "The fixed desktop table and stacked rows constrain content to the available workspace. A two-line preview wraps long references and the details dialog renders the full description.",
-      "testResult": "PASS — local authenticated Chrome and Firefox layout and interaction checks ADM-INC-LAYOUT-01/02.",
-      "outstandingWork": "Repeat the responsive check after the updated layout is deployed to the demo.",
+      "testResult": "PASS — local and hosted Chrome and Firefox confirmed the page fit and Actions remained visible from 320 to 1920 px.",
+      "outstandingWork": "Repeat sizing checks on the final commercial release candidate when authorised.",
       "acceptanceGate": "ADM-INC-G04"
     }
   ],
@@ -148,6 +149,10 @@
     {
       "date": "2026-11-17",
       "change": "Added responsive register coverage ADM-INC-R04/G04. Existing incident listing, response and permissions gates carry forward."
+    },
+    {
+      "date": "2026-11-17",
+      "change": "Deployed the responsive register to the client demo and verified ADM-INC-R04/G04 in both browsers. Preserved demo fulfilment and Paystack test mode."
     }
   ],
   "coverage": {
