@@ -265,7 +265,7 @@ async function handle(
     );
     return NextResponse.json(data, {
       headers:
-        ["documents.list", "orders", "dispatch.centre"].includes(action)
+        ["documents.list", "orders", "dispatch.centre", "incidents"].includes(action)
           ? {
               "Cache-Control": "private, no-store, max-age=0",
               Vary: "Cookie, Authorization",

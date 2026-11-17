@@ -764,6 +764,42 @@ export async function professionalServiceAction(
   }
   if (action === "incidents") {
     allow(user, ["owner", "manager", "finance"]);
+    if ((input as { view?: unknown } | undefined)?.view === "workspace") {
+      const filters = z.object({
+        view: z.literal("workspace"),
+        status: z.enum(["all", "open", "acknowledged", "resolved"]).default("all"),
+        severity: z.enum(["all", "critical", "high", "medium", "low"]).default("all"),
+        q: z.string().trim().max(120).default(""),
+        page: z.coerce.number().int().min(1).max(1_000_000).default(1),
+      }).strict().parse(input);
+      const branchScope = user.role === "owner" ? "TRUE" : "i.branch_id=$1";
+      const scopeParams = user.role === "owner" ? [] : [user.branch_id];
+      const statusIndex = scopeParams.length + 1;
+      const match = `($${statusIndex}='all' OR i.status=$${statusIndex})
+        AND ($${statusIndex + 1}='all' OR i.severity=$${statusIndex + 1})
+        AND strpos(lower(concat_ws(' ', i.id, replace(i.category, '_', ' '), i.detail, b.name)), lower($${statusIndex + 2})) > 0`;
+      const params = [...scopeParams, filters.status, filters.severity, filters.q];
+      const source = `FROM operational_incidents i LEFT JOIN branches b ON b.id=i.branch_id WHERE ${branchScope}`;
+      const stats = await one(tx, `SELECT count(*)::int AS total,
+        count(*) FILTER (WHERE i.status='open')::int AS open,
+        count(*) FILTER (WHERE i.status='acknowledged')::int AS acknowledged,
+        count(*) FILTER (WHERE i.status='resolved')::int AS resolved,
+        count(*) FILTER (WHERE ${match})::int AS matches ${source}`, params);
+      const pageSize = 12;
+      const total = Number(stats?.matches ?? 0);
+      const page = Math.min(filters.page, Math.max(1, Math.ceil(total / pageSize)));
+      const rows = total === 0 ? [] : (await tx.query(
+        `SELECT i.id, i.status, i.severity, i.category, i.detail, i.created_at, b.name AS branch_name
+         ${source} AND ${match}
+         ORDER BY i.created_at DESC, i.id DESC LIMIT ${pageSize} OFFSET $${params.length + 1}`,
+        [...params, (page - 1) * pageSize],
+      )).rows;
+      return {
+        rows, total, page, pageSize,
+        counts: { all: Number(stats?.total ?? 0), open: Number(stats?.open ?? 0), acknowledged: Number(stats?.acknowledged ?? 0), resolved: Number(stats?.resolved ?? 0) },
+        canManage: managers.includes(user.role),
+      };
+    }
     return (
       await tx.query(
         `SELECT * FROM operational_incidents WHERE ${user.role === "owner" ? "true" : "branch_id=$1"} ORDER BY created_at DESC LIMIT 100`,
@@ -791,6 +827,8 @@ export async function professionalServiceAction(
       ["owner", "manager"],
       incident.branch_id,
     );
+    if (!incident.branch_id && user.role !== "owner")
+      throw new AppError(403, "Only an Admin can update a business-wide incident.", "BRANCH_FORBIDDEN");
     if (
       d.status === "resolved" &&
       incident.category === "service_safety" &&

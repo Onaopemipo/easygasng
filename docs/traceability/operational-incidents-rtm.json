@@ -1,0 +1,114 @@
+{
+  "phase": "Operational Incidents register and response popup",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "ADM-INC-R01",
+      "requirement": "List all authorised incidents in a compact register with status totals, status and severity filters, search, and pagination.",
+      "priority": "P1",
+      "scope": "Desktop and mobile web administration",
+      "uiReference": "User screenshots of Operational Incidents with response forms expanded under each incident",
+      "route": "/admin/incidents",
+      "dataSource": "operational_incidents and branches",
+      "securityControl": "Authenticated API and existing role/branch scope apply to rows, search and totals; response is private and not cached.",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/operational-incidents.tsx",
+        "apps/web/components/operational-incidents.css",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "testFiles": [
+        "tests/operational-incidents.test.ts"
+      ],
+      "testIds": [
+        "ADM-INC-01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/operational-incidents-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The default register includes every status, and older records are reachable via server pagination.",
+      "testResult": "PASS · Focused locally executed regression and Chrome browsing/search.",
+      "outstandingWork": "Hosted demo acceptance and rollout pending.",
+      "acceptanceGate": "ADM-INC-G01"
+    },
+    {
+      "id": "ADM-INC-R02",
+      "requirement": "Show a per-row Actions menu that opens details or an authorised response popup without changing the table layout.",
+      "priority": "P1",
+      "scope": "Desktop and mobile web administration",
+      "uiReference": "User screenshots of Operational Incidents with response forms expanded under each incident",
+      "route": "/admin/incidents",
+      "dataSource": "Selected scoped operational_incidents row and server canManage flag",
+      "securityControl": "Record response is shown to authorised roles; incident.update independently enforces write access.",
+      "implementationFiles": [
+        "apps/web/components/operational-incidents.tsx",
+        "apps/web/components/operational-incidents.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/operational-incidents-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Only one requested popup appears at a time. Read-only Finance users can still inspect details.",
+      "testResult": "PASS · Authenticated desktop/light and mobile/dark Chrome checks.",
+      "outstandingWork": "Hosted demo acceptance and rollout pending.",
+      "acceptanceGate": "ADM-INC-G02"
+    },
+    {
+      "id": "ADM-INC-R03",
+      "requirement": "Save corrective action or evidence with acknowledgement or resolution, enforcing existing permission and review rules.",
+      "priority": "P0",
+      "scope": "Desktop and mobile web administration",
+      "uiReference": "User screenshots of Operational Incidents with response forms expanded under each incident",
+      "route": "/admin/incidents",
+      "dataSource": "operational_incidents status, incident_events evidence and existing audit trail",
+      "securityControl": "Server rechecks role, branch, safety resolution authority, password verification and independent dispute review. Failed validation does not write incident events.",
+      "implementationFiles": [
+        "apps/web/components/operational-incidents.tsx",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "testFiles": [
+        "tests/operational-incidents.test.ts"
+      ],
+      "testIds": [
+        "ADM-INC-01"
+      ],
+      "negativeTests": [
+        "branch search isolation",
+        "business-wide incident",
+        "authorised safety review",
+        "Verify your password"
+      ],
+      "evidence": [
+        "docs/traceability/operational-incidents-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The existing incident transaction persists responses and audit history. The popup preserves entries when password verification is requested.",
+      "testResult": "PASS · Scoped-write regression and authenticated dispute-response completion in Chrome.",
+      "outstandingWork": "Hosted demo acceptance and rollout pending.",
+      "acceptanceGate": "ADM-INC-G03"
+    }
+  ],
+  "gates": [
+    {
+      "id": "ADM-INC-G01",
+      "requirement": "Render a compact register with server counts and find older records beyond the legacy read cap with no branch leakage.",
+      "status": "PASS"
+    },
+    {
+      "id": "ADM-INC-G02",
+      "requirement": "Open and dismiss Actions without reflow, inspect details on desktop and mobile, and hide editing for read-only roles.",
+      "status": "PASS"
+    },
+    {
+      "id": "ADM-INC-G03",
+      "requirement": "Persist a valid response and deny unauthorised writes, missing evidence or missing required verification.",
+      "status": "PASS"
+    }
+  ]
+}

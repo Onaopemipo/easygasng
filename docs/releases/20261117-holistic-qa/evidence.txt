@@ -1,0 +1,74 @@
+EasyGas release acceptance | 17 November 2026
+Isolated synthetic PostgreSQL and localhost. No hosted records were changed.
+Candidate base: 2c3dbff plus current local changes and Next.js 16.4.6.
+
+Full PostgreSQL-enabled regression after the Next.js update
+npm test with EASYGAS_TEST_POSTGRES_URL set to a disposable PostgreSQL instance, Node.js 24.21.0
+✔ INV-PDF01: authorised download uses immutable original plus approved notes; anonymous/foreign/driver reads fail closed (2766.668584ms)
+✔ LRT-T012: invalid, future, expired and late observations cannot be published as recent (1.129875ms)
+✔ LRT-T008: owned active stop gets committed GPS and foreign orders, revoked consent and sessions get no coordinates (1136.226667ms)
+✔ LRT-T007: fleet reads exclude foreign branches and enforce a per-user owner denial (776.600333ms)
+✔ FIELD-GPS-02: fleet summary requires current accurate consented trip evidence and ignores future uploaded fixes (773.847792ms)
+✔ TRK-04: skipped transitions, stale versions, branch and inactive dispatch fail without business effects (791.933875ms)
+✔ TRK-11: pickup requires assignment and exact quantities; completion requires pickup and actual handover (820.968541ms)
+✔ TRK-15: stable retries and ambiguous commit recovery produce one stock, cash and handover effect (808.02525ms)
+✔ TRK-27: held failed deliveries cannot be reissued or cancelled until physical return reconciliation (850.871375ms)
+✔ MERCHANT-DOC-01: verified payment produces a private EasyGas receipt and at most one branded email (1556.662583ms)
+✔ PAY-INVOICE: verified collection allocates principal to existing immutable invoice, never fees or duplicate revenue (699.753667ms)
+✔ WALLET-INSTANT: signed webhook verifies and credits card funding without waiting for worker or manual approval (645.123584ms)
+✔ PAY-POLICY: missing merchant terms, dashboard fee double charge, live activation and undeclared secrets fail closed (2.235375ms)
+✔ PAY-PG-CONCURRENCY: separate connections post once; aborted posting rolls back wallet, audit and receipt (482.165416ms)
+✔ PAY-SIGNATURE: raw bytes, timestamp, rotation, malformed headers and no legacy downgrade (0.784042ms)
+✔ PR-03: encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys (968.402833ms)
+✔ POS-PG01: independent connections serialize till opening, sale replay, stock deduction and cash-up (571.448792ms)
+✔ STAFF-ROLE04–06: branch isolation, qualified checklist review and independent financial approvals (834.922166ms)
+✔ SUPPORT-C01: list scans all scoped pages; search reaches beyond 100 requests (856.944875ms)
+✔ SUPPORT-C02: immutable reply idempotency, message pagination and private-note isolation (17.398375ms)
+✔ SUPPORT-C03: authenticated image upload, private reads, validation, replay and limits (54.092ms)
+✔ SUPPORT-C04: Lagos work windows, governed SLA policy, snapshots and one-time escalation (49.756875ms)
+✔ SUPPORT-C05: concurrent reply and attachment retries commit one record each in PostgreSQL (427.187125ms)
+✔ TECH-T40 successful report requires current consented private proof; retries retain one image (997.461292ms)
+✔ PR-05: SMTP outbox sends once, never retries unknown outcomes, rejects unauthorised retry and preserves private message content (1102.435334ms)
+✔ PR-06: expired recovery messages cancel, explicit SMTP rejection backs off, and insecure SMTP configuration is refused (780.674916ms)
+✔ WALLET-BANK: pending transfer, scoped independent approval, rejection and exactly-once ledger (1032.911375ms)
+✔ CHECKOUT-SAVE02: checkout contact and address are opt-in, scoped, retry-safe and independent of sign-in (31.245416ms)
+✔ ROUTE-PG01: independent connections serialize destination revisions and preserve immutable history (609.93025ms)
+✔ ROUTE-01: Lagos deadlines, stop allowance and explicit whole-route cost (2.575666ms)
+✔ ROUTE-02: configured HTTPS OSRM contract, OFF flag and bounded invalid responses (2.235042ms)
+✔ ROUTE-03: authorised destination revisions and stale-context rejection using canonical orders/trips (1955.759375ms)
+ℹ tests 733
+ℹ pass 733
+ℹ fail 0
+ℹ skipped 0
+
+Browser acceptance: 1440px desktop and 390px mobile Chrome
+PASS browser Chrome gas checkout: skip leaves account phone and saved addresses untouched
+PASS browser Chrome gas checkout: explicit consent saves phone and address and prefills the next checkout
+PASS browser Chrome gas checkout: changed phone prompts for phone only and updates the existing address
+PASS browser Chrome /checkout: order with changed contact prompts for consent and skip preserves account
+PASS browser Chrome gas checkout: skip leaves account phone and saved addresses untouched
+PASS browser Chrome gas checkout: explicit consent saves phone and address and prefills the next checkout
+PASS browser Chrome gas checkout: changed phone prompts for phone only and updates the existing address
+PASS browser Chrome /checkout: order with changed contact prompts for consent and skip preserves account
+PASS Chrome desktop linked checkout: committed product and service request prompts, and consent updates only the delivery phone
+PASS Chrome mobile linked checkout: committed product and service request prompts, and consent updates only the delivery phone
+PASS browser order: reserved stock, manager assignment, driver handover, Finance reconciliation, invoice and ledger match, retries posted once
+PASS second browser order: failed delivery held until Inventory recorded a return
+
+Builds and dependency checks
+
+PASS web production build, web TypeScript and mobile TypeScript.
+
+PASS web and native npm audit at moderate threshold, zero reported vulnerabilities.
+
+PASS local iOS Simulator Release and Android emulator Release build, install and startup.
+
+PASS Admin QA sign-in and Business Overview on iOS Simulator and Android Emulator.
+PASS Android installed finance sign-in and role navigation (Finance Overview)
+PASS Android installed manager sign-in and role navigation (Branch Dashboard)
+PASS Android installed driver sign-in and role navigation (Orders)
+PASS Android installed technician sign-in and role navigation (Jobs)
+Native branch allow/deny coverage is from automated tests. Physical lock, airplane mode, replay and Dispatch on reconnect remain unverified.
+
+SHA-256 of the full patched regression log
+54e3e47b506130991b85d762593adc63a32f518d2a6a36bdd6b7517c69833e45

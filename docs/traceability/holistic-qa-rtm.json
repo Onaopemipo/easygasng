@@ -1,0 +1,439 @@
+{
+  "phase": "Holistic release QA on 17 November 2026",
+  "releaseDecision": "NO-GO — Public Commercial Production",
+  "requirements": [
+    {
+      "id": "QA-20261117-R01",
+      "requirement": "Checkout and opt-in contact details",
+      "priority": "P0",
+      "scope": "web desktop and mobile",
+      "uiReference": "17 November release acceptance request",
+      "route": "/gas-order, /checkout, /combined-checkout",
+      "dataSource": "Orders, customer addresses and preferred delivery phone",
+      "securityControl": "Order ownership, selective consent and separate verified sign-in identity",
+      "implementationFiles": [
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/components/checkout-delivery-fields.tsx",
+        "apps/web/components/save-checkout-details.tsx",
+        "apps/web/app/[...slug]/page.tsx",
+        "apps/web/components/gas-order.tsx"
+      ],
+      "testFiles": [
+        "tests/workflows.test.ts"
+      ],
+      "testIds": [
+        "CHECKOUT-SAVE02"
+      ],
+      "negativeTests": [
+        "CHECKOUT-SAVE02"
+      ],
+      "evidence": [
+        "docs/releases/20261117-holistic-qa/evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Three checkout paths in desktop and mobile Chrome accepted synthetic orders; opted-in fields alone persisted.",
+      "testResult": "PASS — browser and regression checks.",
+      "outstandingWork": "Repeat on final hosted candidate and installed native clients.",
+      "acceptanceGate": "QA-20261117-G01",
+      "relatedRequirements": "CHECKOUT-SAVE-R01/R02"
+    },
+    {
+      "id": "QA-20261117-R02",
+      "requirement": "Browser order through staff fulfilment, return and financial documents",
+      "priority": "P0",
+      "scope": "web and backend",
+      "uiReference": "17 November release acceptance request",
+      "route": "/admin/orders, /admin/deliveries, /api/invoices/[orderId]",
+      "dataSource": "Orders, stock reservations, delivery attempts, cash collections, verified payments and issued documents",
+      "securityControl": "Scoped assignment, driver acknowledgement, evidence, independent reconciliation and idempotency",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/app/admin/[[...section]]/page.tsx",
+        "apps/web/app/api/invoices/[orderId]/route.ts",
+        "apps/web/lib/payments/documents.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/invoice-pdf.test.ts"
+      ],
+      "testIds": [
+        "TRK-11",
+        "TRK-15",
+        "TRK-27",
+        "MERCHANT-DOC-01",
+        "PAY-INVOICE"
+      ],
+      "negativeTests": [
+        "TRK-04",
+        "TRK-27",
+        "INV-PDF01"
+      ],
+      "evidence": [
+        "docs/releases/20261117-holistic-qa/evidence.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Staff used the API for two browser-created accessory orders. Verified card receipt passed separately in simulated-provider fixtures.",
+      "testResult": "PASS — browser-to-API handover, return, ledger and invoice. Card receipt fixture PASS.",
+      "outstandingWork": "Run a hosted sandbox card payment, verify the receipt and complete fulfilment using the same order; exercise staff UI on final candidate.",
+      "acceptanceGate": "QA-20261117-G02",
+      "relatedRequirements": "E2E-01/02"
+    },
+    {
+      "id": "QA-20261117-R03",
+      "requirement": "Record actual delivery areas and verify opening stock and cylinder eligibility",
+      "priority": "P0",
+      "scope": "retail and delivery operations",
+      "uiReference": "17 November release acceptance request",
+      "route": "/admin/settings, /admin/inventory, /admin/cylinders",
+      "dataSource": "Approved delivery coverage; physical stock, inspection and cylinder records",
+      "securityControl": "Quotation and dispatch coverage, reservation checks, quarantine and eligibility",
+      "implementationFiles": [
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/gas-delivery-config.ts"
+      ],
+      "testFiles": [
+        "tests/order-tracking.test.ts"
+      ],
+      "testIds": [
+        "TRK-11"
+      ],
+      "negativeTests": [
+        "complete quantities"
+      ],
+      "evidence": [
+        "docs/releases/20261117-holistic-qa/evidence.txt"
+      ],
+      "status": "BLOCKED",
+      "reason": "Only synthetic areas and stock were used locally. Actual operating boundaries and inspected stock evidence are absent.",
+      "testResult": "PASS — synthetic guards. Real readiness OPEN.",
+      "outstandingWork": "Record approved coverage and physically reconcile stock/cylinder eligibility before opening real ordering.",
+      "acceptanceGate": "QA-20261117-G03",
+      "relatedRequirements": "E2E-01/07"
+    },
+    {
+      "id": "QA-20261117-R04",
+      "requirement": "Verify five roles on installed iOS and Android",
+      "priority": "P0",
+      "scope": "native iOS and Android",
+      "uiReference": "17 November release acceptance request",
+      "route": "Native Sign In and role workspaces",
+      "dataSource": "Users, roles, branch memberships and session permissions",
+      "securityControl": "Consolidated scoped roles and restricted field sessions",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/TechnicianWorkspace.tsx"
+      ],
+      "testFiles": [
+        "tests/staff-role-consolidation.test.ts"
+      ],
+      "testIds": [
+        "STAFF-ROLE04–06"
+      ],
+      "negativeTests": [
+        "branch isolation"
+      ],
+      "evidence": [
+        "docs/releases/20261117-holistic-qa/evidence.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Android passed installed sign-in and respective workspace smoke checks for all five roles. iOS passed Admin. Backend regression verified role and branch policy.",
+      "testResult": "PASS — Android 5/5 and iOS 1/5 installed role smoke checks. Full branch acceptance on devices OPEN.",
+      "outstandingWork": "Verify the other four role workspaces on installed iOS and run cross-branch allow and deny cases through both installed builds.",
+      "acceptanceGate": "QA-20261117-G04",
+      "relatedRequirements": "E2E-10; PR-R08/R14"
+    },
+    {
+      "id": "QA-20261117-R05",
+      "requirement": "Real-device driver GPS and technician evidence offline and after reconnect",
+      "priority": "P0",
+      "scope": "physical iOS and Android",
+      "uiReference": "17 November release acceptance request",
+      "route": "Driver tracking, Dispatch Centre and technician evidence",
+      "dataSource": "Consented trip samples, queued writes, evidence and service records",
+      "securityControl": "Authenticated branch/assignment access, timestamp freshness, consent and replay",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/field-queue.ts",
+        "apps/web/components/dispatch-centre.tsx"
+      ],
+      "testFiles": [
+        "tests/live-rider-tracking.test.ts",
+        "tests/technician-work.test.ts"
+      ],
+      "testIds": [
+        "LRT-T007",
+        "LRT-T008",
+        "LRT-T012",
+        "TECH-T40"
+      ],
+      "negativeTests": [
+        "LRT-T007",
+        "LRT-T008",
+        "LRT-T012"
+      ],
+      "evidence": [
+        "docs/releases/20261117-holistic-qa/evidence.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Fixture tests verified location scope and freshness. Service report proof checks passed separately.",
+      "testResult": "PASS — automated location and field evidence. Real locked and disconnected devices OPEN.",
+      "outstandingWork": "Install signed builds on real devices and verify last known state and replay after reconnection.",
+      "acceptanceGate": "QA-20261117-G05",
+      "relatedRequirements": "E2E-03/04/10"
+    },
+    {
+      "id": "QA-20261117-R06",
+      "requirement": "Transactional email, routing and selected messaging providers",
+      "priority": "P0",
+      "scope": "backend and external providers",
+      "uiReference": "17 November release acceptance request",
+      "route": "Invitations, password resets, merchant receipts and Dispatch Centre",
+      "dataSource": "Outbox, configured SMTP sender, route and messaging provider outcomes",
+      "securityControl": "Private scoped messages, safe retries, no duplicate sends or false delivery confirmation",
+      "implementationFiles": [
+        "apps/web/lib/transactional-mail.ts",
+        "apps/web/lib/dispatch-routing.ts"
+      ],
+      "testFiles": [
+        "tests/transactional-mail.test.ts",
+        "tests/dispatch-routing.test.ts",
+        "tests/paystack-orchestration.test.ts"
+      ],
+      "testIds": [
+        "PR-05",
+        "PR-06",
+        "MERCHANT-DOC-01",
+        "ROUTE-02",
+        "ROUTE-03"
+      ],
+      "negativeTests": [
+        "rejects unauthorised retry"
+      ],
+      "evidence": [
+        "docs/releases/20261117-holistic-qa/evidence.txt"
+      ],
+      "status": "PARTIAL",
+      "reason": "Local SMTP outbox and branded receipt fixtures passed. Sender, provider and recipients for live validation were unavailable.",
+      "testResult": "PASS — local mail transport, retry and OSRM contract fixtures. Provider acceptance OPEN.",
+      "outstandingWork": "Configure approved sender and worker, observe invitation/reset/receipt in a real inbox and verify routing and selected SMS or WhatsApp channels.",
+      "acceptanceGate": "QA-20261117-G06",
+      "relatedRequirements": "E2E-03/05; PR-R05"
+    },
+    {
+      "id": "QA-20261117-R07",
+      "requirement": "Live payment readiness and fee approval",
+      "priority": "P0",
+      "scope": "external merchant and finance",
+      "uiReference": "17 November release acceptance request",
+      "route": "/payment-return, /api/payments/paystack/webhook",
+      "dataSource": "Provider verification, fee policy, ledger and settlement records",
+      "securityControl": "Sandbox/live isolation, verified signatures, provider/ledger consistency and independent approvals",
+      "implementationFiles": [
+        "apps/web/lib/payments/policy.ts",
+        "apps/web/lib/payments/runtime.ts",
+        "apps/web/lib/payments/paystack-provider.ts",
+        "apps/web/lib/payments/webhooks.ts",
+        "apps/web/lib/payments/reporting.ts",
+        "apps/web/app/api/payments/paystack/[operation]/route.ts"
+      ],
+      "testFiles": [
+        "tests/paystack-policy.test.ts",
+        "tests/paystack-orchestration.test.ts",
+        "tests/paystack-postgres.test.ts",
+        "tests/paystack-provider.test.ts"
+      ],
+      "testIds": [
+        "PAY-POLICY",
+        "PAY-SIGNATURE",
+        "PAY-PG-CONCURRENCY"
+      ],
+      "negativeTests": [
+        "live activation"
+      ],
+      "evidence": [
+        "docs/releases/20261117-holistic-qa/evidence.txt"
+      ],
+      "status": "BLOCKED",
+      "reason": "Live activation is intentionally disabled. Merchant acceptance and fee pass-through terms have not been verified.",
+      "testResult": "PASS — isolated sandbox fixtures. Live acceptance OPEN.",
+      "outstandingWork": "Confirm merchant account and approved fees, implement and verify live payment, webhook, refund, dispute and settlement handling.",
+      "acceptanceGate": "QA-20261117-G07",
+      "relatedRequirements": "PAY-R01–17"
+    },
+    {
+      "id": "QA-20261117-R08",
+      "requirement": "Independent acceptance and historical reconciliation hold",
+      "priority": "P1",
+      "scope": "business, safety and finance",
+      "uiReference": "17 November release acceptance request",
+      "route": "Launch readiness, audit and import",
+      "dataSource": "Authorised sign-off and reconciled historical business records",
+      "securityControl": "Independent functional sign-off, controlled import and retain-all decision",
+      "implementationFiles": [
+        "docs/releases/20261111-readiness/launch-gates.md"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/production-backup-postgres.test.ts"
+      ],
+      "testIds": [
+        "PR-03"
+      ],
+      "negativeTests": [
+        "rejects overwrite"
+      ],
+      "evidence": [
+        "docs/releases/20261117-holistic-qa/evidence.txt"
+      ],
+      "status": "BLOCKED",
+      "reason": "Independent approvers have not signed off. The historical import remains on hold.",
+      "testResult": "OPEN — actual business sign-off. Local recovery safeguards passed.",
+      "outstandingWork": "Record operations, safety and finance acceptance. Reconcile Excel identities, stock, payments and fees only if needed for launch.",
+      "acceptanceGate": "QA-20261117-G08",
+      "relatedRequirements": "E2E-07/08/11; PR-R12"
+    },
+    {
+      "id": "QA-20261117-R09",
+      "requirement": "Local full regression and dependency remediation",
+      "priority": "P1",
+      "scope": "local web/mobile release candidate",
+      "uiReference": "17 November release acceptance request",
+      "route": "All automated suites",
+      "dataSource": "Local PostgreSQL, build output and npm audit",
+      "securityControl": "Patched Next.js release, integration regression and dependency checks",
+      "implementationFiles": [
+        "apps/web/package.json",
+        "package-lock.json"
+      ],
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/production-backup-postgres.test.ts"
+      ],
+      "testIds": [
+        "PR-03"
+      ],
+      "negativeTests": [
+        "rejects overwrite"
+      ],
+      "evidence": [
+        "docs/releases/20261117-holistic-qa/evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "After updating Next.js, the repeated PostgreSQL-enabled regression and clean dependency audits passed.",
+      "testResult": "PASS — 733 tests, web production build, web/mobile typechecks and both audits.",
+      "outstandingWork": "Run and review hosted CI for the exact release commit under existing release gates.",
+      "acceptanceGate": "QA-20261117-G09",
+      "relatedRequirements": "PR-R10; E2E-11"
+    }
+  ],
+  "gates": [
+    {
+      "id": "QA-20261117-G01",
+      "requirement": "Checkout and opt-in contact details",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-20261117-G02",
+      "requirement": "Browser order through staff fulfilment, return and financial documents",
+      "status": "OPEN"
+    },
+    {
+      "id": "QA-20261117-G03",
+      "requirement": "Record actual delivery areas and verify opening stock and cylinder eligibility",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "QA-20261117-G04",
+      "requirement": "Verify five roles on installed iOS and Android",
+      "status": "OPEN"
+    },
+    {
+      "id": "QA-20261117-G05",
+      "requirement": "Real-device driver GPS and technician evidence offline and after reconnect",
+      "status": "OPEN"
+    },
+    {
+      "id": "QA-20261117-G06",
+      "requirement": "Transactional email, routing and selected messaging providers",
+      "status": "OPEN"
+    },
+    {
+      "id": "QA-20261117-G07",
+      "requirement": "Live payment readiness and fee approval",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "QA-20261117-G08",
+      "requirement": "Independent acceptance and historical reconciliation hold",
+      "status": "BLOCKED"
+    },
+    {
+      "id": "QA-20261117-G09",
+      "requirement": "Local full regression and dependency remediation",
+      "status": "PASS"
+    }
+  ],
+  "coverage": {
+    "implementedLocalPaths": {
+      "covered": 5,
+      "total": 9,
+      "ids": [
+        "QA-20261117-R01",
+        "QA-20261117-R02",
+        "QA-20261117-R04",
+        "QA-20261117-R05",
+        "QA-20261117-R09"
+      ],
+      "scope": "Local software paths exist. Acceptance and external prerequisites are counted separately."
+    },
+    "verified": {
+      "covered": 2,
+      "total": 9
+    },
+    "criticalVerified": {
+      "covered": 1,
+      "total": 7
+    },
+    "launchGatesPassed": {
+      "covered": 2,
+      "total": 9
+    },
+    "browserCheckoutRoutes": {
+      "covered": 3,
+      "total": 3,
+      "scope": "Checkout route acceptance on desktop and mobile Chrome. Other routes have partial API, build or automated evidence as recorded per row."
+    },
+    "installedRoleSmoke": {
+      "android": {
+        "covered": 5,
+        "total": 5
+      },
+      "ios": {
+        "covered": 1,
+        "total": 5
+      }
+    }
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-17",
+      "change": "Recorded the nine requirements and gates for the holistic acceptance phase, with prior requirements cross-referenced. Updated Next.js to 16.4.6 and reran the full PostgreSQL-enabled regression. Preserved prior production NO-GO and import hold.",
+      "requirements": [
+        "QA-20261117-R01",
+        "QA-20261117-R02",
+        "QA-20261117-R03",
+        "QA-20261117-R04",
+        "QA-20261117-R05",
+        "QA-20261117-R06",
+        "QA-20261117-R07",
+        "QA-20261117-R08",
+        "QA-20261117-R09"
+      ]
+    }
+  ]
+}

@@ -241,3 +241,7 @@ EasyGas merchant receipts and invoices: [matrix](merchant-documents-rtm.md) and 
 Driver availability and staff onboarding: [matrix](driver-availability-rtm.md) and [evidence](driver-availability-evidence.txt). Approved drivers default to available, and authorised staff can set availability from the directory. Local settings and browser checks passed; hosted acceptance remains open.
 
 Checkout delivery details consent. [Matrix](checkout-details-save-rtm.md). Gas, cart and linked product checkout verified locally in Chrome. Hosted rollout and native installed-app checks are pending.
+
+Operational Incidents register: [requirements matrix](operational-incidents-rtm.md), [machine-readable scope](operational-incidents-rtm.json), and [test evidence](operational-incidents-evidence.txt). Desktop and mobile web checks passed locally; hosted rollout remains pending.
+
+Holistic release QA (17 November). [Requirements matrix](holistic-qa-rtm.md) and [executed evidence](../releases/20261117-holistic-qa/evidence.txt) cover local PostgreSQL regression, desktop and mobile checkout, synthetic staff fulfilment and installed native smoke checks. Commercial production remains NO-GO.

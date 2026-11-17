@@ -251,7 +251,6 @@ export default function ProfessionalServices({
     (!publicPage || ["customer", "commercial"].includes(user.role));
   const loadBookings =
     Boolean(user) &&
-    mode !== "incidents" &&
     !(publicPage && mode === "catalogue");
   const showCatalogue = !technician || mode === "catalogue";
   const catalogueBranch = technician ? user.branchId : undefined;
@@ -280,7 +279,7 @@ export default function ProfessionalServices({
           )
         : Promise.resolve([]),
       loadBookings ? api("bookings") : Promise.resolve([]),
-      staff && !technician && mode !== "incidents"
+      staff && !technician
         ? api("services.manage")
         : Promise.resolve(null),
     ])
@@ -370,19 +369,15 @@ export default function ProfessionalServices({
               ? "Service quotations"
               : mode === "technicians"
                 ? "Technicians & availability"
-                : mode === "incidents"
-                  ? "Operational incidents"
-                  : technician
-                    ? "Assigned service bookings"
-                    : "Service bookings"}
+                : technician
+                  ? "Assigned service bookings"
+                  : "Service bookings"}
         </h1>
         <p>
           {technician
             ? "View your assigned appointments and available services."
             : staff
-            ? mode === "incidents"
-              ? "Review incidents, follow up on evidence and manage authorised responses."
-              : mode === "quotations"
+            ? mode === "quotations"
                 ? "Review service quotations and their approval and payment status."
                 : "Manage service bookings, catalogue and assigned work using authorised business records."
             : "Book installation, maintenance and safety services for your kitchen."}
@@ -417,9 +412,7 @@ export default function ProfessionalServices({
       </nav>
       {["customer", "commercial"].includes(user?.role) &&
         mode !== "catalogue" && <ServiceFollowups />}
-      {mode === "incidents" ? (
-        <Incidents />
-      ) : mode === "technicians" &&
+      {mode === "technicians" &&
         ["owner", "manager"].includes(user?.role) &&
         workspace ? (
         <Technicians data={workspace} reload={reload} user={user} />
@@ -2445,50 +2438,5 @@ function ReportForm({ b, done }: { b: any; done: () => void }) {
         })
       }
     />
-  );
-}
-function Incidents() {
-  const [rows, setRows] = useState<any[]>([]),
-    [error, setError] = useState(""),
-    [version, setVersion] = useState(0);
-  useEffect(() => {
-    api("incidents")
-      .then(setRows)
-      .catch((e) => setError(e.message));
-  }, [version]);
-  return (
-    <>
-      {error && <Notice type="error" message={error} />}{" "}
-      {!rows.length && !error && <p>No operational incidents recorded.</p>}
-      {rows.map((r) => (
-        <article className="surface" key={r.id}>
-          <h2>
-            {r.severity} · {r.category.replaceAll("_", " ")}
-          </h2>
-          <p>{r.detail}</p>
-          <p>{r.status}</p>
-          <ServiceForm
-            title="Record incident response"
-            fields={[
-              {
-                name: "status",
-                label: "Status",
-                options: [
-                  { value: "acknowledged", label: "Acknowledged" },
-                  { value: "resolved", label: "Resolved" },
-                ],
-              },
-              {
-                name: "note",
-                label: "Corrective action / evidence",
-                type: "textarea",
-              },
-            ]}
-            done={() => setVersion((n) => n + 1)}
-            send={(v) => api("incident.update", { id: r.id, ...v })}
-          />
-        </article>
-      ))}
-    </>
   );
 }

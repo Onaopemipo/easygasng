@@ -1,0 +1,40 @@
+Operational Incidents — local release evidence
+Focused regression: node --import tsx --test --test-concurrency=1 --test-reporter=spec tests/operational-incidents.test.ts tests/professional-services.test.ts tests/service-invoice-drafts.test.ts tests/navigation.test.ts
+✔ RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe nested active matching (3.902959ms)
+✔ RM-06,08,09: mode-independent role visibility preserves dedicated assignment experiences (0.280375ms)
+✔ navigation preferences reject corrupt storage and badge overflow remains bounded (0.127208ms)
+✔ RM-07,10,11: fresh authentication, branch scope, counter aggregates and role/session revocation (1425.254709ms)
+✔ approval badge agrees with independent eligibility, excludes requester, recipient, expired and already-decided requests (1150.031167ms)
+✔ counter accuracy covers actionable orders/deliveries, configured inventory thresholds and unresolved financial items (892.537333ms)
+✔ bounded delegation is included in approval counters only while independently valid (883.796834ms)
+✔ INV-BADGE-01: refresh and transient failure retain explicitly labelled confirmed counts without changing grants (0.308625ms)
+✔ ADMIN-LANDING-01: permitted navigation maps actual backend read allowlists for every existing staff role (1383.407667ms)
+Navigation restricted PGlite fixture aggregate timings (ms): {"samples":[3.8682499999995343,3.8886249999995925,3.9943750000002183,3.972834000000148,7.5017500000003565,3.77087500000016,3.762041999999383,3.6229590000002645,3.6095409999998083,3.8113750000002256],"median":3.8682499999995343,"max":7.5017500000003565}
+✔ navigation aggregates run under the restricted private-schema runtime without new grants (885.335ms)
+✔ DRIVER-NAV-01: driver directory and sidebar follow branch, role and dispatch privilege (888.452917ms)
+✔ DRIVER-MGMT-01: directory management reuses audited staff actions and protects active assignments (970.296708ms)
+✔ ADM-INC-01: the incident register browses older records and preserves scoped counts and filters (907.866583ms)
+✔ service drafts are not sellable; checklist and price activation require independent qualified approval (1664.750417ms)
+✔ booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve (1058.850667ms)
+✔ qualification expiry, stale service versions and out-of-area addresses reject booking without side effects (853.508167ms)
+✔ quotation revisions preserve price history; only latest customer approval reserves materials (879.888916ms)
+✔ approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once (1027.909667ms)
+✔ unsafe inspection cannot become safety clearance or customer-acknowledged success (896.832833ms)
+✔ service deposit uses existing wallet ledger and cancellation refund requires separate finance approval (869.807625ms)
+✔ SINV-DRAFT01: persistent immutable revisions, replay, source-bound issue and private draft history (1156.800458ms)
+✔ SINV-DRAFT02: changed approved source invalidates saved draft, resave requires optimistic revision (940.101709ms)
+✔ SINV-DISPUTE01: customer dispute holds collection, preserves report and requires authorised independent review (972.704625ms)
+✔ PRIVACY-RETAIN01: explicit retain-all policy records truthful disposition and preserves owned records (923.579417ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22390.831875
+
+Local authenticated browser checks (Playwright, Chrome, isolated PostgreSQL with synthetic incidents):
+PASS Desktop Chrome 1440px: collapsed register, stable row geometry, keyboard dismissal and focus, detail, search, severity, pagination, response save and password re-verification.
+PASS Mobile Chrome 390px dark: contained register and menu, Finance can view details with no response action.
+PASS npm run typecheck

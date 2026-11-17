@@ -106,6 +106,7 @@ import {
   money,
   ProductArt,
 } from "./ui";
+import OperationalIncidents from "./operational-incidents";
 export default function Admin({
   section,
   initialAccess,
@@ -335,12 +336,13 @@ export default function Admin({
             <RecommendationAdmin user={user} />
           ) : section === "reconciliation" ? (
             <Reconciliation />
+          ) : section === "incidents" ? (
+            <OperationalIncidents key={`${user.id}:${user.role}:${user.branchId}`} refresh={refresh} />
           ) : [
               "services",
               "bookings",
               "technicians",
               "quotations",
-              "incidents",
             ].includes(section) ? (
             <ProfessionalServices
               user={user}
