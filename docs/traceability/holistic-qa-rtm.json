@@ -44,7 +44,7 @@
       "scope": "web and backend",
       "uiReference": "17 November release acceptance request",
       "route": "/admin/orders, /admin/deliveries, /api/invoices/[orderId]",
-      "dataSource": "Orders, stock reservations, delivery attempts, cash collections, verified payments and issued documents",
+      "dataSource": "Orders, stock reservations, delivery attempts, cash collections, verified payments and issued documents, cylinder inspections, bulk LPG custody and private proof evidence",
       "securityControl": "Scoped assignment, driver acknowledgement, evidence, independent reconciliation and idempotency",
       "implementationFiles": [
         "apps/web/lib/order-tracking.ts",
@@ -52,7 +52,15 @@
         "apps/web/lib/gas-delivery.ts",
         "apps/web/app/admin/[[...section]]/page.tsx",
         "apps/web/app/api/invoices/[orderId]/route.ts",
-        "apps/web/lib/payments/documents.ts"
+        "apps/web/lib/payments/documents.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/inventory-workspace.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/payments/reporting.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/lib/workspace.ts"
       ],
       "testFiles": [
         "tests/order-tracking.test.ts",
@@ -72,12 +80,13 @@
         "INV-PDF01"
       ],
       "evidence": [
-        "docs/releases/20261117-holistic-qa/evidence.txt"
+        "docs/releases/20261117-holistic-qa/evidence.txt",
+        "docs/releases/20261117-holistic-qa/paystack-demo-order.txt"
       ],
-      "status": "PARTIAL",
-      "reason": "Staff used the API for two browser-created accessory orders. Verified card receipt passed separately in simulated-provider fixtures.",
-      "testResult": "PASS — browser-to-API handover, return, ledger and invoice. Card receipt fixture PASS.",
-      "outstandingWork": "Run a hosted sandbox card payment, verify the receipt and complete fulfilment using the same order; exercise staff UI on final candidate.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Hosted browser order EG-2026-E8ED8AE8 completed with the same Paystack sandbox payment through inspected cylinder allocation, assigned-driver pickup, metered custody and customer-code handover. The first simulated attempt returned before reissue. Earlier local return and cash tests remain mapped.",
+      "testResult": "PASS — one hosted order through checkout, reservation, payment, invoice/receipt, acknowledgement, pickup, metered dispensing, proof, handover and stock/Finance reconciliation; replay did not duplicate effects.",
+      "outstandingWork": "Repeat through the final release candidate staff UI and verify physical delivery and operational acceptance under the existing production gates.",
       "acceptanceGate": "QA-20261117-G02",
       "relatedRequirements": "E2E-01/02"
     },
@@ -256,11 +265,12 @@
         "live activation"
       ],
       "evidence": [
-        "docs/releases/20261117-holistic-qa/evidence.txt"
+        "docs/releases/20261117-holistic-qa/evidence.txt",
+        "docs/releases/20261117-holistic-qa/paystack-demo-order.txt"
       ],
       "status": "BLOCKED",
       "reason": "Live activation is intentionally disabled. Merchant acceptance and fee pass-through terms have not been verified.",
-      "testResult": "PASS — isolated sandbox fixtures. Live acceptance OPEN.",
+      "testResult": "PASS — hosted Paystack test card, server verification, idempotent replay and Finance/receipt/invoice reconciliation. Live acceptance OPEN.",
       "outstandingWork": "Confirm merchant account and approved fees, implement and verify live payment, webhook, refund, dispute and settlement handling.",
       "acceptanceGate": "QA-20261117-G07",
       "relatedRequirements": "PAY-R01–17"
@@ -340,7 +350,7 @@
     {
       "id": "QA-20261117-G02",
       "requirement": "Browser order through staff fulfilment, return and financial documents",
-      "status": "OPEN"
+      "status": "PASS"
     },
     {
       "id": "QA-20261117-G03",
@@ -392,15 +402,15 @@
       "scope": "Local software paths exist. Acceptance and external prerequisites are counted separately."
     },
     "verified": {
-      "covered": 2,
+      "covered": 3,
       "total": 9
     },
     "criticalVerified": {
-      "covered": 1,
+      "covered": 2,
       "total": 7
     },
     "launchGatesPassed": {
-      "covered": 2,
+      "covered": 3,
       "total": 9
     },
     "browserCheckoutRoutes": {
@@ -433,6 +443,22 @@
         "QA-20261117-R07",
         "QA-20261117-R08",
         "QA-20261117-R09"
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "change": "Ran one hosted client-demo Paystack sandbox gas order, proved the 3 kg reservation and reconciled both EasyGas documents and the single Finance posting. Recorded the existing fulfilment release gate that stopped assignment and handover. No gate status changed.",
+      "requirements": [
+        "QA-20261117-R02",
+        "QA-20261117-R07"
+      ]
+    },
+    {
+      "date": "2026-11-17",
+      "change": "User authorised demo-only fulfilment. Promoted deployment-scoped demo settings and verified the same Paystack sandbox order through simulated cylinder inspection, assignment, pickup, metered custody, handover and one verified financial posting. Closed the scoped synthetic journey gate QA-20261117-G02. Preserved broader physical, production and payment gates.",
+      "requirements": [
+        "QA-20261117-R02",
+        "QA-20261117-R07"
       ]
     }
   ]

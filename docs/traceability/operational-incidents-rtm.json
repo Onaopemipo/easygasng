@@ -95,6 +95,31 @@
       "testResult": "PASS · Scoped-write regression and authenticated dispute-response completion in Chrome.",
       "outstandingWork": "Response writes verified in the isolated database. Repeat on the final acceptance environment with approved test records.",
       "acceptanceGate": "ADM-INC-G03"
+    },
+    {
+      "id": "ADM-INC-R04",
+      "requirement": "Fit the incident register to the available workspace width with every field and its Actions control visible without horizontal scrolling.",
+      "priority": "P1",
+      "scope": "Desktop and mobile web administration",
+      "uiReference": "17 November screenshot of overflowing Operational Incidents table",
+      "route": "/admin/incidents",
+      "dataSource": "Existing scoped operational incidents, branch labels and timestamps",
+      "securityControl": "Existing role and branch scoping controls the register and response popup. Finance retains read access.",
+      "implementationFiles": [
+        "apps/web/components/operational-incidents.tsx",
+        "apps/web/components/operational-incidents.css"
+      ],
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/operational-incidents-evidence.txt"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "The fixed desktop table and stacked rows constrain content to the available workspace. A two-line preview wraps long references and the details dialog renders the full description.",
+      "testResult": "PASS — local authenticated Chrome and Firefox layout and interaction checks ADM-INC-LAYOUT-01/02.",
+      "outstandingWork": "Repeat the responsive check after the updated layout is deployed to the demo.",
+      "acceptanceGate": "ADM-INC-G04"
     }
   ],
   "gates": [
@@ -112,6 +137,40 @@
       "id": "ADM-INC-G03",
       "requirement": "Persist a valid response and deny unauthorised writes, missing evidence or missing required verification.",
       "status": "PASS"
+    },
+    {
+      "id": "ADM-INC-G04",
+      "requirement": "Confirm the page, register, filters and popups fit every tested width, with all six fields accessible, in Chrome and Firefox.",
+      "status": "PASS"
     }
-  ]
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-17",
+      "change": "Added responsive register coverage ADM-INC-R04/G04. Existing incident listing, response and permissions gates carry forward."
+    }
+  ],
+  "coverage": {
+    "implementation": {
+      "covered": 4,
+      "total": 4
+    },
+    "verified": {
+      "covered": 4,
+      "total": 4
+    },
+    "criticalVerified": {
+      "covered": 1,
+      "total": 1
+    },
+    "routesVerified": {
+      "covered": 1,
+      "total": 1,
+      "scope": "Local desktop and mobile administration"
+    },
+    "gatesPassed": {
+      "covered": 4,
+      "total": 4
+    }
+  }
 }

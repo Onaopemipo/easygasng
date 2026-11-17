@@ -119,3 +119,9 @@ Source `65ae678` is on `codex/cinematic-customer-onboarding`. Vercel deployment 
 To roll back the demo web release, use `vercel rollback dpl_2mkFLAuUvEgQyzEyCueZ3SkADeok --yes --scope onaopemipos-projects`, inspect the stable alias and check `/api/status`. This rollout required no migration. Commercial production remains NO-GO.
 
 [Deployment evidence](evidence/redeploy-20261117-operational-incidents.txt) · [Incident traceability](../traceability/operational-incidents-rtm.md) · [GitHub Release validation](https://github.com/Onaopemipo/easygasng/actions/runs/43989158764)
+
+## 17 November demo-only fulfilment
+
+Deployment `dpl_GfJyTjpgWKXz1a4wnmgzwjsSeQLi` serves the stable client demo. Field operations, tracking writes, bulk LPG and one day of proof visibility are set on this deployment. A future replacement deployment needs these overrides again to keep demo fulfilment enabled. Paystack remains in test mode. To restore the previous demo settings, roll back to `dpl_GXGapwq4nWpKCfCJZ8GYQ88QGrfL`. The test order and audit history persist in the demo database. Commercial production remains NO-GO.
+
+[Hosted sandbox order evidence](../releases/20261117-holistic-qa/paystack-demo-order.txt)

@@ -229,7 +229,6 @@ export default function OperationalIncidents({ refresh }: { refresh: number }) {
           <ShieldAlert size={26} aria-hidden="true" />
         </div>
         <div>
-          <span className="eyebrow">Delivery &amp; services</span>
           <h1>Operational incidents</h1>
           <p>Review reported incidents and record follow-up actions.</p>
         </div>
@@ -347,15 +346,14 @@ export default function OperationalIncidents({ refresh }: { refresh: number }) {
         ) : (
           data && (
             <>
-              <div
-                className="incidents-table-wrap"
-                role="region"
-                aria-label="Incident results"
-                tabIndex={0}
-              >
-                <table className="incidents-table">
-                  <thead>
-                    <tr>
+              <div>
+                <table
+                  className="incidents-table"
+                  role="table"
+                  aria-labelledby="incident-list-title"
+                >
+                  <thead role="rowgroup">
+                    <tr role="row">
                       <th scope="col">Incident</th>
                       <th scope="col">Severity</th>
                       <th scope="col">Status</th>
@@ -364,32 +362,38 @@ export default function OperationalIncidents({ refresh }: { refresh: number }) {
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody role="rowgroup">
                     {data.rows.map((incident) => (
-                      <tr key={incident.id}>
-                        <td>
+                      <tr key={incident.id} role="row">
+                        <td role="cell" className="incidents-summary">
                           <strong>{titleFor(incident.category)}</strong>
                           <small>{incident.detail}</small>
                         </td>
-                        <td>
+                        <td role="cell">
+                          <span className="incidents-cell-label">Severity</span>
                           <Badge
                             value={incident.severity}
                             label={severities[incident.severity]}
                           />
                         </td>
-                        <td>
+                        <td role="cell">
+                          <span className="incidents-cell-label">Status</span>
                           <Badge
                             value={incident.status}
                             label={statuses[incident.status]}
                           />
                         </td>
-                        <td>{incident.branch_name ?? "Business-wide"}</td>
-                        <td>
+                        <td role="cell">
+                          <span className="incidents-cell-label">Branch</span>
+                          {incident.branch_name ?? "Business-wide"}
+                        </td>
+                        <td role="cell">
+                          <span className="incidents-cell-label">Reported (WAT)</span>
                           <time dateTime={incident.created_at}>
                             {date.format(new Date(incident.created_at))}
                           </time>
                         </td>
-                        <td>
+                        <td role="cell" className="incidents-row-actions">
                           <IncidentActions
                             incident={incident}
                             canManage={data.canManage}

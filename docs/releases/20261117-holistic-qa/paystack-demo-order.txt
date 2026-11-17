@@ -1,0 +1,37 @@
+17 November 2026 · hosted client demo Paystack order
+Demo https://easygas-client-demo.vercel.app
+Order EG-2026-E8ED8AE8 · synthetic delivery area SANDBOX ONLY — Payment Test
+Paystack test reference EG.be9baf53-a545-4f79-9141-63fd059c9022
+
+PASS Desktop Chrome gas checkout, 3 kg selected, card enabled in test mode, order created.
+PASS Inventory movements shows exactly one 3 kg reservation for the order.
+PASS Provider-hosted checkout displayed NGN 10,675.13 and accepted the published Paystack test card.
+PASS EasyGas server verification marked the order verified. Reverification returned paid with replayed=true.
+PASS Finance Paystack report shows exactly one posting for the reference with no matching exceptions.
+PASS EasyGas invoice EGI-0000000003, NGN 10,415.00 principal, paid in full, NGN 0.00 due.
+PASS EasyGas receipt TEST-99e252b4-c0b3-40f2-a11b-084b76f47ea9, NGN 10,415.00 principal and NGN 260.13 processing charge, NGN 10,675.13 gross.
+PASS Both customer-authenticated PDF downloads contained EasyGas branding, the same order reference and the expected amounts. Anonymous PDF requests returned 401.
+
+INITIAL RUN BLOCKED at driver assignment and handover. The order had no inspected cylinder attached. The first operational transition, placed to accepted, returned HTTP 503:
+Tracking fulfilment writes are disabled pending operational release approval. Tracking history remains available.
+
+The initial run left the order placed with a verified sandbox payment and the 3 kg reservation held.
+The exercise verified the server payment verification path. Signed webhook delivery and bank settlement were outside the verified path.
+
+
+17 November completion · same order and same Paystack test payment
+Vercel Ready dpl_GfJyTjpgWKXz1a4wnmgzwjsSeQLi · easygas-client-demo only · source 65ae678
+Rollback to the pre-fulfilment demo deployment dpl_GXGapwq4nWpKCfCJZ8GYQ88QGrfL.
+Deployment-scoped overrides enabled field operations, tracking writes and bulk LPG with one day of proof visibility. The project defaults were left in place.
+The candidate and promoted demo passed readiness and Paystack test-mode checks. No payment was initiated during fulfilment.
+
+PASS Synthetic customer-owned cylinder SANDBOX-REFILL-E8ED8AE8 admitted in quarantine, inspected by the separate Finance user using an independently authorised synthetic qualification, and attached with a 3 kg filling allowance.
+PASS Order prepared and assigned to Demo driver with an eligible synthetic vehicle and trip. GPS sharing was off.
+PASS First simulated attempt returned and reconciled before the same order was reissued after the bulk custody control denied completion.
+PASS Reissued attempt recorded a 3 kg load, driver acknowledgement and metered dispensing. Pickup 01:53:58 UTC, arrival 01:54:10 UTC and code-verified handover 01:54:23 UTC.
+PASS Current-attempt synthetic proof image accepted. Anonymous image requests returned 401.
+PASS Restricted driver completion recorded delivered with no cash and replayed the same operation without duplication.
+PASS Inventory shows one 3 kg reservation, one 3 kg fulfilment and the synthetic cylinder marked filled. Separate Finance receipt of the vehicle return reconciled the load and the driver trip closed.
+PASS Finance report still has one sandbox posting for the original reference. Same invoice and receipt, NGN 10,415.00 principal, NGN 260.13 fee, NGN 10,675.13 gross, and NGN 0.00 invoice balance.
+Temporary synthetic qualifications were revoked where active and visible or allowed to expire. All equipment, proof and delivery activity represent demo fixtures.
+Commercial production NO-GO remains in force.
