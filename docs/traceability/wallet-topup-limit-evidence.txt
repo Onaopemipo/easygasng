@@ -32,4 +32,48 @@ Hosted reproduction against client demo confirmed the advertised NGN 100,000 pri
 ℹ todo 0
 ℹ duration_ms 14764.825625
 
-PASS web TypeScript. Hosted deployment acceptance remains open.
+PASS web TypeScript. Hosted acceptance is recorded below.
+
+
+18 November hosted demo acceptance
+Source 5ac10a2 · Vercel Ready dpl_3iL3ow2UTkPmy1qveM5qSuhvcqSe
+Previous Ready demo dpl_FQW3gNSPoui54zzktKydZBNchQLF
+Candidate and promoted demo readiness passed with Paystack sandbox mode.
+The committed source was built without deployment-level environment overrides.
+
+PASS hosted wallet maximum is NGN 98,400.00 after fees.
+PASS NGN 100,000 top-up receives a clear validation error instead of 503.
+PASS wallet 390px validates the corrected maximum and accepts a supported amount.
+PASS wallet 1440px validates the corrected maximum and accepts a supported amount.
+
+PASS Paystack hosted test card charged NGN 1,015.23; wallet credited NGN 1,000 exactly once; EasyGas receipt matches; verification replay leaves the balance unchanged.
+
+PASS hosted boundary: NGN 98,400 quotes NGN 100,000 gross, one kobo above the maximum is rejected with 409, and wallet balance stays at the verified NGN 1,000.
+Synthetic wallet posting reference EG.5e50b858-47e4-4c31-8e1f-db87dac393cf.
+EasyGas receipt TEST-fd66128e-91d2-40b2-9173-6c5b3f5b6b60 records NGN 1,000 principal, NGN 15.23 processing fee and NGN 1,015.23 total.
+Before balance NGN 0.00; after balance NGN 1,000.00. Replay preserved the same balance.
+Web dependency audit returned zero findings.
+
+Separate release check
+The native dependency audit failed on picomatch advisory GHSA-fc5q-39xc-vjpf, reviewed 17 November. It affects picomatch through 4.0.7 and has no published patch in the advisory or registry at verification time.
+https://github.com/advisories/GHSA-fc5q-39xc-vjpf
+The advisory affects the existing native dependency tree. Native dependencies and audit thresholds were not changed by the wallet fix.
+GitHub run https://github.com/Onaopemipo/easygasng/actions/runs/44187892987
+Commercial production remains NO-GO.
+
+Reviewed-source regression follow-up
+The full web run executed 735 tests: 734 passed and the sole failure was DDI-AUDIT01, whose orchestrator hash predated this authorised repair. Updated the review manifest to the tested source; no runtime code or test assertions changed.
+✔ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes (8.417875ms)
+
+Final focused review and phase validation
+✔ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (450.877833ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (1.552709ms)
+✔ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes (10.700083ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 634.088959

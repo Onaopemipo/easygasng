@@ -15,15 +15,18 @@
         "packages/business-rules/src/payment-fees.ts",
         "apps/web/lib/payments/runtime.ts",
         "apps/web/lib/payments/orchestrator.ts",
-        "apps/web/components/hosted-payment.tsx"
+        "apps/web/components/hosted-payment.tsx",
+        "docs/traceability/merchant-documents-reviewed-hashes.json"
       ],
       "testFiles": [
         "tests/payment-fees.test.ts",
-        "tests/paystack-orchestration.test.ts"
+        "tests/paystack-orchestration.test.ts",
+        "tests/dispatch-centre-safety.test.ts"
       ],
       "testIds": [
         "PAY-FEE-PRINCIPAL-MAX",
-        "PAY-WALLET-LIMIT"
+        "PAY-WALLET-LIMIT",
+        "DDI-AUDIT01"
       ],
       "negativeTests": [
         "PAY-WALLET-LIMIT"
@@ -32,32 +35,46 @@
         "docs/traceability/wallet-topup-limit-evidence.txt"
       ],
       "acceptanceGate": "WALLET-TOPUP-G01",
-      "status": "PARTIAL",
-      "reason": "The transaction cap includes the processing fee. The payable principal calculation and server validation passed local regression. Hosted acceptance pending.",
-      "testResult": "PASS — 22 fee, payment, scope and traceability checks and web TypeScript. Hosted acceptance pending.",
-      "outstandingWork": "Finish regression, deploy to demo with persistent fulfilment and verify browser and sandbox wallet flow."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Corrected the displayed maximum to the principal that fits the fee-inclusive transaction cap and confirmed a hosted Paystack sandbox funding credited the wallet once.",
+      "testResult": "PASS — 22 focused tests, web TypeScript, Vercel build, desktop/mobile wallet limits, exact upper boundary and hosted sandbox payment with receipt and idempotent wallet credit.",
+      "outstandingWork": "Existing production gates apply. Separate native CI audit fails on picomatch advisory GHSA-fc5q-39xc-vjpf with no published patch at verification."
     }
   ],
   "gates": [
     {
       "id": "WALLET-TOPUP-G01",
-      "status": "OPEN",
+      "status": "PASS",
       "requirement": "Verify fee-inclusive limits, clear denial of oversized funding with no payment effects, and supported sandbox wallet payment."
     }
   ],
   "coverage": {
     "implemented": 1,
-    "verified": 0,
+    "verified": 1,
     "total": 1,
-    "criticalVerified": 0,
+    "criticalVerified": 1,
     "criticalTotal": 1,
-    "gatesPassed": 0,
+    "routesVerified": 3,
+    "routesTotal": 3,
+    "gatesPassed": 1,
     "gatesTotal": 1
   },
   "changeLog": [
     {
       "date": "2026-11-18",
       "change": "Added WALLET-TOPUP-R01/G01 for the reproduced top-up failure. Existing payment and commercial launch gates carry forward."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Deployed and verified the demo repair with the same persistent fulfilment settings and sandbox gateway. Recorded the independent native dependency audit failure."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Updated the payment review hash for the authorised top-up limit repair after the full CI suite detected the previous value.",
+      "file": "apps/web/lib/payments/orchestrator.ts",
+      "previousHash": "b6fe943d820290532dab5233b3a09f103b9d2ad688c28985a374833fd52ce08b",
+      "reviewedHash": "99b0eaedf3be7ede4d6474f474bbe220d3a4c75f7ad115cedb8b30e3677ef13c",
+      "evidence": "22 focused payment checks, successful hosted sandbox top-up and 734 other full-suite checks."
     }
   ]
 }
