@@ -1,3 +1,5 @@
+import { useCheckoutPayments, CheckoutWalletBalance } from "./CheckoutPayments";
+import { NativeHostedPayment } from "./HostedPayment";
 import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress, type CheckoutAddress } from "../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
 import { useCheckoutProfile } from "./useCheckoutProfile";
@@ -87,6 +89,7 @@ export default function GasOrder({
   latestInput.current = inputKey;
   const quote = storedQuote?.inputKey === inputKey ? storedQuote : null;
   const requestedBranch = selectedBranch ?? "lagos";
+  const payments = useCheckoutPayments(api, user?.id, requestedBranch);
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (state) => {
       if (state === "active") refreshCatalogue((n) => n + 1);
@@ -243,6 +246,7 @@ export default function GasOrder({
         <Text>
           {money(Number(order.total_kobo))} · Payment {order.payment_status}
         </Text>
+        {order.payment_method === "card" && order.payment_status !== "verified" && <NativeHostedPayment api={api} userId={user.id} purpose="order" orderId={order.id} />}
         <Text>Verified cylinder inspection is required before dispatch.</Text>
         {button("View my orders", done)}
       </View>
@@ -630,8 +634,10 @@ export default function GasOrder({
       {quote && user && (
         <NativeRewardSelector api={api} onChange={setRewardSelection} />
       )}
+      {quote && user && <CheckoutWalletBalance payments={payments} />}
       {quote && user && (
         <NativeForm
+          disabled={!payments.data?.methods.length}
           key={picked?.id ?? "new"}
           api={async (action, data) => {
             if (latestInput.current !== inputKey)
@@ -642,10 +648,12 @@ export default function GasOrder({
             if (!l) throw new Error("Select an active location.");
             data.address.zone = l.name;
             data.address.phone = bookingPhone(data.address.phone ?? "") ?? data.address.phone;
+            if (!payments.data?.methods.includes(data.paymentMethod)) throw new Error("Choose an available Card, Cash or Wallet payment method.");
             const payload = {
               ...data,
               ...rewardSelection,
               items: physical,
+              source: "MOBILE",
               gasLines: lines,
               pricing: {
                 priceVersion: quote.priceVersion,
@@ -672,6 +680,8 @@ export default function GasOrder({
             setOrder(
               result.order
                 ? {
+                    id: result.order.id,
+                    payment_method: result.order.payment_method,
                     reference: result.order.reference,
                     total_kobo: result.order.totalKobo,
                     payment_status: result.order.paymentStatus,
@@ -734,20 +744,8 @@ export default function GasOrder({
             },
             {
               name: "paymentMethod",
-              label: "Payment arrangement",
-              options: [
-                ...(catalogue.codEnabled
-                  ? [
-                      {
-                        value: "cash_on_delivery",
-                        label: "Cash on delivery (unverified)",
-                      },
-                    ]
-                  : []),
-                ...(catalogue.walletEnabled
-                  ? [{ value: "wallet", label: "Purchase credit" }]
-                  : []),
-              ],
+              label: "Payment method",
+              options: payments.options,
             },
           ]}
           onDone={() => {}}

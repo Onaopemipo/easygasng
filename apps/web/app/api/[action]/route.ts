@@ -104,6 +104,7 @@ const reads = new Set([
   "me",
   "orders",
   "wallet",
+  "checkout.payment-options",
   "schedules",
   "settings",
   "setting.history",
@@ -265,7 +266,7 @@ async function handle(
     );
     return NextResponse.json(data, {
       headers:
-        ["documents.list", "orders", "dispatch.centre", "incidents"].includes(action)
+        ["documents.list", "orders", "dispatch.centre", "incidents", "checkout.payment-options"].includes(action)
           ? {
               "Cache-Control": "private, no-store, max-age=0",
               Vary: "Cookie, Authorization",

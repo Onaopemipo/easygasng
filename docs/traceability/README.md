@@ -249,3 +249,5 @@ Holistic release QA (17 November). [Requirements matrix](holistic-qa-rtm.md) and
 Wallet top-up amount repair. [Matrix](wallet-topup-limit-rtm.md) maps the fee-inclusive funding maximum and oversized-payment validation. Demo and live payment decisions continue to apply.
 
 Mobile dependency audit repair (18 November). [Matrix](mobile-dependency-audit-rtm.md) and [executed evidence](mobile-dependency-audit-evidence.txt) track the reviewed glob security patch and demo release. Commercial production NO-GO remains.
+
+Wallet order payments (18 November). [Matrix](wallet-order-rtm.md) maps explicit Card, Cash and Wallet choices, authenticated balances, exact wallet debits and governed demo spending activation. Commercial NO-GO remains.

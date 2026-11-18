@@ -10,6 +10,7 @@ import { accountPassword } from "./password-policy";
 import { orderAdditions } from "./order-additions";
 import { financialDocuments } from "./financial-documents";
 import { walletFundingAction } from "./wallet-funding";
+import { checkoutPaymentOptions } from "./checkout-payments";
 import { dispatchCentre } from "./dispatch-centre";
 import { vehicleProducts } from "./vehicle-products";
 import { estimateDispatchRoute } from "./dispatch-routing";
@@ -781,6 +782,7 @@ export async function dispatch(
         await audit(tx, user, "auth.reverified", user.id);
         return { ok: true };
       }
+      if (action === "checkout.payment-options") return checkoutPaymentOptions(tx, user, input);
       if (action === "checkout") {
         const order = await checkout(tx, user, checkoutSchema.parse(input));
         order!.gas_lines = (

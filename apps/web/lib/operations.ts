@@ -186,7 +186,7 @@ export async function checkout(
     method === "wallet" &&
     !(await settingValue(tx, "wallet.enabled", branchId))
   )
-    throw new AppError(409, "Purchase credit spending is not enabled.");
+    throw new AppError(409, "Wallet payment is not enabled for this delivery branch.");
   if (
     method === "cash_on_delivery" &&
     !(await settingValue(tx, "payment.cod", branchId))
@@ -517,7 +517,8 @@ export async function checkout(
     if (balance < subtotal + fee - discount)
       throw new AppError(
         409,
-        "Insufficient purchase credit. Choose another payment method.",
+        "Insufficient wallet balance. Top up your wallet or choose Card or Cash.",
+        "WALLET_INSUFFICIENT_FUNDS",
       );
     await tx.query(
       "INSERT INTO wallet_entries(id,customer_id,amount_kobo,kind,reference) VALUES ($1,$2,$3,'order_payment',$4)",
@@ -543,7 +544,7 @@ export async function checkout(
     tx,
     customerId,
     "Order placed",
-    `${ref} has been received. ${method === "wallet" ? "Paid using purchase credit." : method === "card" ? "Card payment is required before dispatch. Complete secure checkout from My Orders." : "Payment is due on delivery."}`,
+    `${ref} has been received. ${method === "wallet" ? "Paid from your wallet balance." : method === "card" ? "Card payment is required before dispatch. Complete secure checkout from My Orders." : "Payment is due on delivery."}`,
     orderId,
   );
   return order;

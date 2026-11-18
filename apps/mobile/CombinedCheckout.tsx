@@ -1,3 +1,4 @@
+import { useCheckoutPayments, CheckoutWalletBalance } from "./CheckoutPayments";
 import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress } from "../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
 import { useCheckoutProfile } from "./useCheckoutProfile";
@@ -35,6 +36,9 @@ export default function CombinedCheckout({
   const [addressId, setAddressId] = useState<string>();
   const selectedAddress = addressId === undefined ? defaultCheckoutAddress(addresses) : addresses.find((address) => address.id === addressId);
   const delivery = checkoutDelivery(profile, selectedAddress, user?.name);
+  const [paymentZone, setPaymentZone] = useState("");
+  const paymentBranch = catalogue?.gas?.locations?.find((item: any) => item.name === paymentZone)?.branch_id ?? "lagos";
+  const payments = useCheckoutPayments(api, user?.id, paymentBranch, !!cart.length);
   const storage = "easygas.serviceDrafts." + user?.id;
   useEffect(() => {
     SecureStore.getItemAsync(storage)
@@ -62,6 +66,7 @@ export default function CombinedCheckout({
           Add cooking gas to this linked request
         </Text>
       </Pressable>
+      {!!cart.length && <CheckoutWalletBalance payments={payments} />}
       {appointments.map((a, i) => (
         <View
           key={a.request.idempotencyKey}
@@ -112,11 +117,15 @@ export default function CombinedCheckout({
             </View>
           )}
           <NativeForm
+            onValuesChange={values => setPaymentZone(String(values["address.zone"] ?? ""))}
+            disabled={!!cart.length && !payments.data?.methods.length}
             key={selectedAddress?.id ?? "new"}
             api={async (_, v) => {
+              if (cart.length && !payments.data?.methods.includes(v.paymentMethod)) throw new Error("Choose an available Card, Cash or Wallet payment method.");
               const productBase = cart.length
                 ? {
                     items: cart,
+                    source: "MOBILE",
                     address: { ...v.address, phone: bookingPhone(v.address.phone ?? "") ?? v.address.phone },
                     date: v.date,
                     window: v.window,
@@ -202,21 +211,7 @@ export default function CombinedCheckout({
                     {
                       name: "paymentMethod",
                       label: "Product payment",
-                      value: "cash_on_delivery",
-                      options: [
-                        {
-                          value: "cash_on_delivery",
-                          label: "Cash on delivery",
-                        },
-                        ...(catalogue.walletEnabled
-                          ? [
-                              {
-                                value: "wallet",
-                                label: "Verified purchase credit",
-                              },
-                            ]
-                          : []),
-                      ],
+                      options: payments.options,
                     },
                   ]
                 : []

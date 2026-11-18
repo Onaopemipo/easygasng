@@ -62,13 +62,15 @@ export function NativeHostedPayment({
   purpose,
   invoiceId,
   bookingId,
+  orderId,
   amountKobo,
 }: {
   api: CustomerAPI;
   userId: string;
-  purpose: "invoice" | "wallet" | "service";
+  purpose: "invoice" | "wallet" | "service" | "order";
   invoiceId?: string;
   bookingId?: string;
+  orderId?: string;
   amountKobo?: number;
 }) {
   const [config, setConfig] = useState<any>(null),
@@ -79,7 +81,7 @@ export function NativeHostedPayment({
     [error, setError] = useState("");
   const request = useRef<string | null>(null),
     active = useRef(true);
-  const storage = "easygas.paymentIntent." + userId;
+  const storage = "easygas.paymentIntent." + userId + (purpose === "order" ? ".order." + orderId : "");
   useEffect(() => {
     active.current = true;
     api("payments/paystack/configuration")
@@ -117,6 +119,7 @@ export function NativeHostedPayment({
         purpose,
         ...(invoiceId ? { invoiceId } : {}),
         ...(bookingId ? { bookingId } : {}),
+        ...(orderId ? { orderId } : {}),
         ...(amountKobo ? { amountKobo } : {}),
         requestKey: request.current,
       });
@@ -177,8 +180,8 @@ export function NativeHostedPayment({
           </Copy>
           <Title>Total: {money(quote.quote.grossKobo)}</Title>
           <Copy>
-            Expires {new Date(quote.expiresAt).toLocaleString()}. Wallet credit
-            excludes the processing charge.
+            Expires {new Date(quote.expiresAt).toLocaleString()}.
+            {purpose === "wallet" ? " Wallet credit excludes the processing charge." : " The processing charge is separate from your purchase amount."}
           </Copy>
           {pending ? (
             <NativePaymentReturn

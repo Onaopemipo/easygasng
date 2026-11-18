@@ -1,4 +1,5 @@
 "use client";
+import { CheckoutPaymentMethods } from "./checkout-payment-methods";
 import { SaveCheckoutDetails } from "./save-checkout-details";
 import { FieldCaption } from "./field-caption";
 import { RefillProfiles } from "./refill-profiles";
@@ -9,7 +10,7 @@ import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/passwo
 import { CustomerWallet } from "./customer-wallet";
 import { DocumentLibrary } from "./document-library";
 import { FormInput } from "./password-input";
-import {useCardCheckout, OrderCardPayment} from "./hosted-payment";
+import {OrderCardPayment} from "./hosted-payment";
 import {
   EasyRewards,
   RewardCheckoutField,
@@ -1364,7 +1365,6 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
     [order, setOrder] = useState<any>(null),
     [draft, setDraft] = useState({ address: "", date: "", window: "" }),
     [key] = useState(() => crypto.randomUUID());
-  const cardEnabled = useCardCheckout(user?.id);
   useEffect(() => {
     try {
       const d = JSON.parse(
@@ -1576,33 +1576,14 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
                   </label>
                   <RewardCheckoutField />
                   <h3>Payment</h3>
-                  <label>
-                    <FieldCaption required={true}>Payment method</FieldCaption>
-                    <select name="paymentMethod" required>
-                      {cardEnabled && <option value="card">Credit / debit card · secure Paystack checkout (sandbox)</option>}
-                      {catalogue.codEnabled && (
-                        <option value="cash_on_delivery">
-                          Cash on delivery — verified after collection
-                        </option>
-                      )}
-                      {catalogue.walletEnabled && (
-                        <option value="wallet">
-                          Purchase credit wallet — full balance required
-                        </option>
-                      )}
-                    </select>
-                  </label>
-                  {!catalogue.codEnabled && !catalogue.walletEnabled && !cardEnabled && (
-                    <Notice message="No payment method is currently enabled." />
-                  )}
+                  <CheckoutPaymentMethods userId={user?.id} locations={catalogue.gas?.locations} />
                   {error && <Notice type="error" message={error} />}
                   <button
                     className="button full"
                     disabled={
                       busy ||
                       !estimateAvailable ||
-                      !catalogue.orderingEnabled ||
-                      (!catalogue.codEnabled && !catalogue.walletEnabled && !cardEnabled)
+                      !catalogue.orderingEnabled
                     }
                   >
                     {busy ? "Placing your order…" : "Place Order"}

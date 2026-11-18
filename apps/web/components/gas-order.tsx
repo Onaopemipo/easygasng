@@ -1,10 +1,11 @@
 "use client";
+import { CheckoutPaymentMethods } from "./checkout-payment-methods";
 import { SaveCheckoutDetails } from "./save-checkout-details";
 import { FieldCaption } from "./field-caption";
 import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress } from "../../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../../packages/business-rules/src/booking-contact";
 import { useCheckoutProfile } from "./checkout-delivery-fields";
-import { useCardCheckout, OrderCardPayment } from "./hosted-payment";
+import { OrderCardPayment } from "./hosted-payment";
 import { RewardCheckoutField } from "./easyrewards";
 import {
   deliveryAreaEvent,
@@ -112,25 +113,7 @@ export default function GasOrder({
   const coveragePending =
     selectedArea && !hasConfirmedDeliveryCoverage(selectedArea.coverage);
   const requestedBranch = areaBranch ?? "lagos";
-  const cardEnabled = useCardCheckout(user?.id);
-  useEffect(() => {
-    if (!catalogue) return;
-    if (
-      (method === "cash_on_delivery" && catalogue.codEnabled) ||
-      (method === "wallet" && catalogue.walletEnabled) ||
-      (method === "card" && cardEnabled)
-    )
-      return;
-    setMethod(
-      catalogue.codEnabled
-        ? "cash_on_delivery"
-        : catalogue.walletEnabled
-          ? "wallet"
-          : cardEnabled
-            ? "card"
-            : "",
-    );
-  }, [catalogue?.codEnabled, catalogue?.walletEnabled, cardEnabled, method]);
+  const [paymentAvailable, setPaymentAvailable] = useState(false);
   useEffect(() => {
     let live = true;
     setPricingBranch(null);
@@ -428,7 +411,7 @@ export default function GasOrder({
     priceReady &&
     feeReady &&
     catalogue.orderingEnabled &&
-    !!method;
+    !!method && paymentAvailable;
 
   function editOrder(section: string) {
     setQuote(null);
@@ -484,7 +467,7 @@ export default function GasOrder({
     }
   }
   async function confirm() {
-    if (coveragePending || !currentQuote || requestLock.current) return;
+    if (coveragePending || !currentQuote || !paymentAvailable || requestLock.current) return;
     requestLock.current = true;
     setBusy(true);
     setError("");
@@ -521,6 +504,7 @@ export default function GasOrder({
             reference: result.order.reference,
             total_kobo: result.order.totalKobo,
             payment_status: result.order.paymentStatus,
+            payment_method: result.order.payment_method,
           }
         : result;
       if (includeAppointments)
@@ -1155,32 +1139,11 @@ export default function GasOrder({
               onChange={setRewardPoints}
               onOfferChange={setRewardOfferId}
             />
-            <label id="gas-order-payment">
-              <FieldCaption required={true}>Payment arrangement</FieldCaption>
-              <select
-                value={method}
-                onChange={(e) => setMethod(e.target.value)}
-              >
-                {catalogue.codEnabled && (
-                  <option value="cash_on_delivery">
-                    Cash on delivery · payment stays unverified
-                  </option>
-                )}
-                {catalogue.walletEnabled && (
-                  <option value="wallet">Available purchase credit</option>
-                )}
-                {cardEnabled && (
-                  <option value="card">
-                    Credit / debit card · Paystack sandbox
-                  </option>
-                )}
-                {!catalogue.codEnabled &&
-                  !catalogue.walletEnabled &&
-                  !cardEnabled && (
-                    <option value="">No payment arrangement enabled</option>
-                  )}
-              </select>
-            </label>
+            <div id="gas-order-payment">
+              <CheckoutPaymentMethods userId={user?.id} branchId={requestedBranch} value={method} onChange={setMethod}
+                onAvailabilityChange={setPaymentAvailable}
+                amountKobo={!rewardPoints ? currentQuote?.totalKobo : undefined} />
+            </div>
           </section>
         </fieldset>
         <aside
@@ -1320,7 +1283,7 @@ export default function GasOrder({
                 {method === "card"
                   ? "Paystack card"
                   : method === "wallet"
-                    ? "Purchase credit"
+                    ? "Wallet balance"
                     : "Cash on delivery · unverified"}
               </p>
               <div className="button-row">
@@ -1344,7 +1307,7 @@ export default function GasOrder({
               <button
                 type="button"
                 className="button"
-                disabled={busy}
+                disabled={busy || !paymentAvailable}
                 onClick={confirm}
               >
                 {busy ? "Confirming…" : "Accept total and confirm order"}

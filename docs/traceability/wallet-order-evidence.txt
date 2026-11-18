@@ -1,0 +1,186 @@
+18 November 2026 · Wallet order payments
+
+Focused wallet, checkout, permission, provider and delivery regression
+✔ CHECKOUT-PREFILL01: prefer the saved default, fall back to a usable legacy address and then to the account contact (0.971333ms)
+✔ CHECKOUT-SAVE01: preferred delivery phone fills new and default addresses while alternate addresses keep their contact (0.097459ms)
+✔ purchase credit requires independent verification, is append-only and cannot replay funding (2628.600167ms)
+✔ wallet checkout debits once and cancellation restores exact purchase credit once (68.916167ms)
+✔ insufficient wallet funds cannot reserve stock or create a payment (11.950584ms)
+✔ POS uses approved server prices, prevents overselling and verifies cash-up independently (79.91275ms)
+✔ refund credit requires customer consent and cannot exceed the original verified order (140.946709ms)
+✔ new point-to-wallet conversions are closed while historical outcomes remain replayable (31.042791ms)
+✔ concurrent wallet checkouts cannot overdraw the same purchase-credit balance (76.613459ms)
+✔ prepaid wallet delivery collects no cash and cannot earn from unapproved seeded economics (145.059917ms)
+✔ MWEB-03-GATE: disabled card checkout cannot reserve stock; enabled sandbox card remains unpaid and cannot dispatch (116.1025ms)
+✔ POS-MONEY01: naira input is converted exactly and rejects excess precision and exponents (0.300833ms)
+✔ credits workspace pages the full scoped history and hides maker decisions (15.930375ms)
+✔ COMPACT-STEP01: steppers follow backend increments and precision without filling the cylinder (1.679125ms)
+✔ COMPACT-MONEY01: fractional naira are displayed without rounding away kobo (39.9215ms)
+✔ CUI-DATA: physical cylinders and issued invoices are canonical, owned, read-only and reject staff/identity injection (2947.578458ms)
+✔ CUI-NAV: notification targets are allowlisted and never execute external links or malformed order identifiers (0.370667ms)
+✔ CUI-SCOPE: later onboarding and native configuration changes are explicitly traced (33.957667ms)
+✔ CUI-LINK: native destinations are allowlisted, reject credential URLs and retain only validated owned-order selectors (1.854416ms)
+✔ CUI-HTTP: customer read resources use GET-compatible query actions instead of forbidden POST bodies (1.058708ms)
+✔ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (2512.938208ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (5.176375ms)
+✔ DDI-S024: unavailable drivers cannot receive a legacy manual assignment (2780.905542ms)
+✔ DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection (1028.543792ms)
+✔ DDI-READ01: scoped counts include every matching record and pagination never changes totals (1122.140667ms)
+✔ DDI-READ02: dispatch reads reject customer/driver access and cross-branch filters (822.974334ms)
+✔ DDI-READ03: empty-date dashboard reports actual zeros and unknown contact (1230.658292ms)
+✔ DDI-CONTACT01: foreground contact is independently measured, scoped and expires without changing availability (1429.923084ms)
+✔ DDI-PAY01: unverified payment and revoked COD exception block canonical assignment with no attempt (804.021542ms)
+✔ DDI-S031: expired authorisation prevents driver acknowledgement without a response (785.15125ms)
+✔ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes (4.836875ms)
+✔ DDI-S016: Lagos date boundaries and contact freshness never use upload time or future observations (0.653292ms)
+✔ DDI-READ04: literal search and status filters share scope and hide private order internals (786.035417ms)
+✔ DDI-KPI01: completed counts use actual Lagos delivery date rather than scheduled date (775.518292ms)
+✔ DDI-MASS01: vehicle mass is read once from custody and never added to inclusive branch stock (774.828458ms)
+✔ DDI-DECLINE01: declined assignments surface in exceptions and replay retains one response (831.441583ms)
+✔ DDI-S084: production assignment stays disabled without both explicit release approvals (797.682333ms)
+✔ DDI-PAY02: legacy invoice-less fulfilment uses the shared net-payment authority after an approved refund (840.660458ms)
+✔ DDI-S060: missing serialized cylinder allocation blocks dispatch before a delivery attempt (779.819333ms)
+✔ PAY-WALLET-LIMIT: configuration and quote include the fee in the transaction limit without creating failed intents (2811.83975ms)
+✔ MERCHANT-DOC-01: verified payment produces a private EasyGas receipt and at most one branded email (1775.337584ms)
+✔ PAY-RETURN-01: native callback retains the merchant origin and intent without accepting a redirect URL (735.882375ms)
+✔ PAY-POST: exact principal wallet credit, stable init, authenticated duplicate webhook and ledger immutability (909.582291ms)
+✔ PAY-ZERO-EFFECT: forged events, wrong amount/currency/environment, cross-customer and driver requests never credit funds (5118.371625ms)
+✔ PAY-RECOVERY: initialization timeout never launches a second charge; fee variance is separate from principal (678.388375ms)
+✔ PAY-RESUME: failed provider states persist without wallet effects (678.814292ms)
+✔ PAY-EXPIRY: prepared quote expiry is visible and cannot initialize (740.636375ms)
+✔ PAY-INVOICE: verified collection allocates principal to existing immutable invoice, never fees or duplicate revenue (734.609458ms)
+✔ WALLET-CARD: wallet checkout restricts approved channels to card and rejects transfer-only policy (723.029708ms)
+✔ WALLET-INSTANT: signed webhook verifies and credits card funding without waiting for worker or manual approval (689.901459ms)
+✔ DOC-POSTING-SNAPSHOT: new receipt preserves captured identity and customer despite later changes (664.711708ms)
+✔ MWEB-03: direct card orders retain server totals, ownership, fee consent and exactly-once ledger posting (679.529083ms)
+✔ WALLET-CARD-BRANCH: new unassigned customer can fund once in a single active branch; ambiguous context and forged branch are rejected (649.536916ms)
+✔ WALLET-CONFIG-SCOPE: missing wallet context is reported without disabling existing invoice/order card capability (635.434792ms)
+✔ WALLET-ORDER-01: payment options expose only the authenticated balance and governed delivery-branch methods (2947.081416ms)
+✔ WALLET-ORDER-02: the exact full order total including delivery is debited once and replay stays paid (917.52325ms)
+✔ WALLET-ORDER-03: insufficient or changed balances roll back order, payment and stock reservations (1000.746416ms)
+✔ WALLET-ORDER-PG: independent cross-branch purchases cannot overdraw one wallet and concurrent retries debit once (1739.224709ms)
+ℹ tests 58
+ℹ suites 0
+ℹ pass 58
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19170.484625
+
+Final HTTP and concurrency contract checks
+✔ WALLET-ORDER-01: payment options expose only the authenticated balance and governed delivery-branch methods (1347.896917ms)
+✔ WALLET-ORDER-02: the exact full order total including delivery is debited once and replay stays paid (875.218083ms)
+✔ WALLET-ORDER-03: insufficient or changed balances roll back order, payment and stock reservations (868.344375ms)
+✔ WALLET-ORDER-PG: independent cross-branch purchases cannot overdraw one wallet and concurrent retries debit once (1697.618375ms)
+✔ WALLET-ORDER-HTTP: authenticated payment choices use GET, private no-store responses and reject identity injection (1032.767834ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6461.115208
+
+Disposable PostgreSQL browser acceptance
+PASS checkout: wallet total 640000 kobo paid once; replay preserves the balance.
+PASS 390px gas checkout choices, balance and layout.
+PASS checkout: wallet total 640000 kobo paid once; replay preserves the balance.
+PASS 1440px gas checkout choices, balance and layout.
+PASS checkout: wallet total 450000 kobo paid once; replay preserves the balance.
+PASS checkout.mixed: wallet total 450000 kobo paid once; replay preserves the balance.
+PASS insufficient quoted wallet balance blocks confirmation and offers top-up without losing checkout.
+PASS card order remains unpaid and does not debit the wallet.
+PASS cash_on_delivery order remains unpaid and does not debit the wallet.
+✔ WALLET-ORDER-WEB: desktop and mobile gas, cart and linked checkout use Card/Cash/Wallet with exact wallet debits (23341.685375ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23386.398208
+
+PASS web production webpack build and web/native TypeScript.
+PASS iOS and Android Hermes bundle exports. Installed native checkout interaction remains unverified.
+
+Governed demo activation
+PASS governed demo wallet spending enabled; Paystack remains test-only. Approval reference bbe2f535-341a-4e62-ba4d-aade1392a82d
+
+New demo deployment and CI acceptance remain pending. Commercial production NO-GO unchanged.
+
+Final phase validation
+✔ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (434.652292ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (4.66225ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 554.260709
+
+Final native export output
+npm notice run @easygas/mobile@0.1.0 npx
+npm notice run 'expo' export --platform ios --platform android --output-dir /tmp/easygas-wallet-order/native-export-final
+Starting Metro Bundler
+
+| (node:51434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:51434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:51434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:51434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:51434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:51434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:51434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:51434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+iOS Bundled 8390ms index.ts (979 modules)
+Android Bundled 11215ms index.ts (978 modules)
+
+› Assets (25):
+assets/cooking-hero.webp (172KB)
+assets/cylinder-illustration.png (1.7MB)
+assets/delivery.png (2.2MB)
+assets/easygas-logo-hd.png (525KB)
+assets/introduction-delivery.webp (42KB)
+assets/introduction-logo.webp (17KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/AntDesign.ttf (130KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Entypo.ttf (66KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/EvilIcons.ttf (13KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Feather.ttf (56KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome.ttf (166KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf (134KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf (34KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf (203KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome6_Brands.ttf (209KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome6_Regular.ttf (68KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/FontAwesome6_Solid.ttf (424KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Fontisto.ttf (314KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Foundation.ttf (57KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Ionicons.ttf (390KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf (1.3MB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/MaterialIcons.ttf (357KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Octicons.ttf (69KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/SimpleLineIcons.ttf (54KB)
+node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Zocial.ttf (26KB)
+
+› ios bundles (1):
+_expo/static/js/ios/index-e3ec15f910c2339e2d124b3cb0251f83.hbc (3.1MB)
+
+› android bundles (1):
+_expo/static/js/android/index-097f09e3c69b2618582430c30cfd151c.hbc (3.1MB)
+
+› Files (1):
+metadata.json (3.4KB)
+
+Exported: /tmp/easygas-wallet-order/native-export-final

@@ -36,6 +36,7 @@ export function NativeForm({
   prepareReview,
   reviewKey,
   disabled = false,
+  onValuesChange,
 }: {
   api: API;
   action: string;
@@ -48,6 +49,7 @@ export function NativeForm({
   prepareReview?: (values: Record<string, any>) => Promise<void>;
   reviewKey?: string;
   disabled?: boolean;
+  onValuesChange?: (values: Record<string, any>) => void;
 }) {
   const [values, setValues] = useState<Record<string, any>>(() =>
       Object.fromEntries(
@@ -60,6 +62,7 @@ export function NativeForm({
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
   const [reviewed, setReviewed] = useState<Record<string, any> | null>(null);
+  useEffect(() => { onValuesChange?.(values); }, [values]);
   const submitting = useRef(false);
   const currentReviewKey = useRef(reviewKey);
   currentReviewKey.current = reviewKey;

@@ -1,8 +1,9 @@
 "use client";
+import { CheckoutPaymentMethods } from "./checkout-payment-methods";
 import { SaveCheckoutDetails } from "./save-checkout-details";
 import { FieldCaption } from "./field-caption";
 import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
-import { useCardCheckout, OrderCardPayment } from "./hosted-payment";
+import { OrderCardPayment } from "./hosted-payment";
 import { RewardCheckoutField } from "./easyrewards";
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "./workspace-link";
@@ -24,7 +25,6 @@ export default function CombinedCheckout({
     [busy, setBusy] = useState(false),
     [result, setResult] = useState<any>(null),
     [key] = useState(() => crypto.randomUUID());
-  const cardEnabled = useCardCheckout(user?.id);
   const storage = "easygas.serviceDrafts." + user?.id;
   useEffect(() => {
     try {
@@ -238,16 +238,7 @@ export default function CombinedCheckout({
                 </select>
               </label>
               <RewardCheckoutField />
-              <label>
-                <FieldCaption required={true}>Product payment</FieldCaption>
-                <select name="paymentMethod">
-                  {cardEnabled && <option value="card">Credit / debit card · Paystack sandbox</option>}
-                  {catalogue.codEnabled && <option value="cash_on_delivery">Cash on delivery</option>}
-                  {catalogue.walletEnabled && (
-                    <option value="wallet">Verified purchase credit</option>
-                  )}
-                </select>
-              </label>
+              <CheckoutPaymentMethods userId={user?.id} locations={catalogue.gas?.locations} />
             </>
           )}
           <p>

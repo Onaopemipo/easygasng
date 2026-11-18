@@ -1,0 +1,187 @@
+{
+  "phase": "Wallet order payment choice \u2014 18 November 2026",
+  "releaseDecision": "Commercial production NO-GO preserved; demo sandbox only.",
+  "requirements": [
+    {
+      "id": "WALLET-ORDER-R01",
+      "requirement": "Show explicit Card, Cash and Wallet choices and the signed-in wallet balance across gas, cart and linked product checkout.",
+      "priority": "P0",
+      "scope": "Desktop and mobile web; methods use the selected delivery branch.",
+      "uiReference": "Customer request for Card, Cash or Wallet order payment, 18 November 2026.",
+      "route": "/gas-order, /checkout, /combined-checkout, /orders; checkout.payment-options and checkout APIs",
+      "implementationFiles": [
+        "apps/web/components/checkout-payment-methods.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/lib/checkout-payments.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "dataSource": "Authenticated wallet_entries sum; governed branch wallet.enabled/payment.cod/payment.gateway; committed order totals and verified_payments. No browser supplied balance or fee is authoritative.",
+      "securityControl": "Customer identity comes from the session. Server controls methods, full payable amount, user row locks, append-only debit/payment records and transactional stock rollback. Existing order idempotency and assisted-order spending denial are preserved.",
+      "testFiles": [
+        "tests/wallet-order.test.ts",
+        "tests/commerce.test.ts",
+        "scripts/qa-wallet-order.mjs"
+      ],
+      "testIds": [
+        "WALLET-ORDER-01",
+        "WALLET-ORDER-HTTP",
+        "WALLET-ORDER-WEB"
+      ],
+      "negativeTests": [
+        "WALLET-ORDER-01",
+        "WALLET-ORDER-03",
+        "WALLET-ORDER-PG"
+      ],
+      "evidence": [
+        "docs/traceability/wallet-order-evidence.txt"
+      ],
+      "acceptanceGate": "WALLET-ORDER-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authenticated GET transport, branch choices and wallet balance passed HTTP privacy/ownership checks and actual Chrome gas, cart and linked checkout.",
+      "testResult": "PASS \u2014 390/1440px gas checkout, cart and linked wallet debits/replay, insufficient-funds UI, separate Card/Cash non-debits, private GET options and web build/types.",
+      "outstandingWork": "Hosted rollout is tracked by R04. Commercial production gates remain."
+    },
+    {
+      "id": "WALLET-ORDER-R02",
+      "requirement": "Pay the complete order total from the customer wallet atomically, denying insufficient funds and preventing duplicate debits or concurrent overdrafts.",
+      "priority": "P0",
+      "scope": "Existing order checkout, verified payment ledger, stock allocation and retry path.",
+      "uiReference": "Customer request for Card, Cash or Wallet order payment, 18 November 2026.",
+      "route": "/gas-order, /checkout, /combined-checkout, /orders; checkout.payment-options and checkout APIs",
+      "implementationFiles": [
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/checkout-payments.ts"
+      ],
+      "dataSource": "Authenticated wallet_entries sum; governed branch wallet.enabled/payment.cod/payment.gateway; committed order totals and verified_payments. No browser supplied balance or fee is authoritative.",
+      "securityControl": "Customer identity comes from the session. Server controls methods, full payable amount, user row locks, append-only debit/payment records and transactional stock rollback. Existing order idempotency and assisted-order spending denial are preserved.",
+      "testFiles": [
+        "tests/wallet-order.test.ts",
+        "tests/commerce.test.ts"
+      ],
+      "testIds": [
+        "WALLET-ORDER-02",
+        "WALLET-ORDER-03",
+        "WALLET-ORDER-PG"
+      ],
+      "negativeTests": [
+        "WALLET-ORDER-01",
+        "WALLET-ORDER-03",
+        "WALLET-ORDER-PG"
+      ],
+      "evidence": [
+        "docs/traceability/wallet-order-evidence.txt"
+      ],
+      "acceptanceGate": "WALLET-ORDER-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact ledger debit and verified principal, replay, full rollback on insufficient funds, Cash/Card separation and cross-branch concurrent balance locking passed.",
+      "testResult": "PASS \u2014 58 focused checks and 5 final contract checks, including real PostgreSQL connections and browser committed transactions.",
+      "outstandingWork": "Existing production and physical fulfilment gates remain. No payment success is inferred from a browser return."
+    },
+    {
+      "id": "WALLET-ORDER-R03",
+      "requirement": "Provide the same payment choices and balance on iOS and Android, including a secure card continuation for unpaid card orders.",
+      "priority": "P1",
+      "scope": "Native gas, cart, linked product checkout and My Orders.",
+      "uiReference": "Customer request for Card, Cash or Wallet order payment, 18 November 2026.",
+      "route": "/gas-order, /checkout, /combined-checkout, /orders; checkout.payment-options and checkout APIs",
+      "implementationFiles": [
+        "apps/mobile/CheckoutPayments.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/CombinedCheckout.tsx",
+        "apps/mobile/HostedPayment.tsx",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "dataSource": "Authenticated wallet_entries sum; governed branch wallet.enabled/payment.cod/payment.gateway; committed order totals and verified_payments. No browser supplied balance or fee is authoritative.",
+      "securityControl": "Customer identity comes from the session. Server controls methods, full payable amount, user row locks, append-only debit/payment records and transactional stock rollback. Existing order idempotency and assisted-order spending denial are preserved.",
+      "testFiles": [
+        "tests/wallet-order.test.ts",
+        "tests/commerce.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/wallet-order-evidence.txt"
+      ],
+      "acceptanceGate": "WALLET-ORDER-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Native source uses the same scoped options and balance, supports secure card-order continuation and compiles/exports on both platforms. Installed checkout interaction has not been exercised.",
+      "testResult": "PASS native TypeScript and iOS/Android Hermes exports; PENDING installed app interaction.",
+      "outstandingWork": "Rebuild/install and verify Card/Cash/Wallet selection, displayed balance and the order payment journey on iOS and Android. Real-phone and commercial gates remain."
+    },
+    {
+      "id": "WALLET-ORDER-R04",
+      "requirement": "Enable wallet spending on the synthetic demo through the approved setting workflow and retain fulfilment and Paystack sandbox.",
+      "priority": "P1",
+      "scope": "Existing Vercel client demo only; no commercial production activation.",
+      "uiReference": "Customer request for Card, Cash or Wallet order payment, 18 November 2026.",
+      "route": "/gas-order, /checkout, /combined-checkout, /orders; checkout.payment-options and checkout APIs",
+      "implementationFiles": [
+        "apps/web/lib/checkout-payments.ts",
+        "apps/web/lib/operations.ts"
+      ],
+      "dataSource": "Authenticated wallet_entries sum; governed branch wallet.enabled/payment.cod/payment.gateway; committed order totals and verified_payments. No browser supplied balance or fee is authoritative.",
+      "securityControl": "Customer identity comes from the session. Server controls methods, full payable amount, user row locks, append-only debit/payment records and transactional stock rollback. Existing order idempotency and assisted-order spending denial are preserved.",
+      "testFiles": [
+        "tests/wallet-order.test.ts",
+        "tests/commerce.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/wallet-order-evidence.txt"
+      ],
+      "acceptanceGate": "WALLET-ORDER-G04",
+      "status": "PARTIAL",
+      "reason": "wallet.enabled was activated on the demo through owner auto-approval request bbe2f535-341a-4e62-ba4d-aade1392a82d. Sandbox remained test-only.",
+      "testResult": "PASS governed setting activation and sandbox confirmation. PENDING code rollout and hosted acceptance.",
+      "outstandingWork": "GitHub release validation, deployment and hosted checks remain."
+    }
+  ],
+  "gates": [
+    {
+      "id": "WALLET-ORDER-G01",
+      "status": "PASS",
+      "requirement": "Desktop/mobile browser choices, balance, ownership and branch-method checks."
+    },
+    {
+      "id": "WALLET-ORDER-G02",
+      "status": "PASS",
+      "requirement": "Exact debit, replay, insufficient rollback and real PostgreSQL cross-branch concurrency."
+    },
+    {
+      "id": "WALLET-ORDER-G03",
+      "status": "PENDING",
+      "requirement": "Native typecheck, iOS/Android exports and source flows; installed device acceptance remains explicit."
+    },
+    {
+      "id": "WALLET-ORDER-G04",
+      "status": "PENDING",
+      "requirement": "Governed demo wallet activation, hosted smoke, fulfilment and sandbox verification."
+    }
+  ],
+  "coverage": {
+    "implemented": 4,
+    "verified": 2,
+    "total": 4,
+    "criticalVerified": 2,
+    "criticalTotal": 2,
+    "routesVerified": 3,
+    "routesTotal": 4,
+    "gatesPassed": 2,
+    "gatesTotal": 4
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-18",
+      "change": "Added WALLET-ORDER-R01\u2013R04 and G01\u2013G04. Reused existing transactional wallet checkout; clarified its UI and added minimal authenticated payment options. Demo wallet spending was found disabled despite sandbox funding; activation will use the approved setting workflow. Other launch and import holds are preserved."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Registered the read-only HTTP endpoint with private/no-store caching. Real PostgreSQL and browser checks passed. Demo wallet spending was enabled using an audited owner request; no direct database change or Paystack mode change occurred. Native installed-app interaction remains in the denominator."
+    }
+  ]
+}

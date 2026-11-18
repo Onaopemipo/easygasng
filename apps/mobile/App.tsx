@@ -1,3 +1,4 @@
+import { useCheckoutPayments, CheckoutWalletBalance } from "./CheckoutPayments";
 import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress, type CheckoutDetailsOffer } from "../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
 import { useCheckoutProfile } from "./useCheckoutProfile";
@@ -15,7 +16,7 @@ import { EasyGasAlert } from "./AppAlert";
 import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
 import { EasyGasLoader } from "./EasyGasLoader";
 import { stopDriverLocation } from "./driver-location";
-import { NativePaymentReturn } from "./HostedPayment";
+import { NativeHostedPayment, NativePaymentReturn } from "./HostedPayment";
 import TechnicianWorkspace from "./TechnicianWorkspace";
 import TechnicianSignIn from "./TechnicianSignIn";
 import DriverWorkspace from "./DriverWorkspace";
@@ -123,6 +124,7 @@ export default function App() {
     [date, setDate] = useState(""),
     [window, setWindow] = useState(""),
     [key, setKey] = useState<string | null>(null);
+  const checkoutPayments = useCheckoutPayments(api, user?.id, catalogue?.gas?.locations?.find((l: any) => l.name === address.zone)?.branch_id ?? "lagos", screen === "checkout" && ["customer", "commercial"].includes(user?.role));
   useEffect(() => {
     scrollRef.current?.scrollTo({ y: 0, animated: false });
   }, [screen, user?.id]);
@@ -1472,33 +1474,10 @@ export default function App() {
                   setKey(null);
                 }}
               />
-              {catalogue?.codEnabled &&
-                button(
-                  "Pay cash on delivery",
-                  () => {
-                    setPaymentMethod("cash_on_delivery");
-                    setKey(null);
-                  },
-                  paymentMethod !== "cash_on_delivery",
-                )}
-              {catalogue?.walletEnabled &&
-                button(
-                  "Pay with purchase credit",
-                  () => {
-                    setPaymentMethod("wallet");
-                    setKey(null);
-                  },
-                  paymentMethod !== "wallet",
-                )}
-              <View style={s.notice}>
-                <Text style={s.noticeText}>
-                  {paymentMethod === "wallet"
-                    ? "The full order total will be debited from your verified purchase credit."
-                    : catalogue?.codEnabled
-                      ? "Cash on delivery. Payment stays unverified until confirmed."
-                      : "No payment method is currently enabled."}
-                </Text>
-              </View>
+              {checkoutPayments.options.map(option => button(option.label, () => {
+                setPaymentMethod(option.value); setKey(null);
+              }, paymentMethod !== option.value))}
+              <CheckoutWalletBalance payments={checkoutPayments} selected={paymentMethod} />
               {button(
                 "Place Order",
                 async () => {
@@ -1508,6 +1487,7 @@ export default function App() {
                       key ?? (await import("expo-crypto")).randomUUID();
                     setKey(requestKey);
                     const o = await api("checkout", {
+                      source: "MOBILE",
                       items: cart,
                       address: { ...address, phone: bookingPhone(address.phone) ?? address.phone },
                       date,
@@ -1524,7 +1504,7 @@ export default function App() {
                     setKey(null);
                     EasyGasAlert.alert(
                       "Order received",
-                      `${o.reference} · ${paymentMethod === "wallet" ? "Paid using purchase credit" : "Payment due on delivery"}`,
+                      `${o.reference} · ${paymentMethod === "wallet" ? "Paid from your wallet balance" : paymentMethod === "card" ? "Card payment required — continue from My Orders" : "Payment due on delivery"}`,
                     );
                     void offerCheckoutDetails(o.id);
                     setScreen("orders");
@@ -1537,9 +1517,7 @@ export default function App() {
                 false,
                 loading ||
                   !catalogue?.orderingEnabled ||
-                  (paymentMethod === "wallet"
-                    ? !catalogue?.walletEnabled
-                    : !catalogue?.codEnabled),
+                  !checkoutPayments.data?.methods.includes(paymentMethod),
               )}
             </>
           ) : screen === "orders" && !visibleOrders ? (
@@ -1624,6 +1602,7 @@ export default function App() {
                     ) : (
                       <Text style={s.productName}>{o.reference}</Text>
                     )}
+                    {customerView && o.payment_method === "card" && o.payment_status !== "verified" && !["cancelled", "delivered"].includes(o.status) && <NativeHostedPayment key={o.id} api={api} userId={user.id} purpose="order" orderId={o.id} />}
                     <OrderVisit
                       api={api}
                       order={o}
