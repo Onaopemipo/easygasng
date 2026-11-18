@@ -59,12 +59,14 @@
       "securityControl": "Customer identity comes from the session. Server controls methods, full payable amount, user row locks, append-only debit/payment records and transactional stock rollback. Existing order idempotency and assisted-order spending denial are preserved.",
       "testFiles": [
         "tests/wallet-order.test.ts",
-        "tests/commerce.test.ts"
+        "tests/commerce.test.ts",
+        "tests/easyrewards.test.ts"
       ],
       "testIds": [
         "WALLET-ORDER-02",
         "WALLET-ORDER-03",
-        "WALLET-ORDER-PG"
+        "WALLET-ORDER-PG",
+        "ER-13"
       ],
       "negativeTests": [
         "WALLET-ORDER-01",
@@ -108,9 +110,9 @@
       ],
       "acceptanceGate": "WALLET-ORDER-G03",
       "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Native source uses the same scoped options and balance, supports secure card-order continuation and compiles/exports on both platforms. Installed checkout interaction has not been exercised.",
-      "testResult": "PASS native TypeScript and iOS/Android Hermes exports; PENDING installed app interaction.",
-      "outstandingWork": "Rebuild/install and verify Card/Cash/Wallet selection, displayed balance and the order payment journey on iOS and Android. Real-phone and commercial gates remain."
+      "reason": "Native source uses the same scoped options/balance and secure card-order continuation. Both Hermes exports and the iOS Release build passed; installed iOS sign-in and gas-entry navigation passed. The simulator window became unavailable before payment-choice acceptance; installed Android acceptance has not run.",
+      "testResult": "PASS native TypeScript, iOS/Android Hermes exports, iOS Release build (0 errors), installation, sign-in and gas-entry navigation. PENDING installed checkout payment selection and completed native order.",
+      "outstandingWork": "Verify Card/Cash/Wallet selection, displayed balance and completed payment journey on installed iOS and Android. The iOS test stopped when Device Hub lost its window (cgWindowNotFound). Real-phone and commercial gates remain."
     },
     {
       "id": "WALLET-ORDER-R04",
@@ -182,6 +184,10 @@
     {
       "date": "2026-11-18",
       "change": "Registered the read-only HTTP endpoint with private/no-store caching. Real PostgreSQL and browser checks passed. Demo wallet spending was enabled using an audited owner request; no direct database change or Paystack mode change occurred. Native installed-app interaction remains in the denominator."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "First full CI: native passed; web 742/743 passed with one obsolete purchase-credit error assertion in ER-13. Corrected that assertion to the stable insufficient-funds code and current wallet text; retained and reran all discount/inventory rollback assertions successfully. Full rerun remains pending. Installed iOS sign-in/gas navigation verified; native checkout acceptance remains unverified."
     }
   ]
 }

@@ -254,7 +254,11 @@ test("ER-13: failed wallet checkout rolls back discount and inventory with no le
           paymentMethod: "wallet",
           rewardPoints: 100,
         }),
-      /Insufficient purchase credit/,
+      (error: any) => {
+        assert.equal(error.code, "WALLET_INSUFFICIENT_FUNDS");
+        assert.match(error.message, /Insufficient wallet balance/);
+        return true;
+      },
     );
     assert.equal(await rewardBalance(f.db, f.actors.customer.id), 1000);
     assert.equal(

@@ -104,7 +104,9 @@ PASS cash_on_delivery order remains unpaid and does not debit the wallet.
 ℹ duration_ms 23386.398208
 
 PASS web production webpack build and web/native TypeScript.
-PASS iOS and Android Hermes bundle exports. Installed native checkout interaction remains unverified.
+PASS iOS and Android Hermes bundle exports.
+PASS iOS Release simulator build (0 errors; 2 warnings), installed on the isolated EasyGas Onboarding QA device, signed in to the disposable local fixture and opened gas checkout. Gas quantity 3 kg showed NGN 5,400 plus NGN 1,000 delivery.
+PENDING installed payment-choice acceptance: Device Hub lost its window (cgWindowNotFound) during address entry, before the payment review. Installed Android checkout has not run. No native payment success is claimed.
 
 Governed demo activation
 PASS governed demo wallet spending enabled; Paystack remains test-only. Approval reference bbe2f535-341a-4e62-ba4d-aade1392a82d
@@ -184,3 +186,17 @@ _expo/static/js/android/index-097f09e3c69b2618582430c30cfd151c.hbc (3.1MB)
 metadata.json (3.4KB)
 
 Exported: /tmp/easygas-wallet-order/native-export-final
+
+GitHub first release validation e6c3b9c / run 44226669116
+Native PASS, dependency audit 0 vulnerabilities. Web: 743 tests, 742 pass, 1 fail, 0 skipped. The sole failure was ER-13 asserting the old purchase-credit error text; rollback behavior passed the new wallet tests. ER-13 now asserts WALLET_INSUFFICIENT_FUNDS plus the wallet error text; its discount/inventory rollback assertions are retained.
+✔ ER-13: failed wallet checkout rolls back discount and inventory with no leaked point hold (6285.854417ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8688.86575
+
+Fresh full release validation pending after the test-contract correction.
