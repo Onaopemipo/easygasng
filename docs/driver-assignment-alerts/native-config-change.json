@@ -1,0 +1,12 @@
+{
+  "requirement": "DAPP-02",
+  "priorRequirement": "GPS-R01",
+  "priorApprovedHash": "663cb7202304d893fe177428989f67811f2b77d97d5bf9143886931b36b03bb0",
+  "changes": {
+    "apps/mobile/app.json": {
+      "sha256": "ae47b3d39ca2b7e044de58bd6e3d58c93dcd13ce5bf133bcfce06ec0c67dc596",
+      "reason": "Explicit native assignment notifications and foreground chime requested by user. Added expo-notifications plus expo-audio with microphone, recording and background audio disabled; existing location and all other configuration retained."
+    }
+  },
+  "authority": "User requests assignment popup and sound, and current push/deploy request; no new native build authorised in this release."
+}

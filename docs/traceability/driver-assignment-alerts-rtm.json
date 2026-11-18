@@ -66,16 +66,19 @@
         "apps/mobile/app.json",
         "apps/mobile/package.json",
         "apps/mobile/driver/package.json",
-        "apps/mobile/technician/package.json"
+        "apps/mobile/technician/package.json",
+        "docs/driver-assignment-alerts/native-config-change.json"
       ],
       "dataSource": "Authenticated canonical orders?active=1 and driver.snapshot responses; existing dispatch.respond.",
       "securityControl": "Server actor/branch/attempt/version guards, account-scoped private dedupe, no contact/code in OS payload; receipt/read is not acknowledgement.",
       "testFiles": [
         "tests/driver-assignment-alerts.test.ts",
-        "tests/assignment-notifications.test.ts"
+        "tests/assignment-notifications.test.ts",
+        "tests/customer-mobile.test.ts"
       ],
       "testIds": [
-        "DAPP-CONFIG"
+        "DAPP-CONFIG",
+        "CUI-SCOPE"
       ],
       "negativeTests": [],
       "evidence": [
@@ -272,6 +275,10 @@
     {
       "date": "2026-11-19",
       "change": "Actual owner assignment and iOS popup acknowledgement verified. Fixed public branchId/internal branch_id mismatch. Default system sound not heard; added permission-aware bundled foreground chime and test popup. Final iOS/Android Release builds pass; installed iOS replay awaiting audible confirmation. Remote push and native runtime gaps remain in denominators. No deployment or hosting/payment configuration changed."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Initial release CI exposed CUI-SCOPE expecting the prior GPS-only app.json hash. Reviewed and mapped the exact two-plugin notification/audio delta, preserving the historical GPS approval hash and all other onboarding/config checks. No application source or native binary changed in this repair."
     }
   ],
   "coverage": {

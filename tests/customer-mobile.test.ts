@@ -105,6 +105,11 @@ test("CUI-SCOPE: later onboarding and native configuration changes are explicitl
   assert.equal(introduction.requirement, "ONB-004");
   assert.equal(introduction.path, "apps/mobile/Onboarding.tsx");
   assert.equal(introduction.priorApprovedHash, alerts[introduction.path].approvedHash);
+  const assignmentAlertConfig = JSON.parse(await readFile("docs/driver-assignment-alerts/native-config-change.json", "utf8"));
+  assert.equal(assignmentAlertConfig.requirement, "DAPP-02");
+  assert.equal(assignmentAlertConfig.priorRequirement, laterPhase.requirement);
+  assert.equal(assignmentAlertConfig.priorApprovedHash, laterPhase.changes["apps/mobile/app.json"].sha256);
+  assert.deepEqual(Object.keys(assignmentAlertConfig.changes), ["apps/mobile/app.json"]);
   for (const line of manifest.trim().split("\n")) {
     if (line.endsWith("apps/mobile/Onboarding.tsx")) assert.equal(alerts["apps/mobile/Onboarding.tsx"].originalHash, line.split(/\s+/)[0]);
     const [hash, path] = line.split(/\s+/);
@@ -123,7 +128,7 @@ test("CUI-SCOPE: later onboarding and native configuration changes are explicitl
       createHash("sha256")
         .update(source)
         .digest("hex"),
-      mapsPhase.changes[path]?.sha256 ?? laterPhase.changes[path]?.sha256 ?? (path === introduction.path ? introduction.sha256 : hash),
+      assignmentAlertConfig.changes[path]?.sha256 ?? mapsPhase.changes[path]?.sha256 ?? laterPhase.changes[path]?.sha256 ?? (path === introduction.path ? introduction.sha256 : hash),
       path,
     );
   }
