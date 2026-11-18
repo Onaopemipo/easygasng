@@ -1,0 +1,54 @@
+.panel {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+  max-width: 100%;
+}
+.panel fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.panel label {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.panel input,
+.panel select,
+.panel button {
+  min-width: 0;
+  max-width: 100%;
+}
+.panel label[data-field-type="checkbox"] {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.panel label[data-field-type="checkbox"] input {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+}
+.caption {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.details {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+.details div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  gap: 12px;
+}
+.details dt {
+  color: var(--muted);
+}
+.details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}

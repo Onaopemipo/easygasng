@@ -50,7 +50,8 @@ import {
 } from "../../../packages/business-rules/src/driver-presentation";
 import { useTheme } from "./theme-provider";
 import { ActionForm } from "./workflows";
-import { api, Loading, Notice } from "./ui";
+import { api, Loading, Notice, Modal } from "./ui";
+import DriverTripControls from "./driver-trip-controls";
 import styles from "./driver-experience.module.css";
 
 const tabs = ["Home", "Orders", "History", "Profile"] as const;
@@ -72,6 +73,9 @@ export default function DriverExperience({ userId }: { userId: string }) {
   const [busy, setBusy] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [supportOpen, setSupportOpen] = useState(false);
+  const [tripOpen, setTripOpen] = useState(false);
+  const [tripBusy, setTripBusy] = useState(false);
+  const tripWriting = useRef(false);
   const listScroll = useRef(0);
   const historyScroll = useRef(0);
   const [historySearch, setHistorySearch] = useState("");
@@ -134,6 +138,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
   }, []);
 
   useEffect(() => {
+    setTripOpen(false);
     setData(null);
     setHistory(null);
     setRecord(null);
@@ -323,7 +328,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
         <button
           type="button"
           className="button secondary"
-          disabled={busy}
+          disabled={busy || tripBusy}
           onClick={() => {
             setError("");
             void refresh(!ready);
@@ -624,10 +629,18 @@ export default function DriverExperience({ userId }: { userId: string }) {
                   <Navigation size={28} aria-hidden="true" />
                   <p>No active trip</p>
                   <small>
-                    Trip consent and custody are managed in the driver app.
+                    Start a trip here before dispatch assigns deliveries.
                   </small>
                 </div>
               )}
+              <button
+                type="button"
+                className="button"
+                disabled={busy || stale}
+                onClick={() => setTripOpen(true)}
+              >
+                {snapshot.trip ? "Manage trip" : "Start trip"}
+              </button>
             </section>
             <section className={styles.card}>
               <h2>
@@ -1009,9 +1022,17 @@ export default function DriverExperience({ userId }: { userId: string }) {
               <p>No confirmed trip vehicle.</p>
             )}
             <p>
-              Trip consent, device permissions and encrypted delivery sync are
-              managed in the driver app.
+              Start and end duty trips here. Device permissions and encrypted
+              GPS recording are managed separately in the driver app.
             </p>
+            <button
+              type="button"
+              className="button secondary"
+              disabled={busy || stale}
+              onClick={() => setTripOpen(true)}
+            >
+              Manage trip
+            </button>
           </section>
           <section className={styles.card}>
             <h2>Account security</h2>
@@ -1086,6 +1107,24 @@ export default function DriverExperience({ userId }: { userId: string }) {
             </details>
           </section>
         </div>
+      )}
+      {tripOpen && (
+        <Modal
+          title="Manage duty trip"
+          onClose={() => {
+            if (!tripWriting.current) setTripOpen(false);
+          }}
+        >
+          <DriverTripControls
+            key={userId}
+            disabled={stale || busy}
+            onDone={() => refresh()}
+            onBusy={(value) => {
+              tripWriting.current = value;
+              setTripBusy(value);
+            }}
+          />
+        </Modal>
       )}
     </section>
   );

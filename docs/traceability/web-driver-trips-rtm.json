@@ -1,0 +1,201 @@
+{
+  "phase": "Driver web trip controls — 18 November 2026",
+  "baseline": "6dacd21",
+  "releaseDecision": "PENDING implementation and executed acceptance; commercial production NO-GO preserved.",
+  "requirements": [
+    {
+      "id": "DWT-01",
+      "requirement": "Start and manage own duty trip from driver web Home and Profile",
+      "priority": "P1",
+      "scope": "Driver web trip start, current vehicle/odometer, consent revocation and guarded end; Home/Profile access. Existing native and broader scope retained.",
+      "uiReference": "Driver Current trip card and Profile Vehicle and location",
+      "route": "/admin/deliveries; /api/driver.location; /api/trip.start; /api/trip.end; /api/trip.location.revoke",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-trip-controls.tsx",
+        "apps/web/components/driver-trip-controls.module.css"
+      ],
+      "dataSource": "Authenticated own driver.location/current trip and same-branch active suitable vehicles; canonical driver_trips, driver_vehicles, operation receipts and custody records",
+      "securityControl": "Existing driver-only own-trip and branch checks, active LPG-suitable vehicle, odometer bounds, transaction/idempotency and unresolved custody guards; no permission expansion or browser GPS inferred",
+      "testFiles": [
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "scripts/qa-web-driver-trips.mjs"
+      ],
+      "testIds": [
+        "DWT-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/web-driver-trips/README.md",
+        "docs/web-driver-trips/evidence/focused.txt",
+        "docs/web-driver-trips/evidence/browser.txt"
+      ],
+      "acceptanceGate": "DWT-01-G",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
+      "testResult": "PASS — 64 focused checks and one actual owner/driver Chrome scenario against disposable PostgreSQL.",
+      "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
+    },
+    {
+      "id": "DWT-02",
+      "requirement": "Preserve canonical trip ownership, branch, suitability, replay and custody controls",
+      "priority": "P0",
+      "scope": "Driver web trip start, current vehicle/odometer, consent revocation and guarded end; Home/Profile access. Existing native and broader scope retained.",
+      "uiReference": "Driver Current trip card and Profile Vehicle and location",
+      "route": "/admin/deliveries; /api/driver.location; /api/trip.start; /api/trip.end; /api/trip.location.revoke",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-trip-controls.tsx",
+        "apps/web/components/driver-trip-controls.module.css"
+      ],
+      "dataSource": "Authenticated own driver.location/current trip and same-branch active suitable vehicles; canonical driver_trips, driver_vehicles, operation receipts and custody records",
+      "securityControl": "Existing driver-only own-trip and branch checks, active LPG-suitable vehicle, odometer bounds, transaction/idempotency and unresolved custody guards; no permission expansion or browser GPS inferred",
+      "testFiles": [
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "scripts/qa-web-driver-trips.mjs"
+      ],
+      "testIds": [
+        "DWT-SEC"
+      ],
+      "negativeTests": [
+        "DWT-SEC"
+      ],
+      "evidence": [
+        "docs/web-driver-trips/README.md",
+        "docs/web-driver-trips/evidence/focused.txt",
+        "docs/web-driver-trips/evidence/browser.txt"
+      ],
+      "acceptanceGate": "DWT-02-G",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
+      "testResult": "PASS — 64 focused checks and one actual owner/driver Chrome scenario against disposable PostgreSQL.",
+      "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
+    },
+    {
+      "id": "DWT-03",
+      "requirement": "Responsive, explicit consent and authoritative error/reconnect states",
+      "priority": "P1",
+      "scope": "Driver web trip start, current vehicle/odometer, consent revocation and guarded end; Home/Profile access. Existing native and broader scope retained.",
+      "uiReference": "Driver Current trip card and Profile Vehicle and location",
+      "route": "/admin/deliveries; /api/driver.location; /api/trip.start; /api/trip.end; /api/trip.location.revoke",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-trip-controls.tsx",
+        "apps/web/components/driver-trip-controls.module.css"
+      ],
+      "dataSource": "Authenticated own driver.location/current trip and same-branch active suitable vehicles; canonical driver_trips, driver_vehicles, operation receipts and custody records",
+      "securityControl": "Existing driver-only own-trip and branch checks, active LPG-suitable vehicle, odometer bounds, transaction/idempotency and unresolved custody guards; no permission expansion or browser GPS inferred",
+      "testFiles": [
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "scripts/qa-web-driver-trips.mjs"
+      ],
+      "testIds": [
+        "DWT-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/web-driver-trips/README.md",
+        "docs/web-driver-trips/evidence/focused.txt",
+        "docs/web-driver-trips/evidence/browser.txt"
+      ],
+      "acceptanceGate": "DWT-03-G",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
+      "testResult": "PASS — 64 focused checks and one actual owner/driver Chrome scenario against disposable PostgreSQL.",
+      "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
+    },
+    {
+      "id": "DWT-04",
+      "requirement": "Release to the synthetic demo with fulfilment enabled and Paystack sandbox",
+      "priority": "P1",
+      "scope": "Driver web trip start, current vehicle/odometer, consent revocation and guarded end; Home/Profile access. Existing native and broader scope retained.",
+      "uiReference": "Driver Current trip card and Profile Vehicle and location",
+      "route": "/admin/deliveries; /api/driver.location; /api/trip.start; /api/trip.end; /api/trip.location.revoke",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-trip-controls.tsx",
+        "apps/web/components/driver-trip-controls.module.css"
+      ],
+      "dataSource": "Authenticated own driver.location/current trip and same-branch active suitable vehicles; canonical driver_trips, driver_vehicles, operation receipts and custody records",
+      "securityControl": "Existing driver-only own-trip and branch checks, active LPG-suitable vehicle, odometer bounds, transaction/idempotency and unresolved custody guards; no permission expansion or browser GPS inferred",
+      "testFiles": [
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "scripts/qa-web-driver-trips.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/web-driver-trips/README.md",
+        "docs/web-driver-trips/evidence/focused.txt",
+        "docs/web-driver-trips/evidence/browser.txt"
+      ],
+      "acceptanceGate": "DWT-04-G",
+      "status": "PARTIAL",
+      "reason": "Local implementation/browser/build/types acceptance passed; push, fresh CI and demo rollout pending.",
+      "testResult": "PENDING",
+      "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DWT-01-G",
+      "requirement": "Start and manage own duty trip from driver web Home and Profile",
+      "status": "PASS",
+      "reason": "Bounded local API and browser acceptance passed; demo release tracked separately."
+    },
+    {
+      "id": "DWT-02-G",
+      "requirement": "Preserve canonical trip ownership, branch, suitability, replay and custody controls",
+      "status": "PASS",
+      "reason": "Bounded local API and browser acceptance passed; demo release tracked separately."
+    },
+    {
+      "id": "DWT-03-G",
+      "requirement": "Responsive, explicit consent and authoritative error/reconnect states",
+      "status": "PASS",
+      "reason": "Bounded local API and browser acceptance passed; demo release tracked separately."
+    },
+    {
+      "id": "DWT-04-G",
+      "requirement": "Release to the synthetic demo with fulfilment enabled and Paystack sandbox",
+      "status": "PENDING",
+      "reason": "Executed acceptance pending."
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-18",
+      "change": "User authorises trip start/management in the existing driver web dashboard, using existing canonical APIs. No request to start a hosted trip on behalf of a driver or advance the named order; those remain unchanged by verification."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Reuse canonical APIs without backend/schema or permission changes. 64 focused checks and actual disposable PostgreSQL browser start/end/revoke, stale recovery and synthetic assignment/acknowledgement/pickup pass. First browser probe correctly hit acknowledgement guard; final scenario acknowledges before pickup. Release pending."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Final browser acceptance also holds the mutation response and verifies Escape cannot close an in-flight update. Web production build and TypeScript passed."
+    }
+  ],
+  "coverage": {
+    "implemented": 3,
+    "verified": 3,
+    "total": 4,
+    "criticalVerified": 1,
+    "criticalTotal": 1,
+    "gatesPassed": 3,
+    "gatesTotal": 4,
+    "scope": "Bounded driver web trip controls; original production/physical/provider/native requirements retained."
+  }
+}
