@@ -1,3 +1,18 @@
+import {
+  DriverPanel,
+  DriverHeading,
+  DriverMetric,
+  DriverBadge,
+  DriverSettingRow,
+  DriverSignal,
+} from "./DriverSaaS";
+import {
+  driverAssignmentSummary,
+  driverContactLabel,
+  driverInitials,
+  driverNextAction,
+  driverNextAssignment,
+} from "../../packages/business-rules/src/driver-presentation";
 import CustomerNotifications from "./CustomerNotifications";
 import { EasyGasAlert } from "./AppAlert";
 import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
@@ -14,7 +29,6 @@ import {
   Linking,
   AppState,
   BackHandler,
-  useWindowDimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -44,8 +58,14 @@ import { loadQueue } from "./offline";
 import { deliveryFailureReasons } from "../../packages/business-rules/src/order-tracking";
 import { stopDriverLocation } from "./driver-location";
 import {
-  assignmentLabel, driverDate, driverHistoryAction, driverNavigation,
-  driverOrderAddress, driverOutcomes, type DriverHistory, type DriverHistoryRow,
+  assignmentLabel,
+  driverDate,
+  driverHistoryAction,
+  driverNavigation,
+  driverOrderAddress,
+  driverOutcomes,
+  type DriverHistory,
+  type DriverHistoryRow,
 } from "../../packages/business-rules/src/driver-experience";
 
 const tabs = [
@@ -68,17 +88,31 @@ export default function DriverWorkspace({
   logout: () => Promise<void>;
 }) {
   const { colors, preference, setPreference } = useTheme();
-  const headerGreen = "#07592e";
-  const { width, fontScale } = useWindowDimensions();
-  const [backgroundPermission, setBackgroundPermission] = useState("Not checked");
+  const headerGreen = "#004c30";
+  const [backgroundPermission, setBackgroundPermission] =
+    useState("Not checked");
   const [history, setHistory] = useState<DriverHistory | null>(null);
   const [historyRow, setHistoryRow] = useState<DriverHistoryRow | null>(null);
   const [historyError, setHistoryError] = useState("");
-  const [historyFilters, setHistoryFilters] = useState({ from: "", to: "", outcome: "", page: 1 });
-  const [historyDraft, setHistoryDraft] = useState({ from: "", to: "", outcome: "" });
+  const [historyFilters, setHistoryFilters] = useState({
+    from: "",
+    to: "",
+    outcome: "",
+    page: 1,
+  });
+  const [historyQuery, setHistoryQuery] = useState("");
+  const scrollRef = useRef<React.ComponentRef<typeof ScrollView>>(null);
+  const scrollPositions = useRef<Record<string, number>>({});
+  const [historyDraft, setHistoryDraft] = useState({
+    from: "",
+    to: "",
+    outcome: "",
+  });
   const [showFilters, setShowFilters] = useState(false);
   const [historyRefresh, setHistoryRefresh] = useState(0);
-  const [assignmentFilter, setAssignmentFilter] = useState<"all" | "progress">("all");
+  const [assignmentFilter, setAssignmentFilter] = useState<"all" | "progress">(
+    "all",
+  );
   const [lastSync, setLastSync] = useState<string | null>(null);
   const [revoked, setRevoked] = useState(false);
   const [page, setPage] = useState("home"),
@@ -94,8 +128,8 @@ export default function DriverWorkspace({
     [handover, setHandover] = useState(false),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [queue, setQueue] = useState(0),
-    [legacy, setLegacy] = useState(0),
+    [queue, setQueue] = useState<number | null>(null),
+    [legacy, setLegacy] = useState<number | null>(null),
     [connected, setConnected] = useState(false),
     [lastContact, setLastContact] = useState<string | null>(null),
     [permission, setPermission] = useState("Not checked"),
@@ -108,30 +142,57 @@ export default function DriverWorkspace({
     actionBusy = useRef(false),
     refreshSequence = useRef(0),
     keys = useRef(new Map<string, string>());
-  const order = orders.find((o) => o.id === selected) ?? (phase === "completed" ? completed : null);
+  const order =
+    orders.find((o) => o.id === selected) ??
+    (phase === "completed" ? completed : null);
   const response = snapshot?.responses?.find(
     (r: any) => r.order_id === selected,
   )?.decision;
   const activeOrders = orders;
-  const connectionError = "Connection or session unavailable. Displayed records may be stale. Reconnect to verify assignments.";
+  const nextAssignment = driverNextAssignment(
+    activeOrders,
+    snapshot?.responses ?? [],
+  );
+  const scrollKey = selected
+    ? `order:${selected}:${phase}`
+    : historyRow
+      ? `history:${historyRow.id}`
+      : page;
+  useEffect(() => {
+    const frame = requestAnimationFrame(() =>
+      scrollRef.current?.scrollTo({
+        y: scrollPositions.current[scrollKey] ?? 0,
+        animated: false,
+      }),
+    );
+    return () => cancelAnimationFrame(frame);
+  }, [scrollKey]);
+  const connectionError =
+    "Connection or session unavailable. Displayed records may be stale. Reconnect to verify assignments.";
   async function refresh() {
     const sequence = ++refreshSequence.current;
-    const [list, next, inbox, pending, old] = await Promise.all([
-      api("orders?active=1"),
-      api("driver.snapshot"),
-      api("notifications.list").catch(() => null),
-      fieldQueue(user.id, true).catch(() => null),
-      loadQueue(user.id).catch(() => null),
-      api("driver.heartbeat", {}).catch(() => null),
-    ]);
+    const [list, next, inbox, pending, old] = await driverReadDeadline(
+      Promise.all([
+        api("orders?active=1"),
+        api("driver.snapshot"),
+        api("notifications.list").catch(() => null),
+        fieldQueue(user.id, true).catch(() => null),
+        loadQueue(user.id).catch(() => null),
+        api("driver.heartbeat", {}).catch(() => null),
+      ]),
+    );
     if (!alive.current || sequence !== refreshSequence.current) return;
     setOrders(list);
     setSnapshot(next);
     if (inbox) setUnread(inbox.unread);
-    if (pending) setQueue(pending.filter((e) => e.tripId.startsWith("order:")).length);
-    if (old) setLegacy(old.length);
+    setQueue(
+      pending
+        ? pending.filter((e) => e.tripId.startsWith("order:")).length
+        : null,
+    );
+    setLegacy(old ? old.length : null);
     setConnected(true);
-    setError((message) => message === connectionError ? "" : message);
+    setError((message) => (message === connectionError ? "" : message));
     setRevoked(false);
     setLastContact(new Date().toISOString());
   }
@@ -185,7 +246,8 @@ export default function DriverWorkspace({
     api("driver.restrict", {})
       .then(poll)
       .catch((e) => {
-        if (alive.current && [401, 403].includes(e.status)) clearRevokedAccess();
+        if (alive.current && [401, 403].includes(e.status))
+          clearRevokedAccess();
         if (alive.current) setError(e.message);
       });
     void readPermission();
@@ -218,7 +280,9 @@ export default function DriverWorkspace({
         )
           throw new Error("Invalid driver delivery link.");
         await api("driver.restrict", {});
-        const owned = await api("orders?active=1&id=" + encodeURIComponent(orderId));
+        const owned = await api(
+          "orders?active=1&id=" + encodeURIComponent(orderId),
+        );
         if (!owned.length)
           throw new Error(
             "This delivery is no longer assigned to your account.",
@@ -247,14 +311,18 @@ export default function DriverWorkspace({
     let current = true;
     setHistory(null);
     setHistoryError("");
-    api(driverHistoryAction(historyFilters)).then((data) => {
-      if (current) setHistory(data);
-    }).catch((e: any) => {
-      if (!current) return;
-      if ([401, 403].includes(e.status)) clearRevokedAccess();
-      setHistoryError(e.message);
-    });
-    return () => { current = false; };
+    driverReadDeadline(api(driverHistoryAction(historyFilters)))
+      .then((data) => {
+        if (current) setHistory(data);
+      })
+      .catch((e: any) => {
+        if (!current) return;
+        if ([401, 403].includes(e.status)) clearRevokedAccess();
+        setHistoryError(e.message);
+      });
+    return () => {
+      current = false;
+    };
   }, [page, connected, revoked, historyFilters, historyRefresh, user.id]);
 
   function back() {
@@ -264,7 +332,8 @@ export default function DriverWorkspace({
       setCompleted(null);
     } else if (selected) setSelected(null);
     else if (showFilters) setShowFilters(false);
-    else if (["security", "personal", "trip"].includes(page)) setPage("profile");
+    else if (["security", "personal", "trip"].includes(page))
+      setPage("profile");
     else if (page !== "home") setPage("home");
     else return false;
     return true;
@@ -303,7 +372,9 @@ export default function DriverWorkspace({
         await refresh();
       } catch {
         setConnected(false);
-        setError("The server accepted the update. Reconnect to confirm the latest delivery status.");
+        setError(
+          "The server accepted the update. Reconnect to confirm the latest delivery status.",
+        );
       }
     } catch (e: any) {
       if (e instanceof TypeError) {
@@ -320,7 +391,7 @@ export default function DriverWorkspace({
             },
             operationKey,
           );
-          setQueue((q) => q + 1);
+          setQueue((q) => (q === null ? null : q + 1));
           setError(
             "Pending Sync: encrypted intent retained. This has not changed the server order or confirmed delivery.",
           );
@@ -354,18 +425,36 @@ export default function DriverWorkspace({
       setBusy(false);
     }
   }
-  const heading = historyRow ? "Delivery record" : selected
-    ? phase === "proof" ? "Proof of delivery"
-      : phase === "status" ? "Update delivery status"
-      : phase === "completed" ? "Delivery completed"
-      : order?.reference ?? "Assigned delivery"
-    : ({ home: "", orders: "Orders", history: "History", profile: "Profile",
-        notices: "Notifications", security: "Security", personal: "Personal information",
-        support: "Help & support", trip: "Trip & custody" } as Record<string, string>)[page];
+  const heading = historyRow
+    ? "Delivery record"
+    : selected
+      ? phase === "proof"
+        ? "Proof of delivery"
+        : phase === "status"
+          ? "Update delivery status"
+          : phase === "completed"
+            ? "Delivery completed"
+            : (order?.reference ?? "Assigned delivery")
+      : (
+          {
+            home: "",
+            orders: "Orders",
+            history: "History",
+            profile: "Profile",
+            notices: "Notifications",
+            security: "Security",
+            personal: "Personal information",
+            support: "Help & support",
+            trip: "Trip & custody",
+          } as Record<string, string>
+        )[page];
 
   function navigate(destination?: { latitude: unknown; longitude: unknown }) {
     const url = connected && driverNavigation(destination);
-    if (url) Linking.openURL(url).catch(() => setError("Navigation could not be opened."));
+    if (url)
+      Linking.openURL(url).catch(() =>
+        setError("Navigation could not be opened."),
+      );
   }
 
   function openOrders() {
@@ -374,84 +463,332 @@ export default function DriverWorkspace({
   }
 
   function orderList() {
-    const filtered = activeOrders.filter((o) =>
-      (assignmentFilter === "all" || assignmentLabel(o.status, o.attempt?.state,
-        snapshot.responses.find((r: any) => r.order_id === o.id)?.decision) !== "Assigned") &&
-      [o.reference, o.address?.street, o.customer_name].join(" ").toLowerCase().includes(query.trim().toLowerCase()),
+    const filtered = activeOrders.filter(
+      (o) =>
+        (assignmentFilter === "all" ||
+          assignmentLabel(
+            o.status,
+            o.attempt?.state,
+            snapshot.responses.find((r: any) => r.order_id === o.id)?.decision,
+          ) !== "Assigned") &&
+        [o.reference, o.address?.street, o.customer_name]
+          .join(" ")
+          .toLowerCase()
+          .includes(query.trim().toLowerCase()),
     );
     return (
       <>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
-          <Button label={`${assignmentFilter === "all" ? "✓ " : ""}Assigned`} onPress={openOrders} secondary />
-          <Button label={`${assignmentFilter === "progress" ? "✓ " : ""}In progress`} onPress={() => setAssignmentFilter("progress")} secondary />
+          <Button
+            label={`${assignmentFilter === "all" ? "✓ " : ""}Assigned`}
+            onPress={openOrders}
+            secondary
+          />
+          <Button
+            label={`${assignmentFilter === "progress" ? "✓ " : ""}In progress`}
+            onPress={() => setAssignmentFilter("progress")}
+            secondary
+          />
+          <Button
+            label="History"
+            onPress={() => setPage("history")}
+            secondary
+          />
         </View>
         <TextInput
-          accessibilityLabel="Search assigned orders" placeholder="Search assigned orders"
-          value={query} onChangeText={(value) => { setQuery(value); setLimit(20); }}
-          style={{ backgroundColor: colors.input, color: colors.text, padding: 13, minHeight: 48,
-            borderWidth: 1, borderColor: colors.border, borderRadius: 14 }}
+          accessibilityLabel="Search assigned orders"
+          placeholder="Search assigned orders"
+          value={query}
+          onChangeText={(value) => {
+            setQuery(value);
+            setLimit(20);
+          }}
+          style={{
+            backgroundColor: colors.input,
+            color: colors.text,
+            padding: 13,
+            minHeight: 48,
+            borderWidth: 1,
+            borderColor: colors.border,
+            borderRadius: 14,
+          }}
         />
-        {!filtered.length && <Card><Copy>{connected ? "No matching assignments." : "Reconnect to check assigned orders."}</Copy></Card>}
-        {filtered.slice(0, limit).map((o) => (
-          <Card key={o.id}>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", gap: 8 }}>
-              <DriverLabel icon="cube-outline" label={o.reference} />
-              <Copy>{assignmentLabel(o.status, o.attempt?.state,
-                snapshot.responses.find((r: any) => r.order_id === o.id)?.decision)}</Copy>
-            </View>
-            {!!o.customer_name && <Copy>{o.customer_name}</Copy>}
-            {!!driverOrderAddress(o.address) && <Copy>{driverOrderAddress(o.address)}</Copy>}
-            {(o.items ?? []).map((item: any, index: number) => <Copy key={item.id ?? index}>{item.quantity} × {item.name}</Copy>)}
-            {(o.gas_lines ?? []).map((line: any, index: number) => <Copy key={line.id ?? index}>{Number(line.grams) / 1000} kg gas</Copy>)}
-            <Copy>{[o.delivery_date, o.delivery_window].filter(Boolean).join(" · ")}</Copy>
-            {!!o.last_update && <Copy>Updated {driverDate(o.last_update)} WAT</Copy>}
-            {connected && driverNavigation(o.destination) && (
-              <Button label="Navigate" secondary onPress={() => navigate(o.destination)} />
-            )}
-            <Button label="Open assignment" onPress={() => open(o)} />
+        {!filtered.length && (
+          <Card>
+            <Copy>
+              {connected
+                ? "No matching assignments."
+                : "Reconnect to check assigned orders."}
+            </Copy>
           </Card>
+        )}
+        {filtered.slice(0, limit).map((o) => (
+          <DriverPanel key={o.id}>
+            <View
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                gap: 10,
+                alignItems: "center",
+              }}
+            >
+              <DriverLabel icon="cube-outline" label={o.reference} />
+              <DriverBadge
+                label={assignmentLabel(
+                  o.status,
+                  o.attempt?.state,
+                  snapshot.responses.find((r: any) => r.order_id === o.id)
+                    ?.decision,
+                )}
+              />
+            </View>
+            {!!o.customer_name && (
+              <DriverSettingRow title={o.customer_name} icon="person-outline" />
+            )}
+            {!!driverOrderAddress(o.address) && (
+              <View style={{ flexDirection: "row", gap: 8 }}>
+                <Ionicons
+                  name="location-outline"
+                  size={21}
+                  color={colors.primary}
+                  accessible={false}
+                />
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Copy>{driverOrderAddress(o.address)}</Copy>
+                </View>
+              </View>
+            )}
+            {driverAssignmentSummary(o).map((line, index) => (
+              <Copy key={index}>{line}</Copy>
+            ))}
+            <View
+              style={{
+                borderTopWidth: 1,
+                borderColor: colors.border,
+                paddingTop: 12,
+                gap: 10,
+              }}
+            >
+              <Copy>
+                {[o.delivery_date, o.delivery_window]
+                  .filter(Boolean)
+                  .join(" · ") || "Delivery window unavailable"}
+              </Copy>
+              {connected && driverNavigation(o.destination) && (
+                <Button
+                  label="Navigate"
+                  secondary
+                  onPress={() => navigate(o.destination)}
+                />
+              )}
+              <Button
+                label={driverNextAction(
+                  o,
+                  snapshot.responses.find((r: any) => r.order_id === o.id)
+                    ?.decision,
+                )}
+                onPress={() => open(o)}
+              />
+            </View>
+          </DriverPanel>
         ))}
-        {filtered.length > limit && <Button label="Show more assignments" secondary onPress={() => setLimit((n) => n + 20)} />}
-        {activeOrders.length === 100 && <Copy>Showing up to 100 current assignments. Contact dispatch for older assigned records.</Copy>}
+        {filtered.length > limit && (
+          <Button
+            label="Show more assignments"
+            secondary
+            onPress={() => setLimit((n) => n + 20)}
+          />
+        )}
+        {activeOrders.length === 100 && (
+          <Copy>
+            Showing up to 100 current assignments. Contact dispatch for older
+            assigned records.
+          </Copy>
+        )}
       </>
     );
   }
 
   return (
-    <SafeAreaView edges={["left", "right", "bottom"]} style={{ flex: 1, backgroundColor: colors.background }}>
+    <SafeAreaView
+      edges={["left", "right", "bottom"]}
+      style={{ flex: 1, backgroundColor: colors.background }}
+    >
       <StatusBar barStyle="light-content" />
-      <SafeAreaView edges={["top"]} style={{ backgroundColor: headerGreen, paddingHorizontal: 18, paddingBottom: 14 }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8, minHeight: 54 }}>
+      <SafeAreaView
+        edges={["top"]}
+        style={{
+          backgroundColor: headerGreen,
+          paddingHorizontal: 18,
+          paddingBottom: 30,
+          overflow: "hidden",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 8,
+            minHeight: 54,
+          }}
+        >
           {(selected || historyRow || !tabs.some((t) => t[1] === page)) && (
-            <Pressable accessibilityRole="button" accessibilityLabel="Back" onPress={back}
-              style={{ width: 48, minHeight: 48, justifyContent: "center" }}>
-              <Ionicons accessible={false} name="chevron-back" size={24} color="#fff" />
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Back"
+              onPress={back}
+              style={{ width: 48, minHeight: 48, justifyContent: "center" }}
+            >
+              <Ionicons
+                accessible={false}
+                name="chevron-back"
+                size={24}
+                color="#fff"
+              />
             </Pressable>
           )}
-          <View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignItems: "center", gap: 8 }}>
-            <View style={{ backgroundColor: "#fff", borderRadius: 10, paddingHorizontal: 6 }}>
-              <Image accessibilityLabel="EasyGas" source={require("./assets/easygas-logo-hd.png")}
-                resizeMode="contain" style={{ width: 92, height: 36 }} />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "#fff",
+                borderRadius: 10,
+                paddingHorizontal: 6,
+              }}
+            >
+              <Image
+                accessibilityLabel="EasyGas"
+                source={require("./assets/easygas-logo-hd.png")}
+                resizeMode="contain"
+                style={{ width: 92, height: 36 }}
+              />
             </View>
-            <Text preserveColor style={{ color: "#fff", fontWeight: "700" }}>Driver</Text>
+            <Text preserveColor style={{ color: "#fff", fontWeight: "700" }}>
+              Driver
+            </Text>
           </View>
-          {!!snapshot && <Pressable accessibilityRole="button" accessibilityLabel={unread == null ? "Notifications" : `Notifications, ${unread} unread`}
-            style={{ minWidth: 48, minHeight: 48, alignItems: "center", justifyContent: "center" }}
-            onPress={() => { setSelected(null); setHistoryRow(null); setPage("notices"); }}>
-            <Ionicons name="notifications-outline" size={24} color="#fff" accessible={false} />
-            {connected && !!unread && <Text preserveColor style={{ color: "#fff", fontSize: 11 }}>{unread > 99 ? "99+" : unread}</Text>}
-          </Pressable>}
-          {!!snapshot && <Pressable accessibilityRole="button" accessibilityLabel="Help and support"
-            style={{ width: 48, height: 48, alignItems: "center", justifyContent: "center" }}
-            onPress={() => { setSelected(null); setHistoryRow(null); setPage("support"); }}>
-            <Ionicons name="help-circle-outline" size={26} color="#fff" accessible={false} />
-          </Pressable>}
+          {!!snapshot && (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={
+                unread == null
+                  ? "Notifications"
+                  : `Notifications, ${unread} unread`
+              }
+              style={{
+                minWidth: 48,
+                minHeight: 48,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onPress={() => {
+                setSelected(null);
+                setHistoryRow(null);
+                setPage("notices");
+              }}
+            >
+              <Ionicons
+                name="notifications-outline"
+                size={24}
+                color="#fff"
+                accessible={false}
+              />
+              {connected && !!unread && (
+                <Text preserveColor style={{ color: "#fff", fontSize: 11 }}>
+                  {unread > 99 ? "99+" : unread}
+                </Text>
+              )}
+            </Pressable>
+          )}
+          {!!snapshot && (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Help and support"
+              style={{
+                width: 48,
+                height: 48,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onPress={() => {
+                setSelected(null);
+                setHistoryRow(null);
+                setPage("support");
+              }}
+            >
+              <Ionicons
+                name="help-circle-outline"
+                size={26}
+                color="#fff"
+                accessible={false}
+              />
+            </Pressable>
+          )}
         </View>
-        {!!heading && <Text accessibilityRole="header" preserveColor style={{ color: "#fff", fontWeight: "800", fontSize: 27 }}>{heading}</Text>}
-        {!selected && !historyRow && page === "orders" && <Text preserveColor style={{ color: "#fff" }}>Manage your assigned deliveries</Text>}
-        {!historyRow && page === "history" && <Text preserveColor style={{ color: "#fff" }}>Review closed delivery attempts</Text>}
+        {!!heading && (
+          <Text
+            accessibilityRole="header"
+            preserveColor
+            style={{ color: "#fff", fontWeight: "800", fontSize: 27 }}
+          >
+            {heading}
+          </Text>
+        )}
+        {!selected && !historyRow && page === "orders" && (
+          <Text preserveColor style={{ color: "#fff" }}>
+            Manage your assigned deliveries
+          </Text>
+        )}
+        {!historyRow && page === "history" && (
+          <Text preserveColor style={{ color: "#fff" }}>
+            Review closed delivery attempts
+          </Text>
+        )}
+        <View
+          accessible={false}
+          pointerEvents="none"
+          style={{
+            position: "absolute",
+            bottom: -14,
+            left: -30,
+            right: -30,
+            height: 35,
+            backgroundColor: "#168d3e",
+            borderTopLeftRadius: 180,
+            borderTopRightRadius: 110,
+            transform: [{ rotate: "-2deg" }],
+          }}
+        />
+        <View
+          accessible={false}
+          pointerEvents="none"
+          style={{
+            position: "absolute",
+            bottom: -23,
+            left: -20,
+            right: -20,
+            height: 36,
+            backgroundColor: colors.background,
+            borderTopLeftRadius: 130,
+            borderTopRightRadius: 180,
+          }}
+        />
       </SafeAreaView>
       <ScrollView
+        ref={scrollRef}
+        onScroll={(event) => {
+          scrollPositions.current[scrollKey] =
+            event.nativeEvent.contentOffset.y;
+        }}
+        scrollEventThrottle={32}
         automaticallyAdjustKeyboardInsets
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
@@ -463,7 +800,13 @@ export default function DriverWorkspace({
           alignSelf: "center",
         }}
       >
-        {!!snapshot && !revoked && <DriverTripTracking api={api} userId={user.id} visible={page === "trip" && !selected} />}
+        {!!snapshot && !revoked && (
+          <DriverTripTracking
+            api={api}
+            userId={user.id}
+            visible={page === "trip" && !selected}
+          />
+        )}
         {!!snapshot && page === "trip" && !selected && (
           <>
             <BulkLPG api={api} />
@@ -483,8 +826,18 @@ export default function DriverWorkspace({
           />
         )}
         {revoked ? (
-          <Card><Title>Driver access unavailable</Title><Copy>Sign in again or contact dispatch to confirm your access.</Copy>
-            <Button label="Sign out" secondary onPress={() => { void logout().catch(() => setError("Sign-out needs review.")); }} />
+          <Card>
+            <Title>Driver access unavailable</Title>
+            <Copy>
+              Sign in again or contact dispatch to confirm your access.
+            </Copy>
+            <Button
+              label="Sign out"
+              secondary
+              onPress={() => {
+                void logout().catch(() => setError("Sign-out needs review."));
+              }}
+            />
           </Card>
         ) : !snapshot ? (
           <Card>
@@ -499,9 +852,19 @@ export default function DriverWorkspace({
         ) : historyRow ? (
           <Card>
             <Title>{historyRow.reference}</Title>
-            <Copy>{driverOutcomes[historyRow.outcome]} · {driverDate(historyRow.closed_at)} WAT</Copy>
-            {connected && historyRow.has_proof && <DriverPhotoHistory api={api} orderId={historyRow.order_id}
-              attemptId={historyRow.id} origin={origin} token={token} />}
+            <Copy>
+              {driverOutcomes[historyRow.outcome]} ·{" "}
+              {driverDate(historyRow.closed_at)} WAT
+            </Copy>
+            {connected && historyRow.has_proof && (
+              <DriverPhotoHistory
+                api={api}
+                orderId={historyRow.order_id}
+                attemptId={historyRow.id}
+                origin={origin}
+                token={token}
+              />
+            )}
           </Card>
         ) : selected && !order ? (
           <Card>
@@ -531,7 +894,7 @@ export default function DriverWorkspace({
                 <Copy>
                   {completed.reference} was confirmed delivered by the server at{" "}
                   {completed.delivered_at
-                    ? new Date(completed.delivered_at).toLocaleString()
+                    ? driverDate(completed.delivered_at) + " WAT"
                     : "the recorded delivery time"}
                   .
                 </Copy>
@@ -595,13 +958,16 @@ export default function DriverWorkspace({
                         >
                           {e.status.replaceAll("_", " ")}
                         </Text>
-                        <Copy>{new Date(e.created_at).toLocaleString()}</Copy>
+                        <Copy>{driverDate(e.created_at) + " WAT"}</Copy>
                       </View>
                     ))}
                     {activeOrders.some((o) => o.id === order.id) && (
                       <>
                         {connected && driverNavigation(order.destination) && (
-                          <Button label="Navigate to confirmed destination" onPress={() => navigate(order.destination)} />
+                          <Button
+                            label="Navigate to confirmed destination"
+                            onPress={() => navigate(order.destination)}
+                          />
                         )}
                         {/^\+?[0-9]{10,15}$/.test(
                           order.address?.phone ?? "",
@@ -629,7 +995,9 @@ export default function DriverWorkspace({
                     )}
                     {order.status === "assigned" && (
                       <>
-                        <FieldCaption required={true}>Acknowledgement or decline reason</FieldCaption>
+                        <FieldCaption required={true}>
+                          Acknowledgement or decline reason
+                        </FieldCaption>
                         <TextInput
                           accessibilityLabel="Acknowledgement or decline reason, required"
                           placeholder="Acknowledgement / decline reason"
@@ -642,7 +1010,12 @@ export default function DriverWorkspace({
                             borderRadius: 12,
                           }}
                         />
-                        {!response && !order.assignment_response_open && <Copy>Ask dispatch to renew this assignment before responding.</Copy>}
+                        {!response && !order.assignment_response_open && (
+                          <Copy>
+                            Ask dispatch to renew this assignment before
+                            responding.
+                          </Copy>
+                        )}
                         {!response && order.assignment_response_open && (
                           <>
                             <Button
@@ -765,7 +1138,9 @@ export default function DriverWorkspace({
                           onPress={() => setReason(r)}
                         />
                       ))}
-                      <FieldCaption required={true}>Failure evidence and dispatch notes</FieldCaption>
+                      <FieldCaption required={true}>
+                        Failure evidence and dispatch notes
+                      </FieldCaption>
                       <TextInput
                         accessibilityLabel="Failure evidence and dispatch notes, required"
                         placeholder="Observed problem and next step"
@@ -798,7 +1173,9 @@ export default function DriverWorkspace({
                       userId={user.id}
                       order={order}
                       galleryApproved={snapshot.galleryApproved}
-                      onQueued={() => setQueue((n) => n + 1)}
+                      onQueued={() =>
+                        setQueue((n) => (n === null ? null : n + 1))
+                      }
                     />
                     <Button
                       label="Synchronise Encrypted Proof"
@@ -807,9 +1184,12 @@ export default function DriverWorkspace({
                       onPress={sync}
                     />
                     <Copy>
-                      Completion requires a verified payment. Contact dispatch for payment review.
+                      Completion requires a verified payment. Contact dispatch
+                      for payment review.
                     </Copy>
-                    <FieldCaption required={true}>Customer six-digit handover code</FieldCaption>
+                    <FieldCaption required={true}>
+                      Customer six-digit handover code
+                    </FieldCaption>
                     <TextInput
                       accessibilityLabel="Customer six-digit handover code, required"
                       placeholder="Customer handover code"
@@ -832,11 +1212,14 @@ export default function DriverWorkspace({
                       }}
                     >
                       <Switch
+                        hitSlop={10}
                         accessibilityLabel="All items physically handed over"
                         value={handover}
                         onValueChange={setHandover}
                       />
-                      <FieldCaption required={true}>All items and full gas quantity handed over</FieldCaption>
+                      <FieldCaption required={true}>
+                        All items and full gas quantity handed over
+                      </FieldCaption>
                     </View>
                     <Button
                       label="Complete Delivery"
@@ -865,32 +1248,112 @@ export default function DriverWorkspace({
           </>
         ) : page === "home" ? (
           <>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 8 }}>
-              <View style={{ backgroundColor: colors.elevated, padding: 12, borderRadius: 32 }}>
-                <Ionicons accessible={false} name="car-outline" size={26} color={colors.primary} />
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 14,
+                paddingVertical: 2,
+              }}
+            >
+              <View
+                style={{
+                  width: 58,
+                  height: 58,
+                  borderRadius: 29,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: colors.elevated,
+                }}
+              >
+                <Ionicons
+                  accessible={false}
+                  name="car-outline"
+                  size={30}
+                  color={colors.primary}
+                />
               </View>
-              <View style={{ flex: 1 }}><Copy>Good to see you,</Copy><Title>{snapshot.profile.name}</Title></View>
+              <View style={{ flex: 1, gap: 3 }}>
+                <Copy>Good to see you,</Copy>
+                <Text
+                  preserveColor
+                  accessibilityRole="header"
+                  style={{
+                    fontSize: 27,
+                    fontWeight: "800",
+                    letterSpacing: -0.7,
+                    color: colors.text,
+                  }}
+                >
+                  {snapshot.profile.name}
+                </Text>
+              </View>
             </View>
-            <Card accent>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+            <View
+              style={{
+                backgroundColor: headerGreen,
+                borderRadius: 18,
+                padding: 18,
+                gap: 10,
+                overflow: "hidden",
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
+              >
                 <View style={{ flex: 1, gap: 6 }}>
-              <DriverLabel icon="car-outline" label={snapshot.profile.driver_available
-                ? "Available for dispatch" : "Unavailable for dispatch"} />
-              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8, minHeight: 48 }}>
-                <View style={{ flex: 1 }}><Copy>{snapshot.profile.driver_available ? "Ready for new assignments." : "New assignments are paused."}</Copy></View>
+                  <Text
+                    preserveColor
+                    style={{
+                      color: "#fff",
+                      fontWeight: "800",
+                      fontSize: 20,
+                      letterSpacing: -0.4,
+                    }}
+                  >
+                    {snapshot.profile.driver_available
+                      ? "Ready for dispatch"
+                      : "Assignments paused"}
+                  </Text>
+                  <Text
+                    preserveColor
+                    style={{ color: "#e3f1e8", fontSize: 13 }}
+                  >
+                    {connected
+                      ? snapshot.profile.driver_available
+                        ? "New assignments enabled."
+                        : "Turn on availability when ready."
+                      : "Reconnect to confirm availability."}
+                  </Text>
+                </View>
                 <Switch
+                  hitSlop={10}
                   accessibilityLabel="Available for dispatch"
                   value={snapshot.profile.driver_available}
                   disabled={busy || !connected}
+                  trackColor={{ false: "#597467", true: "#23ac31" }}
                   onValueChange={async (available) => {
                     if (actionBusy.current) return;
                     actionBusy.current = true;
                     setBusy(true);
                     setError("");
                     try {
-                      const result = await api("driver.availability", { available, operationKey: randomUUID() });
+                      const result = await api("driver.availability", {
+                        available,
+                        operationKey: randomUUID(),
+                      });
                       ++refreshSequence.current;
-                      setSnapshot((old: any) => old ? { ...old, profile: { ...old.profile, driver_available: result.available } } : old);
+                      setSnapshot((old: any) =>
+                        old
+                          ? {
+                              ...old,
+                              profile: {
+                                ...old.profile,
+                                driver_available: result.available,
+                              },
+                            }
+                          : old,
+                      );
                     } catch (e: any) {
                       if ([401, 403].includes(e.status)) clearRevokedAccess();
                       setError(e.message);
@@ -901,90 +1364,360 @@ export default function DriverWorkspace({
                   }}
                 />
               </View>
-                </View>
-                {width >= 360 && fontScale < 1.3 && <Image
-                  source={require("./assets/delivery.png")} accessible={false} resizeMode="cover"
-                  style={{ width: Math.min(112, width * 0.25), height: 98, borderRadius: 14 }} />}
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+              >
+                <Ionicons
+                  accessible={false}
+                  name="car-outline"
+                  size={19}
+                  color="#b7ef8c"
+                />
+                <Text preserveColor style={{ color: "#d0eed7", fontSize: 12 }}>
+                  {connected
+                    ? "Availability confirmed by EasyGas"
+                    : "Availability unconfirmed"}
+                </Text>
               </View>
-            </Card>
-            <Card>
-              <DriverLabel icon="wifi-outline" label={connected ? "Backend connected" : "Connection unconfirmed"} />
-              {lastContact && <Copy>Last confirmed {driverDate(lastContact)} WAT</Copy>}
-              <Copy>GPS permission · {permission}</Copy>
-              <Copy>Trip location consent · {connected ? snapshot.trip ? snapshot.trip.location_consent ? "Granted for this trip" : "Off" : "No active trip" : "Unavailable"}</Copy>
-            </Card>
-            <Card>
-              <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
-                <DriverLabel icon="stats-chart-outline" label="At a glance" />
-                <Button label="View history" secondary onPress={() => setPage("history")} />
+            </View>
+            <DriverPanel>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 4 }}>
+                <DriverSignal
+                  icon="wifi-outline"
+                  label="Backend"
+                  value={connected ? "Connected" : "Unconfirmed"}
+                />
+                <DriverSignal
+                  icon="navigate-outline"
+                  label="GPS permission"
+                  value={permission}
+                  onPress={() => setPage("trip")}
+                />
+                <DriverSignal
+                  icon="location-outline"
+                  label="Trip sharing"
+                  value={
+                    connected
+                      ? snapshot.trip
+                        ? snapshot.trip.location_consent
+                          ? "Consented"
+                          : "Off"
+                        : "No active trip"
+                      : "Unavailable"
+                  }
+                  onPress={() => setPage("trip")}
+                />
+              </View>
+              <Copy>
+                {driverContactLabel(snapshot.profile.driver_last_seen_at)}
+              </Copy>
+              {lastContact && (
+                <Copy>Backend confirmed {driverDate(lastContact)} WAT</Copy>
+              )}
+            </DriverPanel>
+            <DriverPanel>
+              <View
+                style={{
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 8,
+                }}
+              >
+                <DriverHeading>Today at a glance</DriverHeading>
+                <Button
+                  label="View history"
+                  secondary
+                  onPress={() => setPage("history")}
+                />
               </View>
               <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
-                {[
-                  ["New assignments", snapshot.metrics?.newAssignments],
-                  ["In progress", snapshot.metrics?.inProgress],
-                  ["Completed today", snapshot.metrics?.completedToday],
-                ].map(([label, count]) => (
-                  <View key={label} style={{ flexGrow: 1, flexBasis: 86, padding: 9, backgroundColor: colors.elevated, borderRadius: 12 }}>
-                    <Title>{connected ? count ?? "—" : "—"}</Title><Copy>{label}</Copy>
+                <DriverMetric
+                  label="New assignments"
+                  value={snapshot.metrics?.newAssignments}
+                  confirmed={connected}
+                  icon="cube-outline"
+                />
+                <DriverMetric
+                  label="In progress"
+                  value={snapshot.metrics?.inProgress}
+                  confirmed={connected}
+                  icon="car-outline"
+                  tone="blue"
+                />
+                <DriverMetric
+                  label="Completed today"
+                  value={snapshot.metrics?.completedToday}
+                  confirmed={connected}
+                  icon="checkmark-circle-outline"
+                  tone="amber"
+                />
+              </View>
+            </DriverPanel>
+            <DriverPanel>
+              <DriverHeading icon="cube-outline">Next delivery</DriverHeading>
+              {nextAssignment ? (
+                <>
+                  <DriverLabel
+                    icon="bag-handle-outline"
+                    label={nextAssignment.reference}
+                  />
+                  <Copy>
+                    {driverOrderAddress(nextAssignment.address) ||
+                      "Destination unavailable"}
+                  </Copy>
+                  {driverAssignmentSummary(nextAssignment).map(
+                    (line, index) => (
+                      <Copy key={index}>{line}</Copy>
+                    ),
+                  )}
+                  <Copy>
+                    {[
+                      nextAssignment.delivery_date,
+                      nextAssignment.delivery_window,
+                    ]
+                      .filter(Boolean)
+                      .join(" · ")}
+                  </Copy>
+                  <Button
+                    label={driverNextAction(
+                      nextAssignment,
+                      snapshot.responses.find(
+                        (r: any) => r.order_id === nextAssignment.id,
+                      )?.decision,
+                    )}
+                    onPress={() => {
+                      openOrders();
+                      open(nextAssignment);
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <Copy>
+                    {connected
+                      ? "You're up to date. Your next assigned delivery will appear here."
+                      : "Reconnect to confirm assignments."}
+                  </Copy>
+                  <Button
+                    label="View assigned orders"
+                    secondary
+                    onPress={openOrders}
+                  />
+                </>
+              )}
+            </DriverPanel>
+            <DriverPanel>
+              <DriverHeading icon="flash-outline">Quick actions</DriverHeading>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+                <View style={{ flexGrow: 1, flexBasis: 130 }}>
+                  <Button
+                    label="Assigned orders"
+                    secondary
+                    onPress={openOrders}
+                  />
+                </View>
+                <View style={{ flexGrow: 1, flexBasis: 130 }}>
+                  <Button
+                    label="Trip & custody"
+                    secondary
+                    onPress={() => setPage("trip")}
+                  />
+                </View>
+                <View style={{ flexGrow: 1, flexBasis: 130 }}>
+                  <Button
+                    label="Contact dispatch"
+                    secondary
+                    onPress={() => setPage("support")}
+                  />
+                </View>
+                <View style={{ flexGrow: 1, flexBasis: 130 }}>
+                  <Button
+                    label="Settings"
+                    secondary
+                    onPress={() => setPage("profile")}
+                  />
+                </View>
+              </View>
+            </DriverPanel>
+          </>
+        ) : page === "orders" ? (
+          orderList()
+        ) : page === "history" ? (
+          <>
+            <Button
+              label={showFilters ? "Close filters" : "Filter history"}
+              secondary
+              onPress={() => setShowFilters((value) => !value)}
+            />
+            {showFilters && (
+              <Card>
+                {(["from", "to"] as const).map((field) => (
+                  <View key={field} style={{ gap: 6 }}>
+                    <Copy>
+                      {field === "from" ? "Start date" : "End date"} ·
+                      YYYY-MM-DD
+                    </Copy>
+                    <TextInput
+                      accessibilityLabel={
+                        field === "from" ? "Start date" : "End date"
+                      }
+                      value={historyDraft[field]}
+                      placeholder="YYYY-MM-DD"
+                      onChangeText={(value) =>
+                        setHistoryDraft((draft) => ({
+                          ...draft,
+                          [field]: value,
+                        }))
+                      }
+                      style={{
+                        minHeight: 48,
+                        paddingHorizontal: 12,
+                        borderWidth: 1,
+                        borderColor: colors.border,
+                        borderRadius: 12,
+                      }}
+                    />
                   </View>
                 ))}
-              </View>
-            </Card>
-            {activeOrders[0] && <Card>
-              <DriverLabel icon="cube-outline" label="Next assignment" />
-              <Copy>{activeOrders[0].reference}</Copy>
-              <Button label="Open next assignment" onPress={() => { openOrders(); open(activeOrders[0]); }} />
-            </Card>}
-            <Card>
-              <DriverLabel icon="flash-outline" label="Quick actions" />
-              <Button label="Open assigned orders" secondary onPress={openOrders} />
-              {connected && driverNavigation(activeOrders[0]?.destination) && <Button label="Navigate to next delivery" secondary onPress={() => navigate(activeOrders[0].destination)} />}
-              <Button label="Trip & custody" secondary onPress={() => setPage("trip")} />
-              <Button label="Contact dispatch support" secondary onPress={() => setPage("support")} />
-            </Card>
-          </>
-        ) : page === "orders" ? orderList() : page === "history" ? (
-          <>
-            <Button label={showFilters ? "Close filters" : "Filter history"} secondary onPress={() => setShowFilters((value) => !value)} />
-            {showFilters && <Card>
-              {(["from", "to"] as const).map((field) => (
-                <View key={field} style={{ gap: 6 }}>
-                  <Copy>{field === "from" ? "Start date" : "End date"} · YYYY-MM-DD</Copy>
-                  <TextInput accessibilityLabel={field === "from" ? "Start date" : "End date"} value={historyDraft[field]}
-                    placeholder="YYYY-MM-DD" onChangeText={(value) => setHistoryDraft((draft) => ({ ...draft, [field]: value }))}
-                    style={{ minHeight: 48, paddingHorizontal: 12, borderWidth: 1, borderColor: colors.border, borderRadius: 12 }} />
+                <View
+                  style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}
+                >
+                  {[
+                    ["", "All outcomes"],
+                    ...Object.entries(driverOutcomes),
+                  ].map(([value, label]) => (
+                    <Button
+                      key={value}
+                      label={
+                        (historyDraft.outcome === value ? "✓ " : "") + label
+                      }
+                      secondary
+                      onPress={() =>
+                        setHistoryDraft((draft) => ({
+                          ...draft,
+                          outcome: value,
+                        }))
+                      }
+                    />
+                  ))}
                 </View>
-              ))}
-              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
-                {[["", "All outcomes"], ...Object.entries(driverOutcomes)].map(([value, label]) => (
-                  <Button key={value} label={(historyDraft.outcome === value ? "✓ " : "") + label} secondary
-                    onPress={() => setHistoryDraft((draft) => ({ ...draft, outcome: value }))} />
-                ))}
-              </View>
-              <Button label="Apply filters" onPress={() => {
-                setHistoryFilters({ ...historyDraft, page: 1 }); setShowFilters(false);
-              }} />
-            </Card>}
-            {historyError && <Feedback error={historyError} retry={() => setHistoryRefresh((value) => value + 1)} />}
-            {!connected ? <Copy>Reconnect to confirm delivery history.</Copy> : history ? (
+                <Button
+                  label="Apply filters"
+                  onPress={() => {
+                    setHistoryFilters({ ...historyDraft, page: 1 });
+                    setShowFilters(false);
+                  }}
+                />
+              </Card>
+            )}
+            {historyError && (
+              <Feedback
+                error={historyError}
+                retry={() => setHistoryRefresh((value) => value + 1)}
+              />
+            )}
+            {!connected ? (
+              <Copy>Reconnect to confirm delivery history.</Copy>
+            ) : history ? (
               <>
-                <Card accent><DriverLabel icon="checkmark-circle-outline" label={`${history.delivered} completed deliveries in this period`} /></Card>
-                {!history.rows.length && <Card><Copy>No closed deliveries match these filters.</Copy></Card>}
-                {history.rows.map((row) => (
-                  <Pressable key={row.id} accessibilityRole="button"
-                    accessibilityLabel={`${row.reference}, ${driverOutcomes[row.outcome]}`} onPress={() => setHistoryRow(row)}>
-                    <Card><DriverLabel icon="cube-outline" label={row.reference} />
-                      <Copy>{driverOutcomes[row.outcome]} · {driverDate(row.closed_at)} WAT</Copy>
-                    </Card>
-                  </Pressable>
-                ))}
-                <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-                  <Button label="Previous" secondary disabled={history.page <= 1} onPress={() => setHistoryFilters((old) => ({ ...old, page: old.page - 1 }))} />
+                <DriverPanel>
+                  <DriverHeading icon="checkmark-circle-outline">
+                    Delivery history
+                  </DriverHeading>
+                  <Copy>
+                    {history.delivered} completed deliveries in this period ·{" "}
+                    {history.total} closed records matching filters
+                  </Copy>
+                </DriverPanel>
+                <TextInput
+                  accessibilityLabel="Find reference on this history page"
+                  placeholder="Find reference on this page"
+                  value={historyQuery}
+                  onChangeText={setHistoryQuery}
+                  style={{
+                    minHeight: 48,
+                    padding: 12,
+                    borderWidth: 1,
+                    borderColor: colors.border,
+                    borderRadius: 14,
+                  }}
+                />
+                {!history.rows.length && (
+                  <Card>
+                    <Copy>No closed deliveries match these filters.</Copy>
+                  </Card>
+                )}
+                {history.rows
+                  .filter((row) =>
+                    row.reference
+                      .toLowerCase()
+                      .includes(historyQuery.trim().toLowerCase()),
+                  )
+                  .map((row) => (
+                    <Pressable
+                      key={row.id}
+                      accessibilityRole="button"
+                      accessibilityLabel={`${row.reference}, ${driverOutcomes[row.outcome]}`}
+                      onPress={() => setHistoryRow(row)}
+                    >
+                      <DriverPanel>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            flexWrap: "wrap",
+                            justifyContent: "space-between",
+                            gap: 8,
+                          }}
+                        >
+                          <DriverLabel
+                            icon="cube-outline"
+                            label={row.reference}
+                          />
+                          <DriverBadge label={driverOutcomes[row.outcome]} />
+                        </View>
+                        <Copy>{driverDate(row.closed_at)} WAT</Copy>
+                        <Copy>View delivery record →</Copy>
+                      </DriverPanel>
+                    </Pressable>
+                  ))}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    gap: 8,
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    label="Previous"
+                    secondary
+                    disabled={history.page <= 1}
+                    onPress={() =>
+                      setHistoryFilters((old) => ({
+                        ...old,
+                        page: old.page - 1,
+                      }))
+                    }
+                  />
                   <Copy>Page {history.page}</Copy>
-                  <Button label="Next" secondary disabled={history.page * history.pageSize >= history.total} onPress={() => setHistoryFilters((old) => ({ ...old, page: old.page + 1 }))} />
+                  <Button
+                    label="Next"
+                    secondary
+                    disabled={history.page * history.pageSize >= history.total}
+                    onPress={() =>
+                      setHistoryFilters((old) => ({
+                        ...old,
+                        page: old.page + 1,
+                      }))
+                    }
+                  />
                 </View>
               </>
-            ) : !historyError && <Feedback loading />}
+            ) : (
+              !historyError && <Feedback loading />
+            )}
           </>
         ) : page === "notices" ? (
           <CustomerNotifications
@@ -992,7 +1725,9 @@ export default function DriverWorkspace({
             onUnreadCount={setUnread}
             relatedAction={(id) => {
               const assigned = orders.find((order) => order.id === id);
-              return assigned ? { label: "View assigned order", open: () => open(assigned) } : undefined;
+              return assigned
+                ? { label: "View assigned order", open: () => open(assigned) }
+                : undefined;
             }}
           />
         ) : page === "security" ? (
@@ -1026,78 +1761,181 @@ export default function DriverWorkspace({
             onDone={() => setPage("profile")}
           />
         ) : page === "personal" ? (
-          <NativeForm api={api} action="account.update" title="Edit your name"
-            fields={[{ name: "name", label: "Your name", value: snapshot.profile.name }]}
-            onDone={() => { setPage("profile"); void refresh().catch(() => setConnected(false)); }} />
+          <NativeForm
+            api={api}
+            action="account.update"
+            title="Edit your name"
+            fields={[
+              {
+                name: "name",
+                label: "Your name",
+                value: snapshot.profile.name,
+              },
+            ]}
+            onDone={() => {
+              setPage("profile");
+              void refresh().catch(() => setConnected(false));
+            }}
+          />
         ) : page === "trip" ? null : (
           <>
-            <Card>
-              <DriverLabel icon="person-circle-outline" label={snapshot.profile.name} />
-              <Copy>Driver · {snapshot.profile.branch_name}</Copy>
-              <Copy>{snapshot.profile.email}</Copy>
+            <DriverPanel>
+              <View
+                style={{
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  gap: 16,
+                }}
+              >
+                <View
+                  style={{
+                    width: 76,
+                    height: 76,
+                    borderRadius: 38,
+                    backgroundColor: colors.elevated,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    preserveColor
+                    style={{
+                      color: colors.primary,
+                      fontWeight: "800",
+                      fontSize: 28,
+                    }}
+                  >
+                    {driverInitials(snapshot.profile.name)}
+                  </Text>
+                </View>
+                <View style={{ flex: 1, minWidth: 160, gap: 8 }}>
+                  <DriverBadge label="Driver" />
+                  <DriverHeading>{snapshot.profile.name}</DriverHeading>
+                  <Copy>{snapshot.profile.branch_name}</Copy>
+                  <DriverBadge
+                    label={
+                      !connected
+                        ? "Account status unconfirmed"
+                        : snapshot.profile.active
+                          ? "Active account"
+                          : "Inactive account"
+                    }
+                  />
+                </View>
+              </View>
+              <Copy>{snapshot.profile.email || "Email unavailable"}</Copy>
               <Copy>
-                {snapshot.profile.contact_phone ??
-                  "No verified contact phone recorded"}
+                {snapshot.profile.contact_phone || "Contact number unavailable"}
               </Copy>
-              <Copy>
-                Availability:{" "}
-                {snapshot.profile.driver_available
-                  ? "Available"
-                  : "Unavailable"}
-              </Copy>
-            </Card>
-            <Card>
-              <DriverLabel icon="id-card-outline" label="Driver details" />
-              <Button label="Edit personal information" secondary onPress={() => setPage("personal")} />
-              <Copy>{connected && snapshot.trip
-                && snapshot.trip.vehicle_label
-                ? `Current trip vehicle · ${snapshot.trip.vehicle_label} · ${Number(snapshot.trip.capacity_grams) / 1000} kg capacity`
-                : "No confirmed trip vehicle."}</Copy>
-            </Card>
-            <Card>
-              <DriverLabel icon="navigate-outline" label="Location & sync" />
-              <Copy>Foreground · {permission} · Background · {backgroundPermission}</Copy>
-              <Copy>{queue} encrypted delivery updates pending</Copy>
-              {lastSync && <Copy>Last confirmed sync {driverDate(lastSync)} WAT</Copy>}
-              <Button label="Open device location settings" secondary onPress={() => { void Linking.openSettings().catch(() => setError("Device settings could not be opened.")); }} />
-              <Button label="Trip location consent and custody" secondary onPress={() => setPage("trip")} />
-            </Card>
-            <Button
-              label="Notifications"
-              secondary
-              onPress={() => setPage("notices")}
-            />
-            <Button
-              label="Change Password"
-              secondary
-              onPress={() => setPage("security")}
-            />
-            <Button
-              label="Help & Support"
-              secondary
-              onPress={() => setPage("support")}
-            />
-            {(["light", "dark", "system"] as const).map((mode) => (
-              <Button
-                key={mode}
-                label={(preference === mode ? "✓ " : "") + mode + " appearance"}
-                secondary
-                onPress={() =>
-                  setPreference(mode).catch(() =>
-                    setError("Could not save appearance."),
-                  )
+            </DriverPanel>
+            <DriverHeading>Driver details</DriverHeading>
+            <DriverPanel>
+              <DriverSettingRow
+                icon="person-outline"
+                title="Personal information"
+                description="Edit your name; role and branch remain governed"
+                onPress={() => setPage("personal")}
+              />
+              <DriverSettingRow
+                icon="car-outline"
+                title="Current trip vehicle"
+                description={
+                  connected && snapshot.trip?.vehicle_label
+                    ? `${snapshot.trip.vehicle_label}${snapshot.trip.capacity_grams != null ? ` · ${Number(snapshot.trip.capacity_grams) / 1000} kg capacity` : ""}`
+                    : "No confirmed trip vehicle."
                 }
               />
-            ))}
+              <DriverSettingRow
+                icon="shield-checkmark-outline"
+                title="Verification & documents"
+                description="Managed by authorised staff. No verification record is provided here."
+              />
+            </DriverPanel>
+            <DriverHeading>App & preferences</DriverHeading>
+            <DriverPanel>
+              <DriverSettingRow
+                icon="notifications-outline"
+                title="Notifications"
+                description="View delivery updates and operational alerts"
+                onPress={() => setPage("notices")}
+              />
+              <DriverSettingRow
+                icon="navigate-outline"
+                title="Location & trip consent"
+                description={`Foreground: ${permission}. Background: ${backgroundPermission}. Trip consent is separate.`}
+                onPress={() => setPage("trip")}
+              />
+              <DriverSettingRow
+                icon="settings-outline"
+                title="Device location settings"
+                description="A switch in this app does not grant OS permission"
+                onPress={() => {
+                  void Linking.openSettings().catch(() =>
+                    setError("Device settings could not be opened."),
+                  );
+                }}
+              />
+              <DriverSettingRow
+                icon="cloud-upload-outline"
+                title="Offline sync"
+                description={`${queue ?? "Unavailable"} encrypted delivery updates pending${lastSync ? ` · Confirmed ${driverDate(lastSync)} WAT` : " · No confirmed sync time"}`}
+              />
+              <Button
+                label="Synchronise Safe Delivery Records"
+                secondary
+                disabled={busy}
+                onPress={sync}
+              />
+              <Copy>Appearance</Copy>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+                {(["light", "dark", "system"] as const).map((mode) => (
+                  <Button
+                    key={mode}
+                    label={
+                      (preference === mode ? "✓ " : "") + mode + " appearance"
+                    }
+                    secondary
+                    onPress={() => {
+                      void setPreference(mode).catch(() =>
+                        setError("Could not save appearance."),
+                      );
+                    }}
+                  />
+                ))}
+              </View>
+            </DriverPanel>
+            <DriverHeading>Support & account</DriverHeading>
+            <DriverPanel>
+              <DriverSettingRow
+                icon="help-circle-outline"
+                title="Help & support"
+                description="Contact dispatch or report a delivery issue"
+                onPress={() => setPage("support")}
+              />
+              <DriverSettingRow
+                icon="lock-closed-outline"
+                title="Change password"
+                description="Use your existing account security controls"
+                onPress={() => setPage("security")}
+              />
+              <DriverSettingRow
+                icon="information-circle-outline"
+                title="EasyGas Driver"
+                description="Delivery-only workspace · existing session and safety controls"
+              />
+            </DriverPanel>
             <Button
               label="Sign Out"
               secondary
               onPress={() =>
                 EasyGasAlert.alert(
                   "Sign out of Driver App?",
-                  queue || legacy
-                    ? "You have updates waiting to sync. They will stay securely on this device. Sign in with this same account to sync them later. Deliveries remain unconfirmed until EasyGas verifies them."
-                    : "You can sign in again whenever you are ready.",
+                  queue == null || legacy == null
+                    ? "Sync status is unavailable. Reconnect to check for pending updates. Any retained evidence stays encrypted on this device."
+                    : queue || legacy
+                      ? "You have updates waiting to sync. They will stay securely on this device. Sign in with this same account to sync them later. Deliveries remain unconfirmed until EasyGas verifies them."
+                      : "You can sign in again whenever you are ready.",
                   [
                     { text: "Keep working", style: "cancel" },
                     {
@@ -1113,13 +1951,13 @@ export default function DriverWorkspace({
             />
           </>
         )}
-        {!revoked && (queue > 0 || legacy > 0) && (
+        {!revoked && ((queue ?? 0) > 0 || (legacy ?? 0) > 0) && (
           <Card>
             <Title>Pending Sync</Title>
             <Copy>
-              {queue} encrypted field records. {legacy} legacy completion
-              records require dispatch review; this app never replays cash
-              collection.
+              {queue ?? "Unavailable"} encrypted field records.{" "}
+              {legacy ?? "Unavailable"} legacy completion records require
+              dispatch review; this app never replays cash collection.
             </Copy>
             <Button
               label="Synchronise Safe Delivery Records"
@@ -1136,6 +1974,9 @@ export default function DriverWorkspace({
           borderTopWidth: 1,
           borderColor: colors.border,
           padding: 8,
+          backgroundColor: colors.surface,
+          borderTopLeftRadius: 22,
+          borderTopRightRadius: 22,
         }}
       >
         {tabs.map(([label, dest, icon]) => (
@@ -1143,7 +1984,9 @@ export default function DriverWorkspace({
             key={dest}
             accessibilityRole="tab"
             accessibilityLabel={label}
-            accessibilityState={{ selected: page === dest && !selected }}
+            accessibilityState={{
+              selected: page === dest && !selected && !historyRow,
+            }}
             onPress={() => {
               setSelected(null);
               setHistoryRow(null);
@@ -1157,7 +2000,10 @@ export default function DriverWorkspace({
               justifyContent: "center",
               minHeight: 56,
               borderRadius: 24,
-              backgroundColor: page === dest ? colors.elevated : colors.surface,
+              backgroundColor:
+                page === dest && !selected && !historyRow
+                  ? colors.elevated
+                  : colors.surface,
             }}
           >
             <Ionicons
@@ -1179,10 +2025,61 @@ export default function DriverWorkspace({
   );
 }
 
-function DriverLabel({ icon, label }: { icon: React.ComponentProps<typeof Ionicons>["name"]; label: string }) {
+function DriverLabel({
+  icon,
+  label,
+}: {
+  icon: React.ComponentProps<typeof Ionicons>["name"];
+  label: string;
+}) {
   const { colors } = useTheme();
-  return <View style={{ flexDirection: "row", alignItems: "center", gap: 8, flexShrink: 1 }}>
-    <Ionicons name={icon} color={colors.primary} size={22} accessible={false} />
-    <Text preserveColor style={{ color: colors.text, fontWeight: "800", fontSize: 17, flexShrink: 1 }}>{label}</Text>
-  </View>;
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 8,
+        flexShrink: 1,
+      }}
+    >
+      <Ionicons
+        name={icon}
+        color={colors.primary}
+        size={22}
+        accessible={false}
+      />
+      <Text
+        preserveColor
+        style={{
+          color: colors.text,
+          fontWeight: "800",
+          fontSize: 17,
+          flexShrink: 1,
+        }}
+      >
+        {label}
+      </Text>
+    </View>
+  );
+}
+
+// Only read refreshes use a deadline. Mutation keys and offline recovery stay unchanged.
+async function driverReadDeadline<T>(request: Promise<T>): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      request,
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(
+          () =>
+            reject(
+              new Error("Driver information timed out. Reconnect and retry."),
+            ),
+          15000,
+        );
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
 }

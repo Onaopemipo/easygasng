@@ -282,6 +282,11 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   const approvedDriverSources = JSON.parse(await readFile(
     "docs/driver-redesign/approved-field-source.json", "utf8",
   ));
+  // DRV-SAAS: approved four-screen presentation; previous driver/field hashes retained.
+  const approvedDriverSaasSources = JSON.parse(await readFile(
+    "docs/driver-saas-redesign/approved-field-source.json", "utf8",
+  ));
+  assert.deepEqual(Object.keys(approvedDriverSaasSources.files), ["apps/mobile/DriverWorkspace.tsx"]);
   const staffRoleNavigationSources = JSON.parse(await readFile(
     "docs/traceability/staff-role-navigation-hashes.json", "utf8",
   ));
@@ -298,7 +303,7 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
       ? approvedMerchantDocumentSources[file] ?? approvedPaymentReturnHash
-      : approvedFieldMarkerSources[file] ?? staffInviteDriversSources[file] ?? staffRoleNavigationSources[file] ?? approvedLoaderSources[file] ?? approvedDriverSources[file]
+      : approvedDriverSaasSources.files[file] ?? approvedFieldMarkerSources[file] ?? staffInviteDriversSources[file] ?? staffRoleNavigationSources[file] ?? approvedLoaderSources[file] ?? approvedDriverSources[file]
         ?? approvedHomepageSources[file] ?? approvedNotificationSources[file]
         ?? approvedAlerts[file]?.approvedHash ?? originalHash;
     const source = await readFile(file);
