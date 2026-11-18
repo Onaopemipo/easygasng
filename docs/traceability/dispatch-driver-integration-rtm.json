@@ -871,7 +871,7 @@
       "id": "DDI-S040",
       "requirement": "notify after commit",
       "status": "PASS",
-      "testOrManualEvidence": "TRK-18: committed outbox publication retries without duplicate in-app messages; final-tests.txt (external delivery not certified)"
+      "testOrManualEvidence": "TRK-18: committed outbox publication retries without duplicate in-app messages; final-tests.txt (external delivery not certified); DAN-01/02/03/DAN-PG01 now explicitly verify initial/reassignment driver in-app notices, operation replay and PostgreSQL commit/rollback. See docs/assignment-notifications/README.md; external delivery remains uncertified."
     },
     {
       "id": "DDI-S041",
@@ -1298,6 +1298,10 @@
     {
       "date": "2026-11-09",
       "change": "Final read-projection regression reproduced accepted orders being counted ready before canonical preparation. Reused orderTransitions for state eligibility, blocked premature candidate selection and added per-order Review preparation/View details through the existing tracking component scoped by canonical orderId. Defaults preserve legacy driver/history use.18 dispatch/photo follow-ups and final web build/types pass; no operational data or release flags changed."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "User-reported missing web-bell notice extends DDI-S040: prior TRK-18 customer outbox evidence did not prove initial driver alerts. DAN-01\u201304 correct and locally verify this bounded gap; all original DDI requirements/scenarios/gates and production holds retained."
     }
   ],
   "coverage": {

@@ -217,6 +217,13 @@ export async function beginAttempt(tx: SQL, o: any, driverId: string) {
     `Your delivery confirmation code is ${code}. Share it only after receiving all items.`,
     o.id,
   );
+  await notify(
+    tx,
+    driverId,
+    "Delivery assigned",
+    `${o.reference}: a delivery assignment requires your review. Open Orders to review the assignment.`,
+    o.id,
+  );
 }
 const movement = z
   .object({

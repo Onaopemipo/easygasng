@@ -350,13 +350,6 @@ export async function driverOperations(
         "Dispatch reassigned a visit. Previous assignment access has been revoked.",
         o.id,
       );
-      await notify(
-        tx,
-        driver.id,
-        "Delivery assigned",
-        "A delivery assignment requires your acknowledgement.",
-        o.id,
-      );
       await audit(tx, user, action, o.id, "success", {
         reason: d.reason,
         previousDriver: prior.driver_id,

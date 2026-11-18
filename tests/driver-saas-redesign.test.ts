@@ -130,20 +130,31 @@ test("DRVS-SCOPE: current attempt removal and branch revocation stay authoritati
     await f.db.close?.();
   }
 });
-test("DRVS-PRESERVED: this presentation phase leaves canonical finance, permissions, custody, GPS and proof implementations unchanged", async () => {
+test("DRVS-PRESERVED: the presentation baseline remains protected apart from the reviewed assignment-notification correction", async () => {
   const rows = JSON.parse(
     await readFile(
       "docs/driver-saas-redesign/protected-business-sources.json",
       "utf8",
     ),
   );
-  for (const [file, hash] of Object.entries(rows))
+  const notificationCorrection = JSON.parse(await readFile(
+    "docs/traceability/assignment-notifications-reviewed-hashes.json", "utf8",
+  ));
+  assert.deepEqual(Object.keys(notificationCorrection.files).sort(), [
+    "apps/web/components/admin.tsx", "apps/web/lib/driver-operations.ts", "apps/web/lib/order-tracking.ts",
+  ]);
+  for (const [file, hash] of Object.entries(rows)) {
+    if (notificationCorrection.files[file])
+      assert.equal(notificationCorrection.baseline[file], hash, file);
     assert.equal(
       createHash("sha256")
         .update(await readFile(file))
         .digest("hex"),
-      hash,
+      notificationCorrection.files[file] ?? hash,
       file,
     );
+  }
+  for (const [file, hash] of Object.entries(notificationCorrection.files))
+    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), hash, file);
 });
 

@@ -1,0 +1,190 @@
+{
+  "phase": "Driver assignment web notification correction \u201418 November2026",
+  "baseline": "bf0822a",
+  "releaseDecision": "PENDING synthetic demo release CI/deployment; local correction accepted. Existing public commercial production NO-GO preserved.",
+  "requirements": [
+    {
+      "id": "DAN-01",
+      "requirement": "Exactly one private in-app notification for each committed assignment attempt",
+      "priority": "P0",
+      "scope": "Shared initial/enhanced/reassignment attempts; operation replay and failed transaction have no duplicate/phantom driver alert",
+      "uiReference": "Existing admin web notification bell and driver Home/Orders",
+      "route": "/admin/deliveries; /api/notifications.list; /api/navigation",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "docs/traceability/assignment-notifications-reviewed-hashes.json"
+      ],
+      "dataSource": "Canonical delivery_attempts, orders, operation receipts and recipient-scoped notifications in the assignment transaction",
+      "securityControl": "Existing role/branch/availability/payment/stock/vehicle guards; no OTP/address in driver alert; rollback and operation idempotency; authenticated recipient-only inbox",
+      "testFiles": [
+        "tests/assignment-notifications.test.ts",
+        "tests/assignment-notifications-postgres.test.ts",
+        "tests/driver-saas-redesign.test.ts"
+      ],
+      "testIds": [
+        "DAN-01",
+        "DAN-02",
+        "DAN-03",
+        "DAN-PG01"
+      ],
+      "negativeTests": [
+        "DAN-03",
+        "DAN-PG01"
+      ],
+      "evidence": [
+        "docs/assignment-notifications/evidence/focused.txt",
+        "docs/assignment-notifications/evidence/postgres.txt",
+        "docs/assignment-notifications/README.md"
+      ],
+      "acceptanceGate": "DAN-01-G",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Shared beginAttempt writes one recipient notification in the existing transaction; redundant reassignment send removed. Stable retries and actual PostgreSQL concurrent requests produce one alert; failures roll back notices. Customer code remains customer-only. Canonical guards preserved with exact scoped reviewed hashes.",
+      "testResult": "PASS \u2014 bounded local API/PostgreSQL/browser acceptance and read-only named demo diagnosis; no real-world or external push claim.",
+      "outstandingWork": "Push, fresh release CI and demo deployment verification pending. External email/phone push, commercial production, physical-device and historical import gates remain separate."
+    },
+    {
+      "id": "DAN-02",
+      "requirement": "Web driver unread badge and notification bell show committed assignment alert",
+      "priority": "P1",
+      "scope": "Actual local synthetic owner assignment and separate driver browser session; existing recipient-scoped notifications and polling",
+      "uiReference": "Existing admin web notification bell and driver Home/Orders",
+      "route": "/admin/deliveries; /api/notifications.list; /api/navigation",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/notification-inbox.ts",
+        "apps/web/components/admin.tsx"
+      ],
+      "dataSource": "Canonical delivery_attempts, orders, operation receipts and recipient-scoped notifications in the assignment transaction",
+      "securityControl": "Existing role/branch/availability/payment/stock/vehicle guards; no OTP/address in driver alert; rollback and operation idempotency; authenticated recipient-only inbox",
+      "testFiles": [
+        "scripts/qa-assignment-notifications.mjs"
+      ],
+      "testIds": [
+        "DAN-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/assignment-notifications/evidence/browser.txt",
+        "docs/assignment-notifications/README.md"
+      ],
+      "acceptanceGate": "DAN-02-G",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Chrome owner/driver sessions: valid next-step options, real stale rejection visible inside modal, no alert before assignment, automatically refreshed driver badge/bell after committed assignment, private content and mark-read;390/1440px fit after responsive transitions settle.",
+      "testResult": "PASS \u2014 bounded local API/PostgreSQL/browser acceptance and read-only named demo diagnosis; no real-world or external push claim.",
+      "outstandingWork": "Push, fresh release CI and demo deployment verification pending. External email/phone push, commercial production, physical-device and historical import gates remain separate."
+    },
+    {
+      "id": "DAN-03",
+      "requirement": "Diagnose the named demo order without changing its operational or financial history",
+      "priority": "P1",
+      "scope": "Read-only inspection of EG-2026-7BB8640B; retain reported-order limitations and production holds",
+      "uiReference": "Existing admin web notification bell and driver Home/Orders",
+      "route": "/admin/deliveries; /api/notifications.list; /api/navigation",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/notification-inbox.ts",
+        "apps/web/components/admin.tsx"
+      ],
+      "dataSource": "Canonical delivery_attempts, orders, operation receipts and recipient-scoped notifications in the assignment transaction",
+      "securityControl": "Existing role/branch/availability/payment/stock/vehicle guards; no OTP/address in driver alert; rollback and operation idempotency; authenticated recipient-only inbox",
+      "testFiles": [
+        "tests/assignment-notifications.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/assignment-notifications/evidence/reported-order-inspection.txt",
+        "docs/assignment-notifications/evidence/focused.txt",
+        "docs/assignment-notifications/README.md"
+      ],
+      "acceptanceGate": "DAN-03-G",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authenticated read-only demo inspection found EG-2026-7BB8640B paid/verified but Placed, driver null, no delivery attempt, version1. No existing order/customer/driver/stock/payment record changed; no phantom or backfilled notification created.",
+      "testResult": "PASS \u2014 bounded local API/PostgreSQL/browser acceptance and read-only named demo diagnosis; no real-world or external push claim.",
+      "outstandingWork": "Push, fresh release CI and demo deployment verification pending. External email/phone push, commercial production, physical-device and historical import gates remain separate."
+    },
+    {
+      "id": "DAN-04",
+      "requirement": "Owner status form offers valid next steps and shows failed updates inside the order dialog",
+      "priority": "P1",
+      "scope": "Existing owner order modal; reported order remains Placed and unassigned, no operational state repair inferred",
+      "uiReference": "Existing admin web notification bell and driver Home/Orders",
+      "route": "/admin/deliveries; /api/notifications.list; /api/navigation",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "packages/business-rules/src/forecast.ts"
+      ],
+      "dataSource": "Canonical delivery_attempts, orders, operation receipts and recipient-scoped notifications in the assignment transaction",
+      "securityControl": "Existing role/branch/availability/payment/stock/vehicle guards; no OTP/address in driver alert; rollback and operation idempotency; authenticated recipient-only inbox",
+      "testFiles": [
+        "scripts/qa-assignment-notifications.mjs"
+      ],
+      "testIds": [
+        "DAN-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/assignment-notifications/evidence/browser.txt",
+        "docs/assignment-notifications/README.md"
+      ],
+      "acceptanceGate": "DAN-04-G",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Chrome owner/driver sessions: valid next-step options, real stale rejection visible inside modal, no alert before assignment, automatically refreshed driver badge/bell after committed assignment, private content and mark-read;390/1440px fit after responsive transitions settle.",
+      "testResult": "PASS \u2014 bounded local API/PostgreSQL/browser acceptance and read-only named demo diagnosis; no real-world or external push claim.",
+      "outstandingWork": "Push, fresh release CI and demo deployment verification pending. External email/phone push, commercial production, physical-device and historical import gates remain separate."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DAN-01-G",
+      "requirement": "Exactly one private in-app notification for each committed assignment attempt",
+      "status": "PASS",
+      "reason": "Bounded local correction, actual PostgreSQL concurrency/rollback, actual web browser, or named-order read-only evidence as mapped. Release verification tracked separately."
+    },
+    {
+      "id": "DAN-02-G",
+      "requirement": "Web driver unread badge and notification bell show committed assignment alert",
+      "status": "PASS",
+      "reason": "Bounded local correction, actual PostgreSQL concurrency/rollback, actual web browser, or named-order read-only evidence as mapped. Release verification tracked separately."
+    },
+    {
+      "id": "DAN-03-G",
+      "requirement": "Diagnose the named demo order without changing its operational or financial history",
+      "status": "PASS",
+      "reason": "Bounded local correction, actual PostgreSQL concurrency/rollback, actual web browser, or named-order read-only evidence as mapped. Release verification tracked separately."
+    },
+    {
+      "id": "DAN-04-G",
+      "requirement": "Owner status form offers valid next steps and shows failed updates inside the order dialog",
+      "status": "PASS",
+      "reason": "Bounded local correction, actual PostgreSQL concurrency/rollback, actual web browser, or named-order read-only evidence as mapped. Release verification tracked separately."
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-18",
+      "change": "New user-reported web notification defect extends DDI-S040 beyond prior customer outbox evidence; historical DDI and notification matrices remain in scope."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "User confirmed web bell and reference EG-2026-7BB8640B. Read-only hosted diagnosis: Placed, verified payment, driver null and no delivery attempt. Add explicit valid-step/error-in-dialog UI acceptance; do not advance this order without physical preparation."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Baseline regression reproduced missing first-assignment alerts. Shared atomic notification fix and clear owner workflow accepted:63 focused,1 PostgreSQL concurrency/rollback and1 actual two-session Chrome scenario passed. User order was inspected only, not progressed or assigned. Preserve prior driver SaaS18-source baseline; exact later correction reviewed in assignment-notifications-reviewed-hashes.json."
+    }
+  ],
+  "coverage": {
+    "implemented": 4,
+    "verified": 4,
+    "total": 4,
+    "criticalVerified": 1,
+    "criticalTotal": 1,
+    "gatesPassed": 4,
+    "gatesTotal": 4,
+    "scope": "This bounded notification correction only; historical whole-app, real-phone and provider requirements are not removed or counted as complete."
+  }
+}

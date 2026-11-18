@@ -22,6 +22,7 @@ import AssistedOrder from "./assisted-order";
 import OrderAdditions from "./order-additions";
 import { RewardsPolicyFields } from "./rewards-policy-fields";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
+import { orderTransitions } from "../../../packages/business-rules/src/forecast";
 import DispatchTracking from "./order-tracking";
 import DispatchCentre from "./dispatch-centre";
 import { ThemeToggle } from "./theme-provider";
@@ -2756,6 +2757,7 @@ function Records({
     [message, setMessage] = useState("");
   const params = useSearchParams();
   const targetOrder = params.get("orderId");
+  useEffect(() => setMessage(""), [selected?.id]);
   useEffect(() => {
     let live = true;
     if (section === "orders" && targetOrder) {
@@ -3235,72 +3237,113 @@ function Records({
                   }}
                 />
               )}
-              <details className="order-detail-disclosure">
-                <summary>Update order status</summary>
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  const values = Object.fromEntries(
-                    new FormData(e.currentTarget),
-                  );
-                  try {
-                    await api("order.transition", {
-                      id: selected.id,
-                      operationKey: crypto.randomUUID(),
-                      version: selected.tracking_version,
-                      ...values,
-                      ...(values.driverId ? {} : { driverId: undefined }),
-                    });
-                    setSelected(null);
-                    onChange();
-                  } catch (e: any) {
-                    setMessage(e.message);
-                  }
-                }}
-              >
-                <label>
-                  <FieldCaption required={true}>Next status</FieldCaption>
-                  <select name="status" required>
-                    <option value="accepted">Accept Order</option>
-                    <option value="preparing">Preparing</option>
-                    <option value="assigned">Assign Driver</option>
-                    <option value="out_for_delivery">Out for Delivery</option>
-                    <option value="delivery_failed">Delivery Failed</option>
-                    <option value="cancelled">Cancel Order</option>
-                  </select>
-                </label>
-                <label>
-                  <FieldCaption required={true}>Driver when assigning</FieldCaption>
-                  <select name="driverId">
-                    <option value="">No change</option>
-                    {staff.data
-                      ?.filter((u: any) => u.role === "driver" && u.active)
-                      .map((u: any) => (
-                        <option value={u.id} key={u.id}>
-                          {u.name}
-                        </option>
-                      ))}
-                  </select>
-                </label>
-                <label>
-                  <FieldCaption required={true}>Failure category when reporting unsuccessful delivery</FieldCaption>
-                  <select name="failureReason" defaultValue="other">
-                    {deliveryFailureReasons.map((r) => (
-                      <option key={r} value={r}>
-                        {r.replaceAll("_", " ")}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label>
-                  <FieldCaption required={true}>Operational note</FieldCaption>
-                  <textarea name="note" required minLength={5} />
-                </label>
-                <button className="button full">
-                  Update Order <ArrowRight size={17} />
-                </button>
-              </form>
-              </details>
+              {section === "orders" && ["owner", "manager"].includes(user.role) && (orderTransitions[selected.status] ?? []).some(status => status !== "delivered") && (
+                <details className="order-detail-disclosure">
+                    <summary>Update order status</summary>
+                    <form
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        setMessage("");
+                        const values = Object.fromEntries(
+                          new FormData(e.currentTarget),
+                        );
+                        try {
+                          await api("order.transition", {
+                            id: selected.id,
+                            operationKey: crypto.randomUUID(),
+                            version: selected.tracking_version,
+                            ...values,
+                            ...(values.driverId ? {} : { driverId: undefined }),
+                          });
+                          setSelected(null);
+                          onChange();
+                        } catch (e: any) {
+                          setMessage(e.message);
+                        }
+                      }}
+                    >
+                      {message && <Notice type="error" message={message} />}
+                      <p>
+                        Accept the order, prepare it, then assign a driver.
+                        Selecting a driver alone does not save an assignment;
+                        select Assign Driver and submit the update.
+                      </p>
+                      <label>
+                        <FieldCaption required={true}>Next status</FieldCaption>
+                        <select name="status" required defaultValue="">
+                          <option value="" disabled>
+                            Choose next status
+                          </option>
+                          {(orderTransitions[selected.status] ?? [])
+                            .filter((status) => status !== "delivered")
+                            .map((status) => (
+                              <option key={status} value={status}>
+                                {
+                                  (
+                                    {
+                                      accepted: "Accept Order",
+                                      preparing: "Preparing",
+                                      assigned: "Assign Driver",
+                                      out_for_delivery: "Out for Delivery",
+                                      delivery_failed: "Delivery Failed",
+                                      cancelled: "Cancel Order",
+                                    } as Record<string, string>
+                                  )[status]
+                                }
+                              </option>
+                            ))}
+                        </select>
+                      </label>
+                      <label>
+                        <FieldCaption required={true}>
+                          Driver when assigning
+                        </FieldCaption>
+                        <select
+                          name="driverId"
+                          disabled={
+                            !(orderTransitions[selected.status] ?? []).includes(
+                              "assigned",
+                            )
+                          }
+                        >
+                          <option value="">
+                            Choose a driver when assigning
+                          </option>
+                          {staff.data
+                            ?.filter(
+                              (u: any) => u.role === "driver" && u.active,
+                            )
+                            .map((u: any) => (
+                              <option value={u.id} key={u.id}>
+                                {u.name}
+                              </option>
+                            ))}
+                        </select>
+                      </label>
+                      <label>
+                        <FieldCaption required={true}>
+                          Failure category when reporting unsuccessful delivery
+                        </FieldCaption>
+                        <select name="failureReason" defaultValue="other">
+                          {deliveryFailureReasons.map((r) => (
+                            <option key={r} value={r}>
+                              {r.replaceAll("_", " ")}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <label>
+                        <FieldCaption required={true}>
+                          Operational note
+                        </FieldCaption>
+                        <textarea name="note" required minLength={5} />
+                      </label>
+                      <button className="button full">
+                        Update Order <ArrowRight size={17} />
+                      </button>
+                    </form>
+                  </details>
+              )}
             </>
           )}
         </Modal>
