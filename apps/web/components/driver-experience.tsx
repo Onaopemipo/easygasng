@@ -736,7 +736,10 @@ export default function DriverExperience({ userId }: { userId: string }) {
                     decision={response(current.id)}
                     disabled={busy || stale}
                     write={write}
-                    refresh={() => refresh()}
+                    refresh={async () => {
+                      setError("");
+                      await refresh();
+                    }}
                   />
                 </>
               ) : (

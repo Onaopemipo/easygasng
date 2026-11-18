@@ -250,6 +250,15 @@ test("DWT-BROWSER: web start, status recovery, profile management, consent and g
     await page
       .getByText("Proof photo uploaded for this order.", { exact: true })
       .waitFor();
+    assert.equal(
+      await page
+        .getByText(
+          "Upload an authorised proof photo for this delivery attempt before completion.",
+          { exact: true },
+        )
+        .count(),
+      0,
+    );
     await page.getByLabel(/Customer six-digit handover code/).fill("");
     for (const width of [390, 1440]) {
       await page.setViewportSize({ width, height: 1000 });
