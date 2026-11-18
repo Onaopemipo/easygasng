@@ -1,7 +1,7 @@
 {
   "phase": "Approved Driver SaaS redesign — 18 November 2026",
   "baseline": "904fc6b",
-  "releaseDecision": "NO-GO — final native visual, Android interactive, real-device, accessibility and physical workflow gates incomplete; no automatic deployment",
+  "releaseDecision": "NO-GO — public commercial production and full real-device/accessibility/physical acceptance; bounded synthetic demo release separately authorised",
   "requirements": [
     {
       "id": "DRV-SAAS-AUDIT",
@@ -16,7 +16,8 @@
         "apps/mobile/DriverWorkspace.tsx",
         "apps/mobile/DriverSaaS.tsx",
         "packages/business-rules/src/driver-presentation.ts",
-        "apps/mobile/driver/app.config.js"
+        "apps/mobile/driver/app.config.js",
+        "apps/mobile/driver/package.json"
       ],
       "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
       "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
@@ -34,7 +35,8 @@
         "DRVS-NEXT",
         "DRVS-SCOPE",
         "DRVS-PRESERVED",
-        "DRVS-BROWSER"
+        "DRVS-BROWSER",
+        "DRVS-NATIVE-LINK"
       ],
       "negativeTests": [],
       "evidence": [
@@ -45,13 +47,16 @@
         "docs/driver-saas-redesign/02-design-implementation.md",
         "docs/driver-saas-redesign/00-baseline-audit.md",
         "docs/driver-saas-redesign/01-api-permission-map.md",
-        "docs/driver-saas-redesign/reference-integrity.json"
+        "docs/driver-saas-redesign/reference-integrity.json",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G01",
       "status": "VERIFIED_COMPLETE",
       "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
       "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "outstandingWork": "Real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
       "approvedRequirementId": "DRV-SAAS-AUDIT"
     },
     {
@@ -90,13 +95,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G05",
       "status": "VERIFIED_COMPLETE",
       "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
       "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "outstandingWork": "Real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
       "approvedRequirementId": "DRV-W01"
     },
     {
@@ -135,13 +143,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G19",
       "status": "VERIFIED_COMPLETE",
       "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
       "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "outstandingWork": "Real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
       "approvedRequirementId": "DRV-W02"
     },
     {
@@ -180,13 +191,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G28",
       "status": "VERIFIED_COMPLETE",
       "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
       "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "outstandingWork": "Real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
       "approvedRequirementId": "DRV-W03"
     },
     {
@@ -225,13 +239,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G30",
       "status": "VERIFIED_COMPLETE",
       "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
       "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "outstandingWork": "Real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
       "approvedRequirementId": "DRV-W04"
     },
     {
@@ -270,13 +287,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G07",
       "status": "PARTIAL",
-      "reason": "Implemented in shared native source and observed on installed iOS simulator; Android UI/Back and physical-device lifecycle acceptance have not run.",
-      "testResult": "PASS — native types, iOS/Android Hermes exports and native release compilation; iOS four-view light/dark/system observations. Android/device acceptance incomplete.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain. Repeat isolated iOS header visual acceptance; branding row is absent in some captured subviews despite AX controls being present. Exact35% density comparison remains unverified.",
+      "reason": "Implemented and bounded installed iOS/Android Release screen/navigation/theme acceptance passed. Full physical-device, offline/proof and accessibility acceptance remains incomplete.",
+      "testResult": "PASS — bounded source, builds, types, installed iOS/Android four-screen visual and navigation checks; full requirement remains PARTIAL for retained device gates.",
+      "outstandingWork": "Real iOS/Android permissions, locked screen, airplane/reconnect, camera/proof/physical workflow and assistive-technology acceptance; exact 35% density comparison remains unverified.",
       "approvedRequirementId": "DRV-M01"
     },
     {
@@ -315,13 +335,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G08",
       "status": "PARTIAL",
-      "reason": "Implemented in shared native source and observed on installed iOS simulator; Android UI/Back and physical-device lifecycle acceptance have not run.",
-      "testResult": "PASS — native types, iOS/Android Hermes exports and native release compilation; iOS four-view light/dark/system observations. Android/device acceptance incomplete.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain. Repeat isolated iOS header visual acceptance; branding row is absent in some captured subviews despite AX controls being present. Exact35% density comparison remains unverified.",
+      "reason": "Implemented and bounded installed iOS/Android Release screen/navigation/theme acceptance passed. Full physical-device, offline/proof and accessibility acceptance remains incomplete.",
+      "testResult": "PASS — bounded source, builds, types, installed iOS/Android four-screen visual and navigation checks; full requirement remains PARTIAL for retained device gates.",
+      "outstandingWork": "Real iOS/Android permissions, locked screen, airplane/reconnect, camera/proof/physical workflow and assistive-technology acceptance; exact 35% density comparison remains unverified.",
       "approvedRequirementId": "DRV-M02"
     },
     {
@@ -360,13 +383,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G09",
       "status": "PARTIAL",
-      "reason": "Implemented in shared native source and observed on installed iOS simulator; Android UI/Back and physical-device lifecycle acceptance have not run.",
-      "testResult": "PASS — native types, iOS/Android Hermes exports and native release compilation; iOS four-view light/dark/system observations. Android/device acceptance incomplete.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain. Repeat isolated iOS header visual acceptance; branding row is absent in some captured subviews despite AX controls being present. Exact35% density comparison remains unverified.",
+      "reason": "Implemented and bounded installed iOS/Android Release screen/navigation/theme acceptance passed. Full physical-device, offline/proof and accessibility acceptance remains incomplete.",
+      "testResult": "PASS — bounded source, builds, types, installed iOS/Android four-screen visual and navigation checks; full requirement remains PARTIAL for retained device gates.",
+      "outstandingWork": "Real iOS/Android permissions, locked screen, airplane/reconnect, camera/proof/physical workflow and assistive-technology acceptance; exact 35% density comparison remains unverified.",
       "approvedRequirementId": "DRV-M03"
     },
     {
@@ -405,13 +431,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G10",
       "status": "PARTIAL",
-      "reason": "Implemented in shared native source and observed on installed iOS simulator; Android UI/Back and physical-device lifecycle acceptance have not run.",
-      "testResult": "PASS — native types, iOS/Android Hermes exports and native release compilation; iOS four-view light/dark/system observations. Android/device acceptance incomplete.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain. Repeat isolated iOS header visual acceptance; branding row is absent in some captured subviews despite AX controls being present. Exact35% density comparison remains unverified.",
+      "reason": "Implemented and bounded installed iOS/Android Release screen/navigation/theme acceptance passed. Full physical-device, offline/proof and accessibility acceptance remains incomplete.",
+      "testResult": "PASS — bounded source, builds, types, installed iOS/Android four-screen visual and navigation checks; full requirement remains PARTIAL for retained device gates.",
+      "outstandingWork": "Real iOS/Android permissions, locked screen, airplane/reconnect, camera/proof/physical workflow and assistive-technology acceptance; exact 35% density comparison remains unverified.",
       "approvedRequirementId": "DRV-M04"
     },
     {
@@ -455,13 +484,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G34",
       "status": "VERIFIED_COMPLETE",
       "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
       "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "outstandingWork": "Real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
       "approvedRequirementId": "DRV-SAAS-SECURITY"
     },
     {
@@ -502,13 +534,16 @@
         "docs/driver-saas-redesign/evidence/web-browser.txt",
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/02-design-implementation.md"
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G32",
       "status": "PARTIAL",
-      "reason": "Web six-width/theme/failure checks and iOS simulator visual/navigation checks passed; Android interaction, real assistive technology and target-device dynamic type remain untested.",
-      "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "reason": "Implemented and bounded installed iOS/Android Release screen/navigation/theme acceptance passed. Full physical-device, offline/proof and accessibility acceptance remains incomplete.",
+      "testResult": "PASS — bounded source, builds, types, installed iOS/Android four-screen visual and navigation checks; full requirement remains PARTIAL for retained device gates.",
+      "outstandingWork": "Real iOS/Android permissions, locked screen, airplane/reconnect, camera/proof/physical workflow and assistive-technology acceptance; exact 35% density comparison remains unverified.",
       "approvedRequirementId": "DRV-SAAS-PARITY"
     },
     {
@@ -550,13 +585,16 @@
         "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
         "docs/driver-saas-redesign/04-test-results.md",
         "docs/driver-saas-redesign/02-design-implementation.md",
-        "docs/driver-saas-redesign/05-rollback-and-release.md"
+        "docs/driver-saas-redesign/05-rollback-and-release.md",
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
       ],
       "acceptanceGate": "DRV-SAAS-G40",
       "status": "VERIFIED_COMPLETE",
       "reason": "Explicit NO-GO and reversible source rollback recorded. No automatic deployment, hosted flags, provider activation or destructive migration.",
       "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
-      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "outstandingWork": "Real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
       "approvedRequirementId": "DRV-SAAS-RELEASE"
     }
   ],
@@ -638,55 +676,64 @@
       "requirement": "iOS Home",
       "status": "PASS",
       "approvedGateId": "G07",
-      "reason": "Installed dedicated iOS 26.5 simulator Release screen and existing navigation observed in light/dark; real-phone acceptance is separate.",
+      "reason": "Final installed dedicated iOS 26.5 and Android API37.1 Release four-screen rendering, truthful data/navigation and Profile dark/System theme observed. Android History crash fixed by native SVG declaration; real-phone acceptance stays separate.",
       "evidence": [
-        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
-        "docs/driver-saas-redesign/04-test-results.md"
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/ios-svg-build.txt",
+        "docs/driver-saas-redesign/evidence/header-release/android-svg-build.txt"
       ]
     },
     {
       "id": "DRV-SAAS-G08",
       "requirement": "iOS Orders",
-      "status": "BLOCKED",
+      "status": "PASS",
       "approvedGateId": "G08",
-      "reason": "Installed iOS screen data/navigation/theme observed. Final screenshot review found inconsistent branding-row visibility outside Home; repeat isolated header visual acceptance. Device Hub switched to another active app and rejected the attempted QA selection; no competing UI interaction was forced.",
+      "reason": "Final installed dedicated iOS 26.5 and Android API37.1 Release four-screen rendering, truthful data/navigation and Profile dark/System theme observed. Android History crash fixed by native SVG declaration; real-phone acceptance stays separate.",
       "evidence": [
-        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
-        "docs/driver-saas-redesign/04-test-results.md"
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/ios-svg-build.txt",
+        "docs/driver-saas-redesign/evidence/header-release/android-svg-build.txt"
       ]
     },
     {
       "id": "DRV-SAAS-G09",
       "requirement": "iOS History",
-      "status": "BLOCKED",
+      "status": "PASS",
       "approvedGateId": "G09",
-      "reason": "Installed iOS screen data/navigation/theme observed. Final screenshot review found inconsistent branding-row visibility outside Home; repeat isolated header visual acceptance. Device Hub switched to another active app and rejected the attempted QA selection; no competing UI interaction was forced.",
+      "reason": "Final installed dedicated iOS 26.5 and Android API37.1 Release four-screen rendering, truthful data/navigation and Profile dark/System theme observed. Android History crash fixed by native SVG declaration; real-phone acceptance stays separate.",
       "evidence": [
-        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
-        "docs/driver-saas-redesign/04-test-results.md"
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/ios-svg-build.txt",
+        "docs/driver-saas-redesign/evidence/header-release/android-svg-build.txt"
       ]
     },
     {
       "id": "DRV-SAAS-G10",
       "requirement": "iOS Profile",
-      "status": "BLOCKED",
+      "status": "PASS",
       "approvedGateId": "G10",
-      "reason": "Installed iOS screen data/navigation/theme observed. Final screenshot review found inconsistent branding-row visibility outside Home; repeat isolated header visual acceptance. Device Hub switched to another active app and rejected the attempted QA selection; no competing UI interaction was forced.",
+      "reason": "Final installed dedicated iOS 26.5 and Android API37.1 Release four-screen rendering, truthful data/navigation and Profile dark/System theme observed. Android History crash fixed by native SVG declaration; real-phone acceptance stays separate.",
       "evidence": [
-        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
-        "docs/driver-saas-redesign/04-test-results.md"
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/ios-svg-build.txt",
+        "docs/driver-saas-redesign/evidence/header-release/android-svg-build.txt"
       ]
     },
     {
       "id": "DRV-SAAS-G11",
       "requirement": "Android four screens",
-      "status": "BLOCKED",
+      "status": "PASS",
       "approvedGateId": "G11",
-      "reason": "Android APK built; no isolated interactive Android QA target established. Shared active emulator not commandeered; limited local disk and no installed avdmanager.",
+      "reason": "Final installed dedicated iOS 26.5 and Android API37.1 Release four-screen rendering, truthful data/navigation and Profile dark/System theme observed. Android History crash fixed by native SVG declaration; real-phone acceptance stays separate.",
       "evidence": [
-        "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/evidence/full-regression.txt",
-        "docs/driver-saas-redesign/evidence/web-browser.txt"
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/ios-svg-build.txt",
+        "docs/driver-saas-redesign/evidence/header-release/android-svg-build.txt"
       ]
     },
     {
@@ -920,13 +967,14 @@
     {
       "id": "DRV-SAAS-G31",
       "requirement": "theme",
-      "status": "BLOCKED",
+      "status": "PASS",
       "approvedGateId": "G31",
-      "reason": "Web and iOS light/dark/system inspected; Android device appearance pending.",
+      "reason": "Final installed dedicated iOS 26.5 and Android API37.1 Release four-screen rendering, truthful data/navigation and Profile dark/System theme observed. Android History crash fixed by native SVG declaration; real-phone acceptance stays separate.",
       "evidence": [
-        "docs/driver-saas-redesign/04-test-results.md",
-        "docs/driver-saas-redesign/evidence/full-regression.txt",
-        "docs/driver-saas-redesign/evidence/web-browser.txt"
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt",
+        "docs/driver-saas-redesign/evidence/header-release/ios-svg-build.txt",
+        "docs/driver-saas-redesign/evidence/header-release/android-svg-build.txt"
       ]
     },
     {
@@ -2224,20 +2272,16 @@
     {
       "id": "T78",
       "description": "theme light/dark/system",
-      "status": "BLOCKED",
+      "status": "PASS",
       "evidence": [
-        "docs/driver-saas-redesign/evidence/full-regression.txt",
-        "docs/driver-saas-redesign/evidence/web-browser.txt",
-        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
-        "docs/driver-saas-redesign/04-test-results.md"
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt"
       ],
       "commandIds": [
-        "REGRESSION",
-        "BROWSER",
-        "IOS_UI"
+        "NATIVE_UI"
       ],
-      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
-      "result": "Web and iOS themes tested; Android appearance pending."
+      "platformScope": "Installed dedicated iOS26.5 simulator / Android API37.1 emulator Release; physical-device acceptance separate.",
+      "result": "PASS — Profile dark and System appearance on both final installed releases; system mode restored."
     },
     {
       "id": "T79",
@@ -2286,31 +2330,30 @@
     {
       "id": "T82",
       "description": "iOS safe areas",
-      "status": "BLOCKED",
+      "status": "PASS",
       "evidence": [
-        "docs/driver-saas-redesign/evidence/full-regression.txt",
-        "docs/driver-saas-redesign/evidence/web-browser.txt",
-        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
-        "docs/driver-saas-redesign/04-test-results.md"
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt"
       ],
       "commandIds": [
-        "REGRESSION",
-        "BROWSER",
-        "IOS_UI"
+        "NATIVE_UI"
       ],
-      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
-      "result": "One iOS simulator safe-area layout inspected; wider device/dynamic-type acceptance pending."
+      "platformScope": "Installed dedicated iOS26.5 simulator / Android API37.1 emulator Release; physical-device acceptance separate.",
+      "result": "PASS — all four final iOS/Android screens and fixed headers/tabs fit their tested safe areas. Target-device dynamic type remains open."
     },
     {
       "id": "T83",
       "description": "Android back",
-      "status": "NOT_RUN",
+      "status": "PASS",
       "evidence": [
-        "docs/driver-saas-redesign/04-test-results.md"
+        "docs/driver-saas-redesign/07-header-android-demo-release.md",
+        "docs/driver-saas-redesign/evidence/header-release/native-observations.txt"
       ],
-      "commandIds": [],
-      "platformScope": "Unexecuted; retained in denominator.",
-      "result": "Android hardware Back not exercised."
+      "commandIds": [
+        "NATIVE_UI"
+      ],
+      "platformScope": "Installed dedicated iOS26.5 simulator / Android API37.1 emulator Release; physical-device acceptance separate.",
+      "result": "PASS — actual Android system Back from owned In progress detail returns to Orders with selected filter preserved."
     },
     {
       "id": "T84",
@@ -2425,12 +2468,12 @@
     "criticalTotal": 1,
     "routesVerified": 5,
     "routesTotal": 5,
-    "gatesPassed": 24,
+    "gatesPassed": 29,
     "gatesTotal": 40,
-    "scenariosPassed": 66,
+    "scenariosPassed": 69,
     "scenariosTotal": 90,
-    "routeScope": "One web workspace plus four installed iOS simulator views. This does not count Android acceptance; its four views remain G11 BLOCKED.",
-    "androidViewsVerified": 0,
+    "routeScope": "Existing web workspace and four installed iOS simulator views verified; all four Android emulator views separately verified. Real-device/physical/accessibility gates remain in denominator.",
+    "androidViewsVerified": 4,
     "androidViewsTotal": 4
   },
   "changeLog": [
@@ -2445,6 +2488,14 @@
     {
       "date": "2026-11-18",
       "change": "Added actual name-edit/browser negative boundary verification in cbcb821. Final image review keeps iOS subview header visual acceptance open; shared Device Hub changed to another active app and rejected selection. Inactive-driver-specific scenario remains NOT_RUN rather than substituting generic session tests."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "User explicitly authorised fixing the iOS header, finishing Android interaction checks, pushing all phase commits and deploying to the synthetic demo while preserving permanent fulfilment and Paystack sandbox. Header clipping is being isolated from operational controls; acceptance remains pending execution. Production and physical/device gates are not waived."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Closed bounded G08–G11/G31 and T78/T82/T83 after final installed native checks. Reproduced and fixed missing Android SVG manager; both releases rebuilt. Historical NO-GO retained for public production/full physical acceptance; latest user authorises only synthetic demo deployment with permanent fulfilment and sandbox."
     }
   ],
   "commands": {
@@ -2472,11 +2523,22 @@
       "command": "node --import tsx --test --test-reporter=spec tests/customer-traceability.test.ts",
       "environment": "Latest local documentation and source; no hosted writes",
       "evidence": "docs/driver-saas-redesign/evidence/traceability-validation.txt"
+    },
+    "NATIVE_UI": {
+      "command": "Manual Device Hub and Android Studio Running Devices UI; simctl/adb readonly screen capture and build/install tools",
+      "environment": "Dedicated local synthetic QA only; final installed iOS26.5 simulator and Android API37.1 ARM64 emulator, not real phones",
+      "evidence": "docs/driver-saas-redesign/evidence/header-release/native-observations.txt"
+    },
+    "FOCUSED": {
+      "command": "node --import tsx --test --test-reporter=spec tests/driver-saas-redesign.test.ts tests/driver-local-config.test.ts tests/driver-workspace.test.ts tests/driver-experience-redesign.test.ts tests/dispatch-centre-safety.test.ts",
+      "environment": "Final header correction and native package declaration; 33 pass, 0 failed/skipped",
+      "evidence": "docs/driver-saas-redesign/evidence/header-release/focused-release.txt"
     }
   },
   "sourceCommits": [
     "a97f4de",
     "274e75e",
     "cbcb821"
-  ]
+  ],
+  "demoReleaseDecision": "PENDING — native correction and interactive checks passed; push, fresh CI and Ready candidate verification required before promotion"
 }

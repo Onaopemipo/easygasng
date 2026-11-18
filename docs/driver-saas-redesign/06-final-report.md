@@ -1,28 +1,11 @@
-# Final driver SaaS report
+# Driver SaaS release report
 
-Implemented on `codex/driver-saas-redesign`; application source `274e75e`, supplemental browser verification `cbcb821`, isolated local-shell repair `a97f4de`, baseline `904fc6b`. Presentation and guarded navigation are implemented in web/mobile web and shared native source. The complete phase remains **PARTIAL / NO-GO**, with no push/deploy or hosted setting change in this phase, as required by the supplied brief.
+The iOS header correction and Android interactive checks are complete within simulator/emulator scope. The fixed header uses an explicit safe-area inset and confines clipping to decoration. The Android check also exposed a missing native SVG manager during History loading; the driver package now declares the parent's existing SVG version and both native releases were rebuilt. All four final installed screens, Profile dark/System appearance and Android detail/system Back were checked. [Current evidence and release record](07-header-android-demo-release.md).
 
-Final validation:749/749 regression tests pass, 0 failures/skips; web types/build, native types, both Hermes exports, dedicated iOS Release install/start and Android ARM64 Release compile pass; both production dependency audits report 0 vulnerabilities. Actual Chrome six-width/theme/error/action checks pass. All four installed iOS simulator screens were observed, including detail/back filter preservation and light/dark/System appearance. Final iOS header visual acceptance, Android interactive, real-phone background/camera/offline and assistive-technology gates remain open.
+Fresh focused validation: 33 tests pass, no failures/skips; both typechecks and both production dependency audits pass with zero vulnerabilities. Earlier full PostgreSQL regression passed 749/749. Fresh GitHub web/native validation and demo candidate verification are pending before promotion. User explicitly authorises this push/deployment, superseding the supplied brief's earlier automatic-deployment hold for the synthetic demo only.
 
-Exact source paths changed from baseline:
+[Requirements matrix](../traceability/driver-saas-redesign-rtm.md) retains all 12 stable requirements, 90 scenarios and 40 gates. Implementation is 12/12; seven bounded requirements verified, five native/parity requirements partial. 69/90 scenarios and 29/40 gates pass. Real-phone locked-screen/airplane/reconnect, camera/proof/physical fulfilment, assistive technology and exact 35% density acceptance remain open. Commercial production NO-GO and Excel import hold remain.
 
-- `apps/mobile/DriverSaaS.tsx`
-- `apps/mobile/DriverWorkspace.tsx`
-- `apps/mobile/driver/app.config.js`
-- `apps/web/components/driver-experience.module.css`
-- `apps/web/components/driver-experience.tsx`
-- `docs/driver-saas-redesign/approved-field-source.json`
-- `docs/driver-saas-redesign/protected-business-sources.json`
-- `packages/business-rules/src/driver-presentation.ts`
-- `scripts/qa-driver-saas.mjs`
-- `tests/dispatch-centre-safety.test.ts`
-- `tests/driver-local-config.test.ts`
-- `tests/driver-saas-redesign.test.ts`
+Canonical payment, stock, cylinder, custody, proof, GPS and permission controls are preserved. The 18 protected business sources remain byte-identical. This release retains enabled demo fulfilment and Paystack sandbox; it grants no real delivery or live payment approval. No generated native projects, binaries, test credentials or private account files are committed.
 
-Phase documentation:00-baseline-audit.md,01-api-permission-map.md,02-design-implementation.md,03-security-and-safety-regression.md,04-test-results.md,05-rollback-and-release.md,this report,approved-brief.md,reference-integrity.json and artifact-register.json under docs/driver-saas-redesign; docs/traceability/README.md and driver-saas-redesign-rtm.json/.md. Every evidence path and hash is enumerated in [artifact-register.json](artifact-register.json); credentials, native generated projects and binaries are excluded from Git.
-
-Reused API actions and authority: [01-api-permission-map.md](01-api-permission-map.md). No new endpoint, provider, permission, schema, operational flag or payment setting. Canonical18 protected modules are byte-preserved and tested. Prior wallet payments, demo fulfilment enabled state, Paystack sandbox, production NO-GO and import hold remain unchanged.
-
-Design deviations protect actual capability: privacy-minimal History omits old customer contacts/destinations and missing quantities/timelines; current-page reference search is labelled honestly; no claim queue, QR, earnings, fake map/ETA/trends/verification; web retains existing acknowledgement/decline and routes full physical pickup/proof operations through existing native workflow. Native compact panel replaces large photo; missing data remains unavailable rather than fabricated zero. [Design implementation](02-design-implementation.md) records these scope choices.
-
-[Full RTM](../traceability/driver-saas-redesign-rtm.md) retains 12 stable phase requirements, all 90 scenarios and 40 gates; earlier DRV-R IDs and unrelated work remain. Seven requirements are bounded VERIFIED_COMPLETE and five native/parity requirements PARTIAL. [Executed test report](04-test-results.md) distinguishes canonical automated checks, browser fault injection, iOS simulator observations and missing physical/device proof. [Rollback and explicit release assessment](05-rollback-and-release.md) contains source-only revert and post-rollback checks; no destructive rollback was run.
+Source includes the existing driver web/native redesign, local plugin path repair, presentation helpers, browser/regression checks, native header correction and explicit nested SVG dependency. [Source/API map](01-api-permission-map.md), [design deviations](02-design-implementation.md), [executed tests](04-test-results.md), [rollback](05-rollback-and-release.md) and [artifact register](artifact-register.json) preserve the audit trail.

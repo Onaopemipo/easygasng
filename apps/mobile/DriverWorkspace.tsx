@@ -30,7 +30,10 @@ import {
   AppState,
   BackHandler,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import { randomUUID } from "expo-crypto";
@@ -88,6 +91,7 @@ export default function DriverWorkspace({
   logout: () => Promise<void>;
 }) {
   const { colors, preference, setPreference } = useTheme();
+  const insets = useSafeAreaInsets();
   const headerGreen = "#004c30";
   const [backgroundPermission, setBackgroundPermission] =
     useState("Not checked");
@@ -616,21 +620,25 @@ export default function DriverWorkspace({
       style={{ flex: 1, backgroundColor: colors.background }}
     >
       <StatusBar barStyle="light-content" />
-      <SafeAreaView
-        edges={["top"]}
+      <View
+        key={`${scrollKey}:${colors.background}`}
+        collapsable={false}
         style={{
           backgroundColor: headerGreen,
+          paddingTop: insets.top,
           paddingHorizontal: 18,
           paddingBottom: 30,
-          overflow: "hidden",
+          flexShrink: 0,
         }}
       >
         <View
+          collapsable={false}
           style={{
             flexDirection: "row",
             alignItems: "center",
             gap: 8,
             minHeight: 54,
+            flexShrink: 0,
           }}
         >
           {(selected || historyRow || !tabs.some((t) => t[1] === page)) && (
@@ -649,6 +657,7 @@ export default function DriverWorkspace({
             </Pressable>
           )}
           <View
+            collapsable={false}
             style={{
               flex: 1,
               flexDirection: "row",
@@ -757,31 +766,40 @@ export default function DriverWorkspace({
           pointerEvents="none"
           style={{
             position: "absolute",
-            bottom: -14,
-            left: -30,
-            right: -30,
-            height: 35,
-            backgroundColor: "#168d3e",
-            borderTopLeftRadius: 180,
-            borderTopRightRadius: 110,
-            transform: [{ rotate: "-2deg" }],
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 30,
+            overflow: "hidden",
           }}
-        />
-        <View
-          accessible={false}
-          pointerEvents="none"
-          style={{
-            position: "absolute",
-            bottom: -23,
-            left: -20,
-            right: -20,
-            height: 36,
-            backgroundColor: colors.background,
-            borderTopLeftRadius: 130,
-            borderTopRightRadius: 180,
-          }}
-        />
-      </SafeAreaView>
+        >
+          <View
+            style={{
+              position: "absolute",
+              bottom: -14,
+              left: -30,
+              right: -30,
+              height: 35,
+              backgroundColor: "#168d3e",
+              borderTopLeftRadius: 180,
+              borderTopRightRadius: 110,
+              transform: [{ rotate: "-2deg" }],
+            }}
+          />
+          <View
+            style={{
+              position: "absolute",
+              bottom: -23,
+              left: -20,
+              right: -20,
+              height: 36,
+              backgroundColor: colors.background,
+              borderTopLeftRadius: 130,
+              borderTopRightRadius: 180,
+            }}
+          />
+        </View>
+      </View>
       <ScrollView
         ref={scrollRef}
         onScroll={(event) => {

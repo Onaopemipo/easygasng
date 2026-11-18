@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {readFile} from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 test("DRVS-CONFIG: nested local driver shell resolves inherited plugins and still rejects non-local build profiles", async () => {
   const { execFileSync } = await import("node:child_process");
   const env = {
@@ -34,4 +34,18 @@ test("DRVS-CONFIG: nested local driver shell resolves inherited plugins and stil
       { env: { ...env, EAS_BUILD_PROFILE: "preview" }, stdio: "pipe" },
     ),
   );
+});
+
+test("DRVS-NATIVE-LINK: the nested driver release declares the native SVG loader dependency", async () => {
+  const parent = JSON.parse(await readFile("apps/mobile/package.json", "utf8"));
+  const driver = JSON.parse(
+    await readFile("apps/mobile/driver/package.json", "utf8"),
+  );
+  const loader = await readFile("apps/mobile/EasyGasLoader.tsx", "utf8");
+  assert.match(loader, /from "react-native-svg"/);
+  assert.equal(
+    driver.dependencies["react-native-svg"],
+    parent.dependencies["react-native-svg"],
+  );
+  assert.ok(driver.dependencies["react-native-svg"]);
 });

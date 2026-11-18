@@ -1,5 +1,7 @@
 # Executed validation — 18 November 2026
 
+**Current continuation:** The latest user explicitly authorised the native correction, Android checks, push and synthetic demo deployment. Final installed iOS/Android screen checks now pass; see [current release evidence](07-header-android-demo-release.md). The following records the earlier phase assessment and must not be read as the current deployment status. Commercial production and physical acceptance remain NO-GO.
+
 Source under test: `274e75e`, with isolated prerequisite `a97f4de`; baseline `904fc6b`. Node 24.21.0 / npm 11.19.0. This phase used only disposable local databases, localhost QA and dedicated iOS simulator. Test fixtures are synthetic, never illustrative production records. No hosted order/payment/settings were touched.
 
 | Check | Actual result | Evidence |
