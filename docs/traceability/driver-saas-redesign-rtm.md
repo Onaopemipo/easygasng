@@ -1,7 +1,7 @@
 # Driver SaaS requirements traceability
 
 NO-GO — public commercial production and full real-device/accessibility/physical acceptance; bounded synthetic demo release separately authorised.
-PENDING — native correction and interactive checks passed; push, fresh CI and Ready candidate verification required before promotion.
+GO — explicitly authorised synthetic demo only; source882c08d pushed, fresh web/native CI successful, Ready candidate verified/promoted and stable-alias smoke checks passed; permanent fulfilment enabled and Paystack test mode.
 
 Implementation 12/12; bounded requirements verified 7/12; native/parity partial 5/12. Critical source/control preservation 1/1. Web workspace + iOS views 5/5; Android views 4/4. Gates 29/40 PASS; scenarios 69/90 PASS. Blocked and untested requirements remain in denominators.
 

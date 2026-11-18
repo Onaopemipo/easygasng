@@ -164,3 +164,10 @@ To roll back the web build, promote prior Ready deployment `dpl_D9DFNiZmeSEmTuq8
 The additional hosted funded-wallet order probe was not completed: sandbox funding stayed pending without a checkout URL or credit. No test card was entered and no second charge was initialized for that reference. Actual wallet payment and the matching paid EasyGas invoice were verified using disposable PostgreSQL browser and installed iOS orders. Installed Android and remaining native variants are open. Commercial production remains NO-GO.
 
 [Requirements and coverage](../traceability/wallet-order-rtm.md) · [Executed evidence and limitations](../traceability/wallet-order-evidence.txt)
+
+
+## Driver SaaS release — 18 November2026
+
+Explicit user authorisation covered native correction, Android checks, push and demo deployment. Source882c08d on codex/driver-saas-redesign; both fresh Release validation jobs passed. Candidate dpl_EaXJRaDgh8ocgWnPuH18TN2EqkX3 was built from a clean committed archive with no environment overrides, verified Ready/test mode/fulfilment, then promoted to the stable alias. Previous Ready dpl_Dgvn7MrBfRpp3f42tXi6A4CBXEhu is retained for web rollback.
+
+[Release evidence](../driver-saas-redesign/07-header-android-demo-release.md) records native build/UI checks, CI, hosted six-width driver views, Incidents and checkout smoke results. Permanent Production defaults retain EASYGAS_FIELD_OPERATIONS_ENABLED=true, EASYGAS_TRACKING_MUTATIONS_ENABLED=true, EASYGAS_BULK_LPG_ENABLED=true, EASYGAS_PROOF_RETENTION_DAYS=1. Sensitive values were not exposed by env pull; authenticated candidate and stable runtime configuration confirmed Paystack environment test and available. No live keys or operational data were changed. Native binaries remain local QA builds; physical-device/production acceptance and historical import hold remain separate.

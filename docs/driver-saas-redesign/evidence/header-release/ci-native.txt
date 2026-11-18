@@ -1,0 +1,17 @@
+GitHub Release validation run 44240558101; source 882c08d; native job 134587135793 completed SUCCESS.
+https://github.com/Onaopemipo/easygasng/actions/runs/44240558101
+Selected verbatim job log lines follow. Deferred workflow_dispatch export step was skipped; both final native Release builds and embedded JS bundles were executed locally, recorded separately.
+2026-11-18T04:54:58.1369899Z ##[group]Run npm ci
+2026-11-18T04:55:05.1997719Z found 0 vulnerabilities
+2026-11-18T04:55:05.2276443Z ##[group]Run npm run typecheck
+2026-11-18T04:55:05.3129363Z > @easygas/mobile@0.1.0 typecheck
+2026-11-18T04:55:05.3129873Z > tsc --noEmit
+2026-11-18T04:55:08.0743910Z ##[group]Run npm run test:dependencies
+2026-11-18T04:55:08.1569144Z > @easygas/mobile@0.1.0 test:dependencies
+2026-11-18T04:55:08.1569652Z > node --test ../../tests/mobile-dependencies.test.ts
+2026-11-18T04:55:08.4313888Z # tests 3
+2026-11-18T04:55:08.4314543Z # pass 3
+2026-11-18T04:55:08.4318484Z # fail 0
+2026-11-18T04:55:08.4319130Z # skipped 0
+2026-11-18T04:55:08.4428353Z ##[group]Run npm audit --omit=dev --audit-level=moderate
+2026-11-18T04:55:08.7949647Z found 0 vulnerabilities

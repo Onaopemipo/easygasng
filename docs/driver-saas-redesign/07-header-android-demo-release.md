@@ -12,7 +12,7 @@ Android interactive testing reproduced a History loading crash: the nested drive
 
 Final installed iOS Release: EasyGas Onboarding QA / iOS 26.5. Final installed Android ARM64 Release: dedicated EasyGas_Driver_QA / Android API37.1. Both connect only to disposable local synthetic QA. [Manual observations](evidence/header-release/native-observations.txt), [iOS build](evidence/header-release/ios-svg-build.txt), [Android build](evidence/header-release/android-svg-build.txt).
 
-All four screens render their branding and truthful records. Android History now loads without crashing; Profile dark mode and System restoration pass. Android In progress/detail/system Back preserves the selected filter. Availability is separate from Backend Connected, GPS Not granted and No active trip. Closed History has no old customer contact/address. No OS location/camera permission or physical handover was asserted. Immediate captures sometimes omitted unchanged compositor layers, including OS clock or bottom tabs; final settled captures were visually reviewed and retained.
+All four screens render their branding and truthful records. Android History now loads without crashing; Profile dark mode and System restoration pass. Android In progress/detail/system Back preserves the selected filter. Availability is separate from Backend Connected, GPS Not granted and No active trip. Closed History has no old customer contact/address. No OS location/camera permission or physical handover was asserted. Some immediate captures omitted content, including OS clock or bottom tabs; later UI inspection and settled captures were complete. The capture discrepancy’s cause was not established. Only visually reviewed, complete settled captures were retained as acceptance evidence.
 
 Final screenshots: `evidence/header-release/ios-svg-{home,orders,history,profile,profile-dark}.png`; Android `android-svg-home.png`, `android-svg-back-filter.png`, `android-svg-history.png`, `android-svg-profile-settled.png`, `android-svg-profile-dark.png`.
 
@@ -20,7 +20,13 @@ Fresh focused tests: 33 PASS, 0 failed/skipped. Web/native typechecks pass. Both
 
 ## Release record
 
-Push, fresh GitHub validation and candidate deployment/promotion pending. Permanent project fulfilment flags must stay true; Paystack configuration must report environment `test`. No deployment-specific setting overrides are needed. Candidate must be Ready and checked before promotion to https://easygas-client-demo.vercel.app.
+Source commit `882c08d3f479f151c32de1d63cd227c58d08beb5` and all preceding driver phase commits are pushed to `codex/driver-saas-redesign`. [Fresh GitHub run44240558101](https://github.com/Onaopemipo/easygasng/actions/runs/44240558101) completed with **web SUCCESS and native SUCCESS**. Web regression totals and build/type/audit results are preserved in `evidence/header-release/ci-web.txt`; native install/types/dependency tests/moderate audit passed. Deferred CI bundle export was skipped; both final native Release builds with embedded JS bundles were independently compiled, installed and checked locally.
+
+Clean committed source was deployed as candidate `dpl_EaXJRaDgh8ocgWnPuH18TN2EqkX3`, Ready at https://easygas-client-demo-g4vklxa5l-onaopemipos-projects.vercel.app. Candidate sandbox and fulfilment checks passed before promotion. It is now promoted to **https://easygas-client-demo.vercel.app**. No deployment-specific environment overrides were used. Previous verified Ready deployment `dpl_Dgvn7MrBfRpp3f42tXi6A4CBXEhu` remains the web rollback target.
+
+Stable-alias verification passed: driver Home/Orders/History/Profile at320/390/768/1024/1440/1920px without horizontal overflow; Incidents at320/1440 plus Finance390 read-only actions; Card/Cash/Wallet at390/1440, own private balance, identity injection denial and sandbox configuration. Existing test orderEG-2026-E8ED8AE8 remains paid/verified and delivered. The expired proof is not exposed. Permanent project defaults remain fulfilment=true, tracking=true, bulk=true and proof retention1day; runtime Paystack reports test/available. No charge, stock allocation, driver handover or existing order mutation was performed in this release verification.
+
+[Deployment readback](evidence/header-release/deployment-verification.json), [project defaults](evidence/header-release/project-defaults.json), [candidate fulfilment](evidence/header-release/candidate-fulfilment.txt), [hosted driver](evidence/header-release/hosted-driver.txt), [operations/Incidents](evidence/header-release/hosted-operations.txt), [checkout choices](evidence/header-release/hosted-wallet-choices.txt), [fresh browser fault checks](evidence/header-release/browser-release.txt).
 
 ## Retained acceptance gaps
 
