@@ -2,6 +2,160 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { fixture } from "./helpers/order-tracking-fixture";
 import { id, issueSession } from "../apps/web/lib/auth";
+import { actor } from "../apps/web/lib/auth";
+import { attachDeliveryPhoto } from "../apps/web/lib/delivery-photos";
+
+test("DWT-PROOFNEG: web completion requires payment, arrival, current consented proof, correct code and full handover without granting cash authority", async () => {
+  const f = await fixture();
+  try {
+    const order = await f.ready();
+    await f.call("driver", "driver.restrict");
+    const code = (await f.call("customer", "orders", { id: order.id }))[0]
+      .confirmation_code;
+    const complete = {
+      orderId: order.id,
+      version: order.tracking_version,
+      code,
+      handover: true,
+      operationKey: id(),
+    };
+    await assert.rejects(
+      () => f.call("driver", "driver.complete", complete),
+      /Payment needs authorised/i,
+    );
+    // Explicit disposable fixture funding; the actual wallet checkout below consumes it through the canonical ledger.
+    await f.db.exec(
+      "UPDATE settings SET value='true' WHERE key='wallet.enabled' AND scope='lagos'",
+    );
+    await f.db.query(
+      "INSERT INTO wallet_entries(id,customer_id,amount_kobo,kind,reference) VALUES($1,$2,1000000,'test_fixture',$3)",
+      [id(), f.actors.customer.id, id()],
+    );
+    const paid = await f.call("customer", "checkout", {
+      items: [{ productId: "hose", quantity: 1 }],
+      address: {
+        name: "Synthetic web customer",
+        phone: "08012345678",
+        street: "12 Synthetic Street",
+        zone: "Lekki",
+      },
+      date: new Date(Date.now() + 3 * 86400000).toISOString().slice(0, 10),
+      window: "14:00–18:00",
+      paymentMethod: "wallet",
+      idempotencyKey: id(),
+    });
+    for (const status of ["accepted", "preparing", "assigned"])
+      await f.transition(paid, status);
+    let current = await f.snapshot(paid.id);
+    await f.call("driver", "dispatch.respond", {
+      orderId: paid.id,
+      version: current.tracking_version,
+      decision: "acknowledged",
+      reason: "Synthetic web completion acknowledged",
+      operationKey: id(),
+    });
+    await f.pickup(paid);
+    await f.transition(paid, "out_for_delivery", "driver");
+    current = await f.snapshot(paid.id);
+    const owned = (await f.call("customer", "orders", { id: paid.id }))[0];
+    const request = {
+      orderId: paid.id,
+      version: current.tracking_version,
+      code: owned.confirmation_code,
+      handover: true,
+      operationKey: id(),
+    };
+    await assert.rejects(
+      () => f.call("driver", "driver.complete", request),
+      /arrival/i,
+    );
+    await f.call("driver", "delivery.arrived", {
+      orderId: paid.id,
+      version: current.tracking_version,
+      reason: "Synthetic verified arrival",
+      operationKey: id(),
+    });
+    current = await f.snapshot(paid.id);
+    request.version = current.tracking_version;
+    await assert.rejects(
+      () => f.call("driver", "driver.complete", request),
+      /proof photo/i,
+    );
+    const driver = await actor(f.db, f.actors.driver.token);
+    await assert.rejects(
+      () =>
+        f.db.transaction((tx) =>
+          attachDeliveryPhoto(
+            tx,
+            driver,
+            paid.id,
+            Buffer.from("Synthetic test proof"),
+            "Synthetic proof",
+            false,
+          ),
+        ),
+      /consent/i,
+    );
+    await f.db.transaction((tx) =>
+      attachDeliveryPhoto(
+        tx,
+        driver,
+        paid.id,
+        Buffer.from("Synthetic test proof"),
+        "Synthetic proof",
+        true,
+      ),
+    );
+    await assert.rejects(
+      () =>
+        f.call("driver", "driver.complete", {
+          ...request,
+          code: owned.confirmation_code === "000000" ? "111111" : "000000",
+          operationKey: id(),
+        }),
+      /code/i,
+    );
+    await assert.rejects(
+      () =>
+        f.call("driver", "driver.complete", {
+          ...request,
+          handover: false,
+          operationKey: id(),
+        }),
+      /true|Invalid/i,
+    );
+    assert.equal(
+      (await f.call("driver", "orders", { id: paid.id }))[0].confirmation_code,
+      undefined,
+    );
+    await f.call("driver", "driver.complete", request);
+    await f.call("driver", "driver.complete", request);
+    const result = await f.snapshot(paid.id);
+    assert.equal(result.status, "delivered");
+    assert.equal(result.payment_status, "verified");
+    assert.equal(
+      (
+        await f.db.query("SELECT id FROM stock_movements WHERE reference=$1", [
+          paid.id + ":fulfil:hose",
+        ])
+      ).rows.length,
+      1,
+    );
+    assert.equal(
+      Number(
+        (
+          await f.db.query(
+            "SELECT amount_kobo FROM verified_payments WHERE order_id=$1",
+            [paid.id],
+          )
+        ).rows[0].amount_kobo,
+      ),
+      Number(result.total_kobo),
+    );
+  } finally {
+    await f.db.close?.();
+  }
+});
 
 test("DWT-SEC: restricted driver web trip lifecycle keeps ownership, suitability, branch, replay and odometer controls", async () => {
   const f = await fixture();

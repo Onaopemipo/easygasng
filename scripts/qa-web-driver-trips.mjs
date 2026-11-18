@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
+import sharp from "sharp";
 
 const base = process.env.EASYGAS_TRIP_QA_ORIGIN ?? "http://127.0.0.1:3101";
 assert.ok(
@@ -17,7 +18,8 @@ const { chromium } = await import(
 test("DWT-BROWSER: web start, status recovery, profile management, consent and guarded end unlock synthetic assignment", async () => {
   const browser = await chromium.launch({ channel: "chrome" });
   const owner = await browser.newContext(),
-    driver = await browser.newContext();
+    driver = await browser.newContext(),
+    customer = await browser.newContext();
   async function api(context, action, data) {
     const response = await context.request.fetch(base + "/api/" + action, {
       method: data ? "POST" : "GET",
@@ -31,6 +33,7 @@ test("DWT-BROWSER: web start, status recovery, profile management, consent and g
     for (const [context, account] of [
       [owner, credentials.owner],
       [driver, credentials.driver],
+      [customer, credentials.customer],
     ])
       await api(context, "login", {
         identifier: account.email,
@@ -165,29 +168,33 @@ test("DWT-BROWSER: web start, status recovery, profile management, consent and g
         ...(status === "assigned" ? { driverId: credentials.driver.id } : {}),
       });
     }
-    let current = (await api(driver, "orders?id=" + order.id))[0];
-    await api(driver, "dispatch.respond", {
-      orderId: order.id,
-      version: current.tracking_version,
-      decision: "acknowledged",
-      reason: "Synthetic web trip assignment acknowledged",
-      operationKey: crypto.randomUUID(),
-    });
-    await api(driver, "delivery.pickup", {
-      orderId: order.id,
-      version: current.tracking_version,
-      operationKey: crypto.randomUUID(),
-      manifest: current.manifest,
-      reason: "Synthetic web trip complete manifest checked",
-    });
-    current = (await api(driver, "orders?id=" + order.id))[0];
-    await api(driver, "order.transition", {
-      id: order.id,
-      status: "out_for_delivery",
-      version: current.tracking_version,
-      note: "Synthetic driver delivery custody underway",
-      operationKey: crypto.randomUUID(),
-    });
+    await modal.getByRole("button", { name: "Close dialog" }).click();
+    const nav = page.getByRole("navigation", { name: "Driver workspace" });
+    await nav.getByRole("button", { name: "Home", exact: true }).click();
+    await page.getByRole("button", { name: "Refresh", exact: true }).click();
+    await page.getByRole("button", { name: "View order", exact: true }).click();
+    await page
+      .getByLabel(/Reason or acknowledgement note/)
+      .fill("Synthetic web assignment acknowledgement");
+    await page
+      .getByRole("button", { name: "Acknowledge assignment", exact: true })
+      .click();
+    await page.getByLabel(/I inspected and received every listed/).check();
+    await page
+      .getByLabel(/Pickup note/)
+      .fill("Synthetic complete manifest physically checked");
+    await page
+      .getByRole("button", { name: "Confirm inspected pickup", exact: true })
+      .click();
+    await page
+      .getByRole("button", { name: "Start delivery", exact: true })
+      .click();
+    await page.getByLabel(/Arrival note/).waitFor();
+    await nav.getByRole("button", { name: "Home", exact: true }).click();
+    await page
+      .getByRole("button", { name: "Manage trip", exact: true })
+      .click();
+    modal = page.getByRole("dialog", { name: "Manage duty trip" });
     await modal.getByLabel(/End odometer/).fill("35");
     await modal.getByRole("button", { name: "End trip", exact: true }).click();
     await modal
@@ -196,13 +203,97 @@ test("DWT-BROWSER: web start, status recovery, profile management, consent and g
       })
       .waitFor();
     assert.ok((await api(driver, "driver.location")).trip);
+    await modal.getByRole("button", { name: "Close dialog" }).click();
+    await page.getByRole("button", { name: "View order", exact: true }).click();
+    await page
+      .getByLabel(/Arrival note/)
+      .fill("Synthetic arrival confirmed at test address");
+    await page
+      .getByRole("button", { name: "Confirm arrival", exact: true })
+      .click();
+    await page.getByLabel(/Customer six-digit handover code/).waitFor();
+    const owned = (await api(customer, "orders?id=" + order.id))[0];
+    assert.equal(owned.payment_method, "wallet");
+    assert.equal(owned.payment_status, "verified");
+    await page
+      .getByLabel(/Customer six-digit handover code/)
+      .fill(owned.confirmation_code);
+    await page
+      .getByLabel(/All items and the full gas quantity were physically/)
+      .check();
+    await page
+      .getByRole("button", { name: "Complete delivery", exact: true })
+      .click();
+    await page
+      .getByText(
+        "Upload an authorised proof photo for this delivery attempt before completion.",
+        { exact: true },
+      )
+      .waitFor();
+    const bytes = await sharp({
+      create: { width: 10, height: 10, channels: 3, background: "green" },
+    })
+      .png()
+      .toBuffer();
+    await page.getByLabel("Proof photo", { exact: false }).setInputFiles({
+      name: "synthetic-delivery-proof.png",
+      mimeType: "image/png",
+      buffer: bytes,
+    });
+    await page
+      .getByLabel(/Proof description/)
+      .fill("Synthetic local fixture delivery evidence");
+    await page.getByLabel(/Customer consented to this evidence photo/).check();
+    await page
+      .getByRole("button", { name: "Upload proof photo", exact: true })
+      .click();
+    await page
+      .getByText("Proof photo uploaded for this order.", { exact: true })
+      .waitFor();
+    await page.getByLabel(/Customer six-digit handover code/).fill("");
+    for (const width of [390, 1440]) {
+      await page.setViewportSize({ width, height: 1000 });
+      await page.waitForFunction(
+        () =>
+          document.documentElement.scrollWidth <=
+          document.documentElement.clientWidth + 1,
+      );
+      await page.screenshot({
+        path: `docs/web-driver-trips/evidence/handover-${width}.png`,
+        fullPage: true,
+      });
+    }
+    await page
+      .getByLabel(/Customer six-digit handover code/)
+      .fill(owned.confirmation_code);
+    await page
+      .getByRole("button", { name: "Complete delivery", exact: true })
+      .click();
+    await page
+      .getByText("This assignment is no longer in your current orders.", {
+        exact: true,
+      })
+      .waitFor();
+    const delivered = (await api(owner, "orders?id=" + order.id))[0];
+    assert.equal(delivered.status, "delivered");
+    assert.equal(delivered.payment_status, "verified");
+    await nav.getByRole("button", { name: "Home", exact: true }).click();
+    await page
+      .getByRole("button", { name: "Manage trip", exact: true })
+      .click();
+    modal = page.getByRole("dialog", { name: "Manage duty trip" });
+    await modal.getByLabel(/End odometer/).fill("35");
+    await modal.getByRole("button", { name: "End trip", exact: true }).click();
+    await modal.getByText("Trip ended.", { exact: true }).waitFor();
+    assert.equal((await api(driver, "driver.location")).trip, null);
     console.log(
-      "PASS actual browser start/end/revoke; failed read disables writes until refresh; 390/1440 fit; canonical synthetic assignment/pickup succeeds with web-created trip; unresolved delivery blocks trip end. No hosted writes or GPS permission requested.",
+      "PASS actual browser start/end/revoke; failed read disables writes until refresh; 390/1440 fit; canonical synthetic assignment/pickup succeeds with web-created trip; unresolved delivery blocks trip end. Actual driver UI acknowledgement/pickup/departure/arrival/proof/handover completes a canonically wallet-paid synthetic order; missing proof rejected; trip closes after handover. No hosted writes or GPS permission requested.",
     );
   } finally {
     await Promise.allSettled([
       api(owner, "logout", {}),
       api(driver, "logout", {}),
+      api(customer, "logout", {}),
     ]);
     await browser.close();
   }

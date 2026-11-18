@@ -15,7 +15,11 @@
         "apps/web/lib/driver-operations.ts",
         "apps/web/lib/driver-workspace.ts",
         "apps/web/components/driver-trip-controls.tsx",
-        "apps/web/components/driver-trip-controls.module.css"
+        "apps/web/components/driver-trip-controls.module.css",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/app/api/media/route.ts"
       ],
       "dataSource": "Authenticated own driver.location/current trip and same-branch active suitable vehicles; canonical driver_trips, driver_vehicles, operation receipts and custody records",
       "securityControl": "Existing driver-only own-trip and branch checks, active LPG-suitable vehicle, odometer bounds, transaction/idempotency and unresolved custody guards; no permission expansion or browser GPS inferred",
@@ -36,7 +40,7 @@
       "acceptanceGate": "DWT-01-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
-      "testResult": "PASS — 64 focused checks and one actual owner/driver Chrome scenario against disposable PostgreSQL.",
+      "testResult": "PASS — 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
       "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
     },
     {
@@ -51,7 +55,11 @@
         "apps/web/lib/driver-operations.ts",
         "apps/web/lib/driver-workspace.ts",
         "apps/web/components/driver-trip-controls.tsx",
-        "apps/web/components/driver-trip-controls.module.css"
+        "apps/web/components/driver-trip-controls.module.css",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/app/api/media/route.ts"
       ],
       "dataSource": "Authenticated own driver.location/current trip and same-branch active suitable vehicles; canonical driver_trips, driver_vehicles, operation receipts and custody records",
       "securityControl": "Existing driver-only own-trip and branch checks, active LPG-suitable vehicle, odometer bounds, transaction/idempotency and unresolved custody guards; no permission expansion or browser GPS inferred",
@@ -74,7 +82,7 @@
       "acceptanceGate": "DWT-02-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
-      "testResult": "PASS — 64 focused checks and one actual owner/driver Chrome scenario against disposable PostgreSQL.",
+      "testResult": "PASS — 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
       "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
     },
     {
@@ -89,7 +97,11 @@
         "apps/web/lib/driver-operations.ts",
         "apps/web/lib/driver-workspace.ts",
         "apps/web/components/driver-trip-controls.tsx",
-        "apps/web/components/driver-trip-controls.module.css"
+        "apps/web/components/driver-trip-controls.module.css",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/app/api/media/route.ts"
       ],
       "dataSource": "Authenticated own driver.location/current trip and same-branch active suitable vehicles; canonical driver_trips, driver_vehicles, operation receipts and custody records",
       "securityControl": "Existing driver-only own-trip and branch checks, active LPG-suitable vehicle, odometer bounds, transaction/idempotency and unresolved custody guards; no permission expansion or browser GPS inferred",
@@ -110,7 +122,7 @@
       "acceptanceGate": "DWT-03-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
-      "testResult": "PASS — 64 focused checks and one actual owner/driver Chrome scenario against disposable PostgreSQL.",
+      "testResult": "PASS — 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
       "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
     },
     {
@@ -125,7 +137,11 @@
         "apps/web/lib/driver-operations.ts",
         "apps/web/lib/driver-workspace.ts",
         "apps/web/components/driver-trip-controls.tsx",
-        "apps/web/components/driver-trip-controls.module.css"
+        "apps/web/components/driver-trip-controls.module.css",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/app/api/media/route.ts"
       ],
       "dataSource": "Authenticated own driver.location/current trip and same-branch active suitable vehicles; canonical driver_trips, driver_vehicles, operation receipts and custody records",
       "securityControl": "Existing driver-only own-trip and branch checks, active LPG-suitable vehicle, odometer bounds, transaction/idempotency and unresolved custody guards; no permission expansion or browser GPS inferred",
@@ -145,7 +161,50 @@
       "status": "PARTIAL",
       "reason": "Local implementation/browser/build/types acceptance passed; push, fresh CI and demo rollout pending.",
       "testResult": "PENDING",
-      "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
+      "outstandingWork": "Push final web-only completion source, fresh CI and superseding demo candidate; trip-only fafc162 candidate must not be promoted."
+    },
+    {
+      "id": "DWT-05",
+      "requirement": "Complete the paid synthetic delivery through the driver web interface without requiring the native app",
+      "priority": "P0",
+      "scope": "Expose canonical acknowledgement, manifest-checked pickup, departure, arrival, consented proof upload and handover-code completion, with failure/help routes and existing payment/custody/stock/proof controls.",
+      "uiReference": "Driver Orders assigned-delivery detail",
+      "route": "/admin/deliveries; /api/delivery.pickup; /api/order.transition; /api/delivery.arrived; /api/media; /api/driver.complete",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-trip-controls.tsx",
+        "apps/web/components/driver-trip-controls.module.css",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/app/api/media/route.ts"
+      ],
+      "dataSource": "Own current assignment/manifest/version, existing consented retained attempt-bound proof, canonical verified payment/wallet ledger and customer-provided code; no driver access to the code source",
+      "securityControl": "Existing restricted-session canonical driver.complete enforces payment, arrival, current authorised proof, actual full handover and customer code; existing media ownership, consent, retention and file checks; no cash/finance permission expansion",
+      "testFiles": [
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "scripts/qa-web-driver-trips.mjs"
+      ],
+      "testIds": [
+        "DWT-PROOFNEG",
+        "DWT-BROWSER"
+      ],
+      "negativeTests": [
+        "DWT-PROOFNEG"
+      ],
+      "evidence": [
+        "docs/web-driver-trips/README.md",
+        "docs/web-driver-trips/evidence/focused.txt",
+        "docs/web-driver-trips/evidence/browser.txt"
+      ],
+      "acceptanceGate": "DWT-05-G",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual three-session local PostgreSQL browser completed a canonical wallet-paid synthetic order using web acknowledgement, manifest pickup, departure, arrival, actual multipart proof, customer code and handover, then ended the trip. Missing proof blocked completion; negative tests retain payment/arrival/consent/code/handover authority.",
+      "testResult": "PASS — 66 focused and 1 full actual browser workflow with real proof upload and guarded handover; no hosted order advanced.",
+      "outstandingWork": "Implement and execute web-only pickup/proof/handover acceptance without relaxing server guards; supersede initial trip-only candidate before promotion."
     }
   ],
   "gates": [
@@ -172,6 +231,12 @@
       "requirement": "Release to the synthetic demo with fulfilment enabled and Paystack sandbox",
       "status": "PENDING",
       "reason": "Executed acceptance pending."
+    },
+    {
+      "id": "DWT-05-G",
+      "requirement": "Complete the paid synthetic delivery through the driver web interface without requiring the native app",
+      "status": "PASS",
+      "reason": "Executed full web workflow plus DWT-PROOFNEG guards passed locally; release tracked separately."
     }
   ],
   "changeLog": [
@@ -186,16 +251,24 @@
     {
       "date": "2026-11-18",
       "change": "Final browser acceptance also holds the mutation response and verifies Escape cannot close an in-flight update. Web production build and TypeScript passed."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Scope clarification required by the user’s intended web-only completion: current web Orders still requires mobile pickup/proof. Add stable DWT-05 for canonical web delivery actions/proof/handover. Trip-only fafc162 candidate will not be promoted; retain all earlier requirements/gates/holds."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "DWT-05 verified by actual UI acknowledgement/pickup/departure/arrival, real consented multipart photo, missing-proof rejection, customer-code full handover and trip end. Disposable test_fixture wallet funding consumed by canonical checkout; no fabricated hosted payment. 66 focused/build/types and browser pass; no backend/schema/native permission changes."
     }
   ],
   "coverage": {
-    "implemented": 3,
-    "verified": 3,
-    "total": 4,
-    "criticalVerified": 1,
-    "criticalTotal": 1,
-    "gatesPassed": 3,
-    "gatesTotal": 4,
+    "implemented": 4,
+    "verified": 4,
+    "total": 5,
+    "criticalVerified": 2,
+    "criticalTotal": 2,
+    "gatesPassed": 4,
+    "gatesTotal": 5,
     "scope": "Bounded driver web trip controls; original production/physical/provider/native requirements retained."
   }
 }

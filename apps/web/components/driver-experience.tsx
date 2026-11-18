@@ -52,6 +52,7 @@ import { useTheme } from "./theme-provider";
 import { ActionForm } from "./workflows";
 import { api, Loading, Notice, Modal } from "./ui";
 import DriverTripControls from "./driver-trip-controls";
+import DriverDeliveryControls from "./driver-delivery-controls";
 import styles from "./driver-experience.module.css";
 
 const tabs = ["Home", "Orders", "History", "Profile"] as const;
@@ -729,10 +730,14 @@ export default function DriverExperience({ userId }: { userId: string }) {
                         Ask dispatch to renew this assignment before responding.
                       </p>
                     )}
-                  <p>
-                    Use the driver app for inspected pickup, trip updates and
-                    proof of delivery.
-                  </p>
+                  <DriverDeliveryControls
+                    key={`${current.id}:${current.attempt?.id}`}
+                    order={current}
+                    decision={response(current.id)}
+                    disabled={busy || stale}
+                    write={write}
+                    refresh={() => refresh()}
+                  />
                 </>
               ) : (
                 <p>This assignment is no longer in your current orders.</p>
