@@ -1,0 +1,11 @@
+PASS — manual native UI observations, 18 November 2026. Source 274e75e.
+Environment: installed dedicated com.easygasng.driver.local Release app; iOS 26.5 simulator EasyGas Onboarding QA, B4AE1FB6-4BC2-43F8-94F1-8A80DD1D7A30; disposable local backend http://127.0.0.1:3098. User opened Device Hub after initial CGWindow accessibility blocker. No physical iPhone used.
+Actions through Device Hub accessibility UI:
+1. Sign in using the disposable synthetic driver identity; actual backend Home loaded.
+2. Home showed signed-in name, available true, connected backend, GPS Not granted, No active trip. Metrics 1 new, 1 in progress, 0 completed matched fixture snapshot; next actual in-progress assignment shown. Foreground contact became Recent after heartbeat. Compact availability card and safe-area tabs visually inspected.
+3. Orders showed two owned jobs, Assigned and In progress; choose In progress, one job remained. Open View delivery progress: actual event timeline and existing guarded Update Delivery Status/Private Proof controls. Back preserved In progress filter. No transition was submitted.
+4. History showed 0 completed / 1 closed row. Open actual declined record: reference/outcome/actual WAT timestamp, no former customer contact/address. No delivery was invented.
+5. Profile showed real initials/name/branch/email/active account, missing phone honestly unavailable, no confirmed vehicle, no verification claim. Existing permission, sync, notifications, support, password and appearance actions present.
+6. Select dark via existing Appearance; capture Profile, History, Orders, Home. Restore Assigned order filter and System appearance; UI confirmed selection. No OS permissions granted, no GPS sharing enabled.
+Evidence: ios-home/orders/history/profile-light.png and corresponding -dark.png.
+Limits: simulator only; no VoiceOver run, physical camera/OTP/handover, screen lock/airplane/reconnect, Android UI/Back or role-revocation native UI run. Accessibility tree is not assistive-technology acceptance. Profile is vertically scrollable; screenshots show visible viewport, not every group at once.

@@ -251,3 +251,5 @@ Wallet top-up amount repair. [Matrix](wallet-topup-limit-rtm.md) maps the fee-in
 Mobile dependency audit repair (18 November). [Matrix](mobile-dependency-audit-rtm.md) and [executed evidence](mobile-dependency-audit-evidence.txt) track the reviewed glob security patch and demo release. Commercial production NO-GO remains.
 
 Wallet order payments (18 November). [Matrix](wallet-order-rtm.md) maps explicit Card, Cash and Wallet choices, authenticated balances, exact wallet debits and governed demo spending activation. Commercial NO-GO remains.
+
+Approved driver SaaS continuation (18 November): [matrix](driver-saas-redesign-rtm.md), [baseline and source map](../driver-saas-redesign/00-baseline-audit.md). Retains all 90 scenarios/40 gates and existing DRV-R scope. Source implemented;7/12 bounded requirements verified,5 partial. 66/90 scenarios and 24/40 gates pass; installed iOS simulator four views and both native builds verified, Final iOS header visual and Android interactive/real-phone/accessibility gates remain. NO-GO and automatic deployment hold preserved.

@@ -1,0 +1,2482 @@
+{
+  "phase": "Approved Driver SaaS redesign — 18 November 2026",
+  "baseline": "904fc6b",
+  "releaseDecision": "NO-GO — final native visual, Android interactive, real-device, accessibility and physical workflow gates incomplete; no automatic deployment",
+  "requirements": [
+    {
+      "id": "DRV-SAAS-AUDIT",
+      "requirement": "Baseline audit, API map and full retained scope",
+      "priority": "P1",
+      "scope": "Existing driver web/mobile web and native iOS/Android; all 90 scenarios and 40 gates retained",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-experience.module.css",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverSaaS.tsx",
+        "packages/business-rules/src/driver-presentation.ts",
+        "apps/mobile/driver/app.config.js"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/00-baseline-audit.md",
+        "docs/driver-saas-redesign/01-api-permission-map.md",
+        "docs/driver-saas-redesign/reference-integrity.json"
+      ],
+      "acceptanceGate": "DRV-SAAS-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
+      "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "approvedRequirementId": "DRV-SAAS-AUDIT"
+    },
+    {
+      "id": "DRV-SAAS-W01",
+      "requirement": "Approved web Home composition and truthful operational signals",
+      "priority": "P1",
+      "scope": "Existing /admin/deliveries web driver workspace, four internal views; responsive Chrome at six widths. Native acceptance tracked separately.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-experience.module.css",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
+      "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "approvedRequirementId": "DRV-W01"
+    },
+    {
+      "id": "DRV-SAAS-W02",
+      "requirement": "Assigned-only web Orders and existing guarded acknowledgement",
+      "priority": "P1",
+      "scope": "Existing /admin/deliveries web driver workspace, four internal views; responsive Chrome at six widths. Native acceptance tracked separately.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-experience.module.css",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G19",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
+      "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "approvedRequirementId": "DRV-W02"
+    },
+    {
+      "id": "DRV-SAAS-W03",
+      "requirement": "Closed-only web History, filters and private evidence",
+      "priority": "P1",
+      "scope": "Existing /admin/deliveries web driver workspace, four internal views; responsive Chrome at six widths. Native acceptance tracked separately.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-experience.module.css",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G28",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
+      "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "approvedRequirementId": "DRV-W03"
+    },
+    {
+      "id": "DRV-SAAS-W04",
+      "requirement": "Web Profile, read-only governed fields and existing account actions",
+      "priority": "P1",
+      "scope": "Existing /admin/deliveries web driver workspace, four internal views; responsive Chrome at six widths. Native acceptance tracked separately.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-experience.module.css",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G30",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
+      "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "approvedRequirementId": "DRV-W04"
+    },
+    {
+      "id": "DRV-SAAS-M01",
+      "requirement": "Compact native Home and separate availability/connection/GPS",
+      "priority": "P1",
+      "scope": "Existing native iOS/Android driver four views; installed iOS simulator inspected, Android release compiled but not interactively accepted.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverSaaS.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G07",
+      "status": "PARTIAL",
+      "reason": "Implemented in shared native source and observed on installed iOS simulator; Android UI/Back and physical-device lifecycle acceptance have not run.",
+      "testResult": "PASS — native types, iOS/Android Hermes exports and native release compilation; iOS four-view light/dark/system observations. Android/device acceptance incomplete.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain. Repeat isolated iOS header visual acceptance; branding row is absent in some captured subviews despite AX controls being present. Exact35% density comparison remains unverified.",
+      "approvedRequirementId": "DRV-M01"
+    },
+    {
+      "id": "DRV-SAAS-M02",
+      "requirement": "Native assigned order cards and retained full delivery workflow",
+      "priority": "P1",
+      "scope": "Existing native iOS/Android driver four views; installed iOS simulator inspected, Android release compiled but not interactively accepted.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverSaaS.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G08",
+      "status": "PARTIAL",
+      "reason": "Implemented in shared native source and observed on installed iOS simulator; Android UI/Back and physical-device lifecycle acceptance have not run.",
+      "testResult": "PASS — native types, iOS/Android Hermes exports and native release compilation; iOS four-view light/dark/system observations. Android/device acceptance incomplete.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain. Repeat isolated iOS header visual acceptance; branding row is absent in some captured subviews despite AX controls being present. Exact35% density comparison remains unverified.",
+      "approvedRequirementId": "DRV-M02"
+    },
+    {
+      "id": "DRV-SAAS-M03",
+      "requirement": "Native closed history and existing private evidence",
+      "priority": "P1",
+      "scope": "Existing native iOS/Android driver four views; installed iOS simulator inspected, Android release compiled but not interactively accepted.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverSaaS.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G09",
+      "status": "PARTIAL",
+      "reason": "Implemented in shared native source and observed on installed iOS simulator; Android UI/Back and physical-device lifecycle acceptance have not run.",
+      "testResult": "PASS — native types, iOS/Android Hermes exports and native release compilation; iOS four-view light/dark/system observations. Android/device acceptance incomplete.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain. Repeat isolated iOS header visual acceptance; branding row is absent in some captured subviews despite AX controls being present. Exact35% density comparison remains unverified.",
+      "approvedRequirementId": "DRV-M03"
+    },
+    {
+      "id": "DRV-SAAS-M04",
+      "requirement": "Native Profile groups and actual preferences/consent/sync state",
+      "priority": "P1",
+      "scope": "Existing native iOS/Android driver four views; installed iOS simulator inspected, Android release compiled but not interactively accepted.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverSaaS.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G10",
+      "status": "PARTIAL",
+      "reason": "Implemented in shared native source and observed on installed iOS simulator; Android UI/Back and physical-device lifecycle acceptance have not run.",
+      "testResult": "PASS — native types, iOS/Android Hermes exports and native release compilation; iOS four-view light/dark/system observations. Android/device acceptance incomplete.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain. Repeat isolated iOS header visual acceptance; branding row is absent in some captured subviews despite AX controls being present. Exact35% density comparison remains unverified.",
+      "approvedRequirementId": "DRV-M04"
+    },
+    {
+      "id": "DRV-SAAS-SECURITY",
+      "requirement": "Preserve delivery permissions, money, custody, offline and consent controls",
+      "priority": "P0",
+      "scope": "Preservation of canonical safety/finance/permission implementations with executed API/hash regressions. Real-phone workflow acceptance remains separate.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-experience.module.css",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverSaaS.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [
+        "DRVS-SCOPE",
+        "DR-WEB-01"
+      ],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G34",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source implemented with existing authorities; executed local regression and browser evidence verify this bounded requirement. No production/provider or physical fulfilment acceptance inferred.",
+      "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "approvedRequirementId": "DRV-SAAS-SECURITY"
+    },
+    {
+      "id": "DRV-SAAS-PARITY",
+      "requirement": "Responsive, theme, accessibility, errors and auth lifecycle parity",
+      "priority": "P1",
+      "scope": "Existing driver web/mobile web and native iOS/Android; all 90 scenarios and 40 gates retained",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-experience.module.css",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverSaaS.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G32",
+      "status": "PARTIAL",
+      "reason": "Web six-width/theme/failure checks and iOS simulator visual/navigation checks passed; Android interaction, real assistive technology and target-device dynamic type remain untested.",
+      "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "approvedRequirementId": "DRV-SAAS-PARITY"
+    },
+    {
+      "id": "DRV-SAAS-RELEASE",
+      "requirement": "Executed evidence, rollback and explicit NO-GO assessment",
+      "priority": "P1",
+      "scope": "Honest release assessment, retained requirements/gates, source-only rollback documentation; does not assert release GO.",
+      "uiReference": "Approved_Driver_Web_Dashboard.png and Approved_Driver_Mobile_Home/Orders/History/Profile.png; approved-brief.md",
+      "route": "/admin/deliveries; native Home / Orders / History / Profile",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-experience.module.css",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverSaaS.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Existing authenticated driver.snapshot, owned active orders, driver.history, trip and native permission/queue authorities; no new record store",
+      "securityControl": "Existing session restriction, role/branch/current attempt/version, payment, stock/serial/custody, consent and proof controls; no feature flags enabled",
+      "testFiles": [
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-local-config.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/driver-experience-redesign.test.ts",
+        "tests/dispatch-centre-safety.test.ts",
+        "scripts/qa-driver-saas.mjs"
+      ],
+      "testIds": [
+        "DRVS-DATA",
+        "DRVS-CONTACT",
+        "DRVS-NEXT",
+        "DRVS-SCOPE",
+        "DRVS-PRESERVED",
+        "DRVS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/02-design-implementation.md",
+        "docs/driver-saas-redesign/05-rollback-and-release.md"
+      ],
+      "acceptanceGate": "DRV-SAAS-G40",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Explicit NO-GO and reversible source rollback recorded. No automatic deployment, hosted flags, provider activation or destructive migration.",
+      "testResult": "PASS — bounded source/API/browser/build checks; iOS simulator observations recorded. Full platform acceptance remains NO-GO.",
+      "outstandingWork": "Android interactive and real-phone/accessibility/offline gates remain in the phase denominator; prior production and import holds remain.",
+      "approvedRequirementId": "DRV-SAAS-RELEASE"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DRV-SAAS-G01",
+      "requirement": "baseline audit",
+      "status": "PASS",
+      "approvedGateId": "G01",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G02",
+      "requirement": "route preserved",
+      "status": "PASS",
+      "approvedGateId": "G02",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G03",
+      "requirement": "sidebar/header",
+      "status": "PASS",
+      "approvedGateId": "G03",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G04",
+      "requirement": "only four driver destinations",
+      "status": "PASS",
+      "approvedGateId": "G04",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G05",
+      "requirement": "desktop approved visual",
+      "status": "PASS",
+      "approvedGateId": "G05",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G06",
+      "requirement": "responsive mobile web",
+      "status": "PASS",
+      "approvedGateId": "G06",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G07",
+      "requirement": "iOS Home",
+      "status": "PASS",
+      "approvedGateId": "G07",
+      "reason": "Installed dedicated iOS 26.5 simulator Release screen and existing navigation observed in light/dark; real-phone acceptance is separate.",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G08",
+      "requirement": "iOS Orders",
+      "status": "BLOCKED",
+      "approvedGateId": "G08",
+      "reason": "Installed iOS screen data/navigation/theme observed. Final screenshot review found inconsistent branding-row visibility outside Home; repeat isolated header visual acceptance. Device Hub switched to another active app and rejected the attempted QA selection; no competing UI interaction was forced.",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G09",
+      "requirement": "iOS History",
+      "status": "BLOCKED",
+      "approvedGateId": "G09",
+      "reason": "Installed iOS screen data/navigation/theme observed. Final screenshot review found inconsistent branding-row visibility outside Home; repeat isolated header visual acceptance. Device Hub switched to another active app and rejected the attempted QA selection; no competing UI interaction was forced.",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G10",
+      "requirement": "iOS Profile",
+      "status": "BLOCKED",
+      "approvedGateId": "G10",
+      "reason": "Installed iOS screen data/navigation/theme observed. Final screenshot review found inconsistent branding-row visibility outside Home; repeat isolated header visual acceptance. Device Hub switched to another active app and rejected the attempted QA selection; no competing UI interaction was forced.",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G11",
+      "requirement": "Android four screens",
+      "status": "BLOCKED",
+      "approvedGateId": "G11",
+      "reason": "Android APK built; no isolated interactive Android QA target established. Shared active emulator not commandeered; limited local disk and no installed avdmanager.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G12",
+      "requirement": "real metrics",
+      "status": "PASS",
+      "approvedGateId": "G12",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G13",
+      "requirement": "no fabricated records",
+      "status": "PASS",
+      "approvedGateId": "G13",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G14",
+      "requirement": "availability correct",
+      "status": "PASS",
+      "approvedGateId": "G14",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G15",
+      "requirement": "heartbeat separate",
+      "status": "PASS",
+      "approvedGateId": "G15",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G16",
+      "requirement": "GPS permission separate",
+      "status": "BLOCKED",
+      "approvedGateId": "G16",
+      "reason": "iOS GPS-denied display inspected; real iOS/Android permission lifecycle unexecuted.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G17",
+      "requirement": "consent privacy",
+      "status": "BLOCKED",
+      "approvedGateId": "G17",
+      "reason": "Backend consent/privacy and preserved sources pass; real-phone trip consent and background lifecycle acceptance unexecuted.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G18",
+      "requirement": "stale location",
+      "status": "BLOCKED",
+      "approvedGateId": "G18",
+      "reason": "Backend observed-time/staleness controls pass; live phone GPS stale/reconnect visual checks unexecuted.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G19",
+      "requirement": "assigned ownership",
+      "status": "PASS",
+      "approvedGateId": "G19",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G20",
+      "requirement": "branch scope",
+      "status": "PASS",
+      "approvedGateId": "G20",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G21",
+      "requirement": "valid acknowledgement",
+      "status": "PASS",
+      "approvedGateId": "G21",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G22",
+      "requirement": "pickup readiness",
+      "status": "BLOCKED",
+      "approvedGateId": "G22",
+      "reason": "Canonical pickup readiness tests pass; physical/native pickup acceptance not performed in this presentation phase.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G23",
+      "requirement": "cylinder custody",
+      "status": "BLOCKED",
+      "approvedGateId": "G23",
+      "reason": "Canonical serial/custody tests pass; physical inspection and handover not performed.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G24",
+      "requirement": "vehicle capacity",
+      "status": "BLOCKED",
+      "approvedGateId": "G24",
+      "reason": "Canonical capacity negatives pass; real vehicle load acceptance remains operational.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G25",
+      "requirement": "finance checks",
+      "status": "BLOCKED",
+      "approvedGateId": "G25",
+      "reason": "Financial regressions pass; no independent finance sign-off or live provider acceptance inferred.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G26",
+      "requirement": "proof-backed delivery",
+      "status": "BLOCKED",
+      "approvedGateId": "G26",
+      "reason": "Canonical proof/completion regressions pass; new-build real-camera/OTP/full handover not exercised.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G27",
+      "requirement": "offline sync safety",
+      "status": "BLOCKED",
+      "approvedGateId": "G27",
+      "reason": "Encrypted queue/GPS replay regressions pass; installed real-phone airplane/lock/reconnect not exercised.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G28",
+      "requirement": "History closed-only",
+      "status": "PASS",
+      "approvedGateId": "G28",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G29",
+      "requirement": "authorised evidence",
+      "status": "PASS",
+      "approvedGateId": "G29",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G30",
+      "requirement": "Profile read-only governed fields",
+      "status": "PASS",
+      "approvedGateId": "G30",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G31",
+      "requirement": "theme",
+      "status": "BLOCKED",
+      "approvedGateId": "G31",
+      "reason": "Web and iOS light/dark/system inspected; Android device appearance pending.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G32",
+      "requirement": "accessibility",
+      "status": "BLOCKED",
+      "approvedGateId": "G32",
+      "reason": "Web focus/reduced-motion and native AX/labels reviewed; VoiceOver/TalkBack and device dynamic-type acceptance not run.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G33",
+      "requirement": "auth/session expiry",
+      "status": "PASS",
+      "approvedGateId": "G33",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G34",
+      "requirement": "cross-role negative tests",
+      "status": "PASS",
+      "approvedGateId": "G34",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G35",
+      "requirement": "regression suite",
+      "status": "PASS",
+      "approvedGateId": "G35",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G36",
+      "requirement": "build/typecheck",
+      "status": "PASS",
+      "approvedGateId": "G36",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/web-build.txt",
+        "docs/driver-saas-redesign/evidence/ios-build.txt",
+        "docs/driver-saas-redesign/evidence/android-build.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G37",
+      "requirement": "evidence/screenshots",
+      "status": "BLOCKED",
+      "approvedGateId": "G37",
+      "reason": "Web and iOS screenshot evidence captured; Android and physical offline/proof captures missing.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G38",
+      "requirement": "RTM",
+      "status": "PASS",
+      "approvedGateId": "G38",
+      "reason": "PASS within executed local source/API/browser/build or documented iOS simulator scope; see 04-test-results.md. This gate does not override remaining gates or production NO-GO.",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md",
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G39",
+      "requirement": "rollback",
+      "status": "PASS",
+      "approvedGateId": "G39",
+      "reason": "Source-only rollback and explicit NO-GO recorded; rollback not destructively applied and no release performed.",
+      "evidence": [
+        "docs/driver-saas-redesign/05-rollback-and-release.md"
+      ]
+    },
+    {
+      "id": "DRV-SAAS-G40",
+      "requirement": "explicit release GO/NO-GO",
+      "status": "PASS",
+      "approvedGateId": "G40",
+      "reason": "Source-only rollback and explicit NO-GO recorded; rollback not destructively applied and no release performed.",
+      "evidence": [
+        "docs/driver-saas-redesign/05-rollback-and-release.md"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "T01",
+      "description": "web driver route",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T02",
+      "description": "sidebar preserved",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T03",
+      "description": "four driver subviews",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T04",
+      "description": "no Earnings",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T05",
+      "description": "no duplicate Deliveries/My Orders",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T06",
+      "description": "real signed-in name",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T07",
+      "description": "missing photo initials",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T08",
+      "description": "actual branch",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T09",
+      "description": "availability off",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — empty-driver web server-confirmed off; native active-work OFF not exercised."
+    },
+    {
+      "id": "T10",
+      "description": "availability on",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — empty-driver web server-confirmed on and iOS active driver true."
+    },
+    {
+      "id": "T11",
+      "description": "availability mutation server-confirmed",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — web active-work 409 retained original availability; duplicate tap sent one request; no optimistic success."
+    },
+    {
+      "id": "T12",
+      "description": "availability 403",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — customer driver.availability API returns 403."
+    },
+    {
+      "id": "T13",
+      "description": "heartbeat fresh",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/evidence/full-regression.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI",
+        "REGRESSION"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — DRVS-CONTACT / DRVS-DATA / DRVS-NEXT and actual scoped browser fixture; missing/unknown distinct from confirmed zero."
+    },
+    {
+      "id": "T14",
+      "description": "heartbeat stale",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/evidence/full-regression.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI",
+        "REGRESSION"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — DRVS-CONTACT / DRVS-DATA / DRVS-NEXT and actual scoped browser fixture; missing/unknown distinct from confirmed zero."
+    },
+    {
+      "id": "T15",
+      "description": "heartbeat unknown",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/evidence/full-regression.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI",
+        "REGRESSION"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — DRVS-CONTACT / DRVS-DATA / DRVS-NEXT and actual scoped browser fixture; missing/unknown distinct from confirmed zero."
+    },
+    {
+      "id": "T16",
+      "description": "availability distinct from online",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T17",
+      "description": "GPS not granted",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — installed iOS displays GPS Not granted while availability true; no permission granted."
+    },
+    {
+      "id": "T18",
+      "description": "location consent off",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Consent-off contract retained/tested; installed-phone permission/consent lifecycle incomplete."
+    },
+    {
+      "id": "T19",
+      "description": "consent active trip",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Active-trip API controls tested; new-build live consent/GPS exercise pending."
+    },
+    {
+      "id": "T20",
+      "description": "no active trip",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T21",
+      "description": "stale GPS label",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Backend GPS staleness tests pass; device stale GPS UI pending."
+    },
+    {
+      "id": "T22",
+      "description": "no fabricated map",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T23",
+      "description": "verified map if supported",
+      "status": "NOT_RUN",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [],
+      "platformScope": "Unexecuted; retained in denominator.",
+      "result": "No verified map provider in this surface; map omitted. Provider integration/route visual remains untested and stays in denominator."
+    },
+    {
+      "id": "T24",
+      "description": "real new-assignment count",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/evidence/full-regression.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI",
+        "REGRESSION"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — DRVS-CONTACT / DRVS-DATA / DRVS-NEXT and actual scoped browser fixture; missing/unknown distinct from confirmed zero."
+    },
+    {
+      "id": "T25",
+      "description": "real in-progress count",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/evidence/full-regression.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI",
+        "REGRESSION"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — DRVS-CONTACT / DRVS-DATA / DRVS-NEXT and actual scoped browser fixture; missing/unknown distinct from confirmed zero."
+    },
+    {
+      "id": "T26",
+      "description": "real completed-today count",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/evidence/full-regression.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI",
+        "REGRESSION"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — DRVS-CONTACT / DRVS-DATA / DRVS-NEXT and actual scoped browser fixture; missing/unknown distinct from confirmed zero."
+    },
+    {
+      "id": "T27",
+      "description": "no fabricated yesterday trends",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T28",
+      "description": "empty Home",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — actual empty-driver web Home; no invented cards/counts."
+    },
+    {
+      "id": "T29",
+      "description": "next assignment",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/evidence/full-regression.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI",
+        "REGRESSION"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — DRVS-CONTACT / DRVS-DATA / DRVS-NEXT and actual scoped browser fixture; missing/unknown distinct from confirmed zero."
+    },
+    {
+      "id": "T30",
+      "description": "invalid next-action hidden",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/evidence/full-regression.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI",
+        "REGRESSION"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — DRVS-CONTACT / DRVS-DATA / DRVS-NEXT and actual scoped browser fixture; missing/unknown distinct from confirmed zero."
+    },
+    {
+      "id": "T31",
+      "description": "assigned list",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T32",
+      "description": "in-progress list",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T33",
+      "description": "history list",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T34",
+      "description": "list filter persistence",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — browser list/filter return and installed iOS In progress/detail/back retained selection."
+    },
+    {
+      "id": "T35",
+      "description": "authorised order detail",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T36",
+      "description": "cross-driver read denied",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DRVS-SCOPE; TRK-20; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T37",
+      "description": "cross-branch read denied",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DRVS-SCOPE; DDI-READ02; TRK-20; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T38",
+      "description": "driver inactive denied",
+      "status": "NOT_RUN",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [],
+      "platformScope": "Not independently exercised in this phase.",
+      "result": "Driver-inactive specific denial not separately exercised; role/branch/session/reassignment tests do not substitute for this case."
+    },
+    {
+      "id": "T39",
+      "description": "assigned acknowledgement",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DR-INTEGRATION-01; DDI-S031; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T40",
+      "description": "expired acknowledgement denied",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DDI-S031; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T41",
+      "description": "pickup guards",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — TRK-11; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T42",
+      "description": "stock guard",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DDI-PAY01; TRK-11; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T43",
+      "description": "cylinder serial guard",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DDI-S060; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T44",
+      "description": "vehicle capacity guard",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — BULK-04; TRK-17; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T45",
+      "description": "verified payment/COD guard",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DDI-PAY01; DDI-PAY02; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T46",
+      "description": "out-for-delivery transition",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — TRK-11; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T47",
+      "description": "arrived transition",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Canonical arrival controls tested; installed-phone arrival exercise pending."
+    },
+    {
+      "id": "T48",
+      "description": "proof capture",
+      "status": "NOT_RUN",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [],
+      "platformScope": "Unexecuted; retained in denominator.",
+      "result": "Actual new-build camera capture not exercised."
+    },
+    {
+      "id": "T49",
+      "description": "proof upload",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Private proof API tests pass; new-build native upload exercise pending."
+    },
+    {
+      "id": "T50",
+      "description": "offline evidence queue",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Encrypted queue tests pass; real-phone offline camera capture pending."
+    },
+    {
+      "id": "T51",
+      "description": "reconnect sync",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Replay/recovery tests pass; real-phone reconnect acceptance pending."
+    },
+    {
+      "id": "T52",
+      "description": "no false delivered offline",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Offline guard source/tests preserved; installed offline-delivery acceptance pending."
+    },
+    {
+      "id": "T53",
+      "description": "delivery confirmed by server",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Server completion guard passes; full new-build physical handover pending."
+    },
+    {
+      "id": "T54",
+      "description": "duplicate submit",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — browser double-tap sends one availability request; canonical duplicate operation tests pass."
+    },
+    {
+      "id": "T55",
+      "description": "concurrent reassignment",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — TRK-17; TRK-20; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T56",
+      "description": "decline path",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — actual local dispatch.respond decline seeded the visible closed record; existing API replay tests pass."
+    },
+    {
+      "id": "T57",
+      "description": "failure reason",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — TRK-14F; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T58",
+      "description": "returns",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — TRK-27; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T59",
+      "description": "incident/report issue contextual",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Existing contextual support/incident entry retained; no incident submission made in native UI."
+    },
+    {
+      "id": "T60",
+      "description": "contact dispatch/support",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Support entry displayed; no external contact initiated."
+    },
+    {
+      "id": "T61",
+      "description": "external navigation verified",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Verified-destination URL contract tested; actual external map launch/provider routing not exercised."
+    },
+    {
+      "id": "T62",
+      "description": "no fake ETA",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T63",
+      "description": "history excludes active",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — actual active assignments absent from browser/iOS History and closed-only API regression."
+    },
+    {
+      "id": "T64",
+      "description": "history completed",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DRV-T46–55; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T65",
+      "description": "history failed",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DRV-T46–55; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T66",
+      "description": "history cancelled/declined per contract",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — actual declined row observed; cancellation eligibility remains canonical contract only."
+    },
+    {
+      "id": "T67",
+      "description": "history filters",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — browser date/outcome/current-page reference filters and API Lagos filtering; no global search claim."
+    },
+    {
+      "id": "T68",
+      "description": "history pagination",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DRV-T46–55; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T69",
+      "description": "evidence immutable",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — OPS-T04; DDI-PHOTO01; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T70",
+      "description": "no driver rating",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS in the bounded local browser/source and recorded iOS simulator observations; remaining platform acceptance tracked separately."
+    },
+    {
+      "id": "T71",
+      "description": "profile read",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — actual browser/iOS profile identity, branch, contact/unknown values."
+    },
+    {
+      "id": "T72",
+      "description": "personal edit scope",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt"
+      ],
+      "commandIds": [
+        "BROWSER"
+      ],
+      "platformScope": "Actual web name-edit form and canonical strict API in disposable local QA.",
+      "result": "PASS — name form saved and was restored; role, branch_id and active extra fields each returned400; identity/branch/active unchanged."
+    },
+    {
+      "id": "T73",
+      "description": "vehicle read-only",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — browser/iOS current-trip vehicle is read-only; missing trip has no invented vehicle."
+    },
+    {
+      "id": "T74",
+      "description": "verification read-only",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — no fabricated verification badge or edit; missing verification explicitly stated."
+    },
+    {
+      "id": "T75",
+      "description": "document permissions",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Unsupported administrative document actions omitted; no authorised document service exists in this surface."
+    },
+    {
+      "id": "T76",
+      "description": "OS permission status",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "iOS Not granted displayed; Android/iOS permission lifecycle pending."
+    },
+    {
+      "id": "T77",
+      "description": "offline sync status",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "iOS queue count inspected; storage failure and physical queue lifecycle pending."
+    },
+    {
+      "id": "T78",
+      "description": "theme light/dark/system",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Web and iOS themes tested; Android appearance pending."
+    },
+    {
+      "id": "T79",
+      "description": "session expiry",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — browser injected authoritative 401 clears driver workspace through sign-in redirect; session API negatives pass."
+    },
+    {
+      "id": "T80",
+      "description": "role revocation",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — TRK-20; E; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T81",
+      "description": "web 320/390/768/1024/1440/1920",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+      ],
+      "commandIds": [
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "PASS — browser measured all four views at all six widths, no page/workspace horizontal overflow."
+    },
+    {
+      "id": "T82",
+      "description": "iOS safe areas",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "One iOS simulator safe-area layout inspected; wider device/dynamic-type acceptance pending."
+    },
+    {
+      "id": "T83",
+      "description": "Android back",
+      "status": "NOT_RUN",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [],
+      "platformScope": "Unexecuted; retained in denominator.",
+      "result": "Android hardware Back not exercised."
+    },
+    {
+      "id": "T84",
+      "description": "VoiceOver/TalkBack",
+      "status": "NOT_RUN",
+      "evidence": [
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [],
+      "platformScope": "Unexecuted; retained in denominator.",
+      "result": "VoiceOver/TalkBack not exercised."
+    },
+    {
+      "id": "T85",
+      "description": "reduced motion",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "Web reduced-motion media query checked; native assistive/device motion acceptance pending."
+    },
+    {
+      "id": "T86",
+      "description": "customer/technician/admin non-regression",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DDI-AUDIT01 and full suite; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T87",
+      "description": "Paystack/refund non-regression",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — Paystack/refund and wallet tests in full suite; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T88",
+      "description": "cylinder custody/inventory non-regression",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DDI-S060; BULK/DOOR/custody tests; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T89",
+      "description": "native build and typecheck",
+      "status": "PASS",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BUILD"
+      ],
+      "platformScope": "Automated canonical contract/regression or build only; not physical device workflow acceptance.",
+      "result": "PASS — DRVS-CONFIG; both Hermes exports and release builds; see executed log. Synthetic test fixtures do not prove physical completion."
+    },
+    {
+      "id": "T90",
+      "description": "rollback and RTM validation",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/driver-saas-redesign/evidence/full-regression.txt",
+        "docs/driver-saas-redesign/evidence/web-browser.txt",
+        "docs/driver-saas-redesign/evidence/ios-ui-verification.txt",
+        "docs/driver-saas-redesign/04-test-results.md"
+      ],
+      "commandIds": [
+        "REGRESSION",
+        "BROWSER",
+        "IOS_UI"
+      ],
+      "platformScope": "Actual desktop/mobile Chrome; iOS simulator where explicitly observed. No Android UI or physical-device claim.",
+      "result": "RTM validation and rollback instructions provided; rollback not executed against a deployed environment."
+    }
+  ],
+  "coverage": {
+    "implemented": 12,
+    "verified": 7,
+    "total": 12,
+    "criticalVerified": 1,
+    "criticalTotal": 1,
+    "routesVerified": 5,
+    "routesTotal": 5,
+    "gatesPassed": 24,
+    "gatesTotal": 40,
+    "scenariosPassed": 66,
+    "scenariosTotal": 90,
+    "routeScope": "One web workspace plus four installed iOS simulator views. This does not count Android acceptance; its four views remain G11 BLOCKED.",
+    "androidViewsVerified": 0,
+    "androidViewsTotal": 4
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-18",
+      "change": "Created separate approved visual continuation retaining all 90 T01–T90 scenarios and 40 G01–G40 gates. Prior DRV-R IDs and platform NO-GO remain; no historical requirement is replaced."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Implemented approved web/native presentation; preserved all 12 phase requirements, 90 scenarios and 40 gates. Recorded privacy-minimal History and unsupported-provider/action deviations, isolated local plugin-path repair, actual browser/iOS evidence and Android build. No hosted settings or production decision changed."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Added actual name-edit/browser negative boundary verification in cbcb821. Final image review keeps iOS subview header visual acceptance open; shared Device Hub changed to another active app and rejected selection. Inactive-driver-specific scenario remains NOT_RUN rather than substituting generic session tests."
+    }
+  ],
+  "commands": {
+    "REGRESSION": {
+      "command": "EASYGAS_ENABLE_LOCAL_PG_TESTS=yes EASYGAS_TEST_POSTGRES_URL=postgresql://philipog@127.0.0.1:55473/easygas_test_holistic EASYGAS_BACKGROUND_JOBS=false npm test",
+      "environment": "Node 24.21.0, npm 11.19.0; disposable local PostgreSQL; source 274e75e",
+      "evidence": "docs/driver-saas-redesign/evidence/full-regression.txt"
+    },
+    "BROWSER": {
+      "command": "EASYGAS_DRIVER_QA_CREDENTIAL_FILE=/tmp/easygas-driver-saas/credentials.json EASYGAS_QA_PLAYWRIGHT_MODULE=/tmp/easygas-deploy-20261114.kPxY2q/browser/node_modules/playwright-core/index.mjs node --test --test-reporter=spec scripts/qa-driver-saas.mjs",
+      "environment": "Actual local Chrome, localhost:3098; disposable easygas_test_driver_saas_20261118; mode 600 temporary credentials excluded from repository",
+      "evidence": "docs/driver-saas-redesign/evidence/web-browser.txt"
+    },
+    "IOS_UI": {
+      "command": "Manual Device Hub accessibility navigation plus xcrun simctl io B4AE1FB6-4BC2-43F8-94F1-8A80DD1D7A30 screenshot <evidence path>",
+      "environment": "Installed dedicated driver Release app; iOS 26.5 simulator, not a physical phone",
+      "evidence": "docs/driver-saas-redesign/evidence/ios-ui-verification.txt"
+    },
+    "BUILD": {
+      "command": "See exact web, Hermes, iOS and Android commands in docs/driver-saas-redesign/04-test-results.md",
+      "environment": "Local toolchains; no store/release upload",
+      "evidence": "docs/driver-saas-redesign/evidence/android-build.txt"
+    },
+    "RTM": {
+      "command": "node --import tsx --test --test-reporter=spec tests/customer-traceability.test.ts",
+      "environment": "Latest local documentation and source; no hosted writes",
+      "evidence": "docs/driver-saas-redesign/evidence/traceability-validation.txt"
+    }
+  },
+  "sourceCommits": [
+    "a97f4de",
+    "274e75e",
+    "cbcb821"
+  ]
+}
