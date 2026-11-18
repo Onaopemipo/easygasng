@@ -152,3 +152,15 @@ Deployment `dpl_DL5z6veUhAVM5YaTYnMkePtLA3wr` is Ready at the stable demo alias.
 To roll back this web deployment, promote `dpl_3iL3ow2UTkPmy1qveM5qSuhvcqSe` in the same project and repeat readiness and sandbox checks. No schema migration or installed phone replacement was performed. Commercial production remains NO-GO.
 
 [Repair traceability and release evidence](../traceability/mobile-dependency-audit-rtm.md) · [Reviewed dependency](../security/mobile-glob-review.md)
+
+## 18 November wallet order checkout rollout
+
+Source `2224688` passed [fresh web and native Release validation](https://github.com/Onaopemipo/easygasng/actions/runs/44228881958), including 743/743 web tests with zero skips. Ready deployment `dpl_Dgvn7MrBfRpp3f42tXi6A4CBXEhu` serves the stable demo. It was built without per-deployment environment overrides; the permanent fulfilment settings above and Paystack sandbox mode were verified after promotion.
+
+Wallet spending is enabled for Lagos through the governed `wallet.enabled` setting, approved by owner request `bbe2f535-341a-4e62-ba4d-aade1392a82d`. This lives in the demo database and persists across deployments. Card, Cash on delivery and Wallet are selectable at checkout, with the authenticated own balance. Hosted 390/1440px payment choices, access controls and Incidents layout passed.
+
+To roll back the web build, promote prior Ready deployment `dpl_D9DFNiZmeSEmTuq8QrnkCtSCp7oY` in the same demo project and repeat readiness, fulfilment and sandbox checks. No schema migration occurred. A web rollback does not reverse the audited wallet setting or any payment/order records; use the normal governed workflow for future setting changes.
+
+The additional hosted funded-wallet order probe was not completed: sandbox funding stayed pending without a checkout URL or credit. No test card was entered and no second charge was initialized for that reference. Actual wallet payment and the matching paid EasyGas invoice were verified using disposable PostgreSQL browser and installed iOS orders. Installed Android and remaining native variants are open. Commercial production remains NO-GO.
+
+[Requirements and coverage](../traceability/wallet-order-rtm.md) · [Executed evidence and limitations](../traceability/wallet-order-evidence.txt)

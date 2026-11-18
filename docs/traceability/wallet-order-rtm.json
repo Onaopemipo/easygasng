@@ -40,9 +40,9 @@
       ],
       "acceptanceGate": "WALLET-ORDER-G01",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Authenticated GET transport, branch choices and wallet balance passed HTTP privacy/ownership checks and actual Chrome gas, cart and linked checkout.",
+      "reason": "Authenticated GET transport and ownership checks passed; Chrome gas/cart/linked checkout passed locally and the stable demo displayed selectable Card/Cash/Wallet with the own balance at 390/1440px.",
       "testResult": "PASS \u2014 390/1440px gas checkout, cart and linked wallet debits/replay, insufficient-funds UI, separate Card/Cash non-debits, private GET options and web build/types.",
-      "outstandingWork": "Hosted rollout is tracked by R04. Commercial production gates remain."
+      "outstandingWork": "Commercial production gates remain. Native device acceptance is tracked separately by R03."
     },
     {
       "id": "WALLET-ORDER-R02",
@@ -103,16 +103,18 @@
         "tests/wallet-order.test.ts",
         "tests/commerce.test.ts"
       ],
-      "testIds": [],
+      "testIds": [
+        "WALLET-ORDER-IOS"
+      ],
       "negativeTests": [],
       "evidence": [
         "docs/traceability/wallet-order-evidence.txt"
       ],
       "acceptanceGate": "WALLET-ORDER-G03",
       "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Native source uses the same scoped options/balance and secure card-order continuation. Both Hermes exports and the iOS Release build passed; installed iOS sign-in and gas-entry navigation passed. The simulator window became unavailable before payment-choice acceptance; installed Android acceptance has not run.",
-      "testResult": "PASS native TypeScript, iOS/Android Hermes exports, iOS Release build (0 errors), installation, sign-in and gas-entry navigation. PENDING installed checkout payment selection and completed native order.",
-      "outstandingWork": "Verify Card/Cash/Wallet selection, displayed balance and completed payment journey on installed iOS and Android. The iOS test stopped when Device Hub lost its window (cgWindowNotFound). Real-phone and commercial gates remain."
+      "reason": "Both Hermes exports, native CI and iOS Release build passed. Installed iOS gas checkout displayed Card/Cash/Wallet and the own balance, then paid the complete quoted total from the wallet after choosing not to save delivery details. Installed Android acceptance has not run.",
+      "testResult": "PASS native TypeScript/dependencies/audit, iOS/Android Hermes exports, installed iOS gas wallet order EG-2026-5A8AFC72: total 640000 kobo, one debit -640000, verified payment 640000, balance 0; EasyGas invoice EGI-0000000001 paid with amount due 0. PENDING installed Android checkout.",
+      "outstandingWork": "Verify Card/Cash/Wallet selection, displayed balance and completed payment journey on installed Android. Native cart/linked and hosted-card continuation device acceptance also remain open. Real-phone and commercial gates remain."
     },
     {
       "id": "WALLET-ORDER-R04",
@@ -131,16 +133,19 @@
         "tests/wallet-order.test.ts",
         "tests/commerce.test.ts"
       ],
-      "testIds": [],
+      "testIds": [
+        "WALLET-ORDER-HOSTED",
+        "VDEMO-HTTP01"
+      ],
       "negativeTests": [],
       "evidence": [
         "docs/traceability/wallet-order-evidence.txt"
       ],
       "acceptanceGate": "WALLET-ORDER-G04",
-      "status": "PARTIAL",
-      "reason": "wallet.enabled was activated on the demo through owner auto-approval request bbe2f535-341a-4e62-ba4d-aade1392a82d. Sandbox remained test-only.",
-      "testResult": "PASS governed setting activation and sandbox confirmation. PENDING code rollout and hosted acceptance.",
-      "outstandingWork": "GitHub release validation, deployment and hosted checks remain."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Audited owner request bbe2f535-341a-4e62-ba4d-aade1392a82d activated demo wallet spending. Source 2224688 passed both GitHub jobs and Ready deployment dpl_Dgvn7MrBfRpp3f42tXi6A4CBXEhu serves the stable alias. Hosted choices/access, persistent fulfilment defaults, runtime dispatch/tracking/bulk and Paystack test mode passed.",
+      "testResult": "PASS GitHub run 44228881958: web 743/743, zero skips, build/types/audit; native type/dependency/audit. PASS stable demo 390/1440px payment choices/balance/top-up link; Incidents 320/1440px and read-only Finance 390px; permanent fulfilment configuration and sandbox API.",
+      "outstandingWork": "Additional hosted paid-wallet order was not completed: a sandbox top-up probe remains initializing without a checkout URL or posted credit; its existing reference was retained without creating another charge. Actual wallet payment was verified with disposable PostgreSQL browser and installed iOS orders. Existing provider/merchant, native and commercial production NO-GO gates remain."
     }
   ],
   "gates": [
@@ -161,19 +166,19 @@
     },
     {
       "id": "WALLET-ORDER-G04",
-      "status": "PENDING",
+      "status": "PASS",
       "requirement": "Governed demo wallet activation, hosted smoke, fulfilment and sandbox verification."
     }
   ],
   "coverage": {
     "implemented": 4,
-    "verified": 2,
+    "verified": 3,
     "total": 4,
     "criticalVerified": 2,
     "criticalTotal": 2,
     "routesVerified": 3,
     "routesTotal": 4,
-    "gatesPassed": 2,
+    "gatesPassed": 3,
     "gatesTotal": 4
   },
   "changeLog": [
@@ -188,6 +193,14 @@
     {
       "date": "2026-11-18",
       "change": "First full CI: native passed; web 742/743 passed with one obsolete purchase-credit error assertion in ER-13. Corrected that assertion to the stable insufficient-funds code and current wallet text; retained and reran all discount/inventory rollback assertions successfully. Full rerun remains pending. Installed iOS sign-in/gas navigation verified; native checkout acceptance remains unverified."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Recovered the Device Hub test window and completed installed iOS gas wallet checkout against disposable local PostgreSQL. Card/Cash/Wallet, displayed balance, opt-out contact consent, exact one-time ledger debit and paid EasyGas invoice reconciled. Installed Android, native cart/linked/card continuation and original production gates remain in scope."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Source 2224688 passed fresh web/native Release validation (743 web tests, zero failures/skips). Promoted dpl_Dgvn7MrBfRpp3f42tXi6A4CBXEhu to the stable demo and verified payment choices, privacy, no horizontal scroll, fulfilment defaults/runtime and Paystack sandbox. R04 verified for governed activation and rollout; R03 stays unverified in the denominator. Additional hosted funding probe remains pending and does not count as paid-wallet acceptance."
     }
   ]
 }

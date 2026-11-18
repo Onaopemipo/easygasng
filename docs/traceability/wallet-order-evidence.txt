@@ -200,3 +200,90 @@ Native PASS, dependency audit 0 vulnerabilities. Web: 743 tests, 742 pass, 1 fai
 ℹ duration_ms 8688.86575
 
 Fresh full release validation pending after the test-contract correction.
+
+WALLET-ORDER-IOS · installed Release simulator acceptance
+The Device Hub window was recovered. Displayed Card, Cash on delivery and Wallet with NGN 6,400 balance; selected Wallet and afternoon delivery for 20 November. Selected Use for this order only at the phone/address consent dialog. The app showed EG-2026-5A8AFC72, NGN 6,400 and Payment verified. No physical delivery was attempted. Database verification follows; this is the disposable local fixture, not the hosted demo.
+PASS installed iOS order EG-2026-5A8AFC72: EasyGas invoice EGI-0000000001 total/verified payment 640000 kobo, amount due 0, status paid; owned customer read agrees; exactly one wallet debit -640000 kobo; balance remains 0.
+
+Android installed interaction, native cart/linked checkout and hosted-card continuation remain unverified. Existing real-phone and production NO-GO gates remain.
+
+New source 2224688: Ready candidate dpl_Dgvn7MrBfRpp3f42tXi6A4CBXEhu.
+PASS Ready candidate: authenticated Card/Cash/Wallet methods, own wallet balance 0, Paystack sandbox; no credit/payment inferred.
+
+Fresh release validation run 44228881958 remains in progress. Stable alias promotion is pending.
+
+Hosted sandbox funding probe limitation
+{"intentId":"c2c2b8f8-5294-4b86-a533-6f9fc1825b3f","status":"pending","state":"initializing","hasCheckoutUrl":false,"environment":"test","balanceKobo":0}
+Additional hosted paid-wallet acceptance was not completed: sandbox funding initialization returned no checkout URL and remains pending; no test card was entered and no wallet credit or payment success was inferred. The same reference was retained; no second charge was initialized.
+The hosted probe is separate from the successful disposable PostgreSQL browser and installed iOS wallet order tests. Existing merchant/provider acceptance gates remain open.
+
+Final fresh release validation and stable demo acceptance
+Source 2224688 · https://github.com/Onaopemipo/easygasng/actions/runs/44228881958
+PASS web: 743 tests, 743 passed, 0 failed, 0 skipped; production webpack build, TypeScript and unchanged high audit gate passed.
+PASS native: TypeScript, dependency regression and unchanged moderate audit gate passed.
+Stable alias https://easygas-client-demo.vercel.app resolves to Ready dpl_Dgvn7MrBfRpp3f42tXi6A4CBXEhu (candidate easygas-client-demo-pdquniepn-onaopemipos-projects.vercel.app). Built from a clean source archive without deployment-level environment overrides. Prior Ready rollback target dpl_D9DFNiZmeSEmTuq8QrnkCtSCp7oY. No migration.
+
+WALLET-ORDER-HOSTED
+PASS hosted 390px Card/Cash/Wallet, own zero balance, wallet selection, preserved checkout top-up link and no horizontal scroll.
+PASS hosted 1440px Card/Cash/Wallet, own zero balance, wallet selection, preserved checkout top-up link and no horizontal scroll.
+PASS hosted private GET options, identity injection denied, no synthetic credit inferred, Paystack test mode.
+
+Original proof is outside its one-day visibility window; no expired image is exposed. Persistent one-day project setting verified separately.
+PASS stable demo readiness, driver availability enabled, tracking writes enabled, bulk LPG enabled, proof visibility policy, verified paid and delivered test order, Paystack sandbox.
+PASS hosted chromium 320px: grid, no horizontal overflow, six fields and Actions visible, details fit.
+PASS hosted chromium 1440px: table-row, no horizontal overflow, six fields and Actions visible, details fit.
+PASS hosted chromium Finance can view incident details at 390px with read-only actions.
+
+EASYGAS_FIELD_OPERATIONS_ENABLED=true
+EASYGAS_TRACKING_MUTATIONS_ENABLED=true
+EASYGAS_BULK_LPG_ENABLED=true
+EASYGAS_PROOF_RETENTION_DAYS=1
+PASS permanent demo Production project defaults preserved; no deployment-level overrides. Paystack test mode separately verified through the hosted API (environment export redacts sensitive values).
+
+PASS hosted homepage, synthetic-data notice and no-index metadata
+PASS hosted owner sign-in and persistent identity
+PASS hosted customer sign-in and persistent identity
+PASS owner dashboard and customer privilege rejection
+PASS hosted canonical product catalogue
+PASS demo robots excludes indexing
+✔ VDEMO-HTTP01: hosted demo origin, auth, private admin and catalogue remain isolated (18159.856291ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18239.767583
+
+Hosted smoke first attempt used an immediate option isEnabled assertion while checkout was disabled during hydration. Corrected acceptance to wait for and select each actual option; all three choices passed at both widths. The historical proof-photo assertion also expired with the one-day visibility window: history now returns no expired photos. No retention extension was made; permanent project retention remains one day. Existing retain-all storage hold remains.
+
+Final scope: 4/4 implemented, 3/4 requirements verified, 2/2 critical, routes 3/4, gates 3/4. Installed Android/native variants and additional hosted funded-wallet acceptance remain explicit. Commercial production NO-GO and historical import hold unchanged.
+
+Final requirements matrix validation
+✖ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (492.684416ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (2.080542ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 616.48275
+
+✖ failing tests:
+
+test at tests/customer-traceability.test.ts:1:241
+✖ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (492.684416ms)
+  AssertionError [ERR_ASSERTION]: WALLET-ORDER-R04: WALLET-ORDER-HOSTED has no executed evidence
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/customer-traceability.test.ts:66:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
