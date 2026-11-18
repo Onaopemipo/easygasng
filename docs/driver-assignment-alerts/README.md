@@ -34,3 +34,5 @@ Closed/background/terminated new assignments cannot be detected by foreground po
 Rollback this phase's DriverWorkspace import/component mount and the new alert component/helper/audio/dependency/plugin additions using a reviewed patch. Do not reset the worktree or discard prior technician/driver evidence. No schema migration or business-data rollback is needed. Existing demo fulfilment and Paystack sandbox settings were not changed.
 
 Primary references used: [Expo notifications SDK58](https://docs.expo.dev/versions/v58.0.0/sdk/notifications/), [Expo audio SDK58](https://docs.expo.dev/versions/v58.0.0/sdk/audio/). External documentation is reference material; it does not grant permission or supersede project requirements.
+
+User-authorised release continuation: all pending source/evidence pushed and demo web deployed on19 November. See [release report](../deployment/20261119-technician-alerts-release.md). No new native build/export/install or upgrade of incomplete feature/native/audio/background/physical acceptance occurred. Earlier no-deployment statements describe the implementation phase before this explicit release authorisation.

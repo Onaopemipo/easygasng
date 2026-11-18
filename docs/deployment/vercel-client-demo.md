@@ -193,3 +193,11 @@ Clean candidate `dpl_BG7raiYJy745co8FUCzaQjWnD4Qg` was runtime verified and prom
 Permanent fulfilment/tracking/bulk defaults remain true, proof retention one day, Paystack available/test and email/background jobs OFF. Rollback: previous Ready `dpl_Fodr4MdgFR2C7HYyMQR4qBM8kqfA`, followed by runtime checks; no migration or reversal of operational/financial/notification records. Commercial NO-GO and physical/provider/import holds remain.
 
 [Requirements, evidence and operating flow](../traceability/web-driver-trips-rtm.md) · [Release record](../web-driver-trips/evidence/release.txt)
+
+## Technician workspace and driver alert source release — 19 November 2026
+
+All pending source and evidence were pushed on `codex/technician-saas-redesign`. Fresh [web/native validation](https://github.com/Onaopemipo/easygasng/actions/runs/44338709909) passed on `a59062d0a8d3a972424a1a7de9ea0956536940a8`:764/764 web tests with zero skips, build/types/audits, native types/dependency checks/audit and native export skipped. Ready deployment `dpl_3FWhBohS3bmXoFWCM8oQ51rgkKpX` was promoted to the stable demo and verified. Its application source is identical to the validated commit; the intervening change is the reviewed native-config test/document mapping only, excluded from deployment.
+
+Permanent fulfilment/tracking/bulk defaults remain true, proof retention one day, Paystack available/test. Actual desktop/mobile technician views and API access checks passed. No new native build/export/install or second candidate build, database migration, operational/financial mutation or live activation occurred. Native source is pushed; installed apps remain unchanged. Rollback is prior Ready `dpl_BG7raiYJy745co8FUCzaQjWnD4Qg`; retain data and project defaults and repeat runtime checks after rollback. Full feature/device/production NO-GO and import holds remain.
+
+[Release evidence and limits](20261119-technician-alerts-release.md) · [Bounded release matrix](../traceability/demo-release-20261119-rtm.md)
