@@ -1,6 +1,7 @@
 "use client";
 import { FieldCaption } from "./field-caption";
 import DriverExperience from "./driver-experience";
+import TechnicianWorkspace from "./technician-workspace";
 import DriversWorkspace from "./drivers-workspace";
 import { privilegeById } from "../../../packages/business-rules/src/staff-privileges";
 import { NotificationsTray } from "./notifications-tray";
@@ -339,6 +340,8 @@ export default function Admin({
             <Reconciliation />
           ) : section === "incidents" ? (
             <OperationalIncidents key={`${user.id}:${user.role}:${user.branchId}`} refresh={refresh} />
+          ) : section === "bookings" && user.role === "technician" ? (
+            <TechnicianWorkspace key={`${user.id}:${user.branchId}`} user={user} />
           ) : [
               "services",
               "bookings",

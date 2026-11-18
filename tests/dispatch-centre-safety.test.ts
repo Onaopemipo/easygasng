@@ -287,6 +287,9 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
     "docs/driver-saas-redesign/approved-field-source.json", "utf8",
   ));
   assert.deepEqual(Object.keys(approvedDriverSaasSources.files), ["apps/mobile/DriverWorkspace.tsx"]);
+  const assignmentAlertContinuation = JSON.parse(await readFile("docs/driver-assignment-alerts/reviewed-source-changes.json", "utf8"));
+  assert.deepEqual(Object.keys(assignmentAlertContinuation.files), ["apps/mobile/DriverWorkspace.tsx"]);
+  assert.equal(assignmentAlertContinuation.baseline["apps/mobile/DriverWorkspace.tsx"], approvedDriverSaasSources.files["apps/mobile/DriverWorkspace.tsx"]);
   const staffRoleNavigationSources = JSON.parse(await readFile(
     "docs/traceability/staff-role-navigation-hashes.json", "utf8",
   ));
@@ -300,6 +303,7 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
   const approvedFieldMarkerSources = JSON.parse(await readFile(
     "docs/traceability/field-markers-reviewed-hashes.json", "utf8",
   ));
+  const technicianContinuation = JSON.parse(await readFile("docs/technician-saas-redesign/reviewed-source-changes.json", "utf8"));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
       ? approvedMerchantDocumentSources[file] ?? approvedPaymentReturnHash
@@ -307,7 +311,9 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
         ?? approvedHomepageSources[file] ?? approvedNotificationSources[file]
         ?? approvedAlerts[file]?.approvedHash ?? originalHash;
     const source = await readFile(file);
-    assert.equal(createHash("sha256").update(source).digest("hex"), hash, file);
+    if (technicianContinuation.files[file])
+      assert.equal(technicianContinuation.baseline[file], hash, file);
+    assert.equal(createHash("sha256").update(source).digest("hex"), assignmentAlertContinuation.files[file] ?? technicianContinuation.files[file] ?? hash, file);
   }
 });
 

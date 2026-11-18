@@ -1,3 +1,8 @@
+import {
+  technicianDate,
+  technicianGreeting,
+  technicianReviewLabel,
+} from "../../packages/business-rules/src/technician-presentation";
 import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -121,33 +126,10 @@ function Hero({
     <View
       style={[
         s.hero,
-        { backgroundColor: colors.surface, minHeight: home ? 158 : 142 },
+        { backgroundColor: colors.surface, minHeight: home ? 110 : 96 },
       ]}
     >
-      <View
-        pointerEvents="none"
-        style={[
-          s.wave,
-          {
-            backgroundColor: dark ? "#234b28" : "#e1f8d3",
-            bottom: -75,
-            left: -40,
-          },
-        ]}
-      />
-      <View
-        pointerEvents="none"
-        style={[
-          s.wave,
-          {
-            backgroundColor: dark ? "#3b5723" : "#d1ef8a",
-            bottom: -100,
-            left: 75,
-            transform: [{ rotate: "-12deg" }],
-          },
-        ]}
-      />
-      <View style={{ flex: 1, zIndex: 1, paddingBottom: 25, paddingRight: 82 }}>
+      <View style={{ flex: 1, zIndex: 1, paddingBottom: 14, paddingRight: 8 }}>
         {eyebrow && (
           <Text
             preserveColor
@@ -171,12 +153,6 @@ function Hero({
           {subtitle}
         </Text>
       </View>
-      <Image
-        source={require("./assets/cylinder-illustration.png")}
-        accessible={false}
-        resizeMode="contain"
-        style={s.heroCylinder}
-      />
     </View>
   );
 }
@@ -291,7 +267,7 @@ export function TechnicianScreens({
   availability,
   refresh,
   signout,
-  entryFilter = "all",
+  entryFilter = "active",
   entryRange = "30",
 }: {
   page: string;
@@ -407,12 +383,14 @@ export function TechnicianScreens({
             preserveColor
             style={{ color: colors.text, fontSize: 19, fontWeight: "800" }}
           >
-            Available for Work
+            {p.technician_available
+              ? "Available for assignments"
+              : "Unavailable for assignments"}
           </Text>
           <Copy>
             {!connected
               ? "Offline / refresh not confirmed — preference is cached"
-              : "Receive job assignments and updates"}
+              : "Preference only; schedule, qualifications and work approval still apply"}
           </Copy>
         </View>
       </View>
@@ -506,19 +484,7 @@ export function TechnicianScreens({
       </Pressable>
     );
   }
-  const greetingHour = Number(
-      new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Africa/Lagos",
-        hour: "2-digit",
-        hourCycle: "h23",
-      }).format(new Date()),
-    ),
-    greeting =
-      greetingHour < 12
-        ? "Good morning"
-        : greetingHour < 17
-          ? "Good afternoon"
-          : "Good evening";
+  const greeting = technicianGreeting(profile.generatedAt);
   if (page === "home")
     return (
       <>
@@ -529,15 +495,18 @@ export function TechnicianScreens({
           subtitle={`Technician · ${p.branch_id ?? "Branch unavailable"}`}
         />
         {availabilityCard()}
-        <View style={s.metrics}>
+        <Copy>{technicianDate(profile.generatedAt, true)} · Africa/Lagos</Copy>
+        <View style={[s.metrics, { flexWrap: "wrap" }]}>
           <Metric
-            label="My Jobs"
-            value={summary.total}
-            icon="briefcase-outline"
+            compact
+            label="Assigned Jobs"
+            value={summary.assigned}
+            icon="calendar-outline"
             tone="#edf7ff"
-            onPress={() => navigate("jobs", "all")}
+            onPress={() => navigate("jobs", "assigned")}
           />
           <Metric
+            compact
             label="In Progress"
             value={summary.in_progress}
             icon="play-circle-outline"
@@ -545,17 +514,96 @@ export function TechnicianScreens({
             onPress={() => navigate("jobs", "in_progress")}
           />
           <Metric
-            label="Completed This Month"
-            value={summary.completed_month}
+            compact
+            label="Completed Today"
+            value={summary.completed_today}
             icon="checkmark-circle-outline"
             tone="#effbea"
-            onPress={() => navigate("history", "all", "month")}
+            onPress={() => navigate("history", "active", "7")}
+          />
+          <Metric
+            compact
+            label="Upcoming"
+            value={summary.upcoming}
+            icon="time-outline"
+            tone="#edf7ff"
+            onPress={() => navigate("jobs", "upcoming")}
           />
         </View>
-        <Button label="View My Jobs" onPress={() => navigate("jobs", "all")} />
+        <Card>
+          <Title>Next Appointment</Title>
+          {profile.nextAppointment === undefined ? (
+            <Copy>
+              Next appointment is unavailable. Refresh to confirm your schedule.
+            </Copy>
+          ) : profile.nextAppointment ? (
+            <>
+              {jobCard(profile.nextAppointment)}
+              <Button
+                label={technicianReviewLabel(profile.nextAppointment)}
+                onPress={() => choose(profile.nextAppointment)}
+              />
+            </>
+          ) : (
+            <>
+              <Copy>No assigned appointments yet.</Copy>
+              <Button
+                label="Refresh assignments"
+                secondary
+                onPress={() => refresh().catch((e) => setError(e.message))}
+              />
+            </>
+          )}
+        </Card>
+        <Card>
+          <Title>Today’s Jobs</Title>
+          {!profile.today?.rows ? (
+            <Copy>Today’s schedule is unavailable. Refresh to confirm.</Copy>
+          ) : profile.today.rows.length ? (
+            profile.today.rows.map(jobCard)
+          ) : (
+            <Copy>No appointments scheduled today.</Copy>
+          )}
+          <Button
+            label="View All Jobs"
+            secondary
+            onPress={() => navigate("jobs", "active")}
+          />
+        </Card>
+        {profile.today?.total > 0 && (
+          <Card>
+            <Title>Today’s Scheduled Progress</Title>
+            <Copy>
+              {profile.today.completed} of {profile.today.total} completed
+            </Copy>
+            <Copy>{profile.today.basis}</Copy>
+          </Card>
+        )}
+        <Card>
+          <Title>Quick Actions</Title>
+          <ActionRow
+            label="View Jobs"
+            icon="calendar-outline"
+            onPress={() => navigate("jobs", "active")}
+          />
+          <ActionRow
+            label="Qualifications"
+            detail="Independently verified by operations"
+            icon="shield-checkmark-outline"
+            onPress={() => navigate("skills")}
+          />
+          <ActionRow
+            label="Contact Support"
+            icon="headset-outline"
+            onPress={() => navigate("support")}
+          />
+          <Copy>
+            Service reports and safety incidents stay inside the assigned job.
+          </Copy>
+        </Card>
         <Copy>
-          My Jobs includes current and past assigned records. Last confirmed
-          sync:{" "}
+          Counts cover your current branch. Completed Today requires a recorded
+          terminal event in Lagos. Last confirmed sync:{" "}
           {stamp
             ? new Date(stamp).toLocaleString("en-GB", {
                 timeZone: "Africa/Lagos",
@@ -574,7 +622,11 @@ export function TechnicianScreens({
       <>
         <Hero
           title={history ? "Service History" : "My Jobs"}
-          subtitle={history ? "Your completed and past service jobs" : "View and manage your assigned service jobs"}
+          subtitle={
+            history
+              ? "Your completed and past service jobs"
+              : "View and manage your assigned service jobs"
+          }
         />
         {history && (
           <>
@@ -623,10 +675,10 @@ export function TechnicianScreens({
         {page === "jobs" && (
           <View style={s.filterTabs}>
             {[
-              ["all", "All Jobs", summary.total],
+              ["active", "Active Jobs", summary.active],
               ["assigned", "Assigned", summary.assigned],
               ["in_progress", "In Progress", summary.in_progress],
-              ["completed", "Completed", summary.completed],
+              ["upcoming", "Upcoming", summary.upcoming],
             ].map(([v, title, count]) => (
               <Pressable
                 key={v}
@@ -700,7 +752,7 @@ export function TechnicianScreens({
               },
             ]}
           >
-            <Ionicons name="options-outline" size={26} color={colors.primary} />
+            <Ionicons accessible={false} name="options-outline" size={26} color={colors.primary} />
           </Pressable>
         </View>
         {showFilters && (
@@ -822,8 +874,7 @@ export function TechnicianScreens({
           </View>
         )}
         <Copy>
-          All Jobs includes current and past assignments. Final actions are
-          revalidated by the server.
+          Your current branch only. Final actions are revalidated by the server.
         </Copy>
       </>
     );
@@ -999,8 +1050,7 @@ export function TechnicianScreens({
                 {new Date(v.expires_at).toLocaleString("en-GB", {
                   timeZone: "Africa/Lagos",
                 })}{" "}
-                ·{" "}
-                {Date.parse(v.expires_at) > Date.now() ? "Current" : "Expired"}
+                · {v.verified ? "Verified current" : "Not currently verified"}
               </Copy>
             </Card>
           ))
@@ -1099,14 +1149,14 @@ const s = StyleSheet.create({
     borderBottomWidth: 1,
   },
   iconButton: {
-    minWidth: 44,
-    minHeight: 44,
+    minWidth: 48,
+    minHeight: 48,
     alignItems: "center",
     justifyContent: "center",
   },
   avatar: {
-    width: 44,
-    height: 44,
+    width: 48,
+    height: 48,
     borderRadius: 24,
     alignItems: "center",
     justifyContent: "center",

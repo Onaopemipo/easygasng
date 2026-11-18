@@ -31,8 +31,52 @@ export async function technicianSummary(tx: SQL, user: Actor) {
         Number(summary.unstamped_completed) > 0
           ? null
           : Number(summary.completed_month),
+      completed_today:
+        Number(summary.unstamped_completed) > 0
+          ? null
+          : Number(
+              (await one(
+                tx,
+                source +
+                  " SELECT count(*)::int n FROM owned WHERE status='completed' AND (history_at AT TIME ZONE 'Africa/Lagos')::date=(now() AT TIME ZONE 'Africa/Lagos')::date AND history_at<=now()",
+                [user.id, user.branch_id],
+              ))!.n,
+            ),
+      upcoming: Number(
+        (await one(
+          tx,
+          source +
+            " SELECT count(*)::int n FROM owned WHERE status IN ('confirmed','assigned') AND assignment_response<>'declined' AND starts_at>now()",
+          [user.id, user.branch_id],
+        ))!.n,
+      ),
       rating: ratings?.average == null ? null : Number(ratings.average),
       ratingCount: Number(ratings?.count ?? 0),
+    },
+    nextAppointment:
+      (
+        await tx.query(
+          source +
+            " SELECT id,reference,snapshot->>'name' AS service,status,assignment_response,work_phase,address,starts_at,ends_at FROM owned WHERE status NOT IN ('completed','failed','cancelled') AND assignment_response<>'declined' ORDER BY CASE WHEN status IN ('en_route','in_progress','awaiting_customer_approval','awaiting_acknowledgement') THEN 0 ELSE 1 END,starts_at,id LIMIT 1",
+          [user.id, user.branch_id],
+        )
+      ).rows[0] ?? null,
+    today: {
+      ...(await one(
+        tx,
+        source +
+          " SELECT count(*)::int total,count(*) FILTER(WHERE status='completed')::int completed FROM owned WHERE (starts_at AT TIME ZONE 'Africa/Lagos')::date=(now() AT TIME ZONE 'Africa/Lagos')::date AND status NOT IN ('cancelled','failed')",
+        [user.id, user.branch_id],
+      )),
+      rows: (
+        await tx.query(
+          source +
+            " SELECT id,reference,snapshot->>'name' AS service,status,assignment_response,work_phase,address,starts_at,ends_at FROM owned WHERE (starts_at AT TIME ZONE 'Africa/Lagos')::date=(now() AT TIME ZONE 'Africa/Lagos')::date AND status NOT IN ('cancelled','failed') ORDER BY starts_at,id LIMIT 5",
+          [user.id, user.branch_id],
+        )
+      ).rows,
+      basis:
+        "Appointments scheduled today in Africa/Lagos; cancelled and failed excluded. Completed means server-confirmed completed status.",
     },
     unreadNotifications: Number(
       (await one(
@@ -56,7 +100,15 @@ export async function technicianJobs(tx: SQL, user: Actor, input: unknown) {
     .object({
       q: z.string().trim().max(100).default(""),
       filter: z
-        .enum(["all", "assigned", "in_progress", "completed", "past"])
+        .enum([
+          "all",
+          "active",
+          "upcoming",
+          "assigned",
+          "in_progress",
+          "completed",
+          "past",
+        ])
         .default("all"),
       page: z.coerce.number().int().min(1).max(10000).default(1),
       from: z.iso.date().optional(),
@@ -82,7 +134,7 @@ export async function technicianJobs(tx: SQL, user: Actor, input: unknown) {
     d.intent ?? null,
     d.location ? "%" + d.location.replace(/[\\%_]/g, "\\$&") + "%" : null,
   ];
-  const match = ` WHERE ($3='%%' OR reference ILIKE $3 ESCAPE '\\' OR snapshot->>'name' ILIKE $3 ESCAPE '\\' OR customer_name ILIKE $3 ESCAPE '\\') AND ($4='all' OR ($4='assigned' AND status IN ('assigned','confirmed')) OR ($4='in_progress' AND status IN ('en_route','in_progress','awaiting_customer_approval','awaiting_acknowledgement')) OR ($4='completed' AND status='completed') OR ($4='past' AND status IN ('completed','failed','cancelled'))) AND ($5::date IS NULL OR (COALESCE(history_at,starts_at) AT TIME ZONE 'Africa/Lagos')::date>=$5) AND ($6::date IS NULL OR (COALESCE(history_at,starts_at) AT TIME ZONE 'Africa/Lagos')::date<=$6) AND ($7::text IS NULL OR (status='in_progress' AND work_phase='authorised' AND assignment_response<>'declined' AND NOT EXISTS(SELECT 1 FROM service_reports r WHERE r.booking_id=owned.id))) AND ($8::text IS NULL OR address->>'zone' ILIKE $8 ESCAPE '\\' OR address->>'street' ILIKE $8 ESCAPE '\\')`;
+  const match = ` WHERE ($3='%%' OR reference ILIKE $3 ESCAPE '\\' OR snapshot->>'name' ILIKE $3 ESCAPE '\\' OR customer_name ILIKE $3 ESCAPE '\\') AND ($4='all' OR ($4='active' AND status NOT IN ('completed','failed','cancelled')) OR ($4='upcoming' AND status IN ('assigned','confirmed') AND assignment_response<>'declined' AND starts_at>now()) OR ($4='assigned' AND status IN ('assigned','confirmed')) OR ($4='in_progress' AND status IN ('en_route','in_progress','awaiting_customer_approval','awaiting_acknowledgement')) OR ($4='completed' AND status='completed') OR ($4='past' AND status IN ('completed','failed','cancelled'))) AND ($5::date IS NULL OR (COALESCE(history_at,starts_at) AT TIME ZONE 'Africa/Lagos')::date>=$5) AND ($6::date IS NULL OR (COALESCE(history_at,starts_at) AT TIME ZONE 'Africa/Lagos')::date<=$6) AND ($7::text IS NULL OR (status='in_progress' AND work_phase='authorised' AND assignment_response<>'declined' AND NOT EXISTS(SELECT 1 FROM service_reports r WHERE r.booking_id=owned.id))) AND ($8::text IS NULL OR address->>'zone' ILIKE $8 ESCAPE '\\' OR address->>'street' ILIKE $8 ESCAPE '\\')`;
   const total = Number(
     (await one(
       tx,
@@ -95,7 +147,7 @@ export async function technicianJobs(tx: SQL, user: Actor, input: unknown) {
       source +
         " SELECT id,reference,snapshot->>'name' AS service,status,assignment_response,work_phase,address,starts_at,ends_at,history_at FROM owned" +
         match +
-        " ORDER BY CASE WHEN $4 IN ('past','completed') THEN history_at ELSE starts_at END DESC NULLS LAST,id LIMIT 20 OFFSET $9",
+        " ORDER BY CASE WHEN $4 IN ('active','upcoming','assigned','in_progress') THEN starts_at END ASC NULLS LAST, CASE WHEN $4 IN ('past','completed') THEN history_at ELSE starts_at END DESC NULLS LAST,id LIMIT 20 OFFSET $9",
       [...p, (d.page - 1) * 20],
     )
   ).rows;

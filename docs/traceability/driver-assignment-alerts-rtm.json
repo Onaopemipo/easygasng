@@ -1,0 +1,289 @@
+{
+  "phase": "Driver native assignment popup and sound \u2014 19 November 2026",
+  "baseline": "1a23e5337cd7e5a6541ede1ea61a65bab1343ee8",
+  "releaseDecision": "PARTIAL / NO-GO; no automatic deployment or live activation",
+  "requirements": [
+    {
+      "id": "DAPP-01",
+      "requirement": "Detect only current own-branch unacknowledged assignments and deduplicate each attempt",
+      "priority": "P0",
+      "scope": "Driver app assignment alerts; preserve all canonical dispatch, stock, payment, custody and GPS controls.",
+      "uiReference": "User requests a popup and sound so the driver can acknowledge an assignment.",
+      "route": "Existing native DriverWorkspace Home/Orders/Profile",
+      "implementationFiles": [
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "packages/business-rules/src/driver-assignment-alerts.ts",
+        "apps/mobile/assets/driver-assignment.wav",
+        "apps/mobile/app.json",
+        "apps/mobile/package.json",
+        "apps/mobile/driver/package.json",
+        "apps/mobile/technician/package.json"
+      ],
+      "dataSource": "Authenticated canonical orders?active=1 and driver.snapshot responses; existing dispatch.respond.",
+      "securityControl": "Server actor/branch/attempt/version guards, account-scoped private dedupe, no contact/code in OS payload; receipt/read is not acknowledgement.",
+      "testFiles": [
+        "tests/driver-assignment-alerts.test.ts",
+        "tests/assignment-notifications.test.ts"
+      ],
+      "testIds": [
+        "DAPP-ELIGIBILITY",
+        "DAPP-PRIVACY"
+      ],
+      "negativeTests": [
+        "DAPP-ELIGIBILITY"
+      ],
+      "evidence": [
+        "docs/driver-assignment-alerts/README.md",
+        "docs/driver-assignment-alerts/evidence/regression.txt",
+        "docs/driver-assignment-alerts/evidence/native-types.txt",
+        "docs/driver-assignment-alerts/evidence/native-audit.txt",
+        "docs/driver-assignment-alerts/evidence/ios-build.txt",
+        "docs/driver-assignment-alerts/evidence/android-build.txt",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-popup.png",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-acknowledged.png",
+        "docs/driver-assignment-alerts/evidence/ios-chime-test-popup.png",
+        "docs/driver-assignment-alerts/evidence/build-artifacts.json"
+      ],
+      "acceptanceGate": "DAPP-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current own-branch attempt filtering, public me.user branchId normalization, per-attempt private dedupe and safe payload are tested; actual iOS pending assignment appeared after owner web assignment.",
+      "testResult": "PASS \u2014 22/22 focused regression, 0 failures/skips; actual iOS assignment and acknowledgement verified.",
+      "outstandingWork": "No remaining work for this bounded filtering requirement; separate background and physical requirements remain tracked."
+    },
+    {
+      "id": "DAPP-02",
+      "requirement": "Native popup, permission-aware sound/banner and safe review action while app is open",
+      "priority": "P1",
+      "scope": "Driver app assignment alerts; preserve all canonical dispatch, stock, payment, custody and GPS controls.",
+      "uiReference": "User requests a popup and sound so the driver can acknowledge an assignment.",
+      "route": "Existing native DriverWorkspace Home/Orders/Profile",
+      "implementationFiles": [
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "packages/business-rules/src/driver-assignment-alerts.ts",
+        "apps/mobile/assets/driver-assignment.wav",
+        "apps/mobile/app.json",
+        "apps/mobile/package.json",
+        "apps/mobile/driver/package.json",
+        "apps/mobile/technician/package.json"
+      ],
+      "dataSource": "Authenticated canonical orders?active=1 and driver.snapshot responses; existing dispatch.respond.",
+      "securityControl": "Server actor/branch/attempt/version guards, account-scoped private dedupe, no contact/code in OS payload; receipt/read is not acknowledgement.",
+      "testFiles": [
+        "tests/driver-assignment-alerts.test.ts",
+        "tests/assignment-notifications.test.ts"
+      ],
+      "testIds": [
+        "DAPP-CONFIG"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-assignment-alerts/README.md",
+        "docs/driver-assignment-alerts/evidence/regression.txt",
+        "docs/driver-assignment-alerts/evidence/native-types.txt",
+        "docs/driver-assignment-alerts/evidence/native-audit.txt",
+        "docs/driver-assignment-alerts/evidence/ios-build.txt",
+        "docs/driver-assignment-alerts/evidence/android-build.txt",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-popup.png",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-acknowledged.png",
+        "docs/driver-assignment-alerts/evidence/ios-chime-test-popup.png",
+        "docs/driver-assignment-alerts/evidence/build-artifacts.json"
+      ],
+      "acceptanceGate": "DAPP-G02",
+      "status": "PARTIAL",
+      "reason": "Actual iOS popup and native banner verified. Bundled foreground chime implemented, built and replayed; audible confirmation is pending. Default OS sound was explicitly not heard. Android runtime and physical device acceptance remain unrun.",
+      "testResult": "PARTIAL \u2014 automated 22/22, types, audit and native builds pass; runtime gaps retained.",
+      "outstandingWork": "Obtain audible chime confirmation, verify Android runtime and real iOS/Android permission/mute/accessibility/revocation behavior."
+    },
+    {
+      "id": "DAPP-03",
+      "requirement": "Explicit canonical acknowledgement with version, reason and no automatic pickup/completion",
+      "priority": "P0",
+      "scope": "Driver app assignment alerts; preserve all canonical dispatch, stock, payment, custody and GPS controls.",
+      "uiReference": "User requests a popup and sound so the driver can acknowledge an assignment.",
+      "route": "Existing native DriverWorkspace Home/Orders/Profile",
+      "implementationFiles": [
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "packages/business-rules/src/driver-assignment-alerts.ts",
+        "apps/mobile/assets/driver-assignment.wav",
+        "apps/mobile/app.json",
+        "apps/mobile/package.json",
+        "apps/mobile/driver/package.json",
+        "apps/mobile/technician/package.json"
+      ],
+      "dataSource": "Authenticated canonical orders?active=1 and driver.snapshot responses; existing dispatch.respond.",
+      "securityControl": "Server actor/branch/attempt/version guards, account-scoped private dedupe, no contact/code in OS payload; receipt/read is not acknowledgement.",
+      "testFiles": [
+        "tests/driver-assignment-alerts.test.ts",
+        "tests/assignment-notifications.test.ts"
+      ],
+      "testIds": [
+        "DAPP-ACK"
+      ],
+      "negativeTests": [
+        "DAPP-ACK"
+      ],
+      "evidence": [
+        "docs/driver-assignment-alerts/README.md",
+        "docs/driver-assignment-alerts/evidence/regression.txt",
+        "docs/driver-assignment-alerts/evidence/native-types.txt",
+        "docs/driver-assignment-alerts/evidence/native-audit.txt",
+        "docs/driver-assignment-alerts/evidence/ios-build.txt",
+        "docs/driver-assignment-alerts/evidence/android-build.txt",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-popup.png",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-acknowledged.png",
+        "docs/driver-assignment-alerts/evidence/ios-chime-test-popup.png",
+        "docs/driver-assignment-alerts/evidence/build-artifacts.json"
+      ],
+      "acceptanceGate": "DAPP-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual iOS popup acknowledgement confirmed by EasyGas. Canonical stale/foreign/expired guards and exactly-once replay tested; acknowledgement does not pick up goods or change payment.",
+      "testResult": "PASS \u2014 22/22 focused regression, 0 failures/skips; actual iOS assignment and acknowledgement verified.",
+      "outstandingWork": "No remaining work for this bounded canonical acknowledgement requirement; pickup, custody, payment and handover remain separate guarded workflows."
+    },
+    {
+      "id": "DAPP-04",
+      "requirement": "New assignment notification while backgrounded or terminated",
+      "priority": "P1",
+      "scope": "Driver app assignment alerts; preserve all canonical dispatch, stock, payment, custody and GPS controls.",
+      "uiReference": "User requests a popup and sound so the driver can acknowledge an assignment.",
+      "route": "Existing native DriverWorkspace Home/Orders/Profile",
+      "implementationFiles": [
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "packages/business-rules/src/driver-assignment-alerts.ts",
+        "apps/mobile/assets/driver-assignment.wav",
+        "apps/mobile/app.json",
+        "apps/mobile/package.json",
+        "apps/mobile/driver/package.json",
+        "apps/mobile/technician/package.json"
+      ],
+      "dataSource": "Authenticated canonical orders?active=1 and driver.snapshot responses; existing dispatch.respond.",
+      "securityControl": "Server actor/branch/attempt/version guards, account-scoped private dedupe, no contact/code in OS payload; receipt/read is not acknowledgement.",
+      "testFiles": [
+        "tests/driver-assignment-alerts.test.ts",
+        "tests/assignment-notifications.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-assignment-alerts/README.md",
+        "docs/driver-assignment-alerts/evidence/regression.txt",
+        "docs/driver-assignment-alerts/evidence/native-types.txt",
+        "docs/driver-assignment-alerts/evidence/native-audit.txt",
+        "docs/driver-assignment-alerts/evidence/ios-build.txt",
+        "docs/driver-assignment-alerts/evidence/android-build.txt",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-popup.png",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-acknowledged.png",
+        "docs/driver-assignment-alerts/evidence/ios-chime-test-popup.png",
+        "docs/driver-assignment-alerts/evidence/build-artifacts.json"
+      ],
+      "acceptanceGate": "DAPP-G04",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Foreground polling cannot deliver a newly created assignment while backgrounded or terminated. Remote device registration, token revocation, push outbox, transport and receipt handling are not implemented.",
+      "testResult": "NOT RUN \u2014 remote new-assignment delivery not implemented.",
+      "outstandingWork": "Implement recipient-scoped registration/revocation, transactional push outbox, Expo/APNs/FCM delivery and receipt/retry handling; configure credentials and run locked/terminated/offline/reconnect device checks."
+    },
+    {
+      "id": "DAPP-05",
+      "requirement": "Installed simulator demonstration and retained production/physical gates",
+      "priority": "P1",
+      "scope": "Driver app assignment alerts; preserve all canonical dispatch, stock, payment, custody and GPS controls.",
+      "uiReference": "User requests a popup and sound so the driver can acknowledge an assignment.",
+      "route": "Existing native DriverWorkspace Home/Orders/Profile",
+      "implementationFiles": [
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "packages/business-rules/src/driver-assignment-alerts.ts",
+        "apps/mobile/assets/driver-assignment.wav",
+        "apps/mobile/app.json",
+        "apps/mobile/package.json",
+        "apps/mobile/driver/package.json",
+        "apps/mobile/technician/package.json"
+      ],
+      "dataSource": "Authenticated canonical orders?active=1 and driver.snapshot responses; existing dispatch.respond.",
+      "securityControl": "Server actor/branch/attempt/version guards, account-scoped private dedupe, no contact/code in OS payload; receipt/read is not acknowledgement.",
+      "testFiles": [
+        "tests/driver-assignment-alerts.test.ts",
+        "tests/assignment-notifications.test.ts"
+      ],
+      "testIds": [
+        "DAPP-CONFIG"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-assignment-alerts/README.md",
+        "docs/driver-assignment-alerts/evidence/regression.txt",
+        "docs/driver-assignment-alerts/evidence/native-types.txt",
+        "docs/driver-assignment-alerts/evidence/native-audit.txt",
+        "docs/driver-assignment-alerts/evidence/ios-build.txt",
+        "docs/driver-assignment-alerts/evidence/android-build.txt",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-popup.png",
+        "docs/driver-assignment-alerts/evidence/ios-assignment-acknowledged.png",
+        "docs/driver-assignment-alerts/evidence/ios-chime-test-popup.png",
+        "docs/driver-assignment-alerts/evidence/build-artifacts.json"
+      ],
+      "acceptanceGate": "DAPP-G05",
+      "status": "PARTIAL",
+      "reason": "Final iOS chime build installed and test popup/banner observed on EasyGas First Sign-In QA; actual assignment acknowledgement verified. Android Release build passed, but native sound/device acceptance remains incomplete.",
+      "testResult": "PARTIAL \u2014 automated 22/22, types, audit and native builds pass; runtime gaps retained.",
+      "outstandingWork": "Finish audible iOS demonstration and Android runtime/physical acceptance. Preserve production NO-GO, incomplete named-order handover, provider and import gates."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DAPP-G01",
+      "requirement": "Detect only current own-branch unacknowledged assignments and deduplicate each attempt",
+      "status": "PASS",
+      "reason": "Current own-branch attempt filtering, public me.user branchId normalization, per-attempt private dedupe and safe payload are tested; actual iOS pending assignment appeared after owner web assignment."
+    },
+    {
+      "id": "DAPP-G02",
+      "requirement": "Native popup, permission-aware sound/banner and safe review action while app is open",
+      "status": "PARTIAL",
+      "reason": "Actual iOS popup and native banner verified. Bundled foreground chime implemented, built and replayed; audible confirmation is pending. Default OS sound was explicitly not heard. Android runtime and physical device acceptance remain unrun."
+    },
+    {
+      "id": "DAPP-G03",
+      "requirement": "Explicit canonical acknowledgement with version, reason and no automatic pickup/completion",
+      "status": "PASS",
+      "reason": "Actual iOS popup acknowledgement confirmed by EasyGas. Canonical stale/foreign/expired guards and exactly-once replay tested; acknowledgement does not pick up goods or change payment."
+    },
+    {
+      "id": "DAPP-G04",
+      "requirement": "New assignment notification while backgrounded or terminated",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Foreground polling cannot deliver a newly created assignment while backgrounded or terminated. Remote device registration, token revocation, push outbox, transport and receipt handling are not implemented."
+    },
+    {
+      "id": "DAPP-G05",
+      "requirement": "Installed simulator demonstration and retained production/physical gates",
+      "status": "PARTIAL",
+      "reason": "Final iOS chime build installed and test popup/banner observed on EasyGas First Sign-In QA; actual assignment acknowledgement verified. Android Release build passed, but native sound/device acceptance remains incomplete."
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "RTM created before implementation. Foreground detection and local OS sound/popup supported. Background/terminated remote delivery requires engineering plus APNs/FCM credentials and real-device acceptance; remains in denominator. Prior technician dirty files, named order recovery, production NO-GO and import hold retained."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Actual owner assignment and iOS popup acknowledgement verified. Fixed public branchId/internal branch_id mismatch. Default system sound not heard; added permission-aware bundled foreground chime and test popup. Final iOS/Android Release builds pass; installed iOS replay awaiting audible confirmation. Remote push and native runtime gaps remain in denominators. No deployment or hosting/payment configuration changed."
+    }
+  ],
+  "coverage": {
+    "requirements": 5,
+    "implementedOrPartial": 4,
+    "verifiedRequirements": 2,
+    "criticalRequirements": 2,
+    "verifiedCriticalRequirements": 2,
+    "gates": 5,
+    "passedGates": 2,
+    "routes": 1,
+    "verifiedCompleteRoutes": 0,
+    "note": "All five requirements and gates retained. Existing native workspace is exercised; route existence is not full alert acceptance."
+  }
+}

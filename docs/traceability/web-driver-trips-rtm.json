@@ -1,7 +1,7 @@
 {
-  "phase": "Driver web trip controls — 18 November 2026",
+  "phase": "Driver web trip controls \u2014 18 November 2026",
   "baseline": "6dacd21",
-  "releaseDecision": "GO — bounded synthetic demo web trip and delivery controls deployed from c5bf616 after fresh web/native CI and hosted acceptance. Existing public commercial production NO-GO preserved.",
+  "releaseDecision": "PARTIAL for the named hosted web order. DWT-05 downgraded DEFECTIVE after production-mode bulk custody guard exposed a missing driver web workflow; DWT-06 handover incomplete. Prior deployed trip controls remain. Commercial production NO-GO preserved.",
   "requirements": [
     {
       "id": "DWT-01",
@@ -45,7 +45,7 @@
       "acceptanceGate": "DWT-01-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
-      "testResult": "PASS — 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
+      "testResult": "PASS \u2014 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
       "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
     },
     {
@@ -90,7 +90,7 @@
       "acceptanceGate": "DWT-02-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
-      "testResult": "PASS — 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
+      "testResult": "PASS \u2014 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
       "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
     },
     {
@@ -135,7 +135,7 @@
       "acceptanceGate": "DWT-03-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
-      "testResult": "PASS — 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
+      "testResult": "PASS \u2014 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
       "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
     },
     {
@@ -180,7 +180,7 @@
       "acceptanceGate": "DWT-04-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Source c5bf616 passed final web756/756 and native checks; Ready candidate promoted and stable alias readback verified. Hosted read-only DWT-HOSTED passes; permanent fulfilment/tracking/bulk and Paystack available/test confirmed; no operational data altered.",
-      "testResult": "PASS — fresh web756/756, native types/dependency/audit, Ready deployment, runtime controls and 1/1 hosted read-only acceptance.",
+      "testResult": "PASS \u2014 fresh web756/756, native types/dependency/audit, Ready deployment, runtime controls and 1/1 hosted read-only acceptance.",
       "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
     },
     {
@@ -199,7 +199,10 @@
         "apps/web/components/driver-delivery-controls.tsx",
         "apps/web/lib/delivery.ts",
         "apps/web/lib/delivery-photos.ts",
-        "apps/web/app/api/media/route.ts"
+        "apps/web/app/api/media/route.ts",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/bulk-lpg-reservation.ts"
       ],
       "dataSource": "Own current assignment/manifest/version, existing consented retained attempt-bound proof, canonical verified payment/wallet ledger and customer-provided code; no driver access to the code source",
       "securityControl": "Existing restricted-session canonical driver.complete enforces payment, arrival, current authorised proof, actual full handover and customer code; existing media ownership, consent, retention and file checks; no cash/finance permission expansion",
@@ -221,13 +224,71 @@
         "docs/web-driver-trips/evidence/browser.txt",
         "docs/web-driver-trips/evidence/hosted.txt",
         "docs/web-driver-trips/evidence/release.txt",
-        "docs/web-driver-trips/evidence/ci-web-tests.txt"
+        "docs/web-driver-trips/evidence/ci-web-tests.txt",
+        "docs/web-driver-trips/demo-order-EG-2026-7BB8640B.md",
+        "docs/web-driver-trips/evidence/order-7BB8640B/handover-blocked-bulk-custody.jpg"
       ],
       "acceptanceGate": "DWT-05-G",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "Actual three-session local PostgreSQL browser completed a canonical wallet-paid synthetic order using web acknowledgement, manifest pickup, departure, arrival, actual multipart proof, customer code and handover, then ended the trip. Missing proof blocked completion; negative tests retain payment/arrival/consent/code/handover authority.",
-      "testResult": "PASS — 66 focused and 1 full actual browser workflow with real proof upload and guarded handover; no hosted order advanced.",
-      "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
+      "status": "DEFECTIVE",
+      "reason": "Actual named hosted run reaches acknowledged assignment, inspected pickup, departure, arrival and proof upload, but driver.complete rejects missing acknowledged bulk LPG custody and metered dispensing. DriverExperience omits the existing BulkLPGPanel. Earlier isolated browser success did not exercise the production-mode bulk requirement and is insufficient for complete gas-order web acceptance.",
+      "testResult": "FAIL hosted end-to-end handover: Bulk LPG requires acknowledged vehicle custody and verified metered dispensing. Prior focused and isolated browser passes retained as bounded historical evidence only.",
+      "outstandingWork": "Expose guarded bulk load acknowledgement/dispensing in driver web, provide independently qualified staff loading/current meter workflow and run production-equivalent bulk-enabled browser acceptance. Do not weaken the completion guard."
+    },
+    {
+      "id": "DWT-06",
+      "requirement": "Complete the existing paid demo order EG-2026-7BB8640B through the actual web UI with Demo Driver and an inspected cylinder",
+      "priority": "P0",
+      "scope": "Explicit user-authorised synthetic hosted operational run: verify demo/sandbox, start suitable trip, allocate inspected cylinder, accept/prepare/assign, acknowledge, inspected pickup, arrival, proof/code handover and final payment/invoice/receipt reconciliation. No new charge or live activation.",
+      "uiReference": "Existing owner Orders/cylinder controls, driver web trip/Orders, customer order and EasyGas documents",
+      "route": "/admin/orders; /admin/deliveries; /admin/operations; /admin/inventory?tab=returns; /orders; /api/driver.complete",
+      "implementationFiles": [
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/components/driver-trip-controls.tsx",
+        "apps/web/components/driver-trip-controls.module.css",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/app/api/media/route.ts",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/bulk-lpg-reservation.ts"
+      ],
+      "dataSource": "Observed actual owner/finance/driver/customer web UI in existing Vercel synthetic demo; canonical order c22eac68-f5e2-4ba4-8c26-6f02a028d24b, customer intake4214df22-8d80-4307-8a67-d7bb3655dcac, private assignment notice and EasyGas invoice/receipt. No API/database mutation shortcut.",
+      "securityControl": "Existing independent owner verification and finance recent authentication; explicit user-approved short-lived cylinder_inspection renewal only. Canonical payment/arrival/proof/code/full-handover and bulk custody guards preserved. Synthetic proof clearly labelled; no real-world safety certification, location permission or financial success fabricated.",
+      "testFiles": [
+        "tests/web-driver-trips.test.ts"
+      ],
+      "testIds": [
+        "DWT-PROOFNEG"
+      ],
+      "negativeTests": [
+        "DWT-PROOFNEG"
+      ],
+      "evidence": [
+        "docs/web-driver-trips/evidence/focused.txt",
+        "docs/web-driver-trips/demo-order-EG-2026-7BB8640B.md",
+        "docs/web-driver-trips/evidence/order-7BB8640B/trip-started.jpg",
+        "docs/web-driver-trips/evidence/order-7BB8640B/qualification-renewal-audit.jpg",
+        "docs/web-driver-trips/evidence/order-7BB8640B/inspection-passed.jpg",
+        "docs/web-driver-trips/evidence/order-7BB8640B/driver-assignment-notification.jpg",
+        "docs/web-driver-trips/evidence/order-7BB8640B/pickup-verified.jpg",
+        "docs/web-driver-trips/evidence/order-7BB8640B/proof-uploaded.jpg",
+        "docs/web-driver-trips/evidence/order-7BB8640B/handover-blocked-bulk-custody.jpg",
+        "docs/web-driver-trips/evidence/order-7BB8640B/easygas-paid-invoice.jpg",
+        "docs/web-driver-trips/evidence/order-7BB8640B/easygas-sandbox-receipt.jpg",
+        "docs/web-driver-trips/evidence/order-7BB8640B/simulator-preview-build.json",
+        "docs/web-driver-trips/evidence/order-7BB8640B/simulator-assignment-observation.txt",
+        "docs/web-driver-trips/evidence/order-7BB8640B/simulator-assignment-notification.png",
+        "docs/web-driver-trips/evidence/order-7BB8640B/simulator-assigned-order.png"
+      ],
+      "acceptanceGate": "DWT-06-G",
+      "status": "PARTIAL",
+      "reason": "Actual hosted web run started Demo driver trip, issued/reconciled EasyGas invoice, confirmed synthetic coverage, accepted/prepared/assigned order, registered customer intake, renewed existing finance cylinder_inspection qualification with explicit user approval and independent owner verification, inspected the cylinder, recorded filling eligibility, verified private assignment notification, acknowledged/picked up/departed/arrived and uploaded labelled synthetic proof. Handover was rejected by preserved bulk custody/metered dispensing guard; no completion success inferred.",
+      "testResult": "PARTIAL \u2014 actual UI pickup/arrival/proof passed; final handover rejected. Invoice principal15830 + processing342.59 = sandbox receipt16172.59; paid invoice balance0. No new charge.",
+      "outstandingWork": "User approved necessary existing one-hour demo bulk renewals on19 November; apply them with independent verification when web recovery controls are ready. Repair missing web bulk workflow and complete guarded custody/metering and named handover through web; order currently out_for_delivery with arrived attempt. Cylinder renewal was executed; approved bulk renewals have not yet been submitted. Check stock ledger/final cylinder custody after successful completion. Existing commercial/physical/provider/import gates remain."
     }
   ],
   "gates": [
@@ -258,8 +319,14 @@
     {
       "id": "DWT-05-G",
       "requirement": "Complete the paid synthetic delivery through the driver web interface without requiring the native app",
-      "status": "PASS",
-      "reason": "Mapped API/browser and negative acceptance passed. Final c5bf616 web/native CI and Ready demo deployment/hosted verification passed; no physical or commercial acceptance inferred."
+      "status": "FAIL",
+      "reason": "Hosted bulk-enabled gas handover fails; required driver web bulk custody/metering workflow missing. Previous isolated non-production browser pass retained, gate explicitly downgraded."
+    },
+    {
+      "id": "DWT-06-G",
+      "requirement": "Complete the existing paid demo order EG-2026-7BB8640B through the actual web UI with Demo Driver and an inspected cylinder",
+      "status": "PENDING",
+      "reason": "Trip/inspection/assignment/pickup/arrival/proof and financial document reconciliation observed. Final handover remains blocked by bulk custody; additional one-hour demo bulk renewals approved but not yet applied; guarded web recovery remains required."
     }
   ],
   "changeLog": [
@@ -277,7 +344,7 @@
     },
     {
       "date": "2026-11-18",
-      "change": "Scope clarification required by the user’s intended web-only completion: current web Orders still requires mobile pickup/proof. Add stable DWT-05 for canonical web delivery actions/proof/handover. Trip-only fafc162 candidate will not be promoted; retain all earlier requirements/gates/holds."
+      "change": "Scope clarification required by the user\u2019s intended web-only completion: current web Orders still requires mobile pickup/proof. Add stable DWT-05 for canonical web delivery actions/proof/handover. Trip-only fafc162 candidate will not be promoted; retain all earlier requirements/gates/holds."
     },
     {
       "date": "2026-11-18",
@@ -286,16 +353,32 @@
     {
       "date": "2026-11-18",
       "change": "Final source c5bf616: web756/756 and native CI success, zero audit vulnerabilities. Ready dpl_BG7raiYJy745co8FUCzaQjWnD4Qg promoted and DWT-HOSTED passed. Final local browser also proves help/failed-delivery UI and clears resolved proof feedback. All5 requirements/gates retained/verified for bounded demo; named order untouched, no mobile build or backend guard change."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "User explicitly authorises completing existing EG-2026-7BB8640B entirely in the demo web UI with Demo Driver, inspected allocation/pickup/handover. Append DWT-06; prior no-hosted-order-mutation limit is superseded only for this named synthetic order/trip, not other orders or real operations. Sandbox and permanent fulfilment must remain."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Actual named demo web operation exposed missing bulk custody/metering in driver UI. Preserve all six IDs/denominators; downgrade DWT-05 and gate rather than claiming previous non-production browser success proves the hosted flow. One-hour cylinder qualification renewal explicitly approved and audited; bulk qualification renewal separately requested and not yet approved. No guard disabled, no new charge, no completion inferred."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User approved one-hour demo bulk renewals while technician SaaS phase was active. Approval recorded without starting the short validity before required web recovery controls are ready. Named order remains incomplete; no renewed bulk capability or fulfilment success inferred."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User requested simulator assignment demonstration. Built existing shared iOS preview against hosted demo HTTPS, installed and signed Demo Driver in on EasyGas First Sign-In QA. Existing EG-2026-7BB8640B assignment, unread notification and canonical order timeline observed. No new dispatch assignment/stock/payment/handover mutation. GPS not granted and trip sharing off. DWT-05 remains DEFECTIVE and DWT-06 PARTIAL; all physical and commercial gates retained."
     }
   ],
   "coverage": {
     "implemented": 5,
-    "verified": 5,
-    "total": 5,
-    "criticalVerified": 2,
-    "criticalTotal": 2,
-    "gatesPassed": 5,
-    "gatesTotal": 5,
-    "scope": "Bounded driver web trip controls; original production/physical/provider/native requirements retained."
+    "verified": 4,
+    "total": 6,
+    "criticalVerified": 1,
+    "criticalTotal": 3,
+    "gatesPassed": 4,
+    "gatesTotal": 6,
+    "scope": "All six bounded requirements retained: four verified, one defective and one partial. Original production/physical/provider/native requirements and import hold retained."
   }
 }

@@ -14,6 +14,7 @@ import {
   driverNextAssignment,
 } from "../../packages/business-rules/src/driver-presentation";
 import CustomerNotifications from "./CustomerNotifications";
+import DriverAssignmentAlerts from "./DriverAssignmentAlerts";
 import { EasyGasAlert } from "./AppAlert";
 import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
 import VehicleManifest from "./VehicleManifest";
@@ -1969,6 +1970,19 @@ export default function DriverWorkspace({
             />
           </>
         )}
+        <DriverAssignmentAlerts
+          key={`${origin}:${user.id}:${user.branch_id}`}
+          api={api}
+          user={user}
+          origin={origin}
+          orders={orders}
+          snapshot={snapshot}
+          connected={connected}
+          revoked={revoked}
+          showSettings={page === "profile" && !selected && !historyRow}
+          onReview={open}
+          onRefresh={refresh}
+        />
         {!revoked && ((queue ?? 0) > 0 || (legacy ?? 0) > 0) && (
           <Card>
             <Title>Pending Sync</Title>

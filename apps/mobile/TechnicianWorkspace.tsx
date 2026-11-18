@@ -11,6 +11,7 @@ import {
   StatusBar,
   AppState,
   BackHandler,
+  RefreshControl,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -86,7 +87,7 @@ export default function TechnicianWorkspace({
       setBusy(false);
     }
   }
-  const [entryFilter, setEntryFilter] = useState("all");
+  const [entryFilter, setEntryFilter] = useState("active");
   const [entryRange, setEntryRange] = useState("30");
   const alive = useRef(true),
     refreshGeneration = useRef(0);
@@ -119,7 +120,7 @@ export default function TechnicianWorkspace({
   const availabilityOperation = useRef<{ target: boolean; key: string } | null>(
     null,
   );
-  function navigate(dest: string, filter = "all", range = "30") {
+  function navigate(dest: string, filter = "active", range = "30") {
     setSelected(null);
     setPage(dest);
     setEntryFilter(filter);
@@ -351,6 +352,15 @@ export default function TechnicianWorkspace({
         </View>
       )}
       <ScrollView
+        refreshControl={
+          !selected ? (
+            <RefreshControl
+              refreshing={busy}
+              onRefresh={() => refresh().catch((e) => setError(e.message))}
+              tintColor={colors.primary}
+            />
+          ) : undefined
+        }
         automaticallyAdjustKeyboardInsets
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
@@ -615,7 +625,9 @@ export default function TechnicianWorkspace({
             api={api}
             relatedAction={(id) => {
               const assigned = bookings.find((booking) => booking.id === id);
-              return assigned ? { label: "Open assigned job", open: () => open(assigned) } : undefined;
+              return assigned
+                ? { label: "Open assigned job", open: () => open(assigned) }
+                : undefined;
             }}
           />
         ) : page === "password" ? (

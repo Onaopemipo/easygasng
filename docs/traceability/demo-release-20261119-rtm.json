@@ -1,0 +1,123 @@
+{
+  "phase": "Technician and driver alerts demo release \u2014 19 November 2026",
+  "productionDecision": "Commercial production NO-GO and import hold retained; demo only authorised.",
+  "requirements": [
+    {
+      "id": "DREL-20261119-01",
+      "requirement": "Push all remaining reviewed source and evidence to GitHub",
+      "priority": "P0",
+      "scope": "Explicitly authorised synthetic demo release only, no new native build.",
+      "uiReference": "User requests push and deployment with no new build.",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "docs/deployment/vercel-client-demo.md"
+      ],
+      "dataSource": "Working tree, immutable Git commit and origin branch readback",
+      "securityControl": "Exclude private fixture files, credentials, generated native binaries and local data; preserve previous requirements/gates.",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/vercel-demo.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Source bundle excludes local environment and data files"
+      ],
+      "evidence": [
+        "docs/deployment/20261119-technician-alerts-release.md"
+      ],
+      "acceptanceGate": "DREL-G01",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Release authorised; validation, push and hosted verification pending.",
+      "testResult": "NOT RUN release verification",
+      "outstandingWork": "Complete mapped release checks; retain all prior incomplete feature/native/physical gates."
+    },
+    {
+      "id": "DREL-20261119-02",
+      "requirement": "Deploy reviewed web source to the existing isolated demo and retain fulfilment and sandbox payments",
+      "priority": "P0",
+      "scope": "Explicitly authorised synthetic demo release only, no new native build.",
+      "uiReference": "User requests push and deployment with no new build.",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "docs/deployment/vercel-client-demo.md"
+      ],
+      "dataSource": "Existing Vercel project, immutable deployment, runtime status and authenticated canonical configuration APIs",
+      "securityControl": "No environment overrides, no live payment activation, no migrations or business-record mutations; promote only verified Ready candidate.",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/vercel-demo.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Source bundle excludes local environment and data files"
+      ],
+      "evidence": [
+        "docs/deployment/20261119-technician-alerts-release.md"
+      ],
+      "acceptanceGate": "DREL-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Release authorised; validation, push and hosted verification pending.",
+      "testResult": "NOT RUN release verification",
+      "outstandingWork": "Complete mapped release checks; retain all prior incomplete feature/native/physical gates."
+    },
+    {
+      "id": "DREL-20261119-03",
+      "requirement": "Avoid new native builds and preserve incomplete acceptance honestly",
+      "priority": "P1",
+      "scope": "Explicitly authorised synthetic demo release only, no new native build.",
+      "uiReference": "User requests push and deployment with no new build.",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "docs/deployment/vercel-client-demo.md"
+      ],
+      "dataSource": "User instruction; existing native evidence and push CI workflow conditions",
+      "securityControl": "Do not invoke native build/export/install or manual export-enabled workflow. Record unresolved audio/background/physical gates.",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/vercel-demo.test.ts",
+        "tests/deployment.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/deployment/20261119-technician-alerts-release.md"
+      ],
+      "acceptanceGate": "DREL-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Release authorised; validation, push and hosted verification pending.",
+      "testResult": "NOT RUN release verification",
+      "outstandingWork": "Complete mapped release checks; retain all prior incomplete feature/native/physical gates."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DREL-G01",
+      "requirement": "Push all remaining reviewed source and evidence to GitHub",
+      "status": "PENDING",
+      "reason": "Release not yet verified"
+    },
+    {
+      "id": "DREL-G02",
+      "requirement": "Deploy reviewed web source to the existing isolated demo and retain fulfilment and sandbox payments",
+      "status": "PENDING",
+      "reason": "Release not yet verified"
+    },
+    {
+      "id": "DREL-G03",
+      "requirement": "Avoid new native builds and preserve incomplete acceptance honestly",
+      "status": "PENDING",
+      "reason": "Release not yet verified"
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "Created before release actions. User authorises all pending source/evidence push and web demo deployment, explicitly no new native build. Native CI only types/dependency tests/audit; export default false. Existing feature RTMs retain unresolved audio, background transport, Android and physical acceptance."
+    }
+  ]
+}

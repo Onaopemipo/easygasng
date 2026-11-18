@@ -1578,7 +1578,8 @@ export function BookingCard({
       {error && <Notice type="error" message={error} />}{" "}
       {step &&
         ((manager && ["confirmed", "assigned"].includes(step)) ||
-          (tech && ["en_route", "in_progress"].includes(step))) && (
+          (tech && ["en_route", "in_progress"].includes(step) &&
+            (!user.technician_service_only || b.assignment_response === "acknowledged"))) && (
           <button
             className="button"
             disabled={busy}
@@ -2135,7 +2136,7 @@ export function BookingCard({
           }
         />
       )}
-      {tech && b.billing.dueKobo > 0 && (
+      {tech && !user.technician_service_only && b.billing.dueKobo > 0 && (
         <ServiceForm
           title="Record cash actually collected"
           fields={[
@@ -2152,7 +2153,7 @@ export function BookingCard({
           }
         />
       )}
-      {b.cashCollections.map((c: any) => (
+      {b.cashCollections?.map((c: any) => (
         <div className="quote-card" key={c.id}>
           <p>
             {c.reference} · {money(c.amount_kobo)} ·{" "}
@@ -2220,7 +2221,7 @@ export function BookingCard({
           }
         />
       )}
-      {b.status === "completed" && (tech || manager) && (
+      {b.status === "completed" && (manager || (tech && !user.technician_service_only)) && (
         <ServiceForm
           title="Record a documented follow-up"
           fields={[

@@ -130,7 +130,7 @@ test("DRVS-SCOPE: current attempt removal and branch revocation stay authoritati
     await f.db.close?.();
   }
 });
-test("DRVS-PRESERVED: the presentation baseline remains protected apart from the reviewed assignment-notification correction", async () => {
+test("DRVS-PRESERVED: historical business baselines retain explicitly reviewed notification and technician continuations", async () => {
   const rows = JSON.parse(
     await readFile(
       "docs/driver-saas-redesign/protected-business-sources.json",
@@ -143,18 +143,24 @@ test("DRVS-PRESERVED: the presentation baseline remains protected apart from the
   assert.deepEqual(Object.keys(notificationCorrection.files).sort(), [
     "apps/web/components/admin.tsx", "apps/web/lib/driver-operations.ts", "apps/web/lib/order-tracking.ts",
   ]);
+  const technicianContinuation = JSON.parse(await readFile("docs/technician-saas-redesign/reviewed-source-changes.json", "utf8"));
+  assert.deepEqual(Object.keys(technicianContinuation.files).sort(), ["apps/mobile/TechnicianScreens.tsx", "apps/mobile/TechnicianWorkspace.tsx", "apps/mobile/technician/app.config.js", "apps/web/components/admin.tsx", "apps/web/components/professional-services.tsx", "apps/web/lib/professional-services.ts", "apps/web/lib/technician-mobile.ts"]);
   for (const [file, hash] of Object.entries(rows)) {
     if (notificationCorrection.files[file])
       assert.equal(notificationCorrection.baseline[file], hash, file);
+    if (technicianContinuation.files[file])
+      assert.equal(technicianContinuation.baseline[file], notificationCorrection.files[file] ?? hash, file);
     assert.equal(
       createHash("sha256")
         .update(await readFile(file))
         .digest("hex"),
-      notificationCorrection.files[file] ?? hash,
+      technicianContinuation.files[file] ?? notificationCorrection.files[file] ?? hash,
       file,
     );
   }
   for (const [file, hash] of Object.entries(notificationCorrection.files))
+    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), technicianContinuation.files[file] ?? hash, file);
+  for (const [file, hash] of Object.entries(technicianContinuation.files))
     assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), hash, file);
 });
 

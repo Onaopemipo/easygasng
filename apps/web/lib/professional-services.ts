@@ -435,7 +435,7 @@ export async function professionalServiceAction(
       ),
       qualifications: (
         await tx.query(
-          "SELECT code,expires_at FROM technician_qualifications WHERE user_id=$1",
+          "SELECT q.code,q.expires_at,(q.expires_at>now() AND v.active AND v.role='owner' AND v.id<>q.user_id) AS verified FROM technician_qualifications q JOIN users v ON v.id=q.verified_by WHERE q.user_id=$1",
           [user.id],
         )
       ).rows,
