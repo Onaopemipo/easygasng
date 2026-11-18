@@ -60,6 +60,60 @@ test("DRVS-BROWSER: four driver views, responsive themes, real actions, history 
   }
   try {
     await open(accounts.primary);
+    const originalProfile = (await (await api("driver.snapshot")).json())
+      .profile;
+    await nav.getByRole("button", { name: "Profile", exact: true }).click();
+    await root.getByText("Edit personal information", { exact: true }).click();
+    const personalForm = root.locator("form").filter({
+      has: page.getByRole("heading", { name: "Edit your name", exact: true }),
+    });
+    try {
+      await personalForm
+        .getByLabel("Your name")
+        .fill("Synthetic Driver Name QA");
+      await personalForm
+        .getByRole("button", { name: "Save", exact: true })
+        .click();
+      await root
+        .getByRole("heading", { name: "Synthetic Driver Name QA", exact: true })
+        .waitFor();
+      assert.equal(
+        (await (await api("driver.snapshot")).json()).profile.name,
+        "Synthetic Driver Name QA",
+      );
+      for (const extra of [
+        { role: "owner" },
+        { branch_id: "other" },
+        { active: false },
+      ])
+        assert.equal(
+          (
+            await api("account.update", {
+              name: "Forbidden profile edit",
+              ...extra,
+            })
+          ).status(),
+          400,
+        );
+      const after = (await (await api("driver.snapshot")).json()).profile;
+      assert.equal(after.id, originalProfile.id);
+      assert.equal(after.branch_name, originalProfile.branch_name);
+      assert.equal(after.active, originalProfile.active);
+      assert.equal(after.name, "Synthetic Driver Name QA");
+    } finally {
+      assert.equal(
+        (await api("account.update", { name: originalProfile.name })).status(),
+        200,
+      );
+    }
+    await nav.getByRole("button", { name: "Home", exact: true }).click();
+    await root.getByRole("button", { name: "Refresh", exact: true }).click();
+    await root
+      .getByRole("heading", { name: new RegExp(originalProfile.name) })
+      .waitFor();
+    console.log(
+      "PASS actual name-edit form and canonical name-only update; role, branch and activation edits rejected; disposable identity restored.",
+    );
     for (const width of [320, 390, 768, 1024, 1440, 1920]) {
       await page.setViewportSize({ width, height: 1000 });
       for (const tab of ["Home", "Orders", "History", "Profile"]) {
