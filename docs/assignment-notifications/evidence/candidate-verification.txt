@@ -1,0 +1,24 @@
+Source: 47aa4717d865acbf22ae49ab1fe6b85d5cb9cddf
+Candidate: dpl_Fodr4MdgFR2C7HYyMQR4qBM8kqfA
+URL: https://easygas-client-demo-bs2lcw31k-onaopemipos-projects.vercel.app
+Vercel build: READY, production target, --skip-domain, no deployment-specific environment overrides.
+
+Executed candidate-options.mjs with authenticated synthetic customer:
+PASS Card/Cash on delivery/Wallet methods, own balance 0, Paystack available and environment=test.
+No payment initiated or credit inferred.
+
+Executed candidate-fulfilment.mjs with authenticated synthetic owner:
+PASS driver availability mutation capability and bulk fulfilment enabled.
+No eligible Preparing/Assigned order existed. A transition against a nonexistent UUID reached the canonical Order not found guard, rather than the disabled tracking gate. No existing order was changed.
+PASS retained synthetic order EG-2026-E8ED8AE8 delivered/payment verified.
+PASS Paystack available and environment=test.
+
+Read-only Production project defaults:
+EASYGAS_FIELD_OPERATIONS_ENABLED=true
+EASYGAS_TRACKING_MUTATIONS_ENABLED=true
+EASYGAS_BULK_LPG_ENABLED=true
+EASYGAS_PROOF_RETENTION_DAYS=1
+EASYGAS_EMAIL_ENABLED=false
+EASYGAS_BACKGROUND_JOBS=false
+EASYGAS_PAYSTACK_ENABLED=true
+Sensitive values were not printed; runtime configuration is the sandbox evidence.

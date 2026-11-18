@@ -171,3 +171,14 @@ The additional hosted funded-wallet order probe was not completed: sandbox fundi
 Explicit user authorisation covered native correction, Android checks, push and demo deployment. Source882c08d on codex/driver-saas-redesign; both fresh Release validation jobs passed. Candidate dpl_EaXJRaDgh8ocgWnPuH18TN2EqkX3 was built from a clean committed archive with no environment overrides, verified Ready/test mode/fulfilment, then promoted to the stable alias. Previous Ready dpl_Dgvn7MrBfRpp3f42tXi6A4CBXEhu is retained for web rollback.
 
 [Release evidence](../driver-saas-redesign/07-header-android-demo-release.md) records native build/UI checks, CI, hosted six-width driver views, Incidents and checkout smoke results. Permanent Production defaults retain EASYGAS_FIELD_OPERATIONS_ENABLED=true, EASYGAS_TRACKING_MUTATIONS_ENABLED=true, EASYGAS_BULK_LPG_ENABLED=true, EASYGAS_PROOF_RETENTION_DAYS=1. Sensitive values were not exposed by env pull; authenticated candidate and stable runtime configuration confirmed Paystack environment test and available. No live keys or operational data were changed. Native binaries remain local QA builds; physical-device/production acceptance and historical import hold remain separate.
+
+
+## Driver assignment alert correction — 18 November 2026
+
+Source `47aa471` passed [fresh web and native Release validation](https://github.com/Onaopemipo/easygasng/actions/runs/44304026095):754/754 web tests with zero skips, build/types and both audits with zero vulnerabilities; native types and three dependency checks passed. Native export was skipped by the push workflow.
+
+Ready candidate `dpl_Fodr4MdgFR2C7HYyMQR4qBM8kqfA` was built from a clean committed archive without environment overrides, runtime verified, then promoted to the stable demo. First assignments now produce an atomic private driver alert; the owner order popup exposes canonical next steps and failed-save feedback. The driver badge refreshes using existing approximately30-second/focus polling. Hosted read-only checks passed for the owner dialog and390px driver bell/privacy/fit. Reported order EG-2026-7BB8640B remained Placed, payment verified, driver null, no attempt/version1; it was not assigned by verification.
+
+Permanent fulfilment/tracking/bulk defaults remain true, proof visibility one day, Paystack available/test and email/background jobs OFF. Rollback is previous Ready `dpl_EaXJRaDgh8ocgWnPuH18TN2EqkX3`, followed by readiness/fulfilment/sandbox checks; no schema migration or reversal of operational/financial records. Commercial production NO-GO, physical/provider acceptance and import hold remain.
+
+[Requirements, evidence and limitations](../traceability/assignment-notifications-rtm.md) · [Release record](../assignment-notifications/evidence/release.txt)
