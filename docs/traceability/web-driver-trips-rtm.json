@@ -1,7 +1,7 @@
 {
   "phase": "Driver web trip controls — 18 November 2026",
   "baseline": "6dacd21",
-  "releaseDecision": "PENDING implementation and executed acceptance; commercial production NO-GO preserved.",
+  "releaseDecision": "GO — bounded synthetic demo web trip and delivery controls deployed from c5bf616 after fresh web/native CI and hosted acceptance. Existing public commercial production NO-GO preserved.",
   "requirements": [
     {
       "id": "DWT-01",
@@ -26,22 +26,27 @@
       "testFiles": [
         "tests/web-driver-trips.test.ts",
         "tests/driver-workspace.test.ts",
-        "scripts/qa-web-driver-trips.mjs"
+        "scripts/qa-web-driver-trips.mjs",
+        "scripts/qa-web-driver-trips-hosted.mjs"
       ],
       "testIds": [
-        "DWT-BROWSER"
+        "DWT-BROWSER",
+        "DWT-HOSTED"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/web-driver-trips/README.md",
         "docs/web-driver-trips/evidence/focused.txt",
-        "docs/web-driver-trips/evidence/browser.txt"
+        "docs/web-driver-trips/evidence/browser.txt",
+        "docs/web-driver-trips/evidence/hosted.txt",
+        "docs/web-driver-trips/evidence/release.txt",
+        "docs/web-driver-trips/evidence/ci-web-tests.txt"
       ],
       "acceptanceGate": "DWT-01-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
       "testResult": "PASS — 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
-      "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
+      "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
     },
     {
       "id": "DWT-02",
@@ -77,13 +82,16 @@
       "evidence": [
         "docs/web-driver-trips/README.md",
         "docs/web-driver-trips/evidence/focused.txt",
-        "docs/web-driver-trips/evidence/browser.txt"
+        "docs/web-driver-trips/evidence/browser.txt",
+        "docs/web-driver-trips/evidence/hosted.txt",
+        "docs/web-driver-trips/evidence/release.txt",
+        "docs/web-driver-trips/evidence/ci-web-tests.txt"
       ],
       "acceptanceGate": "DWT-02-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
       "testResult": "PASS — 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
-      "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
+      "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
     },
     {
       "id": "DWT-03",
@@ -108,22 +116,27 @@
       "testFiles": [
         "tests/web-driver-trips.test.ts",
         "tests/driver-workspace.test.ts",
-        "scripts/qa-web-driver-trips.mjs"
+        "scripts/qa-web-driver-trips.mjs",
+        "scripts/qa-web-driver-trips-hosted.mjs"
       ],
       "testIds": [
-        "DWT-BROWSER"
+        "DWT-BROWSER",
+        "DWT-HOSTED"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/web-driver-trips/README.md",
         "docs/web-driver-trips/evidence/focused.txt",
-        "docs/web-driver-trips/evidence/browser.txt"
+        "docs/web-driver-trips/evidence/browser.txt",
+        "docs/web-driver-trips/evidence/hosted.txt",
+        "docs/web-driver-trips/evidence/release.txt",
+        "docs/web-driver-trips/evidence/ci-web-tests.txt"
       ],
       "acceptanceGate": "DWT-03-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing restricted-session own-trip APIs exposed through Home/Profile. Executed start/end/revoke, stale read recovery, 390/1440px fit and canonical synthetic assignment/acknowledgement/pickup; unresolved active delivery rejected trip end. Ownership, suitability, branch, replay, odometer and restricted finance controls pass.",
       "testResult": "PASS — 66 focused checks and 1 actual complete web driver workflow against disposable PostgreSQL.",
-      "outstandingWork": "Implement controls; verify local browser/security/build; fresh CI, scoped demo rollout and hosted read-only acceptance. External provider, physical device and commercial production gates remain separate."
+      "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
     },
     {
       "id": "DWT-04",
@@ -141,27 +154,34 @@
         "apps/web/components/driver-delivery-controls.tsx",
         "apps/web/lib/delivery.ts",
         "apps/web/lib/delivery-photos.ts",
-        "apps/web/app/api/media/route.ts"
+        "apps/web/app/api/media/route.ts",
+        "docs/deployment/vercel-client-demo.md"
       ],
-      "dataSource": "Authenticated own driver.location/current trip and same-branch active suitable vehicles; canonical driver_trips, driver_vehicles, operation receipts and custody records",
-      "securityControl": "Existing driver-only own-trip and branch checks, active LPG-suitable vehicle, odometer bounds, transaction/idempotency and unresolved custody guards; no permission expansion or browser GPS inferred",
+      "dataSource": "GitHub Actions run44310710756/source c5bf616 and official artifact digest; Vercel Ready deployment/stable alias/project defaults; authenticated runtime configuration and hosted read-only canonical state",
+      "securityControl": "Only existing synthetic demo deployed; clean source archive/no env overrides; sandbox runtime verified, no live credentials exposed or real operations performed; all production NO-GO and import/physical/provider gates retained",
       "testFiles": [
         "tests/web-driver-trips.test.ts",
         "tests/driver-workspace.test.ts",
-        "scripts/qa-web-driver-trips.mjs"
+        "scripts/qa-web-driver-trips.mjs",
+        "scripts/qa-web-driver-trips-hosted.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "DWT-HOSTED"
+      ],
       "negativeTests": [],
       "evidence": [
         "docs/web-driver-trips/README.md",
         "docs/web-driver-trips/evidence/focused.txt",
-        "docs/web-driver-trips/evidence/browser.txt"
+        "docs/web-driver-trips/evidence/browser.txt",
+        "docs/web-driver-trips/evidence/hosted.txt",
+        "docs/web-driver-trips/evidence/release.txt",
+        "docs/web-driver-trips/evidence/ci-web-tests.txt"
       ],
       "acceptanceGate": "DWT-04-G",
-      "status": "PARTIAL",
-      "reason": "Local implementation/browser/build/types acceptance passed; push, fresh CI and demo rollout pending.",
-      "testResult": "PENDING",
-      "outstandingWork": "Push final web-only completion source, fresh CI and superseding demo candidate; trip-only fafc162 candidate must not be promoted."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Source c5bf616 passed final web756/756 and native checks; Ready candidate promoted and stable alias readback verified. Hosted read-only DWT-HOSTED passes; permanent fulfilment/tracking/bulk and Paystack available/test confirmed; no operational data altered.",
+      "testResult": "PASS — fresh web756/756, native types/dependency/audit, Ready deployment, runtime controls and 1/1 hosted read-only acceptance.",
+      "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
     },
     {
       "id": "DWT-05",
@@ -169,7 +189,7 @@
       "priority": "P0",
       "scope": "Expose canonical acknowledgement, manifest-checked pickup, departure, arrival, consented proof upload and handover-code completion, with failure/help routes and existing payment/custody/stock/proof controls.",
       "uiReference": "Driver Orders assigned-delivery detail",
-      "route": "/admin/deliveries; /api/delivery.pickup; /api/order.transition; /api/delivery.arrived; /api/media; /api/driver.complete",
+      "route": "/admin/deliveries; /api/delivery.pickup; /api/order.transition; /api/delivery.arrived; /api/media; /api/driver.complete; /api/delivery.help",
       "implementationFiles": [
         "apps/web/components/driver-experience.tsx",
         "apps/web/lib/driver-operations.ts",
@@ -198,13 +218,16 @@
       "evidence": [
         "docs/web-driver-trips/README.md",
         "docs/web-driver-trips/evidence/focused.txt",
-        "docs/web-driver-trips/evidence/browser.txt"
+        "docs/web-driver-trips/evidence/browser.txt",
+        "docs/web-driver-trips/evidence/hosted.txt",
+        "docs/web-driver-trips/evidence/release.txt",
+        "docs/web-driver-trips/evidence/ci-web-tests.txt"
       ],
       "acceptanceGate": "DWT-05-G",
       "status": "VERIFIED_COMPLETE",
       "reason": "Actual three-session local PostgreSQL browser completed a canonical wallet-paid synthetic order using web acknowledgement, manifest pickup, departure, arrival, actual multipart proof, customer code and handover, then ended the trip. Missing proof blocked completion; negative tests retain payment/arrival/consent/code/handover authority.",
       "testResult": "PASS — 66 focused and 1 full actual browser workflow with real proof upload and guarded handover; no hosted order advanced.",
-      "outstandingWork": "Implement and execute web-only pickup/proof/handover acceptance without relaxing server guards; supersede initial trip-only candidate before promotion."
+      "outstandingWork": "No remaining implementation or demo-release work for this bounded web phase. User must supply actual vehicle/odometer, stock/cylinder readiness, consent, proof and customer handover code. Native/physical/external provider/commercial gates and historical import hold remain separate; the named hosted order was not advanced."
     }
   ],
   "gates": [
@@ -212,31 +235,31 @@
       "id": "DWT-01-G",
       "requirement": "Start and manage own duty trip from driver web Home and Profile",
       "status": "PASS",
-      "reason": "Bounded local API and browser acceptance passed; demo release tracked separately."
+      "reason": "Mapped API/browser and negative acceptance passed. Final c5bf616 web/native CI and Ready demo deployment/hosted verification passed; no physical or commercial acceptance inferred."
     },
     {
       "id": "DWT-02-G",
       "requirement": "Preserve canonical trip ownership, branch, suitability, replay and custody controls",
       "status": "PASS",
-      "reason": "Bounded local API and browser acceptance passed; demo release tracked separately."
+      "reason": "Mapped API/browser and negative acceptance passed. Final c5bf616 web/native CI and Ready demo deployment/hosted verification passed; no physical or commercial acceptance inferred."
     },
     {
       "id": "DWT-03-G",
       "requirement": "Responsive, explicit consent and authoritative error/reconnect states",
       "status": "PASS",
-      "reason": "Bounded local API and browser acceptance passed; demo release tracked separately."
+      "reason": "Mapped API/browser and negative acceptance passed. Final c5bf616 web/native CI and Ready demo deployment/hosted verification passed; no physical or commercial acceptance inferred."
     },
     {
       "id": "DWT-04-G",
       "requirement": "Release to the synthetic demo with fulfilment enabled and Paystack sandbox",
-      "status": "PENDING",
-      "reason": "Executed acceptance pending."
+      "status": "PASS",
+      "reason": "Mapped API/browser and negative acceptance passed. Final c5bf616 web/native CI and Ready demo deployment/hosted verification passed; no physical or commercial acceptance inferred."
     },
     {
       "id": "DWT-05-G",
       "requirement": "Complete the paid synthetic delivery through the driver web interface without requiring the native app",
       "status": "PASS",
-      "reason": "Executed full web workflow plus DWT-PROOFNEG guards passed locally; release tracked separately."
+      "reason": "Mapped API/browser and negative acceptance passed. Final c5bf616 web/native CI and Ready demo deployment/hosted verification passed; no physical or commercial acceptance inferred."
     }
   ],
   "changeLog": [
@@ -259,15 +282,19 @@
     {
       "date": "2026-11-18",
       "change": "DWT-05 verified by actual UI acknowledgement/pickup/departure/arrival, real consented multipart photo, missing-proof rejection, customer-code full handover and trip end. Disposable test_fixture wallet funding consumed by canonical checkout; no fabricated hosted payment. 66 focused/build/types and browser pass; no backend/schema/native permission changes."
+    },
+    {
+      "date": "2026-11-18",
+      "change": "Final source c5bf616: web756/756 and native CI success, zero audit vulnerabilities. Ready dpl_BG7raiYJy745co8FUCzaQjWnD4Qg promoted and DWT-HOSTED passed. Final local browser also proves help/failed-delivery UI and clears resolved proof feedback. All5 requirements/gates retained/verified for bounded demo; named order untouched, no mobile build or backend guard change."
     }
   ],
   "coverage": {
-    "implemented": 4,
-    "verified": 4,
+    "implemented": 5,
+    "verified": 5,
     "total": 5,
     "criticalVerified": 2,
     "criticalTotal": 2,
-    "gatesPassed": 4,
+    "gatesPassed": 5,
     "gatesTotal": 5,
     "scope": "Bounded driver web trip controls; original production/physical/provider/native requirements retained."
   }

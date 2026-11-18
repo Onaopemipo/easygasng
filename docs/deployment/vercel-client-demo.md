@@ -182,3 +182,14 @@ Ready candidate `dpl_Fodr4MdgFR2C7HYyMQR4qBM8kqfA` was built from a clean commit
 Permanent fulfilment/tracking/bulk defaults remain true, proof visibility one day, Paystack available/test and email/background jobs OFF. Rollback is previous Ready `dpl_EaXJRaDgh8ocgWnPuH18TN2EqkX3`, followed by readiness/fulfilment/sandbox checks; no schema migration or reversal of operational/financial records. Commercial production NO-GO, physical/provider acceptance and import hold remain.
 
 [Requirements, evidence and limitations](../traceability/assignment-notifications-rtm.md) · [Release record](../assignment-notifications/evidence/release.txt)
+
+
+## Driver web trips and guarded delivery — 18 November 2026
+
+Source `c5bf616` passed [fresh web and native CI](https://github.com/Onaopemipo/easygasng/actions/runs/44310710756):756/756 web tests with zero skips, web build/types, native types/three dependency checks and both audits at zero vulnerabilities. No native bundle export or installed binary was built in this web phase.
+
+Clean candidate `dpl_BG7raiYJy745co8FUCzaQjWnD4Qg` was runtime verified and promoted without environment overrides. Home/Profile now expose the existing own-trip start/end/consent controls. Driver Orders also exposes the existing guarded acknowledgement, manifest pickup, departure, arrival, proof and full handover path, plus failure/help. Actual complete and exception browser workflows passed against disposable local PostgreSQL. Hosted Home/Profile controls/branch vehicles/default consent and320/390/1440px fit passed without operational writes; EG-2026-7BB8640B remained Placed, verified payment, driver null/no attempt/version1.
+
+Permanent fulfilment/tracking/bulk defaults remain true, proof retention one day, Paystack available/test and email/background jobs OFF. Rollback: previous Ready `dpl_Fodr4MdgFR2C7HYyMQR4qBM8kqfA`, followed by runtime checks; no migration or reversal of operational/financial/notification records. Commercial NO-GO and physical/provider/import holds remain.
+
+[Requirements, evidence and operating flow](../traceability/web-driver-trips-rtm.md) · [Release record](../web-driver-trips/evidence/release.txt)

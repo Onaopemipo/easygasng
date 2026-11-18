@@ -1,0 +1,20 @@
+Source: c5bf6168954cee8a177e72537182fc3343649e5d
+Candidate: dpl_BG7raiYJy745co8FUCzaQjWnD4Qg
+URL: https://easygas-client-demo-iybuhnj6g-onaopemipos-projects.vercel.app
+State: READY; clean committed source archive, --skip-domain, no deployment-specific environment overrides.
+
+PASS Ready candidate: authenticated Card/Cash/Wallet methods, own wallet balance 0, Paystack sandbox; no credit/payment inferred.
+
+PASS candidate: driver availability mutations enabled; bulk fulfilment enabled; tracking mutation gate verified with existing project true default and harmless nonexistent-order guard; retained test order paid/delivered; Paystack available in test mode. No order/payment/stock/driver mutation performed.
+
+Safe Production project defaults verified read-only:
+{
+  "EASYGAS_FIELD_OPERATIONS_ENABLED": "true",
+  "EASYGAS_TRACKING_MUTATIONS_ENABLED": "true",
+  "EASYGAS_BULK_LPG_ENABLED": "true",
+  "EASYGAS_PROOF_RETENTION_DAYS": "1",
+  "EASYGAS_EMAIL_ENABLED": "false",
+  "EASYGAS_BACKGROUND_JOBS": "false",
+  "EASYGAS_PAYSTACK_ENABLED": "true"
+}
+Sensitive values not printed. Paystack runtime environment=test and available=true provide sandbox evidence. No existing order/payment/stock/driver mutation by these candidate checks; a nonexistent-order guard probe was used only if no eligible dispatch order existed.

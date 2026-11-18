@@ -295,6 +295,79 @@ test("DWT-BROWSER: web start, status recovery, profile management, consent and g
     await modal.getByRole("button", { name: "End trip", exact: true }).click();
     await modal.getByText("Trip ended.", { exact: true }).waitFor();
     assert.equal((await api(driver, "driver.location")).trip, null);
+    // A second local COD order exercises web exception actions; no payment success is fabricated.
+    await modal
+      .getByLabel("Vehicle", { exact: false })
+      .selectOption(credentials.vehicle.id);
+    await modal.getByLabel(/Start odometer/).fill("35");
+    await modal
+      .getByRole("button", { name: "Start trip", exact: true })
+      .click();
+    await modal
+      .getByRole("button", { name: "End trip", exact: true })
+      .waitFor();
+    await modal.getByRole("button", { name: "Close dialog" }).click();
+    const failed = await api(customer, "checkout", {
+      items: [{ productId: "hose", quantity: 1 }],
+      address: {
+        name: "Synthetic exception customer",
+        phone: "08012345678",
+        street: "12 Synthetic Street",
+        zone: "Lekki",
+      },
+      date: new Date(Date.now() + 3 * 86400000).toISOString().slice(0, 10),
+      window: "14:00–18:00",
+      paymentMethod: "cash_on_delivery",
+      idempotencyKey: crypto.randomUUID(),
+    });
+    for (const status of ["accepted", "preparing", "assigned"]) {
+      const current = (await api(owner, "orders?id=" + failed.id))[0];
+      await api(owner, "order.transition", {
+        id: failed.id,
+        status,
+        version: current.tracking_version,
+        note: "Synthetic web exception assignment",
+        operationKey: crypto.randomUUID(),
+        ...(status === "assigned" ? { driverId: credentials.driver.id } : {}),
+      });
+    }
+    await page.getByRole("button", { name: "Refresh", exact: true }).click();
+    await page.getByRole("button", { name: "View order", exact: true }).click();
+    await page
+      .getByText("Delivery problem or dispatch help", { exact: true })
+      .click();
+    await page
+      .getByLabel(/Help request/)
+      .fill("Synthetic dispatch help request before pickup");
+    const help = page.waitForResponse(
+      (response) =>
+        response.url().endsWith("/api/delivery.help") &&
+        response.request().method() === "POST",
+    );
+    await page
+      .getByRole("button", { name: "Request dispatch help", exact: true })
+      .click();
+    assert.equal((await help).status(), 200);
+    await page
+      .getByLabel(/Failure category/)
+      .selectOption("customer_unavailable");
+    await page
+      .getByLabel(/Failure note/)
+      .fill("Synthetic customer unavailable before custody pickup");
+    await page
+      .getByRole("button", { name: "Report failed delivery", exact: true })
+      .click();
+    await page
+      .getByText("This assignment is no longer in your current orders.", {
+        exact: true,
+      })
+      .waitFor();
+    const exception = (await api(owner, "orders?id=" + failed.id))[0];
+    assert.equal(exception.status, "delivery_failed");
+    assert.notEqual(exception.payment_status, "verified");
+    console.log(
+      "PASS second synthetic web exception order: dispatch help accepted; structured customer_unavailable failure recorded without pickup or fabricated payment.",
+    );
     console.log(
       "PASS actual browser start/end/revoke; failed read disables writes until refresh; 390/1440 fit; canonical synthetic assignment/pickup succeeds with web-created trip; unresolved delivery blocks trip end. Actual driver UI acknowledgement/pickup/departure/arrival/proof/handover completes a canonically wallet-paid synthetic order; missing proof rejected; trip closes after handover. No hosted writes or GPS permission requested.",
     );

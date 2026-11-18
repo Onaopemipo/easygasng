@@ -22,4 +22,16 @@ Production web build and TypeScript passed. The actual browser scenario also ver
 
 ## Release
 
-Push, fresh web/native CI and demo release pending. Permanent fulfilment/tracking/bulk defaults and Paystack sandbox must carry forward unchanged. No migration is required. Previous Ready demo dpl_Fodr4MdgFR2C7HYyMQR4qBM8kqfA is the rollback point; operational history is retained.
+Application source `c5bf616` passed [fresh web/native CI](https://github.com/Onaopemipo/easygasng/actions/runs/44310710756): **756/756 web tests with zero skips**, production build/types and both audits with zero vulnerabilities; native types/three dependency checks passed. Native export was skipped by the push workflow; no installed binary was built in this phase.
+
+Ready deployment `dpl_BG7raiYJy745co8FUCzaQjWnD4Qg` was built from a clean committed archive without environment overrides, runtime verified and promoted to [the existing demo](https://easygas-client-demo.vercel.app). The permanent field/tracking/bulk defaults remain enabled, proof retention one day, Paystack available in **test** mode, and email/background jobs OFF. [Candidate evidence](evidence/candidate.txt).
+
+[Hosted read-only scenario](../../scripts/qa-web-driver-trips-hosted.mjs) passed **1/1**: Home/Profile trip controls, canonical branch vehicle list, consent off by default, and320/390/1440px fit. The QA driver’s trip and EG-2026-7BB8640B were unchanged throughout; the named order remains Placed, verified payment, driver null/no attempt/version1. The full driver fulfilment and exception paths were exercised locally, not by fabricating a hosted assignment. [Hosted log](evidence/hosted.txt), [CI provenance](evidence/release-validation.json), [release and rollback](evidence/release.txt).
+
+The final local browser scenario also submits dispatch help and a structured customer_unavailable failure on a separate synthetic unpaid COD order; it does not infer payment success or physical pickup. The final screenshots omit the customer code. The final evidence/QA update does not change application code from validated/deployed c5bf616.
+
+To operate the demo: sign in as the driver, start a trip with the checked vehicle/odometer from Home, then let the owner accept/prepare/assign the order with the required stock and inspected-cylinder readiness. In driver Orders, acknowledge, inspect pickup, start delivery, confirm arrival, upload consented proof and complete actual handover using the customer-provided code. End the trip after custody/returns are reconciled. No browser GPS or phone app is required by these exposed actions; all server readiness rules remain.
+
+Rollback is previous Ready `dpl_Fodr4MdgFR2C7HYyMQR4qBM8kqfA`, followed by readiness/fulfilment/sandbox checks. No schema migration; retain all committed operational/financial/notification history. All five requirements/gates are verified for this bounded synthetic demo release. Historical commercial NO-GO, external email/provider/device/physical acceptance and import hold remain.
+
+[Own phase artifact register](artifact-register.json) records current evidence and QA hashes; historical phase registers are unchanged.
