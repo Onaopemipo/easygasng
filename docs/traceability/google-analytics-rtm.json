@@ -7,7 +7,7 @@
       "requirement": "Load the supplied published GTM container once and use its existing GA4 destination without duplicate installation",
       "priority": "P1",
       "scope": "Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation.",
-      "uiReference": "User requests Google Analytics with supplied GTM container and GA4 measurement ID19November2026",
+      "uiReference": "User supplied GTM-KLJ8FM96 and G-8Y34NXQMMK,19November2026; actual desktop1280px and phone390px preference controls",
       "route": "/,/products,/services,/privacy; private routes excluded",
       "implementationFiles": [
         "packages/business-rules/src/analytics.ts",
@@ -21,26 +21,30 @@
       "dataSource": "Supplied public tag IDs, published Google container; URL and explicit local analytics consent only",
       "securityControl": "No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied",
       "testFiles": [
-        "tests/google-analytics.test.ts"
+        "tests/google-analytics.test.ts",
+        "tests/google-analytics-browser.test.ts"
       ],
-      "testIds": [],
+      "testIds": ["ANALYTICS-LOAD", "ANALYTICS-BROWSER"],
       "negativeTests": [],
       "evidence": [
         "docs/analytics/evidence/regression.txt",
-        "docs/analytics/evidence/published-container.json"
+        "docs/analytics/evidence/browser-validation.txt",
+        "docs/analytics/evidence/browser-checks.json",
+        "docs/analytics/evidence/published-container.json",
+        "docs/analytics/evidence/stable-identity.json"
       ],
       "acceptanceGate": "ANALYTICS-G01",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Consent-first single GTM loader implemented; server session exclusion, fixed public URL allowlist, private-document latch, full-page navigation when loaded, withdrawal and storage/page restore handling. Local27regressions pass; hosted verification pending.",
-      "testResult": "PASS —27local analytics/navigation/order-modal/customer-order regressions; final build/deployment qualification underway",
-      "outstandingWork": "Deploy and verify hosted consent, tag execution/private exclusion and reporting boundary. No ecommerce, user identification, advertising or production release inferred."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Supplied published container version1 has the existing GA4 destination. Hosted DOM records exactly one GTM script after grant; its onReady callback confirms execution. No second gtag config or manual page-view event is added.",
+      "testResult": "PASS \u201427/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions",
+      "outstandingWork": "None for the bounded site-side requirement. Receiver/reporting evidence remains under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release are outside this scope."
     },
     {
       "id": "ANALYTICS-02",
       "requirement": "Persist optional analytics consent, load no Google resources before consent and support withdrawal",
       "priority": "P0",
       "scope": "Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation.",
-      "uiReference": "User requests Google Analytics with supplied GTM container and GA4 measurement ID19November2026",
+      "uiReference": "User supplied GTM-KLJ8FM96 and G-8Y34NXQMMK,19November2026; actual desktop1280px and phone390px preference controls",
       "route": "/,/products,/services,/privacy; private routes excluded",
       "implementationFiles": [
         "packages/business-rules/src/analytics.ts",
@@ -54,28 +58,32 @@
       "dataSource": "Supplied public tag IDs, published Google container; URL and explicit local analytics consent only",
       "securityControl": "No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied",
       "testFiles": [
-        "tests/google-analytics.test.ts"
+        "tests/google-analytics.test.ts",
+        "tests/google-analytics-browser.test.ts"
       ],
-      "testIds": [],
-      "negativeTests": [
-        "ANALYTICS-PRIVACY"
-      ],
+      "testIds": ["ANALYTICS-PRIVACY", "ANALYTICS-REVOKE", "ANALYTICS-BROWSER"],
+      "negativeTests": ["ANALYTICS-PRIVACY"],
       "evidence": [
         "docs/analytics/evidence/regression.txt",
-        "docs/analytics/evidence/published-container.json"
+        "docs/analytics/evidence/browser-validation.txt",
+        "docs/analytics/evidence/browser-checks.json",
+        "docs/analytics/evidence/published-container.json",
+        "docs/analytics/evidence/stable-identity.json",
+        "docs/analytics/evidence/consent-final-desktop.jpg",
+        "docs/analytics/evidence/consent-phone.jpg"
       ],
       "acceptanceGate": "ANALYTICS-G02",
-      "status": "DEFECTIVE",
-      "reason": "Desktop consent passes;390px Cookie settings obstructed by mobile navigation, corrected with footer clearance; final hosted retest pending.",
-      "testResult": "PASS —27local analytics/navigation/order-modal/customer-order regressions; final build/deployment qualification underway",
-      "outstandingWork": "Deploy and verify hosted consent, tag execution/private exclusion and reporting boundary. No ecommerce, user identification, advertising or production release inferred."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Hosted desktop and390px phone checks pass for no-choice, essential-only, grant, saved preference, reopening settings and withdrawal. Reproduced mobile navigation overlap was corrected and retested on the final Ready source; historical defective observation retained.",
+      "testResult": "PASS \u201427/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions",
+      "outstandingWork": "None for the bounded site-side requirement. Receiver/reporting evidence remains under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release are outside this scope."
     },
     {
       "id": "ANALYTICS-03",
       "requirement": "Exclude signed-in, operational and sensitive URLs; unload tags before entering private pages",
       "priority": "P0",
       "scope": "Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation.",
-      "uiReference": "User requests Google Analytics with supplied GTM container and GA4 measurement ID19November2026",
+      "uiReference": "User supplied GTM-KLJ8FM96 and G-8Y34NXQMMK,19November2026; actual desktop1280px and phone390px preference controls",
       "route": "/,/products,/services,/privacy; private routes excluded",
       "implementationFiles": [
         "packages/business-rules/src/analytics.ts",
@@ -89,28 +97,30 @@
       "dataSource": "Supplied public tag IDs, published Google container; URL and explicit local analytics consent only",
       "securityControl": "No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied",
       "testFiles": [
-        "tests/google-analytics.test.ts"
+        "tests/google-analytics.test.ts",
+        "tests/google-analytics-browser.test.ts"
       ],
-      "testIds": [],
-      "negativeTests": [
-        "ANALYTICS-PRIVACY"
-      ],
+      "testIds": ["ANALYTICS-PRIVACY", "ANALYTICS-NAV", "ANALYTICS-BROWSER"],
+      "negativeTests": ["ANALYTICS-PRIVACY"],
       "evidence": [
         "docs/analytics/evidence/regression.txt",
-        "docs/analytics/evidence/published-container.json"
+        "docs/analytics/evidence/browser-validation.txt",
+        "docs/analytics/evidence/browser-checks.json",
+        "docs/analytics/evidence/published-container.json",
+        "docs/analytics/evidence/stable-identity.json"
       ],
       "acceptanceGate": "ANALYTICS-G03",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Consent-first single GTM loader implemented; server session exclusion, fixed public URL allowlist, private-document latch, full-page navigation when loaded, withdrawal and storage/page restore handling. Local27regressions pass; hosted verification pending.",
-      "testResult": "PASS —27local analytics/navigation/order-modal/customer-order regressions; final build/deployment qualification underway",
-      "outstandingWork": "Deploy and verify hosted consent, tag execution/private exclusion and reporting boundary. No ecommerce, user identification, advertising or production release inferred."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Hosted signed-in admin/public pages, query URLs and private navigation show no Google scripts. An excluded document remains untracked on later SPA navigation. Actual public product action reaches /gas-order without tracking; local negatives cover token/hash/checkout/account/order URLs.",
+      "testResult": "PASS \u201427/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions",
+      "outstandingWork": "None for the bounded site-side requirement. Receiver/reporting evidence remains under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release are outside this scope."
     },
     {
       "id": "ANALYTICS-04",
       "requirement": "Verify implementation, build, client-demo deployment and receiver evidence; preserve production holds",
       "priority": "P1",
       "scope": "Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation.",
-      "uiReference": "User requests Google Analytics with supplied GTM container and GA4 measurement ID19November2026",
+      "uiReference": "User supplied GTM-KLJ8FM96 and G-8Y34NXQMMK,19November2026; actual desktop1280px and phone390px preference controls",
       "route": "/,/products,/services,/privacy; private routes excluded",
       "implementationFiles": [
         "packages/business-rules/src/analytics.ts",
@@ -124,55 +134,72 @@
       "dataSource": "Supplied public tag IDs, published Google container; URL and explicit local analytics consent only",
       "securityControl": "No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied",
       "testFiles": [
-        "tests/google-analytics.test.ts"
+        "tests/google-analytics.test.ts",
+        "tests/google-analytics-browser.test.ts",
+        "scripts/check-analytics-demo.mjs"
       ],
-      "testIds": [],
+      "testIds": ["ANALYTICS-CONFIG", "ANALYTICS-DEPLOY", "ANALYTICS-BROWSER"],
       "negativeTests": [],
       "evidence": [
         "docs/analytics/evidence/regression.txt",
-        "docs/analytics/evidence/published-container.json"
+        "docs/analytics/evidence/browser-validation.txt",
+        "docs/analytics/evidence/browser-checks.json",
+        "docs/analytics/evidence/published-container.json",
+        "docs/analytics/evidence/stable-identity.json",
+        "docs/analytics/evidence/types.txt",
+        "docs/analytics/evidence/build.txt",
+        "docs/analytics/evidence/candidate-recovery.json",
+        "docs/analytics/evidence/source-integrity.json",
+        "docs/analytics/evidence/hosted-business.txt",
+        "docs/analytics/evidence/business-before.json",
+        "docs/analytics/evidence/business-after.json",
+        "docs/analytics/evidence/promotion.txt"
       ],
       "acceptanceGate": "ANALYTICS-G04",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Consent-first single GTM loader implemented; server session exclusion, fixed public URL allowlist, private-document latch, full-page navigation when loaded, withdrawal and storage/page restore handling. Local27regressions pass; hosted verification pending.",
-      "testResult": "PASS —27local analytics/navigation/order-modal/customer-order regressions; final build/deployment qualification underway",
-      "outstandingWork": "Deploy and verify hosted consent, tag execution/private exclusion and reporting boundary. No ecommerce, user identification, advertising or production release inferred."
+      "status": "PARTIAL",
+      "reason": "Local27/27 regressions, TypeScript/build, final Ready deployment identity, source integrity, browser execution and unchanged business readback pass. Browser tooling does not expose collection requests or GA4 reports. Receiver receipt/Realtime is unverified; this row remains in the denominator.",
+      "testResult": "PARTIAL \u2014local27/27, browser1/1, hosted business preservation1/1, build/types and Ready promotion pass; GA4 receiver receipt/Realtime unverified",
+      "outstandingWork": "Confirm receipt in GA4 Realtime for G-8Y34NXQMMK using a clean signed-out demo visit after Allow analytics. Private Google account/reporting access is unavailable; do not infer receipt from script execution. Existing production NO-GO/import/retain-all and wider acceptance gaps remain."
     }
   ],
   "gates": [
     {
       "id": "ANALYTICS-G01",
       "description": "Load the supplied published GTM container once and use its existing GA4 destination without duplicate installation",
-      "status": "OPEN"
+      "status": "PASS",
+      "reason": "Supplied published container version1 has the existing GA4 destination. Hosted DOM records exactly one GTM script after grant; its onReady callback confirms execution. No second gtag config or manual page-view event is added."
     },
     {
       "id": "ANALYTICS-G02",
       "description": "Persist optional analytics consent, load no Google resources before consent and support withdrawal",
-      "status": "OPEN"
+      "status": "PASS",
+      "reason": "Hosted desktop and390px phone checks pass for no-choice, essential-only, grant, saved preference, reopening settings and withdrawal. Reproduced mobile navigation overlap was corrected and retested on the final Ready source; historical defective observation retained."
     },
     {
       "id": "ANALYTICS-G03",
       "description": "Exclude signed-in, operational and sensitive URLs; unload tags before entering private pages",
-      "status": "OPEN"
+      "status": "PASS",
+      "reason": "Hosted signed-in admin/public pages, query URLs and private navigation show no Google scripts. An excluded document remains untracked on later SPA navigation. Actual public product action reaches /gas-order without tracking; local negatives cover token/hash/checkout/account/order URLs."
     },
     {
       "id": "ANALYTICS-G04",
       "description": "Verify implementation, build, client-demo deployment and receiver evidence; preserve production holds",
-      "status": "OPEN"
+      "status": "OPEN",
+      "reason": "Local27/27 regressions, TypeScript/build, final Ready deployment identity, source integrity, browser execution and unchanged business readback pass. Browser tooling does not expose collection requests or GA4 reports. Receiver receipt/Realtime is unverified; this row remains in the denominator."
     }
   ],
   "coverage": {
     "requirements": {
       "implemented": 4,
-      "verified": 0,
+      "verified": 3,
       "total": 4
     },
     "criticalRequirements": {
-      "verified": 0,
+      "verified": 2,
       "total": 2
     },
     "gates": {
-      "passed": 0,
+      "passed": 3,
       "total": 4
     },
     "excluded": 0
@@ -189,6 +216,24 @@
     {
       "date": "2026-11-19",
       "change": "First Ready analytics deployment16a0518/dpl_5Yfr3e9cUkCTU44WUSDace2JfbAr passes hosted before-consent/essential/grant/onReady/signed-in/private/query/withdrawal checks; business hashes unchanged. Actual390px phone test reproduces Cookie settings obscured by fixed mobile navigation, causing an Orders click. Added footer clearance; redeploy and repeat phone interaction before closing UI gate. Initial phone observation retained as defective, not acceptance."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Final source2eb4e17/dpl_3FENKwC96aryhXzA76q45pAv4heM Ready and promoted.450 uploaded files exactly match Git bytes, with no env/data/build artifacts. CLI log streaming ended with fetch failed after successful compilation/types; authoritative Vercel API confirmed the same deployment READY before promotion; no duplicate deployment created."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Final390px real interaction successfully opens preferences clear of fixed navigation, allows exactly one supplied container (onReady loaded), then withdraws with no Google scripts.1280px preference view captured. ANALYTICS-02 mobile defect closed with evidence; prior failed observation preserved."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Actual public catalogue action to /gas-order passes without Google scripts. The older QuickOrder declaration is not mounted by the current route; no speculative cart change or new order/stock/payment was introduced.13 orders, ledger, inventory, gas and QA wallet normal product readbacks are unchanged from baseline. All four requirement IDs retained;3/4 verified,4/4 implemented,2/2 critical,3/4 gates. Receiver receipt remains PARTIAL/OPEN; no production or prior acceptance hold waived."
     }
-  ]
+  ],
+  "sourceSha": "2eb4e17402b3be8a27e2416fd02ab32159710b01",
+  "deployment": {
+    "id": "dpl_3FENKwC96aryhXzA76q45pAv4heM",
+    "url": "https://easygas-client-demo.vercel.app",
+    "state": "READY"
+  }
 }
