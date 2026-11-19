@@ -1,0 +1,417 @@
+{
+  "phase": "Holistic interactive prototype for all EasyGas users",
+  "productionDecision": "Existing commercial production NO-GO actual-import hold and retain-all unchanged",
+  "requirements": [
+    {
+      "id": "EXP-01",
+      "requirement": "Audit all current web routes and visible workflow features with source and role mappings",
+      "priority": "P1",
+      "scope": "Interactive design prototype with synthetic browser-local state; no production operation or real security certification",
+      "uiReference": "User request 20 November 2026 entire website audit and comprehensive interactive prototype all features designs and users",
+      "route": "All current public customer and business route surfaces",
+      "implementationFiles": [
+        "prototypes/easygas-experience/main.tsx",
+        "prototypes/easygas-experience/router.tsx",
+        "prototypes/easygas-experience/runtime.ts",
+        "prototypes/easygas-experience/features.mjs",
+        "prototypes/easygas-experience/build.mjs",
+        "prototypes/easygas-experience/prototype.css"
+      ],
+      "dataSource": "Repository UI and workflow sources plus scoped read-only synthetic demo records",
+      "securityControl": "Private prototype, no credentials, no live API writes, no payment messaging GPS or real qualification claims",
+      "testFiles": [
+        "scripts/test-experience-prototype.mjs",
+        "scripts/validate-experience-prototype.mjs",
+        "tests/experience-prototype.test.ts"
+      ],
+      "testIds": [
+        "EXP-SOURCE-FIDELITY",
+        "EXP-STATIC-ROUTES",
+        "EXP-FEATURE-COVERAGE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/prototype/AUDIT.md",
+        "docs/prototype/route-coverage.json",
+        "docs/prototype/feature-coverage.json",
+        "docs/prototype/evidence/read-capture.json",
+        "docs/prototype/evidence/parameterised-reads.json",
+        "docs/prototype/evidence/artifact-checks.json",
+        "docs/prototype/evidence/focused-tests.txt"
+      ],
+      "acceptanceGate": "EXP-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "86 routes and 36 workflow families/300 named features mapped to actual source and read-only data. All feature entries map to eligible personas. Failed and parameter-dependent reads retained. Route presence is design evidence, not transactional acceptance.",
+      "testResult": "PASS",
+      "outstandingWork": "No outstanding audit inventory item; live business acceptance remains separate."
+    },
+    {
+      "id": "EXP-02",
+      "requirement": "Preserve actual EasyGas visual components across public and all six role experiences",
+      "priority": "P1",
+      "scope": "Interactive design prototype with synthetic browser-local state; no production operation or real security certification",
+      "uiReference": "User request 20 November 2026 entire website audit and comprehensive interactive prototype all features designs and users",
+      "route": "All current public customer and business route surfaces",
+      "implementationFiles": [
+        "prototypes/easygas-experience/main.tsx",
+        "prototypes/easygas-experience/router.tsx",
+        "prototypes/easygas-experience/runtime.ts",
+        "prototypes/easygas-experience/features.mjs",
+        "prototypes/easygas-experience/build.mjs",
+        "prototypes/easygas-experience/prototype.css"
+      ],
+      "dataSource": "Repository UI and workflow sources plus scoped read-only synthetic demo records",
+      "securityControl": "Private prototype, no credentials, no live API writes, no payment messaging GPS or real qualification claims",
+      "testFiles": [
+        "scripts/test-experience-prototype.mjs",
+        "scripts/validate-experience-prototype.mjs",
+        "tests/experience-prototype.test.ts"
+      ],
+      "testIds": [
+        "EXP-SOURCE-FIDELITY",
+        "EXP-PERSONAS"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "prototypes/easygas-experience/source-manifest.json",
+        "docs/prototype/evidence/browser-routes.json",
+        "docs/prototype/evidence/browser-role-routes.json",
+        "docs/prototype/evidence/experience-hub.jpg",
+        "docs/prototype/evidence/focused-tests.txt"
+      ],
+      "acceptanceGate": "EXP-G2",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "160 existing UI/style/rule source files bundled without modifying original application files; public and all six personas inspected in 187 role-route observations covering all 86 distinct routes. Incident adapter defect found and corrected; final browser recheck belongs to EXP-08.",
+      "testResult": "PASS",
+      "outstandingWork": "Final hosted/device verification retained under EXP-08; full backend acceptance is not inferred."
+    },
+    {
+      "id": "EXP-03",
+      "requirement": "Provide a safe cross-role order-to-delivery journey with payments and exception scenarios",
+      "priority": "P1",
+      "scope": "Interactive design prototype with synthetic browser-local state; no production operation or real security certification",
+      "uiReference": "User request 20 November 2026 entire website audit and comprehensive interactive prototype all features designs and users",
+      "route": "All current public customer and business route surfaces",
+      "implementationFiles": [
+        "prototypes/easygas-experience/main.tsx",
+        "prototypes/easygas-experience/router.tsx",
+        "prototypes/easygas-experience/runtime.ts",
+        "prototypes/easygas-experience/features.mjs",
+        "prototypes/easygas-experience/build.mjs",
+        "prototypes/easygas-experience/prototype.css"
+      ],
+      "dataSource": "Repository UI and workflow sources plus scoped read-only synthetic demo records",
+      "securityControl": "Private prototype, no credentials, no live API writes, no payment messaging GPS or real qualification claims",
+      "testFiles": [
+        "scripts/test-experience-prototype.mjs",
+        "scripts/validate-experience-prototype.mjs",
+        "tests/experience-prototype.test.ts"
+      ],
+      "testIds": [
+        "EXP-ORDER-DELIVERY",
+        "EXP-PAYMENT-FAILURE",
+        "EXP-EXPIRED-CALIBRATION",
+        "EXP-REFUND-ONCE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/prototype/evidence/model-tests.json",
+        "docs/prototype/evidence/order-modal.jpg",
+        "docs/prototype/evidence/focused-tests.txt"
+      ],
+      "acceptanceGate": "EXP-G3",
+      "status": "PARTIAL",
+      "reason": "Shared local order/payment/driver/attempt state and canonical statuses implemented. Model delivery, rejected payment, expired calibration and refund-once checks pass; actual order modal tabs explored. Full guided browser traversal after final changes remains unverified.",
+      "testResult": "PARTIAL",
+      "outstandingWork": "Complete final hosted eight-step journey and exception UI pass after browser access is restored."
+    },
+    {
+      "id": "EXP-04",
+      "requirement": "Provide service booking assessment quotation work and follow-up interaction coverage",
+      "priority": "P1",
+      "scope": "Interactive design prototype with synthetic browser-local state; no production operation or real security certification",
+      "uiReference": "User request 20 November 2026 entire website audit and comprehensive interactive prototype all features designs and users",
+      "route": "All current public customer and business route surfaces",
+      "implementationFiles": [
+        "prototypes/easygas-experience/main.tsx",
+        "prototypes/easygas-experience/router.tsx",
+        "prototypes/easygas-experience/runtime.ts",
+        "prototypes/easygas-experience/features.mjs",
+        "prototypes/easygas-experience/build.mjs",
+        "prototypes/easygas-experience/prototype.css"
+      ],
+      "dataSource": "Repository UI and workflow sources plus scoped read-only synthetic demo records",
+      "securityControl": "Private prototype, no credentials, no live API writes, no payment messaging GPS or real qualification claims",
+      "testFiles": [
+        "scripts/test-experience-prototype.mjs",
+        "scripts/validate-experience-prototype.mjs",
+        "tests/experience-prototype.test.ts"
+      ],
+      "testIds": [
+        "EXP-SERVICE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/prototype/evidence/model-tests.json",
+        "docs/prototype/evidence/browser-role-routes.json",
+        "docs/prototype/evidence/focused-tests.txt"
+      ],
+      "acceptanceGate": "EXP-G4",
+      "status": "PARTIAL",
+      "reason": "Actual service/booking/technician screens included; one shared local booking progresses through guided phases and appears in technician read models. Model hand-off passes; final eight-step browser interaction pass remains unverified.",
+      "testResult": "PARTIAL",
+      "outstandingWork": "Complete final hosted guided service traversal, including detail/action views."
+    },
+    {
+      "id": "EXP-05",
+      "requirement": "Cover finance stock governance growth account privacy and support modules",
+      "priority": "P1",
+      "scope": "Interactive design prototype with synthetic browser-local state; no production operation or real security certification",
+      "uiReference": "User request 20 November 2026 entire website audit and comprehensive interactive prototype all features designs and users",
+      "route": "All current public customer and business route surfaces",
+      "implementationFiles": [
+        "prototypes/easygas-experience/main.tsx",
+        "prototypes/easygas-experience/router.tsx",
+        "prototypes/easygas-experience/runtime.ts",
+        "prototypes/easygas-experience/features.mjs",
+        "prototypes/easygas-experience/build.mjs",
+        "prototypes/easygas-experience/prototype.css"
+      ],
+      "dataSource": "Repository UI and workflow sources plus scoped read-only synthetic demo records",
+      "securityControl": "Private prototype, no credentials, no live API writes, no payment messaging GPS or real qualification claims",
+      "testFiles": [
+        "scripts/test-experience-prototype.mjs",
+        "scripts/validate-experience-prototype.mjs",
+        "tests/experience-prototype.test.ts"
+      ],
+      "testIds": [
+        "EXP-FEATURE-COVERAGE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/prototype/feature-coverage.json",
+        "docs/prototype/evidence/browser-routes.json",
+        "docs/prototype/evidence/browser-role-routes.json",
+        "docs/prototype/evidence/focused-tests.txt"
+      ],
+      "acceptanceGate": "EXP-G5",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Finance, stock, governance, growth, account/privacy and support source screens and feature map included and inspected. Generic form submissions explicitly record interaction previews; real transaction execution is not claimed. Empty/unavailable states are retained.",
+      "testResult": "PASS",
+      "outstandingWork": "No outstanding design-inventory item; all live transactional/provider/physical acceptance remains outside this prototype gate."
+    },
+    {
+      "id": "EXP-06",
+      "requirement": "Provide role switching scenario reset guided journeys search and feature coverage navigation",
+      "priority": "P1",
+      "scope": "Interactive design prototype with synthetic browser-local state; no production operation or real security certification",
+      "uiReference": "User request 20 November 2026 entire website audit and comprehensive interactive prototype all features designs and users",
+      "route": "All current public customer and business route surfaces",
+      "implementationFiles": [
+        "prototypes/easygas-experience/main.tsx",
+        "prototypes/easygas-experience/router.tsx",
+        "prototypes/easygas-experience/runtime.ts",
+        "prototypes/easygas-experience/features.mjs",
+        "prototypes/easygas-experience/build.mjs",
+        "prototypes/easygas-experience/prototype.css"
+      ],
+      "dataSource": "Repository UI and workflow sources plus scoped read-only synthetic demo records",
+      "securityControl": "Private prototype, no credentials, no live API writes, no payment messaging GPS or real qualification claims",
+      "testFiles": [
+        "scripts/test-experience-prototype.mjs",
+        "scripts/validate-experience-prototype.mjs",
+        "tests/experience-prototype.test.ts"
+      ],
+      "testIds": [
+        "EXP-ROLES",
+        "EXP-RESET-PERSISTENCE",
+        "EXP-PERSONAS"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/prototype/evidence/model-tests.json",
+        "docs/prototype/evidence/browser-role-routes.json",
+        "docs/prototype/evidence/focused-tests.txt"
+      ],
+      "acceptanceGate": "EXP-G6",
+      "status": "PARTIAL",
+      "reason": "Role cards and persona switcher exercised across all six roles; hub, searchable guide, all-screen directory, shared readback and reset implemented. Local persistence/reset model passes. Native reset test stalled the browser; replaced with the existing accessible application dialog.",
+      "testResult": "PARTIAL",
+      "outstandingWork": "Recheck final reset dialog, guide keyboard behaviour, search and complete journeys in hosted browser."
+    },
+    {
+      "id": "EXP-07",
+      "requirement": "Keep all prototype data local synthetic and isolated from client-demo APIs and real side effects",
+      "priority": "P0",
+      "scope": "Interactive design prototype with synthetic browser-local state; no production operation or real security certification",
+      "uiReference": "User request 20 November 2026 entire website audit and comprehensive interactive prototype all features designs and users",
+      "route": "All current public customer and business route surfaces",
+      "implementationFiles": [
+        "prototypes/easygas-experience/main.tsx",
+        "prototypes/easygas-experience/router.tsx",
+        "prototypes/easygas-experience/runtime.ts",
+        "prototypes/easygas-experience/features.mjs",
+        "prototypes/easygas-experience/build.mjs",
+        "prototypes/easygas-experience/prototype.css",
+        "prototypes/easygas-experience/index.html"
+      ],
+      "dataSource": "Repository UI and workflow sources plus scoped read-only synthetic demo records",
+      "securityControl": "Private prototype, no credentials, no live API writes, no payment messaging GPS or real qualification claims",
+      "testFiles": [
+        "scripts/test-experience-prototype.mjs",
+        "scripts/validate-experience-prototype.mjs",
+        "tests/experience-prototype.test.ts"
+      ],
+      "testIds": [
+        "EXP-ISOLATION",
+        "EXP-ROLE-DENIALS",
+        "EXP-CREDENTIAL-FREE"
+      ],
+      "negativeTests": [
+        "EXP-ISOLATION"
+      ],
+      "evidence": [
+        "docs/prototype/evidence/model-tests.json",
+        "docs/prototype/evidence/artifact-checks.json",
+        "docs/prototype/evidence/focused-tests.txt"
+      ],
+      "acceptanceGate": "EXP-G7",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Browser fetch replacement never forwards requests; CSP blocks network connections and native form submissions. Sensitive fixture metadata/contact identities sanitized, no credential/JWT included. Public order reads and ineligible dispatch/owner actions denied. No live account/safety/policy/payment mutation performed.",
+      "testResult": "PASS",
+      "outstandingWork": "Prototype isolation is verified; this does not certify production authentication or physical controls."
+    },
+    {
+      "id": "EXP-08",
+      "requirement": "Verify desktop and phone behaviour publish privately and retain honest traceability",
+      "priority": "P1",
+      "scope": "Interactive design prototype with synthetic browser-local state; no production operation or real security certification",
+      "uiReference": "User request 20 November 2026 entire website audit and comprehensive interactive prototype all features designs and users",
+      "route": "All current public customer and business route surfaces",
+      "implementationFiles": [
+        "prototypes/easygas-experience/main.tsx",
+        "prototypes/easygas-experience/router.tsx",
+        "prototypes/easygas-experience/runtime.ts",
+        "prototypes/easygas-experience/features.mjs",
+        "prototypes/easygas-experience/build.mjs",
+        "prototypes/easygas-experience/prototype.css"
+      ],
+      "dataSource": "Repository UI and workflow sources plus scoped read-only synthetic demo records",
+      "securityControl": "Private prototype, no credentials, no live API writes, no payment messaging GPS or real qualification claims",
+      "testFiles": [
+        "scripts/test-experience-prototype.mjs",
+        "scripts/validate-experience-prototype.mjs",
+        "tests/experience-prototype.test.ts"
+      ],
+      "testIds": [
+        "EXP-STATIC-ROUTES"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/prototype/evidence/browser-routes.json",
+        "docs/prototype/evidence/browser-role-routes.json",
+        "docs/prototype/evidence/artifact-checks.json",
+        "docs/prototype/evidence/private-access-gate.jpg",
+        "docs/prototype/evidence/publication.json",
+        "docs/prototype/evidence/focused-tests.txt"
+      ],
+      "acceptanceGate": "EXP-G8",
+      "status": "PARTIAL",
+      "reason": "Private Sites publication succeeded and actual ChatGPT access gate observed. Desktop source-screen inspection completed; final browser interactions stalled at a native reset confirmation. Hosted authenticated content and phone interactions remain unverified.",
+      "testResult": "PARTIAL",
+      "outstandingWork": "Owner sign-in and final hosted desktop/phone/form/keyboard pass. Keep these in denominator; do not report full acceptance."
+    }
+  ],
+  "gates": [
+    {
+      "id": "EXP-G1",
+      "status": "PASS",
+      "description": "Audit all current web routes and visible workflow features with source and role mappings",
+      "reason": "86 routes and 36 workflow families/300 named features mapped to actual source and read-only data. All feature entries map to eligible personas. Failed and parameter-dependent reads retained. Route presence is design evidence, not transactional acceptance."
+    },
+    {
+      "id": "EXP-G2",
+      "status": "PASS",
+      "description": "Preserve actual EasyGas visual components across public and all six role experiences",
+      "reason": "160 existing UI/style/rule source files bundled without modifying original application files; public and all six personas inspected in 187 role-route observations covering all 86 distinct routes. Incident adapter defect found and corrected; final browser recheck belongs to EXP-08."
+    },
+    {
+      "id": "EXP-G3",
+      "status": "PARTIAL",
+      "description": "Provide a safe cross-role order-to-delivery journey with payments and exception scenarios",
+      "reason": "Shared local order/payment/driver/attempt state and canonical statuses implemented. Model delivery, rejected payment, expired calibration and refund-once checks pass; actual order modal tabs explored. Full guided browser traversal after final changes remains unverified."
+    },
+    {
+      "id": "EXP-G4",
+      "status": "PARTIAL",
+      "description": "Provide service booking assessment quotation work and follow-up interaction coverage",
+      "reason": "Actual service/booking/technician screens included; one shared local booking progresses through guided phases and appears in technician read models. Model hand-off passes; final eight-step browser interaction pass remains unverified."
+    },
+    {
+      "id": "EXP-G5",
+      "status": "PASS",
+      "description": "Cover finance stock governance growth account privacy and support modules",
+      "reason": "Finance, stock, governance, growth, account/privacy and support source screens and feature map included and inspected. Generic form submissions explicitly record interaction previews; real transaction execution is not claimed. Empty/unavailable states are retained."
+    },
+    {
+      "id": "EXP-G6",
+      "status": "PARTIAL",
+      "description": "Provide role switching scenario reset guided journeys search and feature coverage navigation",
+      "reason": "Role cards and persona switcher exercised across all six roles; hub, searchable guide, all-screen directory, shared readback and reset implemented. Local persistence/reset model passes. Native reset test stalled the browser; replaced with the existing accessible application dialog."
+    },
+    {
+      "id": "EXP-G7",
+      "status": "PASS",
+      "description": "Keep all prototype data local synthetic and isolated from client-demo APIs and real side effects",
+      "reason": "Browser fetch replacement never forwards requests; CSP blocks network connections and native form submissions. Sensitive fixture metadata/contact identities sanitized, no credential/JWT included. Public order reads and ineligible dispatch/owner actions denied. No live account/safety/policy/payment mutation performed."
+    },
+    {
+      "id": "EXP-G8",
+      "status": "PARTIAL",
+      "description": "Verify desktop and phone behaviour publish privately and retain honest traceability",
+      "reason": "Private Sites publication succeeded and actual ChatGPT access gate observed. Desktop source-screen inspection completed; final browser interactions stalled at a native reset confirmation. Hosted authenticated content and phone interactions remain unverified."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 8,
+      "verified": 4,
+      "partial": 4,
+      "total": 8
+    },
+    "criticalRequirements": {
+      "verified": 1,
+      "total": 1
+    },
+    "gates": {
+      "passed": 4,
+      "partial": 4,
+      "total": 8
+    },
+    "routes": {
+      "inventory": 86,
+      "observedDistinct": 86,
+      "total": 86,
+      "fullFunctionalAcceptance": "NOT_CLAIMED"
+    },
+    "featureFamilies": {
+      "mapped": 36,
+      "total": 36
+    },
+    "namedFeatures": {
+      "mapped": 300,
+      "total": 300
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "Registered complete website/role prototype; retain guarded empty unavailable and untested features in audit denominators."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Implemented isolated actual-UI prototype, 86 routes/36 families/300 named features; nine model checks and six artifact checks pass. Four verification gates remain partial because final hosted/phone/browser interaction acceptance is unperformed. Private publication is separate from client demo. All prior NO-GO/import/retention decisions preserved."
+    }
+  ]
+}

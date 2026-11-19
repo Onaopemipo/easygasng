@@ -1,0 +1,1891 @@
+[
+  {
+    "id": "FEATURE-01",
+    "name": "Discover and compare",
+    "route": "/",
+    "role": "public",
+    "items": [
+      "Home and gas calculator",
+      "Location preference",
+      "Catalogue search",
+      "Categories and availability",
+      "Product specifications",
+      "Service scope and exclusions",
+      "How it works",
+      "About and business supply",
+      "Delivery information"
+    ],
+    "subfeatureCount": 9,
+    "implementationFiles": [
+      "apps/web/components/site.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/",
+        "headings": [
+          "One business.Every perspective.",
+          "A workspace for every role",
+          "Follow the work from start to finish",
+          "Feature explorer"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/",
+        "headings": [
+          "One business.Every perspective.",
+          "A workspace for every role",
+          "Follow the work from start to finish",
+          "Feature explorer"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-02",
+    "name": "Order and checkout",
+    "route": "/gas-order",
+    "role": "customer",
+    "items": [
+      "Multiple cylinders",
+      "Requested kg and capacity guidance",
+      "Physical products",
+      "Delivery address and coverage",
+      "Saved delivery details",
+      "Date and delivery window",
+      "Quotation versions",
+      "Card, wallet or cash",
+      "Rewards eligibility",
+      "Order confirmation"
+    ],
+    "subfeatureCount": 10,
+    "implementationFiles": [
+      "apps/web/components/checkout-payment-methods.tsx",
+      "apps/web/components/gas-order.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Guided shared-state simulation plus source UI exploration",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/gas-order",
+        "headings": [
+          "Order Cooking Gas",
+          "1 Cylinders and gas quantity",
+          "2 Delivery details",
+          "3 Schedule and payment",
+          " Order Summary"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/gas-order",
+        "headings": [
+          "Order Cooking Gas",
+          "1 Cylinders and gas quantity",
+          "2 Delivery details",
+          "3 Schedule and payment",
+          " Order Summary"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-03",
+    "name": "Shopping cart",
+    "route": "/cart",
+    "role": "customer",
+    "items": [
+      "Quantity adjustment",
+      "Remove items",
+      "Empty state",
+      "Mixed goods and gas checkout",
+      "Service draft grouping"
+    ],
+    "subfeatureCount": 5,
+    "implementationFiles": [
+      "apps/web/components/site.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/cart",
+        "headings": [
+          "Your Cart"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/cart",
+        "headings": [
+          "Your Cart"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-04",
+    "name": "My orders",
+    "route": "/orders",
+    "role": "customer",
+    "items": [
+      "Status filters",
+      "Order search",
+      "Overview and line details",
+      "Payment verification",
+      "Invoices and receipts",
+      "Delivery progress",
+      "Cancellation request",
+      "Historical evidence"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/customer-orders.tsx",
+      "apps/web/components/site.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Guided shared-state simulation plus source UI exploration",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/orders",
+        "headings": [
+          "My Orders",
+          "EG-2026-1F4E85C7",
+          "EG-2026-E02D78B1",
+          "EG-2026-404B6EE8",
+          "EG-2026-7BE57634",
+          "EG-2026-C1D1199D"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/orders",
+        "headings": [
+          "Good food startswith good energy.",
+          "Welcome back."
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-05",
+    "name": "Account and privacy",
+    "route": "/account-settings",
+    "role": "customer",
+    "items": [
+      "Profile editing",
+      "Addresses",
+      "Notification preferences",
+      "Session management",
+      "Password verification",
+      "Email verification",
+      "Privacy request",
+      "Owned data export",
+      "Appearance",
+      "Customer reviews and consent"
+    ],
+    "subfeatureCount": 10,
+    "implementationFiles": [
+      "apps/web/components/customer-account.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/account-settings",
+        "headings": [
+          "Account & privacy",
+          "Sample customer",
+          "Personal information",
+          "Delivery details"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/account-settings",
+        "headings": [
+          "Good food startswith good energy.",
+          "Welcome back."
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-06",
+    "name": "Purchase credit and wallet",
+    "route": "/wallet",
+    "role": "customer",
+    "items": [
+      "Balance and transactions",
+      "Card funding",
+      "Transfer evidence",
+      "Provider fees",
+      "Funding status",
+      "Refund history",
+      "Credit redemption",
+      "Liability separation"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/hosted-payment.tsx",
+      "apps/web/components/site.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/wallet",
+        "headings": [
+          "My Wallet",
+          "₦29,200.00",
+          "Recent transactions"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/wallet",
+        "headings": [
+          "Good food startswith good energy.",
+          "Welcome back."
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-07",
+    "name": "Customer service visits",
+    "route": "/bookings",
+    "role": "customer",
+    "items": [
+      "Service booking",
+      "Preferred visit request",
+      "Assessment quotation",
+      "Scope and cost acceptance",
+      "Appointment confirmation",
+      "Completion report",
+      "Customer acknowledgement",
+      "Cancellation and concern"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/professional-services.tsx",
+      "apps/web/components/customer-bookings.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Guided shared-state simulation plus source UI exploration",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/bookings",
+        "headings": [
+          "Service bookings",
+          "No upcoming bookings",
+          "Service follow-ups"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/bookings",
+        "headings": [
+          "Good food startswith good energy.",
+          "Welcome back."
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-08",
+    "name": "Rewards and refill planning",
+    "route": "/rewards",
+    "role": "customer",
+    "items": [
+      "Programme status",
+      "Points history",
+      "Offers and referrals",
+      "Cooking gas profiles",
+      "Consumption estimate",
+      "Refill reminders",
+      "Recurring order authority",
+      "Budget and cancellation controls"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/easyrewards.tsx",
+      "apps/web/components/refill-profiles.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/rewards",
+        "headings": [
+          "EasyRewards",
+          "Your EasyGas points",
+          " Your programme",
+          " Rewards & referrals",
+          " Points history"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/rewards",
+        "headings": [
+          "Good food startswith good energy.",
+          "Welcome back."
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-09",
+    "name": "Customer support",
+    "route": "/support",
+    "role": "customer",
+    "items": [
+      "New conversation",
+      "Order and booking context",
+      "Replies and evidence",
+      "Notifications",
+      "Read and unread state"
+    ],
+    "subfeatureCount": 5,
+    "implementationFiles": [
+      "apps/web/components/workflows.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/support",
+        "headings": [
+          "Your support conversations"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/support",
+        "headings": [
+          "Good food startswith good energy.",
+          "Welcome back."
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-10",
+    "name": "Business dashboard",
+    "route": "/admin",
+    "role": "owner",
+    "items": [
+      "Period and branch filters",
+      "Revenue and expenses",
+      "Unavailable profit explanation",
+      "Operational priorities",
+      "Order charts",
+      "Recent orders",
+      "Scoped quick actions"
+    ],
+    "subfeatureCount": 7,
+    "implementationFiles": [
+      "apps/web/components/admin-overview.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin",
+        "headings": [
+          "Business Overview",
+          "Priorities",
+          "Order Trend Created in period",
+          "Order Status",
+          "Operations Summary",
+          "Recent Orders",
+          "Quick Actions",
+          "Build lasting customer relationships"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin",
+        "headings": [
+          "Branch Dashboard",
+          "Order Trend Created in period",
+          "Order Status",
+          "Operations Overview",
+          "Recent Orders",
+          "Quick Actions",
+          "Build lasting customer relationships"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin",
+        "headings": [
+          "Hello, Sample",
+          "Order Trend Created in period",
+          "Order Status",
+          "Operations Overview",
+          "Recent Orders",
+          "Quick Actions",
+          "Build lasting customer relationships"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-11",
+    "name": "Order management",
+    "route": "/admin/orders",
+    "role": "manager",
+    "items": [
+      "Search and status",
+      "Staff-assisted orders",
+      "Overview, Items, Payment and History tabs",
+      "Accept order",
+      "Cylinder inspection",
+      "Coverage verification",
+      "Pre-dispatch additions",
+      "Dispatch stages",
+      "Delivery exceptions",
+      "Photo evidence",
+      "Invoice action"
+    ],
+    "subfeatureCount": 11,
+    "implementationFiles": [
+      "apps/web/components/admin-order-details.tsx",
+      "apps/web/components/admin.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/orders",
+        "headings": [
+          "Your orders, in one place.",
+          "Orders"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/orders",
+        "headings": [
+          "Your orders, in one place.",
+          "Orders"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/orders",
+        "headings": [
+          "Your orders, in one place.",
+          "Orders"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-12",
+    "name": "Retail point of sale",
+    "route": "/admin/pos",
+    "role": "finance",
+    "items": [
+      "Open till",
+      "Opening float",
+      "New sale",
+      "Customer identification",
+      "Items and exact totals",
+      "Receipt",
+      "Till cash-up",
+      "Close shift"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/workflows.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/pos",
+        "headings": [
+          "Retail Point of Sale",
+          "Open your till shift",
+          "Quick actions",
+          "Recent receipts",
+          "No recent receipts"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/pos",
+        "headings": [
+          "Retail Point of Sale",
+          "Open your till shift",
+          "Quick actions",
+          "Recent receipts",
+          "No recent receipts"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/pos",
+        "headings": [
+          "Retail Point of Sale",
+          "Open your till shift",
+          "Quick actions",
+          "Recent receipts",
+          "No recent receipts"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-13",
+    "name": "Customer management",
+    "route": "/admin/customers",
+    "role": "manager",
+    "items": [
+      "Customer list and filters",
+      "Create customer",
+      "Profile and contact",
+      "Order and service history",
+      "Support context",
+      "Follow-ups",
+      "Consent and privacy context"
+    ],
+    "subfeatureCount": 7,
+    "implementationFiles": [
+      "apps/web/components/customer-management.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/customers",
+        "headings": [
+          "Customers",
+          "Customer Support",
+          "Customer Insights",
+          "Export Customers"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/customers",
+        "headings": [
+          "Customers",
+          "Customer Support",
+          "Customer Insights",
+          "Export Customers"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-14",
+    "name": "Support desk",
+    "route": "/admin/support",
+    "role": "manager",
+    "items": [
+      "Conversation queues",
+      "Staff intake",
+      "Customer lookup",
+      "Branch scope",
+      "Internal notes",
+      "Replies",
+      "SLA policy",
+      "Escalation and follow-up"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/workflows.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/support",
+        "headings": [
+          "Support Desk"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/support",
+        "headings": [
+          "Support Desk"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-15",
+    "name": "Catalogue and bundles",
+    "route": "/admin/products",
+    "role": "owner",
+    "items": [
+      "Product list",
+      "Stock eligibility",
+      "Price and publication proposals",
+      "Product import preview",
+      "Gas catalogue",
+      "Compatibility",
+      "Product and service bundles",
+      "Governed revisions"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/operations-completion.tsx",
+      "apps/web/components/admin.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/products",
+        "headings": [
+          "Product Catalogue",
+          "12.5kg Empty Cylinder",
+          "12.5kg Refill",
+          "25kg Empty Cylinder",
+          "25kg Refill",
+          "50kg Empty Cylinder",
+          "50kg Refill",
+          "6kg Empty Cylinder",
+          "6kg Refill",
+          "Double Burner",
+          "Gas Hose",
+          "Gas Regulator",
+          "Kitchen Starter Kit"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/products",
+        "headings": [
+          "Product Catalogue",
+          "12.5kg Empty Cylinder",
+          "12.5kg Refill",
+          "25kg Empty Cylinder",
+          "25kg Refill",
+          "50kg Empty Cylinder",
+          "50kg Refill",
+          "6kg Empty Cylinder",
+          "6kg Refill",
+          "Double Burner",
+          "Gas Hose",
+          "Gas Regulator",
+          "Kitchen Starter Kit"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/products",
+        "headings": [
+          "Product Catalogue",
+          "12.5kg Empty Cylinder",
+          "12.5kg Refill",
+          "25kg Empty Cylinder",
+          "25kg Refill",
+          "50kg Empty Cylinder",
+          "50kg Refill",
+          "6kg Empty Cylinder",
+          "6kg Refill",
+          "Double Burner",
+          "Gas Hose",
+          "Gas Regulator",
+          "Kitchen Starter Kit"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-16",
+    "name": "Inventory management",
+    "route": "/admin/inventory",
+    "role": "finance",
+    "items": [
+      "Stock categories",
+      "Branch and status filters",
+      "Acquisition value",
+      "Add stock",
+      "Receipts",
+      "Adjustments and stocktake",
+      "Returns",
+      "Transfers",
+      "Purchases",
+      "Movement history",
+      "CSV export",
+      "Held goods"
+    ],
+    "subfeatureCount": 12,
+    "implementationFiles": [
+      "apps/web/components/inventory-workspace.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/inventory",
+        "headings": []
+      },
+      {
+        "role": "manager",
+        "route": "/admin/inventory",
+        "headings": [
+          "Inventory",
+          "Bulk Gas Balances",
+          "Inventory Value by Category",
+          "Inventory Alerts",
+          "Quick Actions",
+          "Recent Stock Movements"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/inventory",
+        "headings": [
+          "Inventory",
+          "Bulk Gas Balances",
+          "Inventory Value by Category",
+          "Inventory Alerts",
+          "Quick Actions",
+          "Recent Stock Movements"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-17",
+    "name": "Cylinder records",
+    "route": "/admin/cylinders",
+    "role": "finance",
+    "items": [
+      "Serial records",
+      "Size and ownership",
+      "Test expiry",
+      "Inspection",
+      "Eligibility and quarantine",
+      "Customer custody",
+      "Sale or refill state"
+    ],
+    "subfeatureCount": 7,
+    "implementationFiles": [
+      "apps/web/components/admin.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/cylinders",
+        "headings": [
+          "Every cylinder has a story.",
+          "Cylinders"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/cylinders",
+        "headings": [
+          "Every cylinder has a story.",
+          "Cylinders"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/cylinders",
+        "headings": [
+          "Every cylinder has a story.",
+          "Cylinders"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-18",
+    "name": "Dispatch and driver management",
+    "route": "/admin/deliveries",
+    "role": "manager",
+    "items": [
+      "Dispatch overview",
+      "Ready, assigned and in-transit queues",
+      "Eligible drivers",
+      "Capacity checks",
+      "Assignment",
+      "Map and telemetry freshness",
+      "Vehicle manifests",
+      "Product returns",
+      "Bulk LPG custody",
+      "Trip recovery"
+    ],
+    "subfeatureCount": 10,
+    "implementationFiles": [
+      "apps/web/components/dispatch-centre.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/deliveries",
+        "headings": [
+          "Dispatch Centre",
+          "Delivery map",
+          "Active Drivers (3)",
+          "Today’s Operations",
+          "Quick Actions"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/deliveries",
+        "headings": [
+          "Dispatch Centre",
+          "Delivery map",
+          "Active Drivers (3)",
+          "Today’s Operations",
+          "Quick Actions"
+        ]
+      },
+      {
+        "role": "driver",
+        "route": "/admin/deliveries",
+        "headings": [
+          "Good to see you, Sample driver",
+          "Assignments paused",
+          " Next delivery",
+          " Assigned deliveries",
+          " Connection & location",
+          " Current trip",
+          " Here to help"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-19",
+    "name": "Driver workspace",
+    "route": "/admin/deliveries",
+    "role": "driver",
+    "items": [
+      "Home, Orders, History and Profile",
+      "Availability",
+      "Connection state",
+      "Vehicle and odometer",
+      "Start trip",
+      "Assignment acknowledgement",
+      "Inspected pickup",
+      "Travel and arrival",
+      "Metered dispensing",
+      "Customer code",
+      "Proof and cash",
+      "Failed delivery",
+      "Returns and end trip"
+    ],
+    "subfeatureCount": 13,
+    "implementationFiles": [
+      "apps/web/components/driver-experience.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Guided shared-state simulation plus source UI exploration",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/deliveries",
+        "headings": [
+          "Dispatch Centre",
+          "Delivery map",
+          "Active Drivers (3)",
+          "Today’s Operations",
+          "Quick Actions"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/deliveries",
+        "headings": [
+          "Dispatch Centre",
+          "Delivery map",
+          "Active Drivers (3)",
+          "Today’s Operations",
+          "Quick Actions"
+        ]
+      },
+      {
+        "role": "driver",
+        "route": "/admin/deliveries",
+        "headings": [
+          "Good to see you, Sample driver",
+          "Assignments paused",
+          " Next delivery",
+          " Assigned deliveries",
+          " Connection & location",
+          " Current trip",
+          " Here to help"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-20",
+    "name": "Professional services",
+    "route": "/admin/services",
+    "role": "manager",
+    "items": [
+      "Services catalogue",
+      "Checklists",
+      "Coverage and price basis",
+      "Availability slots",
+      "Booking request",
+      "Scheduling",
+      "Technician assignment",
+      "Assessment",
+      "Quotation versions",
+      "Materials and work authority",
+      "Service report",
+      "Settlement and follow-up"
+    ],
+    "subfeatureCount": 12,
+    "implementationFiles": [
+      "apps/web/components/professional-services.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/services",
+        "headings": [
+          "Professional services"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/services",
+        "headings": [
+          "Professional services"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/services",
+        "headings": [
+          "Professional services"
+        ]
+      },
+      {
+        "role": "technician",
+        "route": "/admin/services",
+        "headings": [
+          "Professional services",
+          "Cooker Installation",
+          "Cooker Servicing",
+          "Cylinder Installation",
+          "Cylinder Maintenance",
+          "Gas Safety Checks"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-21",
+    "name": "Technician workspace",
+    "route": "/admin/bookings",
+    "role": "technician",
+    "items": [
+      "Home, Jobs, History and Profile",
+      "Availability preference",
+      "Qualifications",
+      "Accept or decline",
+      "Assigned visit",
+      "Assessment report",
+      "Approved work",
+      "Material usage",
+      "Safety incident",
+      "Completion report",
+      "Contact support"
+    ],
+    "subfeatureCount": 11,
+    "implementationFiles": [
+      "apps/web/components/technician-workspace.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Guided shared-state simulation plus source UI exploration",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/bookings",
+        "headings": [
+          "Service bookings"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/bookings",
+        "headings": [
+          "Service bookings"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/bookings",
+        "headings": [
+          "Service bookings"
+        ]
+      },
+      {
+        "role": "technician",
+        "route": "/admin/bookings",
+        "headings": [
+          "Good evening, Sample technician",
+          "Next appointment",
+          "Today’s jobs",
+          "Unavailable for assignments",
+          "Connection & eligibility",
+          "Quick actions"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-22",
+    "name": "Staff and qualifications",
+    "route": "/admin/technicians",
+    "role": "manager",
+    "items": [
+      "Technician directory",
+      "Qualifications and expiry",
+      "Independent verification",
+      "Schedule and availability",
+      "Driver directory",
+      "Operational assignment state"
+    ],
+    "subfeatureCount": 6,
+    "implementationFiles": [
+      "apps/web/components/professional-services.tsx",
+      "apps/web/components/drivers-workspace.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/technicians",
+        "headings": [
+          "Technicians & Availability",
+          "Technicians",
+          " Upcoming Availability"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/technicians",
+        "headings": [
+          "Technicians & Availability",
+          "Technicians",
+          " Upcoming Availability"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/technicians",
+        "headings": [
+          "Technicians & Availability",
+          "Technicians",
+          " Upcoming Availability"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-23",
+    "name": "Quotations",
+    "route": "/admin/quotations",
+    "role": "manager",
+    "items": [
+      "Draft assessment",
+      "Labour and materials",
+      "Independent business review",
+      "Customer acceptance",
+      "Revision invalidation",
+      "Payment request",
+      "Approved work scope"
+    ],
+    "subfeatureCount": 7,
+    "implementationFiles": [
+      "apps/web/components/professional-services.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/quotations",
+        "headings": [
+          "Service quotations",
+          "No quotations awaiting approval"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/quotations",
+        "headings": [
+          "Service quotations",
+          "No quotations awaiting approval"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/quotations",
+        "headings": [
+          "Service quotations",
+          "No quotations awaiting approval"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-24",
+    "name": "Finance workspace",
+    "route": "/admin/finance",
+    "role": "owner",
+    "items": [
+      "Financial summary",
+      "Wallet liabilities",
+      "Verified collections",
+      "Expenses",
+      "Profit completeness",
+      "Bank transfer verification",
+      "Reconciliation",
+      "Manual finance work"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/business-centre.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/finance",
+        "headings": [
+          "Financial Summary",
+          "Revenue trend",
+          "Expenses breakdown"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/finance",
+        "headings": [
+          "Finance & expenses",
+          "Revenue trend",
+          "Expenses breakdown"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-25",
+    "name": "Financial reconciliation",
+    "route": "/admin/reconciliation",
+    "role": "finance",
+    "items": [
+      "Invoices and receipts",
+      "Payment ledger",
+      "Independent cash review",
+      "Service costs",
+      "Paystack collections",
+      "Document corrections",
+      "Credit notes",
+      "Voids and refunds"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/business-centre.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Guided shared-state simulation plus source UI exploration",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/reconciliation",
+        "headings": [
+          "Financial reconciliation",
+          "Invoices & receipts"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/reconciliation",
+        "headings": [
+          "Financial reconciliation",
+          "Invoices & receipts"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-26",
+    "name": "Credits and refunds",
+    "route": "/admin/credits",
+    "role": "owner",
+    "items": [
+      "Customer lookup",
+      "Record credit",
+      "Refund request",
+      "Line selection",
+      "Pending and completed tabs",
+      "Independent execution",
+      "Balance and ledger readback"
+    ],
+    "subfeatureCount": 7,
+    "implementationFiles": [
+      "apps/web/components/workflows.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Guided shared-state simulation plus source UI exploration",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/credits",
+        "headings": [
+          "Credits & Refunds"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/credits",
+        "headings": [
+          "Credits & Refunds"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-27",
+    "name": "Reports and analytics",
+    "route": "/admin/reports",
+    "role": "owner",
+    "items": [
+      "Report selector",
+      "Relevant filters",
+      "Branch and date scope",
+      "Generate report",
+      "CSV and Excel XML",
+      "Print and PDF",
+      "Scheduled report availability",
+      "Current stock and liability views"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/business-centre.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/reports",
+        "headings": [
+          "Reports & analytics",
+          "Choose a report to get started"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/reports",
+        "headings": [
+          "Reports & analytics",
+          "Choose a report to get started"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/reports",
+        "headings": [
+          "Reports & analytics",
+          "Choose a report to get started"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-28",
+    "name": "Campaigns",
+    "route": "/admin/campaigns",
+    "role": "manager",
+    "items": [
+      "Campaign list",
+      "New campaign dialog",
+      "Audience and consent",
+      "Message preview",
+      "Draft and approval",
+      "Delivery eligibility",
+      "Quiet hours",
+      "Rewards reconciliation",
+      "Performance"
+    ],
+    "subfeatureCount": 9,
+    "implementationFiles": [
+      "apps/web/components/engagement-records.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/campaigns",
+        "headings": [
+          "Customer campaigns"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/campaigns",
+        "headings": [
+          "Customer campaigns"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-29",
+    "name": "Recommendations",
+    "route": "/admin/recommendations",
+    "role": "manager",
+    "items": [
+      "Product-service rules",
+      "Evidence and relationship",
+      "Draft proposal",
+      "Independent review",
+      "Activation state",
+      "Performance and conversions"
+    ],
+    "subfeatureCount": 6,
+    "implementationFiles": [
+      "apps/web/components/engagement-records.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/recommendations",
+        "headings": [
+          "Recommendations"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/recommendations",
+        "headings": [
+          "Recommendations"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-30",
+    "name": "Testimonials",
+    "route": "/admin/testimonials",
+    "role": "owner",
+    "items": [
+      "Moderation queue",
+      "Status and rating filters",
+      "Review consent",
+      "Approve or request changes",
+      "Publish or hide separately",
+      "Withdrawal",
+      "Retention review",
+      "Analytics and filtered export"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/testimonials.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/testimonials",
+        "headings": [
+          "Customer testimonials"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-31",
+    "name": "Approvals and settings",
+    "route": "/admin/approvals",
+    "role": "owner",
+    "items": [
+      "Requested by",
+      "Revision-bound progress",
+      "Sole-owner eligible business approval",
+      "Restricted independent review",
+      "Identity verification",
+      "Request changes and reject",
+      "Effective date",
+      "Activation checks",
+      "Audit history",
+      "Rollback proposals"
+    ],
+    "subfeatureCount": 10,
+    "implementationFiles": [
+      "apps/web/components/setting-summary.tsx",
+      "apps/web/components/admin.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/approvals",
+        "headings": [
+          "Approval Centre",
+          "Change requests"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/approvals",
+        "headings": [
+          "Approval Centre",
+          "Change requests"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/approvals",
+        "headings": [
+          "Approval Centre",
+          "Change requests"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-32",
+    "name": "Operations centre",
+    "route": "/admin/operations",
+    "role": "owner",
+    "items": [
+      "Suppliers and purchasing",
+      "Catalogue maintenance",
+      "Cylinders",
+      "Branches and delivery locations",
+      "Staff administration",
+      "Equipment calibration",
+      "Delegations",
+      "Mail delivery and retry"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/operations-completion.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/operations",
+        "headings": [
+          "Operations centre"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/operations",
+        "headings": [
+          "Operations centre"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/operations",
+        "headings": [
+          "Operations centre"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-33",
+    "name": "Governance and incidents",
+    "route": "/admin/incidents",
+    "role": "owner",
+    "items": [
+      "Incident search",
+      "Severity and owner",
+      "Acknowledge and resolve",
+      "Evidence and audit trail",
+      "Production NO-GO",
+      "Release gates",
+      "Actual-import hold",
+      "Retain-all"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/operational-incidents.tsx",
+      "apps/web/components/admin.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/incidents",
+        "headings": [
+          "This view needs attention"
+        ]
+      },
+      {
+        "role": "manager",
+        "route": "/admin/incidents",
+        "headings": [
+          "Operational incidents",
+          "Incident register"
+        ]
+      },
+      {
+        "role": "finance",
+        "route": "/admin/incidents",
+        "headings": [
+          "Operational incidents",
+          "Incident register"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-34",
+    "name": "Policies and legal information",
+    "route": "/admin/policies",
+    "role": "owner",
+    "items": [
+      "Nine policy versions",
+      "Review text",
+      "Effective Lagos dates",
+      "Eligible owner publication",
+      "Public policy directory",
+      "Commercial approval boundary"
+    ],
+    "subfeatureCount": 6,
+    "implementationFiles": [
+      "apps/web/components/policies.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "owner",
+        "route": "/admin/policies",
+        "headings": [
+          "Customer policy publication"
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-35",
+    "name": "Identity and entry links",
+    "route": "/login",
+    "role": "public",
+    "items": [
+      "Shared sign in",
+      "Registration",
+      "Invitation acceptance",
+      "Forgot password",
+      "Missing or expired verification",
+      "Payment-return guard",
+      "Secure completion invitation",
+      "Resend route"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/hosted-payment.tsx",
+      "apps/web/components/site.tsx",
+      "apps/web/components/payment-request.tsx",
+      "apps/web/components/phone-completion.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/login",
+        "headings": [
+          "More cooking. Less admin.",
+          "A little less worry.A lot more cooking.",
+          "Next service appointment",
+          "Your Orders",
+          "Wallet Balance",
+          "EasyRewards",
+          "Next Refill",
+          "Recent Activity",
+          "Gas Purchase History"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/login",
+        "headings": [
+          "Good food startswith good energy.",
+          "Welcome back."
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  },
+  {
+    "id": "FEATURE-36",
+    "name": "Global navigation and appearance",
+    "route": "/account",
+    "role": "customer",
+    "items": [
+      "Active sidebar focus",
+      "Collapse and mobile menu",
+      "Role-scoped links",
+      "Global and local search",
+      "Light and dark themes",
+      "Dialogs and keyboard dismissal",
+      "Local state reset",
+      "Notifications"
+    ],
+    "subfeatureCount": 8,
+    "implementationFiles": [
+      "apps/web/components/theme-provider.tsx",
+      "apps/web/components/site.tsx",
+      "apps/web/components/admin.tsx",
+      "prototypes/easygas-experience/main.tsx",
+      "prototypes/easygas-experience/runtime.ts"
+    ],
+    "dataSource": "Sanitized captured read-only synthetic demo fixtures; browser-local scenario overlay",
+    "designCoverage": "Actual React screen and source CSS included; forms/tabs retain source presentation",
+    "interactionCoverage": "Source UI exploration; generic form submissions produce local interaction previews, not complete backend execution",
+    "executedEvidence": [
+      {
+        "role": "customer",
+        "route": "/account",
+        "headings": [
+          "More cooking. Less admin.",
+          "A little less worry.A lot more cooking.",
+          "Next service appointment",
+          "Your Orders",
+          "Wallet Balance",
+          "EasyRewards",
+          "Next Refill",
+          "Recent Activity",
+          "Gas Purchase History"
+        ]
+      },
+      {
+        "role": "public",
+        "route": "/account",
+        "headings": [
+          "Good food startswith good energy.",
+          "Welcome back."
+        ]
+      }
+    ],
+    "fullBusinessAcceptance": "NOT_CLAIMED",
+    "outstanding": "Live providers, real security enforcement, native/physical workflows and all mutation permutations require separate acceptance"
+  }
+]

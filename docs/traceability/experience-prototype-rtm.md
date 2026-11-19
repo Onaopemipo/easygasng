@@ -1,0 +1,20 @@
+# Holistic interactive prototype traceability
+
+20 November 2026. Stable IDs EXP-01–08. Machine source: `experience-prototype-rtm.json`.
+
+Scope: actual EasyGas web design and isolated synthetic interactions for public access and six user roles. No production, native, physical or full backend certification.
+
+| Requirement | Status | Executed evidence / remaining gate |
+|---|---|---|
+| EXP-01 · Audit all current web routes and visible workflow features with source and role mappings | VERIFIED_COMPLETE | 86 routes and 36 workflow families/300 named features mapped to actual source and read-only data. All feature entries map to eligible personas. Failed and parameter-dependent reads retained. Route presence is design evidence, not transactional acceptance. |
+| EXP-02 · Preserve actual EasyGas visual components across public and all six role experiences | VERIFIED_COMPLETE | 160 existing UI/style/rule source files bundled without modifying original application files; public and all six personas inspected in 187 role-route observations covering all 86 distinct routes. Incident adapter defect found and corrected; final browser recheck belongs to EXP-08. |
+| EXP-03 · Provide a safe cross-role order-to-delivery journey with payments and exception scenarios | PARTIAL | Shared local order/payment/driver/attempt state and canonical statuses implemented. Model delivery, rejected payment, expired calibration and refund-once checks pass; actual order modal tabs explored. Full guided browser traversal after final changes remains unverified. |
+| EXP-04 · Provide service booking assessment quotation work and follow-up interaction coverage | PARTIAL | Actual service/booking/technician screens included; one shared local booking progresses through guided phases and appears in technician read models. Model hand-off passes; final eight-step browser interaction pass remains unverified. |
+| EXP-05 · Cover finance stock governance growth account privacy and support modules | VERIFIED_COMPLETE | Finance, stock, governance, growth, account/privacy and support source screens and feature map included and inspected. Generic form submissions explicitly record interaction previews; real transaction execution is not claimed. Empty/unavailable states are retained. |
+| EXP-06 · Provide role switching scenario reset guided journeys search and feature coverage navigation | PARTIAL | Role cards and persona switcher exercised across all six roles; hub, searchable guide, all-screen directory, shared readback and reset implemented. Local persistence/reset model passes. Native reset test stalled the browser; replaced with the existing accessible application dialog. |
+| EXP-07 · Keep all prototype data local synthetic and isolated from client-demo APIs and real side effects | VERIFIED_COMPLETE | Browser fetch replacement never forwards requests; CSP blocks network connections and native form submissions. Sensitive fixture metadata/contact identities sanitized, no credential/JWT included. Public order reads and ineligible dispatch/owner actions denied. No live account/safety/policy/payment mutation performed. |
+| EXP-08 · Verify desktop and phone behaviour publish privately and retain honest traceability | PARTIAL | Private Sites publication succeeded and actual ChatGPT access gate observed. Desktop source-screen inspection completed; final browser interactions stalled at a native reset confirmation. Hosted authenticated content and phone interactions remain unverified. |
+
+Coverage: 8/8 implemented, 4/8 verified and 4/8 partial; 1/1 critical isolation requirement verified; 4/8 gates pass and 4/8 remain partial. Zero exclusions. All 86 routes, 36 families and 300 named features remain in inventory. Nine local model tests and six artifact checks pass. 187 initial role-route observations are inspection evidence, not functional acceptance.
+
+The private prototype does not deploy application changes to the client demo. Commercial production NO-GO, actual-import hold, retain-all and all unrelated acceptance gaps are unchanged.
