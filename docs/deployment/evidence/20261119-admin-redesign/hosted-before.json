@@ -1,0 +1,142 @@
+{
+  "base": "https://easygas-client-demo.vercel.app",
+  "phase": "before",
+  "routes": [
+    {
+      "route": "/admin/support",
+      "status": 200
+    },
+    {
+      "route": "/admin/bookings",
+      "status": 200
+    },
+    {
+      "route": "/admin/services",
+      "status": 200
+    },
+    {
+      "route": "/admin/quotations",
+      "status": 200
+    },
+    {
+      "route": "/admin/finance",
+      "status": 200
+    },
+    {
+      "route": "/admin/reconciliation",
+      "status": 200
+    },
+    {
+      "route": "/admin/credits",
+      "status": 200
+    },
+    {
+      "route": "/admin/reports",
+      "status": 200
+    },
+    {
+      "route": "/admin/campaigns",
+      "status": 200
+    },
+    {
+      "route": "/admin/recommendations",
+      "status": 200
+    },
+    {
+      "route": "/admin/testimonials",
+      "status": 200
+    }
+  ],
+  "reads": [
+    {
+      "action": "support.list",
+      "status": 200
+    },
+    {
+      "action": "bookings",
+      "status": 200
+    },
+    {
+      "action": "services.manage",
+      "status": 200
+    },
+    {
+      "action": "business.snapshot",
+      "status": 200
+    },
+    {
+      "action": "finance.summary",
+      "status": 200
+    },
+    {
+      "action": "finance.ledger",
+      "status": 200
+    },
+    {
+      "action": "documents.list?page=1",
+      "status": 200
+    },
+    {
+      "action": "credits?page=1",
+      "status": 200
+    },
+    {
+      "action": "campaigns",
+      "status": 200
+    },
+    {
+      "action": "recommendations.manage",
+      "status": 200
+    },
+    {
+      "action": "testimonials.manage?limit=8&page=1",
+      "status": 200
+    },
+    {
+      "action": "testimonials.analytics",
+      "status": 200
+    },
+    {
+      "action": "testimonials.export",
+      "status": 200
+    },
+    {
+      "action": "customer documents.list",
+      "status": 200,
+      "scope": "own records only"
+    }
+  ],
+  "denials": [
+    {
+      "action": "services.manage",
+      "status": 403
+    },
+    {
+      "action": "finance.summary",
+      "status": 403
+    },
+    {
+      "action": "credits?view=workspace",
+      "status": 403
+    },
+    {
+      "action": "campaigns",
+      "status": 403
+    },
+    {
+      "action": "recommendations.manage",
+      "status": 403
+    },
+    {
+      "action": "testimonials.manage",
+      "status": 403
+    }
+  ],
+  "preservation": {
+    "orderHash": "0d726abc2c9f655bcf81df66d6bf1fd771b7bf142c283479de27f10028936a99",
+    "verifiedLedgerHash": "b9a0a7ac280d747333e0c99a500645deaa1c09f69ccffde353da9048c0090c31",
+    "paystack": "test/available",
+    "bulkEnabled": true,
+    "retainedNamedOrders": "delivered"
+  }
+}

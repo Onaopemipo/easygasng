@@ -17,28 +17,62 @@
         "apps/web/components/reconciliation.tsx",
         "apps/web/components/business-centre.tsx",
         "apps/web/components/recommendations.tsx",
-        "apps/web/components/testimonials.tsx"
+        "apps/web/components/testimonials.tsx",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/financial-documents.ts",
+        "apps/web/lib/scheduling.ts",
+        "apps/web/lib/catalogue.ts",
+        "apps/web/lib/testimonials.ts",
+        "apps/web/components/document-library.tsx",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs"
       ],
       "dataSource": "Exact committed web source; linked easygas-client-demo Vercel project; existing canonical role/branch scoped APIs and retained synthetic demo database",
       "securityControl": "Preserve existing identity/consent/independent approvals, financial and stock controls; no schema migration, seed, live payment, provider/native activation or commercial-production approval",
       "testFiles": [
         "tests/admin-compact-documents.test.ts",
         "tests/admin-compact-credits.test.ts",
-        "tests/testimonials.test.ts"
+        "tests/testimonials.test.ts",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs",
+        "tests/admin-compact.test.ts",
+        "tests/growth-compact.test.ts",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "ACMP-DOCS",
+        "ACMP-CREDITS",
+        "GROW-CAMPAIGN",
+        "GROW-RULE",
+        "GROW-FEEDBACK",
+        "ARDREL-HTTP",
+        "ARDREL-BROWSER"
+      ],
       "negativeTests": [
         "ACMP-DOCS: compact document pages preserve canonical records, totals and status filtering and reject invalid page sizes",
         "TM-15: stale moderation cannot publish or overwrite a newer customer version"
       ],
       "evidence": [
-        "docs/deployment/evidence/20261119-admin-redesign/start-deployment.json"
+        "docs/deployment/20261119-admin-redesign-release.md",
+        "docs/deployment/evidence/20261119-admin-redesign/regression.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/wrapping-regression.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/final-hosted.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/browser-validation.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/browser-checks.json",
+        "docs/deployment/evidence/20261119-admin-redesign/document-cell-layout.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-source-integrity.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-candidate-identity.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-stable-inspect.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-candidate-progress.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/hosted-before.json",
+        "docs/deployment/evidence/20261119-admin-redesign/hosted-after.json"
       ],
       "acceptanceGate": "ARDREL-G01",
-      "status": "PARTIAL",
-      "reason": "Existing local implementations verified in ACMP/GROW matrices; combined release regression and hosted rollout/acceptance starting.",
-      "testResult": "NOT RUN for this combined release",
-      "outstandingWork": "Exact source snapshot, full regression, staged cloud build, promotion and eleven-route hosted functional acceptance."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact committed candidate built, source/project/Ready verified and promoted to stable demo. All eleven actual desktop/phone workspaces and main read/dialog/filter/export interactions accepted. Final receipt wrapping correction rebuilt/promoted and rechecked; all other upload hashes unchanged.",
+      "testResult": "PASS \u2014 822/822 initial combined regression,18/18 final CSS-follow-up focused tests, cloud compile/types, final hosted API check and saved browser-observation validator;22 actual route/layout observations. No failed/skipped acceptance counted.",
+      "outstandingWork": "None for this bounded client-demo web rollout. Remote source push unrequested; no hosted approvals/delivery/publication/financial mutations performed. Commercial production NO-GO, actual-import hold, retain-all, native/physical/provider/Firefox/formal-accessibility/audio/background and prior unrelated gaps remain."
     },
     {
       "id": "ARDREL-02",
@@ -56,28 +90,62 @@
         "apps/web/components/reconciliation.tsx",
         "apps/web/components/business-centre.tsx",
         "apps/web/components/recommendations.tsx",
-        "apps/web/components/testimonials.tsx"
+        "apps/web/components/testimonials.tsx",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/financial-documents.ts",
+        "apps/web/lib/scheduling.ts",
+        "apps/web/lib/catalogue.ts",
+        "apps/web/lib/testimonials.ts",
+        "apps/web/components/document-library.tsx",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs"
       ],
       "dataSource": "Exact committed web source; linked easygas-client-demo Vercel project; existing canonical role/branch scoped APIs and retained synthetic demo database",
       "securityControl": "Preserve existing identity/consent/independent approvals, financial and stock controls; no schema migration, seed, live payment, provider/native activation or commercial-production approval",
       "testFiles": [
         "tests/admin-compact-documents.test.ts",
         "tests/admin-compact-credits.test.ts",
-        "tests/testimonials.test.ts"
+        "tests/testimonials.test.ts",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs",
+        "tests/admin-compact.test.ts",
+        "tests/growth-compact.test.ts",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "ACMP-DOCS",
+        "ACMP-CREDITS",
+        "GROW-CAMPAIGN",
+        "GROW-RULE",
+        "GROW-FEEDBACK",
+        "ARDREL-HTTP",
+        "ARDREL-BROWSER"
+      ],
       "negativeTests": [
         "ACMP-DOCS: compact document pages preserve canonical records, totals and status filtering and reject invalid page sizes",
         "TM-15: stale moderation cannot publish or overwrite a newer customer version"
       ],
       "evidence": [
-        "docs/deployment/evidence/20261119-admin-redesign/start-deployment.json"
+        "docs/deployment/20261119-admin-redesign-release.md",
+        "docs/deployment/evidence/20261119-admin-redesign/regression.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/wrapping-regression.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/final-hosted.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/browser-validation.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/browser-checks.json",
+        "docs/deployment/evidence/20261119-admin-redesign/document-cell-layout.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-source-integrity.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-candidate-identity.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-stable-inspect.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-candidate-progress.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/hosted-before.json",
+        "docs/deployment/evidence/20261119-admin-redesign/hosted-after.json"
       ],
       "acceptanceGate": "ARDREL-G02",
-      "status": "PARTIAL",
-      "reason": "Existing local implementations verified in ACMP/GROW matrices; combined release regression and hosted rollout/acceptance starting.",
-      "testResult": "NOT RUN for this combined release",
-      "outstandingWork": "Exact source snapshot, full regression, staged cloud build, promotion and eleven-route hosted functional acceptance."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact committed candidate built, source/project/Ready verified and promoted to stable demo. All eleven actual desktop/phone workspaces and main read/dialog/filter/export interactions accepted. Final receipt wrapping correction rebuilt/promoted and rechecked; all other upload hashes unchanged.",
+      "testResult": "PASS \u2014 822/822 initial combined regression,18/18 final CSS-follow-up focused tests, cloud compile/types, final hosted API check and saved browser-observation validator;22 actual route/layout observations. No failed/skipped acceptance counted.",
+      "outstandingWork": "None for this bounded client-demo web rollout. Remote source push unrequested; no hosted approvals/delivery/publication/financial mutations performed. Commercial production NO-GO, actual-import hold, retain-all, native/physical/provider/Firefox/formal-accessibility/audio/background and prior unrelated gaps remain."
     },
     {
       "id": "ARDREL-03",
@@ -95,25 +163,59 @@
         "apps/web/components/reconciliation.tsx",
         "apps/web/components/business-centre.tsx",
         "apps/web/components/recommendations.tsx",
-        "apps/web/components/testimonials.tsx"
+        "apps/web/components/testimonials.tsx",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/financial-documents.ts",
+        "apps/web/lib/scheduling.ts",
+        "apps/web/lib/catalogue.ts",
+        "apps/web/lib/testimonials.ts",
+        "apps/web/components/document-library.tsx",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs"
       ],
       "dataSource": "Exact committed web source; linked easygas-client-demo Vercel project; existing canonical role/branch scoped APIs and retained synthetic demo database",
       "securityControl": "Preserve existing identity/consent/independent approvals, financial and stock controls; no schema migration, seed, live payment, provider/native activation or commercial-production approval",
       "testFiles": [
         "tests/admin-compact-documents.test.ts",
         "tests/admin-compact-credits.test.ts",
-        "tests/testimonials.test.ts"
+        "tests/testimonials.test.ts",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs",
+        "tests/admin-compact.test.ts",
+        "tests/growth-compact.test.ts",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "ACMP-DOCS",
+        "ACMP-CREDITS",
+        "GROW-CAMPAIGN",
+        "GROW-RULE",
+        "GROW-FEEDBACK",
+        "ARDREL-HTTP",
+        "ARDREL-BROWSER"
+      ],
       "negativeTests": [],
       "evidence": [
-        "docs/deployment/evidence/20261119-admin-redesign/start-deployment.json"
+        "docs/deployment/20261119-admin-redesign-release.md",
+        "docs/deployment/evidence/20261119-admin-redesign/regression.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/wrapping-regression.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/final-hosted.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/browser-validation.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/browser-checks.json",
+        "docs/deployment/evidence/20261119-admin-redesign/document-cell-layout.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-source-integrity.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-candidate-identity.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-stable-inspect.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-candidate-progress.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/hosted-before.json",
+        "docs/deployment/evidence/20261119-admin-redesign/hosted-after.json"
       ],
       "acceptanceGate": "ARDREL-G03",
-      "status": "PARTIAL",
-      "reason": "Existing local implementations verified in ACMP/GROW matrices; combined release regression and hosted rollout/acceptance starting.",
-      "testResult": "NOT RUN for this combined release",
-      "outstandingWork": "Exact source snapshot, full regression, staged cloud build, promotion and eleven-route hosted functional acceptance."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact committed candidate built, source/project/Ready verified and promoted to stable demo. All eleven actual desktop/phone workspaces and main read/dialog/filter/export interactions accepted. Final receipt wrapping correction rebuilt/promoted and rechecked; all other upload hashes unchanged.",
+      "testResult": "PASS \u2014 822/822 initial combined regression,18/18 final CSS-follow-up focused tests, cloud compile/types, final hosted API check and saved browser-observation validator;22 actual route/layout observations. No failed/skipped acceptance counted.",
+      "outstandingWork": "None for this bounded client-demo web rollout. Remote source push unrequested; no hosted approvals/delivery/publication/financial mutations performed. Commercial production NO-GO, actual-import hold, retain-all, native/physical/provider/Firefox/formal-accessibility/audio/background and prior unrelated gaps remain."
     },
     {
       "id": "ARDREL-04",
@@ -131,62 +233,124 @@
         "apps/web/components/reconciliation.tsx",
         "apps/web/components/business-centre.tsx",
         "apps/web/components/recommendations.tsx",
-        "apps/web/components/testimonials.tsx"
+        "apps/web/components/testimonials.tsx",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/financial-documents.ts",
+        "apps/web/lib/scheduling.ts",
+        "apps/web/lib/catalogue.ts",
+        "apps/web/lib/testimonials.ts",
+        "apps/web/components/document-library.tsx",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs"
       ],
       "dataSource": "Exact committed web source; linked easygas-client-demo Vercel project; existing canonical role/branch scoped APIs and retained synthetic demo database",
       "securityControl": "Preserve existing identity/consent/independent approvals, financial and stock controls; no schema migration, seed, live payment, provider/native activation or commercial-production approval",
       "testFiles": [
         "tests/admin-compact-documents.test.ts",
         "tests/admin-compact-credits.test.ts",
-        "tests/testimonials.test.ts"
+        "tests/testimonials.test.ts",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs",
+        "tests/admin-compact.test.ts",
+        "tests/growth-compact.test.ts",
+        "scripts/check-admin-redesign-demo.mjs",
+        "scripts/check-admin-redesign-browser-evidence.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "ACMP-DOCS",
+        "ACMP-CREDITS",
+        "GROW-CAMPAIGN",
+        "GROW-RULE",
+        "GROW-FEEDBACK",
+        "ARDREL-HTTP",
+        "ARDREL-BROWSER"
+      ],
       "negativeTests": [],
       "evidence": [
-        "docs/deployment/evidence/20261119-admin-redesign/start-deployment.json"
+        "docs/deployment/20261119-admin-redesign-release.md",
+        "docs/deployment/evidence/20261119-admin-redesign/regression.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/wrapping-regression.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/final-hosted.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/browser-validation.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/browser-checks.json",
+        "docs/deployment/evidence/20261119-admin-redesign/document-cell-layout.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-source-integrity.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-candidate-identity.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-stable-inspect.json",
+        "docs/deployment/evidence/20261119-admin-redesign/final-candidate-progress.txt",
+        "docs/deployment/evidence/20261119-admin-redesign/hosted-before.json",
+        "docs/deployment/evidence/20261119-admin-redesign/hosted-after.json"
       ],
       "acceptanceGate": "ARDREL-G04",
-      "status": "PARTIAL",
-      "reason": "Existing local implementations verified in ACMP/GROW matrices; combined release regression and hosted rollout/acceptance starting.",
-      "testResult": "NOT RUN for this combined release",
-      "outstandingWork": "Exact source snapshot, full regression, staged cloud build, promotion and eleven-route hosted functional acceptance."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact committed candidate built, source/project/Ready verified and promoted to stable demo. All eleven actual desktop/phone workspaces and main read/dialog/filter/export interactions accepted. Final receipt wrapping correction rebuilt/promoted and rechecked; all other upload hashes unchanged.",
+      "testResult": "PASS \u2014 822/822 initial combined regression,18/18 final CSS-follow-up focused tests, cloud compile/types, final hosted API check and saved browser-observation validator;22 actual route/layout observations. No failed/skipped acceptance counted.",
+      "outstandingWork": "None for this bounded client-demo web rollout. Remote source push unrequested; no hosted approvals/delivery/publication/financial mutations performed. Commercial production NO-GO, actual-import hold, retain-all, native/physical/provider/Firefox/formal-accessibility/audio/background and prior unrelated gaps remain."
     }
   ],
   "gates": [
     {
       "id": "ARDREL-G01",
       "description": "Deploy every pending redesigned admin page as one reproducible source snapshot",
-      "status": "OPEN"
+      "status": "PASS"
     },
     {
       "id": "ARDREL-G02",
       "description": "Verify hosted data access and existing approval/scope controls",
-      "status": "OPEN"
+      "status": "PASS"
     },
     {
       "id": "ARDREL-G03",
       "description": "Verify all eleven live workspaces and main interactions on desktop and phone",
-      "status": "OPEN"
+      "status": "PASS"
     },
     {
       "id": "ARDREL-G04",
       "description": "Preserve prior decisions and release evidence with honest coverage",
-      "status": "OPEN"
+      "status": "PASS"
     }
   ],
   "changeLog": [
     {
       "date": "2026-11-19",
       "change": "Explicit user authorization to deploy all pending redesigned pages to existing client demo. Eleven routes retained. Prior eight-page and three-page matrices retained; production NO-GO, actual-import hold, retain-all and all unrelated gaps preserved."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "822/822 combined regression and staged cloud build passed; source aab195b promoted as dpl_Bggadg4idUUFuvYjJFF9ectxV7m5. All11 desktop/phone pages and read/export/control checks passed; final screenshot inspection identified long receipt references overlapping their status column. Scoped document-cell white-space correction committed as3201f93;18/18 focused checks passed; final candidate being built before affected desktop/phone recheck. Prior screenshots and deployment retained."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Final3201f93 candidate dpl_EJBovTu4raszj1ASCq2pkVJYj8LF Ready/project/source metadata validated and promoted. Receipt-reference cells have zero text overflow on desktop/phone; original invoice preview opens. Final HTTP checks pass and order/verified-ledger hashes match baseline.22 layouts and all11 main interaction checks verified;4/4 requirements/gates and2/2critical verified, no exclusions. Canonical own-customer smoke-check assumptions corrected without product authorization changes. Prior NO-GO/import/retain-all and unrelated gaps preserved."
     }
   ],
   "coverage": {
-    "totalRequirements": 4,
-    "verifiedRequirements": 0,
-    "totalRoutes": 11,
-    "verifiedRoutes": 0,
-    "totalGates": 4,
-    "passedGates": 0,
-    "exclusions": 0
+    "requirements": {
+      "implemented": 4,
+      "verified": 4,
+      "total": 4
+    },
+    "criticalRequirements": {
+      "verified": 2,
+      "total": 2
+    },
+    "routes": {
+      "verified": 11,
+      "total": 11
+    },
+    "gates": {
+      "passed": 4,
+      "total": 4
+    },
+    "excluded": 0,
+    "denominatorNote": "Bounded demo release only. All4 release requirements and11 requested admin routes counted; no prior phase ID, requirement, defect or gate removed/reclassified."
+  },
+  "release": {
+    "applicationSource": "3201f93a0571f01c499866150a0068f5737a84dc",
+    "deployment": "dpl_EJBovTu4raszj1ASCq2pkVJYj8LF",
+    "origin": "https://easygas-client-demo.vercel.app",
+    "originalRollback": "dpl_6MewDCoCGcTpw1UKyqpeVpdFBe2C",
+    "nativeBuild": false,
+    "databaseMigration": false
   }
 }

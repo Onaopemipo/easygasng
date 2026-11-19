@@ -106,3 +106,7 @@ Executed negative cases:
 - 2026-11-19: Completed bounded local implementation: 42/42 focused regression checks with PostgreSQL enabled and 0 failures/skips; six captured desktop/phone observations, 17 interaction checks and four evidence validations pass. Production web build/types pass. Hosted rollout remains unperformed; prior eight-workspace work and all NO-GO/import/retain-all holds preserved.
 
 Matrix validation: [executed report](../growth-compact/evidence/traceability.txt). This report is linked outside row evidence to avoid self-referential validation.
+
+## Hosted release addendum
+
+Explicitly authorized demo rollout is now verified: [release matrix](admin-redesign-demo-release-rtm.md), [actual deployed acceptance and screenshots](../deployment/20261119-admin-redesign-release.md). Historical local-only rollout statements above are superseded for this bounded hosted web release. Stable IDs, coverage denominators and all wider gaps/NO-GO/import/retain-all decisions remain.

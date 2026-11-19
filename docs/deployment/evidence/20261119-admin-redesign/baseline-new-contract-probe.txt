@@ -1,0 +1,30 @@
+✖ ARDREL-HTTP: all redesigned demo routes, canonical reads, full exports and customer privilege denials work with retained demo settings (22814.759667ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22863.327125
+
+✖ failing tests:
+
+test at scripts/check-admin-redesign-demo.mjs:10:1
+✖ ARDREL-HTTP: all redesigned demo routes, canonical reads, full exports and customer privilege denials work with retained demo settings (22814.759667ms)
+  AssertionError [ERR_ASSERTION]: documents.list?pageSize=8&page=1 HTTP 400 Unrecognized key: "pageSize"
+  
+  400 !== 200
+  
+      at ok (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/check-admin-redesign-demo.mjs:18:81)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/check-admin-redesign-demo.mjs:31:41)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,29 @@
+✖ ARDREL-HTTP: all redesigned demo routes, canonical reads, full exports and customer privilege denials work with retained demo settings (35184.462667ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35228.445542
+
+✖ failing tests:
+
+test at scripts/check-admin-redesign-demo.mjs:10:1
+✖ ARDREL-HTTP: all redesigned demo routes, canonical reads, full exports and customer privilege denials work with retained demo settings (35184.462667ms)
+  AssertionError [ERR_ASSERTION]: customer must not read support.list
+  
+  200 !== 403
+  
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/check-admin-redesign-demo.mjs:32:170)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 403,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

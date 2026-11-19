@@ -17,3 +17,7 @@ Nine bounded requirements verified: eight supplied workspaces and one shared sec
 [Machine mapping](admin-compact-rtm.json) contains actual implementation/data/security/test/gate/evidence mappings and change history. [Audit and visual evidence](../admin-compact/README.md). [Full executed regression](../admin-compact/evidence/full-regression.txt): 815/815, 0 failures/skips. [Responsive observations](../admin-compact/evidence/browser-checks.json): 16 final desktop/phone observations. [Build](../admin-compact/evidence/build.txt), [types](../admin-compact/evidence/types.txt) and [matrix validation](../admin-compact/evidence/traceability.txt).
 
 Hosted rollout is not performed. Native parity/builds, physical/provider acceptance, Firefox/formal accessibility and commercial production acceptance remain unclaimed and tracked in their existing matrices. Earlier partial/blocked requirements and production decisions are retained. Initial failing/superseded artifacts are retained for history and do not count as final passing evidence.
+
+## Hosted release addendum
+
+Explicitly authorized demo rollout is now verified: [release matrix](admin-redesign-demo-release-rtm.md), [actual deployed acceptance and screenshots](../deployment/20261119-admin-redesign-release.md). Historical local-only rollout statements above are superseded for this bounded hosted web release. Stable IDs, coverage denominators and all wider gaps/NO-GO/import/retain-all decisions remain.
