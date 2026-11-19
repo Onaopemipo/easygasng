@@ -1,0 +1,104 @@
+Vercel CLI 59.18.0 (Node.js 24.21.0)
+Deploying easygas-client-demo
+Uploading [--------------------] (0.0B/9.2MB)
+Uploading [=====---------------] (2.3MB/9.2MB)
+Uploading [==========----------] (4.6MB/9.2MB)
+Uploading [===============-----] (6.9MB/9.2MB)
+Uploading [====================] (9.2MB/9.2MB)
+  Inspect         https://vercel.com/onaopemipos-projects/easygas-client-demo/FCNoBGcVCEFgNofz3m6qx1yWChqd
+▲ Production      https://easygas-client-demo-4gwd8qnur-onaopemipos-projects.vercel.app
+Building…
+Building…
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 4 cores, 8 GB (Standard Build Machine)
+Retrieving list of deployment files...
+Concatenating deployment archive files...
+Extracting deployment files...
+Extracted 441 deployment files...
+Restored build cache from previous deployment (6rCQ8NcZ6tB3vF3R9XiL7eMt4NU9)
+Running "vercel build"
+Vercel CLI 65.17.0
+Running "install" command: `cd ../.. && npm ci --include=dev`...
+npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+added 61 packages, and audited 63 packages in 7s
+10 packages are looking for funding
+run `npm fund` for details
+found 0 vulnerabilities
+npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+Detected Next.js version: 16.4.6
+Running "npm run build"
+npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+> @easygas/web@0.1.0 build
+> next build --webpack
+▲ Next.js 16.4.6 (webpack)
+Applying modifyConfig from Vercel
+✓ Running next.config.ts took 67ms
+Creating an optimized production build ...
+✓ Compiled successfully in 4.7s
+Running TypeScript ...
+Finished TypeScript in 2.7s ...
+Collecting page data using 3 workers ...
+Generating static pages using 3 workers (0/11) ...
+Generating static pages using 3 workers (2/11)
+Generating static pages using 3 workers (5/11)
+Generating static pages using 3 workers (8/11)
+✓ Generating static pages using 3 workers (11/11) in 901ms
+Finalizing page optimization ...
+Collecting build traces ...
+Running onBuildComplete from Vercel
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /[...slug]
+├ ○ /activate
+├ ƒ /admin/[[...section]]
+├ ƒ /api/[action]
+├ ƒ /api/business-live
+├ ƒ /api/invoices/[orderId]
+├ ƒ /api/media
+├ ƒ /api/media/[id]
+├ ƒ /api/messaging/meta
+├ ƒ /api/payments/paystack/[operation]
+├ ƒ /api/receipts
+├ ƒ /api/status
+├ ƒ /api/tracking/stream
+├ ○ /icon.png
+├ ○ /payment-request
+├ ○ /payment-return
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+Build Completed in /vercel/output [26s]
+Deploying outputs...
+[2K[1A[2K[G▲ Production      https://easygas-client-demo-4gwd8qnur-onaopemipos-projects.vercel.app
+Completing…
+{
+  "status": "ok",
+  "deployment": {
+    "id": "dpl_FCNoBGcVCEFgNofz3m6qx1yWChqd",
+    "url": "https://easygas-client-demo-4gwd8qnur-onaopemipos-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/onaopemipos-projects/easygas-client-demo/FCNoBGcVCEFgNofz3m6qx1yWChqd",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_FCNoBGcVCEFgNofz3m6qx1yWChqd"
+  },
+  "message": "Deployment easygas-client-demo-4gwd8qnur-onaopemipos-projects.vercel.app ready.",
+  "next": [
+    {
+      "command": "vercel curl https://easygas-client-demo-4gwd8qnur-onaopemipos-projects.vercel.app",
+      "when": "Verify deployment, including when Deployment Protection is enabled"
+    },
+    {
+      "command": "vercel inspect easygas-client-demo-4gwd8qnur-onaopemipos-projects.vercel.app --scope onaopemipos-projects",
+      "when": "Inspect deployment"
+    },
+    {
+      "command": "vercel deploy --prod --scope onaopemipos-projects",
+      "when": "Promote to production"
+    }
+  ]
+}

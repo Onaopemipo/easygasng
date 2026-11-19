@@ -682,7 +682,7 @@ export default function TechniciansAvailability({ user }: { user: any }) {
                 fields={[
                   {
                     name: "userId",
-                    label: "Technician / reviewer",
+                    label: "Employee / reviewer",
                     options: data.verificationTargets
                       .filter((o) => o.id !== user.id)
                       .map((o) => ({

@@ -127,7 +127,9 @@
       "implementationFiles": [
         ".github/workflows/release-validation.yml",
         "apps/web/lib/bulk-lpg.ts",
-        "apps/web/components/driver-lpg-controls.tsx"
+        "apps/web/components/driver-lpg-controls.tsx",
+        "apps/web/lib/technicians-availability.ts",
+        "apps/web/components/technicians-availability.tsx"
       ],
       "dataSource": "Exact Git/Vercel commit, isolated demo migrations and canonical authenticated order/custody/stock/payment records",
       "securityControl": "Retain sandbox and permanent fulfilment; restricted runtime; no fabricated historical dispensing, broad grants, real payment or guard bypass",
@@ -145,17 +147,20 @@
         "tests/trip-recovery.test.ts",
         "tests/dispatch-driver-photos.test.ts",
         "tests/driver-saas-redesign.test.ts",
-        "tests/driver-experience-redesign.test.ts"
+        "tests/driver-experience-redesign.test.ts",
+        "tests/technicians-availability.test.ts"
       ],
       "testIds": [
         "DLPG-01",
         "DLPG-04",
         "DLPG-UI01",
-        "DWT-PROOFNEG"
+        "DWT-PROOFNEG",
+        "TAV-LPG"
       ],
       "negativeTests": [
         "DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit",
-        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations",
+        "TAV-LPG: independent verification lists active branch loading and dispensing employees without changing qualification authority"
       ],
       "evidence": [],
       "acceptanceGate": "DREL2-G04",
@@ -247,6 +252,10 @@
     {
       "date": "2026-11-19",
       "change": "Source b5503a530d9687288b0c2fd0d3735081221f1f4b pushed; clean committed candidate built at easygas-client-demo-odu3flf2y-onaopemipos-projects.vercel.app. Promotion/081/named recovery pending Vercel two-factor database access and successful web CI."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Hosted preparation found qualification picker excluded backend-eligible finance/manager/driver employees. Picker expanded to exactly those existing eligible roles, owner-only and branch-scoped; driver remains dispensing-only in canonical mutation. New regression TAV-LPG covers inclusion and permission/self-verification/inactive exclusions. No grants made during diagnosis."
     }
   ]
 }

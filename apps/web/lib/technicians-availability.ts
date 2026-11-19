@@ -104,7 +104,7 @@ export async function techniciansWorkspace(
     verificationTargets: ["owner"].includes(user.role)
       ? ((
           await tx.query(
-            "SELECT id,name,role,branch_id FROM users WHERE active=true AND role IN ('technician','owner') AND ($1::text IS NULL OR branch_id=$1) ORDER BY name,id LIMIT 200",
+            "SELECT id,name,role,branch_id FROM users WHERE active=true AND role IN ('technician','owner','finance','manager','driver') AND ($1::text IS NULL OR branch_id=$1) ORDER BY name,id LIMIT 200",
             [branch || null],
           )
         ).rows as any)

@@ -4,6 +4,24 @@ import { fixture } from "./helpers/service-fixture";
 import { id } from "../apps/web/lib/auth";
 import { lagosAppointment } from "../packages/business-rules/src/technicians-availability";
 import { readFile } from "node:fs/promises";
+test("TAV-LPG: independent verification lists active branch loading and dispensing employees without changing qualification authority", async () => {
+  const f = await fixture();
+  try {
+    const driverId = id();
+    await f.db.query("INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Synthetic LPG driver',$2,'unused-fixture-hash','driver','lagos')", [driverId, `${driverId}@example.test`]);
+    const data = await f.call("owner", "technicians.workspace");
+    for (const userId of [driverId, f.actors.inventory.id, f.actors.finance.id, f.actors.service_manager.id])
+      assert.ok(data.verificationTargets.some((p: any) => p.id === userId));
+    assert.ok(!data.verificationTargets.some((p: any) => p.id === f.actors.customer.id));
+    assert.deepEqual((await f.call("finance", "technicians.workspace")).verificationTargets, []);
+    const request = {userId: driverId, code: "bulk_lpg_dispensing", evidence: "Synthetic independent QA verification, not an operational certificate", expiresAt: new Date(Date.now()+3600000).toISOString()};
+    await f.call("owner", "technician.qualify", request);
+    await assert.rejects(() => f.call("owner", "technician.qualify", {...request, code: "bulk_lpg_loading"}), /driver for bulk LPG dispensing/);
+    await assert.rejects(() => f.call("owner", "technician.qualify", {...request, userId: f.actors.owner.id}), /independent/);
+    await f.db.query("UPDATE users SET active=false WHERE id=$1", [driverId]);
+    assert.ok(!(await f.call("owner", "technicians.workspace")).verificationTargets.some((p: any) => p.id === driverId));
+  } finally { await f.db.close?.(); }
+});
 test("TAV-READ: scoped authoritative directory includes inactive staff, filters, paging and honest schedule states", async () => {
   const f = await fixture();
   try {
