@@ -1,0 +1,32 @@
+{
+  "reference": "EG-2026-7BE57634",
+  "status": "delivered",
+  "payment": "verified",
+  "invoice": "EGI-0000000006",
+  "settledKobo": 5700000,
+  "amountDueKobo": 0,
+  "rejectedRefund": "e5ceb901-de75-40e3-a1c8-dde912e5fa62",
+  "pendingConflict": {
+    "role": "customer",
+    "action": "refund.request",
+    "status": 409,
+    "message": "Another refund is awaiting independent review.",
+    "code": "INVALID_REQUEST"
+  },
+  "keyConflict": {
+    "role": "customer",
+    "action": "refund.request",
+    "status": 409,
+    "message": "Refund operation key conflicts with this request.",
+    "code": "INVALID_REQUEST"
+  },
+  "changedDecision": {
+    "role": "finance",
+    "action": "credit.decide",
+    "status": 409,
+    "message": "Credit request has already been decided.",
+    "code": "INVALID_REQUEST"
+  },
+  "walletUnchanged": true,
+  "stockUnchangedByReplayAndRejection": true
+}

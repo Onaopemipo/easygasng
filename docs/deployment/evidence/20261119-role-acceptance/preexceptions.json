@@ -1,0 +1,144 @@
+{
+  "results": [
+    {
+      "role": "customer",
+      "action": "invoice.order",
+      "status": 404,
+      "message": "Order not found.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "action": "navigation.access",
+      "status": 403,
+      "message": "This account does not have administration workspace access.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "commercial",
+      "action": "invoice.order",
+      "status": 404,
+      "message": "Order not found.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "commercial",
+      "action": "navigation.access",
+      "status": 403,
+      "message": "This account does not have administration workspace access.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "sales",
+      "action": "finance.ledger",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "dispatcher",
+      "action": "finance.ledger",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "driver",
+      "action": "finance.ledger",
+      "status": 403,
+      "message": "This session is limited to delivery work. Contact dispatch for sales, cash, stock or financial changes.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "technician",
+      "action": "finance.ledger",
+      "status": 403,
+      "message": "This session is limited to assigned technician service work. Payments, approvals, sales and stock administration require authorised operations.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "action": "checkout",
+      "status": 409,
+      "message": "Insufficient wallet balance. Top up your wallet or choose Card or Cash.",
+      "code": "WALLET_INSUFFICIENT_FUNDS"
+    },
+    {
+      "role": "customer",
+      "action": "checkout",
+      "status": 409,
+      "message": "The quotation changed. Review and accept the revised total.",
+      "code": "PRICE_CHANGED"
+    },
+    {
+      "role": "owner",
+      "action": "credit.decide",
+      "status": 403,
+      "message": "A different finance approver must verify the credit.",
+      "code": "INVALID_REQUEST"
+    }
+  ],
+  "fundingRequest": "454d7e85-adc2-4a2e-bf89-9cb891716e11",
+  "labelledOrders": {
+    "abandoned-card": {
+      "id": "5571c5f9-fbe5-4966-8487-09673911a30f",
+      "reference": "EG-2026-C1D1199D"
+    }
+  },
+  "checks": [
+    {
+      "id": "ROLEACC-PREFLIGHT",
+      "passed": true,
+      "detail": "Existing demo/no real payment;9 labelled accounts authenticated, original orders/ledger/stock snapshots retained privately before new scenarios",
+      "at": "2026-11-19T09:20:06.992Z"
+    },
+    {
+      "id": "ROLEACC-PAYMENT",
+      "passed": true,
+      "detail": "Insufficient balance and quote tampering rejected transactionally; orders, wallet and gas summary unchanged",
+      "at": "2026-11-19T09:23:47.988Z"
+    },
+    {
+      "id": "ROLEACC-FUND",
+      "passed": true,
+      "detail": "₦50,000 explicitly synthetic QA credit approved independently; self-approval denied and decision replay posted one credit",
+      "at": "2026-11-19T09:24:03.020Z"
+    },
+    {
+      "id": "ROLEACC-ACCESS",
+      "passed": true,
+      "detail": "Own-account orders only; independent labelled operational accounts cannot access finance; driver scope excludes handover secrets",
+      "at": "2026-11-19T09:25:38.305Z"
+    },
+    {
+      "id": "ROLEACC-FUND",
+      "passed": true,
+      "detail": "₦50,000 explicitly synthetic QA credit approved independently; self-approval denied and decision replay posted one credit",
+      "at": "2026-11-19T09:26:05.584Z"
+    },
+    {
+      "id": "ROLEACC-ACCESS",
+      "passed": true,
+      "detail": "Own-account orders only; independent labelled operational accounts cannot access finance; driver scope excludes handover secrets",
+      "at": "2026-11-19T09:27:31.689Z"
+    },
+    {
+      "id": "ROLEACC-PAYMENT",
+      "passed": true,
+      "detail": "Insufficient balance and quote tampering rejected transactionally; orders, wallet and gas summary unchanged",
+      "at": "2026-11-19T09:27:47.641Z"
+    },
+    {
+      "id": "ROLEACC-CANCEL",
+      "passed": true,
+      "detail": "EG-2026-C1D1199D: abandoned unpaid card order cancelled by its owner; reservation restored; cancellation replay has no extra effect",
+      "at": "2026-11-19T09:27:57.543Z"
+    },
+    {
+      "id": "ROLEACC-FUND",
+      "passed": true,
+      "detail": "₦50,000 explicitly synthetic QA credit approved independently; self-approval denied and decision replay posted one credit",
+      "at": "2026-11-19T09:28:05.019Z"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "reference": "EG-2026-7BE57634",
+  "collectionId": "a232108f-e79c-4e34-9f33-cd20bac553e5",
+  "denied": {
+    "role": "owner",
+    "action": "cash.reconcile",
+    "status": 403,
+    "message": "Cash collection must be reconciled by an independent finance approver.",
+    "code": "INVALID_REQUEST"
+  },
+  "refund": {
+    "role": "customer",
+    "action": "refund.request",
+    "status": 409,
+    "message": "Only delivered orders with verified payments can be reviewed for a refund. Cancel an eligible pending order instead.",
+    "code": "INVALID_REQUEST"
+  },
+  "payment": "collected/unverified"
+}

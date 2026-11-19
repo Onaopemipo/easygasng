@@ -297,3 +297,6 @@ Staff order detail cleanup (19 November 2026): [matrix](admin-order-modal-rtm.md
 Active sidebar visibility (19 November2026): [matrix](sidebar-focus-rtm.md), [implementation and verification](../sidebar-focus/README.md). Local tab scroll continuity, active-item reveal and expanded/compact/mobile checks verified. Hosted rollout unperformed; previous work and production NO-GO/import/retain-all preserved.
 
 Sidebar and order-detail demo rollout (19 November2026): [release matrix](order-sidebar-demo-release-rtm.md), [deployment and hosted verification](../deployment/20261119-order-sidebar-release.md). Both deployed fromf63bcf2 to Ready53xp97; desktop/phone/readback acceptance verified, prior records and production NO-GO/import/retain-all preserved.
+
+
+19 November role-based hosted order-to-delivery acceptance: [matrix](role-order-acceptance-rtm.md), [report](../reports/role-order-delivery-acceptance-20261119.md).10/10bounded synthetic requirements/gates,8/8critical and9/9functional routes verified;8/9responsive routes exercised; four defects fixed/deployed. Eight original orders unchanged; production NO-GO, actual-import hold, retain-all and physical/provider/native/GPS gates preserved. Two-hour QA qualification/meter renewals explicitly approved, expiring11:53:44 UTC.

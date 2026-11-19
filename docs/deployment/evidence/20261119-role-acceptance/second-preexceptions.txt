@@ -1,0 +1,70 @@
+✔ ROLEACC-ACCESS: customer, commercial, driver and technician cannot read or operate another account's protected order or finance (8018.243458ms)
+✖ ROLEACC-PAYMENT: insufficient wallet and tampered pricing do not create an order, debit the wallet or consume gas (5863.812125ms)
+✖ ROLEACC-CANCEL: unpaid card checkout stays unpaid and customer cancellation releases reservation exactly once (13779.802416ms)
+✔ ROLEACC-FUND: explicit synthetic purchase-credit receipt needs a different reauthenticated finance approver and posts once (7631.909167ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35298.987208
+
+✖ failing tests:
+
+test at scripts/check-role-acceptance-demo.mjs:94:3
+✖ ROLEACC-PAYMENT: insufficient wallet and tampered pricing do not create an order, debit the wallet or consume gas (5863.812125ms)
+  AssertionError [ERR_ASSERTION]: customer gas.quote: HTTP 400 Requested gas exceeds cylinder capacity.
+  
+  400 !== 200
+  
+      at Object.ok (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/demo-role-acceptance-client.mjs:48:12)
+      at async gasInput (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/check-role-acceptance-demo.mjs:8:13)
+      at async TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/check-role-acceptance-demo.mjs:96:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/check-role-acceptance-demo.mjs:105:3
+✖ ROLEACC-CANCEL: unpaid card checkout stays unpaid and customer cancellation releases reservation exactly once (13779.802416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      {
+        asset: 'gas',
+  +     available: '5972000',
+  -     available: '5971500',
+        branch: 'Lagos',
+        branch_id: 'lagos',
+        category: 'Gas',
+        eligible: '5985000',
+        family: 'gas',
+  ...
+        product_id: null,
+  +     reserved: '13000',
+  -     reserved: '13500',
+        size_kg: null,
+        sku: 'GAS-KG',
+        threshold: null,
+        unit: 'grams'
+      }
+  
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/check-role-acceptance-demo.mjs:113:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

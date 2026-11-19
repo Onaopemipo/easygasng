@@ -1,0 +1,58 @@
+{
+  "orderId": "bcab8f98-1cdc-4d10-ad84-8354ed9ec379",
+  "reference": "EG-2026-7BE57634",
+  "rejected": [
+    {
+      "role": "driver",
+      "action": "driver.complete",
+      "status": 409,
+      "message": "Payment needs authorised operations review. This driver app cannot collect cash or change payment.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "driver",
+      "action": "invoice.issue",
+      "status": 403,
+      "message": "This session is limited to delivery work. Contact dispatch for sales, cash, stock or financial changes.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "finance",
+      "action": "delivery.complete",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "commercial",
+      "action": "order.transition",
+      "status": 403,
+      "message": "You can only cancel your own newly placed orders.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "driver",
+      "action": "delivery.arrived",
+      "status": 409,
+      "message": "This order changed. Refresh before retrying.",
+      "code": "TRACKING_VERSION_CONFLICT"
+    },
+    {
+      "role": "owner",
+      "action": "delivery.complete",
+      "status": 400,
+      "message": "Confirm actual handover of every item and the full gas quantity. Partial delivery requires dispatch review.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "owner",
+      "action": "delivery.complete",
+      "status": 400,
+      "message": "The delivery confirmation code is incorrect.",
+      "code": "DELIVERY_CODE_INVALID"
+    }
+  ],
+  "statusUnchanged": true,
+  "paymentUnchanged": true,
+  "retainedProofCount": 1
+}

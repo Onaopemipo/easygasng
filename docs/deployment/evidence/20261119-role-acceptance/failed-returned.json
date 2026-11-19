@@ -1,0 +1,64 @@
+{
+  "reference": "EG-2026-E02D78B1",
+  "status": "delivery_failed",
+  "attempt": {
+    "id": "4ded6c78-9a20-4e65-be00-9f949e8dbbc2",
+    "state": "returned",
+    "driver_id": "109b986c-740b-4932-bdbc-65bc3f051010",
+    "assignment_version": 4,
+    "picked_up_at": "2026-11-19T10:05:04.633Z",
+    "arrived_at": null,
+    "completed_at": "2026-11-19T10:05:37.323Z"
+  },
+  "manifest": {
+    "items": [
+      {
+        "product_id": "cylinder-empty-6",
+        "quantity": 1
+      }
+    ],
+    "serials": [
+      "DEMO-QA-ROLE-20261119-PRODUCT-C"
+    ],
+    "gas": []
+  },
+  "rejected": [
+    {
+      "role": "driver",
+      "action": "delivery.pickup",
+      "status": 409,
+      "durationMs": 3725
+    },
+    {
+      "role": "sales",
+      "action": "order.transition",
+      "status": 409,
+      "durationMs": 1015
+    },
+    {
+      "role": "sales",
+      "action": "order.transition",
+      "status": 409,
+      "durationMs": 1087
+    },
+    {
+      "role": "dispatcher",
+      "action": "dispatch.assign",
+      "status": 409,
+      "durationMs": 6301
+    },
+    {
+      "role": "driver",
+      "action": "delivery.return",
+      "status": 403,
+      "durationMs": 707
+    },
+    {
+      "role": "inventory",
+      "action": "delivery.return",
+      "status": 409,
+      "durationMs": 1911
+    }
+  ],
+  "walletBalanceKobo": 2920000
+}

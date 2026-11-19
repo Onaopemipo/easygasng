@@ -1,0 +1,145 @@
+{
+  "sourceSha": "8e0e5843e6989792f16a38971b02e22ee702ac0e",
+  "deployment": "dpl_Bj5pEYpjY4wToJ9sNFo7a5x7MyE2",
+  "cancelledInvoice": {
+    "status": "voided",
+    "paidKobo": 0,
+    "dueKobo": 0
+  },
+  "originalOrdersPreserved": 8,
+  "totalOrders": 13,
+  "newOrders": {
+    "abandoned-card": {
+      "id": "5571c5f9-fbe5-4966-8487-09673911a30f",
+      "reference": "EG-2026-C1D1199D",
+      "status": "cancelled",
+      "payment": "unpaid"
+    },
+    "product-cod": {
+      "id": "bcab8f98-1cdc-4d10-ad84-8354ed9ec379",
+      "reference": "EG-2026-7BE57634",
+      "status": "delivered",
+      "payment": "verified"
+    },
+    "gas-wallet": {
+      "id": "aa7c77b7-81b7-4cf8-9152-d7b135452798",
+      "reference": "EG-2026-404B6EE8",
+      "status": "delivered",
+      "payment": "verified"
+    },
+    "failed-wallet": {
+      "id": "86852179-9c4f-4be1-a79f-2092dbacaa54",
+      "reference": "EG-2026-E02D78B1",
+      "status": "delivered",
+      "payment": "verified"
+    },
+    "wallet-cancel": {
+      "id": "73a378e0-e65d-485b-bf2f-2c0814c2c419",
+      "reference": "EG-2026-1F4E85C7",
+      "status": "cancelled",
+      "payment": "refunded"
+    }
+  },
+  "walletBalanceKobo": 2920000,
+  "walletEntries": [
+    {
+      "kind": "cancelled_order",
+      "amountKobo": "590000",
+      "reference": "cancellation:73a378e0-e65d-485b-bf2f-2c0814c2c419"
+    },
+    {
+      "kind": "order_payment",
+      "amountKobo": "-590000",
+      "reference": "order:73a378e0-e65d-485b-bf2f-2c0814c2c419"
+    },
+    {
+      "kind": "order_payment",
+      "amountKobo": "-3100000",
+      "reference": "order:86852179-9c4f-4be1-a79f-2092dbacaa54"
+    },
+    {
+      "kind": "refund",
+      "amountKobo": "2600000",
+      "reference": "credit:3cac2de4-2851-4c41-ab17-3103b9b59619"
+    },
+    {
+      "kind": "order_payment",
+      "amountKobo": "-1580000",
+      "reference": "order:aa7c77b7-81b7-4cf8-9152-d7b135452798"
+    },
+    {
+      "kind": "cash_funding",
+      "amountKobo": "5000000",
+      "reference": "credit:454d7e85-adc2-4a2e-bf89-9cb891716e11"
+    }
+  ],
+  "empty6kg": {
+    "quantity": 17,
+    "reserved": 0,
+    "soldTestSerials": 3
+  },
+  "gas": [
+    {
+      "branch_id": "lagos",
+      "branch": "Lagos",
+      "product_id": null,
+      "name": "Cooking Gas (kg)",
+      "sku": "GAS-KG",
+      "asset": "gas",
+      "size_kg": null,
+      "category": "Gas",
+      "eligible": "5979000",
+      "reserved": "13000",
+      "available": "5966000",
+      "held": "0",
+      "threshold": null,
+      "unit": "grams",
+      "family": "gas",
+      "on_hand": "5979000"
+    }
+  ],
+  "loadReconciled": true,
+  "cash": {
+    "id": "a232108f-e79c-4e34-9f33-cd20bac553e5",
+    "collectedKobo": "5700000",
+    "verifiedAt": "2026-11-19T09:44:13.106Z",
+    "independent": true
+  },
+  "invoices": {
+    "product-cod": {
+      "number": "EGI-0000000006",
+      "status": "paid",
+      "totalKobo": "5700000",
+      "effectiveTotalKobo": 3100000,
+      "paidKobo": 3100000,
+      "dueKobo": 0
+    },
+    "gas-wallet": {
+      "number": "EGI-0000000007",
+      "status": "paid",
+      "totalKobo": "1580000",
+      "effectiveTotalKobo": 1580000,
+      "paidKobo": 1580000,
+      "dueKobo": 0
+    },
+    "failed-wallet": {
+      "number": "EGI-0000000008",
+      "status": "paid",
+      "totalKobo": "3100000",
+      "effectiveTotalKobo": 3100000,
+      "paidKobo": 3100000,
+      "dueKobo": 0
+    }
+  },
+  "incident": {
+    "id": "7e26cf15-42e3-4408-90ac-e9540a47d6ae",
+    "target": "4ded6c78-9a20-4e65-be00-9f949e8dbbc2",
+    "ownerRole": "manager",
+    "resolvedAfterRetry": true
+  },
+  "qaTripEnded": true,
+  "driverAvailabilityRestored": true,
+  "qaQualificationExpiry": "2026-11-19T11:53:44.767Z",
+  "productionDecision": "Existing production NO-GO, actual-import hold and retain-all unchanged",
+  "scope": "Synthetic hosted demo acceptance; no actual gas, funds, device, GPS, provider transaction or real certification claim"
+}

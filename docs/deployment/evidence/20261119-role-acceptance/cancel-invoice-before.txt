@@ -1,0 +1,28 @@
+✖ ROLEACC-CANCEL-BALANCE: actual cancellation wallet credit reduces retained invoice settlement once, permits independent void and cannot create fictional excess refund (1062.831667ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1810.514667
+
+✖ failing tests:
+
+test at tests/cancelled-wallet-invoice.test.ts:1:377
+✖ ROLEACC-CANCEL-BALANCE: actual cancellation wallet credit reduces retained invoice settlement once, permits independent void and cannot create fictional excess refund (1062.831667ms)
+  AssertionError [ERR_ASSERTION]: retained settlement excludes actual recorded cancellation refund
+  
+  520000 !== 0
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/cancelled-wallet-invoice.test.ts:33:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 520000,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

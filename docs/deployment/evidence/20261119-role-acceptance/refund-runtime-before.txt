@@ -1,0 +1,46 @@
+✖ ROLEACC-REFUND-RUNTIME: restricted server creates immutable partial refund atomically, approves once and still cannot rewrite its source (943.380125ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1476.24725
+
+✖ failing tests:
+
+test at tests/refund-restricted-role.test.ts:1:377
+✖ ROLEACC-REFUND-RUNTIME: restricted server creates immutable partial refund atomically, approves once and still cannot rewrite its source (943.380125ms)
+  error: permission denied for table credit_requests
+      at ye.Ve (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:17616)
+      at ye.nt (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:15003)
+      at ye.parse (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:13755)
+      at <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/index.js:3:191801)
+      at wasm://wasm/021cbcb2:wasm-function[3707]:0x27cef1
+      at wasm://wasm/021cbcb2:wasm-function[3717]:0x27d268
+      at wasm://wasm/021cbcb2:wasm-function[9494]:0x509d72
+      at wasm://wasm/021cbcb2:wasm-function[175]:0x598a3
+      at invoke_v (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/index.js:3:176458)
+      at wasm://wasm/021cbcb2:wasm-function[178]:0x5a0e8 {
+    length: 103,
+    severity: 'ERROR',
+    code: '42501',
+    detail: undefined,
+    hint: undefined,
+    position: undefined,
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'aclchk.c',
+    line: '2845',
+    routine: 'aclcheck_error',
+    query: 'UPDATE credit_requests SET refund_lines=$1,refund_fingerprint=$2,refund_operation_key=$3 WHERE id=$4',
+    params: [ '{"lines":[{"source":"product:hose","units":"1","grossKobo":"10000","eligible":false}],"grossKobo":"10000","eligibleGrossKobo":"0","discountKobo":"0","restorePoints":"0","deliveryKobo":"0"}', '26c1f01cee91f79b0b236b0adf2082c2436260ea3be08abdbe7945afbe25a95c', 'b751de15-6a05-4821-845d-ea8673800fe7', '157e1d44-aef6-4d74-87bc-000a3efde866' ],
+    queryOptions: undefined
+  }

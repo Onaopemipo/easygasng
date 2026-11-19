@@ -1,0 +1,31 @@
+✔ purchase credit requires independent verification, is append-only and cannot replay funding (2380.488667ms)
+✔ wallet checkout debits once and cancellation restores exact purchase credit once (53.755541ms)
+✔ insufficient wallet funds cannot reserve stock or create a payment (8.987084ms)
+✔ POS uses approved server prices, prevents overselling and verifies cash-up independently (66.252042ms)
+✔ refund credit requires customer consent and cannot exceed the original verified order (47.190625ms)
+✔ new point-to-wallet conversions are closed while historical outcomes remain replayable (10.523083ms)
+✔ concurrent wallet checkouts cannot overdraw the same purchase-credit balance (39.104667ms)
+✔ prepaid wallet delivery collects no cash and cannot earn from unapproved seeded economics (109.154ms)
+✔ MWEB-03-GATE: disabled card checkout cannot reserve stock; enabled sandbox card remains unpaid and cannot dispatch (106.568542ms)
+✔ POS-MONEY01: naira input is converted exactly and rejects excess precision and exponents (0.310459ms)
+✔ credits workspace pages the full scoped history and hides maker decisions (20.793875ms)
+✔ ER-14: cumulative partial line refunds prorate discount and points, preserve delivery, and finish with an exact remaining refund (2786.312958ms)
+✔ ER-10O: approved catalogue offers enforce expiry, budget, point cost and lifetime reuse; unapproved edits cannot publish (1100.809417ms)
+✔ ER-19R: independently approved referral hold blocks posting until separately approved clearance and audited retry (1134.734792ms)
+✔ ER-31S: Smart Refill offers require approved active offers, communication consent and real forecast history (1031.805041ms)
+✔ ER-04S: completed service labour earns only after independent payment verification and full refund reverses once (1102.455625ms)
+✔ ER-14Z: refund of an entirely points-funded product restores points without fictional monetary wallet credit (1040.928ms)
+✔ ER-31P: approved Smart Refill offer uses verified historical sources and disappears on consent withdrawal (950.81125ms)
+✔ ER-30G: decimal gas plus accessory discount preserves one delivery fee, quoted versions and exact reservations (926.372875ms)
+﹣ ER-PG36: real PostgreSQL duplicate workers/refund approvals, encrypted backup and isolated restore preserve committed effects (0.333708ms) # Explicitly enabled disposable local PostgreSQL is required.
+﹣ ER-PGSEC: migrated private schema works under the restricted runtime role and rejects public ledger access (0.065125ms) # Explicitly enabled disposable local PostgreSQL is required.
+✔ PM-T11: invoice issue is immutable, numbered, ownership-scoped and derives settlement only from verified ledger (2479.391791ms)
+✔ ROLEACC-REFUND-RUNTIME: restricted server creates immutable partial refund atomically, approves once and still cannot rewrite its source (2376.621333ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 10764.472125

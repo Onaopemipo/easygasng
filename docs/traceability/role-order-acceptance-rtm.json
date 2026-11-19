@@ -16,7 +16,7 @@
         "scripts/demo-role-acceptance-client.mjs",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Normal hosted me/navigation.access/orders/invoice/finance APIs; canonical users, sessions, roles, branch and order ownership; manifest labels mapped to actual authenticated roles",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "tests/navigation.test.ts",
@@ -59,7 +59,7 @@
         "scripts/demo-role-acceptance-client.mjs",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Canonical orders/order_gas_lines, gas_stock and immutable movements, customer cylinders/inspection/qualifications, bulk LPG meter/load/allocation records, consented proof, verified payment and issued invoice via normal scoped APIs/UI",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "tests/driver-lpg-workflow.test.ts",
@@ -95,7 +95,7 @@
       "priority": "P0",
       "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
       "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
-      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory,/admin/reconciliation",
       "implementationFiles": [
         "apps/web/lib/operations.ts",
         "apps/web/lib/vehicle-products.ts",
@@ -104,7 +104,7 @@
         "scripts/demo-role-acceptance-client.mjs",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Canonical order/attempt/serial allocations, consented proof, cash_collections and verified_payments; owner-supervised collection independently reconciled by actual finance UI",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "tests/order-tracking.test.ts",
@@ -125,7 +125,8 @@
         "docs/deployment/evidence/20261119-role-acceptance/cash-guards.txt",
         "docs/deployment/evidence/20261119-role-acceptance/cod-refund-rejected.txt",
         "docs/deployment/evidence/20261119-role-acceptance/cod-refund-rejected.json",
-        "docs/deployment/evidence/20261119-role-acceptance/finance-cod-verified.jpg"
+        "docs/deployment/evidence/20261119-role-acceptance/finance-cod-verified.jpg",
+        "docs/deployment/evidence/20261119-role-acceptance/browser-evidence.json"
       ],
       "acceptanceGate": "ROLEACC-G03",
       "status": "VERIFIED_COMPLETE",
@@ -147,7 +148,7 @@
         "scripts/demo-role-acceptance-client.mjs",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Canonical gas quote versions, wallet entries, order/reservation state and payment intent/event/verified-payment controls; hosted unsigned/forged requests plus local provider fixtures",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "tests/paystack-policy.test.ts",
@@ -183,33 +184,42 @@
         "apps/web/lib/order-tracking.ts",
         "apps/web/lib/operations.ts",
         "scripts/demo-role-acceptance-client.mjs",
-        "scripts/check-role-acceptance-demo.mjs"
+        "scripts/check-role-acceptance-demo.mjs",
+        "apps/web/lib/invoice-corrections.ts",
+        "apps/web/lib/invoices.ts"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Canonical order/attempt custody, gas reservation movements, cancellation:<order> wallet entry and immutable customer invoice/independently approved note; exact order/customer source binding",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "tests/order-tracking.test.ts",
-        "scripts/check-role-acceptance-demo.mjs"
+        "scripts/check-role-acceptance-demo.mjs",
+        "tests/cancelled-wallet-invoice.test.ts"
       ],
       "testIds": [
         "ROLEACC-CANCEL",
         "ROLEACC-WALLET-CANCEL",
-        "ROLEACC-FAILED"
+        "ROLEACC-FAILED",
+        "ROLEACC-CANCEL-BALANCE",
+        "ROLEACC-CANCEL-INVOICE"
       ],
       "negativeTests": [
-        "ROLEACC-FAILED: failed wallet delivery blocks cancellation/retry until an independent exact manifest return and preserves reservations"
+        "ROLEACC-FAILED: failed wallet delivery blocks cancellation/retry until an independent exact manifest return and preserves reservations",
+        "ROLEACC-CANCEL-BALANCE: actual cancellation wallet credit reduces retained invoice settlement once, permits independent void and cannot create fictional excess refund"
       ],
       "evidence": [
         "docs/deployment/evidence/20261119-role-acceptance/preexceptions.txt",
         "docs/deployment/evidence/20261119-role-acceptance/wallet-cancel.txt",
         "docs/deployment/evidence/20261119-role-acceptance/wallet-cancel.json",
         "docs/deployment/evidence/20261119-role-acceptance/failed-returned.txt",
-        "docs/deployment/evidence/20261119-role-acceptance/operations-regression.txt"
+        "docs/deployment/evidence/20261119-role-acceptance/operations-regression.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/cancel-invoice-regression.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/cancel-invoice-reviewed.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/cancel-invoice-reviewed.json"
       ],
       "acceptanceGate": "ROLEACC-G05",
-      "status": "DEFECTIVE",
-      "reason": "Final cancelled-invoice review exposed authoritative wallet cancellation credit omitted from invoice settlement balance. A wallet-refunded cancelled order still appears financially settled, blocking legitimate void. Fix/regression/rollout underway.",
-      "testResult": "FAIL — final invoice reconciliation caught a fourth defect; prior mapped scenarios remain passed",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Unpaid cancellation releases reservation; prepaid cancellation restores wallet and gas once. Actual cancellation ledger credit now reduces retained invoice settlement; independent finance/owner void closes the original immutable invoice without fictional excess refund. Picked-up/failed goods cannot cancel until an independent exact return.",
+      "testResult": "PASS — executed hosted product API/UI assertions, exact deployment readbacks and mapped local regressions; synthetic demo scope only.",
       "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
@@ -225,7 +235,7 @@
         "scripts/demo-role-acceptance-client.mjs",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Canonical delivery_attempts, pickup/return manifests and serial allocation, dispatch response/reschedule history, operational_incidents with manager ownership, wallet and invoice records",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "tests/order-tracking.test.ts",
@@ -269,7 +279,7 @@
         "scripts/check-role-acceptance-demo.mjs",
         "apps/web/lib/invoice-corrections.ts"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Canonical credit_requests/refund_lines/fingerprint/operation key, source order quantities, wallet entries and immutable invoices/notes; no stock return inferred from refund",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "scripts/check-role-acceptance-demo.mjs",
@@ -310,7 +320,7 @@
         "scripts/demo-role-acceptance-client.mjs",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Canonical scoped order/attempt snapshots, tracking operation/version records, customer handover/proof checks, meter/load allocations, cash and wallet posting identities",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "tests/order-tracking.test.ts",
@@ -353,13 +363,12 @@
         "scripts/demo-role-acceptance-client.mjs",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Actual hosted CUA interactions, saved screenshots and DOM layout/dialog/sidebar observations; no mocked UI or hidden browser API calls.8targeted routes at desktop/phone, plus cash reconciliation functionally exercised on desktop;9functional routes total",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "tests/admin-order-modal.test.ts",
         "tests/customer-orders.test.ts",
         "scripts/check-role-acceptance-demo.mjs",
-        "tests/role-acceptance-ui.test.ts",
         "tests/role-acceptance-ui.test.ts"
       ],
       "testIds": [
@@ -377,9 +386,9 @@
       ],
       "acceptanceGate": "ROLEACC-G09",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Actual role UI used for pickup/arrival/gas dispensing/proof/handover, owner COD and independent finance/refund approval. Eight routes and nine role/route views checked at1440x1000 and390x844; one-dialog completed order has zero forms and bounded history.",
+      "reason": "Actual role UI used for pickup/arrival/gas dispensing/proof/handover, owner COD and independent finance/refund approval. Eight routes and nine role/route views checked at1440x1000 and390x844; one-dialog completed order has zero forms and bounded history. Added cash-reconciliation route functionally exercised on desktop. Its phone interaction was not tested; responsive route coverage is8/9, retained separately without claiming full phone coverage.",
       "testResult": "PASS — executed hosted product API/UI assertions and mapped local regressions; see linked evidence. Synthetic demo scope only.",
-      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
+      "outstandingWork": "Cash-reconciliation phone interaction untested; retained in responsive route coverage8/9. Eight originally targeted route layouts and all requested role journeys pass. Physical/native/GPS and production gates remain unchanged."
     },
     {
       "id": "ROLEACC-10",
@@ -387,7 +396,7 @@
       "priority": "P1",
       "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
       "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
-      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory,/admin/reconciliation",
       "implementationFiles": [
         "apps/web/lib/service.ts",
         "apps/web/components/admin-order-details.tsx",
@@ -397,21 +406,26 @@
         "apps/web/components/cash-reconciliation.tsx",
         "apps/web/components/reconciliation.tsx",
         "apps/web/components/admin.tsx",
-        "apps/web/lib/commerce.ts"
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/invoice-corrections.ts",
+        "apps/web/lib/invoices.ts"
       ],
-      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "dataSource": "Exact archived git-byte source, Vercel Ready project/SHA/alias identity, before/after normal product API snapshot hashes and final canonical order/wallet/stock/custody/invoice reconciliation",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
         "tests/customer-traceability.test.ts",
         "scripts/check-role-acceptance-demo.mjs",
         "tests/catalogue-cylinder-availability.test.ts",
         "tests/cash-reconciliation.test.ts",
-        "tests/refund-restricted-role.test.ts"
+        "tests/refund-restricted-role.test.ts",
+        "tests/cancelled-wallet-invoice.test.ts"
       ],
       "testIds": [
         "ROLEACC-FIX-HTTP",
         "ROLEACC-REFUND-FIX-HTTP",
-        "ROLEACC-RECONCILE"
+        "ROLEACC-RECONCILE",
+        "ROLEACC-CANCEL-BALANCE",
+        "ROLEACC-INVOICE-FIX-HTTP"
       ],
       "negativeTests": [],
       "evidence": [
@@ -424,12 +438,19 @@
         "docs/deployment/evidence/20261119-role-acceptance/refund-runtime-after.txt",
         "docs/deployment/evidence/20261119-role-acceptance/refund-source-integrity.json",
         "docs/deployment/evidence/20261119-role-acceptance/refund-stable-identity.json",
-        "docs/deployment/evidence/20261119-role-acceptance/refund-build.txt"
+        "docs/deployment/evidence/20261119-role-acceptance/refund-build.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/cancel-invoice-regression.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/invoice-fix-hosted.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/invoice-fix-before.json",
+        "docs/deployment/evidence/20261119-role-acceptance/invoice-fix-after.json",
+        "docs/deployment/evidence/20261119-role-acceptance/invoice-source-integrity.json",
+        "docs/deployment/evidence/20261119-role-acceptance/invoice-stable-identity.json",
+        "docs/deployment/evidence/20261119-role-acceptance/cancel-invoice-build.txt"
       ],
       "acceptanceGate": "ROLEACC-G10",
-      "status": "DEFECTIVE",
-      "reason": "Final cancelled-invoice review exposed authoritative wallet cancellation credit omitted from invoice settlement balance. A wallet-refunded cancelled order still appears financially settled, blocking legitimate void. Fix/regression/rollout underway.",
-      "testResult": "FAIL — final invoice reconciliation caught a fourth defect; prior mapped scenarios remain passed",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Four reproduced defects fixed and deployed: eligible serial availability, reachable independent cash review, immutable refund source insertion, and cancellation-credit invoice settlement. Exact source 8e0e5843e6989792f16a38971b02e22ee702ac0e, Ready dpl_Bj5pEYpjY4wToJ9sNFo7a5x7MyE2; before/after orders/wallet/ledger/stock unchanged by deployment. Final13orders include8unchanged originals and5reconciled new scenarios. QA custody/trip closed and availability restored.",
+      "testResult": "PASS — executed hosted product API/UI assertions, exact deployment readbacks and mapped local regressions; synthetic demo scope only.",
       "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     }
   ],
@@ -438,61 +459,61 @@
       "id": "ROLEACC-G01",
       "description": "Authenticate functional role accounts and verify permitted navigation and scoped records",
       "status": "PASS",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     },
     {
       "id": "ROLEACC-G02",
       "description": "Complete a fresh gas wallet order through sales, dispatch, qualified inspection, custody, metered fulfilment, proof and invoice",
       "status": "PASS",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     },
     {
       "id": "ROLEACC-G03",
       "description": "Complete a fresh physical-product cash-on-delivery order with independent cash reconciliation",
       "status": "PASS",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     },
     {
       "id": "ROLEACC-G04",
       "description": "Reject unsuccessful, unauthorised or tampered payment attempts without false payment or stock debit",
       "status": "PASS",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     },
     {
       "id": "ROLEACC-G05",
       "description": "Cancel before pickup and protect cancellation after pickup until custody return; reconcile reservations and financial state",
-      "status": "OPEN",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "status": "PASS",
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     },
     {
       "id": "ROLEACC-G06",
       "description": "Record failed delivery with owned next steps, enforce full return and exercise safe retry or cancellation",
       "status": "PASS",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     },
     {
       "id": "ROLEACC-G07",
       "description": "Exercise refund request, independent rejection/approval, allocation limits and replay safety on new synthetic orders",
       "status": "PASS",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     },
     {
       "id": "ROLEACC-G08",
       "description": "Reject wrong-role/other-customer, stale/duplicate and incomplete handover attempts without unintended effects",
       "status": "PASS",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     },
     {
       "id": "ROLEACC-G09",
       "description": "Verify hosted customer, sales, dispatch, driver and finance screens for happy and exception states on desktop/phone viewport",
       "status": "PASS",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     },
     {
       "id": "ROLEACC-G10",
       "description": "Fix reproduced defects, redeploy if needed and reconcile new changes while preserving prior records and decisions",
-      "status": "OPEN",
-      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
+      "status": "PASS",
+      "evidence": "Mapped successful requirement evidence; bounded synthetic hosted scope only"
     }
   ],
   "changeLog": [
@@ -519,32 +540,45 @@
     {
       "date": "2026-11-19",
       "change": "Reopened ROLEACC-05/G05 and10/G10 before completion: final invoice void correctly refused because shared invoice balance omits automatic cancelled_order wallet credit. Original wallet and stock are correct; accounting read-model correction and focused negative regression are required. All10 requirements retained."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Cash-reconciliation restoration adds a ninth functional route, exercised through actual finance UI. Its phone interaction is untested, retained in a separate8/9responsive-route denominator; no full-route phone acceptance is claimed."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Fourth defect corrected and redeployed: invoiceBalance subtracts exact canonical cancellation wallet credit; public invoice read shares that settlement.41/41 restricted-runtime/commerce/refund/service/payment checks pass. Hosted deployment preserved13orders/wallet/ledger/stock; cancelled test invoice then independently voided with paid0/due0 and original snapshot intact. Final reconciliation rerun passes. Closed ROLEACC-05/G05 and10/G10;10/10bounded synthetic requirements/gates,8/8critical and9/9functional routes accepted;8/9responsive routes exercised; all earlier production/native/physical/provider/import/retention holds remain."
     }
   ],
   "coverage": {
     "requirements": {
       "implemented": 10,
-      "verified": 8,
+      "verified": 10,
       "total": 10
     },
     "criticalRequirements": {
-      "verified": 7,
-      "total": 8
-    },
-    "routes": {
       "verified": 8,
       "total": 8
     },
+    "routes": {
+      "verified": 9,
+      "total": 9
+    },
     "gates": {
-      "passed": 8,
+      "passed": 10,
       "total": 10
     },
     "excluded": 0,
-    "denominatorNote": "All10 approved bounded synthetic acceptance requirements retained. Earlier production/native/device/physical/provider/import/retain-all requirements are not removed or counted as accepted by this pass."
+    "denominatorNote": "All10 approved bounded synthetic acceptance requirements retained. Earlier production/native/device/physical/provider/import/retain-all requirements are not removed or counted as accepted by this pass.",
+    "responsiveRoutes": {
+      "verified": 8,
+      "total": 9,
+      "note": "Eight targeted routes tested at desktop and phone; added cash-reconciliation route functionally exercised on desktop, phone interaction untested and retained in this separate denominator."
+    }
   },
   "release": {
-    "sourceSha": "2e3affb468a0235b747344209051729aa26aeecf",
-    "deploymentId": "dpl_DYWrmvy6WxFVXrnkjZn6Q9TA89J3",
+    "sourceSha": "8e0e5843e6989792f16a38971b02e22ee702ac0e",
+    "deploymentId": "dpl_Bj5pEYpjY4wToJ9sNFo7a5x7MyE2",
     "url": "https://easygas-client-demo.vercel.app",
     "qualificationExpiry": "2026-11-19T11:53:44.767Z",
     "report": "docs/reports/role-order-delivery-acceptance-20261119.md"

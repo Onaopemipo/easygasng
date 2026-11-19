@@ -1,0 +1,26 @@
+{
+  "reference": "EG-2026-7BE57634",
+  "refundId": "3cac2de4-2851-4c41-ab17-3103b9b59619",
+  "walletBeforeKobo": 5000000,
+  "newGasDebitKobo": 1580000,
+  "refundKobo": 2600000,
+  "walletAfterKobo": 6020000,
+  "rejected": {
+    "role": "customer",
+    "action": "refund.request",
+    "status": 409,
+    "message": "Refund quantity exceeds the remaining fulfilled quantity.",
+    "code": "INVALID_REQUEST"
+  },
+  "selfApproval": {
+    "role": "finance",
+    "action": "invoice.correction.decide",
+    "status": 403,
+    "message": "Independent finance/owner decision required.",
+    "code": "INVALID_REQUEST"
+  },
+  "stockUnchanged": true,
+  "originalInvoiceUnchanged": true,
+  "finalInvoiceStatus": "paid",
+  "amountDueKobo": 0
+}

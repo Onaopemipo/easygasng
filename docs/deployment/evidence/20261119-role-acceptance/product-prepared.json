@@ -1,0 +1,80 @@
+{
+  "order": {
+    "id": "bcab8f98-1cdc-4d10-ad84-8354ed9ec379",
+    "reference": "EG-2026-7BE57634",
+    "status": "assigned",
+    "totalKobo": "5700000",
+    "payment": "unpaid"
+  },
+  "serialIds": {
+    "A": "a9fda65a-2f26-4292-8058-712e7467b323",
+    "B": "c6fbd25a-d5f4-4515-8e88-cde2c2aa0065",
+    "C": "d59e78a7-c557-4145-b409-def7b2218ab8"
+  },
+  "trip": {
+    "id": "d4ac6255-2304-44f3-bf32-25a1849bf72a",
+    "vehicleId": "6183ad5e-ae02-4473-a50d-a0cf9d576801"
+  },
+  "checks": [
+    {
+      "id": "ROLEACC-PREFLIGHT",
+      "passed": true,
+      "detail": "Existing demo/no real payment;9 labelled accounts authenticated, original orders/ledger/stock snapshots retained privately before new scenarios",
+      "at": "2026-11-19T09:20:06.992Z"
+    },
+    {
+      "id": "ROLEACC-PAYMENT",
+      "passed": true,
+      "detail": "Insufficient balance and quote tampering rejected transactionally; orders, wallet and gas summary unchanged",
+      "at": "2026-11-19T09:23:47.988Z"
+    },
+    {
+      "id": "ROLEACC-FUND",
+      "passed": true,
+      "detail": "₦50,000 explicitly synthetic QA credit approved independently; self-approval denied and decision replay posted one credit",
+      "at": "2026-11-19T09:24:03.020Z"
+    },
+    {
+      "id": "ROLEACC-ACCESS",
+      "passed": true,
+      "detail": "Own-account orders only; independent labelled operational accounts cannot access finance; driver scope excludes handover secrets",
+      "at": "2026-11-19T09:25:38.305Z"
+    },
+    {
+      "id": "ROLEACC-FUND",
+      "passed": true,
+      "detail": "₦50,000 explicitly synthetic QA credit approved independently; self-approval denied and decision replay posted one credit",
+      "at": "2026-11-19T09:26:05.584Z"
+    },
+    {
+      "id": "ROLEACC-ACCESS",
+      "passed": true,
+      "detail": "Own-account orders only; independent labelled operational accounts cannot access finance; driver scope excludes handover secrets",
+      "at": "2026-11-19T09:27:31.689Z"
+    },
+    {
+      "id": "ROLEACC-PAYMENT",
+      "passed": true,
+      "detail": "Insufficient balance and quote tampering rejected transactionally; orders, wallet and gas summary unchanged",
+      "at": "2026-11-19T09:27:47.641Z"
+    },
+    {
+      "id": "ROLEACC-CANCEL",
+      "passed": true,
+      "detail": "EG-2026-C1D1199D: abandoned unpaid card order cancelled by its owner; reservation restored; cancellation replay has no extra effect",
+      "at": "2026-11-19T09:27:57.543Z"
+    },
+    {
+      "id": "ROLEACC-FUND",
+      "passed": true,
+      "detail": "₦50,000 explicitly synthetic QA credit approved independently; self-approval denied and decision replay posted one credit",
+      "at": "2026-11-19T09:28:05.019Z"
+    },
+    {
+      "id": "ROLEACC-PRODUCT-PREP",
+      "passed": true,
+      "detail": "EG-2026-7BE57634:2 new QA serials reserved, sales accepted/prepared, separate dispatcher assigned, finance issued invoice; no original order mutated",
+      "at": "2026-11-19T09:29:57.289Z"
+    }
+  ]
+}

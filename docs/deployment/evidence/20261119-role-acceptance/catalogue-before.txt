@@ -1,0 +1,28 @@
+✖ ROLEACC-CATALOGUE: advertised empty-cylinder availability uses eligible serials and canonical stock, excluding reservations and unsafe custody (1130.648ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1918.559041
+
+✖ failing tests:
+
+test at tests/catalogue-cylinder-availability.test.ts:1:346
+✖ ROLEACC-CATALOGUE: advertised empty-cylinder availability uses eligible serials and canonical stock, excluding reservations and unsafe custody (1130.648ms)
+  AssertionError [ERR_ASSERTION]: aggregate quantity does not invent eligible serials
+  
+  5 !== 0
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/catalogue-cylinder-availability.test.ts:20:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 5,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

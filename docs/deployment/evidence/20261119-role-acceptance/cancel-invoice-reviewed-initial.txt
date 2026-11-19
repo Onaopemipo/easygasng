@@ -1,0 +1,29 @@
+✖ ROLEACC-CANCEL-INVOICE: independently void the refunded cancelled test invoice without changing its issued snapshot or wallet (7493.078875ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7496.669666
+
+✖ failing tests:
+
+test at scripts/check-role-acceptance-demo.mjs:494:36
+✖ ROLEACC-CANCEL-INVOICE: independently void the refunded cancelled test invoice without changing its issued snapshot or wallet (7493.078875ms)
+  AssertionError [ERR_ASSERTION]: finance invoice.correction.propose: HTTP 409 Void requires no verified settlement and exactly the current total. Use a credit note/refund review otherwise.
+  
+  409 !== 200
+  
+      at Object.ok (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/demo-role-acceptance-client.mjs:48:12)
+      at async TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/check-role-acceptance-demo.mjs:496:70)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 409,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
