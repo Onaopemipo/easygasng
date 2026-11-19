@@ -62,9 +62,7 @@ if (process.argv.includes("--baseline")) {
     assert.equal(r.decisions.length, 0);
     const dual = rows.find(
       (r) =>
-        r.risk === 4 &&
-        r.status === "pending_approval" &&
-        !r.owner_auto_approval,
+        r.risk === 4 && !r.owner_auto_approval && r.approval_progress.complete,
     );
     assert.ok(dual);
     assert.equal(dual.approval_progress.mode, "independent");
@@ -84,6 +82,7 @@ if (process.argv.includes("--baseline")) {
           dualRequest: {
             id: dual.id,
             key: dual.key,
+            status: dual.status,
             progress: dual.approval_progress,
           },
           businessUnchanged: true,

@@ -1,0 +1,109 @@
+Vercel CLI 59.18.0 (Node.js 24.21.0)
+Deploying easygas-client-demo
+Uploading [--------------------] (0.0B/112.4KB)
+Uploading [=====---------------] (32.0KB/112.4KB)
+Uploading [===========---------] (64.0KB/112.4KB)
+Uploading [=================---] (96.0KB/112.4KB)
+Uploading [====================] (112.4KB/112.4KB)
+  Inspect         https://vercel.com/onaopemipos-projects/easygas-client-demo/6v94SxmQWPhPczEUf9vJWuBtLBMo
+▲ Production      https://easygas-client-demo-736b0ywhl-onaopemipos-projects.vercel.app
+Building…
+2026-11-19T11:41:15.649Z  Running build in Washington, D.C., USA (East) – iad1
+2026-11-19T11:41:15.650Z  Build machine configuration: 4 cores, 8 GB (Standard Build Machine)
+2026-11-19T11:41:15.659Z  Retrieving list of deployment files...
+2026-11-19T11:41:16.044Z  Downloading 451 deployment files...
+2026-11-19T11:41:16.518Z  Restored build cache from previous deployment (GLQ6kfg1sEm7ouLDiPhmPZzyaJ7B)
+2026-11-19T11:41:16.797Z  Running "vercel build"
+2026-11-19T11:41:16.804Z  Vercel CLI 65.17.0
+2026-11-19T11:41:17.037Z  Running "install" command: `cd ../.. && npm ci --include=dev`...
+2026-11-19T11:41:17.558Z  npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+2026-11-19T11:41:23.699Z
+2026-11-19T11:41:23.699Z  added 61 packages, and audited 63 packages in 6s
+2026-11-19T11:41:23.699Z
+2026-11-19T11:41:23.699Z  10 packages are looking for funding
+2026-11-19T11:41:23.699Z  run `npm fund` for details
+2026-11-19T11:41:23.700Z
+2026-11-19T11:41:23.700Z  found 0 vulnerabilities
+2026-11-19T11:41:23.700Z  npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-11-19T11:41:23.700Z  npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+2026-11-19T11:41:23.700Z  npm warn install-scripts
+2026-11-19T11:41:23.700Z  npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+2026-11-19T11:41:23.734Z  Detected Next.js version: 16.4.6
+2026-11-19T11:41:23.744Z  Running "npm run build"
+2026-11-19T11:41:23.832Z  npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+2026-11-19T11:41:23.844Z
+2026-11-19T11:41:23.844Z  > @easygas/web@0.1.0 build
+2026-11-19T11:41:23.844Z  > next build --webpack
+2026-11-19T11:41:23.844Z
+2026-11-19T11:41:24.168Z  ▲ Next.js 16.4.6 (webpack)
+2026-11-19T11:41:24.225Z  Applying modifyConfig from Vercel
+2026-11-19T11:41:24.232Z  ✓ Running next.config.ts took 64ms
+2026-11-19T11:41:24.247Z
+2026-11-19T11:41:24.276Z  Creating an optimized production build ...
+2026-11-19T11:41:30.983Z  ✓ Compiled successfully in 4.6s
+2026-11-19T11:41:30.984Z  Running TypeScript ...
+2026-11-19T11:41:34.275Z  Finished TypeScript in 3.3s ...
+2026-11-19T11:41:34.278Z  Collecting page data using 3 workers ...
+2026-11-19T11:41:35.107Z  Generating static pages using 3 workers (0/11) ...
+2026-11-19T11:41:35.183Z  Generating static pages using 3 workers (2/11)
+2026-11-19T11:41:36.050Z  Generating static pages using 3 workers (5/11)
+2026-11-19T11:41:36.051Z  Generating static pages using 3 workers (8/11)
+2026-11-19T11:41:36.051Z  ✓ Generating static pages using 3 workers (11/11) in 944ms
+2026-11-19T11:41:36.556Z  Finalizing page optimization ...
+2026-11-19T11:41:36.556Z  Collecting build traces ...
+2026-11-19T11:41:43.650Z  Running onBuildComplete from Vercel
+2026-11-19T11:41:43.712Z
+2026-11-19T11:41:43.714Z  Route (app)
+2026-11-19T11:41:43.714Z  ┌ ƒ /
+2026-11-19T11:41:43.714Z  ├ ƒ /_not-found
+2026-11-19T11:41:43.714Z  ├ ƒ /[...slug]
+2026-11-19T11:41:43.714Z  ├ ƒ /activate
+2026-11-19T11:41:43.714Z  ├ ƒ /admin/[[...section]]
+2026-11-19T11:41:43.714Z  ├ ƒ /api/[action]
+2026-11-19T11:41:43.714Z  ├ ƒ /api/business-live
+2026-11-19T11:41:43.714Z  ├ ƒ /api/invoices/[orderId]
+2026-11-19T11:41:43.714Z  ├ ƒ /api/media
+2026-11-19T11:41:43.714Z  ├ ƒ /api/media/[id]
+2026-11-19T11:41:43.714Z  ├ ƒ /api/messaging/meta
+2026-11-19T11:41:43.714Z  ├ ƒ /api/payments/paystack/[operation]
+2026-11-19T11:41:43.714Z  ├ ƒ /api/receipts
+2026-11-19T11:41:43.714Z  ├ ƒ /api/status
+2026-11-19T11:41:43.714Z  ├ ƒ /api/tracking/stream
+2026-11-19T11:41:43.714Z  ├ ○ /icon.png
+2026-11-19T11:41:43.714Z  ├ ƒ /payment-request
+2026-11-19T11:41:43.714Z  ├ ƒ /payment-return
+2026-11-19T11:41:43.714Z  ├ ○ /robots.txt
+2026-11-19T11:41:43.714Z  └ ○ /sitemap.xml
+2026-11-19T11:41:43.714Z
+2026-11-19T11:41:43.714Z
+2026-11-19T11:41:43.714Z  ○  (Static)   prerendered as static content
+2026-11-19T11:41:43.714Z  ƒ  (Dynamic)  server-rendered on demand
+2026-11-19T11:41:43.714Z
+2026-11-19T11:41:43.813Z  Build Completed in /vercel/output [27s]
+2026-11-19T11:41:43.828Z  Deploying outputs...
+{
+  "status": "ok",
+  "deployment": {
+    "id": "dpl_6v94SxmQWPhPczEUf9vJWuBtLBMo",
+    "url": "https://easygas-client-demo-736b0ywhl-onaopemipos-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/onaopemipos-projects/easygas-client-demo/6v94SxmQWPhPczEUf9vJWuBtLBMo",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_6v94SxmQWPhPczEUf9vJWuBtLBMo"
+  },
+  "message": "Deployment easygas-client-demo-736b0ywhl-onaopemipos-projects.vercel.app ready.",
+  "next": [
+    {
+      "command": "vercel curl https://easygas-client-demo-736b0ywhl-onaopemipos-projects.vercel.app",
+      "when": "Verify deployment, including when Deployment Protection is enabled"
+    },
+    {
+      "command": "vercel inspect easygas-client-demo-736b0ywhl-onaopemipos-projects.vercel.app --cwd /var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-approval-final-50TNyo/source",
+      "when": "Inspect deployment"
+    },
+    {
+      "command": "vercel deploy --prod --cwd /var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-approval-final-50TNyo/source",
+      "when": "Promote to production"
+    }
+  ]
+}

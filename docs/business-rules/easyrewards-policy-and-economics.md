@@ -1,6 +1,6 @@
 # EasyRewards policy and economics
 
-##19November2026 single-owner continuation
+## 19 November 2026 single-owner continuation
 
 The user confirmed EasyGas has one Admin/business owner. Under the existing explicitly enabled owner-authority policy, `loyalty.policy` can now be authorised by its requesting owner with recent identity verification, immutable revision/base-version authority, validation, expiry/version checks and normal activation. Existing pending requests remain pending until the owner explicitly chooses Approve. New owner submissions follow the existing audited auto-approval flow. There is no requirement for a second Admin for this business policy; Approval Centre shows0/1 for owner authorisation. With owner-authority disabled, the original independent owner/finance rules remain. Financial adjustments, access/payment configuration and qualified safety reviews are outside this exception. Technical rewards flags and actual economics are not enabled by deploying this change.
 
