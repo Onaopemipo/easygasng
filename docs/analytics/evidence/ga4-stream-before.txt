@@ -1,0 +1,180 @@
+- banner:
+  - generic: Analytics
+  - button "Switch products":
+  - button "Ask Advisor":
+    - img: search_spark
+  - button "Help entry menu":
+    - img: help
+  - button "Open the user account switcher panel."
+- main:
+  - tablist:
+    - tab "Completed Account creation":
+      - generic: Completed
+      - img: done
+      - generic: Account creation
+    - tab "Completed Property creation":
+      - generic: Completed
+      - img: done
+      - generic: Property creation
+    - tab "Completed Business details":
+      - generic: Completed
+      - img: done
+      - generic: Business details
+    - tab "Completed Business objectives":
+      - generic: Completed
+      - img: done
+      - generic: Business objectives
+    - tab "Data collection" [selected]:
+      - generic: "5"
+      - generic: Data collection
+  - tabpanel "Data collection":
+    - heading "Start collecting data" [level=1]
+    - text: Data collection may take up to 48 hours to get started.
+    - link "Learn more about data collection":
+      - /url: https://support.google.com/analytics/answer/9304153?hl=en_US&utm_id=ad#setup-datacollection
+      - text: Learn more
+    - button "Add stream":
+      - img: arrow_drop_down
+      - generic: Add stream
+    - tablist:
+      - tab "All" [selected]:
+        - generic: All
+      - tab "iOS":
+        - generic: iOS
+      - tab "Android":
+        - generic: Android
+      - tab "Web":
+        - generic: Web
+    - tabpanel "All"
+    - table:
+      - row "EasyGas https://easygasng.com 16373512765 No data received in past 48 hours. Select stream":
+        - cell:
+        - cell "EasyGas https://easygasng.com":
+          - generic: EasyGas
+          - generic: https://easygasng.com
+        - cell "16373512765":
+          - generic: "16373512765"
+        - cell "No data received in past 48 hours.":
+          - generic: No data received in past 48 hours.
+        - cell "Select stream":
+          - button "Select stream":
+            - img: keyboard_arrow_right
+    - button "Next":
+      - generic: Next
+- button "Open context menu"
+- region "Notifications (F8)":
+  - list
+- dialog "Web stream details":
+  - button "Close web stream details" [active]:
+    - img: close
+  - heading "Web stream details" [level=1]
+  - button "More actions":
+    - img: more_vert
+  - separator
+  - img: warning_amber
+  - generic: Caution
+  - generic: Data collection isn't active for your website. If you installed tags more than 48 hours ago, make sure they are set up correctly.
+  - button "View tag instructions":
+    - generic: View tag instructions
+  - heading "Stream details" [level=2]
+  - button "Edit web stream settings":
+    - img: edit
+  - generic: Stream Name
+  - generic: EasyGas
+  - generic: Stream URL
+  - generic: https://easygasng.com
+  - generic: Stream ID
+  - generic: "16373512765"
+  - generic: Measurement Id
+  - text: G-8Y34NXQMMK
+  - button "Copy Measurement ID":
+    - img: content_copy
+  - heading "Events" [level=2]
+  - img "Enhanced Measurement icon"
+  - generic: Enhanced measurement
+  - generic: Automatically measure interactions and content on your sites in addition to standard page view measurement.
+  - text: Data from on-page elements such as links and embedded videos may be collected with relevant events. You must ensure that no personally-identifiable information will be sent to Google.
+  - link "Learn more about enhanced measurement":
+    - /url: https://support.google.com/analytics/answer/9216061?hl=en_US&utm_id=ad
+    - text: Learn more
+  - switch "Enable enhanced measurement" [checked]:
+  - separator
+  - generic: "Measuring:"
+  - list "Active enhanced measurements":
+    - img: remove_red_eye
+    - text: Page views
+    - img: control_camera
+    - text: Scrolls
+    - img: mouse
+    - text: Outbound clicks
+  - button "Show 4 more active enhanced measurements.":
+    - generic: + 4 more
+  - button "Configure enhanced measurement":
+    - img: settings
+  - button "Modify events Modify incoming events and parameters. Learn more about modifying existing events. Open":
+    - img: touch_app
+    - generic: Modify events
+    - text: Modify incoming events and parameters.
+    - link "Learn more about modifying existing events.":
+      - /url: https://support.google.com/analytics/answer/10085872?hl=en_US&utm_id=ad
+      - text: Learn more
+    - button "Open":
+      - img: keyboard_arrow_right
+  - button "Create custom events Create new events from existing events. Learn more about ceating new events based on existing events. Open":
+    - img: web_traffic
+    - generic: Create custom events
+    - text: Create new events from existing events.
+    - link "Learn more about ceating new events based on existing events.":
+      - /url: https://support.google.com/analytics/answer/10085872?hl=en_US&utm_id=ad
+      - text: Learn more
+    - button "Open":
+      - img: keyboard_arrow_right
+  - button "Measurement Protocol API secrets Create an API secret to enable additional events to be sent into this stream through the Measurement Protocol. Learn more about Measurement Protocol in Google Analytics 4 Open":
+    - img: vpn_key
+    - generic: Measurement Protocol API secrets
+    - text: Create an API secret to enable additional events to be sent into this stream through the Measurement Protocol.
+    - link "Learn more about Measurement Protocol in Google Analytics 4":
+      - /url: https://support.google.com/analytics/answer/9900444?hl=en_US&utm_id=ad
+      - text: Learn more
+    - button "Open":
+      - img: keyboard_arrow_right
+  - button "Redact data Prevent specific data from being sent to Google Analytics. Learn more about data redaction Email active URL query parameter keys inactive Open Data Redaction panel":
+    - generic: Redact data
+    - text: Prevent specific data from being sent to Google Analytics.
+    - link "Learn more about data redaction":
+      - /url: https://support.google.com/analytics/answer/13544947?hl=en_US&utm_id=ad
+      - text: Learn more
+    - generic: Email active
+    - generic: URL query parameter keys inactive
+    - button "Open Data Redaction panel":
+      - img: keyboard_arrow_right
+  - heading "Google tag" [level=2]
+  - button "Configure tag settings Configure your Google tag behavior, including cross-domain linking and internal traffic. Learn more about tag settings. Open":
+    - img: gtag
+    - generic: Configure tag settings
+    - text: Configure your Google tag behavior, including cross-domain linking and internal traffic.
+    - link "Learn more about tag settings.":
+      - /url: https://support.google.com/analytics/answer/12131703?hl=en_US&utm_id=ad
+      - text: Learn more
+    - button "Open":
+      - img: keyboard_arrow_right
+  - button "Manage connected site tags Load tags for additional properties or products using this stream's on-page Google tag. Learn more about how gtag.js maps Universal Analytics to Google Analytics 4 0 connected Open":
+    - img: settings_ethernet
+    - generic: Manage connected site tags
+    - text: Load tags for additional properties or products using this stream's on-page Google tag.
+    - link "Learn more about how gtag.js maps Universal Analytics to Google Analytics 4":
+      - /url: https://support.google.com/analytics/answer/9973999?hl=en_US&utm_id=ad
+      - text: Learn more
+    - generic: 0 connected
+    - button "Open":
+      - img: keyboard_arrow_right
+  - button "View tag instructions Get instructions for how to implement your Google tag for this data stream. Learn more about setting up your Google tag No data received Open":
+    - img: integration_instructions
+    - generic: View tag instructions
+    - text: Get instructions for how to implement your Google tag for this data stream.
+    - link "Learn more about setting up your Google tag":
+      - /url: https://support.google.com/analytics/answer/12002338?hl=en_US&utm_id=ad
+      - text: Learn more
+    - generic: No data received
+    - button "Open":
+      - img: keyboard_arrow_right

@@ -36,8 +36,8 @@
       "acceptanceGate": "ANALYTICS-G01",
       "status": "VERIFIED_COMPLETE",
       "reason": "Supplied published container version1 has the existing GA4 destination. Hosted DOM records exactly one GTM script after grant; its onReady callback confirms execution. No second gtag config or manual page-view event is added.",
-      "testResult": "PASS \u201427/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions",
-      "outstandingWork": "None for the bounded site-side requirement. Receiver/reporting evidence remains under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release are outside this scope."
+      "testResult": "PASS —27/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions",
+      "outstandingWork": "None for this bounded requirement. Receiver evidence is now confirmed under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release remain outside this scope."
     },
     {
       "id": "ANALYTICS-02",
@@ -75,8 +75,8 @@
       "acceptanceGate": "ANALYTICS-G02",
       "status": "VERIFIED_COMPLETE",
       "reason": "Hosted desktop and390px phone checks pass for no-choice, essential-only, grant, saved preference, reopening settings and withdrawal. Reproduced mobile navigation overlap was corrected and retested on the final Ready source; historical defective observation retained.",
-      "testResult": "PASS \u201427/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions",
-      "outstandingWork": "None for the bounded site-side requirement. Receiver/reporting evidence remains under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release are outside this scope."
+      "testResult": "PASS —27/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions",
+      "outstandingWork": "None for this bounded requirement. Receiver evidence is now confirmed under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release remain outside this scope."
     },
     {
       "id": "ANALYTICS-03",
@@ -112,8 +112,8 @@
       "acceptanceGate": "ANALYTICS-G03",
       "status": "VERIFIED_COMPLETE",
       "reason": "Hosted signed-in admin/public pages, query URLs and private navigation show no Google scripts. An excluded document remains untracked on later SPA navigation. Actual public product action reaches /gas-order without tracking; local negatives cover token/hash/checkout/account/order URLs.",
-      "testResult": "PASS \u201427/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions",
-      "outstandingWork": "None for the bounded site-side requirement. Receiver/reporting evidence remains under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release are outside this scope."
+      "testResult": "PASS —27/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions",
+      "outstandingWork": "None for this bounded requirement. Receiver evidence is now confirmed under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release remain outside this scope."
     },
     {
       "id": "ANALYTICS-04",
@@ -131,14 +131,20 @@
         "apps/web/components/site.tsx",
         "apps/web/app/globals.css"
       ],
-      "dataSource": "Supplied public tag IDs, published Google container; URL and explicit local analytics consent only",
+      "dataSource": "Authenticated Google Analytics UI: account416957612, property565150618, stream16373512765/G-8Y34NXQMMK; received page_view/page_location and Realtime pages. Timestamped actual signed-out demo navigation, existing release/build and normal product readback evidence.",
       "securityControl": "No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied",
       "testFiles": [
         "tests/google-analytics.test.ts",
         "tests/google-analytics-browser.test.ts",
-        "scripts/check-analytics-demo.mjs"
+        "scripts/check-analytics-demo.mjs",
+        "tests/google-analytics-realtime.test.ts"
       ],
-      "testIds": ["ANALYTICS-CONFIG", "ANALYTICS-DEPLOY", "ANALYTICS-BROWSER"],
+      "testIds": [
+        "ANALYTICS-CONFIG",
+        "ANALYTICS-DEPLOY",
+        "ANALYTICS-BROWSER",
+        "ANALYTICS-REALTIME"
+      ],
       "negativeTests": [],
       "evidence": [
         "docs/analytics/evidence/regression.txt",
@@ -153,13 +159,20 @@
         "docs/analytics/evidence/hosted-business.txt",
         "docs/analytics/evidence/business-before.json",
         "docs/analytics/evidence/business-after.json",
-        "docs/analytics/evidence/promotion.txt"
+        "docs/analytics/evidence/promotion.txt",
+        "docs/analytics/evidence/ga4-realtime-validation.txt",
+        "docs/analytics/evidence/ga4-realtime-confirmation.json",
+        "docs/analytics/evidence/ga4-stream-confirmed.txt",
+        "docs/analytics/evidence/ga4-realtime-before.txt",
+        "docs/analytics/evidence/ga4-realtime-receipt.txt",
+        "docs/analytics/evidence/ga4-realtime-pages-confirmed.txt",
+        "docs/analytics/evidence/ga4-realtime-pages-confirmed.jpg"
       ],
       "acceptanceGate": "ANALYTICS-G04",
-      "status": "PARTIAL",
-      "reason": "Local27/27 regressions, TypeScript/build, final Ready deployment identity, source integrity, browser execution and unchanged business readback pass. Browser tooling does not expose collection requests or GA4 reports. Receiver receipt/Realtime is unverified; this row remains in the denominator.",
-      "testResult": "PARTIAL \u2014local27/27, browser1/1, hosted business preservation1/1, build/types and Ready promotion pass; GA4 receiver receipt/Realtime unverified",
-      "outstandingWork": "Confirm receipt in GA4 Realtime for G-8Y34NXQMMK using a clean signed-out demo visit after Allow analytics. Private Google account/reporting access is unavailable; do not infer receipt from script execution. Existing production NO-GO/import/retain-all and wider acceptance gaps remain."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authenticated Google Analytics Realtime confirms receipt in Easygas Nigeria / EasyGasNg, property565150618, stream16373512765, measurement G-8Y34NXQMMK. A signed-out consented demo visit at2026-11-19T10:59:04Z followed by /privacy at10:59:19Z is corroborated by page views8→10 and the exact received demo /privacy page_location at11:00:08Z. Canonical stream identity, Realtime event parameter, page table and screenshots saved. Prior build/deployment/business preservation evidence retained.",
+      "testResult": "PASS —actual authenticated GA4 Realtime receipt, exact demo URL and stream identity;1/1 receiver evidence validation. Previous27/27 local,1/1 browser and1/1 hosted preservation checks retained.",
+      "outstandingWork": "None for the bounded Realtime acceptance gate. Processed long-period reports, ecommerce, advertising and commercial production/native/physical/provider acceptance are not inferred. Production NO-GO, actual-import hold and retain-all remain unchanged."
     }
   ],
   "gates": [
@@ -184,14 +197,14 @@
     {
       "id": "ANALYTICS-G04",
       "description": "Verify implementation, build, client-demo deployment and receiver evidence; preserve production holds",
-      "status": "OPEN",
-      "reason": "Local27/27 regressions, TypeScript/build, final Ready deployment identity, source integrity, browser execution and unchanged business readback pass. Browser tooling does not expose collection requests or GA4 reports. Receiver receipt/Realtime is unverified; this row remains in the denominator."
+      "status": "PASS",
+      "reason": "Authenticated Google Analytics Realtime confirms receipt in Easygas Nigeria / EasyGasNg, property565150618, stream16373512765, measurement G-8Y34NXQMMK. A signed-out consented demo visit at2026-11-19T10:59:04Z followed by /privacy at10:59:19Z is corroborated by page views8→10 and the exact received demo /privacy page_location at11:00:08Z. Canonical stream identity, Realtime event parameter, page table and screenshots saved. Prior build/deployment/business preservation evidence retained."
     }
   ],
   "coverage": {
     "requirements": {
       "implemented": 4,
-      "verified": 3,
+      "verified": 4,
       "total": 4
     },
     "criticalRequirements": {
@@ -199,7 +212,7 @@
       "total": 2
     },
     "gates": {
-      "passed": 3,
+      "passed": 4,
       "total": 4
     },
     "excluded": 0
@@ -228,6 +241,10 @@
     {
       "date": "2026-11-19",
       "change": "Actual public catalogue action to /gas-order passes without Google scripts. The older QuickOrder declaration is not mounted by the current route; no speculative cart change or new order/stock/payment was introduced.13 orders, ledger, inventory, gas and QA wallet normal product readbacks are unchanged from baseline. All four requirement IDs retained;3/4 verified,4/4 implemented,2/2 critical,3/4 gates. Receiver receipt remains PARTIAL/OPEN; no production or prior acceptance hold waived."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User requested account-side verification. Existing authenticated Chrome Analytics tab exposed correct G-8Y34NXQMMK stream; navigated existing setup/report UI, then verified canonical account416957612/property565150618/stream16373512765. Fresh actual consented demo / and /privacy visits received: Realtime views8→10, users4→5, exact demo /privacy page_location1, confirmed11:00:08 UTC. ANALYTICS-04/G04 closed with screenshots/raw report/record validation;4/4 requirements and gates verified,2/2critical,0 exclusions. Stale setup/48-hour warning retained as historical, not the receiver result. Test preference restored Essential only with0GTM scripts. No manual events/collection replay, tag/filter/stream/code changes, redeployment, business mutation or wider production/native/provider/import/retention acceptance inferred."
     }
   ],
   "sourceSha": "2eb4e17402b3be8a27e2416fd02ab32159710b01",

@@ -4,7 +4,7 @@
 
 Client demo source `2eb4e17402b3be8a27e2416fd02ab32159710b01` is Ready and promoted as `dpl_3FENKwC96aryhXzA76q45pAv4heM` at [the stable demo](https://easygas-client-demo.vercel.app).
 
-**Coverage:**4/4 implemented,3/4 verified requirements;2/2 critical requirements verified;3/4 gates passed;0 exclusions. ANALYTICS-04 remains PARTIAL because GA4 receipt/Realtime reporting cannot be verified through the available DOM-only browser tools. All four IDs stay in scope.
+**Coverage:**4/4 implemented and verified requirements;2/2 critical requirements verified;4/4 gates passed;0 exclusions. ANALYTICS-04/G04 closed after authenticated Google Analytics Realtime confirmed the exact demo page location. All four IDs stay in scope.
 
 **Existing production NO-GO, actual-import hold and retain-all decisions remain unchanged.** Native, physical, provider, financial and unrelated acceptance evidence is preserved.
 
@@ -13,7 +13,7 @@ Client demo source `2eb4e17402b3be8a27e2416fd02ab32159710b01` is Ready and promo
 | ANALYTICS-01 — Load the supplied published GTM container once and use its existing GA4 destination without duplicate installation | P1 | VERIFIED_COMPLETE / ANALYTICS-G01 PASS | PASS —27/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions |
 | ANALYTICS-02 — Persist optional analytics consent, load no Google resources before consent and support withdrawal | P0 | VERIFIED_COMPLETE / ANALYTICS-G02 PASS | PASS —27/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions |
 | ANALYTICS-03 — Exclude signed-in, operational and sensitive URLs; unload tags before entering private pages | P0 | VERIFIED_COMPLETE / ANALYTICS-G03 PASS | PASS —27/27 focused regressions;1/1 hosted browser evidence validation; desktop/phone actual consent and exclusion interactions |
-| ANALYTICS-04 — Verify implementation, build, client-demo deployment and receiver evidence; preserve production holds | P1 | PARTIAL / ANALYTICS-G04 OPEN | PARTIAL —local27/27, browser1/1, hosted business preservation1/1, build/types and Ready promotion pass; GA4 receiver receipt/Realtime unverified |
+| ANALYTICS-04 — Verify implementation, build, client-demo deployment and receiver evidence; preserve production holds | P1 | VERIFIED_COMPLETE / ANALYTICS-G04 PASS | PASS —actual authenticated GA4 Realtime receipt, exact demo URL and stream identity;1/1 receiver evidence validation. Previous27/27 local,1/1 browser and1/1 hosted preservation checks retained. |
 
 ## Requirement mappings
 
@@ -35,7 +35,7 @@ Client demo source `2eb4e17402b3be8a27e2416fd02ab32159710b01` is Ready and promo
 
 **Acceptance:** Supplied published container version1 has the existing GA4 destination. Hosted DOM records exactly one GTM script after grant; its onReady callback confirms execution. No second gtag config or manual page-view event is added.
 
-**Outstanding:** None for the bounded site-side requirement. Receiver/reporting evidence remains under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release are outside this scope.
+**Outstanding:** None for this bounded requirement. Receiver evidence is now confirmed under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release remain outside this scope.
 
 ### ANALYTICS-02
 
@@ -55,7 +55,7 @@ Client demo source `2eb4e17402b3be8a27e2416fd02ab32159710b01` is Ready and promo
 
 **Acceptance:** Hosted desktop and390px phone checks pass for no-choice, essential-only, grant, saved preference, reopening settings and withdrawal. Reproduced mobile navigation overlap was corrected and retested on the final Ready source; historical defective observation retained.
 
-**Outstanding:** None for the bounded site-side requirement. Receiver/reporting evidence remains under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release are outside this scope.
+**Outstanding:** None for this bounded requirement. Receiver evidence is now confirmed under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release remain outside this scope.
 
 ### ANALYTICS-03
 
@@ -75,27 +75,29 @@ Client demo source `2eb4e17402b3be8a27e2416fd02ab32159710b01` is Ready and promo
 
 **Acceptance:** Hosted signed-in admin/public pages, query URLs and private navigation show no Google scripts. An excluded document remains untracked on later SPA navigation. Actual public product action reaches /gas-order without tracking; local negatives cover token/hash/checkout/account/order URLs.
 
-**Outstanding:** None for the bounded site-side requirement. Receiver/reporting evidence remains under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release are outside this scope.
+**Outstanding:** None for this bounded requirement. Receiver evidence is now confirmed under ANALYTICS-04. Ecommerce, signed-in analytics, advertising and commercial production release remain outside this scope.
 
 ### ANALYTICS-04
 
-**Scope:** Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation.
+**Scope:** Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation..
 
-**UI and routes:** User supplied GTM-KLJ8FM96 and G-8Y34NXQMMK,19November2026; actual desktop1280px and phone390px preference controls. /,/products,/services,/privacy; private routes excluded.
+**UI and routes:** User supplied GTM-KLJ8FM96 and G-8Y34NXQMMK,19November2026; actual desktop1280px and phone390px preference controls.
 
-**Implementation:** [packages/business-rules/src/analytics.ts](../../packages/business-rules/src/analytics.ts), [apps/web/lib/analytics-browser.ts](../../apps/web/lib/analytics-browser.ts), [apps/web/components/google-analytics.tsx](../../apps/web/components/google-analytics.tsx), [apps/web/app/layout.tsx](../../apps/web/app/layout.tsx), [apps/web/components/workspace-link.tsx](../../apps/web/components/workspace-link.tsx), [apps/web/components/site.tsx](../../apps/web/components/site.tsx), [apps/web/app/globals.css](../../apps/web/app/globals.css).
-
-**Authoritative sources:** Supplied public tag IDs, published Google container; URL and explicit local analytics consent only.
+**Authoritative sources:** Authenticated Google Analytics UI: account416957612, property565150618, stream16373512765/G-8Y34NXQMMK; received page_view/page_location and Realtime pages. Timestamped actual signed-out demo navigation, existing release/build and normal product readback evidence..
 
 **Security:** No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied.
 
-**Executed tests:** `ANALYTICS-CONFIG`, `ANALYTICS-DEPLOY`, `ANALYTICS-BROWSER`. Test files: [tests/google-analytics.test.ts](../../tests/google-analytics.test.ts), [tests/google-analytics-browser.test.ts](../../tests/google-analytics-browser.test.ts), [scripts/check-analytics-demo.mjs](../../scripts/check-analytics-demo.mjs).
+**Implementation:** [analytics.ts](../../packages/business-rules/src/analytics.ts), [analytics-browser.ts](../../apps/web/lib/analytics-browser.ts), [google-analytics.tsx](../../apps/web/components/google-analytics.tsx), [layout.tsx](../../apps/web/app/layout.tsx), [workspace-link.tsx](../../apps/web/components/workspace-link.tsx), [site.tsx](../../apps/web/components/site.tsx), [globals.css](../../apps/web/app/globals.css).
 
-**Evidence:** [regression.txt](../../docs/analytics/evidence/regression.txt), [browser-validation.txt](../../docs/analytics/evidence/browser-validation.txt), [browser-checks.json](../../docs/analytics/evidence/browser-checks.json), [published-container.json](../../docs/analytics/evidence/published-container.json), [stable-identity.json](../../docs/analytics/evidence/stable-identity.json), [types.txt](../../docs/analytics/evidence/types.txt), [build.txt](../../docs/analytics/evidence/build.txt), [candidate-recovery.json](../../docs/analytics/evidence/candidate-recovery.json), [source-integrity.json](../../docs/analytics/evidence/source-integrity.json), [hosted-business.txt](../../docs/analytics/evidence/hosted-business.txt), [business-before.json](../../docs/analytics/evidence/business-before.json), [business-after.json](../../docs/analytics/evidence/business-after.json), [promotion.txt](../../docs/analytics/evidence/promotion.txt).
+**Test files:** [google-analytics.test.ts](../../tests/google-analytics.test.ts), [google-analytics-browser.test.ts](../../tests/google-analytics-browser.test.ts), [check-analytics-demo.mjs](../../scripts/check-analytics-demo.mjs), [google-analytics-realtime.test.ts](../../tests/google-analytics-realtime.test.ts).
 
-**Acceptance:** Local27/27 regressions, TypeScript/build, final Ready deployment identity, source integrity, browser execution and unchanged business readback pass. Browser tooling does not expose collection requests or GA4 reports. Receiver receipt/Realtime is unverified; this row remains in the denominator.
+**Evidence:** [regression.txt](../../docs/analytics/evidence/regression.txt), [browser-validation.txt](../../docs/analytics/evidence/browser-validation.txt), [browser-checks.json](../../docs/analytics/evidence/browser-checks.json), [published-container.json](../../docs/analytics/evidence/published-container.json), [stable-identity.json](../../docs/analytics/evidence/stable-identity.json), [types.txt](../../docs/analytics/evidence/types.txt), [build.txt](../../docs/analytics/evidence/build.txt), [candidate-recovery.json](../../docs/analytics/evidence/candidate-recovery.json), [source-integrity.json](../../docs/analytics/evidence/source-integrity.json), [hosted-business.txt](../../docs/analytics/evidence/hosted-business.txt), [business-before.json](../../docs/analytics/evidence/business-before.json), [business-after.json](../../docs/analytics/evidence/business-after.json), [promotion.txt](../../docs/analytics/evidence/promotion.txt), [ga4-realtime-validation.txt](../../docs/analytics/evidence/ga4-realtime-validation.txt), [ga4-realtime-confirmation.json](../../docs/analytics/evidence/ga4-realtime-confirmation.json), [ga4-stream-confirmed.txt](../../docs/analytics/evidence/ga4-stream-confirmed.txt), [ga4-realtime-before.txt](../../docs/analytics/evidence/ga4-realtime-before.txt), [ga4-realtime-receipt.txt](../../docs/analytics/evidence/ga4-realtime-receipt.txt), [ga4-realtime-pages-confirmed.txt](../../docs/analytics/evidence/ga4-realtime-pages-confirmed.txt), [ga4-realtime-pages-confirmed.jpg](../../docs/analytics/evidence/ga4-realtime-pages-confirmed.jpg).
 
-**Outstanding:** Confirm receipt in GA4 Realtime for G-8Y34NXQMMK using a clean signed-out demo visit after Allow analytics. Private Google account/reporting access is unavailable; do not infer receipt from script execution. Existing production NO-GO/import/retain-all and wider acceptance gaps remain.
+**Executed test IDs:** `ANALYTICS-CONFIG`, `ANALYTICS-DEPLOY`, `ANALYTICS-BROWSER`, `ANALYTICS-REALTIME`.
+
+**Acceptance:** Authenticated Google Analytics Realtime confirms receipt in Easygas Nigeria / EasyGasNg, property565150618, stream16373512765, measurement G-8Y34NXQMMK. A signed-out consented demo visit at2026-11-19T10:59:04Z followed by /privacy at10:59:19Z is corroborated by page views8→10 and the exact received demo /privacy page_location at11:00:08Z. Canonical stream identity, Realtime event parameter, page table and screenshots saved. Prior build/deployment/business preservation evidence retained.
+
+**Outstanding:** None for the bounded Realtime acceptance gate. Processed long-period reports, ecommerce, advertising and commercial production/native/physical/provider acceptance are not inferred. Production NO-GO, actual-import hold and retain-all remain unchanged.
 
 ## Scope and execution history
 
@@ -109,3 +111,7 @@ Client demo source `2eb4e17402b3be8a27e2416fd02ab32159710b01` is Ready and promo
 The readback script uses normal authenticated product HTTP reads. No hosted database access or business mutation was used for this phase. The initial local preview could not reach its existing business database; local business acceptance is not claimed. Hosted checks supply the business preservation evidence.
 
 [Traceability schema validation](../analytics/evidence/traceability-validation.txt).
+
+Receiver continuation,19November2026: User requested account-side verification. Existing authenticated Chrome Analytics tab exposed correct G-8Y34NXQMMK stream; navigated existing setup/report UI, then verified canonical account416957612/property565150618/stream16373512765. Fresh actual consented demo / and /privacy visits received: Realtime views8→10, users4→5, exact demo /privacy page_location1, confirmed11:00:08 UTC. ANALYTICS-04/G04 closed with screenshots/raw report/record validation;4/4 requirements and gates verified,2/2critical,0 exclusions. Stale setup/48-hour warning retained as historical, not the receiver result. Test preference restored Essential only with0GTM scripts. No manual events/collection replay, tag/filter/stream/code changes, redeployment, business mutation or wider production/native/provider/import/retention acceptance inferred.
+
+[Realtime verification report](../analytics/REALTIME-VERIFICATION.md). Historical partial statements above describe the earlier checkpoint and are superseded for ANALYTICS-04/G04 only.
