@@ -5,7 +5,6 @@ import { confirmAction } from "./app-dialog";
 import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
 
 import { FormInput } from "./password-input";
-import { ChannelPreferences } from "./operations-completion";
 import { MailDeliveryControls } from "./mail-delivery";
 import { EasyRewardsReport } from "./easyrewards";
 import React, { useState, useEffect, useRef, type FormEvent } from "react";
@@ -168,7 +167,8 @@ export function ActionForm({
                 name={f.name}
                 defaultValue={f.value ?? ""}
                 required={f.required !== false}
-                maxLength={2000}
+                minLength={f.minLength}
+                maxLength={f.maxLength ?? 2000}
               />
             ) : (
               <FormInput
@@ -231,246 +231,6 @@ function useRecords(action: string) {
     };
   }, [action, version]);
   return { data, error, reload: () => setVersion((v) => v + 1) };
-}
-export function AccountSettings() {
-  const { data, error, reload } = useRecords("account.profile");
-  if (error) return <Notice type="error" message={error} />;
-  if (!data) return <Loading />;
-  return (
-    <div className="workflow-stack product-workspace">
-      <ProductHeading eyebrow="YOUR ACCOUNT" title="Account & privacy" description="Manage your personal information, security and privacy preferences." />
-      <Link href="/account">Back to your account</Link>
-      <ActionForm
-        action="account.update"
-        title="Your profile"
-        fields={[{ name: "name", label: "Full name", value: data.user.name }]}
-        onDone={reload}
-      />
-      <section className="surface workflow-form">
-        <h3>Email verification</h3>
-        <p>
-          {data.user.public_customer_id && (
-            <>
-              Customer ID: {data.user.public_customer_id}
-              <br />
-            </>
-          )}
-          {data.user.email} ·{" "}
-          {data.user.verified ? "Verified" : "Awaiting verification"}
-        </p>
-        {!data.user.verified && (
-          <ActionForm
-            action="account.verification.send"
-            title="Request verification"
-            fields={[]}
-            submit="Queue verification email"
-          />
-        )}
-        <p className="muted">
-          Email is queued locally. The installation operator can preview it with
-          the local email command. External email delivery is not connected.
-        </p>
-      </section>
-      <ActionForm
-        action="account.password"
-        title="Change password"
-        fields={[
-          {
-            name: "currentPassword",
-            label: "Current password",
-            type: "password",
-          },
-          {
-            name: "newPassword",
-            label: `New password (at least ${PASSWORD_MIN_LENGTH} characters)`,
-            type: "password",
-          },
-        ]}
-        submit="Change password & sign out"
-      />
-      <h2>Saved addresses</h2>
-      {data.addresses.map((a: any) => (
-        <div className="surface workflow-form" key={a.id}>
-          <strong>
-            {a.label}
-            {a.is_default ? " · Default" : ""}
-          </strong>
-          {!a.location_available && (
-            <Notice message="This saved delivery location is temporarily unavailable for new orders." />
-          )}
-          <ActionForm
-            action="address.default"
-            title="Set default address"
-            fields={[
-              { name: "id", label: "Address", type: "hidden", value: a.id },
-            ]}
-            onDone={reload}
-          />
-          <ActionForm
-            action="address.save"
-            title="Edit address"
-            fields={[
-              { name: "id", label: "Address", type: "hidden", value: a.id },
-              { name: "label", label: "Label", value: a.label },
-              { name: "street", label: "Street", value: a.street },
-              {
-                name: "locationId",
-                label: "Delivery location",
-                value: a.location_id,
-                options: data.deliveryLocations.map((l: any) => ({
-                  value: l.id,
-                  label: l.name,
-                })),
-              },
-              { name: "phone", label: "Recipient phone", value: a.phone },
-              {
-                name: "building",
-                label: "Building / house number",
-                value: a.details?.building,
-              },
-              {
-                name: "landmark",
-                label: "Estate / landmark",
-                value: a.details?.landmark,
-                required: false,
-              },
-              {
-                name: "directions",
-                label: "Additional directions",
-                value: a.details?.directions,
-                required: false,
-              },
-            ]}
-            onDone={reload}
-          />
-
-          <p>
-            {a.street}, {a.zone} · {a.phone}
-          </p>
-          <ActionForm
-            action="address.archive"
-            title="Remove address"
-            fields={[{ name: "id", label: "", type: "hidden", value: a.id }]}
-            onDone={reload}
-            submit="Remove"
-          />
-        </div>
-      ))}
-      <ActionForm
-        action="address.save"
-        title="Add delivery address"
-        fields={[
-          { name: "label", label: "Label (Home, Office…) " },
-          { name: "street", label: "Street address" },
-          {
-            name: "locationId",
-            label: "Delivery location",
-            options: data.deliveryLocations.map((l: any) => ({
-              value: l.id,
-              label: l.name,
-            })),
-          },
-          { name: "building", label: "Building / house number" },
-          { name: "landmark", label: "Estate / landmark", required: false },
-          {
-            name: "directions",
-            label: "Additional directions",
-            required: false,
-          },
-          {
-            name: "isDefault",
-            label: "Use as default delivery address",
-            type: "checkbox",
-          },
-          { name: "phone", label: "Mobile number", type: "tel" },
-        ]}
-        onDone={reload}
-      />
-      <ChannelPreferences />
-      <ActionForm
-        key={JSON.stringify(data.preferences)}
-        action="preferences.save"
-        title="Communication preferences"
-        fields={[
-          {
-            name: "marketing",
-            label: "Receive marketing messages",
-            type: "checkbox",
-            value: data.preferences.marketing,
-          },
-          {
-            name: "refillReminders",
-            label: "Receive refill reminders",
-            type: "checkbox",
-            value: data.preferences.refill_reminders,
-          },
-          {
-            name: "serviceReminders",
-            label: "Service follow-up reminders",
-            type: "checkbox",
-            value: data.preferences.service_reminders ?? true,
-          },
-          {
-            name: "quietStart",
-            label: "Quiet hours start (0–23, Lagos time)",
-            type: "number",
-            value: data.preferences.quiet_start,
-          },
-          {
-            name: "quietEnd",
-            label: "Quiet hours end (0–23, Lagos time)",
-            type: "number",
-            value: data.preferences.quiet_end,
-          },
-        ]}
-        onDone={reload}
-      />
-      <h2>Active sessions</h2>
-      {data.sessions.map((s: any) => (
-        <ActionForm
-          key={s.id}
-          action="account.session.revoke"
-          title={`${s.current ? "This session" : "Other session"} · started ${new Date(s.created_at).toLocaleString()}`}
-          fields={[{ name: "id", label: "", type: "hidden", value: s.id }]}
-          onDone={reload}
-          submit="Sign out this session"
-        />
-      ))}
-      <ActionForm
-        action="reauth"
-        title="Verify your identity for privacy requests"
-        fields={[{ name: "password", label: "Password", type: "password" }]}
-        submit="Verify"
-      />
-      <ActionForm
-        action="privacy.request"
-        title="Request your data or account deletion"
-        fields={[
-          {
-            name: "kind",
-            label: "Request",
-            options: [
-              { value: "export", label: "Export my personal data" },
-              { value: "deletion", label: "Review deletion of my account" },
-            ],
-          },
-          { name: "reason", label: "Details", type: "textarea" },
-        ]}
-        onDone={reload}
-      />
-      <DownloadPersonalData />
-      <p className="muted">
-        EasyGas currently retains all records. Deletion requests are recorded as
-        retained, and your records are not erased. You can still export your
-        personal data.
-      </p>
-      {data.privacyRequests.map((r: any) => (
-        <p key={r.id}>
-          {r.kind} · {r.status} · {new Date(r.created_at).toLocaleDateString()}
-        </p>
-      ))}
-    </div>
-  );
 }
 export function Recovery({
   mode,
@@ -1702,7 +1462,7 @@ export function Campaigns() {
   );
 }
 
-function DownloadPersonalData() {
+export function DownloadPersonalData() {
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   return (
@@ -1834,44 +1594,6 @@ function Delegations() {
           )}
         </section>
       ))}
-    </div>
-  );
-}
-export function NotificationInbox() {
-  const { data, error, reload } = useRecords("me");
-  if (error) return <Notice type="error" message={error} />;
-  if (!data) return <Loading />;
-  return (
-    <div className="workflow-stack product-workspace notification-workspace">
-      <ProductHeading eyebrow="YOUR UPDATES" title="Notifications" description="Order updates, support replies and reminders, together in one inbox." />
-      <p className="product-result-count">{data.notifications.filter((n: any) => !n.read_at).length} unread · {data.notifications.length} total</p>
-      {data.notifications.length ? (
-        data.notifications.map((n: any) => (
-          <article className={`surface workflow-form notification-card ${n.read_at ? "" : "is-unread"}`} key={n.id}>
-            <h3>
-              {n.title}
-              {n.read_at ? "" : " · Unread"}
-            </h3>
-            <p>{n.body}</p>
-            <small>{new Date(n.created_at).toLocaleString()}</small>
-            {!n.read_at && (
-              <ActionForm
-                action="notifications.read"
-                title=""
-                fields={[
-                  { name: "id", label: "", type: "hidden", value: n.id },
-                ]}
-                onDone={reload}
-                submit="Mark read"
-              />
-            )}
-          </article>
-        ))
-      ) : (
-        <Empty title="You're all caught up">
-          Order updates, reminders and support replies will appear here.
-        </Empty>
-      )}
     </div>
   );
 }

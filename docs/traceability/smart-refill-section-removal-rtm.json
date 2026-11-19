@@ -1,0 +1,67 @@
+{
+  "phase": "Remove Smart Refill offers section \u2014 19 November 2026",
+  "productionDecision": "Existing NO-GO, import/retention holds and unrelated work preserved. No deployment or native build.",
+  "requirements": [
+    {
+      "id": "SREF-UI-01",
+      "requirement": "Remove the offers section, empty-offer message and Learn more control from the customer Smart Refill page",
+      "priority": "P1",
+      "scope": "Customer web /refill presentation only; summary metrics, profiles and other routes retained",
+      "uiReference": "User screenshot and explicit removal request, 19 November 2026",
+      "route": "/refill",
+      "implementationFiles": [
+        "apps/web/components/refill-profiles.tsx"
+      ],
+      "dataSource": "Existing cooking-gas profile/forecast/offer readers unchanged",
+      "securityControl": "No changes to eligibility, consent, authentication, approval or financial logic",
+      "testFiles": [
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/traceability/evidence/smart-refill-section-removal/typecheck.txt",
+        "docs/traceability/evidence/smart-refill-section-removal/browser.txt",
+        "docs/traceability/evidence/smart-refill-section-removal/refill-page.jpg",
+        "docs/traceability/evidence/smart-refill-section-removal/traceability-tests.txt"
+      ],
+      "acceptanceGate": "SREF-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Requested banner and its explanation/link are omitted on /refill. Summary metrics and profiles remain; shared Cooking Gas Profiles route retains its existing offer card.",
+      "testResult": "PASS: Local authenticated browser confirms requested section/message/link absent, remaining controls present; web typecheck and phase validation pass.",
+      "outstandingWork": "Hosted rollout pending; no deployment or native build requested or performed. No remaining local removal work."
+    }
+  ],
+  "gates": [
+    {
+      "id": "SREF-G1",
+      "status": "PASS",
+      "evidence": [
+        "docs/traceability/evidence/smart-refill-section-removal/typecheck.txt",
+        "docs/traceability/evidence/smart-refill-section-removal/browser.txt",
+        "docs/traceability/evidence/smart-refill-section-removal/refill-page.jpg",
+        "docs/traceability/evidence/smart-refill-section-removal/traceability-tests.txt"
+      ]
+    }
+  ],
+  "coverage": {
+    "denominator": 1,
+    "implemented": 1,
+    "verified": 1,
+    "criticalRequirements": 0,
+    "routes": 1,
+    "routesVerified": 1,
+    "gates": 1,
+    "gatesPassed": 1
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "User explicitly removes /refill offers card, explanation and Learn more; prior feature/backend requirements and other work remain."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Verified source removal and local rendered page. User-requested UI scope change recorded; backend offer/consent logic and prior requirements/NO-GO preserved."
+    }
+  ]
+}

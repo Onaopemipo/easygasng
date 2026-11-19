@@ -1,4 +1,7 @@
-import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
+import {
+  bookingPhone,
+  bookingPhoneMessage,
+} from "../../../packages/business-rules/src/booking-contact";
 import { serviceDocument } from "../../../packages/business-rules/src/service-document";
 import { serviceMaterialRecoveryAction } from "./service-material-recovery";
 import { serviceSettlementSource } from "./service-settlement-source";
@@ -31,14 +34,18 @@ export const bookingInput = z
     serviceId: scope,
     branchId: scope.default("lagos"),
     serviceVersion: z.number().int().positive(),
-    slotId: uuid,
+    slotId: uuid.optional(),
+    preferredStart: z.string().datetime({ offset: true }).optional(),
     address: z
       .object({
         street: z.string().min(8).max(250),
         zone: z.string().min(2).max(100),
         phone: z.string().transform((value, ctx) => {
           const phone = bookingPhone(value);
-          if (!phone) { ctx.addIssue({ code: "custom", message: bookingPhoneMessage }); return z.NEVER; }
+          if (!phone) {
+            ctx.addIssue({ code: "custom", message: bookingPhoneMessage });
+            return z.NEVER;
+          }
           return phone;
         }),
       })
@@ -58,7 +65,11 @@ export const bookingInput = z
     recommendationId: uuid.optional(),
     followupId: uuid.optional(),
   })
-  .strict();
+  .strict()
+  .refine(
+    (value) => Boolean(value.slotId) !== Boolean(value.preferredStart),
+    "Choose either a calendar appointment or a preferred time.",
+  );
 async function eligible(
   tx: SQL,
   uid: string,
@@ -84,7 +95,7 @@ async function eligible(
 async function booking(tx: SQL, user: Actor, bid: string, write = false) {
   const b = await one(
     tx,
-    `SELECT b.*,s.starts_at,s.ends_at FROM service_bookings b JOIN service_slots s ON s.id=b.slot_id WHERE b.id=$1 ${write ? "FOR UPDATE OF b" : ""}`,
+    `SELECT b.*,s.starts_at,s.ends_at,s.request_only AS schedule_pending FROM service_bookings b JOIN service_slots s ON s.id=b.slot_id WHERE b.id=$1 ${write ? "FOR UPDATE OF b" : ""}`,
     [bid],
   );
   if (!b) throw new AppError(404, "Booking not found.");
@@ -98,12 +109,7 @@ async function booking(tx: SQL, user: Actor, bid: string, write = false) {
         403,
         "This appointment is assigned to another technician.",
       );
-  } else
-    allow(
-      user,
-      [...managers, "finance", "owner"],
-      b.branch_id,
-    );
+  } else allow(user, [...managers, "finance", "owner"], b.branch_id);
   if (user.role === "technician" && user.technician_service_only)
     await eligible(tx, user.id, b.branch_id, b.snapshot.qualification);
   return b;
@@ -193,15 +199,17 @@ async function balance(tx: SQL, b: Row) {
   );
   const exception = ["failed", "cancelled"].includes(b.status);
   const settlement = exception ? await serviceSettlementSource(tx, b) : null;
-  const total = exception
-    ? (settlement?.totalKobo ?? null)
-    : report
-      ? Number(report.body.invoiceTotalKobo)
-      : q?.approved
-        ? Number(q.total_kobo)
-        : b.snapshot.pricingModel === "fixed"
-          ? Number(b.snapshot.priceKobo) + Number(b.snapshot.calloutKobo)
-          : null;
+  const total = b.schedule_pending
+    ? null
+    : exception
+      ? (settlement?.totalKobo ?? null)
+      : report
+        ? Number(report.body.invoiceTotalKobo)
+        : q?.approved
+          ? Number(q.total_kobo)
+          : b.snapshot.pricingModel === "fixed"
+            ? Number(b.snapshot.priceKobo) + Number(b.snapshot.calloutKobo)
+            : null;
   const paid = Number(
     (await one(
       tx,
@@ -334,6 +342,8 @@ async function validateSlot(
     slot.service_id !== serviceId ||
     slot.branch_id !== branch ||
     slot.blocked ||
+    slot.request_only ||
+    !slot.technician_id ||
     Date.parse(slot.starts_at) <= Date.now()
   )
     throw new AppError(409, "This appointment is no longer available.");
@@ -350,7 +360,17 @@ async function validateSlot(
     slot.technician_id,
   ]);
   await eligible(tx, slot.technician_id, branch, config.qualification);
-  if (!(await one(tx,"SELECT id FROM users WHERE id=$1 AND technician_available=true",[slot.technician_id]))) throw new AppError(409,"The technician is not available for new appointments.");
+  if (
+    !(await one(
+      tx,
+      "SELECT id FROM users WHERE id=$1 AND technician_available=true",
+      [slot.technician_id],
+    ))
+  )
+    throw new AppError(
+      409,
+      "The technician is not available for new appointments.",
+    );
   if (
     Date.parse(slot.ends_at) - Date.parse(slot.starts_at) !==
       config.durationMinutes * 60000 ||
@@ -560,7 +580,7 @@ export async function professionalServiceAction(
       ).rows,
       slots: (
         await tx.query(
-          "SELECT * FROM service_slots WHERE branch_id=$1 AND ends_at>now() ORDER BY starts_at LIMIT 100",
+          "SELECT * FROM service_slots WHERE branch_id=$1 AND ends_at>now() AND NOT request_only ORDER BY starts_at LIMIT 100",
           [branch],
         )
       ).rows,
@@ -687,7 +707,16 @@ export async function professionalServiceAction(
       [d.serviceId, d.branchId],
     );
     if (!service) throw new AppError(404, "Service not found.");
-    if (!service.config.active || !(await one(tx,"SELECT id FROM branches WHERE id=$1 AND active=true",[d.branchId]))) throw new AppError(409,"This service or branch is not accepting appointments.");
+    if (
+      !service.config.active ||
+      !(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true", [
+        d.branchId,
+      ]))
+    )
+      throw new AppError(
+        409,
+        "This service or branch is not accepting appointments.",
+      );
     await eligible(
       tx,
       d.technicianId,
@@ -717,10 +746,33 @@ export async function professionalServiceAction(
         "Qualification expires before the appointment finishes.",
       );
     // Serialize availability and bookings on the same canonical technician row.
-    const available = await one(tx, "SELECT technician_available FROM users WHERE id=$1 FOR UPDATE", [d.technicianId]);
-    await eligible(tx, d.technicianId, d.branchId, service.config.qualification);
-    if (!available?.technician_available) throw new AppError(409, "The technician is not available for new appointments.");
-    if (await one(tx, "SELECT id FROM service_slots WHERE technician_id=$1 AND starts_at<$3 AND ends_at>$2 LIMIT 1", [d.technicianId, d.startsAt, d.endsAt])) throw new AppError(409, "This time overlaps an existing appointment or blocked window. Choose another time.");
+    const available = await one(
+      tx,
+      "SELECT technician_available FROM users WHERE id=$1 FOR UPDATE",
+      [d.technicianId],
+    );
+    await eligible(
+      tx,
+      d.technicianId,
+      d.branchId,
+      service.config.qualification,
+    );
+    if (!available?.technician_available)
+      throw new AppError(
+        409,
+        "The technician is not available for new appointments.",
+      );
+    if (
+      await one(
+        tx,
+        "SELECT id FROM service_slots WHERE technician_id=$1 AND starts_at<$3 AND ends_at>$2 LIMIT 1",
+        [d.technicianId, d.startsAt, d.endsAt],
+      )
+    )
+      throw new AppError(
+        409,
+        "This time overlaps an existing appointment or blocked window. Choose another time.",
+      );
     const sid = id();
     await tx.query(
       "INSERT INTO service_slots(id,service_id,branch_id,technician_id,starts_at,ends_at,capacity) VALUES ($1,$2,$3,$4,$5,$6,1)",
@@ -741,6 +793,11 @@ export async function professionalServiceAction(
     );
     if (!s) throw new AppError(404, "Appointment not found.");
     allow(user, managers, s.branch_id);
+    if (s.request_only)
+      throw new AppError(
+        409,
+        "A preferred-time request is not a reserved calendar slot. Allocate an appointment instead.",
+      );
     if (
       d.blocked &&
       (await one(
@@ -765,38 +822,70 @@ export async function professionalServiceAction(
   if (action === "incidents") {
     allow(user, ["owner", "manager", "finance"]);
     if ((input as { view?: unknown } | undefined)?.view === "workspace") {
-      const filters = z.object({
-        view: z.literal("workspace"),
-        status: z.enum(["all", "open", "acknowledged", "resolved"]).default("all"),
-        severity: z.enum(["all", "critical", "high", "medium", "low"]).default("all"),
-        q: z.string().trim().max(120).default(""),
-        page: z.coerce.number().int().min(1).max(1_000_000).default(1),
-      }).strict().parse(input);
+      const filters = z
+        .object({
+          view: z.literal("workspace"),
+          status: z
+            .enum(["all", "open", "acknowledged", "resolved"])
+            .default("all"),
+          severity: z
+            .enum(["all", "critical", "high", "medium", "low"])
+            .default("all"),
+          q: z.string().trim().max(120).default(""),
+          page: z.coerce.number().int().min(1).max(1_000_000).default(1),
+        })
+        .strict()
+        .parse(input);
       const branchScope = user.role === "owner" ? "TRUE" : "i.branch_id=$1";
       const scopeParams = user.role === "owner" ? [] : [user.branch_id];
       const statusIndex = scopeParams.length + 1;
       const match = `($${statusIndex}='all' OR i.status=$${statusIndex})
         AND ($${statusIndex + 1}='all' OR i.severity=$${statusIndex + 1})
         AND strpos(lower(concat_ws(' ', i.id, replace(i.category, '_', ' '), i.detail, b.name)), lower($${statusIndex + 2})) > 0`;
-      const params = [...scopeParams, filters.status, filters.severity, filters.q];
+      const params = [
+        ...scopeParams,
+        filters.status,
+        filters.severity,
+        filters.q,
+      ];
       const source = `FROM operational_incidents i LEFT JOIN branches b ON b.id=i.branch_id WHERE ${branchScope}`;
-      const stats = await one(tx, `SELECT count(*)::int AS total,
+      const stats = await one(
+        tx,
+        `SELECT count(*)::int AS total,
         count(*) FILTER (WHERE i.status='open')::int AS open,
         count(*) FILTER (WHERE i.status='acknowledged')::int AS acknowledged,
         count(*) FILTER (WHERE i.status='resolved')::int AS resolved,
-        count(*) FILTER (WHERE ${match})::int AS matches ${source}`, params);
+        count(*) FILTER (WHERE ${match})::int AS matches ${source}`,
+        params,
+      );
       const pageSize = 12;
       const total = Number(stats?.matches ?? 0);
-      const page = Math.min(filters.page, Math.max(1, Math.ceil(total / pageSize)));
-      const rows = total === 0 ? [] : (await tx.query(
-        `SELECT i.id, i.status, i.severity, i.category, i.detail, i.created_at, b.name AS branch_name
+      const page = Math.min(
+        filters.page,
+        Math.max(1, Math.ceil(total / pageSize)),
+      );
+      const rows =
+        total === 0
+          ? []
+          : (
+              await tx.query(
+                `SELECT i.id, i.status, i.severity, i.category, i.detail, i.created_at, b.name AS branch_name
          ${source} AND ${match}
          ORDER BY i.created_at DESC, i.id DESC LIMIT ${pageSize} OFFSET $${params.length + 1}`,
-        [...params, (page - 1) * pageSize],
-      )).rows;
+                [...params, (page - 1) * pageSize],
+              )
+            ).rows;
       return {
-        rows, total, page, pageSize,
-        counts: { all: Number(stats?.total ?? 0), open: Number(stats?.open ?? 0), acknowledged: Number(stats?.acknowledged ?? 0), resolved: Number(stats?.resolved ?? 0) },
+        rows,
+        total,
+        page,
+        pageSize,
+        counts: {
+          all: Number(stats?.total ?? 0),
+          open: Number(stats?.open ?? 0),
+          acknowledged: Number(stats?.acknowledged ?? 0),
+          resolved: Number(stats?.resolved ?? 0),
+        },
         canManage: managers.includes(user.role),
       };
     }
@@ -822,13 +911,13 @@ export async function professionalServiceAction(
       [d.id],
     );
     if (!incident) throw new AppError(404, "Incident not found.");
-    allow(
-      user,
-      ["owner", "manager"],
-      incident.branch_id,
-    );
+    allow(user, ["owner", "manager"], incident.branch_id);
     if (!incident.branch_id && user.role !== "owner")
-      throw new AppError(403, "Only an Admin can update a business-wide incident.", "BRANCH_FORBIDDEN");
+      throw new AppError(
+        403,
+        "Only an Admin can update a business-wide incident.",
+        "BRANCH_FORBIDDEN",
+      );
     if (
       d.status === "resolved" &&
       incident.category === "service_safety" &&
@@ -945,8 +1034,31 @@ export async function professionalServiceAction(
         409,
         "The selected recommendation is no longer available.",
       );
-    const slot = await validateSlot(tx, d.slotId, d.serviceId, d.branchId),
-      bid = id(),
+    let slot: Row;
+    if (d.preferredStart) {
+      const preferred = Date.parse(d.preferredStart);
+      if (preferred <= Date.now() || preferred > Date.now() + 180 * 86400000)
+        throw new AppError(
+          400,
+          "Choose a future preferred time within the next 180 days.",
+        );
+      const requestedId = id();
+      slot = (
+        await tx.query(
+          "INSERT INTO service_slots(id,service_id,branch_id,technician_id,starts_at,ends_at,capacity,blocked,request_only) VALUES($1,$2,$3,NULL,$4,$5,1,true,true) RETURNING *",
+          [
+            requestedId,
+            d.serviceId,
+            d.branchId,
+            new Date(preferred).toISOString(),
+            new Date(
+              preferred + s.config.durationMinutes * 60000,
+            ).toISOString(),
+          ],
+        )
+      ).rows[0];
+    } else slot = await validateSlot(tx, d.slotId!, d.serviceId, d.branchId);
+    const bid = id(),
       ref = "EGS-" + bid.slice(0, 8).toUpperCase();
     await tx.query(
       "INSERT INTO service_bookings(id,reference,service_id,branch_id,customer_id,slot_id,technician_id,snapshot,checklist,checklist_version,address,equipment,notes,status,idempotency_key,request_hash) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'pending_confirmation',$14,$15)",
@@ -1000,15 +1112,36 @@ export async function professionalServiceAction(
       user,
       b,
       "pending_confirmation",
-      "Appointment requested. Payment and safety clearance have not been confirmed.",
+      slot.request_only
+        ? `Service requested for preferred time ${new Date(slot.starts_at).toISOString()}. Scheduling and provider assignment await EasyGas confirmation; no capacity is reserved.`
+        : "Appointment requested. Payment and safety clearance have not been confirmed.",
     );
-    return { id: bid, reference: ref };
+    if (slot.request_only) {
+      const coordinators = (
+        await tx.query(
+          "SELECT id FROM users WHERE active=true AND (role='owner' OR (role='manager' AND branch_id=$1))",
+          [d.branchId],
+        )
+      ).rows;
+      for (const coordinator of coordinators)
+        await notify(
+          tx,
+          coordinator.id,
+          "Service request needs scheduling",
+          `${ref}: ${s.config.name}. Arrange a qualified provider and confirm the preferred visit time.`,
+          bid,
+        );
+    }
+    return {
+      id: bid,
+      reference: ref,
+      schedulePending: Boolean(slot.request_only),
+    };
   }
   if (action === "bookings") {
     const selector = z.object({ id: uuid.optional() }).strict().parse(input);
     const customer = ["customer", "commercial"].includes(user.role);
-    if (!customer)
-      allow(user, [...managers, "technician", "finance", "owner"]);
+    if (!customer) allow(user, [...managers, "technician", "finance", "owner"]);
     const filter = customer
       ? "customer_id=$1"
       : user.role === "owner"
@@ -1349,6 +1482,11 @@ export async function professionalServiceAction(
     if (["confirmed", "assigned"].includes(d.status))
       allow(user, managers, b.branch_id);
     else await technician(tx, user, b);
+    if (!b.technician_id || b.schedule_pending)
+      throw new AppError(
+        409,
+        "Allocate a qualified provider and an appointment before progressing this request.",
+      );
     await eligible(tx, b.technician_id, b.branch_id, b.snapshot.qualification);
     if (d.status === "in_progress" && b.snapshot.bundleId) {
       const linked = await one(
@@ -1369,11 +1507,16 @@ export async function professionalServiceAction(
     const d = z
       .object({
         bookingId: uuid,
-        slotId: uuid,
+        slotId: uuid.optional(),
+        preferredStart: z.string().datetime({ offset: true }).optional(),
         version: z.number().int(),
         reason,
       })
       .strict()
+      .refine(
+        (v) => Boolean(v.slotId) !== Boolean(v.preferredStart),
+        "Choose an appointment or a preferred time.",
+      )
       .parse(input);
     if (b.customer_id !== user.id) allow(user, managers, b.branch_id);
     if (
@@ -1382,16 +1525,48 @@ export async function professionalServiceAction(
     )
       throw new AppError(409, "Refresh the booking before rescheduling.");
     if (
+      !b.schedule_pending &&
       Date.parse(b.starts_at) - Date.now() <
-      b.snapshot.cancellationHours * 3600000
+        b.snapshot.cancellationHours * 3600000
     )
       throw new AppError(
         409,
         "The self-service rescheduling period has ended. Contact support.",
       );
+    if (d.preferredStart) {
+      if (!b.schedule_pending || b.status !== "pending_confirmation")
+        throw new AppError(
+          409,
+          "A scheduled appointment must use an available appointment slot.",
+        );
+      const preferred = Date.parse(d.preferredStart);
+      if (preferred <= Date.now() || preferred > Date.now() + 180 * 86400000)
+        throw new AppError(
+          400,
+          "Choose a future preferred time within the next 180 days.",
+        );
+      await tx.query(
+        "UPDATE service_slots SET starts_at=$1,ends_at=$2 WHERE id=$3 AND request_only",
+        [
+          new Date(preferred).toISOString(),
+          new Date(
+            preferred + b.snapshot.durationMinutes * 60000,
+          ).toISOString(),
+          b.slot_id,
+        ],
+      );
+      await event(
+        tx,
+        user,
+        b,
+        "pending_confirmation",
+        `Preferred time changed to ${new Date(preferred).toISOString()}. ${d.reason}`,
+      );
+      return { ok: true };
+    }
     const slot = await validateSlot(
       tx,
-      d.slotId,
+      d.slotId!,
       b.service_id,
       b.branch_id,
       b.id,
@@ -1508,8 +1683,9 @@ export async function professionalServiceAction(
       throw new AppError(409, "Refresh the booking before cancelling.");
     if (
       !["pending_confirmation", "confirmed", "assigned"].includes(b.status) ||
-      Date.parse(b.starts_at) - Date.now() <
-        b.snapshot.cancellationHours * 3600000
+      (!b.schedule_pending &&
+        Date.parse(b.starts_at) - Date.now() <
+          b.snapshot.cancellationHours * 3600000)
     )
       throw new AppError(409, "Contact support to review this cancellation.");
     await releaseMaterials(tx, b);

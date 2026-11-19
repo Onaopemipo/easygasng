@@ -1,0 +1,1155 @@
+.workspace {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 0 48px;
+  color: var(--text);
+  --ac-line: var(--border, #e0e7e3);
+  --ac-muted: var(--muted, #68766e);
+}
+.heading {
+  margin-bottom: 30px;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  color: var(--green);
+}
+.heading h1 {
+  font-size: 30px;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin: 8px 0 9px;
+}
+.heading p {
+  font-size: 14px;
+  color: var(--ac-muted);
+  margin: 0;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 208px minmax(0, 1fr);
+  gap: 30px;
+  align-items: start;
+}
+.nav {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 12px;
+  border-radius: 7px;
+  color: var(--ac-muted);
+  font-size: 13px;
+  font-weight: 550;
+  text-decoration: none;
+}
+.nav a > svg:last-child {
+  margin-left: auto;
+  opacity: 0;
+}
+.nav a:hover {
+  background: color-mix(in srgb, var(--green) 5%, transparent);
+  color: var(--text);
+}
+.nav a[aria-current] {
+  background: color-mix(in srgb, var(--green) 10%, var(--surface));
+  color: var(--green);
+  font-weight: 700;
+}
+.nav a[aria-current] > svg:last-child {
+  opacity: 1;
+}
+.nav > p {
+  font-size: 11px;
+  margin: 22px 12px;
+  color: var(--ac-muted);
+}
+.content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.card {
+  border: 1px solid var(--ac-line);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: 0 2px 5px #00000002;
+}
+.cardHeading {
+  padding: 22px 24px 17px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-between;
+}
+.cardHeading h2,
+.identity h2 {
+  font-size: 16px;
+  letter-spacing: -0.35px;
+  line-height: 1.4;
+  margin: 0;
+}
+.cardHeading p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ac-muted);
+  margin: 4px 0 0;
+}
+.row {
+  margin: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px 0;
+  border-top: 1px solid var(--ac-line);
+}
+.row:last-child {
+  padding-bottom: 23px;
+}
+.label {
+  font-size: 11px;
+  color: var(--ac-muted);
+  display: block;
+  margin-bottom: 5px;
+}
+.value {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.value p {
+  margin: 4px 0 0;
+}
+.muted {
+  color: var(--ac-muted);
+}
+.badge {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 7px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 650;
+  color: var(--green);
+  background: color-mix(in srgb, var(--green) 8%, var(--surface));
+  white-space: nowrap;
+}
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 0 8px;
+}
+.identity h2 {
+  font-size: 18px;
+}
+.identity p {
+  font-size: 12px;
+  color: var(--ac-muted);
+  margin: 4px 0;
+  overflow-wrap: anywhere;
+}
+.avatar {
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  width: 54px;
+  height: 54px;
+  background: color-mix(in srgb, var(--green) 11%, var(--surface));
+  font-size: 19px;
+  font-weight: 650;
+  color: var(--green);
+  flex: none;
+}
+.subtle,
+.primary,
+.remove {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ac-line);
+  border-radius: 6px;
+  padding: 8px 11px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.primary {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+  padding: 9px 13px;
+}
+.subtle:hover {
+  background: color-mix(in srgb, var(--green) 5%, var(--surface));
+}
+.remove {
+  border: 0;
+  background: none;
+  color: var(--ac-muted);
+  padding: 8px 0;
+  margin-left: auto;
+}
+.remove:hover {
+  color: var(--danger, #bc3434);
+}
+.workspace button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+.workspace :is(button, a, input, select):focus-visible,
+.overlay :is(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+.emptyInline {
+  font-size: 13px;
+  color: var(--ac-muted);
+  padding: 0 24px 22px;
+  line-height: 1.6;
+  margin: 0;
+}
+.accountDetails {
+  font-size: 11px;
+  color: var(--ac-muted);
+  padding: 0 3px;
+}
+.accountDetails summary {
+  cursor: pointer;
+}
+.accountDetails p {
+  overflow-wrap: anywhere;
+}
+.addresses {
+  padding: 0 24px 24px;
+  display: grid;
+  gap: 14px;
+}
+.address {
+  border: 1px solid var(--ac-line);
+  border-radius: 8px;
+  padding: 18px;
+}
+.addressTop {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.addressTop > svg {
+  color: var(--green);
+}
+.addressTop h3 {
+  margin: 0;
+  font-size: 14px;
+}
+.addressTop .badge {
+  margin-left: auto;
+}
+.address > p {
+  font-size: 13px;
+  margin: 5px 0;
+  line-height: 1.6;
+}
+.addressActions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-top: 1px solid var(--ac-line);
+  padding-top: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.warning {
+  color: var(--danger, #ad6124);
+}
+.empty {
+  padding: 36px 24px 48px;
+  text-align: center;
+  color: var(--ac-muted);
+}
+.empty > svg {
+  color: var(--green);
+  margin: auto;
+}
+.empty h3 {
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.empty p {
+  font-size: 12px;
+}
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0 24px;
+  padding: 17px 0;
+  border-top: 1px solid var(--ac-line);
+  font-size: 13px;
+}
+.toggleRow small {
+  display: block;
+  color: var(--ac-muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin-top: 3px;
+}
+.toggleRow input {
+  appearance: none !important;
+  flex: none !important;
+  width: 34px !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: var(--ac-line) !important;
+  position: relative;
+  cursor: pointer;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.toggleRow input:after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px #0002;
+  transition: transform 0.15s;
+}
+.toggleRow input:checked {
+  background: var(--green) !important;
+}
+.toggleRow input:checked:after {
+  transform: translateX(14px);
+}
+.quiet {
+  border-top: 1px solid var(--ac-line);
+  margin: 0 24px;
+  padding: 20px 0;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+.quiet p {
+  font-size: 12px;
+  max-width: 270px;
+  color: var(--ac-muted);
+  margin: 5px 0 0;
+  line-height: 1.6;
+}
+.times {
+  display: flex;
+  gap: 12px;
+}
+.times label {
+  font-size: 11px;
+  color: var(--ac-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.times select {
+  font-size: 12px;
+  padding: 8px 10px;
+  min-width: 90px;
+  border-radius: 6px;
+  min-height: 36px;
+}
+.formFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--ac-line);
+}
+.saved {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: var(--green);
+  font-size: 12px;
+}
+.channel {
+  border-top: 1px solid var(--ac-line);
+  margin: 0 24px;
+  font-size: 13px;
+}
+.channel summary {
+  padding: 17px 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+.channel summary span {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ac-muted);
+  float: right;
+}
+.channel .toggleRow {
+  margin: 0 0 0 10px;
+  font-size: 12px;
+}
+.session {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  padding: 18px 0;
+  margin: 0 24px;
+  border-top: 1px solid var(--ac-line);
+}
+.session > svg {
+  color: var(--ac-muted);
+  flex: none;
+}
+.session > div {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+}
+.session .badge {
+  margin-left: 8px;
+}
+.session p {
+  font-size: 11px;
+  color: var(--ac-muted);
+  margin: 6px 0 0;
+  line-height: 1.6;
+}
+.session strong {
+  overflow-wrap: anywhere;
+}
+.privacyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 24px 18px;
+}
+.policy {
+  background: color-mix(in srgb, var(--green) 4%, var(--surface));
+  border: 1px solid var(--ac-line);
+  margin: 0 24px 22px;
+  padding: 12px 14px;
+  border-radius: 7px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ac-muted);
+}
+.history {
+  margin: 0 24px 20px;
+  font-size: 12px;
+  color: var(--ac-muted);
+}
+.history summary {
+  cursor: pointer;
+}
+.history > div {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ac-line);
+}
+.content :global(.theme-settings),
+.content > :global(#testimonials) {
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--ac-line);
+  box-shadow: none;
+}
+.content :global(.theme-settings h2),
+.content :global(#testimonials h2) {
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+.content :global(.theme-settings p),
+.content :global(#testimonials > p) {
+  font-size: 12px;
+  color: var(--ac-muted);
+  line-height: 1.7;
+}
+.content :global(.theme-settings label) {
+  font-size: 12px;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 24px;
+}
+.content :global(.theme-settings select) {
+  font-size: 13px;
+  min-height: 40px;
+  padding: 9px 12px;
+}
+.content :global(.testimonial-grid) {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+.content :global(.testimonial-grid article) {
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: none;
+}
+.content :global(.testimonial-grid p) {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+.content :global(.testimonial-grid strong) {
+  font-size: 13px;
+}
+.content :global(.testimonial-controls) {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.content :global(.testimonial-controls .button) {
+  font-size: 11px;
+  min-height: 32px;
+  padding: 7px 10px;
+}
+.content :global(.testimonial-new) {
+  margin-top: 16px;
+  font-size: 12px;
+  min-height: 36px;
+  padding: 9px 13px;
+  width: auto;
+}
+.overlay {
+  padding: 24px;
+  z-index: 1000;
+  background: #0a1f1580;
+  backdrop-filter: blur(3px);
+  --ac-line: var(--border, #e0e7e3);
+}
+.overlay > :global(.modal) {
+  width: min(100%, 580px);
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+  border-radius: 14px;
+  padding: 24px;
+  background: var(--surface);
+  color: var(--text);
+}
+.overlay :global(.section-heading) {
+  margin-bottom: 20px;
+  align-items: center;
+}
+.overlay :global(.section-heading h2) {
+  font-size: 20px;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+.overlay :global(.workflow-form) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  background: none;
+}
+.overlay :global(.workflow-form > label),
+.overlay :global(.testimonial-form > label) {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+}
+.overlay :global(.workflow-form input),
+.overlay :global(.workflow-form select),
+.overlay :global(.workflow-form textarea),
+.overlay :global(.testimonial-form input),
+.overlay :global(.testimonial-form select),
+.overlay :global(.testimonial-form textarea) {
+  font-size: 13px;
+  padding: 10px 12px;
+  min-height: 40px;
+  border-radius: 6px;
+}
+.overlay :global(.workflow-form textarea) {
+  min-height: 80px;
+}
+.overlay :global(.workflow-form .address-area-fields) {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.overlay :global(.workflow-form .address-area-fields label) {
+  font-size: 12px;
+  gap: 7px;
+}
+.overlay :global(.workflow-form .muted) {
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 0;
+}
+.overlay :global(.workflow-form > label[data-field-type="hidden"]) {
+  display: none;
+}
+.overlay :global(.workflow-form > label[data-field-type="checkbox"]),
+.overlay :global(.testimonial-form .testimonial-consent) {
+  flex-direction: row-reverse;
+  align-items: start;
+  justify-content: flex-end;
+  line-height: 1.6;
+}
+.overlay :global(input[type="checkbox"]) {
+  width: 16px !important;
+  height: 16px !important;
+  min-height: 16px !important;
+  flex: none;
+  padding: 0 !important;
+}
+.overlay :global(.button) {
+  font-size: 12px;
+  min-height: 38px;
+  padding: 10px 15px;
+  border-radius: 6px;
+}
+.overlay :global(.workflow-form > .button) {
+  margin-top: 4px;
+  align-self: flex-end;
+  width: auto;
+}
+.dialogIntro {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+.overlay .policy {
+  margin: 0 0 20px;
+}
+.overlay :global(.testimonial-form) {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.overlay :global(.testimonial-form h3) {
+  display: none;
+}
+.overlay :global(.testimonial-form p) {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+.overlay :global(.testimonial-form textarea) {
+  min-height: 110px;
+}
+.overlay :global(.testimonial-form .button) {
+  width: auto;
+  align-self: flex-end;
+}
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 175px minmax(0, 1fr);
+    gap: 20px;
+  }
+  .cardHeading {
+    align-items: flex-start;
+  }
+  .quiet {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .nav a {
+    font-size: 12px;
+  }
+}
+@media (max-width: 700px) {
+  .workspace {
+    padding-top: 0;
+  }
+  .heading {
+    margin-bottom: 22px;
+  }
+  .heading h1 {
+    font-size: 26px;
+  }
+  .heading p {
+    font-size: 12px;
+  }
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .nav {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--ac-line);
+  }
+  .nav a {
+    padding: 9px 10px;
+    border: 1px solid var(--ac-line);
+    font-size: 11px;
+    gap: 6px;
+  }
+  .nav a > svg {
+    width: 14px;
+    height: 14px;
+  }
+  .nav a > svg:last-child,
+  .nav > p {
+    display: none;
+  }
+  .content {
+    width: 100%;
+    gap: 16px;
+  }
+  .identity h2 {
+    font-size: 17px;
+  }
+  .cardHeading {
+    padding: 18px 17px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .cardHeading h2 {
+    font-size: 15px;
+  }
+  .row,
+  .channel,
+  .quiet,
+  .session {
+    margin-left: 17px;
+    margin-right: 17px;
+  }
+  .row {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .value {
+    font-size: 12px;
+  }
+  .row:has(.value > span) {
+    align-items: flex-start;
+  }
+  .row .badge {
+    font-size: 9px;
+  }
+  .primary,
+  .subtle,
+  .remove {
+    font-size: 11px;
+  }
+  .addresses {
+    padding: 0 17px 17px;
+  }
+  .address {
+    padding: 14px;
+  }
+  .addressActions {
+    gap: 7px;
+  }
+  .toggleRow {
+    margin: 0 17px;
+    font-size: 12px;
+    padding: 16px 0;
+  }
+  .toggleRow small {
+    font-size: 11px;
+  }
+  .formFooter {
+    padding: 15px 17px;
+    flex-wrap: wrap;
+  }
+  .privacyActions {
+    padding: 0 17px 16px;
+  }
+  .policy {
+    margin: 0 17px 18px;
+    font-size: 11px;
+  }
+  .session {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .session .badge {
+    margin-left: 5px;
+  }
+  .session p {
+    font-size: 10px;
+  }
+  .session strong {
+    font-size: 12px;
+  }
+  .history {
+    margin: 0 17px 18px;
+  }
+  .history > div {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .overlay {
+    padding: 12px;
+  }
+  .overlay > :global(.modal) {
+    padding: 20px;
+    max-height: calc(100dvh - 24px);
+    border-radius: 12px;
+  }
+  .overlay :global(.section-heading h2) {
+    font-size: 18px;
+  }
+  .content :global(.theme-settings),
+  .content > :global(#testimonials) {
+    padding: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toggleRow input:after {
+    transition: none;
+  }
+}
+.content :global(.theme-settings),
+.content > :global(#testimonials) {
+  padding: 24px;
+  border: 1px solid var(--ac-line);
+  border-radius: 12px;
+  box-shadow: none;
+  margin: 0;
+  background: var(--surface);
+}
+.content :global(.theme-settings h2),
+.content :global(#testimonials > h2) {
+  font-size: 16px;
+  letter-spacing: -0.35px;
+  margin: 0 0 8px;
+}
+.content :global(.theme-settings p),
+.content :global(#testimonials > p) {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ac-muted);
+  margin: 0 0 20px;
+}
+.content :global(.theme-settings label) {
+  font-size: 12px;
+  max-width: 280px;
+  gap: 8px;
+}
+.content :global(.theme-settings select) {
+  font-size: 13px;
+  min-height: 38px;
+  padding: 9px 12px;
+  border-radius: 6px;
+}
+.content :global(.testimonial-grid) {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 20px 0;
+}
+.content :global(.testimonial-grid > article) {
+  padding: 18px;
+  border: 1px solid var(--ac-line);
+  border-radius: 8px;
+  box-shadow: none;
+}
+.content :global(.testimonial-grid strong) {
+  font-size: 12px;
+}
+.content :global(.testimonial-grid p) {
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 8px 0;
+  color: var(--ac-muted);
+}
+.content :global(.testimonial-controls) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+}
+.content :global(#testimonials .button) {
+  font-size: 12px;
+  min-height: 34px;
+  width: auto;
+  padding: 8px 11px;
+  border-radius: 6px;
+}
+.content :global(.review-content) {
+  margin: 10px 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.content :global(.review-content summary) {
+  cursor: pointer;
+}
+.overlay :global(.workflow-form label) {
+  font-size: 12px;
+}
+.overlay :global(.workflow-form .field-caption) {
+  line-height: 1.5;
+}
+.overlay :global(.workflow-form h3) {
+  font-size: 15px;
+}
+.overlay :global(.workflow-form) {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  gap: 15px;
+}
+.overlay :global(.modal) {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  padding: 24px;
+  border-radius: 13px;
+  overflow-y: auto;
+}
+.overlay :global(.section-heading) {
+  margin-bottom: 20px;
+  gap: 10px;
+}
+.overlay :global(.section-heading h2) {
+  font-size: 19px;
+  letter-spacing: -0.4px;
+}
+.overlay :global(.section-heading .icon-button) {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+}
+@media (max-width: 700px) {
+  .nav {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .nav a {
+    padding: 10px 7px;
+    font-size: 10px;
+    gap: 6px;
+    justify-content: center;
+  }
+  .nav a > svg {
+    width: 14px;
+    height: 14px;
+  }
+  .nav a > svg:last-child {
+    display: none;
+  }
+  .nav > p {
+    display: none;
+  }
+  .content {
+    width: 100%;
+    gap: 16px;
+  }
+  .cardHeading {
+    padding: 18px;
+    flex-wrap: wrap;
+  }
+  .cardHeading h2 {
+    font-size: 15px;
+  }
+  .cardHeading p {
+    font-size: 12px;
+  }
+  .row {
+    margin: 0 18px;
+    padding: 15px 0;
+  }
+  .emptyInline {
+    padding: 0 18px 18px;
+  }
+  .value {
+    font-size: 12px;
+  }
+  .addresses {
+    padding: 0 18px 18px;
+  }
+  .address {
+    padding: 15px;
+  }
+  .addressActions {
+    gap: 8px;
+  }
+  .subtle,
+  .primary,
+  .remove {
+    font-size: 11px;
+  }
+  .toggleRow,
+  .quiet,
+  .channel {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+  .toggleRow {
+    font-size: 12px;
+  }
+  .toggleRow small {
+    font-size: 11px;
+  }
+  .formFooter {
+    padding: 15px 18px;
+    flex-wrap: wrap;
+  }
+  .session {
+    margin: 0 18px;
+    gap: 9px;
+    flex-wrap: wrap;
+  }
+  .session > div {
+    flex: 1;
+    min-width: 150px;
+  }
+  .session strong {
+    font-size: 12px;
+  }
+  .session p {
+    font-size: 11px;
+  }
+  .privacyActions {
+    padding: 0 18px 18px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .policy {
+    margin: 0 18px 18px;
+    font-size: 11px;
+  }
+  .history {
+    margin: 0 18px 18px;
+  }
+  .history > div {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .content :global(.theme-settings),
+  .content > :global(#testimonials) {
+    padding: 18px;
+  }
+  .overlay :global(.modal) {
+    max-height: calc(100dvh - 24px);
+    padding: 20px;
+  }
+  .overlay :global(.section-heading h2) {
+    font-size: 18px;
+  }
+}
+.session strong {
+  font-size: 13px;
+}
+.session p {
+  font-size: 12px;
+  color: var(--ac-muted);
+  margin: 6px 0 0;
+}
+.session .badge {
+  margin-left: 8px;
+}
+.privacyActions {
+  display: flex;
+  gap: 12px;
+  padding: 0 24px 20px;
+}
+.addressForm :global(form.product-form.support-dialog-form) {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px 16px;
+}
+.addressForm :global(form.product-form.support-dialog-form) > label {
+  min-width: 0;
+}
+.addressForm
+  :global(form.product-form.support-dialog-form)
+  > label:has([name="label"]),
+.addressForm
+  :global(form.product-form.support-dialog-form)
+  > label:has([name="street"]),
+.addressForm
+  :global(form.product-form.support-dialog-form)
+  > label:has([name="isDefault"]),
+.addressForm
+  :global(form.product-form.support-dialog-form)
+  > .address-location-feedback,
+.addressForm :global(form.product-form.support-dialog-form) > :global(.notice),
+.addressForm :global(form.product-form.support-dialog-form) > button {
+  grid-column: 1/-1;
+}
+.addressForm :global(form.product-form.support-dialog-form) > button {
+  justify-self: end;
+}
+.addressForm
+  :global(form)
+  > label
+  :is(input:not([type="checkbox"]), textarea, select) {
+  width: 100%;
+  min-height: 38px;
+}
+.addressForm :global(form.product-form.support-dialog-form) > label {
+  gap: 7px;
+}
+.addressForm
+  :global(form.product-form.support-dialog-form)
+  > label:has([name="street"])
+  textarea {
+  min-height: 68px;
+}
+.addressForm
+  :global(form.product-form.support-dialog-form)
+  > label
+  input[type="checkbox"] {
+  order: 0;
+}
+.addressForm :global(.address-location-feedback) {
+  grid-column: 1/-1;
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 0;
+}
+@media (max-width: 480px) {
+  .addressForm :global(form.product-form.support-dialog-form) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.content :global(.review-content summary) {
+  font-size: 13px;
+  line-height: 1.6;
+  cursor: pointer;
+  color: var(--ac-muted);
+}

@@ -2,6 +2,7 @@ import { serviceSettlementSource } from "./service-settlement-source";
 import { one, type SQL } from "./db";
 // Source for invoice previews, issue and collectible requests. Never authorises work.
 export async function serviceInvoiceSource(tx: SQL, b: Record<string, any>) {
+  if (!b.technician_id && await one(tx, "SELECT b.id FROM service_bookings b JOIN service_slots s ON s.id=b.slot_id WHERE b.id=$1 AND s.request_only", [b.id])) return null;
   if (["cancelled", "failed"].includes(b.status))
     return serviceSettlementSource(tx, b);
   if (

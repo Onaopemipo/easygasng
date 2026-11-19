@@ -52,7 +52,7 @@ export async function customerDashboard(tx: SQL, user: Actor, input: unknown) {
     return (
       (await one(
         tx,
-        "SELECT b.id,b.reference,b.status,b.snapshot->>'name' AS name,s.starts_at FROM service_bookings b JOIN service_slots s ON s.id=b.slot_id WHERE b.customer_id=$1 AND b.status NOT IN ('completed','cancelled','failed') AND s.ends_at>now() ORDER BY s.starts_at LIMIT 1",
+        "SELECT b.id,b.reference,b.status,b.snapshot->>'name' AS name,s.starts_at,s.request_only AS schedule_pending FROM service_bookings b JOIN service_slots s ON s.id=b.slot_id WHERE b.customer_id=$1 AND b.status NOT IN ('completed','cancelled','failed') AND s.ends_at>now() ORDER BY s.starts_at LIMIT 1",
         [user.id],
       )) ?? null
     );

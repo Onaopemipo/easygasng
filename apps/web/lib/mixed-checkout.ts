@@ -22,7 +22,7 @@ export async function mixedCheckoutAction(
       bundleId: z.string().uuid().optional(),
       bundleVersion: z.number().int().positive().optional(),
       bundleTotalKobo: z.number().int().nonnegative().optional(),
-      appointments: z.array(bookingInput).min(1).max(5),
+      appointments: z.array(bookingInput.refine(v => Boolean(v.slotId), "Product bundles require a reserved appointment slot.")).min(1).max(5),
       idempotencyKey: z.string().uuid(),
     })
     .strict()

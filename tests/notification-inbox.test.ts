@@ -73,3 +73,99 @@ test("NOTIF-SCOPE: paginated filters and bulk reads stay recipient-scoped and pr
     await f.db.close?.();
   }
 });
+
+test("CNIN-API01: customer search is global, literal, bounded and recipient-scoped with canonical totals and pages", async () => {
+  const f = await fixture();
+  try {
+    for (let i = 0; i < 10; i++)
+      await f.db.query(
+        "INSERT INTO notifications(id,user_id,title,body,read_at,created_at) VALUES($1,$2,$3,$4,$5,$6)",
+        [
+          id(),
+          f.actors.customer.id,
+          i % 2 ? "Payment update" : "Delivery update",
+          i === 9 ? "Needle 100% literal" : "Needle search fixture",
+          i < 2 ? new Date().toISOString() : null,
+          new Date(Date.now() - i * 60000).toISOString(),
+        ],
+      );
+    await f.db.query(
+      "INSERT INTO notifications(id,user_id,title,body) VALUES($1,$2,'Delivery update','Needle foreign private notice')",
+      [id(), f.actors.technician.id],
+    );
+    const all = await f.call("customer", "notifications.list", {
+      search: " needle ",
+    });
+    assert.equal(all.total, 10);
+    assert.equal(all.unread, 8);
+    assert.equal(all.filteredTotal, 10);
+    assert.equal(all.items.length, 8);
+    const page = await f.call("customer", "notifications.list", {
+      search: "needle",
+      page: 999,
+    });
+    assert.equal(page.page, 2);
+    assert.equal(page.items.length, 2);
+    assert.ok(
+      page.items.every((n: any) => !all.items.some((p: any) => p.id === n.id)),
+    );
+    const filtered = await f.call("customer", "notifications.list", {
+      search: "DELIVERY",
+      filter: "unread",
+    });
+    assert.equal(filtered.filteredTotal, 4);
+    assert.equal(filtered.total, 10);
+    assert.ok(filtered.items.every((n: any) => !n.read_at));
+    assert.equal(
+      (await f.call("customer", "notifications.list", { search: "%" }))
+        .filteredTotal,
+      1,
+    );
+    assert.equal(
+      (
+        await f.call("customer", "notifications.list", {
+          search: "not-found",
+          page: 9,
+        })
+      ).page,
+      1,
+    );
+    await assert.rejects(() =>
+      f.call("customer", "notifications.list", { search: "x".repeat(101) }),
+    );
+  } finally {
+    await f.db.close?.();
+  }
+});
+
+test("CNIN-API02: customer order destinations require ownership even when an own notification references another customer's order", async () => {
+  const f = await fixture();
+  try {
+    const own = id(),
+      foreign = id();
+    for (const [oid, uid] of [
+      [own, f.actors.customer.id],
+      [foreign, f.actors.technician.id],
+    ])
+      await f.db.query(
+        "INSERT INTO orders(id,reference,customer_id,branch_id,status,payment_status,payment_method,subtotal_kobo,delivery_kobo,total_kobo,address,delivery_date,delivery_window,idempotency_key,request_hash,delivery_code_hash,delivery_code_expires_at) VALUES($1,$1,$2,'lagos','placed','unpaid','cash',1000,0,1000,'{}',current_date,'09:00–12:00',$1,'qa','qa',now()+interval '1 day')",
+        [oid, uid],
+      );
+    for (const oid of [own, foreign])
+      await f.db.query(
+        "INSERT INTO notifications(id,user_id,title,body,related_id) VALUES($1,$2,'Order update','Synthetic fixture',$3)",
+        [id(), f.actors.customer.id, oid],
+      );
+    const result = await f.call("customer", "notifications.list");
+    assert.equal(
+      result.items.find((n: any) => n.related_id === own).href,
+      `/orders?orderId=${own}`,
+    );
+    assert.equal(
+      result.items.find((n: any) => n.related_id === foreign).href,
+      null,
+    );
+  } finally {
+    await f.db.close?.();
+  }
+});

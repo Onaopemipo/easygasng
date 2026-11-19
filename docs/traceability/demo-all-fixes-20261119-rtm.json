@@ -1,0 +1,271 @@
+{
+  "phase": "All pending fixes demo release and named LPG recovery \u2014 19 November2026",
+  "productionDecision": "Explicit demo release and named synthetic workflow authorised. Commercial production NO-GO, actual-import hold, retain-all, unrelated work and native/physical/provider acceptance gaps preserved.",
+  "requirements": [
+    {
+      "id": "DREL2-01",
+      "requirement": "Publish all authorised pending fixes and verify the exact demo deployment against successful release validation",
+      "priority": "P0",
+      "scope": "Existing isolated easygas-client-demo web and named synthetic order only; no native build/export/install or commercial activation",
+      "uiReference": "User screenshot and explicit release/recovery request",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/components/driver-lpg-controls.tsx"
+      ],
+      "dataSource": "Exact Git/Vercel commit, isolated demo migrations and canonical authenticated order/custody/stock/payment records",
+      "securityControl": "Retain sandbox and permanent fulfilment; restricted runtime; no fabricated historical dispensing, broad grants, real payment or guard bypass",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/trip-recovery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DLPG-01",
+        "DLPG-04",
+        "DLPG-UI01",
+        "DWT-PROOFNEG"
+      ],
+      "negativeTests": [
+        "DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit",
+        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "DREL2-G01",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Authorised scope recorded before release",
+      "testResult": "NOT RUN",
+      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+    },
+    {
+      "id": "DREL2-02",
+      "requirement": "Apply service-request migration081 only to the isolated demo database while preserving canonical records and restricted runtime access",
+      "priority": "P0",
+      "scope": "Existing isolated easygas-client-demo web and named synthetic order only; no native build/export/install or commercial activation",
+      "uiReference": "User screenshot and explicit release/recovery request",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/components/driver-lpg-controls.tsx"
+      ],
+      "dataSource": "Exact Git/Vercel commit, isolated demo migrations and canonical authenticated order/custody/stock/payment records",
+      "securityControl": "Retain sandbox and permanent fulfilment; restricted runtime; no fabricated historical dispensing, broad grants, real payment or guard bypass",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/trip-recovery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DLPG-01",
+        "DLPG-04",
+        "DLPG-UI01",
+        "DWT-PROOFNEG"
+      ],
+      "negativeTests": [
+        "DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit",
+        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "DREL2-G02",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Authorised scope recorded before release",
+      "testResult": "NOT RUN",
+      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+    },
+    {
+      "id": "DREL2-03",
+      "requirement": "Verify deployed customer Orders, Notifications, Account and service booking pages including preferred-time requests without technician capacity",
+      "priority": "P1",
+      "scope": "Existing isolated easygas-client-demo web and named synthetic order only; no native build/export/install or commercial activation",
+      "uiReference": "User screenshot and explicit release/recovery request",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/components/driver-lpg-controls.tsx"
+      ],
+      "dataSource": "Exact Git/Vercel commit, isolated demo migrations and canonical authenticated order/custody/stock/payment records",
+      "securityControl": "Retain sandbox and permanent fulfilment; restricted runtime; no fabricated historical dispensing, broad grants, real payment or guard bypass",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/trip-recovery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DLPG-01",
+        "DLPG-04",
+        "DLPG-UI01",
+        "DWT-PROOFNEG"
+      ],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "DREL2-G03",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Authorised scope recorded before release",
+      "testResult": "NOT RUN",
+      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+    },
+    {
+      "id": "DREL2-04",
+      "requirement": "Recover and complete existing synthetic order EG-2026-7BB8640B through the actual web workflow with audited qualifications, custody, dispensing and customer handover",
+      "priority": "P0",
+      "scope": "Existing isolated easygas-client-demo web and named synthetic order only; no native build/export/install or commercial activation",
+      "uiReference": "User screenshot and explicit release/recovery request",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/components/driver-lpg-controls.tsx"
+      ],
+      "dataSource": "Exact Git/Vercel commit, isolated demo migrations and canonical authenticated order/custody/stock/payment records",
+      "securityControl": "Retain sandbox and permanent fulfilment; restricted runtime; no fabricated historical dispensing, broad grants, real payment or guard bypass",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/trip-recovery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DLPG-01",
+        "DLPG-04",
+        "DLPG-UI01",
+        "DWT-PROOFNEG"
+      ],
+      "negativeTests": [
+        "DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit",
+        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "DREL2-G04",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Authorised scope recorded before release",
+      "testResult": "NOT RUN",
+      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+    },
+    {
+      "id": "DREL2-05",
+      "requirement": "Reconcile exact demo stock, cylinder, invoice/payment and returned vehicle custody without new charges or duplicate fulfilment",
+      "priority": "P0",
+      "scope": "Existing isolated easygas-client-demo web and named synthetic order only; no native build/export/install or commercial activation",
+      "uiReference": "User screenshot and explicit release/recovery request",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        ".github/workflows/release-validation.yml",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/components/driver-lpg-controls.tsx"
+      ],
+      "dataSource": "Exact Git/Vercel commit, isolated demo migrations and canonical authenticated order/custody/stock/payment records",
+      "securityControl": "Retain sandbox and permanent fulfilment; restricted runtime; no fabricated historical dispensing, broad grants, real payment or guard bypass",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/trip-recovery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DLPG-01",
+        "DLPG-04",
+        "DLPG-UI01",
+        "DWT-PROOFNEG"
+      ],
+      "negativeTests": [
+        "DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit",
+        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "DREL2-G05",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Authorised scope recorded before release",
+      "testResult": "NOT RUN",
+      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DREL2-G01",
+      "status": "NOT RUN",
+      "criteria": "Publish all authorised pending fixes and verify the exact demo deployment against successful release validation"
+    },
+    {
+      "id": "DREL2-G02",
+      "status": "NOT RUN",
+      "criteria": "Apply service-request migration081 only to the isolated demo database while preserving canonical records and restricted runtime access"
+    },
+    {
+      "id": "DREL2-G03",
+      "status": "NOT RUN",
+      "criteria": "Verify deployed customer Orders, Notifications, Account and service booking pages including preferred-time requests without technician capacity"
+    },
+    {
+      "id": "DREL2-G04",
+      "status": "NOT RUN",
+      "criteria": "Recover and complete existing synthetic order EG-2026-7BB8640B through the actual web workflow with audited qualifications, custody, dispensing and customer handover"
+    },
+    {
+      "id": "DREL2-G05",
+      "status": "NOT RUN",
+      "criteria": "Reconcile exact demo stock, cylinder, invoice/payment and returned vehicle custody without new charges or duplicate fulfilment"
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "approvedScope": "User explicitly requests deploying all pending fixes and recovering/completing EG-2026-7BB8640B. Existing one-hour demo bulk qualification approvals remain available; no real operating qualification or physical meter evidence is implied."
+    }
+  ]
+}

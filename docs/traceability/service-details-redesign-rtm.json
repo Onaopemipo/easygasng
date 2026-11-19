@@ -1112,6 +1112,14 @@
   "changeLog": [
     {
       "change": "Reused existing detail routes, service configuration, slot and booking APIs. Added opt-in availability reasons and native review. All 54 required scenarios and five supplemental checks are retained. No production deployment or migration."
+    },
+    {
+      "date": "2026-11-19",
+      "description": "2026-11-19 user-approved scope change: standalone customer service intake accepts an unassigned preferred-time request independently of technician availability (CSBK-01\u201305). Actual appointment allocation/execution still requires qualified personnel; bundles retain qualified slots. Current local web evidence is in customer-service-booking-redesign-rtm.json. Historical evidence, all requirement/scenario/gate IDs and broader native/production gaps retained.",
+      "evidence": [
+        "docs/traceability/customer-service-booking-redesign-rtm.json",
+        "docs/customer-service-bookings/evidence/tests.txt"
+      ]
     }
   ]
 }

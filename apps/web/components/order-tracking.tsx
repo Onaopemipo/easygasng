@@ -122,7 +122,7 @@ export function TrackingConnection({
     </div>
   );
 }
-function CustomerRiderPosition({ fix }: { fix?: RiderFix }) {
+export function CustomerRiderPosition({ fix }: { fix?: RiderFix }) {
   const [expired, setExpired] = useState<string | null>(null);
   useEffect(() => {
     if (!fix) return;

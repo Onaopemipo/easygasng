@@ -8,30 +8,26 @@ import { hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/s
 import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
 
 import { CustomerWallet } from "./customer-wallet";
-import { DocumentLibrary } from "./document-library";
+import { CustomerOrders } from "./customer-orders";
+import { NotificationInbox } from "./customer-notifications";
 import { FormInput } from "./password-input";
 import {OrderCardPayment} from "./hosted-payment";
 import {
   EasyRewards,
   RewardCheckoutField,
-  PartialRefundForm,
 } from "./easyrewards";
-import {
-  trackingLabels,
-  trackingEventLabel,
-} from "../../../packages/business-rules/src/order-tracking";
+
 import { CheckoutDeliveryFields, readCheckoutDelivery } from "./checkout-delivery-fields";
 import PublicHeader from "./public-header";
 import CustomerIntroduction from "./customer-introduction";
 import {
   useTrackingOrders,
-  TrackingConnection,
-  TrackingDetails,
 } from "./order-tracking";
-import { PublicTestimonials, CustomerTestimonials } from "./testimonials";
+import { CustomerAccount } from "./customer-account";
+import { PublicTestimonials } from "./testimonials";
 
 import { preload } from "react-dom";
-import { ThemeToggle, ThemeSettings } from "./theme-provider";
+import { ThemeToggle } from "./theme-provider";
 import CustomerWorkspace, { CustomerAccountMenu } from "./customer-workspace";
 import CustomerDashboard from "./customer-dashboard";
 import { useCustomerResource } from "./customer-data";
@@ -51,11 +47,9 @@ import { LegalDocument } from "./policies";
 import { Compatibility } from "./compatibility";
 import { Recommendations } from "./recommendations";
 import {
-  NotificationInbox,
   RecurringOrders,
   ActionForm,
   CreditWallet,
-  AccountSettings,
   Recovery,
   SupportDesk,
 } from "./workflows";
@@ -368,7 +362,7 @@ export default function Site({
             user &&
             ["customer", "commercial"].includes(user.role) ? (
             <div className="container page">
-              <CustomerBookings key={user.id} user={user} />
+              <CustomerBookings key={`${user.id}:${user.role}:${user.branchId}`} user={user} />
             </div>
           ) : pathname === "/services" ||
             pathname.startsWith("/services/") ||
@@ -407,7 +401,7 @@ export default function Site({
             <ProductDetail id={pathname.split("/")[2]} />
           ) : pathname === "/notifications" ? (
             <div className="container page">
-              <NotificationInbox />
+              <NotificationInbox key={`${user?.id}:${user?.role}:${user?.branchId}`} identity={`${user?.id}:${user?.role}:${user?.branchId}`} />
             </div>
           ) : pathname === "/recurring" ? (
             <div className="container page">
@@ -419,9 +413,7 @@ export default function Site({
             </div>
           ) : pathname === "/account-settings" ? (
             <div className="container page">
-              <ThemeSettings />
-              <CustomerTestimonials />
-              <AccountSettings />
+              <CustomerAccount key={`${user?.id}:${user?.role}:${user?.branchId}`} identity={`${user?.id}:${user?.role}:${user?.branchId}`} />
             </div>
           ) : pathname === "/support" ? (
             <div className="container page">
@@ -1647,7 +1639,6 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
   );
 }
 function Account({ section }: { section: string }) {
-  const cancelKeys = useRef<Record<string, string>>({});
   const { user, catalogue, toast } = useShop(),
     router = useRouter();
   const [data, setData] = useState<any>(null),
@@ -1658,7 +1649,7 @@ function Account({ section }: { section: string }) {
     let active = true;
     setData(null);
     setError("");
-    if (user && !["/rewards", "/refill"].includes(section)) {
+    if (user && !["/rewards", "/refill", "/orders", "/track"].includes(section)) {
       const action = ["/orders", "/track"].includes(section)
         ? "orders"
         : section === "/schedules"
@@ -1704,6 +1695,8 @@ function Account({ section }: { section: string }) {
     return <div className="container page"><EasyRewards key={`${user.id}:${user.role}:${user.branchId}`} /></div>;
   if (section === "/refill")
     return <div className="container page"><RefillProfiles smart key={`${user.id}:${user.role}:${user.branchId}`} /></div>;
+  if (["/orders", "/track"].includes(section))
+    return <CustomerOrders key={`${user.id}:${user.role}:${user.branchId}:${section}:${trackingOrderId}`} tracking={tracking} orderId={trackingOrderId} track={section === "/track"}/>;
   async function createSchedule(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setBusy(true);
@@ -1737,145 +1730,8 @@ function Account({ section }: { section: string }) {
                 : nav.find((n) => n[0] === section)?.[1]}
           </h1>
         </div>
-        {["/orders", "/track"].includes(section) && (
-          <TrackingConnection tracking={tracking} />
-        )}
-        {section === "/orders" && <DocumentLibrary />}
         {!data ? (
           <Loading />
-        ) : ["/orders", "/track"].includes(section) ? (
-          data.length ? (
-            <div className="order-list">
-              {data.map((o: any) => (
-                <article className="surface customer-order" key={o.id}>
-                  <div className="section-heading">
-                    <div>
-                      <span className="eyebrow">{o.reference}</span>
-                      <h3>
-                        {(o.gas_lines ?? [])
-                          .map(
-                            (g: any) =>
-                              `${Number(g.grams) / 1000} kg gas (${Number(g.capacity_grams) / 1000} kg cylinder)`,
-                          )
-                          .join(", ")}{" "}
-                        {o.items
-                          .map((i: any) => `${i.quantity} × ${i.name}`)
-                          .join(", ")}
-                      </h3>
-                    </div>
-                    <span className={`status ${o.status}`}>
-                      {trackingLabels[o.status] ??
-                        o.status.replaceAll("_", " ")}
-                    </span>
-                  </div>
-                  <p>
-                    {o.address.street}, {o.address.zone}
-                  </p>
-                  <div className="order-meta">
-                    <span>
-                      <CalendarDays size={16} />
-                      {o.delivery_date} · {o.delivery_window}
-                    </span>
-                    <strong>{money(o.total_kobo)}</strong>
-                  </div>
-                  <TrackingDetails order={o} />
-                  <div className="tracking-timeline">
-                    {o.events.map((e: any, i: number) => (
-                      <div key={i}>
-                        <CheckCircle2 size={18} />
-                        <strong>{trackingEventLabel(e)}</strong>
-                        <small>
-                          {new Date(e.created_at).toLocaleString("en-NG", {
-                            timeZone: "Africa/Lagos",
-                          })}
-                        </small>
-                      </div>
-                    ))}
-                  </div>
-                  {o.confirmation_code &&
-                    !["delivered", "cancelled"].includes(o.status) && (
-                      <Notice
-                        message={`Delivery confirmation code: ${o.confirmation_code}. Share this with your driver only after receiving all your items.`}
-                      />
-                    )}
-                  <p className="muted">
-                    Payment: {o.payment_status}. Live driver location is not
-                    available.
-                  </p>
-                  {o.payment_status === "verified" &&
-                    o.status === "delivered" && (
-                      <Link
-                        className="button secondary"
-                        href={`/account-settings?testimonialOrder=${encodeURIComponent(o.id)}#testimonials`}
-                      >
-                        Share your experience
-                      </Link>
-                    )}
-                  {o.payment_status === "verified" &&
-                    o.status === "delivered" && (
-                      <>
-                        <PartialRefundForm orderId={o.id} />
-                        <ActionForm
-                          action="refund.request"
-                          title="Request a refund as purchase credit"
-                          fields={[
-                            {
-                              name: "orderId",
-                              label: "",
-                              type: "hidden",
-                              value: o.id,
-                            },
-                            {
-                              name: "reason",
-                              label: "Reason (at least 10 characters)",
-                              type: "textarea",
-                            },
-                            {
-                              name: "acceptWalletCredit",
-                              label:
-                                "I agree to receive the refund as purchase credit if approved",
-                              type: "checkbox",
-                            },
-                          ]}
-                          submit="Submit refund request"
-                        />
-                      </>
-                    )}
-                  {o.status === "placed" && (
-                    <button
-                      className="button secondary"
-                      onClick={async () => {
-                        try {
-                          await api("order.transition", {
-                            id: o.id,
-                            operationKey: (cancelKeys.current[
-                              `${o.id}:${o.tracking_version}`
-                            ] ??= crypto.randomUUID()),
-                            version: o.tracking_version,
-                            status: "cancelled",
-                            note: "Cancelled by the customer before acceptance.",
-                          });
-                          setData(await api("orders"));
-                        } catch (e: any) {
-                          setError(e.message);
-                        }
-                      }}
-                    >
-                      Cancel Order
-                    </button>
-                  )}
-                </article>
-              ))}
-            </div>
-          ) : (
-            <Empty icon={Truck} title="Your first delivery is still ahead.">
-              Your real order updates will appear here after you place an order.
-              <br />
-              <Link href="/products" className="button">
-                Explore Products
-              </Link>
-            </Empty>
-          )
         ) : section === "/wallet" ? (
           <CustomerWallet data={data} />
         ) : section === "/schedules" ? (
@@ -2298,7 +2154,7 @@ function Footer() {
           <Link href="/contact">Contact Us</Link>
           <Link href="/delivery">Delivery Information</Link>
           <Link href="/account">Your Account</Link>
-          <Link href="/account-settings#testimonials">
+          <Link href="/account-settings?section=reviews#testimonials">
             Share Your Experience
           </Link>
           <Link href="/terms">Terms & Conditions</Link>

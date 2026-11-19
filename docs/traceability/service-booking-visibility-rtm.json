@@ -13,7 +13,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Book a Service navigation and browse/history actions verified in local browser; six header tests pass",
       "testResult": "PASS \u2014 HDR-03 and typecheck; browser confirms booking heading, links and honest empty state",
-      "outstandingWork": "Appointments cannot open until business approves service configurations, qualified personnel and slots; production NO-GO unchanged",
+      "outstandingWork": "Historical requirement remains retained. Standalone preferred-time request intake now verified in CSBK without technician availability; approved active service configuration and coverage remain necessary. Actual appointment allocation still requires qualified personnel and real slots; hosted rollout and production NO-GO unchanged.",
       "implementationFiles": [
         "packages/business-rules/src/public-header.ts",
         "apps/web/components/professional-services.tsx"
@@ -79,6 +79,14 @@
   "productionDecision": "NO-GO unchanged",
   "scopeChanges": [
     "Services navigation label clarified to Book a Service; route and position preserved",
-    "Separate public catalogue reads from staff management requests on the storefront."
+    "Separate public catalogue reads from staff management requests on the storefront.",
+    {
+      "date": "2026-11-19",
+      "description": "2026-11-19 user-approved scope change: standalone customer service intake accepts an unassigned preferred-time request independently of technician availability (CSBK-01\u201305). Actual appointment allocation/execution still requires qualified personnel; bundles retain qualified slots. Current local web evidence is in customer-service-booking-redesign-rtm.json. Historical evidence, all requirement/scenario/gate IDs and broader native/production gaps retained.",
+      "evidence": [
+        "docs/traceability/customer-service-booking-redesign-rtm.json",
+        "docs/customer-service-bookings/evidence/tests.txt"
+      ]
+    }
   ]
 }

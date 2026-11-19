@@ -1,0 +1,30 @@
+User confirms the installed dedicated chime is still silent. Audible acceptance FAIL.
+Existing binary WAV is identical to source: SHA256 28cd0b86be1297875eee1b1f9d3a5e7c9bde6f44a0a00a38d2fda89488d8d2ac.
+PCM mono44.1kHz16bit,0.85sec, peak0.37967 and RMS0.09985; file is not silent.
+Fresh native trace shows seek completed, software volume0.80, audio queue started, playback Playing, reached StopAtEnd0.850.
+CoreMedia also reports err=-12864; its causal significance is not established. Do not equate reaching end with acoustic success.
+AVAudioSession simulator logs Set volume on device73 to0.00.
+Read-only CoreAudio maps device73 to MacBook Pro Speakers; default output.
+Independent40-second scalar/mute trace during replay stayed0.3125, mute0. The zero-volume log alone is not proof of a hardware volume failure.
+Mac Sound UI independently shows MacBook Pro Speakers,31%, Mute off; iOS notifications Allow/Banners/Sounds on.
+Device Hub exposes simulator Increase/Decrease Volume as disabled; output selection attempt does not provide reliable checked-state readback. No successful volume change is claimed.
+iOS simulator Settings omits Sounds & Haptics; coordinate Control Centre attempts produced no verified opening.
+Prepared local-only Safari comparison at http://127.0.0.1:3110 using the exact WAV, without build/export/install or third-party upload.
+Device Hub keyboard/address submission did not load the page. User reports Safari is also silent. However, Device Hub still shows address editing and the local server recorded no request; Safari page load/playback is not independently verified and cannot establish simulator-wide failure.
+No app source changes, builds, installs, deployments, fulfilment/payment changes or business record writes during this diagnostic continuation.
+
+Recovery: Device Hub More > Restart invoked for EasyGas First Sign-In QA only. Home screen returned and both existing EasyGas Local and EasyGas Technician Local installations remained visible. No content reset, build or install. Capture Keyboard restored OFF. Post-restart audible playback has not been verified; defect remains open. Screenshot: simulator-restarted.png.
+
+User directly played the exact bundled WAV through the Mac chat audio control and confirmed: I can hear the chime on my Mac. Confirms this file is acoustically audible on the host; does not establish installed-app/simulator sound success. Post-restart Device Hub shows Home but native taps/Search and app-opening attempts produce no observed navigation, preventing agent-triggered replay in this session. No build/install/source or demo configuration changed.
+
+After the user restarted Device Hub, refreshed CUA connection and used Controls > Home plus visible simulator coordinates because embedded accessibility content remained absent. Opened existing EasyGas Local, restored Alert QA driver session, opened Profile and pressed Test assignment popup & sound. Actual Test assignment alert popup observed and retained in post-devicehub-restart-alert.png. Capture Keyboard restored OFF. User audible confirmation pending; no acoustic success inferred. No build/install/source/deployment or fulfilment/payment change.
+
+User confirms higher Mac volume still silent. Read-only CoreAudio now shows MacBook Pro Speakers default,75%,unmuted. QA simulator SpringBoard preferences explicitly report SBRingerMuted=true. App playsInSilentMode=false maps through installed Expo Swift source to AVAudioSession.ambient, which Apple documents as silenced by the Ring/Silent switch. Strong candidate cause; not acoustically proven until unmute/retest. No setting/source/build/install changed. Retain DAPP-02 DEFECTIVE/G02 FAIL pending user approval to turn off only QA simulator Silent Mode and audible retest.
+
+User explicitly approved turning off Silent Mode only on EasyGas First Sign-In QA. Device Hub inspector verifies Sound0.6 and Output MacBook Pro Speakers. Controls Home/Lock/Shake are disabled; visible switch attempt did not change SBRingerMuted, readback remains true. Compact view tested then full Device Hub restored; Capture Keyboard OFF. Approved mute change has NOT been applied, and no post-unmute playback claimed. No rebuild/install/source/deployment/business writes.
+
+User approved QA-only command-line unmute/restart. Both restart paths restored mute=true; persistent unmute not achieved. Restored original simulator volume0.6 and speaker route. Reopened installed app, wrote running SBRingerMuted=false with readback0 and triggered actual Profile test popup/banner. Final readback 0. Acoustic confirmation pending; no new build/install/source/deployment/payment changes.
+
+User confirms saved-preference-off replay remains silent. Simulator live com.apple.springboard.ringerstate still read0 while SBRingerMuted read0. Under existing QA-only CLI mute approval, set live state1 and posted its notification; readback com.apple.springboard.ringerstate 1. Triggered actual CUA Profile test popup and saved live-ringer-replay.png. Acoustic acceptance pending; notify-state change alone is not proof of effective audio unmute. DAPP-02 DEFECTIVE/G02 FAIL retained; no new source/build/install/deployment changes.
+
+Final listener response: Yes I heard it now. PASS: installed iOS foreground Profile test chime audible in current QA session following approved live-ringer adjustment. Fresh automatic assignment audio and restart persistence not re-tested; Android/physical/remote push gaps retained. No new build/install/source/deployment change.

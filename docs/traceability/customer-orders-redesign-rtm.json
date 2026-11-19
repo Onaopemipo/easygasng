@@ -1,0 +1,290 @@
+{
+  "phase": "Customer My Orders redesign \u2014 19 November 2026",
+  "productionDecision": "Existing production NO-GO, import hold and retain-all decisions preserved. No hosted deployment or native build in this phase.",
+  "requirements": [
+    {
+      "id": "CORD-01",
+      "requirement": "Show compact searchable order summaries, status counts and six-per-page pagination; put invoices/receipts in a separate view with optional advanced filters",
+      "priority": "P1",
+      "scope": "Customer web My Orders and Track order only; existing backend and staff/native flows preserved",
+      "uiReference": "Eight user screenshots of the single customer My Orders page, 19 November 2026",
+      "route": "/orders; /track",
+      "implementationFiles": [
+        "apps/web/components/customer-orders.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/customer-orders.ts",
+        "apps/web/components/document-library.tsx"
+      ],
+      "dataSource": "Existing authenticated orders snapshot/stream and documents.list; financial document models retain canonical balance/verified-receipt amounts",
+      "securityControl": "No initial mounting of document/refund detail readers; original authenticated document ownership/branch scope and private download URLs retained. Sandbox badges retained.",
+      "testFiles": [
+        "tests/customer-orders.test.ts",
+        "tests/financial-document-integration.test.ts"
+      ],
+      "testIds": [
+        "CORD-01",
+        "CORD-02",
+        "DOC-LIBRARY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/customer-orders/evidence/component-tests.txt",
+        "docs/customer-orders/evidence/regression-tests.txt",
+        "docs/customer-orders/evidence/financial-regression.txt",
+        "docs/customer-orders/evidence/typecheck.txt",
+        "docs/customer-orders/evidence/web-build.txt",
+        "docs/customer-orders/evidence/browser-observations.txt",
+        "docs/customer-orders/evidence/desktop-orders.jpg",
+        "docs/customer-orders/evidence/mobile-orders.jpg",
+        "docs/customer-orders/evidence/mobile-details.jpg",
+        "docs/customer-orders/evidence/desktop-dark.jpg"
+      ],
+      "acceptanceGate": "CORD-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Orders now precede all secondary content. Search/filter/paging and dedicated compact documents view verified in rendering tests and local desktop/mobile browser. Repeated technical notices and source IDs removed from initial summaries.",
+      "testResult": "PASS:64 distinct focused component/tracking/financial/document/addition checks across the recorded suites; final web build/typecheck and bounded local browser acceptance. Presentation checks rerun on final source.",
+      "outstandingWork": "None for the bounded local customer web redesign. Hosted rollout, formal assistive-technology/physical-device and broader production acceptance remain outside this phase and unverified; prior NO-GO/import/retention decisions preserved."
+    },
+    {
+      "id": "CORD-02",
+      "requirement": "Reveal tracking, complete chronology, private visit/photo history and receipt-before-sharing confirmation code only on request; preserve direct tracking links and truthful location state",
+      "priority": "P1",
+      "scope": "Customer web My Orders and Track order only; existing backend and staff/native flows preserved",
+      "uiReference": "Eight user screenshots of the single customer My Orders page, 19 November 2026",
+      "route": "/orders; /track",
+      "implementationFiles": [
+        "apps/web/components/customer-orders.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/customer-orders.ts",
+        "apps/web/components/order-tracking.tsx",
+        "apps/web/components/order-operations.tsx",
+        "apps/web/components/order-invoice.tsx"
+      ],
+      "dataSource": "Existing orders / tracking stream, canonical order_events, time-limited confirmation code, doorstep.list and eligible delivery.photos; existing GPS expiry component",
+      "securityControl": "Selected order is resolved against the current authorised snapshot; code starts hidden and is omitted for terminal orders; map uses existing expiring rider fixes with no fabricated ETA. Existing staff disclosure default retained.",
+      "testFiles": [
+        "tests/customer-orders.test.ts",
+        "tests/order-tracking.test.ts"
+      ],
+      "testIds": [
+        "CORD-02",
+        "CORD-05",
+        "TRK-23"
+      ],
+      "negativeTests": [
+        "TRK-23: API never fabricates GPS, ETA or a proof for an unfulfilled order"
+      ],
+      "evidence": [
+        "docs/customer-orders/evidence/component-tests.txt",
+        "docs/customer-orders/evidence/regression-tests.txt",
+        "docs/customer-orders/evidence/financial-regression.txt",
+        "docs/customer-orders/evidence/typecheck.txt",
+        "docs/customer-orders/evidence/web-build.txt",
+        "docs/customer-orders/evidence/browser-observations.txt",
+        "docs/customer-orders/evidence/desktop-orders.jpg",
+        "docs/customer-orders/evidence/mobile-orders.jpg",
+        "docs/customer-orders/evidence/mobile-details.jpg",
+        "docs/customer-orders/evidence/desktop-dark.jpg"
+      ],
+      "acceptanceGate": "CORD-G2",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Single order dialog has Overview, Delivery updates and Visit/photo history sections. Full events retained off the initial page; invoice opens separately. Valid /track?orderId deep link, code reveal/reset, history loading and empty photos state checked.",
+      "testResult": "PASS:64 distinct focused component/tracking/financial/document/addition checks across the recorded suites; final web build/typecheck and bounded local browser acceptance. Presentation checks rerun on final source.",
+      "outstandingWork": "None for the bounded local customer web redesign. Hosted rollout, formal assistive-technology/physical-device and broader production acceptance remain outside this phase and unverified; prior NO-GO/import/retention decisions preserved."
+    },
+    {
+      "id": "CORD-03",
+      "requirement": "Replace duplicate inline refund forms with one focused full/selected-quantity dialog while retaining explicit consent, independent approval, canonical quantities, idempotency and versioned cancellation",
+      "priority": "P0",
+      "scope": "Customer web My Orders and Track order only; existing backend and staff/native flows preserved",
+      "uiReference": "Eight user screenshots of the single customer My Orders page, 19 November 2026",
+      "route": "/orders; /track",
+      "implementationFiles": [
+        "apps/web/components/customer-orders.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/customer-orders.ts",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "apps/web/lib/order-tracking.ts"
+      ],
+      "dataSource": "Existing refund.lines / refund.request; original immutable order economics and verified payment eligibility; original order.transition version and operation key",
+      "securityControl": "No refund amount calculated or credited by the client. Required reason, positive selected quantity and explicit purchase-credit consent. Stable retry key per payload, independent finance review, cancellation confirmation and version-keyed idempotency retained; canonical errors remain visible.",
+      "testFiles": [
+        "tests/customer-orders.test.ts",
+        "tests/order-tracking.test.ts",
+        "tests/easyrewards.test.ts"
+      ],
+      "testIds": [
+        "CORD-04",
+        "TRK-04",
+        "ER-15F"
+      ],
+      "negativeTests": [
+        "TRK-04: skipped transitions, stale versions, branch and inactive dispatch fail without business effects",
+        "ER-22: reward ownership, strict API inputs, branch scope and session revocation are enforced"
+      ],
+      "evidence": [
+        "docs/customer-orders/evidence/component-tests.txt",
+        "docs/customer-orders/evidence/regression-tests.txt",
+        "docs/customer-orders/evidence/financial-regression.txt",
+        "docs/customer-orders/evidence/typecheck.txt",
+        "docs/customer-orders/evidence/web-build.txt",
+        "docs/customer-orders/evidence/browser-observations.txt",
+        "docs/customer-orders/evidence/desktop-orders.jpg",
+        "docs/customer-orders/evidence/mobile-orders.jpg",
+        "docs/customer-orders/evidence/mobile-details.jpg",
+        "docs/customer-orders/evidence/desktop-dark.jpg"
+      ],
+      "acceptanceGate": "CORD-G3",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Both full and selected synthetic refund requests reached awaiting independent finance review; no credit approval/posting performed. Cancellation confirmation Keep order works. Deliberately inconsistent synthetic gas reservation was rejected without changing order state; positive canonical transitions/cancellation remain covered by the executed backend suites.",
+      "testResult": "PASS:64 distinct focused component/tracking/financial/document/addition checks across the recorded suites; final web build/typecheck and bounded local browser acceptance. Presentation checks rerun on final source.",
+      "outstandingWork": "None for the bounded local customer web redesign. Hosted rollout, formal assistive-technology/physical-device and broader production acceptance remain outside this phase and unverified; prior NO-GO/import/retention decisions preserved."
+    },
+    {
+      "id": "CORD-04",
+      "requirement": "Provide responsive local web layouts and dialogs with keyboard focus, Escape, scroll lock, unsaved-form protection, empty states and identity-bound customer state",
+      "priority": "P1",
+      "scope": "Customer web My Orders and Track order only; existing backend and staff/native flows preserved",
+      "uiReference": "Eight user screenshots of the single customer My Orders page, 19 November 2026",
+      "route": "/orders; /track",
+      "implementationFiles": [
+        "apps/web/components/customer-orders.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/customer-orders.ts",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/app-dialog.tsx",
+        "apps/web/components/order-tracking.tsx"
+      ],
+      "dataSource": "Existing authenticated actor identity and current owned tracking snapshot; browser DOM/state and shared dialog provider",
+      "securityControl": "Account/role/branch/order route keys reset UI; null or removed authorised snapshot unmounts detail content. Existing stream revocation/ownership guards retained. Dialogs restore focus, guard unsaved refund drafts and avoid nested order/document dialogs.",
+      "testFiles": [
+        "tests/customer-orders.test.ts",
+        "tests/order-tracking.test.ts"
+      ],
+      "testIds": [
+        "CORD-03",
+        "TRK-20S"
+      ],
+      "negativeTests": [
+        "TRK-20: reassigned branch, revoked session and unrelated driver cannot read or mutate assigned delivery"
+      ],
+      "evidence": [
+        "docs/customer-orders/evidence/component-tests.txt",
+        "docs/customer-orders/evidence/regression-tests.txt",
+        "docs/customer-orders/evidence/financial-regression.txt",
+        "docs/customer-orders/evidence/typecheck.txt",
+        "docs/customer-orders/evidence/web-build.txt",
+        "docs/customer-orders/evidence/browser-observations.txt",
+        "docs/customer-orders/evidence/desktop-orders.jpg",
+        "docs/customer-orders/evidence/mobile-orders.jpg",
+        "docs/customer-orders/evidence/mobile-details.jpg",
+        "docs/customer-orders/evidence/desktop-dark.jpg"
+      ],
+      "acceptanceGate": "CORD-G4",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Desktop 1280x720, tablet 768x1024 and mobile 390x844 verified without horizontal page overflow. Light/dark appearance, Tab/Shift+Tab, Escape/focus restoration, post-submit focus, body scroll lock, unsaved draft confirmation, empty search and direct tracking checked locally. Full formal accessibility/device/hosted release acceptance is not claimed.",
+      "testResult": "PASS:64 distinct focused component/tracking/financial/document/addition checks across the recorded suites; final web build/typecheck and bounded local browser acceptance. Presentation checks rerun on final source.",
+      "outstandingWork": "None for the bounded local customer web redesign. Hosted rollout, formal assistive-technology/physical-device and broader production acceptance remain outside this phase and unverified; prior NO-GO/import/retention decisions preserved."
+    }
+  ],
+  "gates": [
+    {
+      "id": "CORD-G1",
+      "status": "PASS",
+      "evidence": [
+        "docs/customer-orders/evidence/component-tests.txt",
+        "docs/customer-orders/evidence/regression-tests.txt",
+        "docs/customer-orders/evidence/financial-regression.txt",
+        "docs/customer-orders/evidence/typecheck.txt",
+        "docs/customer-orders/evidence/web-build.txt",
+        "docs/customer-orders/evidence/browser-observations.txt",
+        "docs/customer-orders/evidence/desktop-orders.jpg",
+        "docs/customer-orders/evidence/mobile-orders.jpg",
+        "docs/customer-orders/evidence/mobile-details.jpg",
+        "docs/customer-orders/evidence/desktop-dark.jpg"
+      ]
+    },
+    {
+      "id": "CORD-G2",
+      "status": "PASS",
+      "evidence": [
+        "docs/customer-orders/evidence/component-tests.txt",
+        "docs/customer-orders/evidence/regression-tests.txt",
+        "docs/customer-orders/evidence/financial-regression.txt",
+        "docs/customer-orders/evidence/typecheck.txt",
+        "docs/customer-orders/evidence/web-build.txt",
+        "docs/customer-orders/evidence/browser-observations.txt",
+        "docs/customer-orders/evidence/desktop-orders.jpg",
+        "docs/customer-orders/evidence/mobile-orders.jpg",
+        "docs/customer-orders/evidence/mobile-details.jpg",
+        "docs/customer-orders/evidence/desktop-dark.jpg"
+      ]
+    },
+    {
+      "id": "CORD-G3",
+      "status": "PASS",
+      "evidence": [
+        "docs/customer-orders/evidence/component-tests.txt",
+        "docs/customer-orders/evidence/regression-tests.txt",
+        "docs/customer-orders/evidence/financial-regression.txt",
+        "docs/customer-orders/evidence/typecheck.txt",
+        "docs/customer-orders/evidence/web-build.txt",
+        "docs/customer-orders/evidence/browser-observations.txt",
+        "docs/customer-orders/evidence/desktop-orders.jpg",
+        "docs/customer-orders/evidence/mobile-orders.jpg",
+        "docs/customer-orders/evidence/mobile-details.jpg",
+        "docs/customer-orders/evidence/desktop-dark.jpg"
+      ]
+    },
+    {
+      "id": "CORD-G4",
+      "status": "PASS",
+      "evidence": [
+        "docs/customer-orders/evidence/component-tests.txt",
+        "docs/customer-orders/evidence/regression-tests.txt",
+        "docs/customer-orders/evidence/financial-regression.txt",
+        "docs/customer-orders/evidence/typecheck.txt",
+        "docs/customer-orders/evidence/web-build.txt",
+        "docs/customer-orders/evidence/browser-observations.txt",
+        "docs/customer-orders/evidence/desktop-orders.jpg",
+        "docs/customer-orders/evidence/mobile-orders.jpg",
+        "docs/customer-orders/evidence/mobile-details.jpg",
+        "docs/customer-orders/evidence/desktop-dark.jpg"
+      ]
+    }
+  ],
+  "coverage": {
+    "denominator": 4,
+    "implemented": 4,
+    "verified": 4,
+    "criticalRequirements": 1,
+    "criticalVerified": 1,
+    "routes": [
+      "/orders",
+      "/track"
+    ],
+    "routesVerified": 2,
+    "acceptanceGates": 4,
+    "acceptanceGatesPassed": 4,
+    "note": "Coverage is for four bounded local customer web presentation requirements only. Existing production matrices, their incomplete denominators, NO-GO and unrelated work remain unchanged. No requirement removed."
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "User-approved presentation redesign only; move long histories, documents and forms off the initial order list without dropping existing functionality."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Financial-control preservation designated P0; existing backend guards retained and negative regressions executed. Unified full/partial refund presentation; customer visit history embedded in dialog while staff default retained."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Final local browser/test evidence recorded. Earlier generated-type race resolved by sequential build/typecheck. No native build or hosted deployment; prior dirty driver-alert evidence untouched."
+    }
+  ]
+}

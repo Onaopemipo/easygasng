@@ -1,0 +1,341 @@
+{
+  "phase": "Customer account redesign \u2014 19 November 2026",
+  "productionDecision": "Existing production NO-GO, actual import hold, retain-all and unrelated work preserved. No deployment or native build.",
+  "requirements": [
+    {
+      "id": "CACC-01",
+      "requirement": "Organise account settings into compact, responsive sections with profile summaries",
+      "priority": "P1",
+      "scope": "Bounded local customer /account-settings web redesign",
+      "uiReference": "Five user account-settings screenshots, 19 November 2026",
+      "route": "/account-settings",
+      "implementationFiles": [
+        "apps/web/components/customer-account.tsx",
+        "apps/web/components/customer-account.module.css",
+        "apps/web/components/site.tsx",
+        "apps/web/components/customer-data.ts",
+        "apps/web/components/theme-provider.tsx"
+      ],
+      "dataSource": "Authenticated account.profile (own user, addresses, preferences, sessions and privacy_requests); browser-local existing ThemeProvider",
+      "securityControl": "Existing ownership, recent reauthentication, consent/moderation and retain-all controls preserved; no live delivery or deletion implied",
+      "testFiles": [
+        "tests/customer-account-redesign.test.ts",
+        "tests/testimonials.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/address-location.test.ts",
+        "tests/password-minimum.test.ts"
+      ],
+      "testIds": [
+        "CACC-UI01",
+        "CACC-UI02"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-final.jpg",
+        "docs/customer-account/evidence/tablet-profile.jpg",
+        "docs/customer-account/evidence/mobile-profile.jpg",
+        "docs/customer-account/evidence/mobile-dark.jpg"
+      ],
+      "acceptanceGate": "CACC-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Default Profile and six settings sections implemented with scoped loading/error/retry, compact summaries, collapsed reference/history and responsive light/dark layouts. Actual component and local browser acceptance passed.",
+      "testResult": "PASS:62 focused component/API/security/testimonial/prior-customer tests; web production build and typecheck; bounded synthetic desktop/tablet/mobile browser acceptance.",
+      "outstandingWork": "None for the bounded local redesign. Hosted rollout, real verification-mail delivery, formal assistive-technology and physical-device acceptance remain unverified outside this phase. Prior production NO-GO and all other matrices remain unchanged."
+    },
+    {
+      "id": "CACC-02",
+      "requirement": "Use focused dialogs for profile, addresses and password with existing validation and ownership",
+      "priority": "P1",
+      "scope": "Bounded local customer /account-settings web redesign",
+      "uiReference": "Five user account-settings screenshots, 19 November 2026",
+      "route": "/account-settings",
+      "implementationFiles": [
+        "apps/web/components/customer-account.tsx",
+        "apps/web/components/customer-account.module.css",
+        "apps/web/components/site.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/address-area-fields.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/lib/accounts.ts"
+      ],
+      "dataSource": "account.update / account.password / account.verification.send, own account_addresses and currently active delivery_locations; original accounts.ts actions",
+      "securityControl": "Existing ownership, recent reauthentication, consent/moderation and retain-all controls preserved; no live delivery or deletion implied",
+      "testFiles": [
+        "tests/customer-account-redesign.test.ts",
+        "tests/testimonials.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/address-location.test.ts",
+        "tests/password-minimum.test.ts"
+      ],
+      "testIds": [
+        "CACC-API01",
+        "CACC-UI02"
+      ],
+      "negativeTests": [
+        "CACC-API01: address edits remain owner-scoped and preserve recipient details, default and archive semantics"
+      ],
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-addresses.jpg",
+        "docs/customer-account/evidence/mobile-address-dialog.jpg"
+      ],
+      "acceptanceGate": "CACC-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Profile/address/password editors and remove/sign-out confirmation dialogs reuse original actions and validation. Recipient details preserved, unavailable/default address behavior retained, unsaved changes protected.",
+      "testResult": "PASS:62 focused component/API/security/testimonial/prior-customer tests; web production build and typecheck; bounded synthetic desktop/tablet/mobile browser acceptance.",
+      "outstandingWork": "None for the bounded local redesign. Hosted rollout, real verification-mail delivery, formal assistive-technology and physical-device acceptance remain unverified outside this phase. Prior production NO-GO and all other matrices remain unchanged."
+    },
+    {
+      "id": "CACC-03",
+      "requirement": "Simplify communication settings while preserving independent purpose/channel consent and quiet hours",
+      "priority": "P1",
+      "scope": "Bounded local customer /account-settings web redesign",
+      "uiReference": "Five user account-settings screenshots, 19 November 2026",
+      "route": "/account-settings",
+      "implementationFiles": [
+        "apps/web/components/customer-account.tsx",
+        "apps/web/components/customer-account.module.css",
+        "apps/web/components/site.tsx",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/channel-messaging.ts",
+        "apps/web/lib/business-operation.ts"
+      ],
+      "dataSource": "communication_preferences via preferences.save; own channel_consents via channels.preferences / channels.consent and canonical business operation ledger",
+      "securityControl": "Existing ownership, recent reauthentication, consent/moderation and retain-all controls preserved; no live delivery or deletion implied",
+      "testFiles": [
+        "tests/customer-account-redesign.test.ts",
+        "tests/testimonials.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/address-location.test.ts",
+        "tests/password-minimum.test.ts"
+      ],
+      "testIds": [
+        "CACC-API02",
+        "CACC-UI03",
+        "OPS-T05"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-preferences.jpg",
+        "docs/customer-account/evidence/mobile-preferences.jpg"
+      ],
+      "acceptanceGate": "CACC-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Switches and bounded hour selectors save canonical preference fields. Each SMS/WhatsApp purpose remains separate; stable fingerprint/operation key retained across retries; no provider activation.",
+      "testResult": "PASS:62 focused component/API/security/testimonial/prior-customer tests; web production build and typecheck; bounded synthetic desktop/tablet/mobile browser acceptance.",
+      "outstandingWork": "None for the bounded local redesign. Hosted rollout, real verification-mail delivery, formal assistive-technology and physical-device acceptance remain unverified outside this phase. Prior production NO-GO and all other matrices remain unchanged."
+    },
+    {
+      "id": "CACC-04",
+      "requirement": "Preserve session management, identity verification, data export and retain-all privacy semantics",
+      "priority": "P0",
+      "scope": "Bounded local customer /account-settings web redesign",
+      "uiReference": "Five user account-settings screenshots, 19 November 2026",
+      "route": "/account-settings",
+      "implementationFiles": [
+        "apps/web/components/customer-account.tsx",
+        "apps/web/components/customer-account.module.css",
+        "apps/web/components/site.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/auth.ts"
+      ],
+      "dataSource": "Own sessions and privacy_requests, reauth session timestamp, account.export and original retain-all accounts.ts enforcement",
+      "securityControl": "Existing ownership, recent reauthentication, consent/moderation and retain-all controls preserved; no live delivery or deletion implied",
+      "testFiles": [
+        "tests/customer-account-redesign.test.ts",
+        "tests/testimonials.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/address-location.test.ts",
+        "tests/password-minimum.test.ts"
+      ],
+      "testIds": [
+        "CACC-API03",
+        "CACC-UI02"
+      ],
+      "negativeTests": [
+        "CACC-API03: privacy requires fresh password verification, retains deletion records and cannot revoke another customer's session"
+      ],
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-security.jpg",
+        "docs/customer-account/evidence/desktop-privacy-dialog.jpg",
+        "docs/customer-account/evidence/mobile-password-dialog.jpg"
+      ],
+      "acceptanceGate": "CACC-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "On-demand password verification gates export/privacy dialogs. Sessions are owned and secret identifiers stay out of summaries. Retain-all/deletion-review semantics remain explicit and tested; focus restored after verification.",
+      "testResult": "PASS:62 focused component/API/security/testimonial/prior-customer tests; web production build and typecheck; bounded synthetic desktop/tablet/mobile browser acceptance.",
+      "outstandingWork": "None for the bounded local redesign. Hosted rollout, real verification-mail delivery, formal assistive-technology and physical-device acceptance remain unverified outside this phase. Prior production NO-GO and all other matrices remain unchanged."
+    },
+    {
+      "id": "CACC-05",
+      "requirement": "Move testimonial creation and editing into dialogs while preserving eligibility, consent, moderation and order deep links",
+      "priority": "P1",
+      "scope": "Bounded local customer /account-settings web redesign",
+      "uiReference": "Five user account-settings screenshots, 19 November 2026",
+      "route": "/account-settings",
+      "implementationFiles": [
+        "apps/web/components/customer-account.tsx",
+        "apps/web/components/customer-account.module.css",
+        "apps/web/components/site.tsx",
+        "apps/web/components/testimonials.tsx",
+        "apps/web/components/image-upload.tsx",
+        "apps/web/lib/testimonials.ts",
+        "apps/web/components/customer-dashboard.tsx"
+      ],
+      "dataSource": "testimonials.mine eligibility/selectedTransaction; owned customer_testimonials / testimonial_versions / events and existing private media APIs",
+      "securityControl": "Existing ownership, recent reauthentication, consent/moderation and retain-all controls preserved; no live delivery or deletion implied",
+      "testFiles": [
+        "tests/customer-account-redesign.test.ts",
+        "tests/testimonials.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/address-location.test.ts",
+        "tests/password-minimum.test.ts",
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testIds": [
+        "CACC-UI01",
+        "TM-01",
+        "TM-02",
+        "TM-ENTRY",
+        "TM-EXPORT",
+        "TM-WITHDRAW-STALE",
+        "CACC-UI04"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-review-dialog.jpg",
+        "docs/customer-account/evidence/desktop-reviews.jpg",
+        "docs/customer-account/evidence/legacy-review-entry.jpg"
+      ],
+      "acceptanceGate": "CACC-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Review summaries paginate five at a time. On-demand creation/edit/photo dialogs preserve optional draft publication consent, separate review/publication, ownership and private media. Owned eligible deep links select creation or existing editor; focus restored after async save. Public/footer/dashboard review links open the reviews section; legacy anchor bookmarks redirect to that same section.",
+      "testResult": "PASS:62 focused component/API/security/testimonial/prior-customer tests; web production build and typecheck; bounded synthetic desktop/tablet/mobile browser acceptance.",
+      "outstandingWork": "None for the bounded local redesign. Hosted rollout, real verification-mail delivery, formal assistive-technology and physical-device acceptance remain unverified outside this phase. Prior production NO-GO and all other matrices remain unchanged."
+    }
+  ],
+  "gates": [
+    {
+      "id": "CACC-G01",
+      "status": "PASS",
+      "criteria": "Organise account settings into compact, responsive sections with profile summaries",
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-final.jpg",
+        "docs/customer-account/evidence/tablet-profile.jpg",
+        "docs/customer-account/evidence/mobile-profile.jpg",
+        "docs/customer-account/evidence/mobile-dark.jpg"
+      ]
+    },
+    {
+      "id": "CACC-G02",
+      "status": "PASS",
+      "criteria": "Use focused dialogs for profile, addresses and password with existing validation and ownership",
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-addresses.jpg",
+        "docs/customer-account/evidence/mobile-address-dialog.jpg"
+      ]
+    },
+    {
+      "id": "CACC-G03",
+      "status": "PASS",
+      "criteria": "Simplify communication settings while preserving independent purpose/channel consent and quiet hours",
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-preferences.jpg",
+        "docs/customer-account/evidence/mobile-preferences.jpg"
+      ]
+    },
+    {
+      "id": "CACC-G04",
+      "status": "PASS",
+      "criteria": "Preserve session management, identity verification, data export and retain-all privacy semantics",
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-security.jpg",
+        "docs/customer-account/evidence/desktop-privacy-dialog.jpg",
+        "docs/customer-account/evidence/mobile-password-dialog.jpg"
+      ]
+    },
+    {
+      "id": "CACC-G05",
+      "status": "PASS",
+      "criteria": "Move testimonial creation and editing into dialogs while preserving eligibility, consent, moderation and order deep links",
+      "evidence": [
+        "docs/customer-account/evidence/tests.txt",
+        "docs/customer-account/evidence/typecheck.txt",
+        "docs/customer-account/evidence/web-build.txt",
+        "docs/customer-account/evidence/browser-observations.txt",
+        "docs/customer-account/evidence/desktop-review-dialog.jpg",
+        "docs/customer-account/evidence/desktop-reviews.jpg",
+        "docs/customer-account/evidence/legacy-review-entry.jpg"
+      ]
+    }
+  ],
+  "coverage": {
+    "denominator": 5,
+    "implemented": 5,
+    "verified": 5,
+    "criticalRequirements": 1,
+    "criticalVerified": 1,
+    "routes": [
+      "/account-settings"
+    ],
+    "routesVerified": 1,
+    "acceptanceGates": 5,
+    "acceptanceGatesPassed": 5,
+    "note": "Bounded local customer account redesign only. All five approved rows retained. Prior full-app denominators/NO-GO and unrelated work remain unchanged."
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "Recorded five approved requirements before implementation. Replace stacked forms with a settings submenu and focused dialogs without dropping account/consent/privacy/testimonial capabilities."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Implemented new customer component with existing APIs, preserved recipient details, canonical request keys and transaction deep links. Removed obsolete stacked AccountSettings renderer and linked inbox Preferences to its actual settings section."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Completed 62 focused tests plus local desktop/tablet/mobile/dark acceptance, web build and typecheck. Corrected missing channel operation key and focus restoration during verification. No hosted rollout, native build, provider activation or record erasure."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Final link audit preserved three generic review entry points and old anchor bookmarks. Added actual public component entry-link coverage and reran customer-dashboard regression; final 62/62 tests pass."
+    }
+  ]
+}

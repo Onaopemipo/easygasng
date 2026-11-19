@@ -1,7 +1,7 @@
 "use client";
 import { FieldCaption } from "./field-caption";
 import { EasyGasLoader } from "./easygas-loader";
-import { useEffect, useState, useRef, type FormEvent } from "react";
+import React, { useEffect, useState, useRef, type FormEvent } from "react";
 import { ImageUpload } from "./image-upload";
 import { api, Notice, Modal } from "./ui";
 import Link from "./workspace-link";
@@ -98,7 +98,7 @@ export function PublicTestimonials({
           </p>
           <Link
             className="button secondary"
-            href="/account-settings#testimonials"
+            href="/account-settings?section=reviews#testimonials"
           >
             Share your experience →
           </Link>
@@ -107,13 +107,43 @@ export function PublicTestimonials({
     </section>
   );
 }
-export function CustomerTestimonials() {
+export function CustomerTestimonials({
+  dialogClassName,
+}: {
+  dialogClassName?: string;
+}) {
+  const [showEditor, setShowEditor] = useState(false),
+    [dirty, setDirty] = useState(false),
+    [photo, setPhoto] = useState<string | null>(null),
+    [page, setPage] = useState(0);
+  useEffect(() => {
+    if (!showEditor && !photo) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [showEditor, photo]);
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [editing, setEditing] = useState<any>(null),
     [nameStyle, setNameStyle] = useState("first");
+  const returnFocus = useRef(false);
+  useEffect(() => {
+    if (showEditor || photo) returnFocus.current = true;
+    else if (!busy && returnFocus.current) {
+      document
+        .querySelector<HTMLButtonElement>(
+          "#testimonials .testimonial-controls button:not(:disabled), #testimonials > button:not(:disabled)",
+        )
+        ?.focus();
+      returnFocus.current = false;
+    }
+  }, [showEditor, photo, busy]);
+  const openedFor = useRef("");
   async function load() {
+    setError("");
     try {
       const search = new URLSearchParams(window.location.search),
         q = new URLSearchParams();
@@ -121,7 +151,23 @@ export function CustomerTestimonials() {
         q.set("orderId", search.get("testimonialOrder")!);
       if (search.get("testimonialBooking"))
         q.set("bookingId", search.get("testimonialBooking")!);
-      setData(await api("testimonials.mine" + (q.size ? "?" + q : "")));
+      const response = await api("testimonials.mine" + (q.size ? "?" + q : ""));
+      setData(response);
+      if (q.size && openedFor.current !== q.toString()) {
+        openedFor.current = q.toString();
+        const existing = response.submissions.find(
+          (r: any) =>
+            (search.has("testimonialOrder") &&
+              r.order_id === search.get("testimonialOrder")) ||
+            (search.has("testimonialBooking") &&
+              r.booking_id === search.get("testimonialBooking")),
+        );
+        if (existing && !["WITHDRAWN", "REJECTED"].includes(existing.status)) {
+          setEditing(existing);
+          setNameStyle(existing.name_style);
+          setShowEditor(true);
+        } else if (response.selectedTransaction) setShowEditor(true);
+      }
     } catch (e: any) {
       setError(e.message);
     }
@@ -172,8 +218,9 @@ export function CustomerTestimonials() {
         });
       }
       setEditing(null);
+      setShowEditor(false);
+      setDirty(false);
       await load();
-      (e.target as HTMLFormElement).reset();
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -182,30 +229,43 @@ export function CustomerTestimonials() {
   }
   return (
     <section id="testimonials" className="surface">
-      <h2>Your testimonials</h2>
-      <p>
-        The latest 100 submissions are shown here. Your identity-verified
-        personal data export below includes the complete version and consent
-        history.
-      </p>
+      <h2>Your reviews</h2>
       <p>
         Your feedback is never public without your consent and moderation. You
         can withdraw publication at any time.
       </p>
       {error && <Notice message={error} />}
-      {!data ? (
-        <EasyGasLoader size="sm" variant="section" label="Loading your feedback" />
+      {!data && error ? (
+        <button className="button secondary" onClick={load}>
+          Retry reviews
+        </button>
+      ) : !data ? (
+        <EasyGasLoader
+          size="sm"
+          variant="section"
+          label="Loading your feedback"
+        />
       ) : (
         <>
           <div className="testimonial-grid">
-            {data.submissions.map((r: any) => (
+            {data.submissions.slice(page * 5, page * 5 + 5).map((r: any) => (
               <article className="surface" key={r.id}>
                 <strong>
                   {labels[r.status]} · {r.rating}/5
                 </strong>
-                <p>{r.body}</p>
+                {r.body.length > 140 ? (
+                  <details className="review-content">
+                    <summary>{r.body.slice(0, 140)}…</summary>
+                    <p>{r.body}</p>
+                  </details>
+                ) : (
+                  <p>{r.body}</p>
+                )}
                 <p>Public name: {r.display_name}</p>
-                {r.latest_reason && <p>Latest update: {r.latest_reason}</p>}
+                {r.latest_reason &&
+                  ["REJECTED", "CHANGES_REQUESTED", "HIDDEN"].includes(
+                    r.status,
+                  ) && <p>Latest update: {r.latest_reason}</p>}
                 {r.image_id && (
                   <img
                     src={`/api/media/${r.image_id}`}
@@ -217,7 +277,14 @@ export function CustomerTestimonials() {
                 )}
                 {data.policy.imagesEnabled &&
                   r.status === "DRAFT" &&
-                  r.consent && <ImageUpload testimonialId={r.id} done={load} />}
+                  r.consent && (
+                    <button
+                      className="button secondary"
+                      onClick={() => setPhoto(r.id)}
+                    >
+                      Add photo
+                    </button>
+                  )}
 
                 {!["WITHDRAWN", "REJECTED"].includes(r.status) && (
                   <div className="testimonial-controls">
@@ -227,6 +294,9 @@ export function CustomerTestimonials() {
                       onClick={() => {
                         setEditing(r);
                         setNameStyle(r.name_style);
+                        setShowEditor(true);
+                        setDirty(false);
+                        setShowEditor(true);
                       }}
                     >
                       Edit feedback
@@ -252,123 +322,184 @@ export function CustomerTestimonials() {
               </article>
             ))}
           </div>
-          {editing || data.orders.length + data.bookings.length > 0 ? (
-            <form
-              key={editing?.id ?? "new"}
-              onSubmit={save}
-              className="testimonial-form"
+          {(editing || data.orders.length + data.bookings.length > 0) &&
+            !showEditor && (
+              <button
+                className="button testimonial-new"
+                disabled={!data.policy.enabled}
+                onClick={() => {
+                  setEditing(null);
+                  setNameStyle("first");
+                  setDirty(false);
+                  setShowEditor(true);
+                }}
+              >
+                Write a review
+              </button>
+            )}
+          {data.submissions.length > 5 && (
+            <div className="testimonial-controls">
+              <button
+                className="button secondary"
+                disabled={page === 0}
+                onClick={() => setPage((p) => p - 1)}
+              >
+                Previous reviews
+              </button>
+              <span>
+                Page {page + 1} of {Math.ceil(data.submissions.length / 5)}
+              </span>
+              <button
+                className="button secondary"
+                disabled={(page + 1) * 5 >= data.submissions.length}
+                onClick={() => setPage((p) => p + 1)}
+              >
+                Next reviews
+              </button>
+            </div>
+          )}
+          {photo && (
+            <Modal
+              title="Add a review photo"
+              className={dialogClassName}
+              onClose={() => setPhoto(null)}
             >
-              <h3>{editing ? "Edit your feedback" : "Share an experience"}</h3>
-              {!editing && (
+              <ImageUpload
+                testimonialId={photo}
+                done={() => {
+                  setPhoto(null);
+                  load();
+                }}
+              />
+            </Modal>
+          )}
+          {data.submissions.length === 0 && (
+            <p>
+              No reviews yet. Share your experience after a completed purchase
+              or service.
+            </p>
+          )}
+          {showEditor &&
+          (editing || data.orders.length + data.bookings.length > 0) ? (
+            <Modal
+              title={editing ? "Edit your review" : "Write a review"}
+              className={dialogClassName}
+              onClose={() => {
+                setShowEditor(false);
+                setEditing(null);
+                setDirty(false);
+              }}
+            >
+              {error && <Notice type="error" message={error} />}
+              <form
+                key={editing?.id ?? "new"}
+                onSubmit={save}
+                className="testimonial-form"
+                onChange={() => setDirty(true)}
+                data-unsaved={dirty ? "true" : undefined}
+              >
+                <h3>
+                  {editing ? "Edit your feedback" : "Share an experience"}
+                </h3>
+                {!editing && (
+                  <label>
+                    <FieldCaption required={true}>
+                      Completed purchase or service
+                    </FieldCaption>
+                    <select
+                      name="transaction"
+                      required
+                      defaultValue={data.selectedTransaction}
+                    >
+                      <option value="">Choose a completed transaction</option>
+                      {data.orders.map((r: any) => (
+                        <option key={r.id} value={"order:" + r.id}>
+                          Order {r.reference}
+                        </option>
+                      ))}
+                      {data.bookings.map((r: any) => (
+                        <option key={r.id} value={"booking:" + r.id}>
+                          Service {r.reference}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                )}
                 <label>
-                  <FieldCaption required={true}>Completed purchase or service</FieldCaption>
-                  <select
-                    name="transaction"
-                    required
-                    defaultValue={data.selectedTransaction}
-                  >
-                    <option value="">Choose a completed transaction</option>
-                    {data.orders.map((r: any) => (
-                      <option key={r.id} value={"order:" + r.id}>
-                        Order {r.reference}
-                      </option>
-                    ))}
-                    {data.bookings.map((r: any) => (
-                      <option key={r.id} value={"booking:" + r.id}>
-                        Service {r.reference}
+                  <FieldCaption required={true}>Rating</FieldCaption>
+                  <select name="rating" defaultValue={editing?.rating ?? 5}>
+                    {[5, 4, 3, 2, 1].map((n) => (
+                      <option key={n} value={n}>
+                        {n} out of 5
                       </option>
                     ))}
                   </select>
                 </label>
-              )}
-              <label>
-                <FieldCaption required={true}>Rating</FieldCaption>
-                <select name="rating" defaultValue={editing?.rating ?? 5}>
-                  {[5, 4, 3, 2, 1].map((n) => (
-                    <option key={n} value={n}>
-                      {n} out of 5
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                <FieldCaption required={true}>Your experience</FieldCaption>
-                <textarea
-                  name="body"
-                  required
-                  minLength={data.policy.minimumLength}
-                  maxLength={data.policy.maximumLength}
-                  defaultValue={editing?.body}
-                />
-              </label>
-              <p>
-                Do not include phone numbers, email, links, addresses or private
-                details. All ratings are welcome.
-              </p>
-              <label>
-                <FieldCaption required={true}>Public name style</FieldCaption>
-                <select
-                  name="nameStyle"
-                  value={nameStyle}
-                  onChange={(e) => setNameStyle(e.target.value)}
-                >
-                  <option value="first">First name</option>
-                  <option value="initials">Initials</option>
-                  <option value="custom">Chosen display name</option>
-                </select>
-              </label>
-              {nameStyle === "custom" && (
                 <label>
-                  <FieldCaption required={true}>Chosen display name</FieldCaption>
-                  <input
-                    name="displayName"
+                  <FieldCaption required={true}>Your experience</FieldCaption>
+                  <textarea
+                    name="body"
                     required
-                    minLength={2}
-                    maxLength={60}
-                    defaultValue={editing?.display_name ?? ""}
+                    minLength={data.policy.minimumLength}
+                    maxLength={data.policy.maximumLength}
+                    defaultValue={editing?.body}
                   />
                 </label>
-              )}
-              <label className="testimonial-consent">
-                <input
-                  name="consent"
-                  type="checkbox"
-                  defaultChecked={editing?.consent ?? false}
-                /><FieldCaption required={true}>{" "}
-                I consent to this feedback and my selected display name being
-                published on EasyGas after review.</FieldCaption>
-              </label>
-              <p>
-                Photo uploads can be added to a saved draft when enabled by the
-                business. Saving a draft does not publish it. Editing a
-                published testimonial removes it from public view until it is
-                reviewed again.
-              </p>
-              <button
-                className="button"
-                disabled={busy || !data.policy.enabled}
-              >
-                Save draft
-              </button>
-              {editing && (
+                <p>
+                  Do not include phone numbers, email, links, addresses or
+                  private details. All ratings are welcome.
+                </p>
+                <label>
+                  <FieldCaption required={true}>Public name style</FieldCaption>
+                  <select
+                    name="nameStyle"
+                    value={nameStyle}
+                    onChange={(e) => setNameStyle(e.target.value)}
+                  >
+                    <option value="first">First name</option>
+                    <option value="initials">Initials</option>
+                    <option value="custom">Chosen display name</option>
+                  </select>
+                </label>
+                {nameStyle === "custom" && (
+                  <label>
+                    <FieldCaption required={true}>
+                      Chosen display name
+                    </FieldCaption>
+                    <input
+                      name="displayName"
+                      required
+                      minLength={2}
+                      maxLength={60}
+                      defaultValue={editing?.display_name ?? ""}
+                    />
+                  </label>
+                )}
+                <label className="testimonial-consent">
+                  <input
+                    name="consent"
+                    type="checkbox"
+                    defaultChecked={editing?.consent ?? false}
+                  />
+                  <FieldCaption required={false}>
+                    {" "}
+                    I consent to this feedback and my selected display name
+                    being published on EasyGas after review.
+                  </FieldCaption>
+                </label>
+                <p>
+                  Saving a draft does not publish your review. Changes to a
+                  published review require another review before publication.
+                </p>
                 <button
-                  type="button"
-                  className="button secondary"
-                  onClick={() => {
-                    setEditing(null);
-                    setNameStyle("first");
-                  }}
+                  className="button"
+                  disabled={busy || !data.policy.enabled}
                 >
-                  Cancel editing
+                  Save draft
                 </button>
-              )}
-            </form>
-          ) : (
-            <p>
-              No eligible purchases or services are available for a new
-              testimonial yet.
-            </p>
-          )}
+              </form>
+            </Modal>
+          ) : null}
         </>
       )}
     </section>
@@ -634,7 +765,13 @@ export function TestimonialManagement() {
             </select>
           </label>
         </div>
-        {loading && <EasyGasLoader size="sm" variant="section" label="Loading testimonial records" />}
+        {loading && (
+          <EasyGasLoader
+            size="sm"
+            variant="section"
+            label="Loading testimonial records"
+          />
+        )}
         <p>
           {total} matching submissions. Page {page + 1} of{" "}
           {Math.max(1, Math.ceil(total / 10))}.

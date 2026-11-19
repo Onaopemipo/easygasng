@@ -1,0 +1,37 @@
+✔ CSBK-UI01: compact booking summaries label preferred times without mounting contact, payment or reports (15.722333ms)
+✔ CSBK-UI02: service launcher offers booking without loading technician availability or an expanded form (1.027375ms)
+✔ CSBK-API01: requests are accepted with no available technician, reserve no capacity, notify coordination and recover without duplication (1922.863584ms)
+✔ CSBK-API02: unassigned requests reject invalid time, coverage, stale pricing, inactive service, mixed slot inputs and foreign follow-ups without orphan rows (1040.762333ms)
+✔ CSBK-API03: ownership and actual qualified assignment remain mandatory before confirming or progressing a request (1063.213958ms)
+✔ service drafts are not sellable; checklist and price activation require independent qualified approval (3121.605709ms)
+✔ booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve (1035.152792ms)
+✔ qualification expiry, stale service versions and out-of-area addresses reject booking without side effects (974.029833ms)
+✔ quotation revisions preserve price history; only latest customer approval reserves materials (1006.402292ms)
+✔ approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once (1103.097667ms)
+✔ unsafe inspection cannot become safety clearance or customer-acknowledged success (1074.902333ms)
+✔ service deposit uses existing wallet ledger and cancellation refund requires separate finance approval (978.307ms)
+✔ EO-01: sequential and concurrent same-key retries recover one authoritative booking; conflicts and cross-customer reuse reject (2399.535666ms)
+✔ EO-03: injected failure after outbox write rolls back booking, capacity, operation result, notifications and money (1034.338333ms)
+✔ EO-04: lost commit acknowledgement is reconciled using the persisted result without another business event (1096.968958ms)
+✔ RC-04: failed and competing rescheduling preserve a single capacity allocation and reject stale cancellation (1004.571958ms)
+✔ RC-15: encrypted backup restores booking, operation, quotation, inventory, notifications and audit relationships (1743.685083ms)
+✔ BK-23: communication opt-out is respected while in-app history remains authoritative (1024.373417ms)
+✔ EO-09: approval and material issue retries have one inventory effect; expired quotations cannot authorise work (1077.688625ms)
+✔ RC-10: interrupted report publication preserves in-progress work; unsafe completion is rejected; permission revocation blocks recovery (1124.903084ms)
+✔ BK-quiet: durable service events are scheduled after overnight and same-day quiet periods (0.486667ms)
+✔ EO-10: wallet and independently approved refund failures roll back and replay without duplicate money (957.112458ms)
+✔ RC-13: failed additive migration rolls back DDL without losing a valid booking (896.349875ms)
+✔ BK-private: operation persistence works under the restricted trusted server role and committed results are immutable (862.758959ms)
+✔ EO-contract: public service mutations require a stable identity and stale-sensitive changes require a version (1.087375ms)
+✔ SDR-T005: money and details preserve real zero and configured content, with honest missing states (4.679708ms)
+✔ SDR-T025: changed service version and stale slots cannot reach review; slot times use Lagos (1.443291ms)
+✔ SDR-T022: real slot read distinguishes configuration, coverage, qualification and absence without exposing staff (2344.75425ms)
+✔ SDR-T030: service sign-in return preserves known booking context and drops unrecognised parameters (0.390958ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14009.620458

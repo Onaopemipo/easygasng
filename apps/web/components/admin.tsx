@@ -19,6 +19,7 @@ import AdminSearch from "./admin-search";
 import { OperationsExtensions } from "./operations-completion";
 import { OrderOperations } from "./order-operations";
 import OrderInvoice from "./order-invoice";
+import OrderCylinderInspection from "./order-cylinder-inspection";
 import AssistedOrder from "./assisted-order";
 import OrderAdditions from "./order-additions";
 import { RewardsPolicyFields } from "./rewards-policy-fields";
@@ -3181,39 +3182,12 @@ function Records({
                     {g.inspected_at ? "Recorded" : "Required before dispatch"}
                   </p>
                   {["owner", "finance"].includes(user.role) &&
-                    ["placed", "confirmed", "preparing"].includes(
+                    ["placed", "accepted", "preparing"].includes(
                       selected.status,
                     ) && (
                       <details className="order-detail-disclosure">
                         <summary>Record cylinder inspection</summary>
-                      <ActionForm
-                        action="gas.inspection.record"
-                        title="Record verified cylinder filling eligibility"
-                        fields={[
-                          {
-                            name: "lineId",
-                            label: "Gas line",
-                            type: "hidden",
-                            value: g.id,
-                          },
-                          { name: "cylinderId", label: "Cylinder record ID" },
-                          {
-                            name: "allowableKg",
-                            label: "Verified allowable additional fill (kg)",
-                            type: "number",
-                            step: "0.001",
-                          },
-                          {
-                            name: "reason",
-                            label:
-                              "Physical inspection, residual gas and custody evidence",
-                          },
-                        ]}
-                        onDone={() => {
-                          setSelected(null);
-                          onChange();
-                        }}
-                      />
+                        <OrderCylinderInspection line={g} onDone={()=>{setSelected(null);onChange();}}/>
                       </details>
                     )}
                 </section>

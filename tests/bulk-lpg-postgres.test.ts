@@ -205,6 +205,63 @@ test(
       );
       assert.equal(counts.rows.length, 4);
       assert.ok(counts.rows.every((row) => row.rowsecurity));
+      // A second isolated actor/trip reproduces legacy arrival with no load.
+      const late = await bulkFixture(db),
+        attemptId = id();
+      await db.exec(
+        "UPDATE settings SET value=jsonb_set(value,'{requiresAddressConfirmation}','false') WHERE key LIKE 'location.%'",
+      );
+      await db.query(
+        "UPDATE orders SET status='out_for_delivery' WHERE id=$1",
+        [late.order.id],
+      );
+      await db.query(
+        "INSERT INTO delivery_attempts(id,order_id,driver_id,assignment_version,state,picked_up_at,arrived_at) VALUES($1,$2,$3,1,'arrived',now()-interval '5 minutes',now())",
+        [attemptId, late.order.id, late.actors.driver.id],
+      );
+      const recoveryInput = {
+        tripId: late.trip.id,
+        meterId: late.meter.id,
+        grams: 10000,
+        meterReadingGrams: 100000,
+        orderIds: [late.order.id],
+        reason: "Synthetic fresh recovery measurements",
+        recovery: {
+          orderId: late.order.id,
+          version: 1,
+          attemptId,
+          observedAt: new Date().toISOString(),
+          notDispensed: true,
+        },
+        operationKey: id(),
+      };
+      const recoveries = await Promise.all([
+        late.call("inventory", "bulk.load.recover", recoveryInput),
+        late.call("inventory", "bulk.load.recover", recoveryInput),
+      ]);
+      assert.equal(recoveries[0].id, recoveries[1].id);
+      assert.equal(
+        (
+          await db.query("SELECT id FROM bulk_lpg_loads WHERE trip_id=$1", [
+            late.trip.id,
+          ])
+        ).rows.length,
+        1,
+      );
+      assert.equal(
+        (
+          await db.query(
+            "SELECT id FROM bulk_lpg_events WHERE load_id=$1 AND kind='load.recovered'",
+            [recoveries[0].id],
+          )
+        ).rows.length,
+        1,
+      );
+      assert.equal(Number((await late.balance()).reserved_grams), 10000);
+      assert.equal(
+        (await late.snapshot(late.order.id)).attempt.state,
+        "arrived",
+      );
     } finally {
       if (before === undefined) delete process.env.EASYGAS_BULK_LPG_ENABLED;
       else process.env.EASYGAS_BULK_LPG_ENABLED = before;

@@ -1,0 +1,24 @@
+✔ DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit (1896.364375ms)
+✔ DLPG-02: arrived missing-custody recovery is fresh, scoped, versioned, independently qualified and replay-safe without status rewind or dispensing (1298.687959ms)
+✔ DLPG-03: order cylinder discovery links marked serial to generated ID, scopes ownership and recovers registration without duplicates (1214.542833ms)
+✔ DLPG-UI01: driver sees actionable missing custody, observed acknowledgement and metered dispensing before handover (8.184542ms)
+✖ DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations (1138.179084ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6967.247208
+
+✖ failing tests:
+
+test at tests/driver-lpg-workflow.test.ts:1:11441
+✖ DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations (1138.179084ms)
+  Error: Tracking fulfilment writes are disabled pending operational release approval. Tracking history remains available.
+      at <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/lib/service.ts:941:17)
+      at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/src/base.ts:494:24) {
+    status: 503,
+    code: 'INVALID_REQUEST'
+  }

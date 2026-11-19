@@ -1,0 +1,382 @@
+{
+  "phase": "Customer services and booking requests \u2014 19 November 2026",
+  "productionDecision": "Existing production NO-GO, retain-all, actual-import hold and unrelated work preserved. Local implementation only; no hosted rollout or native build.",
+  "requirements": [
+    {
+      "id": "CSBK-01",
+      "requirement": "Compact bookings workspace with searchable status views and on-demand booking details",
+      "priority": "P1",
+      "scope": "Bounded local customer web redesign and preferred-time request intake; hosted/native/physical acceptance and external provider integration excluded",
+      "uiReference": "Two customer bookings and cooker-installation screenshots, 19 November 2026",
+      "route": "/bookings; /services; /services/[serviceId]",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/service-request.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/service-details.css",
+        "apps/web/components/site.tsx"
+      ],
+      "dataSource": "Existing service_catalogue, service_bookings, service_slots, account.profile and billing/qualification APIs",
+      "securityControl": "Original authenticated ownership, approved service/version/area and actual work qualification/safety controls retained",
+      "testFiles": [
+        "tests/customer-service-booking-redesign.test.ts",
+        "tests/service-detail-redesign.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts",
+        "tests/service-invoices.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-account-redesign.test.ts",
+        "tests/service-cancellation-review.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/bundles.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "testIds": [
+        "CSBK-UI01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-final.jpg",
+        "docs/customer-service-bookings/evidence/tablet-bookings.jpg",
+        "docs/customer-service-bookings/evidence/mobile-bookings.jpg",
+        "docs/customer-service-bookings/evidence/mobile-dark-bookings.jpg",
+        "docs/customer-service-bookings/evidence/mobile-search-empty.jpg"
+      ],
+      "acceptanceGate": "CSBK-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bookings and service exploration separated; status/search/pagination use owned records; personal, billing and work content loads inside detail dialog.",
+      "testResult": "PASS:75 focused component/API/regression tests +1 PostgreSQL concurrency test; web build/typecheck and local browser acceptance",
+      "outstandingWork": "No remaining bounded local implementation work. Hosted migration081/rollout, installed native parity, formal assistive/physical-device acceptance and outsourced-provider integrations remain unverified and are not represented as complete."
+    },
+    {
+      "id": "CSBK-02",
+      "requirement": "Focused customer service-request dialog with preferred Lagos date/time, address, review and retry recovery",
+      "priority": "P1",
+      "scope": "Bounded local customer web redesign and preferred-time request intake; hosted/native/physical acceptance and external provider integration excluded",
+      "uiReference": "Two customer bookings and cooker-installation screenshots, 19 November 2026",
+      "route": "/bookings; /services; /services/[serviceId]",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/service-request.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/service-details.css",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/customer-data.ts"
+      ],
+      "dataSource": "Existing service_catalogue, service_bookings, service_slots, account.profile and billing/qualification APIs",
+      "securityControl": "Original authenticated ownership, approved service/version/area and actual work qualification/safety controls retained",
+      "testFiles": [
+        "tests/customer-service-booking-redesign.test.ts",
+        "tests/service-detail-redesign.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts",
+        "tests/service-invoices.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-account-redesign.test.ts",
+        "tests/service-cancellation-review.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/bundles.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "testIds": [
+        "CSBK-UI02",
+        "CSBK-API04",
+        "CSBK-API05"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-request-form.jpg",
+        "docs/customer-service-bookings/evidence/desktop-request-review.jpg",
+        "docs/customer-service-bookings/evidence/mobile-request-review.jpg",
+        "docs/customer-service-bookings/evidence/desktop-booking-detail.jpg"
+      ],
+      "acceptanceGate": "CSBK-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Preferred Lagos time, saved/manual address, equipment, review and success dialogs preserve drafts and stable operation keys; uncertain completion recovers owned canonical result.",
+      "testResult": "PASS:75 focused component/API/regression tests +1 PostgreSQL concurrency test; web build/typecheck and local browser acceptance",
+      "outstandingWork": "No remaining bounded local implementation work. Hosted migration081/rollout, installed native parity, formal assistive/physical-device acceptance and outsourced-provider integrations remain unverified and are not represented as complete."
+    },
+    {
+      "id": "CSBK-03",
+      "requirement": "Accept canonical unassigned booking requests independently of technician slots without confirming a provider or visit",
+      "priority": "P0",
+      "scope": "Bounded local customer web redesign and preferred-time request intake; hosted/native/physical acceptance and external provider integration excluded",
+      "uiReference": "Two customer bookings and cooker-installation screenshots, 19 November 2026",
+      "route": "/bookings; /services; /services/[serviceId]",
+      "implementationFiles": [
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/db.ts",
+        "database/migrations/081_service_booking_requests.sql",
+        "database/bootstrap.sql",
+        "scripts/export-bootstrap.ts",
+        "apps/web/lib/service-invoice-source.ts",
+        "apps/web/lib/customer-dashboard.ts",
+        "apps/web/components/customer-dashboard.tsx"
+      ],
+      "dataSource": "Existing service_catalogue, service_bookings, service_slots, account.profile and billing/qualification APIs",
+      "securityControl": "Original authenticated ownership, approved service/version/area and actual work qualification/safety controls retained",
+      "testFiles": [
+        "tests/customer-service-booking-redesign.test.ts",
+        "tests/service-detail-redesign.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts",
+        "tests/service-invoices.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-account-redesign.test.ts",
+        "tests/service-cancellation-review.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/bundles.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "testIds": [
+        "CSBK-API01",
+        "CSBK-API02",
+        "CSBK-API03",
+        "CSBK-API05",
+        "EO-PG"
+      ],
+      "negativeTests": [
+        "CSBK-API02: unassigned requests reject invalid time, coverage, stale pricing, inactive service, mixed slot inputs and foreign follow-ups without orphan rows",
+        "CSBK-API03: ownership and actual qualified assignment remain mandatory before confirming or progressing a request",
+        "CSBK-API05: lost commit acknowledgement recovers one owned preferred-time request and one preference record"
+      ],
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-booking-detail.jpg"
+      ],
+      "acceptanceGate": "CSBK-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Migration081 adds blocked request-only preferences without provider or reserved calendar capacity; canonical pending booking/coordination notification accepted with all technicians unavailable.",
+      "testResult": "PASS:75 focused component/API/regression tests +1 PostgreSQL concurrency test; web build/typecheck and local browser acceptance",
+      "outstandingWork": "No remaining bounded local implementation work. Hosted migration081/rollout, installed native parity, formal assistive/physical-device acceptance and outsourced-provider integrations remain unverified and are not represented as complete."
+    },
+    {
+      "id": "CSBK-04",
+      "requirement": "Clean service detail/catalogue presentation and consistent booking entry points",
+      "priority": "P1",
+      "scope": "Bounded local customer web redesign and preferred-time request intake; hosted/native/physical acceptance and external provider integration excluded",
+      "uiReference": "Two customer bookings and cooker-installation screenshots, 19 November 2026",
+      "route": "/bookings; /services; /services/[serviceId]",
+      "implementationFiles": [
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/customer-bookings.css",
+        "apps/web/components/service-request.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/app/service-details.css"
+      ],
+      "dataSource": "Existing service_catalogue, service_bookings, service_slots, account.profile and billing/qualification APIs",
+      "securityControl": "Original authenticated ownership, approved service/version/area and actual work qualification/safety controls retained",
+      "testFiles": [
+        "tests/customer-service-booking-redesign.test.ts",
+        "tests/service-detail-redesign.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts",
+        "tests/service-invoices.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-account-redesign.test.ts",
+        "tests/service-cancellation-review.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/bundles.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "testIds": [
+        "CSBK-UI02",
+        "CSBK-UI03"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-catalogue.jpg",
+        "docs/customer-service-bookings/evidence/desktop-service-detail.jpg",
+        "docs/customer-service-bookings/evidence/mobile-service-detail.jpg"
+      ],
+      "acceptanceGate": "CSBK-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Compact catalogue/details retain real configured content and canonical starting/flat prices; empty placeholders/configuration internals removed; standalone requests and bundle appointment path retained.",
+      "testResult": "PASS:75 focused component/API/regression tests +1 PostgreSQL concurrency test; web build/typecheck and local browser acceptance",
+      "outstandingWork": "No remaining bounded local implementation work. Hosted migration081/rollout, installed native parity, formal assistive/physical-device acceptance and outsourced-provider integrations remain unverified and are not represented as complete."
+    },
+    {
+      "id": "CSBK-05",
+      "requirement": "Preserve ownership, pricing/version, coverage, payment, qualification, safety and existing appointment controls",
+      "priority": "P0",
+      "scope": "Bounded local customer web redesign and preferred-time request intake; hosted/native/physical acceptance and external provider integration excluded",
+      "uiReference": "Two customer bookings and cooker-installation screenshots, 19 November 2026",
+      "route": "/bookings; /services; /services/[serviceId]",
+      "implementationFiles": [
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/mixed-checkout.ts",
+        "apps/web/lib/service-invoice-source.ts",
+        "apps/web/components/professional-services.tsx",
+        "database/migrations/081_service_booking_requests.sql"
+      ],
+      "dataSource": "Existing service_catalogue, service_bookings, service_slots, account.profile and billing/qualification APIs",
+      "securityControl": "Original authenticated ownership, approved service/version/area and actual work qualification/safety controls retained",
+      "testFiles": [
+        "tests/customer-service-booking-redesign.test.ts",
+        "tests/service-detail-redesign.test.ts",
+        "tests/professional-services.test.ts",
+        "tests/service-booking-recovery.test.ts",
+        "tests/service-invoices.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/customer-account-redesign.test.ts",
+        "tests/service-cancellation-review.test.ts",
+        "tests/service-governance.test.ts",
+        "tests/bundles.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/service-booking-postgres.test.ts"
+      ],
+      "testIds": [
+        "CSBK-API02",
+        "CSBK-API03",
+        "CSBK-API04",
+        "EO-PG"
+      ],
+      "negativeTests": [
+        "CSBK-API02: unassigned requests reject invalid time, coverage, stale pricing, inactive service, mixed slot inputs and foreign follow-ups without orphan rows",
+        "CSBK-API03: ownership and actual qualified assignment remain mandatory before confirming or progressing a request",
+        "CSBK-API05: lost commit acknowledgement recovers one owned preferred-time request and one preference record"
+      ],
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-booking-detail.jpg"
+      ],
+      "acceptanceGate": "CSBK-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Ownership, approved service/version/coverage, idempotency and stale updates enforced. Requests cannot confirm/progress or create collectible invoices before actual qualified allocation; legacy appointment, bundle, report, cancellation/refund and invoice checks pass.",
+      "testResult": "PASS:75 focused component/API/regression tests +1 PostgreSQL concurrency test; web build/typecheck and local browser acceptance",
+      "outstandingWork": "No remaining bounded local implementation work. Hosted migration081/rollout, installed native parity, formal assistive/physical-device acceptance and outsourced-provider integrations remain unverified and are not represented as complete."
+    }
+  ],
+  "gates": [
+    {
+      "id": "CSBK-G01",
+      "status": "PASS",
+      "criteria": "Compact bookings workspace with searchable status views and on-demand booking details",
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-final.jpg",
+        "docs/customer-service-bookings/evidence/tablet-bookings.jpg",
+        "docs/customer-service-bookings/evidence/mobile-bookings.jpg",
+        "docs/customer-service-bookings/evidence/mobile-dark-bookings.jpg",
+        "docs/customer-service-bookings/evidence/mobile-search-empty.jpg"
+      ]
+    },
+    {
+      "id": "CSBK-G02",
+      "status": "PASS",
+      "criteria": "Focused customer service-request dialog with preferred Lagos date/time, address, review and retry recovery",
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-request-form.jpg",
+        "docs/customer-service-bookings/evidence/desktop-request-review.jpg",
+        "docs/customer-service-bookings/evidence/mobile-request-review.jpg",
+        "docs/customer-service-bookings/evidence/desktop-booking-detail.jpg"
+      ]
+    },
+    {
+      "id": "CSBK-G03",
+      "status": "PASS",
+      "criteria": "Accept canonical unassigned booking requests independently of technician slots without confirming a provider or visit",
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-booking-detail.jpg"
+      ]
+    },
+    {
+      "id": "CSBK-G04",
+      "status": "PASS",
+      "criteria": "Clean service detail/catalogue presentation and consistent booking entry points",
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-catalogue.jpg",
+        "docs/customer-service-bookings/evidence/desktop-service-detail.jpg",
+        "docs/customer-service-bookings/evidence/mobile-service-detail.jpg"
+      ]
+    },
+    {
+      "id": "CSBK-G05",
+      "status": "PASS",
+      "criteria": "Preserve ownership, pricing/version, coverage, payment, qualification, safety and existing appointment controls",
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/customer-service-bookings/evidence/postgres-tests.txt",
+        "docs/customer-service-bookings/evidence/typecheck.txt",
+        "docs/customer-service-bookings/evidence/web-build.txt",
+        "docs/customer-service-bookings/evidence/browser-observations.txt",
+        "docs/customer-service-bookings/evidence/desktop-booking-detail.jpg"
+      ]
+    }
+  ],
+  "coverage": {
+    "implementation": "5/5",
+    "verification": "5/5 bounded local requirements",
+    "critical": "2/2",
+    "routes": "3/3 local route templates",
+    "gates": "5/5",
+    "broaderAcceptance": "Hosted/native/physical/formal accessibility remain outside these local denominators; all prior requirements and release holds preserved"
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "approvedScope": "User explicitly permits customer bookings without internal technician availability because company may outsource. Standalone booking.create accepts preferred time as an unassigned pending request; actual qualified scheduling/execution controls retained.",
+      "affectedRequirements": [
+        "CSBK-01",
+        "CSBK-02",
+        "CSBK-03",
+        "CSBK-04",
+        "CSBK-05",
+        "SDR-004",
+        "SDR-007",
+        "SDR-008",
+        "SDR-009",
+        "SBV-001"
+      ],
+      "validation": "75/75 focused +1/1 independent PostgreSQL test; final build/types; bounded desktop/tablet/mobile browser checks. Bootstrap exporter regenerated through081 after restricted-role regression found stale bootstrap."
+    }
+  ]
+}

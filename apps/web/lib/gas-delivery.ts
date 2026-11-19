@@ -112,6 +112,13 @@ export async function gasDeliveryAction(
     });
     return { id: lid, request: r };
   }
+  if (action === "gas.cylinders") {
+    const d=z.object({lineId:z.string().uuid()}).strict().parse(input);
+    const line=await one(tx,"SELECT g.*,o.customer_id,o.branch_id FROM order_gas_lines g JOIN orders o ON o.id=g.order_id WHERE g.id=$1",[d.lineId]);
+    if(!line) throw new AppError(404,"Gas line not found.");
+    allow(user,["owner","finance"],line.branch_id);
+    return (await tx.query("SELECT c.id,c.serial,c.size_kg,c.status,c.test_due,(c.id=$4) AS selected,EXISTS(SELECT 1 FROM order_gas_lines g JOIN orders o ON o.id=g.order_id WHERE g.cylinder_id=c.id AND g.order_id<>$3 AND (o.status NOT IN ('cancelled','delivered','delivery_failed') OR EXISTS(SELECT 1 FROM delivery_attempts a WHERE a.order_id=o.id AND a.picked_up_at IS NOT NULL AND a.state IN ('picked_up','arrived','failed')))) AS committed FROM cylinders c WHERE c.branch_id=$1 AND c.size_kg*1000=$5 AND (c.customer_id=$2 OR EXISTS(SELECT 1 FROM cylinder_allocations a WHERE a.cylinder_id=c.id AND a.order_id=$3 AND a.state='reserved')) ORDER BY c.serial",[line.branch_id,line.customer_id,line.order_id,line.cylinder_id,Number(line.capacity_grams)])).rows;
+  }
   if (action === "gas.inspections") {
     allow(user, ["owner", "finance"]);
     return (

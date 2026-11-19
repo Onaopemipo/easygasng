@@ -62,15 +62,39 @@ export async function bulkLPG(
     }
     return {
       loads,
-      meters:
-        user.role === "owner"
-          ? (
+      required:
+        process.env.EASYGAS_BULK_LPG_ENABLED === "true" ||
+        process.env.NODE_ENV === "production",
+      trips:
+        user.role === "driver"
+          ? []
+          : (
               await tx.query(
-                "SELECT m.*,v.label FROM bulk_lpg_meters m JOIN driver_vehicles v ON v.id=m.vehicle_id ORDER BY m.created_at DESC LIMIT 100",
+                "SELECT t.id,t.driver_id,t.vehicle_id,v.label,u.name AS driver_name FROM driver_trips t JOIN driver_vehicles v ON v.id=t.vehicle_id JOIN users u ON u.id=t.driver_id WHERE t.ended_at IS NULL AND ($1::boolean OR t.branch_id=$2) AND NOT EXISTS(SELECT 1 FROM bulk_lpg_loads l WHERE l.trip_id=t.id) ORDER BY t.started_at DESC",
+                [user.role === "owner", user.branch_id],
               )
-            ).rows
-          : [],
-      enabled: process.env.EASYGAS_BULK_LPG_ENABLED === "true",
+            ).rows,
+      orders:
+        user.role === "driver"
+          ? []
+          : (
+              await tx.query(
+                "SELECT o.id,o.reference,o.driver_id,o.tracking_version,o.status,(SELECT id FROM delivery_attempts a WHERE a.order_id=o.id ORDER BY assignment_version DESC LIMIT 1) AS attempt_id,(SELECT state FROM delivery_attempts a WHERE a.order_id=o.id ORDER BY assignment_version DESC LIMIT 1) AS attempt_state,(SELECT sum(g.grams) FROM order_gas_lines g WHERE g.order_id=o.id) AS grams FROM orders o WHERE o.status IN ('assigned','out_for_delivery') AND ($1::boolean OR o.branch_id=$2) AND EXISTS(SELECT 1 FROM order_gas_lines g WHERE g.order_id=o.id) AND NOT EXISTS(SELECT 1 FROM bulk_lpg_allocations a WHERE a.order_id=o.id AND a.state NOT IN ('released','returned')) ORDER BY o.created_at",
+                [user.role === "owner", user.branch_id],
+              )
+            ).rows,
+      meters: ["owner", "finance"].includes(user.role)
+        ? (
+            await tx.query(
+              "SELECT m.*,v.label FROM bulk_lpg_meters m JOIN driver_vehicles v ON v.id=m.vehicle_id WHERE ($1::boolean OR v.branch_id=$2) ORDER BY m.created_at DESC LIMIT 100",
+              [user.role === "owner", user.branch_id],
+            )
+          ).rows
+        : [],
+      enabled:
+        process.env.EASYGAS_BULK_LPG_ENABLED === "true" &&
+        (process.env.NODE_ENV !== "production" ||
+          process.env.EASYGAS_FIELD_OPERATIONS_ENABLED === "true"),
       doorstepEnabled:
         process.env.EASYGAS_DOORSTEP_ENABLED === "true" &&
         (process.env.NODE_ENV !== "production" ||
@@ -233,7 +257,7 @@ export async function bulkLPG(
     await audit(tx, user, action, mid);
     return { id: mid };
   }
-  if (action === "bulk.load.issue") {
+  if (["bulk.load.issue", "bulk.load.recover"].includes(action)) {
     allow(user, ["owner", "finance"]);
     recentVerification(user);
     const d = z
@@ -243,10 +267,36 @@ export async function bulkLPG(
         grams: mass.refine((n) => n > 0),
         meterReadingGrams: mass,
         orderIds: z.array(z.string().uuid()).max(100).default([]),
+        recovery: z
+          .object({
+            orderId: z.string().uuid(),
+            version: z.number().int().positive(),
+            attemptId: z.string().uuid(),
+            observedAt: z.iso.datetime(),
+            notDispensed: z.literal(true),
+          })
+          .strict()
+          .optional(),
         reason: z.string().trim().min(10).max(500),
       })
       .strict()
       .parse(input);
+    if ((action === "bulk.load.recover") !== Boolean(d.recovery))
+      throw new AppError(
+        400,
+        "Use the explicit missing-custody recovery workflow.",
+      );
+    if (
+      d.recovery &&
+      (d.orderIds.length !== 1 ||
+        d.orderIds[0] !== d.recovery.orderId ||
+        Date.parse(d.recovery.observedAt) > Date.now() ||
+        Date.parse(d.recovery.observedAt) < Date.now() - 15 * 60000)
+    )
+      throw new AppError(
+        409,
+        "Recovery requires one current order and fresh observed custody within fifteen minutes.",
+      );
     if (new Set(d.orderIds).size !== d.orderIds.length)
       throw new AppError(400, "Duplicate load order.");
     // Canonical orders lock first, consistently with fulfilment and cancellation.
@@ -292,6 +342,13 @@ export async function bulkLPG(
         409,
         "A current calibrated mass meter on this vehicle is required.",
       );
+    if (
+      await one(tx, "SELECT id FROM bulk_lpg_loads WHERE trip_id=$1", [trip.id])
+    )
+      throw new AppError(
+        409,
+        "This trip already has an LPG load. Reconcile its custody before starting another trip; do not create a duplicate load.",
+      );
     let allocated = 0;
     const quantities: number[] = [];
     for (const order of orders) {
@@ -299,12 +356,32 @@ export async function bulkLPG(
       if (
         order.branch_id !== trip.branch_id ||
         order.driver_id !== trip.driver_id ||
-        order.status !== "assigned"
+        order.status !== (d.recovery ? "out_for_delivery" : "assigned")
       )
         throw new AppError(
           409,
           "Only current assigned gas orders for this trip may be loaded.",
         );
+      if (d.recovery) {
+        const attempt = await one(
+          tx,
+          "SELECT * FROM delivery_attempts WHERE order_id=$1 ORDER BY assignment_version DESC LIMIT 1 FOR UPDATE",
+          [order.id],
+        );
+        if (
+          Number(order.tracking_version) !== d.recovery.version ||
+          !attempt ||
+          attempt.id !== d.recovery.attemptId ||
+          attempt.driver_id !== trip.driver_id ||
+          !attempt.picked_up_at ||
+          !["picked_up", "arrived"].includes(attempt.state)
+        )
+          throw new AppError(
+            409,
+            "The delivery attempt changed. Recovery requires the current picked-up or arrived order without recorded dispensing.",
+          );
+        await verifyGasDispatch(tx, order.id);
+      }
       const n = Number(
         (await one(
           tx,
@@ -383,11 +460,26 @@ export async function bulkLPG(
         "INSERT INTO gas_stock_movements(id,branch_id,grams,kind,reference,actor_id,reason) VALUES($1,$2,$3,'reserved',$4,$5,$6)",
         [id(), trip.branch_id, buffer, `bulk:${lid}:buffer`, user.id, d.reason],
       );
-    await event(tx, user, lid, "load.issued", {
+    await event(tx, user, lid, d.recovery ? "load.recovered" : "load.issued", {
       ...d,
       allocatedGrams: allocated,
       bufferGrams: buffer,
     });
+    if (d.recovery)
+      await audit(
+        tx,
+        user,
+        "bulk.missing_custody.recovered",
+        d.recovery.orderId,
+        "success",
+        {
+          loadId: lid,
+          ...d.recovery,
+          reason: d.reason,
+          recordedAt: new Date().toISOString(),
+          noPriorDispensingAsserted: true,
+        },
+      );
     return { id: lid, version: 1, bufferGrams: buffer };
   }
   const d = z

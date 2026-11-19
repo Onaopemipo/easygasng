@@ -1,3 +1,4 @@
+import { verifyVehicleLPGPickup } from "./bulk-lpg-reservation";
 import { cylinderAllocationReadiness } from "./cylinder-allocation";
 import { vehicleReady } from "./fleet-constraints";
 import { invoiceBalance } from "./invoice-corrections";
@@ -331,6 +332,7 @@ export async function trackingAction(
           throw new AppError(409, "Acknowledge this assignment before pickup.");
       }
       await fulfilmentReady(tx, o);
+      await verifyVehicleLPGPickup(tx,o);
       const manifest = await deliveryManifest(tx, o.id);
       if (canonicalRequest(d.manifest) !== canonicalRequest(manifest))
         throw new AppError(

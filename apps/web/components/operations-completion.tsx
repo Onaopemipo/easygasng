@@ -1,6 +1,7 @@
 "use client";
 import { FieldCaption } from "./field-caption";
 import { FormInput } from "./password-input";
+import LPGLoadIssue from "./lpg-load-issue";
 import { VehicleManifestPanel } from "./vehicle-manifest-panel";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { api, Notice, money } from "./ui";
@@ -75,7 +76,11 @@ export function OperationForm({
       <h3>{title}</h3>
       {fields.map((f) => (
         <label key={f.name} data-field-type={f.type ?? "text"}>
-          {f.type !== "hidden" && <FieldCaption required={f.type !== "checkbox" && !f.optional}>{f.label}</FieldCaption>}
+          {f.type !== "hidden" && (
+            <FieldCaption required={f.type !== "checkbox" && !f.optional}>
+              {f.label}
+            </FieldCaption>
+          )}
           {f.options ? (
             <select
               name={f.name}
@@ -338,7 +343,13 @@ function TripInputs({ trip, onDone }: { trip: any; onDone: () => void }) {
         <h3>Fuel purchase</h3>
         <label>
           <FieldCaption required={true}>Litres</FieldCaption>
-          <FormInput type="number" name="litres" step="0.01" min="0.01" required />
+          <FormInput
+            type="number"
+            name="litres"
+            step="0.01"
+            min="0.01"
+            required
+          />
         </label>
         <label>
           <FieldCaption required={true}>Cost (₦)</FieldCaption>
@@ -369,6 +380,8 @@ export function BulkLPGPanel({ user }: { user: any }) {
     [tick, setTick] = useState(0);
   useEffect(() => {
     let current = true;
+    setError("");
+    setData(null);
     api("bulk.summary")
       .then((value) => {
         if (current) setData(value);
@@ -385,6 +398,8 @@ export function BulkLPGPanel({ user }: { user: any }) {
   return (
     <details className="panel">
       <summary>Bulk LPG loading, dispensing and returns</summary>
+      <button type="button" className="button secondary" onClick={refresh}>Refresh LPG records</button>
+      {!data && !error && <p role="status">Loading custody records…</p>}
       {error && <Notice type="error" message={error} />}
       <p>
         All measurements are mass in grams. Vehicle LPG remains included in
@@ -417,35 +432,7 @@ export function BulkLPGPanel({ user }: { user: any }) {
           ]}
         />
       )}
-      {data?.enabled && staff && (
-        <OperationForm
-          title="Issue measured LPG load"
-          action="bulk.load.issue"
-          onDone={refresh}
-          fields={[
-            { name: "tripId", label: "Active trip ID" },
-            { name: "meterId", label: "Calibrated meter ID" },
-            {
-              name: "grams",
-              label: "Physically loaded mass (grams)",
-              type: "number",
-            },
-            {
-              name: "meterReadingGrams",
-              label: "Initial cumulative meter reading (grams)",
-              type: "number",
-            },
-            {
-              name: "orderIds",
-              label:
-                "Assigned order IDs, separated by commas (optional buffer-only load)",
-              type: "csv",
-              optional: true,
-            },
-            { name: "reason", label: "Loading evidence and reason" },
-          ]}
-        />
-      )}
+      {data?.enabled && staff && <LPGLoadIssue data={data} onDone={refresh} />}
       {data?.enabled &&
         user.role === "owner" &&
         data?.meters?.map((meter: any) => (
@@ -523,7 +510,10 @@ export function BulkLPGPanel({ user }: { user: any }) {
             <p>
               {Number(load.loaded_grams) / 1000} kg loaded ·{" "}
               {Number(load.dispensed_grams) / 1000} kg dispensed ·{" "}
-              {Number(load.buffer_grams) / 1000} kg reserved buffer
+              {Number(load.buffer_grams) / 1000}{" "}
+              {load.state === "reconciled"
+                ? "kg original buffer · reservation released"
+                : "kg reserved buffer"}
             </p>
             {load.state === "held" && (
               <Notice
@@ -906,7 +896,10 @@ export function CRMPanel({ user }: { user: any }) {
       >
         <label>
           Search customer name or ID
-          <FormInput value={search} onChange={(e) => setSearch(e.target.value)} />
+          <FormInput
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </label>
         <button className="button secondary">Search</button>
       </form>
@@ -1066,27 +1059,24 @@ export function OperationsExtensions({
   section: string;
   user: any;
 }) {
+  if (section === "operations" && ["owner", "finance"].includes(user.role))
+    return <BulkLPGPanel user={user} />;
   if (section === "deliveries")
     return (
       <>
         {["owner", "manager", "finance", "driver"].includes(user.role) && (
           <VehicleManifestPanel user={user} Form={OperationForm} />
         )}
-        {["owner", "manager", "finance", "driver"].includes(
-          user.role,
-        ) && <BulkLPGPanel user={user} />}
-        {["owner", "manager"].includes(user.role) && (
-          <DispatchPanel />
+        {["owner", "manager", "finance", "driver"].includes(user.role) && (
+          <BulkLPGPanel user={user} />
         )}
-        {["owner", "manager", "finance", "driver"].includes(
-          user.role,
-        ) && <FleetPanel user={user} />}
+        {["owner", "manager"].includes(user.role) && <DispatchPanel />}
+        {["owner", "manager", "finance", "driver"].includes(user.role) && (
+          <FleetPanel user={user} />
+        )}
       </>
     );
-  if (
-    section === "customers" &&
-    ["owner", "manager"].includes(user.role)
-  )
+  if (section === "customers" && ["owner", "manager"].includes(user.role))
     return <CRMPanel user={user} />;
   return null;
 }

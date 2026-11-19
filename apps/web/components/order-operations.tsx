@@ -1,7 +1,7 @@
 "use client";
 import { FieldCaption } from "./field-caption";
 import { DoorstepCylinderForm } from "./doorstep-cylinder-form";
-import { useState, type FormEvent } from "react";
+import React, { useEffect, useState, type FormEvent } from "react";
 import { api, Loading, Notice, money } from "./ui";
 import { OperationForm } from "./operations-completion";
 import { DoorstepActions } from "./doorstep-actions";
@@ -183,10 +183,12 @@ export function OrderOperations({
   order,
   user,
   customer = false,
+  embedded = false,
 }: {
   order: any;
   user?: any;
   customer?: boolean;
+  embedded?: boolean;
 }) {
   const [photos, setPhotos] = useState<any[] | null>(null),
     [amendments, setAmendments] = useState<any[]>([]),
@@ -209,6 +211,8 @@ export function OrderOperations({
       setError(e.message);
     }
   }
+  useEffect(() => { if (embedded) load(); }, [embedded, order.id]);
+  const Container = embedded ? "section" : "details";
   async function photo(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
@@ -223,13 +227,14 @@ export function OrderOperations({
     }
   }
   return (
-    <details
+    <Container
       className="panel"
+      aria-label={embedded ? "Visit changes and photo history" : undefined}
       onToggle={(e) => {
-        if (e.currentTarget.open) load();
+        if (!embedded && (e.currentTarget as HTMLDetailsElement).open) load();
       }}
     >
-      <summary>Visit changes and photo history</summary>
+      {!embedded && <summary>Visit changes and photo history</summary>}
       {error && <Notice type="error" message={error} />}{" "}
       {!photos && !error && <Loading label="Loading visit and photo history" />}
       {photos?.length === 0 && <p>No eligible photos for this order.</p>}
@@ -434,6 +439,6 @@ export function OrderOperations({
           />
         </>
       )}
-    </details>
+    </Container>
   );
 }

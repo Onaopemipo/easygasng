@@ -56,6 +56,7 @@ const reads = new Set([
   "delivery.locations.manage",
   "gas.stock",
   "gas.inspections",
+  "gas.cylinders",
   "staff.manage",
   "staff.privileges",
   "staff.lookup",

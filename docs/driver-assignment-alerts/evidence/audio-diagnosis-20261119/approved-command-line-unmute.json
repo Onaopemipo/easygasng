@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-19",
+  "device": "EasyGas First Sign-In QA",
+  "udid": "1DEB740D-CCB3-41CC-9992-CFCB859CD985",
+  "authorization": "User explicitly approved QA-only Silent Mode change and local command-line control plus restart.",
+  "execution": [
+    "Runtime defaults write false read back0; restart reset it to1.",
+    "Shutdown, edit only SBRingerMuted offline tofalse, boot; startup reset it to1.",
+    "Restored Device Hub Sound slider from startup0 to original0.6. Output remained MacBook Pro Speakers.",
+    "Reopened existing EasyGas Local as Alert QA driver through CUA.",
+    "Applied approved runtime defaults write false again, readback0; immediately triggered Profile Test assignment popup & sound through CUA.",
+    "Actual native Test assignment alert popup and banner observed."
+  ],
+  "finalSBRingerMutedReadback": "0",
+  "persistence": "Does not survive startup; no permanent-unmute claim.",
+  "audibleAcceptance": "Awaiting user confirmation; DAPP-02 remains DEFECTIVE/G02 FAIL.",
+  "buildsOrInstalls": 0,
+  "applicationSourceChanges": false,
+  "hostedOrPaymentChanges": false
+}

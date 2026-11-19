@@ -4,9 +4,10 @@ import { one, type SQL } from "./db";
 import { navigationAccess } from "./navigation";
 
 export async function notificationInbox(tx: SQL, user: Actor, input: unknown) {
-  const { filter, page } = z
+  const { filter, page, search } = z
     .object({
       filter: z.enum(["all", "unread"]).default("all"),
+      search: z.string().trim().max(100).default(""),
       page: z.coerce.number().int().min(1).max(1_000_000).default(1),
     })
     .strict()
@@ -30,12 +31,13 @@ export async function notificationInbox(tx: SQL, user: Actor, input: unknown) {
   }
   const counts = await one(
     tx,
-    "SELECT count(*)::int AS total, count(*) FILTER (WHERE read_at IS NULL)::int AS unread FROM notifications WHERE user_id=$1",
-    [user.id],
+    `SELECT count(*)::int AS total, count(*) FILTER (WHERE read_at IS NULL)::int AS unread,
+      count(*) FILTER (WHERE (NOT $2::boolean OR read_at IS NULL)
+        AND strpos(lower(concat_ws(' ',title,body)),lower($3))>0)::int AS filtered_total
+      FROM notifications WHERE user_id=$1`,
+    [user.id, filter === "unread", search],
   );
-  const filteredTotal = Number(
-    filter === "all" ? counts?.total : counts?.unread,
-  );
+  const filteredTotal = Number(counts?.filtered_total ?? 0);
   const currentPage = Math.min(
     page,
     Math.max(1, Math.ceil(filteredTotal / pageSize)),
@@ -45,16 +47,22 @@ export async function notificationInbox(tx: SQL, user: Actor, input: unknown) {
       CASE WHEN $3::boolean AND EXISTS (
         SELECT 1 FROM orders o WHERE o.id::text=n.related_id::text
         AND ($2::text IS NULL OR o.branch_id=$2)
-      ) THEN '/admin/orders?orderId=' || n.related_id::text END AS href
+      ) THEN '/admin/orders?orderId=' || n.related_id::text
+      WHEN $8::boolean AND EXISTS (
+        SELECT 1 FROM orders o WHERE o.id::text=n.related_id::text AND o.customer_id=$1
+      ) THEN '/orders?orderId=' || n.related_id::text END AS href
       FROM notifications n WHERE n.user_id=$1 AND (NOT $4::boolean OR n.read_at IS NULL)
-      ORDER BY n.created_at DESC,n.id DESC LIMIT $5 OFFSET $6`,
+      AND strpos(lower(concat_ws(' ',n.title,n.body)),lower($5))>0
+      ORDER BY n.created_at DESC,n.id DESC LIMIT $6 OFFSET $7`,
     [
       user.id,
       user.role === "owner" ? null : user.branch_id,
       canOpenOrders,
       filter === "unread",
+      search,
       pageSize,
       (currentPage - 1) * pageSize,
+      customer,
     ],
   );
   return {

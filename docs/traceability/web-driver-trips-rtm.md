@@ -16,3 +16,8 @@ PARTIAL — hosted execution of EG-2026-7BB8640B exposed missing bulk LPG custod
 Historical66 focused checks, isolated browser workflows, web756/756/native CI and hosted read-only acceptance are preserved. They did not prove production-mode bulk gas fulfilment. The named hosted run changed authorised synthetic trip/order/cylinder/inspection/proof records; final delivery did not succeed. A user-approved short-lived cylinder qualification renewal was independently audited. Additional one-hour demo bulk renewals are now approved but not yet applied. Fulfilment remains enabled and Paystack sandbox; no new charge, guard bypass or live operation.
 
 Simulator continuation (19 November): existing assignment/notification/timeline observed on the hosted-demo-connected iOS preview. [Evidence](../web-driver-trips/evidence/order-7BB8640B/simulator-assignment-observation.txt). No new assignment/charge/handover or GPS permission change; DWT-05 DEFECTIVE/DWT-06 PARTIAL and all denominators unchanged.
+
+
+### Local vehicle-dispensing repair continuation
+
+19 November2026 user-approved local repair: vehicle-dispensed LPG web workflow and serial-based cylinder selection implemented in DLPG-01–04. Local API/HTTP/production-mode/PostgreSQL/browser acceptance recorded separately. Hosted EG-2026-7BB8640B remains unchanged/incomplete; deployed DWT-05 DEFECTIVE and DWT-06 PARTIAL, all historical evidence, native/physical/NO-GO/import holds retained.

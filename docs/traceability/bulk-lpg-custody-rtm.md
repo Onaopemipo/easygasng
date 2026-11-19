@@ -22,3 +22,8 @@ BULK-R05 continuation: held returns can now be independently investigated, measu
 BULK-R06/R07/R08 doorstep continuation:060 binds supplementary custody to the original invoice/visit/cylinder, shares existing approvals and verified payment authority, transfers vehicle buffer without double reservation and atomically meters/debits grams. Existing web/native controls and verified COD proof-based completion integrated. Physical-product/multi-cylinder/exception and full operational acceptance remain in the eight-requirement/four-gate denominator; production stays NO-GO. See doorway operating scope in ../production-completion/doorstep-implementation.md.
 
 9 November approved continuation: [execution, source/security evidence and remaining acceptance](../production-completion/approved-completion-execution.md). Current JSON evidence maps multi-cylinder and physical-manifest custody, independently governed financial/service exceptions and material recovery. Broad434/434 and targeted13/13 pass; no requirement/scenario/gate removed or production approval inferred.
+
+
+### Local vehicle-dispensing repair continuation
+
+19 November2026 user-approved local repair: vehicle-dispensed LPG web workflow and serial-based cylinder selection implemented in DLPG-01–04. Local API/HTTP/production-mode/PostgreSQL/browser acceptance recorded separately. Hosted EG-2026-7BB8640B remains unchanged/incomplete; deployed DWT-05 DEFECTIVE and DWT-06 PARTIAL, all historical evidence, native/physical/NO-GO/import holds retained.

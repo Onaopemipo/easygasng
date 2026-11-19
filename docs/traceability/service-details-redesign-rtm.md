@@ -114,3 +114,8 @@ Production NO-GO. [Audit](../service-details-redesign/00-repository-audit.md) ·
 | SDR-G25 | Rollback and release | PARTIAL | Source rollback is documented; production stays NO-GO. No hosted rehearsal performed. |
 
 All 12 requirements, 59 scenarios and 25 gates remain in scope. 6 requirements and 19 gates have complete local verification within their defined scope.
+
+
+### 19 November customer request intake scope change
+
+2026-11-19 user-approved scope change: standalone customer service intake accepts an unassigned preferred-time request independently of technician availability (CSBK-01–05). Actual appointment allocation/execution still requires qualified personnel; bundles retain qualified slots. Current local web evidence is in customer-service-booking-redesign-rtm.json. Historical evidence, all requirement/scenario/gate IDs and broader native/production gaps retained.

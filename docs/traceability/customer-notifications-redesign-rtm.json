@@ -1,0 +1,301 @@
+{
+  "phase": "Customer notifications redesign \u2014 19 November 2026",
+  "productionDecision": "Existing production NO-GO, actual-import hold, retain-all and unrelated work preserved. No deployment or native build.",
+  "requirements": [
+    {
+      "id": "CNIN-01",
+      "requirement": "Compact inbox with All/Unread counts, global search and canonical pagination",
+      "priority": "P1",
+      "scope": "Customer web /notifications; original staff/native defaults and backend authority preserved",
+      "uiReference": "Two user screenshots of oversized customer notification cards, 19 November 2026",
+      "route": "/notifications",
+      "implementationFiles": [
+        "apps/web/components/customer-notifications.tsx",
+        "apps/web/components/customer-notifications.module.css",
+        "apps/web/components/site.tsx",
+        "apps/web/components/workflows.tsx",
+        "packages/business-rules/src/customer-notifications.ts",
+        "apps/web/lib/notification-inbox.ts"
+      ],
+      "dataSource": "Existing notifications recipient rows, notifications.list / notifications.read.bulk and owned orders",
+      "securityControl": "Original ownership/read timestamp guards retained; parameterised bounded search and authenticated order-link resolution; no notification deletion, auto-credit, new provider channel or client-supplied recipient identity introduced.",
+      "testFiles": [
+        "tests/customer-notifications.test.ts",
+        "tests/notification-inbox.test.ts"
+      ],
+      "testIds": [
+        "CNIN-API01",
+        "CNIN-UI03"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/customer-notifications/evidence/tests.txt",
+        "docs/customer-notifications/evidence/typecheck.txt",
+        "docs/customer-notifications/evidence/web-build.txt",
+        "docs/customer-notifications/evidence/browser-observations.txt",
+        "docs/customer-notifications/evidence/desktop-final.jpg",
+        "docs/customer-notifications/evidence/desktop-inbox.jpg",
+        "docs/customer-notifications/evidence/desktop-message.jpg",
+        "docs/customer-notifications/evidence/desktop-dark.jpg",
+        "docs/customer-notifications/evidence/mobile-inbox.jpg",
+        "docs/customer-notifications/evidence/mobile-message.jpg",
+        "docs/customer-notifications/evidence/inbox-error.jpg"
+      ],
+      "acceptanceGate": "CNIN-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Compact summaries replace expanded cards. Existing server pagination is reused; bounded search applies globally before pagination and returns canonical overall and filtered counts. All/Unread, search/page navigation and empty states verified in local browser and tests.",
+      "testResult": "PASS:27 focused component/API/customer/driver/prior-order checks; final web production build/typecheck and bounded local browser acceptance.",
+      "outstandingWork": "None for the bounded local customer inbox redesign. Hosted rollout, production-volume search, formal assistive-technology and physical-device acceptance remain unverified outside this phase; prior production NO-GO and all other matrices remain."
+    },
+    {
+      "id": "CNIN-02",
+      "requirement": "On-demand message dialog with sensitive-code previews, full original message and verified related-order action",
+      "priority": "P1",
+      "scope": "Customer web /notifications; original staff/native defaults and backend authority preserved",
+      "uiReference": "Two user screenshots of oversized customer notification cards, 19 November 2026",
+      "route": "/notifications",
+      "implementationFiles": [
+        "apps/web/components/customer-notifications.tsx",
+        "apps/web/components/customer-notifications.module.css",
+        "apps/web/components/site.tsx",
+        "apps/web/components/workflows.tsx",
+        "packages/business-rules/src/customer-notifications.ts",
+        "apps/web/lib/notification-inbox.ts"
+      ],
+      "dataSource": "Existing notifications recipient rows, notifications.list / notifications.read.bulk and owned orders",
+      "securityControl": "Original ownership/read timestamp guards retained; parameterised bounded search and authenticated order-link resolution; no notification deletion, auto-credit, new provider channel or client-supplied recipient identity introduced.",
+      "testFiles": [
+        "tests/customer-notifications.test.ts",
+        "tests/notification-inbox.test.ts"
+      ],
+      "testIds": [
+        "CNIN-UI01",
+        "CNIN-UI02",
+        "CNIN-API02"
+      ],
+      "negativeTests": [
+        "CNIN-API02: customer order destinations require ownership even when an own notification references another customer's order"
+      ],
+      "evidence": [
+        "docs/customer-notifications/evidence/tests.txt",
+        "docs/customer-notifications/evidence/typecheck.txt",
+        "docs/customer-notifications/evidence/web-build.txt",
+        "docs/customer-notifications/evidence/browser-observations.txt",
+        "docs/customer-notifications/evidence/desktop-final.jpg",
+        "docs/customer-notifications/evidence/desktop-inbox.jpg",
+        "docs/customer-notifications/evidence/desktop-message.jpg",
+        "docs/customer-notifications/evidence/desktop-dark.jpg",
+        "docs/customer-notifications/evidence/mobile-inbox.jpg",
+        "docs/customer-notifications/evidence/mobile-message.jpg",
+        "docs/customer-notifications/evidence/inbox-error.jpg"
+      ],
+      "acceptanceGate": "CNIN-G2",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Original full message and timestamp are revealed in a native modal; neutral code previews and safe related destinations tested. Actual owned-order click opened the corresponding order detail. Sandbox meaning and safety instructions retained; no speculative destination inferred from message text.",
+      "testResult": "PASS:27 focused component/API/customer/driver/prior-order checks; final web production build/typecheck and bounded local browser acceptance.",
+      "outstandingWork": "None for the bounded local customer inbox redesign. Hosted rollout, production-volume search, formal assistive-technology and physical-device acceptance remain unverified outside this phase; prior production NO-GO and all other matrices remain."
+    },
+    {
+      "id": "CNIN-03",
+      "requirement": "Single and all read actions retain recipient scope and first-read timestamps; identity/request isolation",
+      "priority": "P0",
+      "scope": "Customer web /notifications; original staff/native defaults and backend authority preserved",
+      "uiReference": "Two user screenshots of oversized customer notification cards, 19 November 2026",
+      "route": "/notifications",
+      "implementationFiles": [
+        "apps/web/components/customer-notifications.tsx",
+        "apps/web/components/customer-notifications.module.css",
+        "apps/web/components/site.tsx",
+        "apps/web/components/workflows.tsx",
+        "packages/business-rules/src/customer-notifications.ts",
+        "apps/web/components/customer-data.ts",
+        "apps/web/components/ui.tsx",
+        "apps/web/lib/notification-inbox.ts",
+        "apps/web/lib/accounts.ts"
+      ],
+      "dataSource": "Existing notifications recipient rows, notifications.list / notifications.read.bulk and owned orders",
+      "securityControl": "Original ownership/read timestamp guards retained; parameterised bounded search and authenticated order-link resolution; no notification deletion, auto-credit, new provider channel or client-supplied recipient identity introduced.",
+      "testFiles": [
+        "tests/notification-inbox.test.ts",
+        "tests/customer-dashboard.test.ts",
+        "tests/assignment-notifications.test.ts"
+      ],
+      "testIds": [
+        "NOTIF-SCOPE",
+        "CNIN-API02",
+        "CD-E,F"
+      ],
+      "negativeTests": [
+        "CNIN-API02: customer order destinations require ownership even when an own notification references another customer's order",
+        "NOTIF-SCOPE: paginated filters and bulk reads stay recipient-scoped and preserve first read timestamps"
+      ],
+      "evidence": [
+        "docs/customer-notifications/evidence/tests.txt",
+        "docs/customer-notifications/evidence/typecheck.txt",
+        "docs/customer-notifications/evidence/web-build.txt",
+        "docs/customer-notifications/evidence/browser-observations.txt",
+        "docs/customer-notifications/evidence/desktop-final.jpg",
+        "docs/customer-notifications/evidence/desktop-inbox.jpg",
+        "docs/customer-notifications/evidence/desktop-message.jpg",
+        "docs/customer-notifications/evidence/desktop-dark.jpg",
+        "docs/customer-notifications/evidence/mobile-inbox.jpg",
+        "docs/customer-notifications/evidence/mobile-message.jpg",
+        "docs/customer-notifications/evidence/inbox-error.jpg"
+      ],
+      "acceptanceGate": "CNIN-G3",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Recipient-only single/all reads and first-read timestamp preservation remain authoritative. Actor-keyed component and existing abortable resource retained. Scoped acknowledged IDs prevent late acknowledgements from changing another open message. Read, bulk-read, unread badge and guarded order-link regressions pass; final corrected dialog read retested successfully.",
+      "testResult": "PASS:27 focused component/API/customer/driver/prior-order checks; final web production build/typecheck and bounded local browser acceptance.",
+      "outstandingWork": "None for the bounded local customer inbox redesign. Hosted rollout, production-volume search, formal assistive-technology and physical-device acceptance remain unverified outside this phase; prior production NO-GO and all other matrices remain."
+    },
+    {
+      "id": "CNIN-04",
+      "requirement": "Responsive accessible desktop/mobile/dark layouts and explicit loading/error/empty states",
+      "priority": "P1",
+      "scope": "Customer web /notifications; original staff/native defaults and backend authority preserved",
+      "uiReference": "Two user screenshots of oversized customer notification cards, 19 November 2026",
+      "route": "/notifications",
+      "implementationFiles": [
+        "apps/web/components/customer-notifications.tsx",
+        "apps/web/components/customer-notifications.module.css",
+        "apps/web/components/site.tsx",
+        "apps/web/components/workflows.tsx",
+        "packages/business-rules/src/customer-notifications.ts",
+        "apps/web/components/customer-data.ts"
+      ],
+      "dataSource": "Existing notifications recipient rows, notifications.list / notifications.read.bulk and owned orders",
+      "securityControl": "Original ownership/read timestamp guards retained; parameterised bounded search and authenticated order-link resolution; no notification deletion, auto-credit, new provider channel or client-supplied recipient identity introduced.",
+      "testFiles": [
+        "tests/customer-notifications.test.ts",
+        "tests/customer-dashboard.test.ts"
+      ],
+      "testIds": [
+        "CNIN-UI03",
+        "CD-E,F"
+      ],
+      "negativeTests": [
+        "CD-E,F: revoked and expired sessions cannot retrieve any dashboard source"
+      ],
+      "evidence": [
+        "docs/customer-notifications/evidence/tests.txt",
+        "docs/customer-notifications/evidence/typecheck.txt",
+        "docs/customer-notifications/evidence/web-build.txt",
+        "docs/customer-notifications/evidence/browser-observations.txt",
+        "docs/customer-notifications/evidence/desktop-final.jpg",
+        "docs/customer-notifications/evidence/desktop-inbox.jpg",
+        "docs/customer-notifications/evidence/desktop-message.jpg",
+        "docs/customer-notifications/evidence/desktop-dark.jpg",
+        "docs/customer-notifications/evidence/mobile-inbox.jpg",
+        "docs/customer-notifications/evidence/mobile-message.jpg",
+        "docs/customer-notifications/evidence/inbox-error.jpg"
+      ],
+      "acceptanceGate": "CNIN-G4",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Desktop/tablet/mobile layouts and dark appearance checked, with no horizontal page overflow. Native modal plus explicit Tab boundaries, Escape/focus restoration and scroll lock verified. Local server-stop/retry recovery showed explicit error and real reload; empty search/unread states remain distinct.",
+      "testResult": "PASS:27 focused component/API/customer/driver/prior-order checks; final web production build/typecheck and bounded local browser acceptance.",
+      "outstandingWork": "None for the bounded local customer inbox redesign. Hosted rollout, production-volume search, formal assistive-technology and physical-device acceptance remain unverified outside this phase; prior production NO-GO and all other matrices remain."
+    }
+  ],
+  "gates": [
+    {
+      "id": "CNIN-G1",
+      "status": "PASS",
+      "evidence": [
+        "docs/customer-notifications/evidence/tests.txt",
+        "docs/customer-notifications/evidence/typecheck.txt",
+        "docs/customer-notifications/evidence/web-build.txt",
+        "docs/customer-notifications/evidence/browser-observations.txt",
+        "docs/customer-notifications/evidence/desktop-final.jpg",
+        "docs/customer-notifications/evidence/desktop-inbox.jpg",
+        "docs/customer-notifications/evidence/desktop-message.jpg",
+        "docs/customer-notifications/evidence/desktop-dark.jpg",
+        "docs/customer-notifications/evidence/mobile-inbox.jpg",
+        "docs/customer-notifications/evidence/mobile-message.jpg",
+        "docs/customer-notifications/evidence/inbox-error.jpg"
+      ]
+    },
+    {
+      "id": "CNIN-G2",
+      "status": "PASS",
+      "evidence": [
+        "docs/customer-notifications/evidence/tests.txt",
+        "docs/customer-notifications/evidence/typecheck.txt",
+        "docs/customer-notifications/evidence/web-build.txt",
+        "docs/customer-notifications/evidence/browser-observations.txt",
+        "docs/customer-notifications/evidence/desktop-final.jpg",
+        "docs/customer-notifications/evidence/desktop-inbox.jpg",
+        "docs/customer-notifications/evidence/desktop-message.jpg",
+        "docs/customer-notifications/evidence/desktop-dark.jpg",
+        "docs/customer-notifications/evidence/mobile-inbox.jpg",
+        "docs/customer-notifications/evidence/mobile-message.jpg",
+        "docs/customer-notifications/evidence/inbox-error.jpg"
+      ]
+    },
+    {
+      "id": "CNIN-G3",
+      "status": "PASS",
+      "evidence": [
+        "docs/customer-notifications/evidence/tests.txt",
+        "docs/customer-notifications/evidence/typecheck.txt",
+        "docs/customer-notifications/evidence/web-build.txt",
+        "docs/customer-notifications/evidence/browser-observations.txt",
+        "docs/customer-notifications/evidence/desktop-final.jpg",
+        "docs/customer-notifications/evidence/desktop-inbox.jpg",
+        "docs/customer-notifications/evidence/desktop-message.jpg",
+        "docs/customer-notifications/evidence/desktop-dark.jpg",
+        "docs/customer-notifications/evidence/mobile-inbox.jpg",
+        "docs/customer-notifications/evidence/mobile-message.jpg",
+        "docs/customer-notifications/evidence/inbox-error.jpg"
+      ]
+    },
+    {
+      "id": "CNIN-G4",
+      "status": "PASS",
+      "evidence": [
+        "docs/customer-notifications/evidence/tests.txt",
+        "docs/customer-notifications/evidence/typecheck.txt",
+        "docs/customer-notifications/evidence/web-build.txt",
+        "docs/customer-notifications/evidence/browser-observations.txt",
+        "docs/customer-notifications/evidence/desktop-final.jpg",
+        "docs/customer-notifications/evidence/desktop-inbox.jpg",
+        "docs/customer-notifications/evidence/desktop-message.jpg",
+        "docs/customer-notifications/evidence/desktop-dark.jpg",
+        "docs/customer-notifications/evidence/mobile-inbox.jpg",
+        "docs/customer-notifications/evidence/mobile-message.jpg",
+        "docs/customer-notifications/evidence/inbox-error.jpg"
+      ]
+    }
+  ],
+  "coverage": {
+    "denominator": 4,
+    "implemented": 4,
+    "verified": 4,
+    "criticalRequirements": 1,
+    "criticalVerified": 1,
+    "routes": [
+      "/notifications"
+    ],
+    "routesVerified": 1,
+    "acceptanceGates": 4,
+    "acceptanceGatesPassed": 4,
+    "note": "Bounded local web redesign only. All four requirements retained; previous full-app denominators, NO-GO and unrelated work preserved."
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "User approves customer notifications presentation redesign. Reuse existing recipient-scoped inbox, read actions and pagination; add bounded server search and owned-order navigation. No notification history deletion or provider changes."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Implemented compact summaries, on-demand native message dialog, scoped read acknowledgements and focus recovery; extended existing read-only inbox with optional literal search and owned-order destinations. No duplicate notification system/schema."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Removed old expanded card renderer and imported the new inbox directly in Site so shared workflow consumers do not acquire its CSS dependency. Prior My Orders tests retained and rerun."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Detected and fixed an acknowledgement-state UI error during server-recovery QA. Final positive read flow,27 checks, web build/types and local browser evidence passed. No hosted/native/physical acceptance implied."
+    }
+  ]
+}

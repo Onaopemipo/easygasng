@@ -105,6 +105,20 @@ test(
         }),
       ]);
       assert.equal(conflict.filter((r) => r.status === "fulfilled").length, 1);
+      // Customer preferences do not reserve provider capacity, even at the same time.
+      await db.query("UPDATE users SET technician_available=false WHERE id=$1", [f.actors.technician.id]);
+      const {slotId: omitted,...base}=f.input();
+      const preferred={...base,preferredStart:new Date(Date.now()+7*86400000).toISOString(),operationKey:id()};
+      const retries=await Promise.all([f.call("customer","booking.create",preferred),f.call("customer","booking.create",preferred)]);
+      assert.equal(retries[0].id,retries[1].id);
+      await f.call("commercial","booking.create",{...preferred,idempotencyKey:id(),operationKey:id()});
+      const requests=(await db.query("SELECT s.*,b.technician_id AS assigned FROM service_slots s JOIN service_bookings b ON b.slot_id=s.id WHERE s.request_only")).rows;
+      assert.equal(requests.length,2);
+      assert.ok(requests.every(r=>r.blocked && r.technician_id===null && r.assigned===null));
+      const owned=(await f.call("customer","bookings",{id:retries[0].id}))[0];
+      assert.equal(owned.billing.dueKobo,null);
+      await assert.rejects(f.call("owner","booking.transition",{bookingId:owned.id,status:"confirmed",reason:"Unallocated requests cannot confirm"}),/provider|qualified/);
+
     } finally {
       await pool.end();
       await admin.query(`DROP SCHEMA ${schema} CASCADE`);

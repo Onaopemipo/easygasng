@@ -1,90 +1,189 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "./workspace-link";
+import { useSearchParams } from "next/navigation";
 import {
   ArrowRight,
   CalendarDays,
-  ClipboardList,
-  Clock,
-  Headset,
-  Lightbulb,
-  MapPin,
+  Clock3,
+  Search,
   Plus,
-  ShieldCheck,
   Wrench,
-  Flame,
   ChevronRight,
+  CheckCircle2,
+  Inbox,
+  MapPin,
 } from "lucide-react";
 import { api, Loading, Modal, Notice, money } from "./ui";
 import { BookingCard } from "./professional-services";
 import { ServiceFollowups } from "./service-followups";
-import "./customer-bookings.css";
 import { HostedPayment } from "./hosted-payment";
-const tabs = ["Upcoming", "Awaiting Action", "Completed", "Cancelled"];
+import { useCustomerResource } from "./customer-data";
+import { ServiceRequestDialog } from "./service-request";
+import { servicePrice } from "../../../packages/business-rules/src/service-detail";
+import "./customer-bookings.css";
+const filters = [
+  "Upcoming",
+  "Awaiting action",
+  "Completed",
+  "Cancelled",
+  "All",
+] as const;
+export function bookingMatches(b: any, filter: string, query: string) {
+  const status =
+    filter === "Completed"
+      ? b.status === "completed"
+      : filter === "Cancelled"
+        ? ["cancelled", "failed"].includes(b.status)
+        : filter === "Awaiting action"
+          ? b.status === "awaiting_acknowledgement" ||
+            (b.status === "awaiting_customer_approval" &&
+              b.quotes?.[0]?.approved == null)
+          : filter === "Upcoming"
+            ? !["completed", "cancelled", "failed"].includes(b.status)
+            : true;
+  return (
+    status &&
+    [
+      b.reference,
+      b.snapshot.name,
+      b.address.zone,
+      b.status.replaceAll("_", " "),
+    ].some((x) =>
+      String(x ?? "")
+        .toLowerCase()
+        .includes(query.trim().toLowerCase()),
+    )
+  );
+}
+function statusLabel(b: any) {
+  return b.schedule_pending && b.status === "pending_confirmation"
+    ? "Awaiting confirmation"
+    : b.status === "failed"
+      ? "Unable to complete"
+      : b.status.replaceAll("_", " ");
+}
+const date = (v: string) =>
+  new Date(v).toLocaleString("en-NG", {
+    timeZone: "Africa/Lagos",
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+export function BookingSummaries({
+  rows,
+  open,
+}: {
+  rows: any[];
+  open: (id: string) => void;
+}) {
+  return (
+    <div className="bk-list">
+      {rows.map((b) => (
+        <button
+          key={b.id}
+          onClick={() => open(b.id)}
+          aria-label={`View ${b.snapshot.name}, ${b.reference}`}
+        >
+          <span className="bk-icon-mini">
+            <CalendarDays size={18} />
+          </span>
+          <span>
+            <strong>{b.snapshot.name}</strong>
+            <small>{b.reference}</small>
+          </span>
+          <span className="bk-time">
+            <small>
+              {b.schedule_pending ? "Preferred visit" : "Appointment"}
+            </small>
+            <strong>{date(b.starts_at)}</strong>
+          </span>
+          <span className={"bk-badge state-" + b.status}>{statusLabel(b)}</span>
+          <ChevronRight size={17} />
+        </button>
+      ))}
+    </div>
+  );
+}
 export default function CustomerBookings({ user }: { user: any }) {
-  const [catalogue, setCatalogue] = useState<any[] | null>(null),
-    [bookings, setBookings] = useState<any[] | null>(null),
-    [errors, setErrors] = useState<Record<string, string>>({}),
-    [version, setVersion] = useState(0),
-    [view, setView] = useState("bookings"),
-    [tab, setTab] = useState("Upcoming"),
+  const identity = [user.id, user.role, user.branchId].join(":");
+  const source = useSearchParams().get("bookingId");
+  const bookingsRead = useCustomerResource("bookings", identity),
+    catalogueRead = useCustomerResource("services.catalogue", identity);
+  const bookings: any[] = bookingsRead.data ?? [],
+    catalogue: any[] = catalogueRead.data ?? [];
+  const [view, setView] = useState("bookings"),
+    [filter, setFilter] = useState("Upcoming"),
+    [query, setQuery] = useState(""),
+    [page, setPage] = useState(1),
     [selected, setSelected] = useState<string | null>(null),
-    [coverage, setCoverage] = useState(false),
-    [recovery, setRecovery] = useState("");
-  const workspace = useRef<HTMLElement>(null),
-    requestedSource = useRef("");
+    [choose, setChoose] = useState(false),
+    [service, setService] = useState<any>(null),
+    [recovery, setRecovery] = useState(""),
+    [older, setOlder] = useState<any>(null),
+    [sourceError, setSourceError] = useState("");
+  const sourceRead = useRef("");
+  const detail =
+    bookings.find((b) => b.id === selected) ??
+    (older?.id === selected ? older : null);
+  const rows = bookings.filter((b) => bookingMatches(b, filter, query)),
+    pages = Math.max(1, Math.ceil(rows.length / 6)),
+    activePage = Math.min(page, pages);
   useEffect(() => {
-    if (!bookings) return;
-    const source = new URLSearchParams(window.location.search).get("bookingId");
-    if (!source) return;
-    const key = user.id + ":" + source;
-    if (requestedSource.current === key) return;
-    requestedSource.current = key;
-    if (bookings.some((b) => b.id === source)) setSelected(source);
-    else
-      setErrors((v) => ({
-        ...v,
-        source:
-          "The requested booking is unavailable in your account. Contact support for an older service record.",
-      }));
-  }, [bookings, user.id]);
+    setPage(1);
+  }, [filter, query]);
   useEffect(() => {
-    const controller = new AbortController();
-    setErrors({});
-    setBookings(null);
-    setCatalogue(null);
-    for (const [name, action, setter] of [
-      ["catalogue", "services.catalogue", setCatalogue],
-      ["bookings", "bookings", setBookings],
-    ] as const) {
-      api(action, undefined, { signal: controller.signal })
-        .then(setter)
-        .catch((e) => {
-          if (!controller.signal.aborted)
-            setErrors((v) => ({ ...v, [name]: e.message }));
-        });
+    if (!bookingsRead.data) return;
+    const id = source;
+    if (!id || sourceRead.current === identity + id) return;
+    sourceRead.current = identity + id;
+    if (bookings.some((b) => b.id === id)) {
+      setSelected(id);
+      return;
     }
-    return () => controller.abort();
-  }, [user.id, version]);
+    let live = true,
+      finished = false;
+    const controller = new AbortController();
+    api("bookings?id=" + encodeURIComponent(id), undefined, {
+      signal: controller.signal,
+    })
+      .then((r) => {
+        if (!live) return;
+        finished = true;
+        if (r[0]) {
+          setOlder(r[0]);
+          setSelected(r[0].id);
+        } else
+          setSourceError("This booking could not be found in your account.");
+      })
+      .catch((e) => {
+        if (live && !controller.signal.aborted) {
+          finished = true;
+          setSourceError(e.message);
+        }
+      });
+    return () => {
+      live = false;
+      controller.abort();
+      if (!finished) sourceRead.current = "";
+    };
+  }, [bookingsRead.data, identity, source]);
   useEffect(() => {
     let live = true;
     try {
       const prefix = `easygas.booking.request.${user.id}.`;
-      const keys = Object.keys(sessionStorage).filter((k) =>
+      for (const k of Object.keys(sessionStorage).filter((k) =>
         k.startsWith(prefix),
-      );
-      for (const k of keys) {
+      )) {
         const key = sessionStorage.getItem(k);
         if (key)
           api("booking.recover?key=" + encodeURIComponent(key))
             .then((r) => {
               if (live && r.status === "COMMITTED") {
                 setRecovery(
-                  "Your earlier appointment request was saved: " +
-                    r.reference +
-                    ". It is listed in My Bookings.",
+                  `Your earlier request ${r.reference} was saved. It appears in your bookings.`,
                 );
                 sessionStorage.removeItem(k);
+                bookingsRead.retry();
               }
             })
             .catch(() => {});
@@ -93,449 +192,304 @@ export default function CustomerBookings({ user }: { user: any }) {
     return () => {
       live = false;
     };
-  }, [user.id, version]);
-  const reload = () => setVersion((v) => v + 1),
-    detail = bookings?.find((b) => b.id === selected);
-  function activate(next: string) {
-    setView(next);
-    workspace.current?.scrollIntoView({ behavior: "auto", block: "start" });
-  }
-  const rows = (bookings ?? []).filter((b) =>
-    tab === "Completed"
-      ? b.status === "completed"
-      : tab === "Cancelled"
-        ? ["cancelled", "failed"].includes(b.status)
-        : tab === "Awaiting Action"
-          ? b.status === "awaiting_acknowledgement" ||
-            (b.status === "awaiting_customer_approval" &&
-              b.quotes?.[0]?.approved == null)
-          : !["completed", "cancelled", "failed"].includes(b.status),
-  );
-  const label = (status: string) =>
-    status === "failed" ? "Unable to complete" : status.replaceAll("_", " ");
-  const date = (value: string) =>
-    new Date(value).toLocaleString("en-NG", {
-      timeZone: "Africa/Lagos",
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
+  }, [identity]);
+  useEffect(() => {
+    if (!detail && !choose && !service) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [Boolean(detail), choose, Boolean(service)]);
+  const reload = () => {
+    bookingsRead.retry();
+    if (older)
+      api("bookings?id=" + encodeURIComponent(older.id))
+        .then((r) => setOlder(r[0] ?? null))
+        .catch((e) => setSourceError(e.message));
+  };
   return (
-    <div className="customer-bookings">
-      <section className="bk-hero">
+    <div className="customer-bookings bk-clean">
+      <header className="bk-heading">
         <div>
-          <span className="eyebrow">PROFESSIONAL SERVICE FOR A SAFER HOME</span>
+          <span className="eyebrow">SERVICE APPOINTMENTS</span>
           <h1>Service bookings</h1>
-          <p>
-            From cooker servicing and installations to gas safety checks,
-            EasyGas helps you keep your cooking equipment properly maintained.
-          </p>
-          <div className="bk-actions">
-            <button className="button" onClick={() => activate("services")}>
-              Book a Service
-              <ArrowRight size={19} />
-            </button>
-            <button
-              className="button secondary"
-              onClick={() => activate("bookings")}
-            >
-              View My Bookings
-            </button>
-          </div>
+          <p>Book a visit and keep track of your equipment care.</p>
         </div>
-        <svg
-          viewBox="0 0 300 220"
-          className="bk-hero-art"
-          role="img"
-          aria-label="Cooking equipment care illustration"
+        <button className="button" onClick={() => setChoose(true)}>
+          <Plus size={17} />
+          Book a service
+        </button>
+      </header>
+      {recovery && <Notice type="success" message={recovery} />}{" "}
+      {sourceError && <Notice type="error" message={sourceError} />}
+      <div className="bk-view-nav" aria-label="Service workspace">
+        <button
+          aria-pressed={view === "bookings"}
+          onClick={() => setView("bookings")}
         >
-          <path d="M40 170h220v30H40z" fill="#b9e1c4" />
-          <rect x="50" y="100" width="200" height="70" rx="14" fill="#f8fff8" />
-          <ellipse cx="106" cy="130" rx="35" ry="18" fill="#133c30" />
-          <ellipse cx="195" cy="130" rx="30" ry="17" fill="#133c30" />
-          <path d="M87 72h42l-5 42H92z" fill="#e6bc73" />
-          <path
-            d="M82 72h52M94 63h28"
-            stroke="#fff"
-            strokeWidth="7"
-            strokeLinecap="round"
-          />
-          <path
-            d="M186 59q-14 13 0 26M203 45q-14 16 0 33"
-            stroke="#c3e9b6"
-            strokeWidth="7"
-            fill="none"
-          />
-          <circle cx="225" cy="155" r="5" fill="#ff951a" />
-        </svg>
-        <aside>
-          <p>
-            <ShieldCheck />
-            Service eligibility checked
-          </p>
-          <p>
-            <Wrench />
-            Equipment care and assessment
-          </p>
-          <p>
-            <Clock />
-            Available appointment scheduling
-          </p>
-          <p>
-            <Headset />
-            Home services in configured areas
-          </p>
-        </aside>
-      </section>
-      {recovery && <Notice message={recovery} />}
-      {errors.catalogue ? (
-        <Notice type="error" message={errors.catalogue} />
-      ) : catalogue === null ? (
-        <Loading />
-      ) : (
-        <div className="bk-categories">
-          {catalogue.map((s, i) => (
-            <Link href={"/services/" + s.id} className="bk-category" key={s.id}>
-              <div className={"bk-category-art art-" + i}>
-                {s.image_id ? (
-                  <img src={"/api/media/" + s.image_id} alt="" />
-                ) : (
-                  <Wrench size={38} />
-                )}
-              </div>
-              <div>
-                <h2>{s.name}</h2>
-                <p>{s.config.description}</p>
-                <span>
-                  {s.config.priceKobo === null
-                    ? "Quotation required"
-                    : `${s.config.pricingModel === "starting" ? "From " : ""}${money(s.config.priceKobo)}`}{" "}
-                  · {s.config.durationMinutes} min
-                </span>
-                <ArrowRight size={18} />
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-      <section
-        ref={workspace}
-        id="my-bookings"
-        className="bk-workspace"
-        aria-label="Service booking workspace"
-      >
-        <div className="bk-workspace-heading">
-          <div className="bk-switch">
-            <button
-              aria-pressed={view === "bookings"}
-              onClick={() => setView("bookings")}
-            >
-              My bookings
-            </button>
-            <button
-              aria-pressed={view === "services"}
-              onClick={() => setView("services")}
-            >
-              Services
-            </button>
-          </div>
-          <Link className="button" href="/services">
-            <Plus size={18} />
-            Book a New Service
-          </Link>
-        </div>
-        {view === "services" ? (
-          <div className="bk-services">
-            <h2>Choose your service</h2>
-            <p>
-              Only active, business-approved services appear here. Review the
-              service details, coverage, charges and cancellation terms before
-              selecting a real appointment.
-            </p>
-            {catalogue?.length
-              ? catalogue.map((s) => (
-                  <Link
-                    className="bk-service-row"
-                    key={s.id}
-                    href={"/services/" + s.id}
-                  >
-                    <Wrench />
-                    <span>
-                      <strong>{s.name}</strong>
-                      <small>
-                        {s.config.zones.join(", ")} · {s.config.durationMinutes}{" "}
-                        minutes
-                      </small>
-                    </span>
-                    <ChevronRight />
-                  </Link>
-                ))
-              : catalogue && (
-                  <Notice message="Service appointments are being prepared. EasyGas must approve availability, pricing and safety checklists before bookings open." />
-                )}
-          </div>
-        ) : (
-          <>
-            <div role="tablist" aria-label="Booking status" className="bk-tabs">
-              {tabs.map((t, i) => (
+          <CalendarDays size={16} />
+          My bookings<span>{bookingsRead.data ? bookings.length : "—"}</span>
+        </button>
+        <button
+          aria-pressed={view === "services"}
+          onClick={() => setView("services")}
+        >
+          <Wrench size={16} />
+          Explore services
+        </button>
+        <Link href="/support">
+          Need help?
+          <ArrowRight size={14} />
+        </Link>
+      </div>
+      {view === "bookings" ? (
+        <section className="bk-inbox" aria-label="My service bookings">
+          <div className="bk-toolbar">
+            <div className="bk-filters" aria-label="Booking status">
+              {filters.map((f) => (
                 <button
-                  key={t}
-                  role="tab"
-                  id={"bk-tab-" + i}
-                  aria-controls="bk-panel"
-                  aria-selected={tab === t}
-                  tabIndex={tab === t ? 0 : -1}
-                  onClick={() => setTab(t)}
-                  onKeyDown={(e) => {
-                    const n =
-                      e.key === "ArrowRight"
-                        ? (i + 1) % 4
-                        : e.key === "ArrowLeft"
-                          ? (i + 3) % 4
-                          : e.key === "Home"
-                            ? 0
-                            : e.key === "End"
-                              ? 3
-                              : null;
-                    if (n !== null) {
-                      e.preventDefault();
-                      setTab(tabs[n]);
-                      document.getElementById("bk-tab-" + n)?.focus();
-                    }
-                  }}
+                  key={f}
+                  aria-pressed={filter === f}
+                  onClick={() => setFilter(f)}
                 >
-                  {t}
-                  {bookings && t === "Awaiting Action"
-                    ? ` (${bookings.filter((b) => b.status === "awaiting_acknowledgement" || (b.status === "awaiting_customer_approval" && b.quotes?.[0]?.approved == null)).length})`
-                    : ""}
+                  {f}
+                  <span>
+                    {bookingsRead.data
+                      ? bookings.filter((b) => bookingMatches(b, f, "")).length
+                      : "—"}
+                  </span>
                 </button>
               ))}
             </div>
-            <div
-              role="tabpanel"
-              id="bk-panel"
-              aria-labelledby={"bk-tab-" + tabs.indexOf(tab)}
-              tabIndex={0}
-            >
-              {errors.bookings ? (
-                <Notice type="error" message={errors.bookings} />
-              ) : bookings === null ? (
-                <Loading />
-              ) : rows.length ? (
-                <div className="bk-appointments">
-                  {rows.map((b) => (
-                    <article className="bk-appointment" key={b.id}>
-                      <div className="bk-card-top">
-                        <span className="bk-icon">
-                          <CalendarDays />
-                        </span>
-                        <span className={"bk-status state-" + b.status}>
-                          {label(b.status)}
-                        </span>
-                      </div>
-                      <h2>{b.snapshot.name}</h2>
-                      <p className="bk-reference">{b.reference}</p>
-                      <p>
-                        <Clock size={17} />
-                        {date(b.starts_at)} –{" "}
-                        {new Date(b.ends_at).toLocaleTimeString("en-NG", {
-                          timeZone: "Africa/Lagos",
-                          timeStyle: "short",
-                        })}{" "}
-                        (Lagos)
-                      </p>
-                      <p>
-                        <MapPin size={17} />
-                        {b.address.street}, {b.address.zone}
-                      </p>
-                      {b.technician?.name && (
-                        <p>Technician: {b.technician.name}</p>
-                      )}
-                      <p>
-                        {b.billing.totalKobo === null
-                          ? "Awaiting approved quotation"
-                          : money(b.billing.totalKobo)}{" "}
-                        · Verified paid {money(b.billing.paidKobo)}
-                      </p>
-                      {b.report && (
-                        <p>
-                          Recorded outcome:{" "}
-                          {b.report.body.outcome ??
-                            b.report.outcome ??
-                            "View report"}
-                        </p>
-                      )}
-                      <div className="bk-actions">
-                        {b.status === "completed" && (
-                          <Link
-                            className="text-link"
-                            href={`/account-settings?testimonialBooking=${encodeURIComponent(b.id)}#testimonials`}
-                          >
-                            Share your experience
-                          </Link>
-                        )}
-                        <button
-                          className="button secondary"
-                          onClick={() => setSelected(b.id)}
-                        >
-                          View Details
-                          <ArrowRight size={17} />
-                        </button>
-                        {["completed", "cancelled", "failed"].includes(
-                          b.status,
-                        ) && (
-                          <Link
-                            className="text-link"
-                            href={"/services/" + b.service_id}
-                          >
-                            Book Again
-                          </Link>
-                        )}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              ) : (
-                <div className="bk-empty-grid">
-                  <article>
-                    <CalendarDays className="bk-icon" />
-                    <div>
-                      <h2>
-                        {tab === "Upcoming"
-                          ? "No upcoming appointments"
-                          : tab === "Awaiting Action"
-                            ? "No bookings awaiting action"
-                            : tab === "Completed"
-                              ? "Your service history starts here"
-                              : "No cancelled appointments"}
-                      </h2>
-                      <p>
-                        {tab === "Upcoming"
-                          ? "Your scheduled EasyGas services will appear here. Need help with your cooker or cylinder?"
-                          : tab === "Completed"
-                            ? "Once a service is completed, you’ll find your reports and previous appointments here."
-                            : "Recorded appointments in this category will appear here."}
-                      </p>
-                      <Link className="button secondary" href="/services">
-                        Book a Service
-                        <ArrowRight size={18} />
-                      </Link>
-                    </div>
-                  </article>
-                  {tab === "Upcoming" && (
-                    <article>
-                      <ClipboardList className="bk-icon" />
-                      <div>
-                        <h2>Service history</h2>
-                        <p>
-                          Review completed and cancelled appointments, reports
-                          and previous service outcomes.
-                        </p>
-                        <button
-                          className="button secondary"
-                          onClick={() => setTab("Completed")}
-                        >
-                          Explore history
-                          <ArrowRight size={18} />
-                        </button>
-                      </div>
-                    </article>
-                  )}
-                </div>
-              )}
+            <label className="bk-search">
+              <Search size={16} />
+              <input
+                aria-label="Search bookings"
+                placeholder="Search bookings…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                type="search"
+                maxLength={100}
+              />
+            </label>
+          </div>
+          {bookingsRead.error ? (
+            <div className="bk-empty">
+              <Notice type="error" message={bookingsRead.error} />
+              <button className="button secondary" onClick={bookingsRead.retry}>
+                Retry bookings
+              </button>
             </div>
-          </>
-        )}
-        {(errors.bookings || errors.catalogue) && (
-          <button className="button secondary" onClick={reload}>
-            Retry loading services and bookings
-          </button>
-        )}
-      </section>
-      <ServiceFollowups />
-      <div className="bk-help">
-        {[
-          [
-            Headset,
-            "Need help?",
-            "Need assistance with a booking, appointment change, or service question?",
-            "Contact Support",
-            "/support",
-          ],
-          [
-            Lightbulb,
-            "Tips for a safer kitchen",
-            "Find EasyGas help on cooking equipment care and approved safety guidance.",
-            "View Safety Tips",
-            "/help",
-          ],
-          [
-            MapPin,
-            "Service coverage",
-            "Home services are available only in locations configured for each active service.",
-            "Check Coverage",
-            null,
-          ],
-        ].map(([Icon, title, text, cta, href]: any) => (
-          <article key={title}>
-            <Icon className="bk-icon" />
-            <div>
-              <h2>{title}</h2>
-              <p>{text}</p>
-              {href ? (
-                <Link className="button secondary" href={href}>
-                  {cta}
-                  <ArrowRight size={18} />
-                </Link>
-              ) : (
+          ) : bookingsRead.loading ? (
+            <Loading label="Loading your bookings" />
+          ) : rows.length ? (
+            <>
+              <BookingSummaries
+                rows={rows.slice((activePage - 1) * 6, activePage * 6)}
+                open={setSelected}
+              />
+              <footer className="bk-pagination">
+                <span>
+                  {(activePage - 1) * 6 + 1}–
+                  {Math.min(activePage * 6, rows.length)} of {rows.length}{" "}
+                  bookings
+                  {bookings.length >= 100 ? " · Latest 100 records" : ""}
+                </span>
+                <div>
+                  <button
+                    disabled={activePage === 1}
+                    onClick={() => setPage((p) => p - 1)}
+                  >
+                    Previous
+                  </button>
+                  <span>
+                    {activePage} / {pages}
+                  </span>
+                  <button
+                    disabled={activePage === pages}
+                    onClick={() => setPage((p) => p + 1)}
+                  >
+                    Next
+                  </button>
+                </div>
+              </footer>
+            </>
+          ) : (
+            <div className="bk-empty">
+              <span>
+                <Inbox size={28} />
+              </span>
+              <h2>
+                {query
+                  ? "No matching bookings"
+                  : filter === "Upcoming"
+                    ? "No upcoming bookings"
+                    : filter === "Awaiting action"
+                      ? "You’re all caught up"
+                      : `No ${filter.toLowerCase()} bookings`}
+              </h2>
+              <p>
+                {query
+                  ? "Try a service name, reference or area."
+                  : filter === "Awaiting action"
+                    ? "Nothing needs your attention right now."
+                    : "Choose a service and send us your preferred visit time. We’ll arrange the rest."}
+              </p>
+              {query ? (
                 <button
                   className="button secondary"
-                  onClick={() => setCoverage(true)}
+                  onClick={() => setQuery("")}
                 >
-                  {cta}
-                  <ArrowRight size={18} />
+                  Clear search
+                </button>
+              ) : (
+                <button className="button" onClick={() => setChoose(true)}>
+                  Book a service
+                  <ArrowRight size={16} />
                 </button>
               )}
             </div>
-          </article>
-        ))}
-      </div>
+          )}
+        </section>
+      ) : (
+        <ServiceChoices
+          catalogue={catalogue}
+          loading={catalogueRead.loading}
+          error={catalogueRead.error}
+          retry={catalogueRead.retry}
+          choose={setService}
+        />
+      )}
+      <details className="bk-reminders">
+        <summary>
+          <Clock3 size={16} />
+          Service reminders
+        </summary>
+        <ServiceFollowups />
+      </details>
+      <p className="bk-footer-note">
+        <CheckCircle2 size={15} />
+        Have a preferred date? Request a visit — EasyGas will confirm the time
+        and provider.
+      </p>
+      {choose && (
+        <Modal
+          title="Choose a service"
+          className="bk-detail-overlay"
+          onClose={() => setChoose(false)}
+        >
+          <ServiceChoices
+            catalogue={catalogue}
+            loading={catalogueRead.loading}
+            error={catalogueRead.error}
+            retry={catalogueRead.retry}
+            choose={(s) => {
+              setChoose(false);
+              setService(s);
+            }}
+          />
+        </Modal>
+      )}
+      {service && (
+        <ServiceRequestDialog
+          key={identity + service.id}
+          service={service}
+          customerId={user.id}
+          onClose={() => setService(null)}
+          onCreated={reload}
+          onView={(r) => {
+            setService(null);
+            setSelected(r.id);
+            setView("bookings");
+            setFilter("Upcoming");
+            reload();
+          }}
+        />
+      )}
       {detail && (
         <Modal
-          title={detail.reference + " · " + detail.snapshot.name}
+          title="Booking details"
+          className="bk-detail-overlay"
           onClose={() => setSelected(null)}
         >
-          {detail.billing?.dueKobo > 0 && (
+          {!detail.schedule_pending && detail.billing?.dueKobo > 0 && (
             <HostedPayment purpose="service" bookingId={detail.id} />
           )}
           <BookingCard
             key={detail.id + ":" + detail.version}
+            compact
             booking={detail}
             user={user}
             done={reload}
           />
         </Modal>
       )}
-      {coverage && (
-        <Modal
-          title="Active service coverage"
-          onClose={() => setCoverage(false)}
-        >
-          {catalogue?.length ? (
-            catalogue.map((s) => (
-              <section key={s.id}>
-                <h3>{s.name}</h3>
-                <p>{s.config.zones.join(", ") || "No locations configured"}</p>
-                <Link href={"/services/" + s.id}>Review availability</Link>
-              </section>
-            ))
-          ) : (
-            <p>
-              No active service coverage is currently configured. Contact
-              EasyGas for assistance.
-            </p>
-          )}
-        </Modal>
-      )}
+    </div>
+  );
+}
+function ServiceChoices({
+  catalogue,
+  loading,
+  error,
+  retry,
+  choose,
+}: {
+  catalogue: any[];
+  loading: boolean;
+  error: string;
+  retry: () => void;
+  choose: (s: any) => void;
+}) {
+  if (error)
+    return (
+      <>
+        <Notice type="error" message={error} />
+        <button className="button secondary" onClick={retry}>
+          Retry services
+        </button>
+      </>
+    );
+  if (loading) return <Loading label="Loading services" />;
+  if (!catalogue.length)
+    return (
+      <div className="bk-empty">
+        <Wrench size={28} />
+        <h2>Services are being prepared</h2>
+        <p>Contact EasyGas for help with a service request.</p>
+        <Link className="button secondary" href="/support">
+          Contact support
+        </Link>
+      </div>
+    );
+  return (
+    <div className="bk-service-choices">
+      {catalogue.map((s) => (
+        <article key={s.branch_id + ":" + s.id}>
+          <span className="bk-service-icon">
+            <Wrench size={21} />
+          </span>
+          <div>
+            <h2>{s.name}</h2>
+            <p>{s.config.description}</p>
+            <small>
+              <MapPin size={13} />
+              {s.config.zones.join(", ")}
+            </small>
+            <div className="bk-choice-footer">
+              <strong>{servicePrice(s.config)}</strong>
+              <span>{s.config.durationMinutes} min</span>
+              <Link className="bk-service-details" href={"/services/" + s.id}>
+                View details
+              </Link>
+              <button className="button secondary" onClick={() => choose(s)}>
+                Book service
+                <ArrowRight size={15} />
+              </button>
+            </div>
+          </div>
+        </article>
+      ))}
     </div>
   );
 }

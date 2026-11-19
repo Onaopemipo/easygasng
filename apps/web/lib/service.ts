@@ -650,6 +650,10 @@ export async function dispatch(
       if (policyResult !== undefined) return policyResult;
       const workflow = await approvalWorkflowAction(tx, action, user, input);
       if (workflow !== undefined) return workflow;
+      if (["gas.cylinder.intake","gas.inspection.record"].includes(action) && (input as any)?.operationKey)
+        return businessOperation(tx,user,action,input,clean=>gasDeliveryAction(tx,action,user!,clean));
+      if(action==="cylinder.inspect" && (input as any)?.operationKey)
+        return businessOperation(tx,user,action,input,clean=>workspaceAction(tx,action,user!,clean));
       const gas = await gasDeliveryAction(tx, action, user, input);
       if (gas !== undefined) return gas;
       const reportResult = await financialReports(tx, action, user, input);

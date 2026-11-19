@@ -1,0 +1,572 @@
+getpwuid_r did not find a match for uid 501
+Filtering the log data using "(process == "EasyGasLocal" AND (subsystem CONTAINS[c] "audio" OR subsystem CONTAINS[c] "coremedia" OR composedMessage CONTAINS[c] "audio" OR composedMessage CONTAINS[c] "player")) OR process == "mediaserverd""
+Timestamp               Ty Process[PID:TID]
+2026-11-19 08:13:41.351 Df EasyGasLocal[49900:8fe458] [com.apple.coreaudio:as_client] AVAudioSessionImpl_Simulator.mm:111   Set volume on device 73 to 0.00
+2026-11-19 08:13:41.363 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> itemfig_setCurrentTimeWithRangeAndIDGuts: <0x109bcd400|I/OKY.01> called, time = 0.000, flags = 0x3, range = [-inf, inf], seekID = 2
+2026-11-19 08:13:41.365 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< FADC >>>> fadcGetAnchorTimeInternal_block_invoke: Encountered sample time ( 1233328420 - 47171881 ) = 1186156539. Had expected 1.000 * 0.002000 * ( 6041858440447 - 5448778803299 ) = 1186161432 [-4800/+4800] ). Flagging discontinuity.
+2026-11-19 08:13:41.367 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetTimeWithRange: <0x10bd7bb80|I/OKY.01> newTime: 0.000000, scruboption = 0x4, range = [-inf, inf] seekID 2
+2026-11-19 08:13:41.373 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> bossSetMentorModesToScrub: <0x10bd7bb80|I/OKY.01> called, tracks 0...0, time 0.000
+2026-11-19 08:13:41.375 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetTimeWithRange: <0x10bd7bb80|I/OKY.01> playState set to Paused
+2026-11-19 08:13:41.375 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetTimeWithRange: <0x10bd7bb80|I/OKY.01> Posting SeekDidComplete for seek ID 2
+2026-11-19 08:13:41.375 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] << FigPlayMonitor >> fpm_likelyToKeepUpUsingDynamicAlgorithm: [0x10bec2830] bandwidth: 0 kbps; smoothedBandwidth: 0 kbps; bwInflationFactor: 1.00; (movieDuration - durToPlayThrough): 0.00; durationAhead: 0.85; timeToLikelyToKeepUp: 0.00
+2026-11-19 08:13:41.375 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossPostSeekDidComplete: <0x10bd7bb80|I/OKY.01> called for seekID 2 seekErr 0
+2026-11-19 08:13:41.376 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> itemfig_BossSeekDidComplete: <0x109bcd400|I/OKY.01> posting SeekDidComplete (seekID 2, seekError 0)
+2026-11-19 08:13:41.378 Df EasyGasLocal[49900:86e8ea] [com.apple.coremedia:] <<<< AVPlayer >>>> -[AVPlayer _setRate:rateChangeReason:figPlayerSetRateHandler:]_block_invoke: P/HM setting timeControlStatus=1, reasonForWaitingToPlay=AVPlayerWaitingWhileEvaluatingBufferingRateReason
+2026-11-19 08:13:41.379 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:player] <<<< FigPlayerSurrogate >>>> surrogatePlayer_setActionAtEndOnRealPlayerOnQ: [0x109b94900|P/HM] actionAtEnd Stop
+2026-11-19 08:13:41.381 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_getNextPlaybackState: [0x104f33700] P/HM new playback state: Playing (Player) (playerRate: 1.000), NEED TO update boss rate (1.000), previous state: Paused, change reason: ClientInitiated, playthrough prediction: likely, options: DiscourageWaiting
+2026-11-19 08:13:41.381 Df EasyGasLocal[49900:8fe45b] [com.apple.coreaudio:ddagg]        AggregateDevice.mm:1008  PrimarySessionActiveWithInputEnabled 0 -> 0
+2026-11-19 08:13:41.381 Df EasyGasLocal[49900:86e8bf] [com.apple.coremedia:] <<<< AVPlayer >>>> avplayer_fpNotificationCallback_block_invoke_9: P/HM setting timeControlStatus=2, reasonForWaitingToPlay=(null) triggeredByNotificationName=PlaybackStateDidChange
+2026-11-19 08:13:41.382 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_setBossRateWithFade: [0x104f33700] P/HM called, new rate = 1.000, previous rate = 0.000, fadeDuration = nan, itemTime nan, hostClockTime nan (now 251744.119 + nan)
+2026-11-19 08:13:41.382 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_applySoftwareVolume: [0x104f33700] P/HM rp: [FigRenderPipeline 0x104f95f80], propertyName = SoftwareVolume1, targetVolume = 0.00, rampDuration = 0.00, synchronous = YES
+2026-11-19 08:13:41.386 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 4(VolumeRampTime):0.000
+2026-11-19 08:13:41.387 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.387 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.000
+2026-11-19 08:13:41.387 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.387 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_applySoftwareVolume: [0x104f33700] P/HM rp: [FigRenderPipeline 0x104f95f80], propertyName = SoftwareVolume5, targetVolume = 1.00, rampDuration = 0.00, synchronous = YES
+2026-11-19 08:13:41.387 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 14(VolumeProcessMute):1.000
+2026-11-19 08:13:41.387 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.387 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Alt >>>> FPSupport_GetDisplayRefreshInformation: displayMaxRefreshInterval:1/60 displayMinRefreshInterval:1/60 displayRefreshStep:0/0
+2026-11-19 08:13:41.387 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetRateAndAnchorTime: <0x10bd7bb80|I/OKY.01> called, newRate = 1.000, itemTime = nan, hostClockTime = nan = now (251744.125) + nan
+2026-11-19 08:13:41.388 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForTime: <0x10bd7bb80|I/OKY.01> called, endTime = nan
+2026-11-19 08:13:41.388 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleAdvanceForOverlappedPlaybackCallbackForTime: <0x10bd7bb80|I/OKY.01> called, advanceTime = nan
+2026-11-19 08:13:41.388 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> bossConfigureRatePlan: requested rate 1.000 => will use audio time compression rate 1.000, timebase rate 1.000, NON-snippetised playback
+2026-11-19 08:13:41.388 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossStartPrerollAndSetPlayState: <0x10bd7bb80|I/OKY.01> called, prerollRate == 1.000, itemTime = nan, hostClockTime = nan, prerollTime = nan, useSnippetPlayback = NO, currentTimebaseTime == 0.000, newPlayState = PrerollingWillPlay
+2026-11-19 08:13:41.388 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> bossSetMentorModesToForwardPlayback: <0x10bd7bb80|I/OKY.01> called, tracks 0...0, start time 0.000, end time nan, rate 1.00, previousOutputDisposition=3
+2026-11-19 08:13:41.388 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossSetRateToNonZero: <0x10bd7bb80|I/OKY.01> playState set to PrerollingWillPlay
+2026-11-19 08:13:41.390 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> itemfig_ReportAudioPlaybackThroughFigLog: [QE Critical][0x104f33700|P/HM]: <0x109bcd400|I/OKY.01>: [AudioFormat lpcm] [AudioChannels 1] [Spatialization Eligible yes] [Client permits multi: no, stereo: no] [Spatialization no] [StereoSpatialization no] [item requires immersive rendering no]
+2026-11-19 08:13:41.390 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ >>>> faq_reset: [0x10bddc000:0x10bd7b800] RP/HM.01 calling FigAudioQueueTimingShimReset
+2026-11-19 08:13:41.391 Df EasyGasLocal[49900:8fe8fa] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_applySoftwareVolume: [0x104f33700] P/HM rp: [FigRenderPipeline 0x104f95f80], propertyName = SoftwareVolume1, targetVolume = 0.80, rampDuration = 0.00, synchronous = NO
+2026-11-19 08:13:41.391 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimReset: [0x10be7ad00] Calling AudioQueueReset(0xc2ec002)
+2026-11-19 08:13:41.391 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:525   AudioQueueReset: ->0xc2ec003
+2026-11-19 08:13:41.391 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3677  Reset: aq@0x10be81400
+2026-11-19 08:13:41.391 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3781  PerformFlush: aq@0x10be81400
+2026-11-19 08:13:41.391 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5561  PropertyChanged: aq@0x10be81400: 1718383464 (mDisposalPending=0)
+2026-11-19 08:13:41.391 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5401  ionc@0x10be81400: Resetting processors (not disconnecting)
+2026-11-19 08:13:41.392 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5409  ionc@0x10be81400: Finished resetting processors
+2026-11-19 08:13:41.392 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5412  ionc@0x10be81400: startingTimeline 1
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]           ClientQueue.cpp:667   AwaitAllPendingCallbacks: 0x10bdaabd8: done
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:536   AudioQueueReset: <-
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 2(Rate):1.000
+2026-11-19 08:13:41.393 Df EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4741  AQ Time-stretcher: ionc@0x10be81400 Set parameter 2 as 1.000000
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.000
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 9(Volume3):1.000
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 14(VolumeProcessMute):1.000
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimPause: [0x10be7ad00] Calling AudioQueuePause(0xc2ec002)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:482   AudioQueuePause: ->0xc2ec003
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9192  BeginPause: aq@0x10be81400: beingInterrupted 0
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:494   AudioQueuePause: <- pauseSampleTime 41984
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 4(VolumeRampTime):0.000
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.800
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:8fe8fa] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ >>>> faq_reset: [0x10bddc000:0x10bd7b800] RP/HM.01 calling FigAudioQueueTimingShimReset
+2026-11-19 08:13:41.393 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimReset: [0x10be7ad00] Calling AudioQueueReset(0xc2ec002)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:525   AudioQueueReset: ->0xc2ec003
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3677  Reset: aq@0x10be81400
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3781  PerformFlush: aq@0x10be81400
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5561  PropertyChanged: aq@0x10be81400: 1718383464 (mDisposalPending=0)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5401  ionc@0x10be81400: Resetting processors (not disconnecting)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5409  ionc@0x10be81400: Finished resetting processors
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5412  ionc@0x10be81400: startingTimeline 1
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]           ClientQueue.cpp:667   AwaitAllPendingCallbacks: 0x10bdaabd8: done
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:536   AudioQueueReset: <-
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 2(Rate):1.000
+2026-11-19 08:13:41.393 Df EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4741  AQ Time-stretcher: ionc@0x10be81400 Set parameter 2 as 1.000000
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.800
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 9(Volume3):1.000
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 14(VolumeProcessMute):1.000
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.393 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimPause: [0x10be7ad00] Calling AudioQueuePause(0xc2ec002)
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:482   AudioQueuePause: ->0xc2ec003
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9192  BeginPause: aq@0x10be81400: beingInterrupted 0
+2026-11-19 08:13:41.393 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:494   AudioQueuePause: <- pauseSampleTime 41984
+2026-11-19 08:13:41.395 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_MentorPrerollComplete: <0x10bd7bb80|I/OKY.01> track 1 s, currentOrder 0x8bb53f5e94cf171d (1006), orderFromPayload 0x8bb53f5e94cf171d (1006), OrderComplete, CURRENT, masterOrder 0x8bb53f5e936fc31d (1000006), waitingForMentorPreroll
+2026-11-19 08:13:41.395 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_beginPrerollPhase2: <0x10bd7bb80|I/OKY.01> Beginning Preroll Phase 2, masterOrder 0x8bb53f5e936fc31d (1000006)
+2026-11-19 08:13:41.395 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossPrerollCompleted: <0x10bd7bb80|I/OKY.01> called
+2026-11-19 08:13:41.396 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQRP >>>> figAudioQueueRenderPipelineSetRateAndAnchorTime: (0x104f95f80 RP/HM.01) timebase 0x109be5f80, set to timebaseRate 1.00, pipelineRate 1.00, itemTime nan, hostClockTime nan (nownan)
+2026-11-19 08:13:41.396 Df EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5177  SetProperty: AQ Time-stretcher: ionc@0x10bed0900 TimePitchProperty set qtpb: 1
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4523  set 21; err 0
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 2(Rate):1.000
+2026-11-19 08:13:41.396 Df EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4741  AQ Time-stretcher: ionc@0x10be81400 Set parameter 2 as 1.000000
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:41.396 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ >>>> FigAudioQueuePrime: [0x10bddc000:0x10bd7b800] RP/HM.01 called, mediaStartTime = 0.000, FRESH START
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(41984)
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 41984 st; err=0
+2026-11-19 08:13:41.396 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ >>>> faqTimelineWrangler_setTimesInFAQPrime: [0x10bddc000] RP/HM.01 TimelineWrangler 0x10bddc1a0: aqTime_SampleTimeAtQueueStart = 0.952 (currentAQTime), mediaStartTime = 0.000, wasPaused = NO
+2026-11-19 08:13:41.396 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ >>>> faqTimelineWrangler_setTimesInFAQPrime: [0x10bddc000] RP/HM.01 TimelineWrangler 0x10bddc1a0: aqTime_SampleTimeAtTrackStart = 0.952 (currentAQTime), mediaStartTime = 0.000, wasPaused = NO
+2026-11-19 08:13:41.396 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ >>>> faqTimelineWrangler_setTimesInFAQPrime: [0x10bddc000] RP/HM.01 TimelineWrangler 0x10bddc1a0: aqTime_SampleTimeAtFirstStart = 0.952, mediaTime_StartTimeAtFirstStart = 0.000, mediaStartTime = 0.000, wasPaused = NO
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(41984)
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 41984 st; err=0
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(41984)
+2026-11-19 08:13:41.396 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 41984 st; err=0
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQBufAlloc] alloc #1001 0x11b000030 74976
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQBufAlloc] slab map: after adding slab 2
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQBufAlloc]   0x11b000000 : id 2  size 10485760
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQBufAlloc] relocAddr: 2 48
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQBufAlloc] slab map: makeXPCBoxForSlabs
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQBufAlloc]   0x11b000000 : id 2  size 10485760
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQBufAlloc] mapping slabID 2
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQBufAlloc] Server slab map for client 49900:
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQBufAlloc]   id 2  ->  0x11b000000  size 10485760
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5823  buffersCreatedAndDestroyed: aq@0x10be81400: unmap buf 1000
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5810  buffersCreatedAndDestroyed: aq@0x10be81400: map buf 1001
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6037  EnqueueBuffer: aq@0x10be81400: bufid 1001, cmd 0x10bf02308, data 0x11b000030: 74970 bytes, 37485 frames (trim 0/0), 37485 packets, invalid ht, 41984 st, outActualStartTime 0x16f4614b0
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6123  EnqueueBuffer: ^^^ actual start time invalid ht, 41984 st
+2026-11-19 08:13:41.397 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ >>>> subaq_enqueueAQBufferIntoAudioQueue: [0x10bddc000:0x10bd7b800:0x10be7ad00] RP/HM.01 enqueueing #2 from 0.000 to 0.850 (duration: 0.850000, total: 0.850000) start time:(requested media: 0.952, actual host: nan)
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(41984)
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 41984 st; err=0
+2026-11-19 08:13:41.397 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimFlush: [0x10be7ad00] Calling AudioQueueFlush(0xc2ec002)
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:505   AudioQueueFlush: ->0xc2ec003
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3767  ScheduleFlush: aq@0x10be81400
+2026-11-19 08:13:41.397 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:513   AudioQueueFlush: <-
+2026-11-19 08:13:41.397 Df EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:aqme]            AQMEIO_HAL.cpp:2857  FetchAndLogFrameSize GetCurrentIOBufferFrameSize deviceID=131, frame size is 512
+2026-11-19 08:13:41.398 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimPrime: [0x10be7ad00] Calling AudioQueuePrime(0xc2ec002)
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:428   AudioQueuePrime: ->0xc2ec003 4096 fr
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:2916  Prime: aq@0x10be81400: Entering (0x1000 frames requested)
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2583  AcquirePlayResources: aq@0x10be81400
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2536  SetDecodeSizesToDefault: aq@0x10be81400: conn 0x10be15918 RunsOnAP 1
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2554  SetDecodeSizesToDefault: aq@0x10be81400: decode buffer sizes: 66150 frames, low-water 57330, max-decode 8820
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6494  RunConverter: Overriding max frames from prime to 4096
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:7072  ConvertOutput: aq@0x10be81400: scheduling rationale 1: invalid ht, 41984 st
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:7115  ConvertOutput: aq@0x10be81400 / bcmd@0x10bf02308: Passed 37485 of 37485 frames (status=not enough input) to offset 0xffffffff (0x11b000030), 74970 bytes, t=0xa400 (0xa400 + 0x926d)
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6494  RunConverter: Overriding max frames from prime to 4096
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6364  CheckAsyncCommand: aq@0x10be81400: About to perform async command: flush
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3781  PerformFlush: aq@0x10be81400
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5561  PropertyChanged: aq@0x10be81400: 1718383464 (mDisposalPending=0)
+2026-11-19 08:13:41.398 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6494  RunConverter: Overriding max frames from prime to 4096
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6494  RunConverter: Overriding max frames from prime to 4096
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:2957  Prime: Exiting because 0x926d frames were primed (0x1000 were requested)
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fc] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:441   AudioQueuePrime: <-37485 fr, err 0
+2026-11-19 08:13:41.403 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseAndAudioQueue: (0x104f95f80 RP/HM.01) with timebase 0x109be5f80, calling FigAudioQueueStart2(itemTime = 0.000, hostClockTime = nan = now nan)
+2026-11-19 08:13:41.403 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ >>>> figAudioQueueStartCommon: [0x10bddc000:0x10bd7b800] RP/HM.01 called, faq->mediaStartTime = 0.000, timebaseRate = 1.00, hostStartTime: nan, ignoring passed-in mediaStartTime 0.000
+2026-11-19 08:13:41.403 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ >>>> figAudioQueueStartCommon: [0x10bddc000:0x10bd7b800:0x10be7ad00] RP/HM.01 starting active audio queue mediaStartTime:0.000 hostStartTime:nan (hostTimeNow:251744.140 + nan) timebaseRate:1.000000
+2026-11-19 08:13:41.403 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< FAQ >>>> subaq_startAudioQueueIfReady: [0x10bddc000:0x10bd7b800] RP/HM.01 starting with no timestamp
+2026-11-19 08:13:41.403 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> faqts_audioQueueStartInternal: [0x10be7ad00] Calling AudioQueueStartWithFlags(0xc2ec002, 0x1), aqStartTimeStampPtr NULL
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:402   AudioQueueStartWithFlags: ->0xc2ec003 time: (null) (now: 251744.140383)
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2583  AcquirePlayResources: aq@0x10be81400
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2536  SetDecodeSizesToDefault: aq@0x10be81400: conn 0x10be15918 RunsOnAP 1
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2554  SetDecodeSizesToDefault: aq@0x10be81400: decode buffer sizes: 66150 frames, low-water 57330, max-decode 8820
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9286  EndPause: aq@0x10be81400: mInterrupted 0
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2583  AcquirePlayResources: aq@0x10be81400
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2536  SetDecodeSizesToDefault: aq@0x10be81400: conn 0x10be15918 RunsOnAP 1
+2026-11-19 08:13:41.403 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForRate: <0x10bd7bb80|I/OKY.01> endTime is duration 0.850
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2554  SetDecodeSizesToDefault: aq@0x10be81400: decode buffer sizes: 66150 frames, low-water 57330, max-decode 8820
+2026-11-19 08:13:41.403 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForTime: <0x10bd7bb80|I/OKY.01> called, endTime = 0.850
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5401  ionc@0x10be81400: Resetting processors (not disconnecting)
+2026-11-19 08:13:41.403 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleAdvanceForOverlappedPlaybackCallbackForTime: <0x10bd7bb80|I/OKY.01> called, advanceTime = nan
+2026-11-19 08:13:41.403 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5409  ionc@0x10be81400: Finished resetting processors
+2026-11-19 08:13:41.404 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5412  ionc@0x10be81400: startingTimeline 0
+2026-11-19 08:13:41.404 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2650  StartRunning: aq@0x10be81400
+2026-11-19 08:13:41.404 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossPrerollCompleted: <0x10bd7bb80|I/OKY.01> PrerollingWillPlay -> Playing; rate 1.0
+2026-11-19 08:13:41.404 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]           AQMixEngine.cpp:1069  ->AQMEDevice(0x10bed0958)::AddRunningClient <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play> count 1
+2026-11-19 08:13:41.404 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:13:41.404 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_MentorStopping: <0x10bd7bb80|I/OKY.01> all mentors are now idle
+2026-11-19 08:13:41.404 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_sendBecameIdleNotificationIfNowIdle: <0x10bd7bb80|I/OKY.01> posting BecameIdle notification now that all mentors have finished prerolling
+2026-11-19 08:13:41.404 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_prepareNextItemForTransition: [0x104f33700|P/HM] <0x109bcd400|I/OKY.01> called
+2026-11-19 08:13:41.404 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_doingGapless: P/HM NO, because actionAtEnd (1) is not kFigPlayerActionCode_Advance
+2026-11-19 08:13:41.404 Df EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:3273  1-channel audio content is NOT eligible for spatialization
+2026-11-19 08:13:41.405 Db EasyGasLocal[49900:8fe8fd] [com.apple.defaults:User Defaults] found no value for key converterkTracesPermitted in CFPrefsSearchListSource<0x10bcba480> (Domain: com.apple.coreaudio, Container: (null) Non-launch persona: 0)
+2026-11-19 08:13:41.407 Db EasyGasLocal[49900:8fe8fd] [com.apple.defaults:User Defaults] found no value for key converterkTracesPermitted in CFPrefsSearchListSource<0x10bcba480> (Domain: com.apple.coreaudio, Container: (null) Non-launch persona: 0)
+2026-11-19 08:13:41.408 Df EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AudioConverter]        AudioConverter.cpp:1077  Created a new in process converter -> 0x11af2c780, from  1 ch,  44100 Hz, Float32 (actually:  1 ch,  44100 Hz, Float32) to  1 ch,  44100 Hz, Float32 (actually:  1 ch,  44100 Hz, Float32)
+2026-11-19 08:13:41.409 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]         MESubmixGraph.cpp:1633  client <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play> has a valid layout; setting: tag=0x640001
+2026-11-19 08:13:41.409 Df EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4741  AQ Time-stretcher: ionc@0x10be81400 Set parameter 2 as 1.000000
+2026-11-19 08:13:41.409 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4711  Set EQ preset 0
+2026-11-19 08:13:41.409 Df EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5764  ApplyParameters: aq@0x10be81400 volume 0.800 1.000 1.000 1.000 1.000 1.000, 1.000
+2026-11-19 08:13:41.409 Df EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]  MEDeviceStreamClient.cpp:245   AQME Default-InputOutput: client starting: <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play>; running count now 2
+2026-11-19 08:13:41.413 Df EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:aqme]            AQMEIO_HAL.cpp:2857  FetchAndLogFrameSize GetCurrentIOBufferFrameSize deviceID=131, frame size is 512
+2026-11-19 08:13:41.413 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9402  EndPause: ***** unpausing after being paused 1137042164 - 41984 = 1137000692 sample frames *****
+2026-11-19 08:13:41.413 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:414   AudioQueueStartWithFlags: <-(err=0, 0.009651 s)
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]              AQIONode.cpp:131     ionode anchor 251744.185576, 1137041652 st, 1.000002 rs
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9122    ionode now    251744.151032, 1137040129 st, 1.000002 rs (25783.223); qrate = 1.000
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9123    queue anchor  1137000692 fr
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9125    queue now     251744.151032, 39437 st, 1.000002 rs (0.894)
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9127  <-AudioQueueObject::GetCurrentQueueTime success
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:86e974] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9137  GetCurrentQueueTime: AQSTL AudioQueueObject(0x10be81400)::GetCurrentQueueTime 
+ ionode now    251744.151032, 1137040129 st, 1.000002 rs (25783.223); qrate = 1.000 
+ queue anchor  1137000692 fr 
+ queue now     251744.151032, 39437 st, 1.000002 rs (0.894)
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-251744.151032, 39437 st; err=0
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQ >>>> subaq_getAudioQueueLatencyFigTime: [0x10bddc000:0x10bd7b800] RP/HM.01 Returning audio device latency as 0.016 sec
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:8fe904] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:8fe904] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:8fe904] [com.apple.coreaudio:aqiotime]              AQIONode.cpp:131     ionode anchor 251744.185576, 1137041652 st, 1.000002 rs
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:8fe904] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9122    ionode now    251744.151256, 1137040138 st, 1.000002 rs (25783.223); qrate = 1.000
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:8fe904] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9123    queue anchor  1137000692 fr
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:8fe904] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9125    queue now     251744.151256, 39446 st, 1.000002 rs (0.894)
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:8fe904] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9127  <-AudioQueueObject::GetCurrentQueueTime success
+2026-11-19 08:13:41.414 Db EasyGasLocal[49900:8fe904] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-251744.151256, 39446 st; err=0
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQ >>>> subaq_performStartupSync: [0x10bddc000:0x10bd7b800] RP/HM.01 AudioQueueGetCurrentTime -> timeStamp { mFlags 0x7, mSampleTime 39446 (0.894 seconds), faq->srcASBD->mSampleRate 44100, mHostTime 6041859630140 (251744.151 seconds) }
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQ >>>> subaq_performStartupSync: [0x10bddc000:0x10bd7b800] RP/HM.01 FigAudioQueueTimingShimGetCurrentTime -> timeStamp { mFlags 0x7, mSampleTime 39446 (0.894 seconds), faq->srcASBD->mSampleRate 44100, mHostTime 6041859630140 (251744.151 seconds) }
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQ >>>> subaq_getAudioQueueLatencyFigTime: [0x10bddc000:0x10bd7b800] RP/HM.01 Returning audio device latency as 0.016 sec
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQ >>>> faqTimelineWrangler_getMediaTimeInStartupSync: [0x10bddc000] RP/HM.01 TimelineWrangler 0x10bddc1a0: deviceLatencyAtPlayRateSpeed: 0.016, sampleTimeWithLatency: 0.879, SinceQueueStart: -0.073, WithPauseOffset: -0.073, SinceTrackStart: 0.879
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQ >>>> subaq_performStartupSync: [0x10bddc000:0x10bd7b800] RP/HM.01 calling startedCallback with (AQ time 0.894) media time -0.073 / host time 251744.151
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseAtAnchorAudioTimeStamp: (0x104f95f80 RP/HM.01) mediaTime = -0.073, hostTime = 251744.151, rate = 1.00 at lastStartedMediaTime = 0.000, currentHostTime = 251744.151
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseCommon: (0x104f95f80 RP/HM.01) adjusting: now mediaTime = 0.000, hostTime = 251744.225, rate = 1.00 at currentMediaTime = 0.000, currentHostTime = 251744.151
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseCommon: (0x104f95f80 RP/HM.01) converted host time 251744.225 to source time 251744.225 (host clock 0x1098c65a0, source 0x10bf37180)
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseCommon: (0x104f95f80 RP/HM.01) calling CMTimebaseSetRateAndAnchorTime for timebase 0x109be5f80 with rate 1.00, media time 0.000, source time 251744.225
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe904] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_timebaseRateChangedCallback: (0x104f95f80 RP/HM.01) timebase 0x109be5f80 effective rate changed, new rate 1.000, current time -0.073, current host time 251744.152 (ignoring because this faqrp is timebase starter)
+2026-11-19 08:13:41.414 E  EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> signalled err=-12864 at <>:10127
+2026-11-19 08:13:41.414 Df EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_timebaseRateChangedDeferredWork: <0x10bd7bb80|I/OKY.01> Timebase rate changed to non-zero @-0.073s. Will reach preroll time 0.000s in 0.073s
+2026-11-19 08:13:41.423 Df EasyGasLocal[49900:86e914] [com.apple.coreaudio:default] AQSTL aq(0x10be81400) start time resolved to: 1137000692 ioTS st: 1137042164 ht: 251744.196243
+2026-11-19 08:13:41.423 Db EasyGasLocal[49900:8fe852] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9851  ProcessingNodeDeliverPendingParameters: aq@0x10be81400 Processing Node deliver pending parameters: targetSampleTime: 1137000692 mNextIOSampleTime: 1137042676 Anchor: 1137000692 offset: 0
+2026-11-19 08:13:41.915 Df EasyGasLocal[49900:8fe905] [com.apple.coremedia:] << FigPlayMonitor >> fpm_likelyToKeepUpUsingDynamicAlgorithm: [0x10bec2830] bandwidth: 0 kbps; smoothedBandwidth: 0 kbps; bwInflationFactor: 1.00; (movieDuration - durToPlayThrough): 0.43; durationAhead: 0.42; timeToLikelyToKeepUp: 0.00
+2026-11-19 08:13:42.278 Db EasyGasLocal[49900:8fe852] [com.apple.coreaudio:AQBufAlloc] dealloc #1001 0x11b000030 74976
+2026-11-19 08:13:42.278 Db EasyGasLocal[49900:8fe852] [com.apple.coreaudio:AQBufAlloc] slab map: tearing down
+2026-11-19 08:13:42.278 Db EasyGasLocal[49900:8fe852] [com.apple.coreaudio:AQBufAlloc]   0x11b000000 : id 2  size 10485760
+2026-11-19 08:13:42.278 Db EasyGasLocal[49900:8fe852] [com.apple.coreaudio:AQBufAlloc] slab map: makeXPCBoxForSlabs
+2026-11-19 08:13:42.278 Db EasyGasLocal[49900:8fe852] [com.apple.coreaudio:AQBufAlloc] unmapping slabID 2
+2026-11-19 08:13:42.278 Db EasyGasLocal[49900:8fe852] [com.apple.coreaudio:AQBufAlloc] Server slab map for client 49900:
+2026-11-19 08:13:42.340 Df EasyGasLocal[49900:8fe905] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossReachedEndWithContext: <0x10bd7bb80|I/OKY.01> Triggering stopAtEnd at 0.850
+2026-11-19 08:13:42.340 Df EasyGasLocal[49900:8fe905] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForTime: <0x10bd7bb80|I/OKY.01> called, endTime = nan
+2026-11-19 08:13:42.340 Df EasyGasLocal[49900:8fe905] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleAdvanceForOverlappedPlaybackCallbackForTime: <0x10bd7bb80|I/OKY.01> called, advanceTime = nan
+2026-11-19 08:13:42.340 Df EasyGasLocal[49900:8fe905] [com.apple.coremedia:] <<<< FAQRP >>>> figAudioQueueRenderPipelineSetRateAndAnchorTime: (0x104f95f80 RP/HM.01) timebase 0x109be5f80, set to timebaseRate 0.00, pipelineRate 1.00, itemTime 0.850, hostClockTime nan (nownan)
+2026-11-19 08:13:42.340 Df EasyGasLocal[49900:8fe905] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_stopTimebaseAndAudioQueue: (0x104f95f80 RP/HM.01) stopping timebase 0x109be5f80 at 0.850
+2026-11-19 08:13:42.340 Df EasyGasLocal[49900:8fe905] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_timebaseRateChangedCallback: (0x104f95f80 RP/HM.01) timebase 0x109be5f80 effective rate changed, new rate 0.000, current time 0.850, current host time 251745.076 (ignoring because this faqrp is timebase starter)
+2026-11-19 08:13:42.340 E  EasyGasLocal[49900:8fe8fc] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> signalled err=-12864 at <>:10127
+2026-11-19 08:13:42.341 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:13:42.341 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:13:42.341 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqiotime]              AQIONode.cpp:131     ionode anchor 251745.092244, 1137082100 st, 1.000002 rs
+2026-11-19 08:13:42.341 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9122    ionode now    251745.076696, 1137081414 st, 1.000002 rs (25784.159); qrate = 1.000
+2026-11-19 08:13:42.341 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9123    queue anchor  1137000692 fr
+2026-11-19 08:13:42.341 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9125    queue now     251745.076696, 80722 st, 1.000002 rs (1.830)
+2026-11-19 08:13:42.342 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9127  <-AudioQueueObject::GetCurrentQueueTime success
+2026-11-19 08:13:42.342 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-251745.076696, 80722 st; err=0
+2026-11-19 08:13:42.342 Df EasyGasLocal[49900:8fe905] [com.apple.coremedia:] <<<< FAQ >>>> FigAudioQueuePause: [0x10bddc000:0x10bd7b800] RP/HM.01 calling FigAudioQueueTimingShimPause() at AQ time: 1.830
+2026-11-19 08:13:42.342 Df EasyGasLocal[49900:8fe905] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimPause: [0x10be7ad00] Calling AudioQueuePause(0xc2ec002)
+2026-11-19 08:13:42.342 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:482   AudioQueuePause: ->0xc2ec003
+2026-11-19 08:13:42.342 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9192  BeginPause: aq@0x10be81400: beingInterrupted 0
+2026-11-19 08:13:42.368 Df EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqme]            AQMEIO_HAL.cpp:2857  FetchAndLogFrameSize GetCurrentIOBufferFrameSize deviceID=131, frame size is 512
+2026-11-19 08:13:42.374 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9216  BeginPause: mNextIOSampleTime 1137084660, mAnchorIOSampleTime 1137000692, mPauseSampleTime 83968
+2026-11-19 08:13:42.374 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:494   AudioQueuePause: <- pauseSampleTime 83968
+2026-11-19 08:13:42.374 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:13:42.374 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:13:42.374 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(83968)
+2026-11-19 08:13:42.374 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 83968 st; err=0
+2026-11-19 08:13:42.374 Df EasyGasLocal[49900:8fe905] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5177  SetProperty: AQ Time-stretcher: ionc@0x10bed0900 TimePitchProperty set qtpb: 1
+2026-11-19 08:13:42.374 Db EasyGasLocal[49900:8fe905] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4523  set 21; err 0
+2026-11-19 08:13:42.374 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> itemfig_ReachedEndGuts: [0x104f33700|P/HM] <0x109bcd400|I/OKY.01> stopping (because ActionAtEnd == Stop)
+2026-11-19 08:13:42.374 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_setRateForReason: [0x104f33700] P/HM called, rate = 0.000, current playback state Playing (rate = 1.000), reason: StopAtEnd
+2026-11-19 08:13:42.374 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_getNextPlaybackState: [0x104f33700] P/HM new playback state: Paused (Player) (playerRate: 0.000), NEED TO update boss rate (0.000), previous state: Playing, change reason: StopAtEnd, playthrough prediction: likely, options: None
+2026-11-19 08:13:42.374 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_setBossRateWithFade: [0x104f33700] P/HM called, new rate = 0.000, previous rate = 1.000, fadeDuration = nan, itemTime nan, hostClockTime nan (now 251745.110 + nan)
+2026-11-19 08:13:42.374 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_applySoftwareVolume: [0x104f33700] P/HM rp: [FigRenderPipeline 0x104f95f80], propertyName = SoftwareVolume1, targetVolume = 0.00, rampDuration = 0.00, synchronous = YES
+2026-11-19 08:13:42.375 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 4(VolumeRampTime):0.000
+2026-11-19 08:13:42.375 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:42.375 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.000
+2026-11-19 08:13:42.375 Db EasyGasLocal[49900:8fe8fd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:13:42.375 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetRateAndAnchorTime: <0x10bd7bb80|I/OKY.01> called, newRate = 0.000, itemTime = nan, hostClockTime = nan = now (251745.110) + nan
+2026-11-19 08:13:42.375 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForTime: <0x10bd7bb80|I/OKY.01> called, endTime = nan
+2026-11-19 08:13:42.375 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleAdvanceForOverlappedPlaybackCallbackForTime: <0x10bd7bb80|I/OKY.01> called, advanceTime = nan
+2026-11-19 08:13:42.375 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_getNextPlaybackState: [0x104f33700] P/HM new playback state: Paused (Player) (playerRate: 0.000), WILL NOT update boss rate (nan), previous state: Paused, change reason: CurrentItemChanged, playthrough prediction: likely, options: None
+2026-11-19 08:13:42.375 Df EasyGasLocal[49900:86e8bf] [com.apple.coremedia:] <<<< AVPlayer >>>> avplayer_fpNotificationCallback_block_invoke_9: P/HM setting timeControlStatus=2, reasonForWaitingToPlay=(null) triggeredByNotificationName=RateDidChange
+2026-11-19 08:13:42.402 Df EasyGasLocal[49900:86e8bf] [com.apple.coremedia:] <<<< AVPlayer >>>> avplayer_fpNotificationCallback_block_invoke_9: P/HM setting timeControlStatus=0, reasonForWaitingToPlay=(null) triggeredByNotificationName=PlaybackStateDidChange
+2026-11-19 08:13:42.491 Df EasyGasLocal[49900:8fe263] [com.apple.coreaudio:ddagg]        AggregateDevice.mm:1008  PrimarySessionActiveWithInputEnabled 0 -> 0
+2026-11-19 08:13:42.832 Df EasyGasLocal[49900:8fe8fd] [com.apple.coremedia:] << FigPlayMonitor >> fpm_likelyToKeepUpUsingDynamicAlgorithm: [0x10bec2830] bandwidth: 0 kbps; smoothedBandwidth: 0 kbps; bwInflationFactor: 1.00; (movieDuration - durToPlayThrough): 0.85; durationAhead: 0.00; timeToLikelyToKeepUp: 0.00
+2026-11-19 08:13:47.880 Db EasyGasLocal[49900:8fe458] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9266  StopFromPause: aq@0x10be81400
+2026-11-19 08:13:47.880 Db EasyGasLocal[49900:8fe458] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2690  StopRunning: aq@0x10be81400: ionode 0x10bed0900
+2026-11-19 08:13:47.880 Db EasyGasLocal[49900:8fe458] [com.apple.coreaudio:aqme]  MEDeviceStreamClient.cpp:424   -> 0x10bed0958 <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play>
+2026-11-19 08:13:47.881 Df EasyGasLocal[49900:8fe458] [com.apple.coreaudio:aqme]            AQMEIO_HAL.cpp:2857  FetchAndLogFrameSize GetCurrentIOBufferFrameSize deviceID=131, frame size is 512
+2026-11-19 08:13:47.886 Df EasyGasLocal[49900:8fe458] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:3273  1-channel audio content is NOT eligible for spatialization
+2026-11-19 08:13:47.886 Df EasyGasLocal[49900:8fe458] [com.apple.coreaudio:aqme]  MEDeviceStreamClient.cpp:459   AQME Default-InputOutput: client stopping: <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play>; running count now 1
+2026-11-19 08:15:52.398 Df EasyGasLocal[49900:86e8ea] [com.apple.coremedia:] <<<< AVPlayer >>>> -[AVPlayer _setRate:rateChangeReason:figPlayerSetRateHandler:]_block_invoke: P/HM setting timeControlStatus=0, reasonForWaitingToPlay=(null)
+2026-11-19 08:15:52.398 Df EasyGasLocal[49900:8ff651] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_getNextPlaybackState: [0x104f33700] P/HM new playback state: Paused (Player) (playerRate: 0.000), WILL NOT update boss rate (nan), previous state: Paused, change reason: ClientInitiated, playthrough prediction: likely, options: None
+2026-11-19 08:15:53.091 Df EasyGasLocal[49900:86e8ea] [com.apple.coremedia:] <<<< AVPlayer >>>> -[AVPlayer _setRate:rateChangeReason:figPlayerSetRateHandler:]_block_invoke: P/HM setting timeControlStatus=0, reasonForWaitingToPlay=(null)
+2026-11-19 08:15:53.091 Df EasyGasLocal[49900:8ff651] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_getNextPlaybackState: [0x104f33700] P/HM new playback state: Paused (Player) (playerRate: 0.000), WILL NOT update boss rate (nan), previous state: Paused, change reason: ClientInitiated, playthrough prediction: likely, options: None
+2026-11-19 08:15:53.091 I  EasyGasLocal[49900:86e8bf] [com.apple.runningboard:assertion] Acquiring assertion: <RBSAssertionDescriptor| "AVPlayer background assertion" ID:(null) target:49900>
+2026-11-19 08:19:38.126 Df EasyGasLocal[49900:900ea8] [com.apple.coreaudio:as_client] AVAudioSessionImpl_Simulator.mm:111   Set volume on device 73 to 0.00
+2026-11-19 08:19:38.127 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> itemfig_setCurrentTimeWithRangeAndIDGuts: <0x109bcd400|I/OKY.01> called, time = 0.000, flags = 0x3, range = [-inf, inf], seekID = 3
+2026-11-19 08:19:38.127 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetTimeWithRange: <0x10bd7bb80|I/OKY.01> newTime: 0.000000, scruboption = 0x4, range = [-inf, inf] seekID 3
+2026-11-19 08:19:38.127 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> bossSetMentorModesToScrub: <0x10bd7bb80|I/OKY.01> called, tracks 0...0, time 0.000
+2026-11-19 08:19:38.127 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetTimeWithRange: <0x10bd7bb80|I/OKY.01> playState set to Paused
+2026-11-19 08:19:38.127 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetTimeWithRange: <0x10bd7bb80|I/OKY.01> Posting SeekDidComplete for seek ID 3
+2026-11-19 08:19:38.127 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossPostSeekDidComplete: <0x10bd7bb80|I/OKY.01> called for seekID 3 seekErr 0
+2026-11-19 08:19:38.127 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> itemfig_BossSeekDidComplete: <0x109bcd400|I/OKY.01> posting SeekDidComplete (seekID 3, seekError 0)
+2026-11-19 08:19:38.127 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] << FigPlayMonitor >> fpm_likelyToKeepUpUsingDynamicAlgorithm: [0x10bec2830] bandwidth: 0 kbps; smoothedBandwidth: 0 kbps; bwInflationFactor: 1.00; (movieDuration - durToPlayThrough): 0.00; durationAhead: 0.85; timeToLikelyToKeepUp: 0.00
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:player] <<<< FigPlayerSurrogate >>>> surrogatePlayer_setActionAtEndOnRealPlayerOnQ: [0x109b94900|P/HM] actionAtEnd Stop
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:86e8ea] [com.apple.coremedia:] <<<< AVPlayer >>>> -[AVPlayer _setRate:rateChangeReason:figPlayerSetRateHandler:]_block_invoke: P/HM setting timeControlStatus=1, reasonForWaitingToPlay=AVPlayerWaitingWhileEvaluatingBufferingRateReason
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_getNextPlaybackState: [0x104f33700] P/HM new playback state: Playing (Player) (playerRate: 1.000), NEED TO update boss rate (1.000), previous state: Paused, change reason: ClientInitiated, playthrough prediction: likely, options: DiscourageWaiting
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900d33] [com.apple.coreaudio:ddagg]        AggregateDevice.mm:1008  PrimarySessionActiveWithInputEnabled 0 -> 0
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_setBossRateWithFade: [0x104f33700] P/HM called, new rate = 1.000, previous rate = 0.000, fadeDuration = nan, itemTime nan, hostClockTime nan (now 252100.838 + nan)
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_applySoftwareVolume: [0x104f33700] P/HM rp: [FigRenderPipeline 0x104f95f80], propertyName = SoftwareVolume1, targetVolume = 0.00, rampDuration = 0.00, synchronous = YES
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:86e8bf] [com.apple.coremedia:] <<<< AVPlayer >>>> avplayer_fpNotificationCallback_block_invoke_9: P/HM setting timeControlStatus=2, reasonForWaitingToPlay=(null) triggeredByNotificationName=PlaybackStateDidChange
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 4(VolumeRampTime):0.000
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.000
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_applySoftwareVolume: [0x104f33700] P/HM rp: [FigRenderPipeline 0x104f95f80], propertyName = SoftwareVolume5, targetVolume = 1.00, rampDuration = 0.00, synchronous = YES
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 14(VolumeProcessMute):1.000
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Alt >>>> FPSupport_GetDisplayRefreshInformation: displayMaxRefreshInterval:1/60 displayMinRefreshInterval:1/60 displayRefreshStep:0/0
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetRateAndAnchorTime: <0x10bd7bb80|I/OKY.01> called, newRate = 1.000, itemTime = nan, hostClockTime = nan = now (252100.838) + nan
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForTime: <0x10bd7bb80|I/OKY.01> called, endTime = nan
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleAdvanceForOverlappedPlaybackCallbackForTime: <0x10bd7bb80|I/OKY.01> called, advanceTime = nan
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> bossConfigureRatePlan: requested rate 1.000 => will use audio time compression rate 1.000, timebase rate 1.000, NON-snippetised playback
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossStartPrerollAndSetPlayState: <0x10bd7bb80|I/OKY.01> called, prerollRate == 1.000, itemTime = nan, hostClockTime = nan, prerollTime = nan, useSnippetPlayback = NO, currentTimebaseTime == 0.000, newPlayState = PrerollingWillPlay
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> bossSetMentorModesToForwardPlayback: <0x10bd7bb80|I/OKY.01> called, tracks 0...0, start time 0.000, end time nan, rate 1.00, previousOutputDisposition=3
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossSetRateToNonZero: <0x10bd7bb80|I/OKY.01> playState set to PrerollingWillPlay
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ >>>> faq_reset: [0x10bddc000:0x10bd7b800] RP/HM.01 calling FigAudioQueueTimingShimReset
+2026-11-19 08:19:38.128 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimReset: [0x10be7ad00] Calling AudioQueueReset(0xc2ec002)
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:525   AudioQueueReset: ->0xc2ec003
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3677  Reset: aq@0x10be81400
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3781  PerformFlush: aq@0x10be81400
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5561  PropertyChanged: aq@0x10be81400: 1718383464 (mDisposalPending=0)
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5401  ionc@0x10be81400: Resetting processors (not disconnecting)
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5409  ionc@0x10be81400: Finished resetting processors
+2026-11-19 08:19:38.128 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5412  ionc@0x10be81400: startingTimeline 1
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]           ClientQueue.cpp:667   AwaitAllPendingCallbacks: 0x10bdaabd8: done
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:536   AudioQueueReset: <-
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 2(Rate):1.000
+2026-11-19 08:19:38.129 Df EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4741  AQ Time-stretcher: ionc@0x10be81400 Set parameter 2 as 1.000000
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.000
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 9(Volume3):1.000
+2026-11-19 08:19:38.129 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> itemfig_ReportAudioPlaybackThroughFigLog: [QE Critical][0x104f33700|P/HM]: <0x109bcd400|I/OKY.01>: [AudioFormat lpcm] [AudioChannels 1] [Spatialization Eligible yes] [Client permits multi: no, stereo: no] [Spatialization no] [StereoSpatialization no] [item requires immersive rendering no]
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Df EasyGasLocal[49900:900edd] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_applySoftwareVolume: [0x104f33700] P/HM rp: [FigRenderPipeline 0x104f95f80], propertyName = SoftwareVolume1, targetVolume = 0.80, rampDuration = 0.00, synchronous = NO
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 14(VolumeProcessMute):1.000
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimPause: [0x10be7ad00] Calling AudioQueuePause(0xc2ec002)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:482   AudioQueuePause: ->0xc2ec003
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9192  BeginPause: aq@0x10be81400: beingInterrupted 0
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:494   AudioQueuePause: <- pauseSampleTime 83968
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 4(VolumeRampTime):0.000
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.800
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:900edd] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ >>>> faq_reset: [0x10bddc000:0x10bd7b800] RP/HM.01 calling FigAudioQueueTimingShimReset
+2026-11-19 08:19:38.129 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimReset: [0x10be7ad00] Calling AudioQueueReset(0xc2ec002)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:525   AudioQueueReset: ->0xc2ec003
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3677  Reset: aq@0x10be81400
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3781  PerformFlush: aq@0x10be81400
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5561  PropertyChanged: aq@0x10be81400: 1718383464 (mDisposalPending=0)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5401  ionc@0x10be81400: Resetting processors (not disconnecting)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5409  ionc@0x10be81400: Finished resetting processors
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5412  ionc@0x10be81400: startingTimeline 1
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]           ClientQueue.cpp:667   AwaitAllPendingCallbacks: 0x10bdaabd8: done
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:536   AudioQueueReset: <-
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 2(Rate):1.000
+2026-11-19 08:19:38.129 Df EasyGasLocal[49900:86e976] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4741  AQ Time-stretcher: ionc@0x10be81400 Set parameter 2 as 1.000000
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.800
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 9(Volume3):1.000
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 14(VolumeProcessMute):1.000
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.129 Df EasyGasLocal[49900:86e976] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimPause: [0x10be7ad00] Calling AudioQueuePause(0xc2ec002)
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:482   AudioQueuePause: ->0xc2ec003
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9192  BeginPause: aq@0x10be81400: beingInterrupted 0
+2026-11-19 08:19:38.129 Db EasyGasLocal[49900:86e976] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:494   AudioQueuePause: <- pauseSampleTime 83968
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_MentorPrerollComplete: <0x10bd7bb80|I/OKY.01> track 1 s, currentOrder 0x8bb53f5e94cf189d (1009), orderFromPayload 0x8bb53f5e94cf189d (1009), OrderComplete, CURRENT, masterOrder 0x8bb53f5e936fc49d (1000009), waitingForMentorPreroll
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_beginPrerollPhase2: <0x10bd7bb80|I/OKY.01> Beginning Preroll Phase 2, masterOrder 0x8bb53f5e936fc49d (1000009)
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossPrerollCompleted: <0x10bd7bb80|I/OKY.01> called
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQRP >>>> figAudioQueueRenderPipelineSetRateAndAnchorTime: (0x104f95f80 RP/HM.01) timebase 0x109be5f80, set to timebaseRate 1.00, pipelineRate 1.00, itemTime nan, hostClockTime nan (nownan)
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5177  SetProperty: AQ Time-stretcher: ionc@0x10bed0900 TimePitchProperty set qtpb: 1
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4523  set 21; err 0
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 2(Rate):1.000
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4741  AQ Time-stretcher: ionc@0x10be81400 Set parameter 2 as 1.000000
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ >>>> FigAudioQueuePrime: [0x10bddc000:0x10bd7b800] RP/HM.01 called, mediaStartTime = 0.000, FRESH START
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(83968)
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 83968 st; err=0
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ >>>> faqTimelineWrangler_setTimesInFAQPrime: [0x10bddc000] RP/HM.01 TimelineWrangler 0x10bddc1a0: aqTime_SampleTimeAtQueueStart = 1.904 (currentAQTime), mediaStartTime = 0.000, wasPaused = NO
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ >>>> faqTimelineWrangler_setTimesInFAQPrime: [0x10bddc000] RP/HM.01 TimelineWrangler 0x10bddc1a0: aqTime_SampleTimeAtTrackStart = 1.904 (currentAQTime), mediaStartTime = 0.000, wasPaused = NO
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ >>>> faqTimelineWrangler_setTimesInFAQPrime: [0x10bddc000] RP/HM.01 TimelineWrangler 0x10bddc1a0: aqTime_SampleTimeAtFirstStart = 1.904, mediaTime_StartTimeAtFirstStart = 0.000, mediaStartTime = 0.000, wasPaused = NO
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(83968)
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 83968 st; err=0
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(83968)
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 83968 st; err=0
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQBufAlloc] alloc #1002 0x11b604030 74976
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQBufAlloc] slab map: after adding slab 3
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQBufAlloc]   0x11b604000 : id 3  size 10485760
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQBufAlloc] relocAddr: 3 48
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQBufAlloc] slab map: makeXPCBoxForSlabs
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQBufAlloc]   0x11b604000 : id 3  size 10485760
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQBufAlloc] mapping slabID 3
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQBufAlloc] Server slab map for client 49900:
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQBufAlloc]   id 3  ->  0x11b604000  size 10485760
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5823  buffersCreatedAndDestroyed: aq@0x10be81400: unmap buf 1001
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5810  buffersCreatedAndDestroyed: aq@0x10be81400: map buf 1002
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6037  EnqueueBuffer: aq@0x10be81400: bufid 1002, cmd 0x10bf02308, data 0x11b604030: 74970 bytes, 37485 frames (trim 0/0), 37485 packets, invalid ht, 83968 st, outActualStartTime 0x16f71d4b0
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6123  EnqueueBuffer: ^^^ actual start time invalid ht, 83968 st
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ >>>> subaq_enqueueAQBufferIntoAudioQueue: [0x10bddc000:0x10bd7b800:0x10be7ad00] RP/HM.01 enqueueing #3 from 0.000 to 0.850 (duration: 0.850000, total: 0.850000) start time:(requested media: 1.904, actual host: nan)
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(83968)
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 83968 st; err=0
+2026-11-19 08:19:38.130 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimFlush: [0x10be7ad00] Calling AudioQueueFlush(0xc2ec002)
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:505   AudioQueueFlush: ->0xc2ec003
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3767  ScheduleFlush: aq@0x10be81400
+2026-11-19 08:19:38.130 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:513   AudioQueueFlush: <-
+2026-11-19 08:19:38.131 Df EasyGasLocal[49900:900ede] [com.apple.coreaudio:aqme]            AQMEIO_HAL.cpp:2857  FetchAndLogFrameSize GetCurrentIOBufferFrameSize deviceID=131, frame size is 512
+2026-11-19 08:19:38.131 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimPrime: [0x10be7ad00] Calling AudioQueuePrime(0xc2ec002)
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:428   AudioQueuePrime: ->0xc2ec003 4096 fr
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:2916  Prime: aq@0x10be81400: Entering (0x1000 frames requested)
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2583  AcquirePlayResources: aq@0x10be81400
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2536  SetDecodeSizesToDefault: aq@0x10be81400: conn 0x10be15918 RunsOnAP 1
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2554  SetDecodeSizesToDefault: aq@0x10be81400: decode buffer sizes: 66150 frames, low-water 57330, max-decode 8820
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6494  RunConverter: Overriding max frames from prime to 4096
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:7072  ConvertOutput: aq@0x10be81400: scheduling rationale 1: invalid ht, 83968 st
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:7115  ConvertOutput: aq@0x10be81400 / bcmd@0x10bf02308: Passed 37485 of 37485 frames (status=not enough input) to offset 0xffffffff (0x11b604030), 74970 bytes, t=0x14800 (0x14800 + 0x926d)
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6494  RunConverter: Overriding max frames from prime to 4096
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6364  CheckAsyncCommand: aq@0x10be81400: About to perform async command: flush
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:3781  PerformFlush: aq@0x10be81400
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5561  PropertyChanged: aq@0x10be81400: 1718383464 (mDisposalPending=0)
+2026-11-19 08:19:38.131 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6494  RunConverter: Overriding max frames from prime to 4096
+2026-11-19 08:19:38.136 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:2957  Prime: Exiting because 0x926d frames were primed (0x1000 were requested)
+2026-11-19 08:19:38.136 Db EasyGasLocal[49900:86ed4d] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:6494  RunConverter: Overriding max frames from prime to 4096
+2026-11-19 08:19:38.136 Db EasyGasLocal[49900:900ede] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:441   AudioQueuePrime: <-37485 fr, err 0
+2026-11-19 08:19:38.136 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseAndAudioQueue: (0x104f95f80 RP/HM.01) with timebase 0x109be5f80, calling FigAudioQueueStart2(itemTime = 0.000, hostClockTime = nan = now nan)
+2026-11-19 08:19:38.136 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ >>>> figAudioQueueStartCommon: [0x10bddc000:0x10bd7b800] RP/HM.01 called, faq->mediaStartTime = 0.000, timebaseRate = 1.00, hostStartTime: nan, ignoring passed-in mediaStartTime 0.000
+2026-11-19 08:19:38.136 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ >>>> figAudioQueueStartCommon: [0x10bddc000:0x10bd7b800:0x10be7ad00] RP/HM.01 starting active audio queue mediaStartTime:0.000 hostStartTime:nan (hostTimeNow:252100.846 + nan) timebaseRate:1.000000
+2026-11-19 08:19:38.136 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< FAQ >>>> subaq_startAudioQueueIfReady: [0x10bddc000:0x10bd7b800] RP/HM.01 starting with no timestamp
+2026-11-19 08:19:38.136 Df EasyGasLocal[49900:900edf] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> faqts_audioQueueStartInternal: [0x10be7ad00] Calling AudioQueueStartWithFlags(0xc2ec002, 0x1), aqStartTimeStampPtr NULL
+2026-11-19 08:19:38.136 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:402   AudioQueueStartWithFlags: ->0xc2ec003 time: (null) (now: 252100.846499)
+2026-11-19 08:19:38.136 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2583  AcquirePlayResources: aq@0x10be81400
+2026-11-19 08:19:38.136 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2536  SetDecodeSizesToDefault: aq@0x10be81400: conn 0x10be15918 RunsOnAP 1
+2026-11-19 08:19:38.136 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForRate: <0x10bd7bb80|I/OKY.01> endTime is duration 0.850
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2554  SetDecodeSizesToDefault: aq@0x10be81400: decode buffer sizes: 66150 frames, low-water 57330, max-decode 8820
+2026-11-19 08:19:38.137 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForTime: <0x10bd7bb80|I/OKY.01> called, endTime = 0.850
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9286  EndPause: aq@0x10be81400: mInterrupted 0
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2583  AcquirePlayResources: aq@0x10be81400
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2536  SetDecodeSizesToDefault: aq@0x10be81400: conn 0x10be15918 RunsOnAP 1
+2026-11-19 08:19:38.137 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleAdvanceForOverlappedPlaybackCallbackForTime: <0x10bd7bb80|I/OKY.01> called, advanceTime = nan
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2554  SetDecodeSizesToDefault: aq@0x10be81400: decode buffer sizes: 66150 frames, low-water 57330, max-decode 8820
+2026-11-19 08:19:38.137 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossPrerollCompleted: <0x10bd7bb80|I/OKY.01> PrerollingWillPlay -> Playing; rate 1.0
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5401  ionc@0x10be81400: Resetting processors (not disconnecting)
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5409  ionc@0x10be81400: Finished resetting processors
+2026-11-19 08:19:38.137 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_MentorStopping: <0x10bd7bb80|I/OKY.01> all mentors are now idle
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:5412  ionc@0x10be81400: startingTimeline 0
+2026-11-19 08:19:38.137 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_sendBecameIdleNotificationIfNowIdle: <0x10bd7bb80|I/OKY.01> posting BecameIdle notification now that all mentors have finished prerolling
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2650  StartRunning: aq@0x10be81400
+2026-11-19 08:19:38.137 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_prepareNextItemForTransition: [0x104f33700|P/HM] <0x109bcd400|I/OKY.01> called
+2026-11-19 08:19:38.137 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_doingGapless: P/HM NO, because actionAtEnd (1) is not kFigPlayerActionCode_Advance
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]           AQMixEngine.cpp:1069  ->AQMEDevice(0x10bed0958)::AddRunningClient <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play> count 1
+2026-11-19 08:19:38.137 Df EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:3273  1-channel audio content is NOT eligible for spatialization
+2026-11-19 08:19:38.137 Db EasyGasLocal[49900:900edf] [com.apple.defaults:User Defaults] found no value for key converterkTracesPermitted in CFPrefsSearchListSource<0x10bcba480> (Domain: com.apple.coreaudio, Container: (null) Non-launch persona: 0)
+2026-11-19 08:19:38.138 Db EasyGasLocal[49900:900edf] [com.apple.defaults:User Defaults] found no value for key converterkTracesPermitted in CFPrefsSearchListSource<0x10bcba480> (Domain: com.apple.coreaudio, Container: (null) Non-launch persona: 0)
+2026-11-19 08:19:38.138 Df EasyGasLocal[49900:900edf] [com.apple.coreaudio:AudioConverter]        AudioConverter.cpp:1077  Created a new in process converter -> 0x11a656f40, from  1 ch,  44100 Hz, Float32 (actually:  1 ch,  44100 Hz, Float32) to  1 ch,  44100 Hz, Float32 (actually:  1 ch,  44100 Hz, Float32)
+2026-11-19 08:19:38.138 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]         MESubmixGraph.cpp:1633  client <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play> has a valid layout; setting: tag=0x640001
+2026-11-19 08:19:38.138 Df EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4741  AQ Time-stretcher: ionc@0x10be81400 Set parameter 2 as 1.000000
+2026-11-19 08:19:38.138 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4711  Set EQ preset 0
+2026-11-19 08:19:38.138 Df EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5764  ApplyParameters: aq@0x10be81400 volume 0.800 1.000 1.000 1.000 1.000 1.000, 1.000
+2026-11-19 08:19:38.138 Df EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]  MEDeviceStreamClient.cpp:245   AQME Default-InputOutput: client starting: <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play>; running count now 2
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:900edf] [com.apple.coreaudio:aqme]            AQMEIO_HAL.cpp:2857  FetchAndLogFrameSize GetCurrentIOBufferFrameSize deviceID=131, frame size is 512
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9402  EndPause: ***** unpausing after being paused 1152772608 - 83968 = 1152689152 sample frames *****
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900edf] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:414   AudioQueueStartWithFlags: <-(err=0, 0.007514 s)
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQ >>>> subaq_getAudioQueueLatencyFigTime: [0x10bddc000:0x10bd7b800] RP/HM.01 Returning audio device latency as 0.016 sec
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]              AQIONode.cpp:131     ionode anchor 252100.890133, 1152772096 st, 1.000001 rs
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900ee7] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9122    ionode now    252100.854175, 1152770510 st, 1.000001 rs (26139.921); qrate = 1.000
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9123    queue anchor  1152689152 fr
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9125    queue now     252100.854175, 81358 st, 1.000001 rs (1.845)
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9127  <-AudioQueueObject::GetCurrentQueueTime success
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:86e974] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9137  GetCurrentQueueTime: AQSTL AudioQueueObject(0x10be81400)::GetCurrentQueueTime 
+ ionode now    252100.854175, 1152770510 st, 1.000001 rs (26139.921); qrate = 1.000 
+ queue anchor  1152689152 fr 
+ queue now     252100.854175, 81358 st, 1.000001 rs (1.845)
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:86e974] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-252100.854175, 81358 st; err=0
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900ee7] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900ee7] [com.apple.coreaudio:aqiotime]              AQIONode.cpp:131     ionode anchor 252100.890133, 1152772096 st, 1.000001 rs
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900ee7] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9122    ionode now    252100.854282, 1152770515 st, 1.000001 rs (26139.921); qrate = 1.000
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900ee7] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9123    queue anchor  1152689152 fr
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900ee7] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9125    queue now     252100.854282, 81363 st, 1.000001 rs (1.845)
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900ee7] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9127  <-AudioQueueObject::GetCurrentQueueTime success
+2026-11-19 08:19:38.144 Db EasyGasLocal[49900:900ee7] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-252100.854282, 81363 st; err=0
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQ >>>> subaq_performStartupSync: [0x10bddc000:0x10bd7b800] RP/HM.01 AudioQueueGetCurrentTime -> timeStamp { mFlags 0x7, mSampleTime 81363 (1.845 seconds), faq->srcASBD->mSampleRate 44100, mHostTime 6050420502765 (252100.854 seconds) }
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQ >>>> subaq_performStartupSync: [0x10bddc000:0x10bd7b800] RP/HM.01 FigAudioQueueTimingShimGetCurrentTime -> timeStamp { mFlags 0x7, mSampleTime 81363 (1.845 seconds), faq->srcASBD->mSampleRate 44100, mHostTime 6050420502765 (252100.854 seconds) }
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQ >>>> subaq_getAudioQueueLatencyFigTime: [0x10bddc000:0x10bd7b800] RP/HM.01 Returning audio device latency as 0.016 sec
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQ >>>> faqTimelineWrangler_getMediaTimeInStartupSync: [0x10bddc000] RP/HM.01 TimelineWrangler 0x10bddc1a0: deviceLatencyAtPlayRateSpeed: 0.016, sampleTimeWithLatency: 1.829, SinceQueueStart: -0.075, WithPauseOffset: -0.075, SinceTrackStart: 1.829
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQ >>>> subaq_performStartupSync: [0x10bddc000:0x10bd7b800] RP/HM.01 calling startedCallback with (AQ time 1.845) media time -0.075 / host time 252100.854
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseAtAnchorAudioTimeStamp: (0x104f95f80 RP/HM.01) mediaTime = -0.075, hostTime = 252100.854, rate = 1.00 at lastStartedMediaTime = 0.000, currentHostTime = 252100.855
+2026-11-19 08:19:38.144 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseCommon: (0x104f95f80 RP/HM.01) adjusting: now mediaTime = 0.000, hostTime = 252100.929, rate = 1.00 at currentMediaTime = 0.000, currentHostTime = 252100.855
+2026-11-19 08:19:38.145 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseCommon: (0x104f95f80 RP/HM.01) converted host time 252100.929 to source time 252100.929 (host clock 0x1098c65a0, source 0x10bf37180)
+2026-11-19 08:19:38.145 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_startTimebaseCommon: (0x104f95f80 RP/HM.01) calling CMTimebaseSetRateAndAnchorTime for timebase 0x109be5f80 with rate 1.00, media time 0.000, source time 252100.929
+2026-11-19 08:19:38.145 Df EasyGasLocal[49900:900ee7] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_timebaseRateChangedCallback: (0x104f95f80 RP/HM.01) timebase 0x109be5f80 effective rate changed, new rate 1.000, current time -0.075, current host time 252100.855 (ignoring because this faqrp is timebase starter)
+2026-11-19 08:19:38.145 E  EasyGasLocal[49900:900edf] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> signalled err=-12864 at <>:10127
+2026-11-19 08:19:38.145 Df EasyGasLocal[49900:900ede] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBoss_timebaseRateChangedDeferredWork: <0x10bd7bb80|I/OKY.01> Timebase rate changed to non-zero @-0.075s. Will reach preroll time 0.000s in 0.075s
+2026-11-19 08:19:38.154 Df EasyGasLocal[49900:86e914] [com.apple.coreaudio:default] AQSTL aq(0x10be81400) start time resolved to: 1152689152 ioTS st: 1152772608 ht: 252100.900800
+2026-11-19 08:19:38.154 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9851  ProcessingNodeDeliverPendingParameters: aq@0x10be81400 Processing Node deliver pending parameters: targetSampleTime: 1152689152 mNextIOSampleTime: 1152773120 Anchor: 1152689152 offset: 0
+2026-11-19 08:19:38.645 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] << FigPlayMonitor >> fpm_likelyToKeepUpUsingDynamicAlgorithm: [0x10bec2830] bandwidth: 0 kbps; smoothedBandwidth: 0 kbps; bwInflationFactor: 1.00; (movieDuration - durToPlayThrough): 0.43; durationAhead: 0.42; timeToLikelyToKeepUp: 0.00
+2026-11-19 08:19:39.008 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:AQBufAlloc] dealloc #1002 0x11b604030 74976
+2026-11-19 08:19:39.008 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:AQBufAlloc] slab map: tearing down
+2026-11-19 08:19:39.008 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:AQBufAlloc]   0x11b604000 : id 3  size 10485760
+2026-11-19 08:19:39.008 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:AQBufAlloc] slab map: makeXPCBoxForSlabs
+2026-11-19 08:19:39.008 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:AQBufAlloc] unmapping slabID 3
+2026-11-19 08:19:39.008 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:AQBufAlloc] Server slab map for client 49900:
+2026-11-19 08:19:39.070 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< Boss >>>> figPlaybackBossReachedEndWithContext: <0x10bd7bb80|I/OKY.01> Triggering stopAtEnd at 0.850
+2026-11-19 08:19:39.070 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForTime: <0x10bd7bb80|I/OKY.01> called, endTime = nan
+2026-11-19 08:19:39.070 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleAdvanceForOverlappedPlaybackCallbackForTime: <0x10bd7bb80|I/OKY.01> called, advanceTime = nan
+2026-11-19 08:19:39.070 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< FAQRP >>>> figAudioQueueRenderPipelineSetRateAndAnchorTime: (0x104f95f80 RP/HM.01) timebase 0x109be5f80, set to timebaseRate 0.00, pipelineRate 1.00, itemTime 0.850, hostClockTime nan (nownan)
+2026-11-19 08:19:39.070 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_stopTimebaseAndAudioQueue: (0x104f95f80 RP/HM.01) stopping timebase 0x109be5f80 at 0.850
+2026-11-19 08:19:39.070 E  EasyGasLocal[49900:900edf] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> signalled err=-12864 at <>:10127
+2026-11-19 08:19:39.070 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< FAQRP >>>> faqrp_timebaseRateChangedCallback: (0x104f95f80 RP/HM.01) timebase 0x109be5f80 effective rate changed, new rate 0.000, current time 0.850, current host time 252101.780 (ignoring because this faqrp is timebase starter)
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqiotime]              AQIONode.cpp:131     ionode anchor 252101.796801, 1152812544 st, 1.000001 rs
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9122    ionode now    252101.780034, 1152811805 st, 1.000001 rs (26140.857); qrate = 1.000
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9123    queue anchor  1152689152 fr
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9125    queue now     252101.780034, 122653 st, 1.000001 rs (2.781)
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9127  <-AudioQueueObject::GetCurrentQueueTime success
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-252101.780034, 122653 st; err=0
+2026-11-19 08:19:39.070 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< FAQ >>>> FigAudioQueuePause: [0x10bddc000:0x10bd7b800] RP/HM.01 calling FigAudioQueueTimingShimPause() at AQ time: 2.781
+2026-11-19 08:19:39.070 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< FAQ TIMING SHIM >>>> FigAudioQueueTimingShimPause: [0x10be7ad00] Calling AudioQueuePause(0xc2ec002)
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:482   AudioQueuePause: ->0xc2ec003
+2026-11-19 08:19:39.070 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9192  BeginPause: aq@0x10be81400: beingInterrupted 0
+2026-11-19 08:19:39.096 Df EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqme]            AQMEIO_HAL.cpp:2857  FetchAndLogFrameSize GetCurrentIOBufferFrameSize deviceID=131, frame size is 512
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9216  BeginPause: mNextIOSampleTime 1152815104, mAnchorIOSampleTime 1152689152, mPauseSampleTime 125952
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:494   AudioQueuePause: <- pauseSampleTime 125952
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:793   AudioQueueGetCurrentTime: ->0xc2ec003
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9071  ->AudioQueueObject::GetCurrentQueueTime 0x10be81400
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqiotime]      AudioQueueObject.cpp:9104  <-AudioQueueObject::GetCurrentQueueTime - paused; result is mPauseSampleTime(125952)
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:817   AudioQueueGetCurrentTime: <-invalid ht, 125952 st; err=0
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:5177  SetProperty: AQ Time-stretcher: ionc@0x10bed0900 TimePitchProperty set qtpb: 1
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:4523  set 21; err 0
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> itemfig_ReachedEndGuts: [0x104f33700|P/HM] <0x109bcd400|I/OKY.01> stopping (because ActionAtEnd == Stop)
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_setRateForReason: [0x104f33700] P/HM called, rate = 0.000, current playback state Playing (rate = 1.000), reason: StopAtEnd
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_getNextPlaybackState: [0x104f33700] P/HM new playback state: Paused (Player) (playerRate: 0.000), NEED TO update boss rate (0.000), previous state: Playing, change reason: StopAtEnd, playthrough prediction: likely, options: None
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_setBossRateWithFade: [0x104f33700] P/HM called, new rate = 0.000, previous rate = 1.000, fadeDuration = nan, itemTime nan, hostClockTime nan (now 252101.814 + nan)
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_applySoftwareVolume: [0x104f33700] P/HM rp: [FigRenderPipeline 0x104f95f80], propertyName = SoftwareVolume1, targetVolume = 0.00, rampDuration = 0.00, synchronous = YES
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 4(VolumeRampTime):0.000
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:574   AudioQueueSetParameter: ->0xc2ec003 1(Volume):0.000
+2026-11-19 08:19:39.104 Db EasyGasLocal[49900:900ee8] [com.apple.coreaudio:AQClient]         AQ_API_V2Impl.cpp:583   AudioQueueSetParameter: <-(0)
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< Boss >>>> FigPlaybackBossSetRateAndAnchorTime: <0x10bd7bb80|I/OKY.01> called, newRate = 0.000, itemTime = nan, hostClockTime = nan = now (252101.814) + nan
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleReachedEndCallbackForTime: <0x10bd7bb80|I/OKY.01> called, endTime = nan
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] <<<< Boss >>>> bossScheduleAdvanceForOverlappedPlaybackCallbackForTime: <0x10bd7bb80|I/OKY.01> called, advanceTime = nan
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:player] <<<< FigFilePlayer >>>> playerfig_getNextPlaybackState: [0x104f33700] P/HM new playback state: Paused (Player) (playerRate: 0.000), WILL NOT update boss rate (nan), previous state: Paused, change reason: CurrentItemChanged, playthrough prediction: likely, options: None
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:86e8bf] [com.apple.coremedia:] <<<< AVPlayer >>>> avplayer_fpNotificationCallback_block_invoke_9: P/HM setting timeControlStatus=2, reasonForWaitingToPlay=(null) triggeredByNotificationName=RateDidChange
+2026-11-19 08:19:39.104 Df EasyGasLocal[49900:86e8bf] [com.apple.coremedia:] <<<< AVPlayer >>>> avplayer_fpNotificationCallback_block_invoke_9: P/HM setting timeControlStatus=0, reasonForWaitingToPlay=(null) triggeredByNotificationName=PlaybackStateDidChange
+2026-11-19 08:19:39.209 Df EasyGasLocal[49900:900eab] [com.apple.coreaudio:ddagg]        AggregateDevice.mm:1008  PrimarySessionActiveWithInputEnabled 0 -> 0
+2026-11-19 08:19:39.561 Df EasyGasLocal[49900:900ee8] [com.apple.coremedia:] << FigPlayMonitor >> fpm_likelyToKeepUpUsingDynamicAlgorithm: [0x10bec2830] bandwidth: 0 kbps; smoothedBandwidth: 0 kbps; bwInflationFactor: 1.00; (movieDuration - durToPlayThrough): 0.85; durationAhead: 0.00; timeToLikelyToKeepUp: 0.00
+2026-11-19 08:19:44.604 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:AQ]      AudioQueueObject.cpp:9266  StopFromPause: aq@0x10be81400
+2026-11-19 08:19:44.604 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:AQ]        AudioQueueObject.h:2690  StopRunning: aq@0x10be81400: ionode 0x10bed0900
+2026-11-19 08:19:44.604 Db EasyGasLocal[49900:900eab] [com.apple.coreaudio:aqme]  MEDeviceStreamClient.cpp:424   -> 0x10bed0958 <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play>
+2026-11-19 08:19:44.605 Df EasyGasLocal[49900:900eab] [com.apple.coreaudio:aqme]            AQMEIO_HAL.cpp:2857  FetchAndLogFrameSize GetCurrentIOBufferFrameSize deviceID=131, frame size is 512
+2026-11-19 08:19:44.608 Df EasyGasLocal[49900:900eab] [com.apple.coreaudio:aqme]        MEMixerChannel.cpp:3273  1-channel audio content is NOT eligible for spatialization
+2026-11-19 08:19:44.608 Df EasyGasLocal[49900:900eab] [com.apple.coreaudio:aqme]  MEDeviceStreamClient.cpp:459   AQME Default-InputOutput: client stopping: <AudioQueueObject@0x10be81400; Unknown FigPlayer; [49900]; play>; running count now 1
+

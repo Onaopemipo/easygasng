@@ -1,0 +1,17 @@
+{
+  "device": "EasyGas First Sign-In QA",
+  "authorization": "Existing explicit QA-only command-line Silent Mode approval",
+  "before": {
+    "savedSBRingerMuted": "0",
+    "liveRingerState": "0",
+    "audibleAcceptance": "User said No after previous replay"
+  },
+  "action": "notifyutil -s com.apple.springboard.ringerstate 1 -p com.apple.springboard.ringerstate",
+  "after": {
+    "liveRingerState": "com.apple.springboard.ringerstate 1",
+    "savedSBRingerMuted": "0"
+  },
+  "acceptance": "Actual CUA Test assignment alert popup observed; user acoustic confirmation pending. Setting a notify state is not proof that the effective audio route became audible.",
+  "scope": "No application/private API added; simulator diagnostic only. No new build/install/source/deployment/payment change.",
+  "runtimeReference": "https://gist.github.com/niw/a739e43d1f8ea4ecfa86ab171719a4d3"
+}

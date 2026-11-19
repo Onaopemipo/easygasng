@@ -6,8 +6,10 @@ import { FinancialDocumentPreview } from "./financial-document";
 import { documentMoney } from "../../../packages/business-rules/src/financial-document";
 export function DocumentLibrary({
   initialType = "all",
+  compact = false,
 }: {
   initialType?: "all" | "invoice" | "receipt";
+  compact?: boolean;
 }) {
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
@@ -52,16 +54,83 @@ export function DocumentLibrary({
       generation.current++;
     };
   }, [filters, revision]);
+  const extraFilters = (
+    <>
+      <label>
+        Document status
+        <select
+          aria-label="Document status"
+          value={filters.status}
+          onChange={(e) =>
+            setFilters((v) => ({ ...v, status: e.target.value, page: 1 }))
+          }
+        >
+          {[
+            "all",
+            "Unpaid invoice",
+            "Partially paid invoice",
+            "Paid invoice",
+            "Voided invoice",
+            "Reconciliation required",
+            "Payment Verified",
+          ].map((s) => (
+            <option key={s} value={s}>
+              {s === "all" ? "All statuses" : s}
+            </option>
+          ))}
+        </select>
+      </label>
+      {data?.branches?.length > 1 && (
+        <label>
+          Branch
+          <select
+            aria-label="Document branch"
+            value={filters.branchId}
+            onChange={(e) =>
+              setFilters((v) => ({ ...v, branchId: e.target.value, page: 1 }))
+            }
+          >
+            <option value="">All authorised branches</option>
+            {data.branches.map((b: any) => (
+              <option key={b.id} value={b.id}>
+                {b.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
+      <label>
+        From (Lagos)
+        <input
+          type="date"
+          value={filters.from}
+          onChange={(e) =>
+            setFilters((v) => ({ ...v, from: e.target.value, page: 1 }))
+          }
+        />
+      </label>
+      <label>
+        To (Lagos)
+        <input
+          type="date"
+          value={filters.to}
+          onChange={(e) =>
+            setFilters((v) => ({ ...v, to: e.target.value, page: 1 }))
+          }
+        />
+      </label>
+    </>
+  );
   return (
     <section
-      className="surface stack document-library"
+      className={`surface stack document-library ${compact ? "co-documents" : ""}`}
       aria-label="Invoices and payment receipts"
     >
-      <h2>Invoices & Payment Receipts</h2>
+      <h2>{compact ? "Invoices & receipts" : "Invoices & Payment Receipts"}</h2>
       <p>
-        EasyGas invoices show what you owe. EasyGas receipts confirm verified
-        payments. Test receipts are clearly labelled. Manual credits and POS
-        records remain in their existing histories.
+        {compact
+          ? "View and download your issued invoices and verified payment receipts."
+          : "EasyGas invoices show what you owe. EasyGas receipts confirm verified payments. Test receipts are clearly labelled. Manual credits and POS records remain in their existing histories."}
       </p>
       <form
         className="document-library-filters"
@@ -97,69 +166,22 @@ export function DocumentLibrary({
             <option value="receipt">Payment receipts</option>
           </select>
         </label>
-        <label>
-          Document status
-          <select
-            aria-label="Document status"
-            value={filters.status}
-            onChange={(e) =>
-              setFilters((v) => ({ ...v, status: e.target.value, page: 1 }))
-            }
-          >
-            {[
-              "all",
-              "Unpaid invoice",
-              "Partially paid invoice",
-              "Paid invoice",
-              "Voided invoice",
-              "Reconciliation required",
-              "Payment Verified",
-            ].map((s) => (
-              <option key={s} value={s}>
-                {s === "all" ? "All statuses" : s}
-              </option>
-            ))}
-          </select>
-        </label>
-        {data?.branches?.length > 1 && (
-          <label>
-            Branch
-            <select
-              aria-label="Document branch"
-              value={filters.branchId}
-              onChange={(e) =>
-                setFilters((v) => ({ ...v, branchId: e.target.value, page: 1 }))
-              }
-            >
-              <option value="">All authorised branches</option>
-              {data.branches.map((b: any) => (
-                <option key={b.id} value={b.id}>
-                  {b.name}
-                </option>
-              ))}
-            </select>
-          </label>
+        {compact ? (
+          <details className="co-document-filters">
+            <summary>
+              More filters
+              {filters.status !== "all" ||
+              filters.from ||
+              filters.to ||
+              filters.branchId
+                ? " · Applied"
+                : ""}
+            </summary>
+            <div>{extraFilters}</div>
+          </details>
+        ) : (
+          extraFilters
         )}
-        <label>
-          From (Lagos)
-          <input
-            type="date"
-            value={filters.from}
-            onChange={(e) =>
-              setFilters((v) => ({ ...v, from: e.target.value, page: 1 }))
-            }
-          />
-        </label>
-        <label>
-          To (Lagos)
-          <input
-            type="date"
-            value={filters.to}
-            onChange={(e) =>
-              setFilters((v) => ({ ...v, to: e.target.value, page: 1 }))
-            }
-          />
-        </label>
         <button className="button secondary" disabled={busy}>
           Search
         </button>
@@ -184,30 +206,38 @@ export function DocumentLibrary({
                   <tr>
                     <th scope="col">Document</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Amount</th>
+                    <th scope="col">
+                      {compact ? "Balance / amount paid" : "Amount"}
+                    </th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.rows.map((r: any) => (
                     <tr key={r.id}>
-                      <td>
+                      <td data-label="Document">
                         {r.model.title}
                         <br />
                         {r.number}
                         <small>{r.model.issuedAt}</small>
                       </td>
-                      <td>
+                      <td data-label="Status">
                         {r.model.status}
                         {r.model.sandbox && <strong> · SANDBOX</strong>}
                       </td>
-                      <td>
+                      <td
+                        data-label={
+                          compact && r.model.type === "invoice"
+                            ? "Balance due"
+                            : "Amount paid"
+                        }
+                      >
                         {documentMoney(
                           r.model.totals.find((t: any) => t.emphasis)
                             ?.amountKobo ?? null,
                         )}
                       </td>
-                      <td>
+                      <td data-label="Actions">
                         <button
                           className="button secondary"
                           onClick={() => setSelected(r)}

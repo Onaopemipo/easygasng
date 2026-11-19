@@ -106,7 +106,7 @@ export default function CustomerDashboard({ user }: { user: any }) {
           Order gas, book services, manage your account and stay on track with
           your refills.
         </p>
-        <Link className="text-link" href="/account-settings#testimonials">
+        <Link className="text-link" href="/account-settings?section=reviews#testimonials">
           Share your EasyGas experience <ArrowRight size={16} />
         </Link>
       </div>
@@ -201,7 +201,7 @@ export default function CustomerDashboard({ user }: { user: any }) {
           {appointment.data ? (
             <p>
               <strong>{appointment.data.name}</strong> ·{" "}
-              {date(appointment.data.starts_at)} ·{" "}
+              {appointment.data.schedule_pending ? "Preferred: " : ""}{date(appointment.data.starts_at)} ·{" "}
               {appointment.data.status.replaceAll("_", " ")}
             </p>
           ) : (

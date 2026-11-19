@@ -1,0 +1,14 @@
+Local browser acceptance — 19 November 2026
+Environment: http://127.0.0.1:3112, isolated temporary service fixture; no hosted writes, payment or real messages.
+All technicians were marked unavailable before acceptance. Five synthetic approved services, saved Home address, nine seeded request records (one cancelled).
+PASS desktop 1280x720 and 1440x900: compact heading, booking status/search, six-row pagination, service selector and catalogue.
+PASS customer creates Cooker Installation request via chooser, despite every technician being unavailable. Preferred 26 November 2026 10:00 Africa/Lagos, approved price NGN15,000, saved address, equipment and concerns reviewed. Success reference EGS-C1B206AE; Awaiting confirmation, no provider/time reservation and no payment collected.
+PASS View my booking opens owned detail dialog; full contact details, optional photos and lifecycle controls appear on demand. No collectible invoice/payment UI for unassigned request.
+PASS change preferred time to 27 November 2026 11:00 Lagos; request remains Awaiting confirmation with no assigned technician.
+PASS review -> Edit details retains entered fields. Keyboard focus enters review/success actions and returns to preferred date on Edit details.
+PASS mobile 390x844: service detail, request form/review, saved-address prefill, compact list and dark mode; review fits viewport. Unsaved dialog close offers Keep editing/Discard. Discarded second draft, did not create another booking.
+PASS empty Awaiting action view and unmatched search with Clear search; pagination/search show canonical counts.
+PASS tablet768x1024, desktop1440x900: no horizontal overflow. DOM page widths753 and1425 respectively; mobile375 at viewport390 (vertical scrollbar excluded).
+PASS /services catalogue and /services/cooker-installation: direct booking entry, actual service price/duration, collapsed useful content, no empty placeholder art, zero callout, empty warranty or technician-availability blocker. Bundle offers retained in a disclosure.
+PASS light/dark presentation and readable pending badges. Browser viewport override reset; local booking tab retained as preview.
+Limits: bounded browser inspection, not formal screen-reader/physical-device acceptance. No outsourced provider integration or hosted/native execution claimed.

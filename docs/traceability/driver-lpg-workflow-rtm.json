@@ -1,0 +1,328 @@
+{
+  "phase": "Driver vehicle-dispensed LPG workflow repair \u2014 19 November 2026",
+  "productionDecision": "Existing commercial production NO-GO, retain-all, import hold and unrelated work preserved. No invented physical measurements or hosted completion claim.",
+  "requirements": [
+    {
+      "id": "DLPG-01",
+      "requirement": "Complete vehicle load issue, driver acknowledgement, metered dispensing and handover through the web with canonical stock and payment controls",
+      "priority": "P0",
+      "scope": "Bounded local web repair for vehicle-dispensed LPG at customer address; hosted named-order execution and physical/native acceptance remain separate",
+      "uiReference": "User screenshot EG-2026-7BB8640B completion blocker",
+      "route": "/admin/deliveries; /admin/orders; /admin/operations; /admin/settings",
+      "dataSource": "Canonical driver_trips, bulk_lpg_loads/allocations/events/meters, order_gas_lines, cylinders/inspections, delivery_attempts, verified payments and stock ledgers",
+      "securityControl": "Existing role/branch/ownership/recent verification, independent qualifications, meter calibration, invoice/payment and immutable evidence preserved",
+      "implementationFiles": [
+        "apps/web/components/driver-lpg-controls.tsx",
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/lpg-load-issue.tsx",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/bulk-lpg-reservation.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts"
+      ],
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/trip-recovery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DLPG-01",
+        "DLPG-04",
+        "DLPG-UI01",
+        "DWT-PROOFNEG"
+      ],
+      "negativeTests": [
+        "DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit",
+        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+      ],
+      "evidence": [
+        "docs/driver-lpg-workflow/evidence/tests.txt",
+        "docs/driver-lpg-workflow/evidence/postgres-tests.txt",
+        "docs/driver-lpg-workflow/evidence/web-build.txt",
+        "docs/driver-lpg-workflow/evidence/typecheck.txt",
+        "docs/driver-lpg-workflow/evidence/browser-observations.txt",
+        "docs/driver-lpg-workflow/evidence/driver-delivered.jpg",
+        "docs/driver-lpg-workflow/evidence/mobile-metered-dispensing.jpg",
+        "docs/driver-lpg-workflow/evidence/dispensed-proof-ready.jpg"
+      ],
+      "acceptanceGate": "DLPG-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Canonical API journey from customer wallet checkout and generated cylinder intake through qualified inspection, assignment/load/acknowledgement, actual pickup/departure/arrival, full dispensing/proof/code handover passes under production-mode field/tracking/retention configuration. Historical missing-load arrival also completed through the local browser; one stock debit and return/trip closure verified.",
+      "testResult": "PASS:51 distinct focused/API/HTTP/regression checks,1 independent PostgreSQL concurrency test, web build/typecheck and isolated browser acceptance",
+      "outstandingWork": "No remaining bounded local implementation action. Hosted release/approved operational flags and independently valid qualifications/meters, actual EG-2026-7BB8640B recovery, physical measurement acceptance, installed-native and formal assistive-technology acceptance remain unverified. An existing trip with another LPG load must reconcile that custody; recovery never duplicates a trip load or invents prior dispensing."
+    },
+    {
+      "id": "DLPG-02",
+      "requirement": "Recover a picked-up or arrived order missing LPG allocation through explicit measured and audited custody intake, without rewinding or inventing dispensing",
+      "priority": "P0",
+      "scope": "Bounded local web repair for vehicle-dispensed LPG at customer address; hosted named-order execution and physical/native acceptance remain separate",
+      "uiReference": "User screenshot EG-2026-7BB8640B completion blocker",
+      "route": "/admin/deliveries; /admin/orders; /admin/operations; /admin/settings",
+      "dataSource": "Canonical driver_trips, bulk_lpg_loads/allocations/events/meters, order_gas_lines, cylinders/inspections, delivery_attempts, verified payments and stock ledgers",
+      "securityControl": "Existing role/branch/ownership/recent verification, independent qualifications, meter calibration, invoice/payment and immutable evidence preserved",
+      "implementationFiles": [
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/components/lpg-load-issue.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/business-operation.ts"
+      ],
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/trip-recovery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DLPG-02",
+        "BULK-PG01"
+      ],
+      "negativeTests": [
+        "DLPG-02: arrived missing-custody recovery is fresh, scoped, versioned, independently qualified and replay-safe without status rewind or dispensing"
+      ],
+      "evidence": [
+        "docs/driver-lpg-workflow/evidence/tests.txt",
+        "docs/driver-lpg-workflow/evidence/postgres-tests.txt",
+        "docs/driver-lpg-workflow/evidence/web-build.txt",
+        "docs/driver-lpg-workflow/evidence/typecheck.txt",
+        "docs/driver-lpg-workflow/evidence/browser-observations.txt",
+        "docs/driver-lpg-workflow/evidence/recovery-form.jpg",
+        "docs/driver-lpg-workflow/evidence/recovery-issued.jpg",
+        "docs/driver-lpg-workflow/evidence/driver-missing-custody.jpg"
+      ],
+      "acceptanceGate": "DLPG-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Explicit bulk.load.recover accepts one current picked-up/arrived order, fresh observed current custody and no prior dispensing attestation, independently qualified/recently verified loader, matching active driver trip/current meter/capacity. It appends immutable recovery evidence and leaves arrival, payment and dispensing unchanged. Concurrent replay produces one load/reservation/event.",
+      "testResult": "PASS:51 distinct focused/API/HTTP/regression checks,1 independent PostgreSQL concurrency test, web build/typecheck and isolated browser acceptance",
+      "outstandingWork": "No remaining bounded local implementation action. Hosted release/approved operational flags and independently valid qualifications/meters, actual EG-2026-7BB8640B recovery, physical measurement acceptance, installed-native and formal assistive-technology acceptance remain unverified. An existing trip with another LPG load must reconcile that custody; recovery never duplicates a trip load or invents prior dispensing."
+    },
+    {
+      "id": "DLPG-03",
+      "requirement": "Select the actual cylinder by serial with an owned/allocated branch-scoped record and qualified inspection rather than typing internal IDs",
+      "priority": "P0",
+      "scope": "Bounded local web repair for vehicle-dispensed LPG at customer address; hosted named-order execution and physical/native acceptance remain separate",
+      "uiReference": "User screenshot EG-2026-7BB8640B completion blocker",
+      "route": "/admin/deliveries; /admin/orders; /admin/operations; /admin/settings",
+      "dataSource": "Canonical driver_trips, bulk_lpg_loads/allocations/events/meters, order_gas_lines, cylinders/inspections, delivery_attempts, verified payments and stock ledgers",
+      "securityControl": "Existing role/branch/ownership/recent verification, independent qualifications, meter calibration, invoice/payment and immutable evidence preserved",
+      "implementationFiles": [
+        "apps/web/components/order-cylinder-inspection.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/gas-delivery-admin.tsx",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/auth.ts"
+      ],
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/trip-recovery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DLPG-03",
+        "DLPG-04",
+        "DLPG-HTTP01",
+        "DLPG-HTTP02"
+      ],
+      "negativeTests": [
+        "DLPG-03: order cylinder discovery links marked serial to generated ID, scopes ownership and recovers registration without duplicates",
+        "DLPG-HTTP01: actual cylinder discovery read handler permits scoped staff GET and rejects public, customer and POST access",
+        "DLPG-HTTP02: actual registration POST preserves reauthentication and canonical operation replay without duplicating cylinder IDs"
+      ],
+      "evidence": [
+        "docs/driver-lpg-workflow/evidence/tests.txt",
+        "docs/driver-lpg-workflow/evidence/postgres-tests.txt",
+        "docs/driver-lpg-workflow/evidence/web-build.txt",
+        "docs/driver-lpg-workflow/evidence/typecheck.txt",
+        "docs/driver-lpg-workflow/evidence/browser-observations.txt",
+        "docs/driver-lpg-workflow/evidence/cylinder-serial-selector.jpg",
+        "docs/driver-lpg-workflow/evidence/mobile-cylinder-selector.jpg"
+      ],
+      "acceptanceGate": "DLPG-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Order-scoped GET discovery and shared serial-based registration/inspection/filling forms replace raw IDs in Orders and Gas settings. Registration generates a UUID, quarantines the cylinder and auto-selects it. Qualified inspection, reauth, customer/branch/capacity/custody/allowance checks remain. Actual HTTP and browser journeys pass.",
+      "testResult": "PASS:51 distinct focused/API/HTTP/regression checks,1 independent PostgreSQL concurrency test, web build/typecheck and isolated browser acceptance",
+      "outstandingWork": "No remaining bounded local implementation action. Hosted release/approved operational flags and independently valid qualifications/meters, actual EG-2026-7BB8640B recovery, physical measurement acceptance, installed-native and formal assistive-technology acceptance remain unverified. An existing trip with another LPG load must reconcile that custody; recovery never duplicates a trip load or invents prior dispensing."
+    },
+    {
+      "id": "DLPG-04",
+      "requirement": "Show actionable order and trip LPG readiness, versioned retry-safe controls and return reconciliation with responsive driver views",
+      "priority": "P1",
+      "scope": "Bounded local web repair for vehicle-dispensed LPG at customer address; hosted named-order execution and physical/native acceptance remain separate",
+      "uiReference": "User screenshot EG-2026-7BB8640B completion blocker",
+      "route": "/admin/deliveries; /admin/orders; /admin/operations; /admin/settings",
+      "dataSource": "Canonical driver_trips, bulk_lpg_loads/allocations/events/meters, order_gas_lines, cylinders/inspections, delivery_attempts, verified payments and stock ledgers",
+      "securityControl": "Existing role/branch/ownership/recent verification, independent qualifications, meter calibration, invoice/payment and immutable evidence preserved",
+      "implementationFiles": [
+        "apps/web/components/driver-lpg-controls.tsx",
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/lpg-load-issue.tsx",
+        "apps/web/lib/bulk-lpg.ts"
+      ],
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/bulk-lpg.test.ts",
+        "tests/bulk-recovery.test.ts",
+        "tests/bulk-meter-lifecycle.test.ts",
+        "tests/bulk-lpg-postgres.test.ts",
+        "tests/bulk-lpg-http.test.ts",
+        "tests/web-driver-trips.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/shared-approval-gas.test.ts",
+        "tests/trip-recovery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/driver-experience-redesign.test.ts"
+      ],
+      "testIds": [
+        "DLPG-01",
+        "DLPG-UI01",
+        "DLPG-04"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-lpg-workflow/evidence/tests.txt",
+        "docs/driver-lpg-workflow/evidence/postgres-tests.txt",
+        "docs/driver-lpg-workflow/evidence/web-build.txt",
+        "docs/driver-lpg-workflow/evidence/typecheck.txt",
+        "docs/driver-lpg-workflow/evidence/browser-observations.txt",
+        "docs/driver-lpg-workflow/evidence/return-reconciled.jpg",
+        "docs/driver-lpg-workflow/evidence/mobile-metered-dispensing.jpg"
+      ],
+      "acceptanceGate": "DLPG-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Driver Home/order context reads authoritative scoped custody, shows serials and exact meter delta, blocks premature pickup/handover, exposes return declaration; Inventory Operations Centre exposes existing authorised loading/receipt, with refresh and preserved independent reconciliation. Existing movement/help, payment, photo, code, retry, branch and source-preservation regressions pass.",
+      "testResult": "PASS:51 distinct focused/API/HTTP/regression checks,1 independent PostgreSQL concurrency test, web build/typecheck and isolated browser acceptance",
+      "outstandingWork": "No remaining bounded local implementation action. Hosted release/approved operational flags and independently valid qualifications/meters, actual EG-2026-7BB8640B recovery, physical measurement acceptance, installed-native and formal assistive-technology acceptance remain unverified. An existing trip with another LPG load must reconcile that custody; recovery never duplicates a trip load or invents prior dispensing."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DLPG-G01",
+      "status": "PASS",
+      "criteria": "Complete vehicle load issue, driver acknowledgement, metered dispensing and handover through the web with canonical stock and payment controls",
+      "evidence": [
+        "docs/driver-lpg-workflow/evidence/tests.txt",
+        "docs/driver-lpg-workflow/evidence/postgres-tests.txt",
+        "docs/driver-lpg-workflow/evidence/web-build.txt",
+        "docs/driver-lpg-workflow/evidence/typecheck.txt",
+        "docs/driver-lpg-workflow/evidence/browser-observations.txt",
+        "docs/driver-lpg-workflow/evidence/driver-delivered.jpg",
+        "docs/driver-lpg-workflow/evidence/mobile-metered-dispensing.jpg",
+        "docs/driver-lpg-workflow/evidence/dispensed-proof-ready.jpg"
+      ]
+    },
+    {
+      "id": "DLPG-G02",
+      "status": "PASS",
+      "criteria": "Recover a picked-up or arrived order missing LPG allocation through explicit measured and audited custody intake, without rewinding or inventing dispensing",
+      "evidence": [
+        "docs/driver-lpg-workflow/evidence/tests.txt",
+        "docs/driver-lpg-workflow/evidence/postgres-tests.txt",
+        "docs/driver-lpg-workflow/evidence/web-build.txt",
+        "docs/driver-lpg-workflow/evidence/typecheck.txt",
+        "docs/driver-lpg-workflow/evidence/browser-observations.txt",
+        "docs/driver-lpg-workflow/evidence/recovery-form.jpg",
+        "docs/driver-lpg-workflow/evidence/recovery-issued.jpg",
+        "docs/driver-lpg-workflow/evidence/driver-missing-custody.jpg"
+      ]
+    },
+    {
+      "id": "DLPG-G03",
+      "status": "PASS",
+      "criteria": "Select the actual cylinder by serial with an owned/allocated branch-scoped record and qualified inspection rather than typing internal IDs",
+      "evidence": [
+        "docs/driver-lpg-workflow/evidence/tests.txt",
+        "docs/driver-lpg-workflow/evidence/postgres-tests.txt",
+        "docs/driver-lpg-workflow/evidence/web-build.txt",
+        "docs/driver-lpg-workflow/evidence/typecheck.txt",
+        "docs/driver-lpg-workflow/evidence/browser-observations.txt",
+        "docs/driver-lpg-workflow/evidence/cylinder-serial-selector.jpg",
+        "docs/driver-lpg-workflow/evidence/mobile-cylinder-selector.jpg"
+      ]
+    },
+    {
+      "id": "DLPG-G04",
+      "status": "PASS",
+      "criteria": "Show actionable order and trip LPG readiness, versioned retry-safe controls and return reconciliation with responsive driver views",
+      "evidence": [
+        "docs/driver-lpg-workflow/evidence/tests.txt",
+        "docs/driver-lpg-workflow/evidence/postgres-tests.txt",
+        "docs/driver-lpg-workflow/evidence/web-build.txt",
+        "docs/driver-lpg-workflow/evidence/typecheck.txt",
+        "docs/driver-lpg-workflow/evidence/browser-observations.txt",
+        "docs/driver-lpg-workflow/evidence/return-reconciled.jpg",
+        "docs/driver-lpg-workflow/evidence/mobile-metered-dispensing.jpg"
+      ]
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "scope": "User confirms gas is dispensed from vehicle at customer address. Repair web workflow and cylinder identification end to end; preserve historical DWT-05 DEFECTIVE/DWT-06 PARTIAL until current acceptance proves repair."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Completed local repair using existing058 custody schema; no new migration. Added explicit late missing-load intake, early pickup/departure guard, Inventory Operations Centre access and serial-based cylinder registration/inspection. Historical source baseline hashes retained with reviewed lineage for this user-approved change and preceding customer service redesign.",
+      "affectedRequirements": [
+        "DLPG-01",
+        "DLPG-02",
+        "DLPG-03",
+        "DLPG-04",
+        "DWT-05",
+        "DWT-06"
+      ],
+      "evidence": [
+        "docs/driver-lpg-workflow/reviewed-source-changes.json",
+        "docs/customer-service-bookings/reviewed-source-changes.json",
+        "docs/driver-lpg-workflow/evidence/tests.txt"
+      ]
+    }
+  ],
+  "coverage": {
+    "implementation": "4/4 bounded local requirements",
+    "verification": "4/4 bounded local requirements",
+    "critical": "3/3",
+    "routes": "3/4 browser-inspected routes; Settings uses the same built/tested component but whole-route browser acceptance was not repeated; retained in denominator",
+    "gates": "4/4 local gates",
+    "hosted": "Not deployed; named hosted order remains incomplete and prior DWT-05 DEFECTIVE/DWT-06 PARTIAL retained"
+  }
+}

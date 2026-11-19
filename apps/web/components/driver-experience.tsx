@@ -53,6 +53,7 @@ import { ActionForm } from "./workflows";
 import { api, Loading, Notice, Modal } from "./ui";
 import DriverTripControls from "./driver-trip-controls";
 import DriverDeliveryControls from "./driver-delivery-controls";
+import DriverLPGControls, {lpgReadiness} from "./driver-lpg-controls";
 import styles from "./driver-experience.module.css";
 
 const tabs = ["Home", "Orders", "History", "Profile"] as const;
@@ -65,6 +66,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
   const [data, setData] = useState<{
     snapshot: any;
     orders: any[];
+    bulk:any;
     confirmedAt: string;
   } | null>(null);
   const [ready, setReady] = useState(false);
@@ -108,12 +110,13 @@ export default function DriverExperience({ userId }: { userId: string }) {
     try {
       if (initialize)
         await api("driver.restrict", {}, { signal: controller.signal });
-      const [snapshot, orders] = await Promise.all([
+      const [snapshot, orders, bulk] = await Promise.all([
         api("driver.snapshot", undefined, { signal: controller.signal }),
         api("orders?active=1", undefined, { signal: controller.signal }),
+        api("bulk.summary",undefined,{signal:controller.signal}),
       ]);
       if (controller.signal.aborted) return;
-      setData({ snapshot, orders, confirmedAt: new Date().toISOString() });
+      setData({ snapshot, orders, bulk, confirmedAt: new Date().toISOString() });
       setStale(false);
       setConnectionError("");
       setReady(true);
@@ -634,6 +637,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
                   </small>
                 </div>
               )}
+              <DriverLPGControls bulk={data.bulk} disabled={busy || stale} write={write}/>
               <button
                 type="button"
                 className="button"
@@ -730,7 +734,9 @@ export default function DriverExperience({ userId }: { userId: string }) {
                         Ask dispatch to renew this assignment before responding.
                       </p>
                     )}
+                  <DriverLPGControls bulk={data.bulk} order={current} disabled={busy || stale} write={write}/>
                   <DriverDeliveryControls
+                    lpg={lpgReadiness(current,data.bulk)}
                     key={`${current.id}:${current.attempt?.id}`}
                     order={current}
                     decision={response(current.id)}

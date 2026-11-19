@@ -7,6 +7,7 @@ import {
   gasReportExcel,
   gasReportHtml,
 } from "../../../packages/business-rules/src/gas-report-export";
+import OrderCylinderInspection from "./order-cylinder-inspection";
 import { ActionForm } from "./workflows";
 export default function GasDeliveryAdmin({
   user,
@@ -112,66 +113,7 @@ export default function GasDeliveryAdmin({
                   {g.reference} · {Number(g.grams) / 1000} kg gas ·{" "}
                   {Number(g.capacity_grams) / 1000} kg cylinder
                 </p>
-                <ActionForm
-                  action="gas.cylinder.intake"
-                  title="Register a customer-owned cylinder intake"
-                  fields={[
-                    {
-                      name: "lineId",
-                      type: "hidden",
-                      label: "Gas line",
-                      value: g.id,
-                    },
-                    { name: "serial", label: "Verified manufacturer serial" },
-                    {
-                      name: "sizeKg",
-                      label: "Physical cylinder capacity (kg)",
-                      type: "number",
-                      step: "0.001",
-                      value: Number(g.capacity_grams) / 1000,
-                    },
-                    {
-                      name: "testDue",
-                      label: "Documented test due date",
-                      type: "date",
-                    },
-                    {
-                      name: "reason",
-                      label: "Verified physical intake and ownership evidence",
-                    },
-                  ]}
-                  onDone={() => setTick((t) => t + 1)}
-                />
-                <p>
-                  New customer intakes remain quarantined until a documented
-                  inspection is completed in Cylinders. Existing serials must
-                  use their current record and return-custody controls.
-                </p>
-                <ActionForm
-                  action="gas.inspection.record"
-                  title="Record physical cylinder filling eligibility"
-                  fields={[
-                    {
-                      name: "lineId",
-                      label: "Gas line",
-                      type: "hidden",
-                      value: g.id,
-                    },
-                    { name: "cylinderId", label: "Cylinder record ID" },
-                    {
-                      name: "allowableKg",
-                      label: "Verified additional fill allowance (kg)",
-                      type: "number",
-                      step: "0.001",
-                    },
-                    {
-                      name: "reason",
-                      label:
-                        "Physical intake, residual gas and inspection evidence",
-                    },
-                  ]}
-                  onDone={() => setTick((t) => t + 1)}
-                />
+                <OrderCylinderInspection line={g} onDone={()=>setTick(t=>t+1)}/>
               </div>
             ))}
           </section>

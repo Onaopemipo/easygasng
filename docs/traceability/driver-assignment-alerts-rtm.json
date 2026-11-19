@@ -91,13 +91,21 @@
         "docs/driver-assignment-alerts/evidence/ios-assignment-popup.png",
         "docs/driver-assignment-alerts/evidence/ios-assignment-acknowledged.png",
         "docs/driver-assignment-alerts/evidence/ios-chime-test-popup.png",
-        "docs/driver-assignment-alerts/evidence/build-artifacts.json"
+        "docs/driver-assignment-alerts/evidence/build-artifacts.json",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/observations.txt",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/simulator-restarted.png",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/post-devicehub-restart-alert.png",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/silent-mode-diagnosis.json",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/approved-command-line-unmute.json",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/live-ringer-state.json",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/live-ringer-replay.png",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/audible-confirmation.json"
       ],
       "acceptanceGate": "DAPP-G02",
       "status": "PARTIAL",
-      "reason": "Actual iOS popup and native banner verified. Bundled foreground chime implemented, built and replayed; audible confirmation is pending. Default OS sound was explicitly not heard. Android runtime and physical device acceptance remain unrun.",
-      "testResult": "PARTIAL \u2014 automated 22/22, types, audit and native builds pass; runtime gaps retained.",
-      "outstandingWork": "Obtain audible chime confirmation, verify Android runtime and real iOS/Android permission/mute/accessibility/revocation behavior."
+      "reason": "User confirms the installed foreground Profile test chime is audible in the current iOS QA simulator session after approved live-ringer adjustment. Popup/banner/review are verified. Prior acoustic failure is superseded for this bounded test; fresh automatic-assignment sound, restart persistence and Android/physical acceptance remain unverified.",
+      "testResult": "PASS bounded iOS foreground test chime: user said Yes I heard it now. Prior22/22 focused tests remain historical; broader sound acceptance PARTIAL.",
+      "outstandingWork": "Verify a fresh actual assignment with audible listener confirmation, simulator restart persistence, Android and physical-device permission/mute/interruption behavior. Preserve separate remote-push engineering scope."
     },
     {
       "id": "DAPP-03",
@@ -226,13 +234,21 @@
         "docs/driver-assignment-alerts/evidence/ios-assignment-popup.png",
         "docs/driver-assignment-alerts/evidence/ios-assignment-acknowledged.png",
         "docs/driver-assignment-alerts/evidence/ios-chime-test-popup.png",
-        "docs/driver-assignment-alerts/evidence/build-artifacts.json"
+        "docs/driver-assignment-alerts/evidence/build-artifacts.json",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/observations.txt",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/simulator-restarted.png",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/post-devicehub-restart-alert.png",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/silent-mode-diagnosis.json",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/approved-command-line-unmute.json",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/live-ringer-state.json",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/live-ringer-replay.png",
+        "docs/driver-assignment-alerts/evidence/audio-diagnosis-20261119/audible-confirmation.json"
       ],
       "acceptanceGate": "DAPP-G05",
       "status": "PARTIAL",
-      "reason": "Final iOS chime build installed and test popup/banner observed on EasyGas First Sign-In QA; actual assignment acknowledgement verified. Android Release build passed, but native sound/device acceptance remains incomplete.",
+      "reason": "Installed iOS popup and canonical acknowledgement verified; user now confirms the foreground Profile test chime is audible in the current simulator session. Restart persistence, Android runtime, physical and remote delivery remain incomplete.",
       "testResult": "PARTIAL \u2014 automated 22/22, types, audit and native builds pass; runtime gaps retained.",
-      "outstandingWork": "Finish audible iOS demonstration and Android runtime/physical acceptance. Preserve production NO-GO, incomplete named-order handover, provider and import gates."
+      "outstandingWork": "Complete fresh-assignment acoustic, restart-persistence and Android/physical acceptance. Retain remote delivery engineering and existing no-new-build constraint."
     }
   ],
   "gates": [
@@ -246,7 +262,7 @@
       "id": "DAPP-G02",
       "requirement": "Native popup, permission-aware sound/banner and safe review action while app is open",
       "status": "PARTIAL",
-      "reason": "Actual iOS popup and native banner verified. Bundled foreground chime implemented, built and replayed; audible confirmation is pending. Default OS sound was explicitly not heard. Android runtime and physical device acceptance remain unrun."
+      "reason": "Bounded installed iOS foreground test chime audible PASS by user confirmation after approved QA live-ringer adjustment; fresh automatic-assignment, restart-persistence and Android/physical sound checks remain open."
     },
     {
       "id": "DAPP-G03",
@@ -264,7 +280,7 @@
       "id": "DAPP-G05",
       "requirement": "Installed simulator demonstration and retained production/physical gates",
       "status": "PARTIAL",
-      "reason": "Final iOS chime build installed and test popup/banner observed on EasyGas First Sign-In QA; actual assignment acknowledgement verified. Android Release build passed, but native sound/device acceptance remains incomplete."
+      "reason": "Actual iOS popup/acknowledgement and current-session foreground test chime verified. Android runtime, physical, restart-persistence and remote-delivery acceptance remain incomplete."
     }
   ],
   "changeLog": [
@@ -283,6 +299,42 @@
     {
       "date": "2026-11-19",
       "change": "User-authorised source/evidence push and demo web deployment completed; see demo-release-20261119-rtm. Fresh web764/764/native CI pass. No new native build/export/install. All original requirement/gate/scenario statuses, denominators and outstanding native/audio/physical/provider work preserved."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Delayed user reply confirms dedicated chime still silent. DAPP-02 downgraded from PARTIAL to DEFECTIVE; DAPP-G02 FAIL. Two verified requirements and all five requirements/gates retained. Diagnosis only under standing no-new-build constraint; prior demo release remains historically verified and no settings changed."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User reports Safari also silent, but observed address-entry UI and no local page requests leave comparison playback unverified. Restarted only named QA simulator through Device Hub; Home and both installed apps preserved, keyboard capture restored OFF. Post-restart acoustic acceptance remains unverified. DAPP-02 DEFECTIVE/G02 FAIL and all five requirement/gate denominators retained; no build/install/source/deployment/fulfilment/Paystack change."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User confirms exact bundled WAV is audible when played directly on Mac. Silent-file/host-playback failure excluded for that direct test; app/simulator audio root cause remains unproven. Post-restart Device Hub shows Home but taps and app-opening attempts do not navigate, blocking agent-triggered replay. DAPP-02 DEFECTIVE/G02 FAIL and all denominators retained. No new build/install or source/demo configuration changes."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "After the user restarted Device Hub, refreshed CUA connection and used Controls > Home plus visible simulator coordinates because embedded accessibility content remained absent. Opened existing EasyGas Local, restored Alert QA driver session, opened Profile and pressed Test assignment popup & sound. Actual Test assignment alert popup observed and retained in post-devicehub-restart-alert.png. Capture Keyboard restored OFF. User audible confirmation pending; no acoustic success inferred. No build/install/source/deployment or fulfilment/payment change."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User confirms higher Mac volume still silent. Read-only CoreAudio now shows MacBook Pro Speakers default,75%,unmuted. QA simulator SpringBoard preferences explicitly report SBRingerMuted=true. App playsInSilentMode=false maps through installed Expo Swift source to AVAudioSession.ambient, which Apple documents as silenced by the Ring/Silent switch. Strong candidate cause; not acoustically proven until unmute/retest. No setting/source/build/install changed. Retain DAPP-02 DEFECTIVE/G02 FAIL pending user approval to turn off only QA simulator Silent Mode and audible retest."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User explicitly approved turning off Silent Mode only on EasyGas First Sign-In QA. Device Hub inspector verifies Sound0.6 and Output MacBook Pro Speakers. Controls Home/Lock/Shake are disabled; visible switch attempt did not change SBRingerMuted, readback remains true. Compact view tested then full Device Hub restored; Capture Keyboard OFF. Approved mute change has NOT been applied, and no post-unmute playback claimed. No rebuild/install/source/deployment/business writes."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User approved QA-only command-line unmute/restart. Both restart paths restored mute=true; persistent unmute not achieved. Restored original simulator volume0.6 and speaker route. Reopened installed app, wrote running SBRingerMuted=false with readback0 and triggered actual Profile test popup/banner. Final readback 0. Acoustic confirmation pending; no new build/install/source/deployment/payment changes."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User confirms saved-preference-off replay remains silent. Simulator live com.apple.springboard.ringerstate still read0 while SBRingerMuted read0. Under existing QA-only CLI mute approval, set live state1 and posted its notification; readback com.apple.springboard.ringerstate 1. Triggered actual CUA Profile test popup and saved live-ringer-replay.png. Acoustic acceptance pending; notify-state change alone is not proof of effective audio unmute. DAPP-02 DEFECTIVE/G02 FAIL retained; no new source/build/install/deployment changes."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User confirms Yes I heard it now after the live-ringer adjustment and final replay. Bounded installed iOS foreground Profile test-chime acoustic acceptance PASS. DAPP-02 DEFECTIVE->PARTIAL and G02 FAIL->PARTIAL; no full multi-platform or automatic fresh-assignment sound pass inferred. Coverage stays2/5 requirements and2/5 gates verified with all original denominators retained. Restart persistence, Android/physical and remote-push engineering remain open. No new build/export/install/source/deployment or fulfilment/payment change."
     }
   ],
   "coverage": {
@@ -295,6 +347,8 @@
     "passedGates": 2,
     "routes": 1,
     "verifiedCompleteRoutes": 0,
-    "note": "All five requirements and gates retained. Existing native workspace is exercised; route existence is not full alert acceptance."
+    "note": "All five requirements/gates retained:2 verified,2 partial,1 not implemented;2/5 gates pass. Current-session iOS foreground test chime audible PASS; full sound/native acceptance remains partial.",
+    "defectiveRequirements": 0,
+    "implementedRequirements": 4
   }
 }

@@ -1,19 +1,54 @@
 "use client";
+import {
+  ServiceRequestLauncher,
+  CustomerServiceCatalogue,
+} from "./service-request";
 import { FieldCaption } from "./field-caption";
 import { staffRoleLabel } from "../../../packages/business-rules/src/staff-roles";
 import { EasyGasLoader } from "./easygas-loader";
-import { ArrowLeft, ArrowRight, CalendarDays, ChevronDown, ClipboardList, Clock3, Info, ListChecks, MapPin, ShieldCheck, Wrench, CircleMinus } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CalendarDays,
+  ChevronDown,
+  ClipboardList,
+  Clock3,
+  Info,
+  ListChecks,
+  MapPin,
+  ShieldCheck,
+  Wrench,
+  CircleMinus,
+} from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import {
-  activeServiceSlots, assertServiceSelection, serviceAvailabilityMessage, serviceDetailText, serviceMoney, servicePrice, serviceSlotDay, serviceSlotTime, serviceSlotsQuery, type ServiceAvailability,
+  activeServiceSlots,
+  assertServiceSelection,
+  serviceAvailabilityMessage,
+  serviceDetailText,
+  serviceMoney,
+  servicePrice,
+  serviceSlotDay,
+  serviceSlotTime,
+  serviceSlotsQuery,
+  type ServiceAvailability,
 } from "../../../packages/business-rules/src/service-detail";
 import TechniciansAvailability from "./technicians-availability";
 import { lagosAppointment } from "../../../packages/business-rules/src/technicians-availability";
-import { bookingPhone, bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
+import {
+  bookingPhone,
+  bookingPhoneMessage,
+} from "../../../packages/business-rules/src/booking-contact";
 import { FormInput } from "./password-input";
 import OrderInvoice from "./order-invoice";
 import { AddressAreaFields } from "./address-area-fields";
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type ReactNode,
+} from "react";
 import Link from "./workspace-link";
 import { serviceReportHtml } from "../../../packages/business-rules/src/service-report";
 import { BundleOffers } from "./bundles";
@@ -103,7 +138,10 @@ export function ServiceForm({
         return;
       }
       const r = await send(reviewValues ?? v);
-      setMessage(r.message ?? (r.id ? "Saved. Reference: " + r.id : "Saved successfully."));
+      setMessage(
+        r.message ??
+          (r.id ? "Saved. Reference: " + r.id : "Saved successfully."),
+      );
       setDirty(false);
       done?.();
     } catch (err: any) {
@@ -160,7 +198,17 @@ export function ServiceForm({
             />
           ) : (
             <label key={f.name} data-field-type={f.type ?? "text"}>
-              {f.type !== "hidden" && <FieldCaption required={f.type === "checkbox" ? f.needsConsent === true : f.required !== false}>{f.label}</FieldCaption>}
+              {f.type !== "hidden" && (
+                <FieldCaption
+                  required={
+                    f.type === "checkbox"
+                      ? f.needsConsent === true
+                      : f.required !== false
+                  }
+                >
+                  {f.label}
+                </FieldCaption>
+              )}
               {f.options ? (
                 <select
                   name={f.name}
@@ -246,12 +294,10 @@ export default function ProfessionalServices({
     ),
     manager = staff && ["owner", "manager"].includes(user?.role);
   const canBook =
-    !technician &&
-    user &&
-    (!publicPage || ["customer", "commercial"].includes(user.role));
-  const loadBookings =
-    Boolean(user) &&
-    !(publicPage && mode === "catalogue");
+    !technician && user && ["customer", "commercial"].includes(user.role)
+      ? user
+      : null;
+  const loadBookings = Boolean(user) && !(publicPage && mode === "catalogue");
   const showCatalogue = !technician || mode === "catalogue";
   const catalogueBranch = technician ? user.branchId : undefined;
   const redesigned =
@@ -274,14 +320,13 @@ export default function ProfessionalServices({
       showCatalogue
         ? api(
             catalogueBranch
-              ? "services.catalogue?branch=" + encodeURIComponent(catalogueBranch)
+              ? "services.catalogue?branch=" +
+                  encodeURIComponent(catalogueBranch)
               : "services.catalogue",
           )
         : Promise.resolve([]),
       loadBookings ? api("bookings") : Promise.resolve([]),
-      staff && !technician
-        ? api("services.manage")
-        : Promise.resolve(null),
+      staff && !technician ? api("services.manage") : Promise.resolve(null),
     ])
       .then(([c, b, w]) => {
         if (active) {
@@ -299,7 +344,17 @@ export default function ProfessionalServices({
     return () => {
       active = false;
     };
-  }, [user?.id, catalogueBranch, showCatalogue, version, staff, technician, mode, redesigned, loadBookings]);
+  }, [
+    user?.id,
+    catalogueBranch,
+    showCatalogue,
+    version,
+    staff,
+    technician,
+    mode,
+    redesigned,
+    loadBookings,
+  ]);
   if (redesigned) return <TechniciansAvailability user={user} />;
   const currentDetail =
     publicPage &&
@@ -316,6 +371,21 @@ export default function ProfessionalServices({
       </>
     );
   const service = catalogue.find((s) => s.id === serviceId);
+  if (publicPage && mode === "catalogue" && !serviceId)
+    return (
+      <>
+        <CustomerServiceCatalogue
+          catalogue={catalogue}
+          customerId={canBook?.id}
+        />
+        {onBundle && (
+          <details className="service-bundles">
+            <summary>Service &amp; product packages</summary>
+            <BundleOffers select={onBundle} />
+          </details>
+        )}
+      </>
+    );
   if (publicPage && mode === "catalogue" && serviceId) {
     if (!service)
       return (
@@ -377,10 +447,10 @@ export default function ProfessionalServices({
           {technician
             ? "View your assigned appointments and available services."
             : staff
-            ? mode === "quotations"
+              ? mode === "quotations"
                 ? "Review service quotations and their approval and payment status."
                 : "Manage service bookings, catalogue and assigned work using authorised business records."
-            : "Book installation, maintenance and safety services for your kitchen."}
+              : "Book installation, maintenance and safety services for your kitchen."}
         </p>
       </div>
       {mode === "catalogue" && !serviceId && !technician && (
@@ -397,7 +467,9 @@ export default function ProfessionalServices({
         </div>
       )}
       <nav className="service-tabs" aria-label="Professional services">
-        <Link href={technician ? "/admin/services" : "/services"}>Services</Link>
+        <Link href={technician ? "/admin/services" : "/services"}>
+          Services
+        </Link>
         <Link href={staff ? "/admin/bookings" : "/bookings"}>
           {technician ? "Assigned bookings" : "My bookings"}
         </Link>
@@ -413,8 +485,8 @@ export default function ProfessionalServices({
       {["customer", "commercial"].includes(user?.role) &&
         mode !== "catalogue" && <ServiceFollowups />}
       {mode === "technicians" &&
-        ["owner", "manager"].includes(user?.role) &&
-        workspace ? (
+      ["owner", "manager"].includes(user?.role) &&
+      workspace ? (
         <Technicians data={workspace} reload={reload} user={user} />
       ) : mode === "catalogue" ? (
         <>
@@ -511,7 +583,11 @@ export default function ProfessionalServices({
             </Link>
           ) : !bookings.length ? (
             <div className="surface">
-              <h2>{technician ? "No assigned appointments yet" : "No appointments yet"}</h2>
+              <h2>
+                {technician
+                  ? "No assigned appointments yet"
+                  : "No appointments yet"}
+              </h2>
               <p>
                 {technician
                   ? "Your assigned appointments will appear here."
@@ -557,10 +633,10 @@ function ServiceDetail({
   const inclusions = serviceDetailText(config.inclusions);
   const coverage = Array.isArray(config.zones) ? config.zones.join(", ") : "";
   const notes = [
-    Number.isInteger(config.cancellationHours)
+    Number.isInteger(config.cancellationHours) && config.cancellationHours > 0
       ? `Self-service changes close ${config.cancellationHours} hours before arrival.`
       : "",
-    serviceDetailText(config.warranty) || "Warranty terms are not configured.",
+    serviceDetailText(config.warranty),
   ].filter(Boolean);
   const sections = [
     { title: "What’s included", icon: ListChecks, content: inclusions },
@@ -597,9 +673,9 @@ function ServiceDetail({
           </div>
           <div className="service-detail-meta">
             <strong>{servicePrice(config)}</strong>
-            <span>
-              Call-out {serviceMoney(config.calloutKobo) ?? "unavailable"}
-            </span>
+            {config.calloutKobo > 0 && (
+              <span>Call-out {serviceMoney(config.calloutKobo)}</span>
+            )}
             <span>
               <Clock3 size={17} aria-hidden="true" />
               {Number.isInteger(config.durationMinutes) &&
@@ -616,14 +692,7 @@ function ServiceDetail({
             alt={service.name}
             onError={() => setImageFailed(true)}
           />
-        ) : (
-          <div
-            className="service-detail-image service-detail-placeholder"
-            aria-hidden="true"
-          >
-            <Wrench size={56} strokeWidth={1.3} />
-          </div>
-        )}
+        ) : null}
       </section>
       <div className="service-detail-columns">
         <div className="service-detail-information">
@@ -633,20 +702,22 @@ function ServiceDetail({
               {config.safety}
             </p>
           )}
-          {sections.map(({ title, icon: Icon, content }, index) => (
-            <details
-              className="surface service-detail-accordion"
-              key={title}
-              open={index === 0 && Boolean(content)}
-            >
-              <summary>
-                <Icon size={20} aria-hidden="true" />
-                <span>{title}</span>
-                <ChevronDown size={17} aria-hidden="true" />
-              </summary>
-              <p>{content || "Details not configured."}</p>
-            </details>
-          ))}
+          {sections
+            .filter((s) => Boolean(s.content))
+            .map(({ title, icon: Icon, content }, index) => (
+              <details
+                className="surface service-detail-accordion"
+                key={title}
+                open={index === 0 && Boolean(content)}
+              >
+                <summary>
+                  <Icon size={20} aria-hidden="true" />
+                  <span>{title}</span>
+                  <ChevronDown size={17} aria-hidden="true" />
+                </summary>
+                <p>{content || "Details not configured."}</p>
+              </details>
+            ))}
         </div>
         <aside
           className="surface service-detail-booking"
@@ -658,15 +729,27 @@ function ServiceDetail({
           {booking}
         </aside>
       </div>
-      <p className="service-detail-note service-detail-policy">
-        <Info size={18} aria-hidden="true" />
-        {notes.join(" ")}
-      </p>
+      {notes.length > 0 && (
+        <p className="service-detail-note service-detail-policy">
+          <Info size={18} aria-hidden="true" />
+          {notes.join(" ")}
+        </p>
+      )}
     </div>
   );
 }
 
-function BookingForm({
+function BookingForm(props: {
+  service: any;
+  done: () => void;
+  customerId: string;
+}) {
+  const params = useSearchParams();
+  // Existing linked-product bundles still reserve qualified appointment capacity.
+  if (params.get("bundle")) return <ScheduledBookingForm {...props} />;
+  return <ServiceRequestLauncher {...props} />;
+}
+function ScheduledBookingForm({
   service,
   done,
   customerId,
@@ -778,7 +861,11 @@ function BookingForm({
       {error ? (
         <Notice type="error" message={error} />
       ) : !current ? (
-        <EasyGasLoader size="sm" variant="section" label="Checking appointment availability" />
+        <EasyGasLoader
+          size="sm"
+          variant="section"
+          label="Checking appointment availability"
+        />
       ) : changed ? (
         <Notice message="Service details or pricing changed. Refresh the service and review the current terms." />
       ) : !available ? (
@@ -841,7 +928,9 @@ function BookingForm({
             </select>
           </label>
           <label>
-            <FieldCaption required={true}>Appointment time (Lagos)</FieldCaption>
+            <FieldCaption required={true}>
+              Appointment time (Lagos)
+            </FieldCaption>
             <select
               value={selected?.id ?? ""}
               disabled={!available || !day}
@@ -1327,8 +1416,8 @@ function ChecklistEditor({
                   ),
                 )
               }
-            /><FieldCaption required={false}>{" "}
-            Required</FieldCaption>
+            />
+            <FieldCaption required={false}> Required</FieldCaption>
           </label>
           <button
             type="button"
@@ -1491,10 +1580,12 @@ export function BookingCard({
   booking: b,
   user,
   done,
+  compact = false,
 }: {
   booking: any;
   user: any;
   done: () => void;
+  compact?: boolean;
 }) {
   const customer = user.id === b.customer_id,
     tech = user.role === "technician",
@@ -1545,41 +1636,72 @@ export function BookingCard({
           <span className="eyebrow">{b.reference}</span>
           <h2>{b.snapshot.name}</h2>
         </div>
-        <span className="status-badge">{b.status.replaceAll("_", " ")}</span>
+        <span className="status-badge">
+          {b.schedule_pending && b.status === "pending_confirmation"
+            ? "Awaiting confirmation"
+            : b.status.replaceAll("_", " ")}
+        </span>
       </div>
+      {b.schedule_pending && (
+        <Notice message="Your preferred visit time is awaiting confirmation. EasyGas is arranging a provider." />
+      )}
       <p>
+        {b.schedule_pending ? "Preferred: " : ""}
         {new Date(b.starts_at).toLocaleString("en-NG", {
           timeZone: "Africa/Lagos",
+          ...(compact
+            ? ({ dateStyle: "medium", timeStyle: "short" } as const)
+            : {}),
         })}{" "}
         (Lagos time)
       </p>
       <p>
-        {b.address.street}, {b.address.zone} ·{" "}
-        <a href={"tel:" + b.address.phone}>{b.address.phone}</a>
+        {b.address.street}
+        {b.address.street.toLowerCase().endsWith(b.address.zone.toLowerCase())
+          ? ""
+          : ", " + b.address.zone}{" "}
+        · <a href={"tel:" + b.address.phone}>{b.address.phone}</a>
       </p>
       <p>
         {b.equipment.type} · {b.equipment.concerns}
       </p>
-      <p>
-        Total:{" "}
-        {b.billing.totalKobo === null
-          ? "Awaiting approved quotation"
-          : money(b.billing.totalKobo)}{" "}
-        · Verified paid {money(b.billing.paidKobo)} · Refunded{" "}
-        {money(b.billing.refundedKobo)}{" "}
-        {b.billing.overpaidKobo > 0 && (
-          <>· Credit review due {money(b.billing.overpaidKobo)}</>
-        )}
-      </p>
+      {compact ? (
+        <p className="bk-billing-summary">
+          {b.schedule_pending
+            ? `Estimate: ${servicePrice(b.snapshot)}`
+            : b.billing.totalKobo === null
+              ? "Quotation pending"
+              : `Total: ${money(b.billing.totalKobo)}`}
+          {b.billing.paidKobo > 0 && ` · Paid ${money(b.billing.paidKobo)}`}
+          {b.billing.refundedKobo > 0 &&
+            ` · Refunded ${money(b.billing.refundedKobo)}`}
+        </p>
+      ) : (
+        <p>
+          {b.schedule_pending ? "Service estimate: " : "Total: "}
+          {b.billing.totalKobo === null
+            ? "Awaiting approved quotation"
+            : money(b.billing.totalKobo)}{" "}
+          · Verified paid {money(b.billing.paidKobo)} · Refunded{" "}
+          {money(b.billing.refundedKobo)}{" "}
+          {b.billing.overpaidKobo > 0 && (
+            <>· Credit review due {money(b.billing.overpaidKobo)}</>
+          )}
+        </p>
+      )}
       {b.technician?.name && <p>Assigned technician: {b.technician.name}</p>}
       <Link className="text-link" href="/support">
         Contact Support
       </Link>
       {error && <Notice type="error" message={error} />}{" "}
       {step &&
-        ((manager && ["confirmed", "assigned"].includes(step)) ||
-          (tech && ["en_route", "in_progress"].includes(step) &&
-            (!user.technician_service_only || b.assignment_response === "acknowledged"))) && (
+        ((manager &&
+          !b.schedule_pending &&
+          ["confirmed", "assigned"].includes(step)) ||
+          (tech &&
+            ["en_route", "in_progress"].includes(step) &&
+            (!user.technician_service_only ||
+              b.assignment_response === "acknowledged"))) && (
           <button
             className="button"
             disabled={busy}
@@ -1600,8 +1722,9 @@ export function BookingCard({
         )}
       {(manager ||
         (customer &&
-          Date.parse(b.starts_at) - Date.now() >=
-            b.snapshot.cancellationHours * 3600000)) &&
+          (b.schedule_pending ||
+            Date.parse(b.starts_at) - Date.now() >=
+              b.snapshot.cancellationHours * 3600000))) &&
         ["pending_confirmation", "confirmed", "assigned"].includes(
           b.status,
         ) && (
@@ -1786,73 +1909,72 @@ export function BookingCard({
               }
             />
           )}{" "}
-          {["owner", "finance"].includes(user.role) &&
-            m.state === "issued" && (
-              <details>
-                <summary>Recover stopped-work material custody</summary>
-                <p>
-                  Record actual counts only. Owner and finance approval is
-                  required. Recovery never authorises further work or changes
-                  customer charges.
-                </p>
-                {(user.role === "finance"
-                  ? ["request", "execute"]
-                  : ["execute"]
-                ).map((step) => (
-                  <ServiceForm
-                    key={step}
-                    title={
-                      step === "request"
-                        ? "Request independent material recovery review"
-                        : "Execute approved material recovery"
-                    }
-                    fields={[
-                      {
-                        name: "used",
-                        label: "Actual units used",
-                        type: "number",
-                        value: 0,
-                      },
-                      {
-                        name: "damaged",
-                        label: "Actual units damaged",
-                        type: "number",
-                        value: 0,
-                      },
-                      {
-                        name: "missing",
-                        label: "Actual units missing",
-                        type: "number",
-                        value: 0,
-                      },
-                      {
-                        name: "returned",
-                        label: "Safe unused units actually returned",
-                        type: "number",
-                        value: 0,
-                      },
-                      {
-                        name: "damagedReturned",
-                        label: "Damaged units actually returned to quarantine",
-                        type: "number",
-                        value: 0,
-                      },
-                      { name: "evidence", label: "Independent count evidence" },
-                      { name: "reason", label: "Recovery reason" },
-                    ]}
-                    done={done}
-                    send={(v) =>
-                      serviceMutation("service.material.recovery." + step, {
-                        bookingId: b.id,
-                        materialId: m.id,
-                        version: b.version,
-                        ...v,
-                      })
-                    }
-                  />
-                ))}
-              </details>
-            )}
+          {["owner", "finance"].includes(user.role) && m.state === "issued" && (
+            <details>
+              <summary>Recover stopped-work material custody</summary>
+              <p>
+                Record actual counts only. Owner and finance approval is
+                required. Recovery never authorises further work or changes
+                customer charges.
+              </p>
+              {(user.role === "finance"
+                ? ["request", "execute"]
+                : ["execute"]
+              ).map((step) => (
+                <ServiceForm
+                  key={step}
+                  title={
+                    step === "request"
+                      ? "Request independent material recovery review"
+                      : "Execute approved material recovery"
+                  }
+                  fields={[
+                    {
+                      name: "used",
+                      label: "Actual units used",
+                      type: "number",
+                      value: 0,
+                    },
+                    {
+                      name: "damaged",
+                      label: "Actual units damaged",
+                      type: "number",
+                      value: 0,
+                    },
+                    {
+                      name: "missing",
+                      label: "Actual units missing",
+                      type: "number",
+                      value: 0,
+                    },
+                    {
+                      name: "returned",
+                      label: "Safe unused units actually returned",
+                      type: "number",
+                      value: 0,
+                    },
+                    {
+                      name: "damagedReturned",
+                      label: "Damaged units actually returned to quarantine",
+                      type: "number",
+                      value: 0,
+                    },
+                    { name: "evidence", label: "Independent count evidence" },
+                    { name: "reason", label: "Recovery reason" },
+                  ]}
+                  done={done}
+                  send={(v) =>
+                    serviceMutation("service.material.recovery." + step, {
+                      bookingId: b.id,
+                      materialId: m.id,
+                      version: b.version,
+                      ...v,
+                    })
+                  }
+                />
+              ))}
+            </details>
+          )}
           {store && m.state === "usage_recorded" && (
             <ServiceForm
               title="Confirm physical return and reconcile"
@@ -1954,18 +2076,22 @@ export function BookingCard({
       )}
       {(customer || tech) &&
         !b.report &&
-        !["cancelled", "failed", "completed"].includes(b.status) && (
+        !["cancelled", "failed", "completed"].includes(b.status) &&
+        (compact ? (
+          <details>
+            <summary>Add a photo (optional)</summary>
+            <ImageUpload bookingId={b.id} done={done} />
+          </details>
+        ) : (
           <ImageUpload bookingId={b.id} done={done} />
+        ))}
+      {!b.schedule_pending &&
+        (customer || ["owner", "finance", "manager"].includes(user.role)) && (
+          <OrderInvoice
+            bookingId={b.id}
+            canIssue={["owner", "finance"].includes(user.role)}
+          />
         )}
-      {(customer ||
-        ["owner", "finance", "manager"].includes(
-          user.role,
-        )) && (
-        <OrderInvoice
-          bookingId={b.id}
-          canIssue={["owner", "finance"].includes(user.role)}
-        />
-      )}
       {["failed", "cancelled"].includes(b.status) && (
         <section className="panel">
           <h3>Financial exception review</h3>
@@ -2116,26 +2242,29 @@ export function BookingCard({
           )}
         </section>
       )}
-      {customer && b.billing.walletEnabled && b.billing.dueKobo > 0 && (
-        <ServiceForm
-          title="Pay approved charges with purchase credit"
-          fields={[
-            {
-              name: "amount",
-              label: "Amount in naira (partial payment allowed)",
-              type: "number",
-            },
-          ]}
-          done={done}
-          send={(v) =>
-            serviceMutation("booking.wallet.pay", {
-              bookingId: b.id,
-              amountKobo: Math.round(v.amount * 100),
-              idempotencyKey: paymentKey,
-            })
-          }
-        />
-      )}
+      {customer &&
+        !b.schedule_pending &&
+        b.billing.walletEnabled &&
+        b.billing.dueKobo > 0 && (
+          <ServiceForm
+            title="Pay approved charges with purchase credit"
+            fields={[
+              {
+                name: "amount",
+                label: "Amount in naira (partial payment allowed)",
+                type: "number",
+              },
+            ]}
+            done={done}
+            send={(v) =>
+              serviceMutation("booking.wallet.pay", {
+                bookingId: b.id,
+                amountKobo: Math.round(v.amount * 100),
+                idempotencyKey: paymentKey,
+              })
+            }
+          />
+        )}
       {tech && !user.technician_service_only && b.billing.dueKobo > 0 && (
         <ServiceForm
           title="Record cash actually collected"
@@ -2221,23 +2350,24 @@ export function BookingCard({
           }
         />
       )}
-      {b.status === "completed" && (manager || (tech && !user.technician_service_only)) && (
-        <ServiceForm
-          title="Record a documented follow-up"
-          fields={[
-            { name: "dueDate", label: "Follow-up date", type: "date" },
-            {
-              name: "reason",
-              label: "Documented reason; no automatic paid work",
-              type: "textarea",
-            },
-          ]}
-          done={done}
-          send={(v) =>
-            api("service.followup.create", { bookingId: b.id, ...v })
-          }
-        />
-      )}
+      {b.status === "completed" &&
+        (manager || (tech && !user.technician_service_only)) && (
+          <ServiceForm
+            title="Record a documented follow-up"
+            fields={[
+              { name: "dueDate", label: "Follow-up date", type: "date" },
+              {
+                name: "reason",
+                label: "Documented reason; no automatic paid work",
+                type: "textarea",
+              },
+            ]}
+            done={done}
+            send={(v) =>
+              api("service.followup.create", { bookingId: b.id, ...v })
+            }
+          />
+        )}
       <details>
         <summary>Appointment history</summary>
         {b.events.map((e: any, i: number) => (
@@ -2262,6 +2392,29 @@ function Reschedule({ b, done }: { b: any; done: () => void }) {
       .then(setSlots)
       .catch(() => setSlots([]));
   }, [b.service_id, b.branch_id]);
+  if (b.schedule_pending)
+    return (
+      <ServiceForm
+        title="Change preferred visit time"
+        fields={[
+          {
+            name: "preferredStart",
+            label: "Preferred date and time (Lagos)",
+            type: "datetime-lagos",
+          },
+          { name: "reason", label: "Reason" },
+        ]}
+        done={done}
+        submit="Update preferred time"
+        send={(v) =>
+          serviceMutation("booking.reschedule", {
+            bookingId: b.id,
+            version: b.version,
+            ...v,
+          })
+        }
+      />
+    );
   return slots.length ? (
     <ServiceForm
       title="Reschedule with an available technician"

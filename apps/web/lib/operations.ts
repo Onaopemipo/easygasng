@@ -1,3 +1,4 @@
+import { verifyVehicleLPGPickup } from "./bulk-lpg-reservation";
 import { deliveryCoveragePending, hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
 import { paystackAvailability } from "./payments/runtime";
 import { gatewayPolicy } from "./payments/policy";
@@ -658,6 +659,7 @@ export async function transitionOrder(
       409,
       "Confirm the complete pickup manifest before dispatch.",
     );
+  if(input.status === "out_for_delivery") await verifyVehicleLPGPickup(tx,o);
   if (input.status === "delivery_failed" && attempt) {
     await tx.query(
       "UPDATE delivery_attempts SET state='failed',completed_at=now() WHERE id=$1",

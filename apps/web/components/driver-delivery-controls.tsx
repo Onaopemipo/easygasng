@@ -11,7 +11,9 @@ export default function DriverDeliveryControls({
   disabled,
   write,
   refresh,
+  lpg,
 }: {
+  lpg?: { pickupReady: boolean; handoverReady: boolean };
   order: any;
   decision?: string;
   disabled: boolean;
@@ -113,7 +115,10 @@ export default function DriverDeliveryControls({
                 <li key={serial}>Cylinder serial: {serial}</li>
               ))}
             </ul>
-            <fieldset disabled={blocked} className={styles.panel}>
+            <fieldset
+              disabled={blocked || lpg?.pickupReady === false}
+              className={styles.panel}
+            >
               <label data-field-type="checkbox">
                 <input type="checkbox" required />
                 <span>
@@ -138,7 +143,7 @@ export default function DriverDeliveryControls({
         <button
           type="button"
           className="button"
-          disabled={blocked}
+          disabled={blocked || lpg?.pickupReady === false}
           onClick={() =>
             void write("order.transition", {
               id: order.id,
@@ -229,7 +234,11 @@ export default function DriverDeliveryControls({
                 quantity.
               </p>
               <fieldset
-                disabled={blocked || order.payment_status !== "verified"}
+                disabled={
+                  blocked ||
+                  lpg?.handoverReady === false ||
+                  order.payment_status !== "verified"
+                }
                 className={styles.panel}
               >
                 <label>

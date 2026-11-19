@@ -20,7 +20,6 @@ import {
   noSmartRefillOffers,
   refillProfileActivity,
   refillSaveError,
-  smartRefillExplanation,
   supplyOptions,
   type CookingGasProfilesData,
   type RefillProfile,
@@ -203,48 +202,39 @@ export function RefillProfiles({ smart = false }: { smart?: boolean } = {}) {
                 : "Refill sizes are unavailable. Refresh the page to try again."}
             </p>
           )}
-          <section className={`${styles.card} ${styles.offers}`}>
-            <span className={styles.icon}>
-              <Gift aria-hidden="true" size={25} />
-            </span>
-            <div>
-              <h2>Smart Refill offers</h2>
-              {!data.offers ? (
-                <p>Smart Refill offers are unavailable.</p>
-              ) : data.offers.length && !error ? (
-                <ul>
-                  {data.offers.map((offer) => (
-                    <li key={offer.id}>
-                      <Link href="/rewards">
-                        {offer.title} · {offer.points} points
-                      </Link>{" "}
-                      · expires {lagosRefillDate(offer.expiresAt)}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>
-                  {error
-                    ? "Refresh to check current offer eligibility."
-                    : noSmartRefillOffers}
-                </p>
-              )}
-            </div>
-            {smart ? (
-              <details className={styles.offerHelp}>
-                <summary>Learn more</summary>
-                <p>{smartRefillExplanation}</p>
-                <p>
-                  Offers depend on your eligible profile and communication
-                  preferences.
-                </p>
-              </details>
-            ) : (
+          {!smart && (
+            <section className={`${styles.card} ${styles.offers}`}>
+              <span className={styles.icon}>
+                <Gift aria-hidden="true" size={25} />
+              </span>
+              <div>
+                <h2>Smart Refill offers</h2>
+                {!data.offers ? (
+                  <p>Smart Refill offers are unavailable.</p>
+                ) : data.offers.length && !error ? (
+                  <ul>
+                    {data.offers.map((offer) => (
+                      <li key={offer.id}>
+                        <Link href="/rewards">
+                          {offer.title} · {offer.points} points
+                        </Link>{" "}
+                        · expires {lagosRefillDate(offer.expiresAt)}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>
+                    {error
+                      ? "Refresh to check current offer eligibility."
+                      : noSmartRefillOffers}
+                  </p>
+                )}
+              </div>
               <Link className="button secondary" href="/refill">
                 Learn more
               </Link>
-            )}
-          </section>
+            </section>
+          )}
           {!data.profiles.length && (
             <section className={styles.card}>
               <h2>No cooking gas profiles yet</h2>

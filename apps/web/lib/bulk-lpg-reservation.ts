@@ -97,3 +97,39 @@ export async function bulkReservation(
   );
   return retainedOnVehicle;
 }
+
+/** Pickup must not leave the depot without acknowledged vehicle gas custody. */
+export async function verifyVehicleLPGPickup(tx: SQL, order: any) {
+  if (
+    process.env.EASYGAS_BULK_LPG_ENABLED !== "true" &&
+    process.env.NODE_ENV !== "production"
+  )
+    return;
+  const quantity = Number(
+    (await one(
+      tx,
+      "SELECT COALESCE(sum(grams),0) AS n FROM order_gas_lines WHERE order_id=$1",
+      [order.id],
+    ))!.n,
+  );
+  if (!quantity) return;
+  const custody = await one(
+    tx,
+    "SELECT a.*,l.state AS load_state,l.acknowledged_by,t.driver_id,t.branch_id,t.ended_at FROM bulk_lpg_allocations a JOIN bulk_lpg_loads l ON l.id=a.load_id JOIN driver_trips t ON t.id=l.trip_id WHERE a.order_id=$1 FOR SHARE OF a,l,t",
+    [order.id],
+  );
+  if (
+    !custody ||
+    custody.state !== "allocated" ||
+    Number(custody.grams) !== quantity ||
+    custody.load_state !== "active" ||
+    custody.acknowledged_by !== order.driver_id ||
+    custody.driver_id !== order.driver_id ||
+    custody.branch_id !== order.branch_id ||
+    custody.ended_at
+  )
+    throw new AppError(
+      409,
+      "Dispatch must issue this order's measured vehicle LPG load, and the assigned driver must acknowledge it before pickup.",
+    );
+}
