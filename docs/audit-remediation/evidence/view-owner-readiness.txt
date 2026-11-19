@@ -1,0 +1,216 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders, 2 New orders awaiting acceptance":
+        - /url: /admin/orders
+        - generic: Orders
+        - generic: "2"
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk, 3 Open or in-progress support requests":
+        - /url: /admin/support
+        - generic: Support Desk
+        - generic: "3"
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory, 4 Physical product and bulk gas balances at or below configured thresholds":
+        - /url: /admin/inventory
+        - generic: Inventory
+        - generic: "4"
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries, 3 Accepted or preparing orders awaiting a driver":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+        - generic: "3"
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents, 10 Open or acknowledged operational incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+        - generic: "10"
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "73"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Launch Readiness
+  - generic: LAUNCH READINESS
+  - heading "Production readiness · NO-GO" [level=1]
+  - paragraph: Review launch gates, their supporting evidence and outstanding work.
+  - paragraph: Automated checks and remaining evidence requirements. These checks do not authorise deployment or certify safety, compliance or financial operations.
+  - paragraph: Checked 20/11/2026, 02:33:18
+  - article:
+    - heading "1. Reviewed release scope · unverified" [level=2]
+    - paragraph: Owner-approved release scope and reviewed source baseline are required.
+  - article:
+    - heading "2. Web build and CI · unverified" [level=2]
+    - paragraph: Run the documented build against the reviewed release revision; source code alone does not prove this deployment.
+  - article:
+    - heading "3. Native distribution · unverified" [level=2]
+    - paragraph: Hermes exports are available; signed device builds, identifiers, permissions and store approval require verification.
+  - article:
+    - heading "4. Database schema · pass" [level=2]
+    - paragraph: "All application migrations and runtime policies through 056 required. Current versions: 001, 002, 003, 004, 005, 006, 007, 008, 009, 010, 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 025, 027, 028, 029, 030, 031, 032, 033, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 043c, 044, 045, 046, 047, 048, 049, 050, 051, 052, 053, 054, 055, 056, 057, 058, 059, 060, 061, 062, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081"
+  - article:
+    - heading "5. Managed database and TLS · unverified" [level=2]
+    - paragraph: A connection is configured; restricted identity, advisors, TLS and staging acceptance still require evidence.
+  - article:
+    - heading "6. Production origin · unverified" [level=2]
+    - paragraph: A verified HTTPS origin, certificate and hosting configuration are required.
+  - article:
+    - heading "7. Independent business authority · unverified" [level=2]
+    - paragraph: 6 active Admin/business owner account(s), 6 active Inventory/finance account(s). One business owner is supported. Restricted actions still require distinct eligible reviewers; verify maker, reviewer and executor responsibilities for the actual staff and branches.
+  - article:
+    - heading "8. Reviewed customer policies · unverified" [level=2]
+    - paragraph: 9 of 9 policies published and effective; legal/business review and acceptance evidence remain necessary.
+  - article:
+    - heading "9. Physical inventory · unverified" [level=2]
+    - paragraph: 4 published stocked lines; reconcile physical counts and serial eligibility before sale.
+  - article:
+    - heading "10. Qualified service operation · unverified" [level=2]
+    - paragraph: 5 active services with approved checklist; verify actual qualifications, areas, equipment and field processes.
+  - article:
+    - heading "11. Online payments · unverified" [level=2]
+    - paragraph: The configured gateway is enabled for sandbox/test payments only. Live merchant ownership, provider acceptance and commercial release remain unverified.
+  - article:
+    - heading "12. Cash and credit reconciliation · unverified" [level=2]
+    - paragraph: Finance must verify counted cash, liability balances and refund controls against real records.
+  - article:
+    - heading "13. Notification providers · blocked" [level=2]
+    - paragraph: Transactional SMTP adapter exists behind an OFF flag. Verified sender, real recovery delivery, provider monitoring and outage acceptance remain required. In-app notifications are persisted.
+  - article:
+    - heading "14. Authentication and security · unverified" [level=2]
+    - paragraph: Local tests cover sessions, ownership and role/branch controls. Independent assessment, abuse/load testing and native toolchain advisories remain.
+  - article:
+    - heading "15. Multi-connection concurrency · unverified" [level=2]
+    - paragraph: Isolated PostgreSQL concurrency and uncertain-COMMIT tests passed. Run against the reviewed deployment revision and capacity before release.
+  - article:
+    - heading "16. Backups and restore · unverified" [level=2]
+    - paragraph: Encrypted local restore tests pass; managed/off-site backups, retention, recovery objectives and production restore drill are required.
+  - article:
+    - heading "17. Monitoring and incidents · blocked" [level=2]
+    - paragraph: 9 unresolved high/critical incidents. External health/error alerting and on-call ownership must be configured.
+  - article:
+    - heading "18. Workers and recovery · unverified" [level=2]
+    - paragraph: Worker heartbeat missing/stale or schema incomplete. Configure and supervise the worker before serving traffic.
+  - article:
+    - heading "19. Privacy and retention · blocked" [level=2]
+    - paragraph: Owned export and request intake exist. Verified erasure/retention and incident fulfilment processes remain incomplete.
+  - article:
+    - heading "20. Acceptance and authorisation · blocked" [level=2]
+    - paragraph: Business, finance, qualified safety reviewers and operations must accept their scope; production release requires explicit user authorisation.
+- text: EasyGas Business · NGN · Africa/Lagos

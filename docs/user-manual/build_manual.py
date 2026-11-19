@@ -38,7 +38,7 @@ topic('Sign in and find your way','All users','/login and your workspace',
  'Use the top search for permitted records. Local page search and filters narrow the current list; clear them before assuming a record is missing.',
  'Use tabs to switch views and Review or Details to open a record. Close a dialog before changing workspace. Sign Out when you finish on a shared device.'],
  'The workspace header identifies your account and role. Business amounts use NGN and operational dates use Africa/Lagos.',
- 'Use Forgot your password for account recovery. Verification, invitation and reset links must be current and complete; do not paste private links into support screenshots.',
+ 'Use Forgot your password for password recovery. For an expired email verification link, sign in and request a new verification email from Account & privacy. Keep invitation and recovery links private.',
  'sign-in','The shared sign-in page. No credentials are included in this manual.')
 
 topic('Browse products and services','Customers','Products and Book a Service',
@@ -128,7 +128,7 @@ topic('Manage account privacy and support','Customers','Account and Privacy and 
  'Open Notifications for messages intended for your account. Use Support to open a conversation about the relevant order or booking and follow its replies.',
  'When sharing a review, check the feedback, rating and publication consent. Moderation approval and publication are separate actions.'],
  'The saved result appears in the chosen section. A privacy request is an intake record; it is not evidence that all data has already been erased.',
- 'Use Help or Contact Us if your normal support page is unavailable. During this audit the public policy pages awaited business publication; request the approved policy rather than relying on this manual as legal terms.',
+ 'Use Help or Contact Us if your normal support page is unavailable. Customer Policies now publishes nine approved client-demo notices. These exclude real sales; commercial policy approval is still required before real operation.',
  'customer-account','Account and Privacy keeps common tasks in separate sections.')
 
 topic('Run the daily business review','Admin and Service Manager','Dashboard and Orders',
@@ -158,7 +158,7 @@ topic('Coordinate dispatch and staff','Admin and Service Manager','Deliveries an
  'Assign through the order or dispatch action when eligible. Follow acknowledgement, inspected pickup, travel, arrival and delivery progress.',
  'Use Drivers for permitted directory and availability work. Escalate failed or stalled delivery activity with its order and trip references.'],
  'The intended driver receives the assignment and the order records the assignment. A recorded map point can be stale; an unknown ETA must stay unknown.',
- 'Do not assign around expired calibration, missing qualifications, unverified address coverage or unresolved custody. The sandbox meter calibration was expired at this audit.',
+ 'Do not assign around expired calibration, missing qualifications, unverified address coverage or unresolved custody. The demo-only renewal is temporary; check its current expiry before every journey.',
  'manager-dispatch','The Service Manager dispatch view. Availability, location and fulfilment states are separate.')
 
 topic('Create staff assisted sales','Admin Service Manager and permitted Inventory staff','Retail POS and Customers',
@@ -208,8 +208,8 @@ topic('Use the technician workspace','Technician','Service Bookings',
  'Use Profile to review qualification information and working arrangements. A qualification document or preference does not by itself authorise every kind of work.',
  'Use History for closed jobs and reports. Keep customer evidence inside the authorised job record.'],
  'Your Jobs and History reflect your own assignments. In the audited technician account both lists were empty; the manual does not fabricate a live job.',
- 'The Home Contact support shortcut currently leads to a permission error for technicians. Use public Help or contact the Admin until the shortcut is repaired.',
- 'technician-jobs','The current technician Jobs view is empty. Later job stages are documented from the implemented workflow and prior evidence.')
+ 'The Home Contact support shortcut opens the public Contact Us page and its contact information. Customer support conversations remain restricted; technicians do not gain access to customer messages.',
+ 'technician-home','Technician Home separates assigned work, availability, eligibility and quick actions.')
 
 topic('Assess quote and complete service work','Technician and Service Manager','Assigned service job and Quotations',
  'Assessment, quotation, approval, payment, work authorisation and completion are separate stages. Use the latest approved scope and version.',
@@ -238,7 +238,7 @@ topic('Control bulk gas and purchasing','Inventory and qualified operations staf
  'Record measured quantities and references through the actual operational action. Reconcile issued, dispensed, returned and exceptional quantities without inventing a balancing figure.',
  'Use Operations Centre for suppliers, purchases and transfers. Request, approval, receipt and payment are separate events; inspect each state before progressing.'],
  'Recorded physical custody and authorised financial evidence agree. The authoritative server rejects work whose safety prerequisites are no longer valid.',
- 'At the audit the sandbox meter expired at 11:53:44 UTC on 19 November 2026. No renewal was made. A previous two-hour QA renewal is not continuing authority for later use.',
+ 'The approved synthetic QA meter and four staff qualifications expire at 18:31 UTC on 19 November 2026, or 19:31 Lagos time. This is 04:31 Brisbane time on 20 November. After expiry, stop and obtain a new authorised review. This is not physical safety certification.',
  'admin-operations','Operations Centre provides governed purchasing and operational workflows.')
 
 topic('Reconcile payments and documents','Inventory finance staff and Admin','Financial Reconciliation',
@@ -272,7 +272,7 @@ topic('Generate and interpret reports','Admin Service Manager and permitted Inve
  'admin-reports','Report selection is separate from generated results and saved reports.')
 
 topic('Manage campaigns and recommendations','Admin and permitted Service Manager','Campaigns Recommendations and Testimonials',
- 'Growth tools use record lists and focused creation dialogs. Delivery eligibility, independent review and customer consent remain part of the workflow.',
+ 'Growth tools use record lists and focused creation dialogs. Delivery eligibility, the required approval authority and customer consent remain part of the workflow.',
  ['In Campaigns, open New campaign, define the relevant audience and message, review the draft and follow approval and delivery actions.',
  'Delivery rechecks customer marketing consent, account eligibility and configured quiet hours. The current flow describes in-app messages; it is not proof of an external email or SMS delivery.',
  'In Recommendations, propose the product and service relationship with supporting rationale and specification evidence. Follow independent review before using the rule.',
@@ -297,7 +297,7 @@ topic('Maintain staff settings and public policies','Admin and authorised staff'
  'Use Settings for the actual organisation, pricing and permitted controls. Review submitted changes in Approval Centre and confirm their effective state.',
  'Use Customer Policies to prepare, review and publish the appropriate approved versions. Then open the public links and verify that the intended current text is visible.'],
  'Staff permissions and published customer information reflect approved business decisions. An approved draft policy is not necessarily the published version.',
- 'All eight customer policy links were awaiting publication during this audit. This manual is operational guidance and cannot replace approved privacy, terms, refund, cancellation, service, warranty, credit or loyalty policies.',
+ 'Nine approved demo-only notices, including Delivery Policy, are published. The existing owner authority permits Apply reviewed policy where eligible; restricted financial, access and qualified safety changes retain separate review controls. Commercial policy approval remains outstanding.',
  'admin-staff','Staff Management shows scoped roles and invitation states. It does not require multiple business owners.')
 
 topic('Handle incidents and release readiness','Admin and responsible operational staff','Operational Incidents Audit History and Launch Readiness',
@@ -307,7 +307,7 @@ topic('Handle incidents and release readiness','Admin and responsible operationa
  'Review Launch Readiness with the relevant operational, security, provider and business owners. Supply current evidence for each open gate.',
  'Before commercial use, resolve the outstanding release, policy, physical, provider and operational controls. The existing actual-import hold and retain-all decisions remain in force.'],
  'A closed incident has evidence of resolution, and a passed gate has its required acceptance evidence. Current demo availability is not commercial approval.',
- 'The audited readiness view reported nine unresolved high or critical incidents and missing external monitoring or on-call ownership. Do not enable production by changing a label or bypassing a guard.',
+ 'Readiness still reports nine unresolved high or critical incidents. One business owner is supported; actual staff review responsibilities remain to be confirmed. Sandbox payment configuration is not live-provider acceptance.',
  'admin-readiness','Launch Readiness exposes the existing NO-GO decision and individual outstanding gates.')
 
 topic('Resolve common problems','All users','The affected order booking or account',
@@ -325,7 +325,7 @@ topic('Use the daily handover checklist','Admin and team leads','Start and end o
  ['Start of day: review new orders and service requests, stock eligibility, vehicle readiness, current qualifications and meter calibration. Resolve blocking issues before dispatch.',
  'During operations: monitor unassigned work, acknowledgement, inspection, custody, arrival, exceptions and customer messages. Obtain revised approvals before added work.',
  'End of day: reconcile actual gas and product returns, verify cash independently, resolve pending provider payments, review open service reports and close eligible trips.',
- 'Owner review: check approval queues, incident ownership, low stock, unpublished policies and launch gates. Keep restricted approvals pending until eligible independent review is possible.'],
+ 'Owner review: check approval queues, incident ownership, low stock, policy versions and launch gates. Keep restricted approvals pending until eligible independent review is possible.'],
  'Every open obligation has a reference, responsible person and next step. Historical records remain intact.',
  'Do not use numerical dashboard totals alone as a handover. Unknown ETA, unavailable profit, empty histories and expired evidence each require their own interpretation.',
  sub='Terms: purchase credit is spendable wallet value; rewards points are programme records. Custody is responsibility for issued physical stock. A quotation proposes scope and price; an invoice requests payment; a verified receipt records money received. Approval authorises a change; activation or execution applies it.')
@@ -387,10 +387,10 @@ def make():
     doc.add_paragraph('Customer and staff operating guide','Subtitle')
     p(doc,'Use this guide to shop, manage orders, coordinate delivery, complete service work and administer the EasyGas website. It is customised for one Admin/business owner and separately authorised operational staff.')
     figs.append(figure(doc,'public-home.jpg','The current EasyGas client demo home page.',1,True))
-    p(doc,'Edition 1 • 20 November 2026 • Client demo web application')
+    p(doc,'Edition 2 • 20 November 2026 • Client demo web application')
     p(doc,'Website: https://easygas-client-demo.vercel.app')
     p(doc,'Screenshots show synthetic demo records captured on 20 November in Australia/Brisbane, corresponding to 19 November 2026 in Lagos. Operational dates and windows in the product use Africa/Lagos.')
-    p(doc,'Current limitation: commercial production remains NO-GO. Customer policies await publication and the sandbox meter calibration has expired. This guide explains the software; it does not approve a launch, renew qualifications or provide physical LPG training.')
+    p(doc,'Commercial production remains NO-GO. Nine approved demo-only notices are published. The authorised synthetic QA renewal expires at 18:31 UTC on 19 November 2026. This guide explains the software; it does not approve commercial terms or provide physical LPG training.')
     doc.add_page_break()
     doc.add_heading('Find the task you need',1)
     p(doc,'Start with your role, then turn to the task page. Each page identifies who can use it, where to go, the steps, the expected result and how to handle a block.')
@@ -421,7 +421,7 @@ def make():
         if t['sub']:p(doc,t['sub'])
     for node in doc.element.xpath('.//w:pBdr'):node.getparent().remove(node)
     doc.save(OUT/'EasyGas-User-Manual.docx')
-    (BASE/'manual-content.json').write_text(json.dumps({'edition':'2026-11-20','topics':topics,'figures':figs,'plannedPages':len(topics)+2},indent=2)+'\n')
+    (BASE/'manual-content.json').write_text(json.dumps({'edition':'2026-11-20-edition-2','topics':topics,'figures':figs,'plannedPages':len(topics)+2},indent=2)+'\n')
     print(json.dumps({'topics':len(topics),'figures':len(figs),'plannedPages':len(topics)+2,'docx':str(OUT/'EasyGas-User-Manual.docx')}))
 
 if __name__=='__main__':make()

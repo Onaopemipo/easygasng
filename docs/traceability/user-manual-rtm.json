@@ -29,13 +29,14 @@
         "docs/user-manual/evidence/browser-audit.json",
         "docs/user-manual/evidence/subviews.json",
         "docs/user-manual/evidence/responsive.json",
-        "docs/user-manual/evidence/deployment.json"
+        "docs/user-manual/evidence/deployment.json",
+        "docs/user-manual/evidence/document-regression.txt"
       ],
       "acceptanceGate": "UM-G01",
       "status": "VERIFIED_COMPLETE",
       "reason": "All 86 inventoried route surfaces inspected in 109 recorded role-route observations plus field-workspace subviews. Eight unpublished policies and guarded/empty states remain in the route denominator; no full transactional certification claimed.",
       "testResult": "PASS",
-      "outstandingWork": "None for the bounded audit/documentation deliverable. Website remediation WEB-A01–WEB-A07 and production/native/physical/provider/full-transaction acceptance remain open and are not waived."
+      "outstandingWork": "None for the documentation deliverable. Current remediation status and outstanding commercial/real staffing gates are tracked in audit-remediation-rtm.json; original audit findings retained as history."
     },
     {
       "id": "UM-02",
@@ -57,8 +58,6 @@
         "scripts/manual-preservation.mjs"
       ],
       "testIds": [
-        "UM-ROLE-BOUNDS",
-        "UM-PRESERVATION",
         "UM-COVERAGE",
         "UM-FINDINGS"
       ],
@@ -71,13 +70,14 @@
         "docs/user-manual/evidence/role-access.json",
         "docs/user-manual/evidence/business-before.json",
         "docs/user-manual/evidence/business-after.json",
-        "docs/user-manual/evidence/safety-readback.json"
+        "docs/user-manual/evidence/safety-readback.json",
+        "docs/user-manual/evidence/document-regression.txt"
       ],
       "acceptanceGate": "UM-G02",
       "status": "VERIFIED_COMPLETE",
       "reason": "15/15 selected expected HTTP results, including 9 negative controls. Current role workspaces inspected. Final normal product readbacks equal the pre-audit 13-order/ledger/inventory/gas/wallet/policy baseline. No hosted DB access or business writes.",
       "testResult": "PASS",
-      "outstandingWork": "None for the bounded audit/documentation deliverable. Website remediation WEB-A01–WEB-A07 and production/native/physical/provider/full-transaction acceptance remain open and are not waived."
+      "outstandingWork": "None for the documentation deliverable. Current remediation status and outstanding commercial/real staffing gates are tracked in audit-remediation-rtm.json; original audit findings retained as history."
     },
     {
       "id": "UM-03",
@@ -99,19 +99,19 @@
         "docs/user-manual/validate_artifacts.py"
       ],
       "testIds": [
-        "UM-ARTIFACTS",
-        "UM-VISUAL"
+        "UM-ARTIFACTS"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/user-manual/evidence/artifact-validation.json",
-        "docs/user-manual/evidence/visual-review.json"
+        "docs/user-manual/evidence/visual-review.json",
+        "docs/user-manual/evidence/document-regression.txt"
       ],
       "acceptanceGate": "UM-G03",
       "status": "VERIFIED_COMPLETE",
       "reason": "33-page customised manual with 31 task chapters, 25 genuine screenshots, six role perspectives, linked contents and explicit single-owner 0/1 guidance. PDF and editable Word verified.",
       "testResult": "PASS",
-      "outstandingWork": "None for the bounded audit/documentation deliverable. Website remediation WEB-A01–WEB-A07 and production/native/physical/provider/full-transaction acceptance remain open and are not waived."
+      "outstandingWork": "None for the documentation deliverable. Current remediation status and outstanding commercial/real staffing gates are tracked in audit-remediation-rtm.json; original audit findings retained as history."
     },
     {
       "id": "UM-04",
@@ -133,9 +133,6 @@
         "docs/user-manual/validate_artifacts.py"
       ],
       "testIds": [
-        "UM-ARTIFACTS",
-        "UM-VISUAL",
-        "UM-FINDINGS",
         "UM-MATRIX"
       ],
       "negativeTests": [],
@@ -143,13 +140,14 @@
         "docs/user-manual/evidence/artifact-validation.json",
         "docs/user-manual/evidence/visual-review.json",
         "docs/user-manual/evidence/route-coverage.json",
-        "docs/user-manual/evidence/validation.txt"
+        "docs/user-manual/evidence/validation.txt",
+        "docs/user-manual/evidence/document-regression.txt"
       ],
       "acceptanceGate": "UM-G04",
       "status": "VERIFIED_COMPLETE",
       "reason": "13-page audit with seven open/blocked findings, route appendix, evidence, responsibilities, next actions and explicit acceptance limits. All 46 final rendered pages visually reviewed; artifact integrity/coverage/matrix checks pass.",
       "testResult": "PASS",
-      "outstandingWork": "None for the bounded audit/documentation deliverable. Website remediation WEB-A01–WEB-A07 and production/native/physical/provider/full-transaction acceptance remain open and are not waived."
+      "outstandingWork": "None for the documentation deliverable. Current remediation status and outstanding commercial/real staffing gates are tracked in audit-remediation-rtm.json; original audit findings retained as history."
     }
   ],
   "gates": [
@@ -328,6 +326,52 @@
         "docs/user-manual/evidence/view-manager-_admin_deliveries.txt",
         "docs/user-manual/evidence/driver-trip.txt"
       ]
+    }
+  ],
+  "findingsAsOfOriginalAudit": true,
+  "remediationMatrix": "docs/traceability/audit-remediation-rtm.json",
+  "currentFindings": [
+    {
+      "id": "WEB-A01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Nine exact user-approved demo-only notices published as version 2 through existing owner authority and read publicly. Lagos effective-date display verified. Scope explicitly changed from commercial-policy completion to bounded demo publication; commercial review remains in WEB-A05.",
+      "outstandingWork": "Real commercial policy review and acceptance before production; these notices exclude real sales."
+    },
+    {
+      "id": "WEB-A02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Technician Contact support click opens useful public contact information without permission error. Customer conversations and driver workspace remain denied.",
+      "outstandingWork": "None for the repaired shortcut. No staff access to customer conversations added."
+    },
+    {
+      "id": "WEB-A03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Deployed verification-specific guidance and account link observed. Isolated valid, expired, wrong-purpose and replayed tokens tested; no live recovery token or external email sent.",
+      "outstandingWork": "Real transactional email receipt remains a separate production provider gate."
+    },
+    {
+      "id": "WEB-A04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Explicitly approved two-hour synthetic-only renewal read back for four existing QA qualifications and sandbox meter. Independent verifiers, wrong-role denial and past-expiry rejection preserved. Verified only for the recorded window, not permanent readiness or a new complete delivery journey.",
+      "outstandingWork": "Expires 2026-11-19T18:31:17.495Z without automatic extension. Any later synthetic run needs fresh approval; real activity needs genuine qualified evidence."
+    },
+    {
+      "id": "WEB-A05",
+      "status": "BLOCKED",
+      "reason": "BLOCKED: nine unresolved high/critical incidents and unverified commercial gates remain. Readiness describes actual sandbox gateway configuration truthfully; no release decision was waived.",
+      "outstandingWork": "Business/release owners must resolve incident, provider, native/device, monitoring, restore, privacy, physical and commercial acceptance evidence through the established release process."
+    },
+    {
+      "id": "WEB-A06",
+      "status": "PARTIAL",
+      "reason": "PARTIAL: sole-owner publication labels and readiness guidance corrected; no second owner required for eligible notices. Actual company maker/reviewer/executor responsibilities cannot be inferred from labelled QA accounts. Named EasyRewards request and existing restricted decisions preserved.",
+      "outstandingWork": "Sole business owner must identify real authorised staff and branches for restricted review/execution. Do not create fake owners or share credentials."
+    },
+    {
+      "id": "WEB-A07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Deployed dashboard, finance and inventory explicitly distinguish missing cost evidence from zero profit/value. Manual preserves unknown GPS/ETA and web-versus-device tracking limits. No missing money or telemetry invented.",
+      "outstandingWork": "Authoritative cost reconciliation and native/device telemetry acceptance remain separate requirements."
     }
   ]
 }

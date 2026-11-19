@@ -304,6 +304,7 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
     "docs/traceability/field-markers-reviewed-hashes.json", "utf8",
   ));
   const technicianContinuation = JSON.parse(await readFile("docs/technician-saas-redesign/reviewed-source-changes.json", "utf8"));
+  const auditContinuations = JSON.parse(await readFile("docs/audit-remediation/reviewed-prior-continuations.json", "utf8"));
   for (const [file, originalHash] of Object.entries(baseline)) {
     const hash = file === "apps/web/lib/payments/orchestrator.ts"
       ? approvedMerchantDocumentSources[file] ?? approvedPaymentReturnHash
@@ -313,7 +314,7 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
     const source = await readFile(file);
     if (technicianContinuation.files[file])
       assert.equal(technicianContinuation.baseline[file], hash, file);
-    assert.equal(createHash("sha256").update(source).digest("hex"), assignmentAlertContinuation.files[file] ?? technicianContinuation.files[file] ?? hash, file);
+    assert.equal(createHash("sha256").update(source).digest("hex"), auditContinuations.files[file] ?? assignmentAlertContinuation.files[file] ?? technicianContinuation.files[file] ?? hash, file);
   }
 });
 

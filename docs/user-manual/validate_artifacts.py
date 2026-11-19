@@ -12,7 +12,7 @@ for path in files:
     item={'path':str(path.relative_to(ROOT)),'bytes':path.stat().st_size,'sha256':digest(path)}
     assert item['bytes']>10000
     if path.suffix=='.pdf':
-        reader=PdfReader(path);count=33 if 'User-Manual' in path.name else 13
+        reader=PdfReader(path);count=33 if 'User-Manual' in path.name else 16
         assert len(reader.pages)==count
         for page in reader.pages:assert len(page.extract_text())>100
         text='\n'.join(p.extract_text() for p in reader.pages);alltext+=text

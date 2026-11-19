@@ -85,7 +85,8 @@ test("PRODUCT-UI03: workspace headings escape record content and describe the wo
 });
 test("PRODUCT-UI04: approval labels are Approve while backend authority and owner-apply action are retained", () => {
   const source = readFileSync("apps/web/components/admin.tsx", "utf8");
-  assert.ok(source.includes('r.can_owner_apply ? "Approve" : "Review"'));
+  assert.ok(source.includes('title="Review requested change"'));
+  assert.match(source, /Review\{\" \"\}/);
   assert.ok(source.includes('busy ? "Approving…" : "Approve"'));
   assert.ok(source.includes("approval.owner_apply"));
   assert.ok(!source.includes('"Apply request"'));

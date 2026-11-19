@@ -1,3 +1,5 @@
+Edition 2 note: the original read-only audit observations below are historical. The [current remediation matrix](audit-remediation-rtm.md) records deployed corrections and remaining gates.
+
 # Whole website audit and user manual traceability
 
 20 November 2026. Documentation scope is complete; commercial production remains **NO-GO**. Actual-import hold, retain-all and all prior phase denominators are preserved.
@@ -81,3 +83,7 @@ Read-only website inspection and selected HTTP boundaries, not an exhaustive pen
 
 - 2026-11-20: Scope registered for whole website read-only audit and user manual. Inventory denominators retained including untested/blocked states. No app fixes/deployment, policy activation, native build or qualification renewal inferred.
 - 2026-11-20: Audit and manual completed without app changes or deployment. All 86 surfaces/4 documentation requirements retained; seven website findings stay open or blocked. Commercial NO-GO, actual-import hold, retain-all and unrelated changes preserved. Artifact hashes, final full-page visual review, 15 access checks and unchanged business readbacks recorded.
+
+## Edition 2 remediation update
+
+The original audit and its seven finding states above are retained as historical evidence. Current states are in [audit remediation](audit-remediation-rtm.md): five of seven findings verified within approved demo scope, one blocked and one partial; all nine phase requirements remain in the denominator. The manual remains 33 pages and 25 genuine screenshots. The audit now has a three-page remediation update followed by the original 13-page audit. Artifact hashes and full visual review have been refreshed. Commercial NO-GO, actual-import hold and retain-all remain.

@@ -28,7 +28,7 @@ test('UM-ARTIFACTS: delivered files match the fully reviewed artifact versions a
  assert.equal(validation.status,'PASS');assert.equal(qa.status,'PASS');assert.equal(content.figures.length,25);
  for(const f of content.figures)assert.ok(existsSync(base+f.source),f.source);
  for(const a of validation.artifacts){assert.ok(existsSync(a.path),a.path);assert.equal(createHash('sha256').update(readFileSync(a.path)).digest('hex'),a.sha256);assert.equal(qa.artifacts.find((x:any)=>x.path===a.path)?.sha256,a.sha256);}
- assert.deepEqual(qa.manualPages,Array.from({length:33},(_,i)=>i+1));assert.deepEqual(qa.auditPages,Array.from({length:13},(_,i)=>i+1));
+ assert.deepEqual(qa.manualPages,Array.from({length:33},(_,i)=>i+1));assert.deepEqual(qa.auditPages,Array.from({length:16},(_,i)=>i+1));
 });
 test('UM-MATRIX: all stable documentation requirements and gates keep their evidence and scope limitations',()=>{
  const rtm=JSON.parse(readFileSync('docs/traceability/user-manual-rtm.json','utf8'));

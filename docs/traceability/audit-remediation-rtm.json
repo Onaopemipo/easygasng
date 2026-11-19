@@ -6,254 +6,365 @@
       "id": "WEB-A01",
       "requirement": "Prepare and review the business-approved versions in Customer Policies, complete the required approval and publication steps, then re-open every public link. Verify title, version, effective date, content and consent-linked references.",
       "priority": "P1",
-      "scope": "Client demo remediation with current business authority; preserve commercial NO-GO, actual-import hold and retain-all",
+      "scope": "User-approved client-demo remediation; nine demo-only notices and explicitly approved two-hour synthetic renewal. Commercial production, actual-import hold and retain-all preserved.",
       "uiReference": "Website audit dated 20 November 2026 and current user authorisation to fix deploy verify and refresh manual",
-      "routes": [],
-      "implementationFiles": [],
-      "dataSource": "Current client-demo product reads, approved business records, existing workflow source and audit evidence",
+      "implementationFiles": [
+        "apps/web/components/policies.tsx",
+        "apps/web/lib/policies.ts",
+        "docs/audit-remediation/proposed-demo-policies.json",
+        "scripts/publish-audit-demo-policies.mjs"
+      ],
+      "dataSource": "Existing legal_documents and setting_definitions authority; user-approved exact notice packet and normal setting.propose workflow",
       "securityControl": "No invented legal approval, certification or staffing; retain current independent financial/access/safety controls and private data boundaries",
-      "testFiles": [],
-      "testIds": [],
+      "testFiles": [
+        "tests/audit-remediation.test.ts"
+      ],
+      "testIds": [
+        "WEB-A01 and WEB-A06"
+      ],
       "negativeTests": [],
       "evidence": [
-        "docs/user-manual/findings.json"
+        "docs/audit-remediation/evidence/acceptance-tests.txt",
+        "docs/audit-remediation/evidence/policy-publication.json",
+        "docs/audit-remediation/evidence/browser-checks.json",
+        "docs/audit-remediation/evidence/view-owner-policies.txt"
       ],
       "acceptanceGate": "WEB-A01-GATE",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Registered before implementation; investigating authoritative source and acceptance conditions",
-      "testResult": "UNTESTED",
-      "outstandingWork": "Prepare and review the business-approved versions in Customer Policies, complete the required approval and publication steps, then re-open every public link. Verify title, version, effective date, content and consent-linked references."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Nine exact user-approved demo-only notices published as version 2 through existing owner authority and read publicly. Lagos effective-date display verified. Scope explicitly changed from commercial-policy completion to bounded demo publication; commercial review remains in WEB-A05.",
+      "testResult": "PASS",
+      "outstandingWork": "Real commercial policy review and acceptance before production; these notices exclude real sales.",
+      "route": "/admin/policies, /policies, /privacy, /terms, /delivery, /refund, /cancellation, /service-terms, /warranty, /credit-terms, /loyalty-terms"
     },
     {
       "id": "WEB-A02",
       "requirement": "Point the shortcut to an appropriate staff help or dispatch destination, or implement narrowly scoped staff support. Preserve customer and branch isolation; do not grant technicians broad customer-support access.",
       "priority": "P2",
-      "scope": "Client demo remediation with current business authority; preserve commercial NO-GO, actual-import hold and retain-all",
+      "scope": "User-approved client-demo remediation; nine demo-only notices and explicitly approved two-hour synthetic renewal. Commercial production, actual-import hold and retain-all preserved.",
       "uiReference": "Website audit dated 20 November 2026 and current user authorisation to fix deploy verify and refresh manual",
-      "routes": [],
-      "implementationFiles": [],
-      "dataSource": "Current client-demo product reads, approved business records, existing workflow source and audit evidence",
+      "implementationFiles": [
+        "apps/web/components/technician-workspace.tsx"
+      ],
+      "dataSource": "Scoped current product HTTP records and deployed UI; original preserved audit baseline and source",
       "securityControl": "No invented legal approval, certification or staffing; retain current independent financial/access/safety controls and private data boundaries",
-      "testFiles": [],
-      "testIds": [],
+      "testFiles": [
+        "tests/audit-remediation.test.ts"
+      ],
+      "testIds": [
+        "WEB-A02"
+      ],
       "negativeTests": [
         "WEB-A02-NEGATIVE"
       ],
       "evidence": [
-        "docs/user-manual/findings.json"
+        "docs/audit-remediation/evidence/acceptance-tests.txt",
+        "docs/audit-remediation/evidence/view-technician-home.txt",
+        "docs/audit-remediation/evidence/view-technician-contact.txt",
+        "docs/audit-remediation/evidence/hosted-readback.json"
       ],
       "acceptanceGate": "WEB-A02-GATE",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Registered before implementation; investigating authoritative source and acceptance conditions",
-      "testResult": "UNTESTED",
-      "outstandingWork": "Point the shortcut to an appropriate staff help or dispatch destination, or implement narrowly scoped staff support. Preserve customer and branch isolation; do not grant technicians broad customer-support access."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Technician Contact support click opens useful public contact information without permission error. Customer conversations and driver workspace remain denied.",
+      "testResult": "PASS",
+      "outstandingWork": "None for the repaired shortcut. No staff access to customer conversations added.",
+      "route": "/admin/bookings, /contact"
     },
     {
       "id": "WEB-A03",
       "requirement": "Use verification-specific missing or expired link guidance, including the correct resend route. Keep reset and invitation messages scoped to their own flow.",
       "priority": "P2",
-      "scope": "Client demo remediation with current business authority; preserve commercial NO-GO, actual-import hold and retain-all",
+      "scope": "User-approved client-demo remediation; nine demo-only notices and explicitly approved two-hour synthetic renewal. Commercial production, actual-import hold and retain-all preserved.",
       "uiReference": "Website audit dated 20 November 2026 and current user authorisation to fix deploy verify and refresh manual",
-      "routes": [],
-      "implementationFiles": [],
-      "dataSource": "Current client-demo product reads, approved business records, existing workflow source and audit evidence",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/lib/accounts.ts"
+      ],
+      "dataSource": "Scoped current product HTTP records and deployed UI; original preserved audit baseline and source",
       "securityControl": "No invented legal approval, certification or staffing; retain current independent financial/access/safety controls and private data boundaries",
-      "testFiles": [],
-      "testIds": [],
+      "testFiles": [
+        "tests/audit-remediation.test.ts"
+      ],
+      "testIds": [
+        "WEB-A03"
+      ],
       "negativeTests": [
         "WEB-A03-NEGATIVE"
       ],
       "evidence": [
-        "docs/user-manual/findings.json"
+        "docs/audit-remediation/evidence/acceptance-tests.txt",
+        "docs/audit-remediation/evidence/view-public-_verify-email.txt",
+        "docs/audit-remediation/evidence/view-owner-verification-account.txt"
       ],
       "acceptanceGate": "WEB-A03-GATE",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Registered before implementation; investigating authoritative source and acceptance conditions",
-      "testResult": "UNTESTED",
-      "outstandingWork": "Use verification-specific missing or expired link guidance, including the correct resend route. Keep reset and invitation messages scoped to their own flow."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Deployed verification-specific guidance and account link observed. Isolated valid, expired, wrong-purpose and replayed tokens tested; no live recovery token or external email sent.",
+      "testResult": "PASS",
+      "outstandingWork": "Real transactional email receipt remains a separate production provider gate.",
+      "route": "/verify-email, /account-settings"
     },
     {
       "id": "WEB-A04",
       "requirement": "Before another authorised synthetic journey, obtain appropriate current demo-only review and evidence for the meter and required staff qualifications. Real operation needs genuine qualified evidence, not QA placeholders.",
       "priority": "P1",
-      "scope": "Client demo remediation with current business authority; preserve commercial NO-GO, actual-import hold and retain-all",
+      "scope": "User-approved client-demo remediation; nine demo-only notices and explicitly approved two-hour synthetic renewal. Commercial production, actual-import hold and retain-all preserved.",
       "uiReference": "Website audit dated 20 November 2026 and current user authorisation to fix deploy verify and refresh manual",
-      "routes": [],
-      "implementationFiles": [],
-      "dataSource": "Current client-demo product reads, approved business records, existing workflow source and audit evidence",
+      "implementationFiles": [
+        "apps/web/components/operations-completion.tsx",
+        "scripts/renew-audit-demo-evidence.mjs"
+      ],
+      "dataSource": "Existing qualifications, independently verified safety records and sandbox bulk meter via normal product APIs",
       "securityControl": "No invented legal approval, certification or staffing; retain current independent financial/access/safety controls and private data boundaries",
-      "testFiles": [],
-      "testIds": [],
+      "testFiles": [
+        "tests/audit-remediation.test.ts"
+      ],
+      "testIds": [
+        "WEB-A04 and WEB-A07"
+      ],
       "negativeTests": [],
       "evidence": [
-        "docs/user-manual/findings.json"
+        "docs/audit-remediation/evidence/acceptance-tests.txt",
+        "docs/audit-remediation/evidence/qa-renewal.json",
+        "docs/audit-remediation/evidence/renewal.txt"
       ],
       "acceptanceGate": "WEB-A04-GATE",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Registered before implementation; investigating authoritative source and acceptance conditions",
-      "testResult": "UNTESTED",
-      "outstandingWork": "Before another authorised synthetic journey, obtain appropriate current demo-only review and evidence for the meter and required staff qualifications. Real operation needs genuine qualified evidence, not QA placeholders."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Explicitly approved two-hour synthetic-only renewal read back for four existing QA qualifications and sandbox meter. Independent verifiers, wrong-role denial and past-expiry rejection preserved. Verified only for the recorded window, not permanent readiness or a new complete delivery journey.",
+      "testResult": "PASS",
+      "outstandingWork": "Expires 2026-11-19T18:31:17.495Z without automatic extension. Any later synthetic run needs fresh approval; real activity needs genuine qualified evidence.",
+      "route": "/admin/operations, /admin/inventory"
     },
     {
       "id": "WEB-A05",
       "requirement": "Assign owners and evidence to every current gate, resolve incidents and complete the established release acceptance process. Preserve the actual-import hold and retain-all decisions.",
       "priority": "P0",
-      "scope": "Client demo remediation with current business authority; preserve commercial NO-GO, actual-import hold and retain-all",
+      "scope": "User-approved client-demo remediation; nine demo-only notices and explicitly approved two-hour synthetic renewal. Commercial production, actual-import hold and retain-all preserved.",
       "uiReference": "Website audit dated 20 November 2026 and current user authorisation to fix deploy verify and refresh manual",
-      "routes": [],
-      "implementationFiles": [],
-      "dataSource": "Current client-demo product reads, approved business records, existing workflow source and audit evidence",
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts"
+      ],
+      "dataSource": "Scoped current product HTTP records and deployed UI; original preserved audit baseline and source",
       "securityControl": "No invented legal approval, certification or staffing; retain current independent financial/access/safety controls and private data boundaries",
-      "testFiles": [],
-      "testIds": [],
-      "negativeTests": [],
+      "testFiles": [
+        "tests/audit-remediation.test.ts"
+      ],
+      "testIds": [
+        "WEB-A05"
+      ],
+      "negativeTests": [
+        "WEB-A05-GUARD"
+      ],
       "evidence": [
-        "docs/user-manual/findings.json"
+        "docs/audit-remediation/evidence/acceptance-tests.txt",
+        "docs/audit-remediation/evidence/view-owner-readiness.txt"
       ],
       "acceptanceGate": "WEB-A05-GATE",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Registered before implementation; investigating authoritative source and acceptance conditions",
-      "testResult": "UNTESTED",
-      "outstandingWork": "Assign owners and evidence to every current gate, resolve incidents and complete the established release acceptance process. Preserve the actual-import hold and retain-all decisions."
+      "status": "BLOCKED",
+      "reason": "BLOCKED: nine unresolved high/critical incidents and unverified commercial gates remain. Readiness describes actual sandbox gateway configuration truthfully; no release decision was waived.",
+      "testResult": "PASS guard checks; production acceptance BLOCKED",
+      "outstandingWork": "Business/release owners must resolve incident, provider, native/device, monitoring, restore, privacy, physical and commercial acceptance evidence through the established release process.",
+      "route": "/admin/readiness, /admin/incidents"
     },
     {
       "id": "WEB-A06",
       "requirement": "Document real maker, reviewer and executor responsibilities for the small company. Confirm how each restricted request can be processed by authorised staff without fake owners or shared identities.",
       "priority": "P2",
-      "scope": "Client demo remediation with current business authority; preserve commercial NO-GO, actual-import hold and retain-all",
+      "scope": "User-approved client-demo remediation; nine demo-only notices and explicitly approved two-hour synthetic renewal. Commercial production, actual-import hold and retain-all preserved.",
       "uiReference": "Website audit dated 20 November 2026 and current user authorisation to fix deploy verify and refresh manual",
-      "routes": [],
-      "implementationFiles": [],
-      "dataSource": "Current client-demo product reads, approved business records, existing workflow source and audit evidence",
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/policies.ts",
+        "apps/web/components/policies.tsx",
+        "docs/user-manual/build_manual.py"
+      ],
+      "dataSource": "Scoped current product HTTP records and deployed UI; original preserved audit baseline and source",
       "securityControl": "No invented legal approval, certification or staffing; retain current independent financial/access/safety controls and private data boundaries",
-      "testFiles": [],
-      "testIds": [],
+      "testFiles": [
+        "tests/audit-remediation.test.ts"
+      ],
+      "testIds": [
+        "WEB-A01 and WEB-A06"
+      ],
       "negativeTests": [
         "WEB-A06-NEGATIVE"
       ],
       "evidence": [
-        "docs/user-manual/findings.json"
+        "docs/audit-remediation/evidence/acceptance-tests.txt",
+        "docs/audit-remediation/evidence/view-owner-policies.txt",
+        "docs/audit-remediation/evidence/view-owner-readiness.txt",
+        "docs/audit-remediation/evidence/hosted-readback.json"
       ],
       "acceptanceGate": "WEB-A06-GATE",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Registered before implementation; investigating authoritative source and acceptance conditions",
-      "testResult": "UNTESTED",
-      "outstandingWork": "Document real maker, reviewer and executor responsibilities for the small company. Confirm how each restricted request can be processed by authorised staff without fake owners or shared identities."
+      "status": "PARTIAL",
+      "reason": "PARTIAL: sole-owner publication labels and readiness guidance corrected; no second owner required for eligible notices. Actual company maker/reviewer/executor responsibilities cannot be inferred from labelled QA accounts. Named EasyRewards request and existing restricted decisions preserved.",
+      "testResult": "PASS software controls; actual staffing UNVERIFIED",
+      "outstandingWork": "Sole business owner must identify real authorised staff and branches for restricted review/execution. Do not create fake owners or share credentials.",
+      "route": "/admin/policies, /admin/readiness, /admin/approvals"
     },
     {
       "id": "WEB-A07",
       "requirement": "Maintain clear unknown-state copy and train users to supply authoritative cost, stock and telemetry evidence. Complete native/device acceptance separately when needed.",
       "priority": "P2",
-      "scope": "Client demo remediation with current business authority; preserve commercial NO-GO, actual-import hold and retain-all",
+      "scope": "User-approved client-demo remediation; nine demo-only notices and explicitly approved two-hour synthetic renewal. Commercial production, actual-import hold and retain-all preserved.",
       "uiReference": "Website audit dated 20 November 2026 and current user authorisation to fix deploy verify and refresh manual",
-      "routes": [],
-      "implementationFiles": [],
-      "dataSource": "Current client-demo product reads, approved business records, existing workflow source and audit evidence",
+      "implementationFiles": [
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/inventory-workspace.tsx",
+        "docs/user-manual/build_manual.py"
+      ],
+      "dataSource": "Scoped current product HTTP records and deployed UI; original preserved audit baseline and source",
       "securityControl": "No invented legal approval, certification or staffing; retain current independent financial/access/safety controls and private data boundaries",
-      "testFiles": [],
-      "testIds": [],
+      "testFiles": [
+        "tests/audit-remediation.test.ts"
+      ],
+      "testIds": [
+        "WEB-A04 and WEB-A07"
+      ],
       "negativeTests": [],
       "evidence": [
-        "docs/user-manual/findings.json"
+        "docs/audit-remediation/evidence/acceptance-tests.txt",
+        "docs/audit-remediation/evidence/view-owner-dashboard.txt",
+        "docs/audit-remediation/evidence/view-owner-finance.txt",
+        "docs/audit-remediation/evidence/view-owner-inventory.txt"
       ],
       "acceptanceGate": "WEB-A07-GATE",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Registered before implementation; investigating authoritative source and acceptance conditions",
-      "testResult": "UNTESTED",
-      "outstandingWork": "Maintain clear unknown-state copy and train users to supply authoritative cost, stock and telemetry evidence. Complete native/device acceptance separately when needed."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Deployed dashboard, finance and inventory explicitly distinguish missing cost evidence from zero profit/value. Manual preserves unknown GPS/ETA and web-versus-device tracking limits. No missing money or telemetry invented.",
+      "testResult": "PASS",
+      "outstandingWork": "Authoritative cost reconciliation and native/device telemetry acceptance remain separate requirements.",
+      "route": "/admin, /admin/finance, /admin/inventory"
     },
     {
       "id": "AUD-R08",
       "requirement": "Deploy reviewed fixes to client demo and verify actual affected routes and protected business records",
       "priority": "P1",
-      "scope": "Client demo remediation with current business authority; preserve commercial NO-GO, actual-import hold and retain-all",
+      "scope": "User-approved client-demo remediation; nine demo-only notices and explicitly approved two-hour synthetic renewal. Commercial production, actual-import hold and retain-all preserved.",
       "uiReference": "Website audit dated 20 November 2026 and current user authorisation to fix deploy verify and refresh manual",
-      "routes": [],
-      "implementationFiles": [],
-      "dataSource": "Current client-demo product reads, approved business records, existing workflow source and audit evidence",
+      "implementationFiles": [
+        "scripts/verify-audit-remediation.mjs",
+        ".vercelignore"
+      ],
+      "dataSource": "Scoped current product HTTP records and deployed UI; original preserved audit baseline and source",
       "securityControl": "No invented legal approval, certification or staffing; retain current independent financial/access/safety controls and private data boundaries",
-      "testFiles": [],
-      "testIds": [],
+      "testFiles": [
+        "tests/audit-remediation.test.ts"
+      ],
+      "testIds": [
+        "AUD-HOSTED"
+      ],
       "negativeTests": [],
-      "evidence": [],
+      "evidence": [
+        "docs/audit-remediation/evidence/acceptance-tests.txt",
+        "docs/audit-remediation/evidence/source-integrity.json",
+        "docs/audit-remediation/evidence/candidate.json",
+        "docs/audit-remediation/evidence/stable-identity.json",
+        "docs/audit-remediation/evidence/promote.txt",
+        "docs/audit-remediation/evidence/hosted-readback.json",
+        "docs/audit-remediation/evidence/browser-checks.json"
+      ],
       "acceptanceGate": "AUD-R08-GATE",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Registered before implementation; investigating authoritative source and acceptance conditions",
-      "testResult": "UNTESTED",
-      "outstandingWork": "Deploy reviewed fixes to client demo and verify actual affected routes and protected business records"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact Git source b10829a deployed to Ready dpl_Ewd4EFdg7QEGbaAgqxAzBZ4MBiVN and stable alias confirmed. Affected browser flows checked; 16/16 role responses (10 denials), 13 orders and 32 original approvals preserved alongside balances/stock/ledger/loyalty.",
+      "testResult": "PASS",
+      "outstandingWork": "No remaining bounded deployment work. Full native, provider and commercial release acceptance unclaimed.",
+      "route": "https://easygas-client-demo.vercel.app"
     },
     {
       "id": "AUD-R09",
       "requirement": "Refresh illustrated user manual and audit traceability with executed outcomes and outstanding gates",
       "priority": "P1",
-      "scope": "Client demo remediation with current business authority; preserve commercial NO-GO, actual-import hold and retain-all",
+      "scope": "User-approved client-demo remediation; nine demo-only notices and explicitly approved two-hour synthetic renewal. Commercial production, actual-import hold and retain-all preserved.",
       "uiReference": "Website audit dated 20 November 2026 and current user authorisation to fix deploy verify and refresh manual",
-      "routes": [],
-      "implementationFiles": [],
-      "dataSource": "Current client-demo product reads, approved business records, existing workflow source and audit evidence",
+      "implementationFiles": [
+        "docs/user-manual/build_manual.py",
+        "docs/user-manual/validate_artifacts.py",
+        "docs/audit-remediation/build_audit_addendum.py",
+        "output/manual/EasyGas-User-Manual.docx",
+        "output/pdf/EasyGas-User-Manual.pdf",
+        "output/pdf/EasyGas-Website-Audit.pdf"
+      ],
+      "dataSource": "Scoped current product HTTP records and deployed UI; original preserved audit baseline and source",
       "securityControl": "No invented legal approval, certification or staffing; retain current independent financial/access/safety controls and private data boundaries",
-      "testFiles": [],
-      "testIds": [],
+      "testFiles": [
+        "tests/user-manual.test.ts"
+      ],
+      "testIds": [
+        "UM-ARTIFACTS"
+      ],
       "negativeTests": [],
-      "evidence": [],
+      "evidence": [
+        "docs/user-manual/evidence/artifact-validation.json",
+        "docs/user-manual/evidence/visual-review.json",
+        "docs/user-manual/evidence/document-regression.txt"
+      ],
       "acceptanceGate": "AUD-R09-GATE",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Registered before implementation; investigating authoritative source and acceptance conditions",
-      "testResult": "UNTESTED",
-      "outstandingWork": "Refresh illustrated user manual and audit traceability with executed outcomes and outstanding gates"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Manual refreshed with current help, publication, one-owner, unknown-value and exact temporary expiry guidance. All 33 manual and 16 audit pages visually inspected; original audit retained as history. Integrity and credential-text checks passed.",
+      "testResult": "PASS",
+      "outstandingWork": "Commercial and real staff operating gates remain explicit; no requirement excluded.",
+      "route": "Illustrated manual Edition 2 and remediation audit addendum"
     }
   ],
   "gates": [
     {
       "id": "WEB-A01-GATE",
-      "status": "OPEN",
-      "description": "Prepare and review the business-approved versions in Customer Policies, complete the required approval and publication steps, then re-open every public link. Verify title, version, effective date, content and consent-linked references."
+      "status": "PASS",
+      "description": "Prepare and review the business-approved versions in Customer Policies, complete the required approval and publication steps, then re-open every public link. Verify title, version, effective date, content and consent-linked references.",
+      "reason": "Nine exact user-approved demo-only notices published as version 2 through existing owner authority and read publicly. Lagos effective-date display verified. Scope explicitly changed from commercial-policy completion to bounded demo publication; commercial review remains in WEB-A05."
     },
     {
       "id": "WEB-A02-GATE",
-      "status": "OPEN",
-      "description": "Point the shortcut to an appropriate staff help or dispatch destination, or implement narrowly scoped staff support. Preserve customer and branch isolation; do not grant technicians broad customer-support access."
+      "status": "PASS",
+      "description": "Point the shortcut to an appropriate staff help or dispatch destination, or implement narrowly scoped staff support. Preserve customer and branch isolation; do not grant technicians broad customer-support access.",
+      "reason": "Actual Technician Contact support click opens useful public contact information without permission error. Customer conversations and driver workspace remain denied."
     },
     {
       "id": "WEB-A03-GATE",
-      "status": "OPEN",
-      "description": "Use verification-specific missing or expired link guidance, including the correct resend route. Keep reset and invitation messages scoped to their own flow."
+      "status": "PASS",
+      "description": "Use verification-specific missing or expired link guidance, including the correct resend route. Keep reset and invitation messages scoped to their own flow.",
+      "reason": "Deployed verification-specific guidance and account link observed. Isolated valid, expired, wrong-purpose and replayed tokens tested; no live recovery token or external email sent."
     },
     {
       "id": "WEB-A04-GATE",
-      "status": "OPEN",
-      "description": "Before another authorised synthetic journey, obtain appropriate current demo-only review and evidence for the meter and required staff qualifications. Real operation needs genuine qualified evidence, not QA placeholders."
+      "status": "PASS",
+      "description": "Before another authorised synthetic journey, obtain appropriate current demo-only review and evidence for the meter and required staff qualifications. Real operation needs genuine qualified evidence, not QA placeholders.",
+      "reason": "Explicitly approved two-hour synthetic-only renewal read back for four existing QA qualifications and sandbox meter. Independent verifiers, wrong-role denial and past-expiry rejection preserved. Verified only for the recorded window, not permanent readiness or a new complete delivery journey."
     },
     {
       "id": "WEB-A05-GATE",
-      "status": "OPEN",
-      "description": "Assign owners and evidence to every current gate, resolve incidents and complete the established release acceptance process. Preserve the actual-import hold and retain-all decisions."
+      "status": "BLOCKED",
+      "description": "Assign owners and evidence to every current gate, resolve incidents and complete the established release acceptance process. Preserve the actual-import hold and retain-all decisions.",
+      "reason": "BLOCKED: nine unresolved high/critical incidents and unverified commercial gates remain. Readiness describes actual sandbox gateway configuration truthfully; no release decision was waived."
     },
     {
       "id": "WEB-A06-GATE",
       "status": "OPEN",
-      "description": "Document real maker, reviewer and executor responsibilities for the small company. Confirm how each restricted request can be processed by authorised staff without fake owners or shared identities."
+      "description": "Document real maker, reviewer and executor responsibilities for the small company. Confirm how each restricted request can be processed by authorised staff without fake owners or shared identities.",
+      "reason": "PARTIAL: sole-owner publication labels and readiness guidance corrected; no second owner required for eligible notices. Actual company maker/reviewer/executor responsibilities cannot be inferred from labelled QA accounts. Named EasyRewards request and existing restricted decisions preserved."
     },
     {
       "id": "WEB-A07-GATE",
-      "status": "OPEN",
-      "description": "Maintain clear unknown-state copy and train users to supply authoritative cost, stock and telemetry evidence. Complete native/device acceptance separately when needed."
+      "status": "PASS",
+      "description": "Maintain clear unknown-state copy and train users to supply authoritative cost, stock and telemetry evidence. Complete native/device acceptance separately when needed.",
+      "reason": "Deployed dashboard, finance and inventory explicitly distinguish missing cost evidence from zero profit/value. Manual preserves unknown GPS/ETA and web-versus-device tracking limits. No missing money or telemetry invented."
     },
     {
       "id": "AUD-R08-GATE",
-      "status": "OPEN",
-      "description": "Deploy reviewed fixes to client demo and verify actual affected routes and protected business records"
+      "status": "PASS",
+      "description": "Deploy reviewed fixes to client demo and verify actual affected routes and protected business records",
+      "reason": "Exact Git source b10829a deployed to Ready dpl_Ewd4EFdg7QEGbaAgqxAzBZ4MBiVN and stable alias confirmed. Affected browser flows checked; 16/16 role responses (10 denials), 13 orders and 32 original approvals preserved alongside balances/stock/ledger/loyalty."
     },
     {
       "id": "AUD-R09-GATE",
-      "status": "OPEN",
-      "description": "Refresh illustrated user manual and audit traceability with executed outcomes and outstanding gates"
+      "status": "PASS",
+      "description": "Refresh illustrated user manual and audit traceability with executed outcomes and outstanding gates",
+      "reason": "Manual refreshed with current help, publication, one-owner, unknown-value and exact temporary expiry guidance. All 33 manual and 16 audit pages visually inspected; original audit retained as history. Integrity and credential-text checks passed."
     }
   ],
   "coverage": {
     "requirements": {
-      "implemented": 0,
-      "verified": 0,
+      "implemented": 8,
+      "verified": 7,
       "total": 9
     },
     "criticalRequirements": {
@@ -261,8 +372,14 @@
       "total": 1
     },
     "gates": {
-      "passed": 0,
+      "passed": 7,
       "total": 9
+    },
+    "findings": {
+      "verifiedWithinApprovedDemoScope": 5,
+      "blocked": 1,
+      "partial": 1,
+      "total": 7
     },
     "excluded": 0
   },
@@ -270,6 +387,24 @@
     {
       "date": "2026-11-20",
       "change": "Registered all seven original audit findings with stable WEB-A IDs plus release and documentation requirements. No finding silently removed; operational controls and authorised business decisions remain distinct from software defects."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "User approved exact nine demo-only notices and fresh two-hour renewal. WEB-A01 scope is demo notices, with commercial acceptance held under WEB-A05; WEB-A04 is time-bounded evidence only. Original seven IDs retained. A05 blocked and A06 partial remain in denominators."
     }
-  ]
+  ],
+  "sourceSha": "b10829aa447a7ae5bd430a73f9644e2feca854a6",
+  "deployment": "dpl_Ewd4EFdg7QEGbaAgqxAzBZ4MBiVN",
+  "validationSummary": {
+    "testId": "AUD-REGRESSION",
+    "status": "PASS",
+    "tests": 857,
+    "passed": 829,
+    "failed": 0,
+    "skipped": 28,
+    "skipReason": "Disposable independent-connection PostgreSQL tests were not enabled; remain untested in coverage",
+    "focusedAdditionalChecks": 15,
+    "matrixAndDocumentationChecks": 6,
+    "productionDecision": "NO-GO unchanged"
+  }
 }

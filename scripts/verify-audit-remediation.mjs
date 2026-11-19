@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import{readFile,writeFile}from'node:fs/promises';
+import{client,hash}from'./demo-role-acceptance-client.mjs';
+const c=await client(),root='docs/audit-remediation/evidence/';
+const before=JSON.parse(await readFile('.data/audit-remediation-before.json','utf8'));
+const after={orders:await c.ok('owner','orders'),ledger:await c.ok('finance','finance.ledger'),inventory:await c.ok('inventory','inventory'),gas:(await c.ok('inventory','inventory.workspace')).gas,wallet:await c.ok('customer','wallet'),policy:(await c.ok('owner','settings?scope=lagos')).filter(s=>s.key==='loyalty.policy').map(s=>({key:s.key,value:s.value,version:s.version}))};
+assert.deepEqual(after,before);
+const original=JSON.parse(await readFile('.data/audit-remediation-approvals.json','utf8')),requests=await c.ok('owner','approvals');for(const r of original)assert.deepEqual(requests.find(x=>x.id===r.id),r,'Original request '+r.id);
+const checks=[];for(const[role,action,expected]of[['','orders',401],['','navigation.access',401],['customer','approvals',403],['customer','drivers.workspace',403],['driver','finance.ledger',403],['driver','technician.snapshot',403],['technician','drivers.workspace',403],['technician','support.list',403],['manager','finance.ledger',403],['finance','staff.manage',403],['owner','orders',200],['manager','orders',200],['finance','finance.ledger',200],['driver','orders',200],['technician','technician.snapshot',200],['customer','orders',200]]){const r=await c.call(role,action);assert.equal(r.status,expected,role+' '+action);checks.push({role:role||'anonymous',action,status:r.status,expected});}
+await writeFile(root+'hosted-readback.json',JSON.stringify({testId:'AUD-HOSTED',status:'PASS',checkedAt:new Date().toISOString(),orders:after.orders.length,originalApprovalsPreserved:original.length,businessUnchanged:true,hashes:Object.fromEntries(Object.entries(after).map(([k,v])=>[k+'Hash',hash(v)])),checks,productionDecision:'NO-GO unchanged',noNewBusinessTransactions:true},null,2)+'\n');console.log('PASS hosted preservation and role boundaries');

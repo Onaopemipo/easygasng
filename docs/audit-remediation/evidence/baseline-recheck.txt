@@ -1,0 +1,70 @@
+✖ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes (11.785ms)
+✖ DRVS-PRESERVED: historical business baselines retain explicitly reviewed notification and technician continuations (12.189ms)
+✖ PRODUCT-UI04: approval labels are Approve while backend authority and owner-apply action are retained (4.605292ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 692.779583
+
+✖ failing tests:
+
+test at tests/dispatch-centre-safety.test.ts:1:6700
+✖ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes (11.785ms)
+  AssertionError [ERR_ASSERTION]: apps/web/components/admin-navigation.tsx
+  + actual - expected
+  
+  + 'e8c9fa4417819c3aac8492fc9e81b67e5c9812fb7203ff2d0e93c173291be1c5'
+  - 'de2fa6a3104a15e8c949e58d954df087d0e58244c083152a8fcc170dc07b3b7a'
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/dispatch-centre-safety.test.ts:316:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'e8c9fa4417819c3aac8492fc9e81b67e5c9812fb7203ff2d0e93c173291be1c5',
+    expected: 'de2fa6a3104a15e8c949e58d954df087d0e58244c083152a8fcc170dc07b3b7a',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/driver-saas-redesign.test.ts:1:3716
+✖ DRVS-PRESERVED: historical business baselines retain explicitly reviewed notification and technician continuations (12.189ms)
+  AssertionError [ERR_ASSERTION]: apps/web/components/admin.tsx
+  + actual - expected
+  
+  + '718f6f12075281e690bb9b7731c6ca4335a43e362c6d956817c10cba7f111836'
+  - 'a3541e2d0635954f5952e0b134d01623c4f6bcd5d207747c5d7223a7e91b6306'
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/driver-saas-redesign.test.ts:159:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '718f6f12075281e690bb9b7731c6ca4335a43e362c6d956817c10cba7f111836',
+    expected: 'a3541e2d0635954f5952e0b134d01623c4f6bcd5d207747c5d7223a7e91b6306',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/product-ui.test.ts:1:2399
+✖ PRODUCT-UI04: approval labels are Approve while backend authority and owner-apply action are retained (4.605292ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(source.includes('r.can_owner_apply ? "Approve" : "Review"'))
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/product-ui.test.ts:88:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

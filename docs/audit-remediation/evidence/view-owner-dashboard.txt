@@ -1,0 +1,389 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders, 2 New orders awaiting acceptance":
+        - /url: /admin/orders
+        - generic: Orders
+        - generic: "2"
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk, 3 Open or in-progress support requests":
+        - /url: /admin/support
+        - generic: Support Desk
+        - generic: "3"
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory, 4 Physical product and bulk gas balances at or below configured thresholds":
+        - /url: /admin/inventory
+        - generic: Inventory
+        - generic: "4"
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries, 3 Accepted or preparing orders awaiting a driver":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+        - generic: "3"
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents, 10 Open or acknowledged operational incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+        - generic: "10"
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "73"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Dashboard
+  - paragraph: YOUR EASYGAS OPERATIONS
+  - heading "Business Overview" [level=1]
+  - paragraph: Here’s what’s happening across your authorised workspace.
+  - group "Dashboard filters":
+    - time:
+      - text: 19 Nov 2026
+    - combobox "Dashboard period":
+      - option "This Month" [selected]
+      - option "Last 7 Days"
+      - option "Last 30 Days"
+    - combobox "Dashboard branch":
+      - option "All authorised branches" [selected]
+      - option "Lagos"
+  - paragraph: All authorised branches · 2026-11-01 – 2026-11-19 · Africa/Lagos
+  - button "Refresh":
+    - text: Refresh
+  - status: Updated 17:32:21
+  - region "Business financial indicators":
+    - link "Verified net receipts ₦119,845 Selected period":
+      - /url: /admin/finance?from=2026-11-01&to=2026-11-19
+      - generic: Verified net receipts
+      - strong: ₦119,845
+      - generic: Selected period
+    - link "Verified completed revenue ₦119,845 Selected period":
+      - /url: /admin/finance?from=2026-11-01&to=2026-11-19
+      - generic: Verified completed revenue
+      - strong: ₦119,845
+      - generic: Selected period
+    - link "Recorded expenses ₦0 Selected period":
+      - /url: /admin/finance?from=2026-11-01&to=2026-11-19
+      - generic: Recorded expenses
+      - strong: ₦0
+      - generic: Selected period
+    - link "Net profit Unavailable Cost evidence incomplete · not zero profit":
+      - /url: /admin/finance?from=2026-11-01&to=2026-11-19
+      - generic: Net profit
+      - strong: Unavailable
+      - generic: Cost evidence incomplete · not zero profit
+  - heading "Priorities" [level=2]
+  - link "3 requests awaiting review":
+    - /url: /admin/approvals
+  - link "Active stock holds · 0":
+    - /url: /admin/inventory
+  - link "Open incidents · 10":
+    - /url: /admin/incidents
+  - link "Operations Summary ↓":
+    - /url: "#owner-operations-summary"
+  - region "Workspace metrics":
+    - link "Orders 13 Selected period":
+      - /url: /admin/orders
+      - generic: Orders
+      - strong: "13"
+      - generic: Selected period
+    - link "Service bookings 1 Selected period":
+      - /url: /admin/bookings
+      - generic: Service bookings
+      - strong: "1"
+      - generic: Selected period
+    - link "Active customers 3 Selected period":
+      - /url: /admin/customers
+      - generic: Active customers
+      - strong: "3"
+      - generic: Selected period
+    - link "Eligible cylinders 0 Current snapshot":
+      - /url: /admin/cylinders
+      - generic: Eligible cylinders
+      - strong: "0"
+      - generic: Current snapshot
+    - link "Open incidents 10 Current snapshot":
+      - /url: /admin/incidents
+      - generic: Open incidents
+      - strong: "10"
+      - generic: Current snapshot
+  - generic "Metric definitions and scope"
+  - heading "Order Trend Created in period" [level=2]:
+    - text: Order Trend
+    - generic: Created in period
+  - img "Orders created per Lagos day, 2026-11-01 to 2026-11-19":
+    - generic: 11-01
+    - generic: 11-19
+  - generic "Daily order counts"
+  - heading "Order Status" [level=2]
+  - img "13 orders by current status":
+    - generic: "13"
+    - generic: Orders
+  - list:
+    - generic: Accepted
+    - strong: 1 · 8%
+    - generic: Cancelled
+    - strong: 2 · 15%
+    - generic: Delivered
+    - strong: 6 · 46%
+    - generic: Placed
+    - strong: 2 · 15%
+    - generic: Preparing
+    - strong: 2 · 15%
+  - heading "Operations Summary" [level=2]
+  - term:
+    - link "Active deliveries":
+      - /url: /admin/deliveries
+  - definition: "0"
+  - term:
+    - link "Appointments in period":
+      - /url: /admin/bookings
+  - definition: "0"
+  - term:
+    - link "Technicians on authorised work":
+      - /url: /admin/bookings
+  - definition: "0"
+  - term:
+    - link "Drivers on delivery":
+      - /url: /admin/deliveries
+  - definition: "0"
+  - term:
+    - link "Open incidents":
+      - /url: /admin/incidents
+  - definition: "10"
+  - term:
+    - link "Orders in period":
+      - /url: /admin/orders
+  - definition: "13"
+  - term:
+    - link "Stock exceptions":
+      - /url: /admin/inventory
+  - definition: "4"
+  - term:
+    - link "Active stock holds":
+      - /url: /admin/inventory
+  - definition: "0"
+  - paragraph: Order and appointment counts follow the selected period. Other metrics show the current snapshot.
+  - heading "Recent Orders" [level=2]
+  - link "View All":
+    - /url: /admin/orders
+    - text: View All
+  - table:
+    - rowgroup:
+      - row "Order ID Customer Items Amount Status Assigned to":
+        - columnheader "Order ID"
+        - columnheader "Customer"
+        - columnheader "Items"
+        - columnheader "Amount"
+        - columnheader "Status"
+        - columnheader "Assigned to"
+    - rowgroup:
+      - row "EG-2026-1F4E85C7 Demo QA 10 Nov customer View item details ₦5,900 Cancelled Unassigned":
+        - cell "EG-2026-1F4E85C7":
+          - link "EG-2026-1F4E85C7":
+            - /url: /admin/orders?orderId=73a378e0-e65d-485b-bf2f-2c0814c2c419
+        - cell "Demo QA 10 Nov customer"
+        - cell "View item details"
+        - cell "₦5,900"
+        - cell "Cancelled":
+          - generic: Cancelled
+        - cell "Unassigned"
+      - row "EG-2026-E02D78B1 Demo QA 10 Nov customer 1 × 6kg Empty Cylinder ₦31,000 Delivered Demo QA 10 Nov driver":
+        - cell "EG-2026-E02D78B1":
+          - link "EG-2026-E02D78B1":
+            - /url: /admin/orders?orderId=86852179-9c4f-4be1-a79f-2092dbacaa54
+        - cell "Demo QA 10 Nov customer"
+        - cell "1 × 6kg Empty Cylinder"
+        - cell "₦31,000"
+        - cell "Delivered":
+          - generic: Delivered
+        - cell "Demo QA 10 Nov driver"
+      - row "EG-2026-404B6EE8 Demo QA 10 Nov customer View item details ₦15,800 Delivered Demo QA 10 Nov driver":
+        - cell "EG-2026-404B6EE8":
+          - link "EG-2026-404B6EE8":
+            - /url: /admin/orders?orderId=aa7c77b7-81b7-4cf8-9152-d7b135452798
+        - cell "Demo QA 10 Nov customer"
+        - cell "View item details"
+        - cell "₦15,800"
+        - cell "Delivered":
+          - generic: Delivered
+        - cell "Demo QA 10 Nov driver"
+      - row "EG-2026-7BE57634 Demo QA 10 Nov customer 2 × 6kg Empty Cylinder ₦57,000 Delivered Demo QA 10 Nov driver":
+        - cell "EG-2026-7BE57634":
+          - link "EG-2026-7BE57634":
+            - /url: /admin/orders?orderId=bcab8f98-1cdc-4d10-ad84-8354ed9ec379
+        - cell "Demo QA 10 Nov customer"
+        - cell "2 × 6kg Empty Cylinder"
+        - cell "₦57,000"
+        - cell "Delivered":
+          - generic: Delivered
+        - cell "Demo QA 10 Nov driver"
+      - row "EG-2026-C1D1199D Demo QA 10 Nov customer View item details ₦5,900 Cancelled Unassigned":
+        - cell "EG-2026-C1D1199D":
+          - link "EG-2026-C1D1199D":
+            - /url: /admin/orders?orderId=5571c5f9-fbe5-4966-8487-09673911a30f
+        - cell "Demo QA 10 Nov customer"
+        - cell "View item details"
+        - cell "₦5,900"
+        - cell "Cancelled":
+          - generic: Cancelled
+        - cell "Unassigned"
+  - button "Previous" [disabled]
+  - generic: Page 1
+  - button "Next"
+  - heading "Quick Actions" [level=2]
+  - link "Delivery Operations":
+    - /url: /admin/deliveries
+    - generic: Delivery Operations
+  - link "Review Approvals":
+    - /url: /admin/approvals
+    - generic: Review Approvals
+  - link "Financial Summary":
+    - /url: /admin/finance
+    - generic: Financial Summary
+  - link "New Order":
+    - /url: /admin/orders
+    - generic: New Order
+  - link "Retail POS":
+    - /url: /admin/pos
+    - generic: Retail POS
+  - link "Service Bookings":
+    - /url: /admin/bookings
+    - generic: Service Bookings
+  - link "Review Quotations":
+    - /url: /admin/quotations
+    - generic: Review Quotations
+  - link "Add Customer":
+    - /url: /admin/customers
+    - generic: Add Customer
+  - link "Receive Stock":
+    - /url: /admin/inventory
+    - generic: Receive Stock
+  - link "Review Incidents":
+    - /url: /admin/incidents
+    - generic: Review Incidents
+  - link "View Reports":
+    - /url: /admin/reports
+    - generic: View Reports
+  - paragraph: Actions open the existing authorised workflows. New service requests and quotations remain controlled by the booking/assessment process.
+  - paragraph: GROWTH & ENGAGEMENT
+  - heading "Build lasting customer relationships" [level=2]
+  - paragraph: No active approved campaign in this scope. Manage consent and approved campaigns in the existing workspace.
+  - link "Manage Campaigns":
+    - /url: /admin/campaigns
+    - text: Manage Campaigns
+- text: EasyGas Business · NGN · Africa/Lagos

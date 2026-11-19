@@ -188,3 +188,15 @@ test("WEB-A04 and WEB-A07: expired meters and missing valuation are explained wi
   );
   assert.match(inventory, /Cost evidence incomplete · not zero value/);
 });
+
+// WEB-A05-GUARD: the readiness test above asserts the production NO-GO is preserved.
+
+test('AUD-HOSTED: deployed source, approved notices, bounded renewal and protected hosted records have executed evidence', async()=>{
+ const json=async(p:string)=>JSON.parse(await readFile('docs/audit-remediation/evidence/'+p,'utf8'));
+ const stable=await json('stable-identity.json'),source=await json('source-integrity.json'),published=await json('policy-publication.json'),renewal=await json('qa-renewal.json'),hosted=await json('hosted-readback.json');
+ assert.equal(stable.id,'dpl_Ewd4EFdg7QEGbaAgqxAzBZ4MBiVN');assert.equal(stable.readyState,'READY');assert.equal(source.sourceSha,'b10829aa447a7ae5bd430a73f9644e2feca854a6');assert.equal(source.status,'PASS');
+ assert.equal(published.status,'PASS');assert.equal(published.published.length,9);assert.equal(new Set(published.published.map((p:any)=>p.kind)).size,9);
+ assert.equal(renewal.status,'PASS');assert.equal(renewal.qualifications.length,4);assert.ok(Math.abs(Date.parse(renewal.expiresAt)-Date.parse(renewal.startedAt)-7200000)<10);assert.equal(renewal.negativeChecks.driverDenied,403);assert.ok([400,409].includes(renewal.negativeChecks.pastExpiryDenied));for(const q of renewal.qualifications)assert.notEqual(q.userId,q.verifiedBy);
+ assert.equal(hosted.status,'PASS');assert.equal(hosted.orders,13);assert.equal(hosted.originalApprovalsPreserved,32);assert.equal(hosted.checks.length,16);assert.equal(hosted.checks.filter((c:any)=>c.status>=400).length,10);for(const c of hosted.checks)assert.equal(c.status,c.expected);
+ const before=await json('business-before.json');assert.deepEqual(hosted.hashes,before);assert.match(hosted.productionDecision,/NO-GO/);
+});
