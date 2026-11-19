@@ -2159,7 +2159,7 @@ function Approvals({
                           setFailure("");
                         }}
                       >
-                        {r.can_owner_apply ? "Approve" : "Review"}{" "}
+                        Review{" "}
                         <ArrowRight size={14} />
                       </button>
                     </td>
@@ -2260,6 +2260,29 @@ function Approvals({
             Requested by <strong>{selected.requester}</strong> ·{" "}
             {selected.scope}
           </p>
+          <p>
+            {approvalStatusLabel(selected)} · Review progress is checked against the current request version
+          </p>
+          <Notice
+            message={
+              selected.owner_auto_approval && selected.approval_progress?.mode === "owner"
+                ? "This business setting can be authorised by its requesting Admin. No second Admin is needed. Use Approve after verifying your identity. Effective date and activation checks still apply."
+                : selected.owner_auto_approval
+                  ? "The requesting Admin can record owner authorisation. An independent qualified safety review is still required before activation."
+                : selected.risk === 4
+                  ? "This restricted change needs two distinct authorised reviewers. The requester cannot review it. Required roles: " + selected.required_roles.map((role: string) => roleLabel(role)).join(", ") + ". Identity verification is required."
+                  : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
+            }
+          />
+          {selected.approval_progress?.qualified_review_required && (
+            <p className="muted">An independent, currently qualified safety reviewer is still required.</p>
+          )}
+          {selected.approval_progress?.mode === "independent" && selected.approval_progress?.missing_roles?.length > 0 && (
+            <p className="muted">Still needed: {selected.approval_progress.missing_roles.map((role: string) => roleLabel(role)).join(", ")}.</p>
+          )}
+          {selected.approval_progress?.owner_approved && (
+            <p className="muted">Admin authorisation recorded for this request version.</p>
+          )}
           <div className="comparison">
             <div>
               <small>CURRENT AT SUBMISSION</small>
@@ -2340,9 +2363,6 @@ function Approvals({
           {selected.failure_reason && (
             <Notice type="error" message={selected.failure_reason} />
           )}
-          <p>
-            {approvalStatusLabel(selected)} · Review progress is checked against the current request version
-          </p>
           <div className="proposal-context">
             <h3>Reason for change</h3>
             <p>{selected.reason}</p>
@@ -2355,26 +2375,6 @@ function Approvals({
               · Base version {selected.base_version}
             </small>
           </div>
-          <Notice
-            message={
-              selected.owner_auto_approval && selected.approval_progress?.mode === "owner"
-                ? "This business setting can be authorised by its requesting Admin. No second Admin is needed. Use Approve after verifying your identity. Effective date and activation checks still apply."
-                : selected.owner_auto_approval
-                  ? "The requesting Admin can record owner authorisation. An independent qualified safety review is still required before activation."
-                : selected.risk === 4
-                  ? "This restricted change needs two distinct authorised reviewers. The requester cannot review it. Required roles: " + selected.required_roles.map((role: string) => roleLabel(role)).join(", ") + ". Identity verification is required."
-                  : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
-            }
-          />
-          {selected.approval_progress?.qualified_review_required && (
-            <p className="muted">An independent, currently qualified safety reviewer is still required.</p>
-          )}
-          {selected.approval_progress?.mode === "independent" && selected.approval_progress?.missing_roles?.length > 0 && (
-            <p className="muted">Still needed: {selected.approval_progress.missing_roles.map((role: string) => roleLabel(role)).join(", ")}.</p>
-          )}
-          {selected.approval_progress?.owner_approved && (
-            <p className="muted">Admin authorisation recorded for this request version.</p>
-          )}
           {selected.can_owner_apply && (
             <button
               className="button full"
