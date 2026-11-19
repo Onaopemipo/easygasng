@@ -2274,10 +2274,10 @@ function Approvals({
                   : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
             }
           />
-          {selected.approval_progress?.qualified_review_required && (
+          {["pending_approval", "partially_approved"].includes(selected.status) && selected.approval_progress?.qualified_review_required && (
             <p className="muted">An independent, currently qualified safety reviewer is still required.</p>
           )}
-          {selected.approval_progress?.mode === "independent" && selected.approval_progress?.missing_roles?.length > 0 && (
+          {["pending_approval", "partially_approved"].includes(selected.status) && selected.approval_progress?.mode === "independent" && selected.approval_progress?.missing_roles?.length > 0 && (
             <p className="muted">Still needed: {selected.approval_progress.missing_roles.map((role: string) => roleLabel(role)).join(", ")}.</p>
           )}
           {selected.approval_progress?.owner_approved && (
