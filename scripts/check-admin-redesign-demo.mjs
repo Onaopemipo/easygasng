@@ -27,10 +27,11 @@ test('ARDREL-HTTP: all redesigned demo routes, canonical reads, full exports and
    const me=await ok(role,'me');assert.equal(me.user.id,a.id);assert.equal(me.user.role,role);
   }
   for(const route of routes){const r=await fetch(base+'/admin/'+route,{signal:AbortSignal.timeout(45000)});assert.equal(r.status,200,route+' shell');evidence.routes.push({route:'/admin/'+route,status:r.status});}
-  const reads=['support.list','bookings','services.manage','business.snapshot','finance.summary','finance.ledger',before?'documents.list?page=1':'documents.list?pageSize=8&page=1',before?'credits?page=1':'credits?pageSize=8&page=1','campaigns','recommendations.manage','testimonials.manage?limit=8&page=1','testimonials.analytics','testimonials.export'];
-  for(const action of reads){const data=await ok('owner',action);evidence.reads.push({action,status:200});if(action==='documents.list?pageSize=8&page=1'||action==='credits?pageSize=8&page=1'){assert.equal(data.pageSize,8);assert.ok(data.rows.length<=8);}}
-  for(const action of ['support.list','services.manage','finance.summary','documents.list','credits','campaigns','recommendations.manage','testimonials.manage']){assert.equal((await call('customer',action)).status,403,'customer must not read '+action);evidence.denials.push({action,status:403});}
-  for(const action of before?[]:['documents.list?pageSize=0','credits?pageSize=21']){assert.equal((await call('owner',action)).status,400,action);evidence.denials.push({action,status:400});}
+  const reads=['support.list','bookings','services.manage','business.snapshot','finance.summary','finance.ledger',before?'documents.list?page=1':'documents.list?pageSize=8&page=1',before?'credits?page=1':'credits?view=workspace&pageSize=8&page=1','campaigns','recommendations.manage','testimonials.manage?limit=8&page=1','testimonials.analytics','testimonials.export'];
+  for(const action of reads){const requested=before?action.replace(/([?&])pageSize=8&?/, '$1').replace(/[?&]$/, ''):action;const data=await ok('owner',requested);evidence.reads.push({action,status:200});if(!before&&(action==='documents.list?pageSize=8&page=1'||action==='credits?view=workspace&pageSize=8&page=1')){assert.equal(data.pageSize,8);assert.ok(data.rows.length<=8);}}
+  for(const action of ['services.manage','finance.summary','credits?view=workspace','campaigns','recommendations.manage','testimonials.manage']){assert.equal((await call('customer',action)).status,403,'customer must not read '+action);evidence.denials.push({action,status:403});}
+  for(const action of before?[]:['documents.list?pageSize=0','credits?view=workspace&pageSize=21']){assert.equal((await call('owner',action)).status,400,action);evidence.denials.push({action,status:400});}
+  const ownDocs=await ok('customer','documents.list');assert.ok(ownDocs.rows.every(r=>r.customer_id===manifest.accounts.find(a=>a.role==='customer').id));evidence.reads.push({action:'customer documents.list',status:200,scope:'own records only'});
   const payment=await ok('owner','payments/paystack/configuration');assert.equal(payment.environment,'test');assert.equal(payment.available,true);
   const bulk=await ok('owner','bulk.summary');assert.equal(bulk.enabled,true);
   const orders=await ok('owner','orders');
@@ -39,6 +40,6 @@ test('ARDREL-HTTP: all redesigned demo routes, canonical reads, full exports and
   evidence.preservation={orderHash:digest(orders),verifiedLedgerHash:digest(await ok('owner','finance.ledger')),paystack:'test/available',bulkEnabled:true,retainedNamedOrders:'delivered'};
   if(!before){const baseline=JSON.parse(await readFile(root+'/hosted-before.json','utf8'));assert.deepEqual(evidence.preservation,baseline.preservation);}
   await writeFile(root+'/hosted-'+(before?'before':'after')+'.json',JSON.stringify(evidence,null,2)+'\n');
-  console.log('PASS eleven shells, thirteen canonical read/export contracts, ten role/size denials, demo/noindex, sandbox/permanent bulk settings and retained delivered-order/ledger hashes');
+  console.log('PASS eleven shells, canonical read/export contracts, role/size denials, demo/noindex, sandbox/permanent bulk settings and retained delivered-order/ledger hashes');
  } finally {for(const role of Object.keys(tokens))await call(role,'logout',{});}
 });

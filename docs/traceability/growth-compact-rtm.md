@@ -39,7 +39,7 @@ Priority: P1. Scope: Local responsive admin web presentation.
 
 Implementation and authoritative adapters: [recommendations.tsx](../../apps/web/components/recommendations.tsx), [catalogue.ts](../../apps/web/lib/catalogue.ts), [engagement-records.tsx](../../apps/web/components/engagement-records.tsx), [compact-workspace.tsx](../../apps/web/components/compact-workspace.tsx), [admin-compact.css](../../apps/web/app/admin-compact.css).
 
-**Authoritative data:** recommendations.manage, products.manage and services.manage; original recommendation.propose/approve APIs and canonical product_service_rules and recorded recommendation events in catalogue.ts. Performance displays actual loaded-rule event counters..
+**Authoritative data:** recommendations.manage, products.manage and services.manage; original recommendation.propose/approve APIs and canonical recommendation_rules and recorded recommendation events in catalogue.ts. Performance displays actual loaded-rule event counters..
 
 **Controls:** Original owner/manager proposal and independent-owner approval checks retained server-side. Incompatible rules explicitly labelled Do not recommend; unknown compatibility remains assessment-only. No automatic paid-item addition or fabricated conversion metrics.
 
