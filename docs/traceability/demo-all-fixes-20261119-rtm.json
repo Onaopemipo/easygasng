@@ -57,37 +57,24 @@
       "uiReference": "User screenshot and explicit release/recovery request",
       "route": "https://easygas-client-demo.vercel.app",
       "implementationFiles": [
-        ".github/workflows/release-validation.yml",
-        "apps/web/lib/bulk-lpg.ts",
-        "apps/web/components/driver-lpg-controls.tsx"
+        "database/migrations/081_service_booking_requests.sql",
+        "apps/web/lib/db.ts",
+        "apps/web/lib/professional-services.ts"
       ],
       "dataSource": "Exact Git/Vercel commit, isolated demo migrations and canonical authenticated order/custody/stock/payment records",
       "securityControl": "Retain sandbox and permanent fulfilment; restricted runtime; no fabricated historical dispensing, broad grants, real payment or guard bypass",
       "testFiles": [
-        "tests/driver-lpg-workflow.test.ts",
-        "tests/driver-lpg-http.test.ts",
-        "tests/bulk-lpg.test.ts",
-        "tests/bulk-recovery.test.ts",
-        "tests/bulk-meter-lifecycle.test.ts",
-        "tests/bulk-lpg-postgres.test.ts",
-        "tests/bulk-lpg-http.test.ts",
-        "tests/web-driver-trips.test.ts",
-        "tests/driver-workspace.test.ts",
-        "tests/shared-approval-gas.test.ts",
-        "tests/trip-recovery.test.ts",
-        "tests/dispatch-driver-photos.test.ts",
-        "tests/driver-saas-redesign.test.ts",
-        "tests/driver-experience-redesign.test.ts"
+        "tests/customer-service-booking-redesign.test.ts"
       ],
       "testIds": [
-        "DLPG-01",
-        "DLPG-04",
-        "DLPG-UI01",
-        "DWT-PROOFNEG"
+        "CSBK-API01",
+        "CSBK-API02",
+        "CSBK-API03",
+        "CSBK-API05"
       ],
       "negativeTests": [
-        "DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit",
-        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+        "CSBK-API02: unassigned requests reject invalid time, coverage, stale pricing, inactive service, mixed slot inputs and foreign follow-ups without orphan rows",
+        "CSBK-API03: ownership and actual qualified assignment remain mandatory before confirming or progressing a request"
       ],
       "evidence": [],
       "acceptanceGate": "DREL2-G02",
@@ -104,33 +91,23 @@
       "uiReference": "User screenshot and explicit release/recovery request",
       "route": "https://easygas-client-demo.vercel.app",
       "implementationFiles": [
-        ".github/workflows/release-validation.yml",
-        "apps/web/lib/bulk-lpg.ts",
-        "apps/web/components/driver-lpg-controls.tsx"
+        "apps/web/components/customer-orders.tsx",
+        "apps/web/components/customer-notifications.tsx",
+        "apps/web/components/customer-account.tsx",
+        "apps/web/components/customer-bookings.tsx",
+        "apps/web/components/service-request.tsx"
       ],
       "dataSource": "Exact Git/Vercel commit, isolated demo migrations and canonical authenticated order/custody/stock/payment records",
       "securityControl": "Retain sandbox and permanent fulfilment; restricted runtime; no fabricated historical dispensing, broad grants, real payment or guard bypass",
       "testFiles": [
-        "tests/driver-lpg-workflow.test.ts",
-        "tests/driver-lpg-http.test.ts",
-        "tests/bulk-lpg.test.ts",
-        "tests/bulk-recovery.test.ts",
-        "tests/bulk-meter-lifecycle.test.ts",
-        "tests/bulk-lpg-postgres.test.ts",
-        "tests/bulk-lpg-http.test.ts",
-        "tests/web-driver-trips.test.ts",
-        "tests/driver-workspace.test.ts",
-        "tests/shared-approval-gas.test.ts",
-        "tests/trip-recovery.test.ts",
-        "tests/dispatch-driver-photos.test.ts",
-        "tests/driver-saas-redesign.test.ts",
-        "tests/driver-experience-redesign.test.ts"
+        "tests/customer-orders.test.ts",
+        "tests/customer-notifications.test.ts",
+        "tests/customer-account-redesign.test.ts",
+        "tests/customer-service-booking-redesign.test.ts"
       ],
       "testIds": [
-        "DLPG-01",
-        "DLPG-04",
-        "DLPG-UI01",
-        "DWT-PROOFNEG"
+        "CSBK-API01",
+        "CACC-API01"
       ],
       "negativeTests": [],
       "evidence": [],
@@ -266,6 +243,10 @@
     {
       "date": "2026-11-19",
       "approvedScope": "User explicitly requests deploying all pending fixes and recovering/completing EG-2026-7BB8640B. Existing one-hour demo bulk qualification approvals remain available; no real operating qualification or physical meter evidence is implied."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Source b5503a530d9687288b0c2fd0d3735081221f1f4b pushed; clean committed candidate built at easygas-client-demo-odu3flf2y-onaopemipos-projects.vercel.app. Promotion/081/named recovery pending Vercel two-factor database access and successful web CI."
     }
   ]
 }
