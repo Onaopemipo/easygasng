@@ -1,0 +1,68 @@
+{
+  "order": "EG-2026-FD9F2C67",
+  "orderId": "0ef2f7cf-f877-42cb-879a-531544c34368",
+  "applicationSource": "600b0fddd1a90e6c5edecfd5f81b2c539c6f5196",
+  "source": "Actual authenticated hosted UI readbacks only; no demo database connection/query/mutation used in this run",
+  "scope": "Fresh order by existing Demo customer; sandbox wallet; synthetic mass/inspection/proof/travel; no card/provider/native/physical acceptance inferred",
+  "checks": {
+    "checkoutVerified15800": true,
+    "normalIssuedLoad": true,
+    "exactMeterAllocation": true,
+    "driverDelivered": true,
+    "customerDelivered": true,
+    "orderedDeliveryTimeline": true,
+    "normalCustodyHistoryWithoutRecovery": true,
+    "independentReturnReconciled": true,
+    "tripEnded": true,
+    "newCylinderFilled": true,
+    "expectedStockBalance": true,
+    "oneVisibleFulfilmentMovement": true,
+    "oneWalletDebitAndExpectedBalance": true,
+    "paidInvoiceZeroDue": true,
+    "oneCustomerInvoiceDocument": true
+  },
+  "evidence": {
+    "checkoutVerified15800": "checkout-success-ax.txt",
+    "normalIssuedLoad": "normal-load-issued-ax.txt",
+    "exactMeterAllocation": "metered-dispensing-ax.txt",
+    "driverDelivered": "driver-delivered-ax.txt",
+    "customerDelivered": "customer-delivered-ax.txt",
+    "orderedDeliveryTimeline": "customer-timeline-ax.txt",
+    "normalCustodyHistoryWithoutRecovery": "load-reconciled-ax.txt",
+    "independentReturnReconciled": "load-reconciled-ax.txt",
+    "tripEnded": "trip-ended-ax.txt",
+    "newCylinderFilled": "cylinder-filled-ax.txt",
+    "expectedStockBalance": "stock-after-delivery-ax.txt",
+    "oneVisibleFulfilmentMovement": "stock-after-delivery-ax.txt",
+    "oneWalletDebitAndExpectedBalance": "customer-wallet-after-ax.txt",
+    "paidInvoiceZeroDue": "customer-paid-invoice-ax.txt",
+    "oneCustomerInvoiceDocument": "customer-document-ax.txt"
+  },
+  "wallet": {
+    "beforeNGN": 83200,
+    "orderDebitNGN": 15800,
+    "afterNGN": 67400
+  },
+  "stock": {
+    "previousVerifiedOnHandKg": 5991,
+    "newOnHandKg": 5985,
+    "reservedKg": 13,
+    "availableKg": 5972,
+    "fulfilmentKg": 6
+  },
+  "cylinder": {
+    "serial": "DEMO-QA-FRESH-FD9F2C67",
+    "generatedId": "f8695fbc-d058-4f20-885d-8a84f188b2ea",
+    "status": "filled",
+    "idSource": "Observed selected cylinder option value after normal registration; not manually supplied"
+  },
+  "loadId": "29233322-6e59-4054-894f-e89165978324",
+  "tripId": "09637fca-2f6a-4a34-bbda-537900034da5",
+  "counterGrams": {
+    "before": 9000,
+    "after": 15000
+  },
+  "invoice": "EGI-0000000005",
+  "operationalIssueObserved": "First dispensing correctly rejected absent issued invoice. Finance issued immutable paid invoice via normal UI; retry succeeded without status/stock/payment/database correction. Runbook must include invoice issuance before departure.",
+  "writes": "All hosted operational writes used normal UI. No SQL,seed,API shortcut,missing-custody recovery,role grant,stock adjustment,manual wallet credit or direct status edit."
+}

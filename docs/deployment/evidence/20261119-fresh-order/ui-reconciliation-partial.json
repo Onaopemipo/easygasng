@@ -1,0 +1,29 @@
+{
+  "source": "Actual authenticated hosted UI readbacks,not database queries",
+  "order": "EG-2026-FD9F2C67",
+  "id": "0ef2f7cf-f877-42cb-879a-531544c34368",
+  "checks": {
+    "newCheckoutPaid": true,
+    "normalLoadIssuedBeforePickup": true,
+    "exact6000gMeteredDispensing": true,
+    "driverDelivered": true,
+    "independentZeroReturnReconciled": true,
+    "tripEnded": true,
+    "cylinderFilled": true,
+    "stock5985kgOnHand13kgReserved5972kgAvailable": true,
+    "invoice15800PaidZeroBalance": true
+  },
+  "evidence": {
+    "newCheckoutPaid": "checkout-success-ax.txt",
+    "normalLoadIssuedBeforePickup": "normal-load-issued-ax.txt",
+    "exact6000gMeteredDispensing": "metered-dispensing-ax.txt",
+    "driverDelivered": "driver-delivered-ax.txt",
+    "independentZeroReturnReconciled": "load-reconciled-ax.txt",
+    "tripEnded": "trip-ended-ax.txt",
+    "cylinderFilled": "cylinder-filled-ax.txt",
+    "stock5985kgOnHand13kgReserved5972kgAvailable": "stock-after-delivery-ax.txt",
+    "invoice15800PaidZeroBalance": "issued-paid-invoice-ax.txt"
+  },
+  "pending": "customer final wallet debit/receipt and final screenshot",
+  "historicalRecord": "Intermediate check before customer readback; superseded by ui-final-reconciliation.json"
+}

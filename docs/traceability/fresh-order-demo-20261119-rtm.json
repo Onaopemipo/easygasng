@@ -1,0 +1,225 @@
+{
+  "phase": "Fresh hosted customer order normal-path acceptance19November2026",
+  "productionDecision": "Synthetic demo only; existing production NO-GO/import/retain-all/native/physical/provider holds preserved",
+  "requirements": [
+    {
+      "id": "FRESH-01",
+      "requirement": "Place a brand-new synthetic customer order through normal hosted checkout",
+      "priority": "P0",
+      "scope": "Fresh synthetic order through existing hosted demo UI; original customer account; no direct database/API writes or recovery of arrived order",
+      "uiReference": "User request19November2026",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/checkout-payments.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "Actual authenticated hosted customer/staff/driver UI timelines, normal custody audit, stock movements, wallet history and issued invoice; no direct database reads or writes in this run",
+      "securityControl": "Preserve sandbox, qualification/inspection/meter/independent custody and proof/customer-code guards; no role grants or fabricated physical evidence",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts"
+      ],
+      "testIds": [
+        "DLPG-04"
+      ],
+      "negativeTests": [
+        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-fresh-order/normal-checkout-regression.txt",
+        "docs/deployment/evidence/20261119-fresh-order/execution.txt",
+        "docs/deployment/evidence/20261119-fresh-order/ui-final-reconciliation.json",
+        "docs/deployment/evidence/20261119-fresh-order/ui-final-reconciliation.txt",
+        "docs/deployment/evidence/20261119-fresh-order/customer-delivery-timeline.jpg",
+        "docs/deployment/evidence/20261119-fresh-order/customer-wallet-after-ax.txt",
+        "docs/deployment/evidence/20261119-fresh-order/load-reconciled-ax.txt"
+      ],
+      "acceptanceGate": "FRESH-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Fresh actual wallet checkout15800 verified; finalwallet67400 from83200 with one orderdebit. Originalaccount reused,new uniqueorder; paidcustomerinvoice retrieved.",
+      "testResult": "PASS: fresh hosted UI checkout-to-completion,15 UI reconciliation checks and focusedDLPG-04 regression1/1,0failures/skips.",
+      "outstandingWork": "No remaining bounded fresh-wallet-order acceptance step. Card/COD/provider,new customer registration,native,physical measurements/certification,formal accessibility and global database table/hash reconciliation not exercised in this run. Production NO-GO,actual-import,retain-all and prior holds unchanged."
+    },
+    {
+      "id": "FRESH-02",
+      "requirement": "Accept, prepare and dispatch the new order with registered cylinder and recorded filling eligibility",
+      "priority": "P0",
+      "scope": "Fresh synthetic order through existing hosted demo UI; original customer account; no direct database/API writes or recovery of arrived order",
+      "uiReference": "User request19November2026",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        "apps/web/components/order-cylinder-inspection.tsx",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/technicians-availability.ts"
+      ],
+      "dataSource": "Actual authenticated hosted customer/staff/driver UI timelines, normal custody audit, stock movements, wallet history and issued invoice; no direct database reads or writes in this run",
+      "securityControl": "Preserve sandbox, qualification/inspection/meter/independent custody and proof/customer-code guards; no role grants or fabricated physical evidence",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts"
+      ],
+      "testIds": [
+        "DLPG-04"
+      ],
+      "negativeTests": [
+        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-fresh-order/normal-checkout-regression.txt",
+        "docs/deployment/evidence/20261119-fresh-order/execution.txt",
+        "docs/deployment/evidence/20261119-fresh-order/ui-final-reconciliation.json",
+        "docs/deployment/evidence/20261119-fresh-order/ui-final-reconciliation.txt",
+        "docs/deployment/evidence/20261119-fresh-order/customer-delivery-timeline.jpg",
+        "docs/deployment/evidence/20261119-fresh-order/customer-wallet-after-ax.txt",
+        "docs/deployment/evidence/20261119-fresh-order/load-reconciled-ax.txt"
+      ],
+      "acceptanceGate": "FRESH-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Owner normal coverage/accept/prepare; appregisterednewserial/generatedUUID; user-approved independently verified one-hourfinanceinspection renewal,simulatedinspection and6kg allowance; normal driver assignment toactive trip.",
+      "testResult": "PASS: fresh hosted UI checkout-to-completion,15 UI reconciliation checks and focusedDLPG-04 regression1/1,0failures/skips.",
+      "outstandingWork": "No remaining bounded fresh-wallet-order acceptance step. Card/COD/provider,new customer registration,native,physical measurements/certification,formal accessibility and global database table/hash reconciliation not exercised in this run. Production NO-GO,actual-import,retain-all and prior holds unchanged."
+    },
+    {
+      "id": "FRESH-03",
+      "requirement": "Issue and independently acknowledge vehicle custody, dispense to exact meter delta and complete proof/customer handover",
+      "priority": "P0",
+      "scope": "Fresh synthetic order through existing hosted demo UI; original customer account; no direct database/API writes or recovery of arrived order",
+      "uiReference": "User request19November2026",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        "apps/web/components/lpg-load-issue.tsx",
+        "apps/web/components/driver-lpg-controls.tsx",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/bulk-lpg-reservation.ts"
+      ],
+      "dataSource": "Actual authenticated hosted customer/staff/driver UI timelines, normal custody audit, stock movements, wallet history and issued invoice; no direct database reads or writes in this run",
+      "securityControl": "Preserve sandbox, qualification/inspection/meter/independent custody and proof/customer-code guards; no role grants or fabricated physical evidence",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts"
+      ],
+      "testIds": [
+        "DLPG-04"
+      ],
+      "negativeTests": [
+        "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-fresh-order/normal-checkout-regression.txt",
+        "docs/deployment/evidence/20261119-fresh-order/execution.txt",
+        "docs/deployment/evidence/20261119-fresh-order/ui-final-reconciliation.json",
+        "docs/deployment/evidence/20261119-fresh-order/ui-final-reconciliation.txt",
+        "docs/deployment/evidence/20261119-fresh-order/customer-delivery-timeline.jpg",
+        "docs/deployment/evidence/20261119-fresh-order/customer-wallet-after-ax.txt",
+        "docs/deployment/evidence/20261119-fresh-order/load-reconciled-ax.txt"
+      ],
+      "acceptanceGate": "FRESH-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Normal load issue anddriveracknowledgement beforepickup; exact9000\u219215000g dispensing,syntheticproofupload/customer-owned code andhandover; driver/customerDelivered06:05WAT. Missinginvoice rejection resolved with normal Financeissuance,not DBfix.",
+      "testResult": "PASS: fresh hosted UI checkout-to-completion,15 UI reconciliation checks and focusedDLPG-04 regression1/1,0failures/skips.",
+      "outstandingWork": "No remaining bounded fresh-wallet-order acceptance step. Card/COD/provider,new customer registration,native,physical measurements/certification,formal accessibility and global database table/hash reconciliation not exercised in this run. Production NO-GO,actual-import,retain-all and prior holds unchanged."
+    },
+    {
+      "id": "FRESH-04",
+      "requirement": "Reconcile new delivery stock/payment/custody and close trip without direct database mutation or missing-custody recovery",
+      "priority": "P1",
+      "scope": "Fresh synthetic order through existing hosted demo UI; original customer account; no direct database/API writes or recovery of arrived order",
+      "uiReference": "User request19November2026",
+      "route": "https://easygas-client-demo.vercel.app",
+      "implementationFiles": [
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/invoices.ts",
+        "apps/web/components/customer-wallet.tsx",
+        "apps/web/components/order-invoice.tsx"
+      ],
+      "dataSource": "Actual authenticated hosted customer/staff/driver UI timelines, normal custody audit, stock movements, wallet history and issued invoice; no direct database reads or writes in this run",
+      "securityControl": "Preserve sandbox, qualification/inspection/meter/independent custody and proof/customer-code guards; no role grants or fabricated physical evidence",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts"
+      ],
+      "testIds": [
+        "DLPG-04"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-fresh-order/normal-checkout-regression.txt",
+        "docs/deployment/evidence/20261119-fresh-order/execution.txt",
+        "docs/deployment/evidence/20261119-fresh-order/ui-final-reconciliation.json",
+        "docs/deployment/evidence/20261119-fresh-order/ui-final-reconciliation.txt",
+        "docs/deployment/evidence/20261119-fresh-order/customer-delivery-timeline.jpg",
+        "docs/deployment/evidence/20261119-fresh-order/customer-wallet-after-ax.txt",
+        "docs/deployment/evidence/20261119-fresh-order/load-reconciled-ax.txt"
+      ],
+      "acceptanceGate": "FRESH-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Zero return independently received/reconciled;tripclosed;5985kgonhand/13reserved/5972available and onevisible6kg debit;paidinvoice15800/balance0;onewallet15800debit.15actualUIchecks and focused regressionpass.",
+      "testResult": "PASS: fresh hosted UI checkout-to-completion,15 UI reconciliation checks and focusedDLPG-04 regression1/1,0failures/skips.",
+      "outstandingWork": "No remaining bounded fresh-wallet-order acceptance step. Card/COD/provider,new customer registration,native,physical measurements/certification,formal accessibility and global database table/hash reconciliation not exercised in this run. Production NO-GO,actual-import,retain-all and prior holds unchanged."
+    }
+  ],
+  "gates": [
+    {
+      "id": "FRESH-G01",
+      "criteria": "Place a brand-new synthetic customer order through normal hosted checkout",
+      "status": "PASS"
+    },
+    {
+      "id": "FRESH-G02",
+      "criteria": "Accept, prepare and dispatch the new order with registered cylinder and recorded filling eligibility",
+      "status": "PASS"
+    },
+    {
+      "id": "FRESH-G03",
+      "criteria": "Issue and independently acknowledge vehicle custody, dispense to exact meter delta and complete proof/customer handover",
+      "status": "PASS"
+    },
+    {
+      "id": "FRESH-G04",
+      "criteria": "Reconcile new delivery stock/payment/custody and close trip without direct database mutation or missing-custody recovery",
+      "status": "PASS"
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "approvedScope": "User requests fresh customer checkout through dispatch, vehicle dispensing and completion without manual database fixes. Existing account reused; fresh order identity required."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Fresh order EG-2026-FD9F2C67; original customer wallet83200 before,15800checkout,6kg. Owner confirmed coverage/accepted/prepared; new driver trip vehicleSANDBOX QA VEHICLE E8ED8AE8/odometer1000/GPSoff. Owner registered new synthetic customer serialDEMO-QA-FRESH-FD9F2C67 through normal UI; app generated UUIDf8695fbc-d058-4f20-885d-8a84f188b2ea and quarantined it. Awaiting user approval for expired finance cylinder-inspection one-hour demo renewal. No DB/API operational writes or recovery used."
+    },
+    {
+      "date": "2026-11-19",
+      "requirement": "FRESH-01",
+      "previousStatus": "PARTIAL",
+      "previousReason": "Actual new hosted checkout EG-2026-FD9F2C67 accepted and wallet payment verified15800; final receipt/ledger and downstream completion remain pending.",
+      "change": "Actual fresh normal-path hosted acceptance completed, evidence preserved; no direct DB/API operational writes."
+    },
+    {
+      "date": "2026-11-19",
+      "requirement": "FRESH-02",
+      "previousStatus": "IMPLEMENTED_UNVERIFIED",
+      "previousReason": "Fresh normal-path hosted run started; previous named recovery is not evidence that this order completes.",
+      "change": "Actual fresh normal-path hosted acceptance completed, evidence preserved; no direct DB/API operational writes."
+    },
+    {
+      "date": "2026-11-19",
+      "requirement": "FRESH-03",
+      "previousStatus": "IMPLEMENTED_UNVERIFIED",
+      "previousReason": "Fresh normal-path hosted run started; previous named recovery is not evidence that this order completes.",
+      "change": "Actual fresh normal-path hosted acceptance completed, evidence preserved; no direct DB/API operational writes."
+    },
+    {
+      "date": "2026-11-19",
+      "requirement": "FRESH-04",
+      "previousStatus": "IMPLEMENTED_UNVERIFIED",
+      "previousReason": "Fresh normal-path hosted run started; previous named recovery is not evidence that this order completes.",
+      "change": "Actual fresh normal-path hosted acceptance completed, evidence preserved; no direct DB/API operational writes."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User approved one-hour inspection renewal; recorded forDemo finance byindependentDemo owner,expiry06:55Lagos. Existing bulk qualifications/meter not changed in this run; dispensing/reconciliation occurred before05:11UTCexpiry. Firstnoinvoice dispensing rejection retained and resolved by normalFinanceinvoice issuance. All4 bounded requirements/3critical/4gatespass. No scope dropped or commercial/native/physical/provider gate upgraded."
+    }
+  ]
+}
