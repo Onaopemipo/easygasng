@@ -18,3 +18,5 @@ Scope: actual EasyGas web design and isolated synthetic interactions for public 
 Coverage: 8/8 implemented, 4/8 verified and 4/8 partial; 1/1 critical isolation requirement verified; 4/8 gates pass and 4/8 remain partial. Zero exclusions. All 86 routes, 36 families and 300 named features remain in inventory. Nine local model tests and six artifact checks pass. 187 initial role-route observations are inspection evidence, not functional acceptance.
 
 The private prototype does not deploy application changes to the client demo. Commercial production NO-GO, actual-import hold, retain-all and all unrelated acceptance gaps are unchanged.
+
+20 November scope correction: this is historical web work. The active private link now serves the separate [mobile prototype](mobile-experience-prototype-rtm.md). Existing EXP statuses and denominator are retained.

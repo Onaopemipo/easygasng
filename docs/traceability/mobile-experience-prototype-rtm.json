@@ -1,0 +1,389 @@
+{
+  "phase": "EasyGas holistic mobile app interactive prototype",
+  "productionDecision": "Existing commercial NO-GO, actual-import hold and retain-all unchanged",
+  "requirements": [
+    {
+      "id": "MEXP-01",
+      "requirement": "Audit the actual mobile screen and role navigation inventory",
+      "priority": "P1",
+      "scope": "Mobile app prototype; actual React Native source/screens. Prior web prototype is historical work and does not satisfy this scope.",
+      "uiReference": "User correction: I want the interactive prototype for mobile app not web",
+      "route": "Actual native screen keys and field-workspace tabs",
+      "implementationFiles": [
+        "prototypes/easygas-mobile/source-manifest.json",
+        "scripts/document-mobile-prototype.mjs",
+        "docs/mobile-prototype/feature-coverage.json"
+      ],
+      "dataSource": "apps/mobile/*.tsx and shared native business-rule sources; sanitized synthetic fixture data",
+      "securityControl": "No live business mutation, credentials, payment, notification, GPS or qualified physical evidence",
+      "testFiles": [
+        "tests/mobile-experience-prototype.test.ts",
+        "scripts/test-mobile-prototype.mjs",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MEXP-ARTIFACT",
+        "MEXP-CATALOGUE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-prototype/evidence/acceptance-tests.txt",
+        "docs/mobile-prototype/evidence/mobile-screen-audit.json",
+        "docs/mobile-prototype/evidence/phone-fit.json",
+        "docs/mobile-prototype/evidence/mobile-journeys.json",
+        "docs/mobile-prototype/evidence/mobile-exceptions.json"
+      ],
+      "acceptanceGate": "MEXP-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "97 original source inputs hashed; 57-module inventory and 36 families / 300 named items retained. Individual feature acceptance is not inferred.",
+      "testResult": "PASS \u2014 19 bounded model/artifact checks and recorded browser observations",
+      "outstandingWork": "None for this bounded prototype requirement. Full native/backend/device/provider/physical acceptance remains separate and unclaimed."
+    },
+    {
+      "id": "MEXP-02",
+      "requirement": "Reproduce the native app designs and interaction patterns for all six roles",
+      "priority": "P1",
+      "scope": "Mobile app prototype; actual React Native source/screens. Prior web prototype is historical work and does not satisfy this scope.",
+      "uiReference": "User correction: I want the interactive prototype for mobile app not web",
+      "route": "Actual native screen keys and field-workspace tabs",
+      "implementationFiles": [
+        "prototypes/easygas-mobile/build.mjs",
+        "prototypes/easygas-mobile/rn-shim.tsx",
+        "prototypes/easygas-mobile/screens.mjs",
+        "apps/mobile/App.tsx"
+      ],
+      "dataSource": "apps/mobile/*.tsx and shared native business-rule sources; sanitized synthetic fixture data",
+      "securityControl": "No live business mutation, credentials, payment, notification, GPS or qualified physical evidence",
+      "testFiles": [
+        "tests/mobile-experience-prototype.test.ts",
+        "scripts/test-mobile-prototype.mjs",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MEXP-ARTIFACT",
+        "MEXP-BROWSER-EVIDENCE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-prototype/evidence/acceptance-tests.txt",
+        "docs/mobile-prototype/evidence/mobile-screen-audit.json",
+        "docs/mobile-prototype/evidence/phone-fit.json",
+        "docs/mobile-prototype/evidence/mobile-journeys.json",
+        "docs/mobile-prototype/evidence/mobile-exceptions.json"
+      ],
+      "acceptanceGate": "MEXP-G2",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual native designs across six roles plus visitor; all 117 entries observed.",
+      "testResult": "PASS \u2014 19 bounded model/artifact checks and recorded browser observations",
+      "outstandingWork": "None for this bounded prototype requirement. Full native/backend/device/provider/physical acceptance remains separate and unclaimed."
+    },
+    {
+      "id": "MEXP-03",
+      "requirement": "Provide tappable mobile navigation, contextual sheets and account/product/service flows",
+      "priority": "P1",
+      "scope": "Mobile app prototype; actual React Native source/screens. Prior web prototype is historical work and does not satisfy this scope.",
+      "uiReference": "User correction: I want the interactive prototype for mobile app not web",
+      "route": "Actual native screen keys and field-workspace tabs",
+      "implementationFiles": [
+        "prototypes/easygas-mobile/main.tsx",
+        "prototypes/easygas-mobile/rn-shim.tsx",
+        "prototypes/easygas-mobile/model.ts"
+      ],
+      "dataSource": "apps/mobile/*.tsx and shared native business-rule sources; sanitized synthetic fixture data",
+      "securityControl": "No live business mutation, credentials, payment, notification, GPS or qualified physical evidence",
+      "testFiles": [
+        "tests/mobile-experience-prototype.test.ts",
+        "scripts/test-mobile-prototype.mjs",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MEXP-PROFILE-SUPPORT",
+        "MEXP-POS",
+        "MEXP-BROWSER-EVIDENCE",
+        "MEXP-JOURNEY-EVIDENCE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-prototype/evidence/acceptance-tests.txt",
+        "docs/mobile-prototype/evidence/mobile-screen-audit.json",
+        "docs/mobile-prototype/evidence/phone-fit.json",
+        "docs/mobile-prototype/evidence/mobile-journeys.json",
+        "docs/mobile-prototype/evidence/mobile-exceptions.json"
+      ],
+      "acceptanceGate": "MEXP-G3",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Native navigation, phone-contained sheets, actual local checkout and stock review form exercised. Generic forms remain interaction previews.",
+      "testResult": "PASS \u2014 19 bounded model/artifact checks and recorded browser observations",
+      "outstandingWork": "None for this bounded prototype requirement. Full native/backend/device/provider/physical acceptance remains separate and unclaimed."
+    },
+    {
+      "id": "MEXP-04",
+      "requirement": "Provide shared order delivery and service journeys with exception states",
+      "priority": "P1",
+      "scope": "Mobile app prototype; actual React Native source/screens. Prior web prototype is historical work and does not satisfy this scope.",
+      "uiReference": "User correction: I want the interactive prototype for mobile app not web",
+      "route": "Actual native screen keys and field-workspace tabs",
+      "implementationFiles": [
+        "prototypes/easygas-mobile/model.ts",
+        "prototypes/easygas-mobile/screens.mjs"
+      ],
+      "dataSource": "apps/mobile/*.tsx and shared native business-rule sources; sanitized synthetic fixture data",
+      "securityControl": "No live business mutation, credentials, payment, notification, GPS or qualified physical evidence",
+      "testFiles": [
+        "tests/mobile-experience-prototype.test.ts",
+        "scripts/test-mobile-prototype.mjs",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MEXP-ORDER-DELIVERY",
+        "MEXP-SERVICE",
+        "MEXP-REFUND-ONCE",
+        "MEXP-PAYMENT-FAILURE",
+        "MEXP-EXPIRED-CALIBRATION",
+        "MEXP-JOURNEY-EVIDENCE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-prototype/evidence/acceptance-tests.txt",
+        "docs/mobile-prototype/evidence/mobile-screen-audit.json",
+        "docs/mobile-prototype/evidence/phone-fit.json",
+        "docs/mobile-prototype/evidence/mobile-journeys.json",
+        "docs/mobile-prototype/evidence/mobile-exceptions.json"
+      ],
+      "acceptanceGate": "MEXP-G4",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Five guided local journeys / 29 browser steps; rejected payment and expired calibration block affected examples.",
+      "testResult": "PASS \u2014 19 bounded model/artifact checks and recorded browser observations",
+      "outstandingWork": "None for this bounded prototype requirement. Full native/backend/device/provider/physical acceptance remains separate and unclaimed."
+    },
+    {
+      "id": "MEXP-05",
+      "requirement": "Keep synthetic prototype state isolated from all real APIs and device side effects",
+      "priority": "P0",
+      "scope": "Mobile app prototype; actual React Native source/screens. Prior web prototype is historical work and does not satisfy this scope.",
+      "uiReference": "User correction: I want the interactive prototype for mobile app not web",
+      "route": "Actual native screen keys and field-workspace tabs",
+      "implementationFiles": [
+        "prototypes/easygas-mobile/network.ts",
+        "prototypes/easygas-mobile/expo-shims.tsx",
+        "prototypes/easygas-mobile/index.html"
+      ],
+      "dataSource": "apps/mobile/*.tsx and shared native business-rule sources; sanitized synthetic fixture data",
+      "securityControl": "No live business mutation, credentials, payment, notification, GPS or qualified physical evidence",
+      "testFiles": [
+        "tests/mobile-experience-prototype.test.ts",
+        "scripts/test-mobile-prototype.mjs",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MEXP-ISOLATION",
+        "MEXP-ROLE-DENIALS"
+      ],
+      "negativeTests": [
+        "MEXP-ISOLATION"
+      ],
+      "evidence": [
+        "docs/mobile-prototype/evidence/acceptance-tests.txt",
+        "docs/mobile-prototype/evidence/mobile-screen-audit.json",
+        "docs/mobile-prototype/evidence/phone-fit.json",
+        "docs/mobile-prototype/evidence/mobile-journeys.json",
+        "docs/mobile-prototype/evidence/mobile-exceptions.json"
+      ],
+      "acceptanceGate": "MEXP-G5",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual network adapter has zero forwarding; CSP prohibits connections; no live credentials or physical authority.",
+      "testResult": "PASS \u2014 19 bounded model/artifact checks and recorded browser observations",
+      "outstandingWork": "None for this bounded prototype requirement. Full native/backend/device/provider/physical acceptance remains separate and unclaimed."
+    },
+    {
+      "id": "MEXP-06",
+      "requirement": "Verify phone layouts, role scopes and complete interaction journeys",
+      "priority": "P1",
+      "scope": "Mobile app prototype; actual React Native source/screens. Prior web prototype is historical work and does not satisfy this scope.",
+      "uiReference": "User correction: I want the interactive prototype for mobile app not web",
+      "route": "Actual native screen keys and field-workspace tabs",
+      "implementationFiles": [
+        "scripts/validate-mobile-prototype.mjs",
+        "docs/mobile-prototype/screen-coverage.json"
+      ],
+      "dataSource": "apps/mobile/*.tsx and shared native business-rule sources; sanitized synthetic fixture data",
+      "securityControl": "No live business mutation, credentials, payment, notification, GPS or qualified physical evidence",
+      "testFiles": [
+        "tests/mobile-experience-prototype.test.ts",
+        "scripts/test-mobile-prototype.mjs",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MEXP-BROWSER-EVIDENCE",
+        "MEXP-JOURNEY-EVIDENCE",
+        "MEXP-RESET-PERSISTENCE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-prototype/evidence/acceptance-tests.txt",
+        "docs/mobile-prototype/evidence/mobile-screen-audit.json",
+        "docs/mobile-prototype/evidence/phone-fit.json",
+        "docs/mobile-prototype/evidence/mobile-journeys.json",
+        "docs/mobile-prototype/evidence/mobile-exceptions.json"
+      ],
+      "acceptanceGate": "MEXP-G6",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "117 screen observations and 12 phone/role checks pass; native inputs/navigation, shared examples and reset verified within review scope.",
+      "testResult": "PASS \u2014 19 bounded model/artifact checks and recorded browser observations",
+      "outstandingWork": "None for this bounded prototype requirement. Full native/backend/device/provider/physical acceptance remains separate and unclaimed."
+    },
+    {
+      "id": "MEXP-07",
+      "requirement": "Deliver the selected mobile prototype format and preserve honest traceability",
+      "priority": "P1",
+      "scope": "Mobile app prototype; actual React Native source/screens. Prior web prototype is historical work and does not satisfy this scope.",
+      "uiReference": "User correction: I want the interactive prototype for mobile app not web",
+      "route": "Actual native screen keys and field-workspace tabs",
+      "implementationFiles": [
+        "prototypes/easygas-mobile/.openai/hosting.json",
+        "docs/mobile-prototype/README.md",
+        "docs/mobile-prototype/AUDIT.md"
+      ],
+      "dataSource": "apps/mobile/*.tsx and shared native business-rule sources; sanitized synthetic fixture data",
+      "securityControl": "No live business mutation, credentials, payment, notification, GPS or qualified physical evidence",
+      "testFiles": [
+        "tests/mobile-experience-prototype.test.ts",
+        "scripts/test-mobile-prototype.mjs",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MEXP-PRIVATE-RELEASE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-prototype/evidence/acceptance-tests.txt",
+        "docs/mobile-prototype/evidence/mobile-screen-audit.json",
+        "docs/mobile-prototype/evidence/phone-fit.json",
+        "docs/mobile-prototype/evidence/mobile-journeys.json",
+        "docs/mobile-prototype/evidence/mobile-exceptions.json",
+        "docs/mobile-prototype/publication.json",
+        "docs/mobile-prototype/evidence/hosted-delivery.json",
+        "docs/mobile-prototype/evidence/hosted-roles.json",
+        "docs/mobile-prototype/evidence/hosted-orders.json",
+        "docs/mobile-prototype/evidence/hosted-reset.json"
+      ],
+      "acceptanceGate": "MEXP-G7",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact mobile source 3065ebea5fb080c945cbabba0b697ce1789c7a1c privately published. Normal owner ChatGPT sign-in reaches mobile UI; hosted six-role views, 390px layout, delivery readback and reset pass.",
+      "testResult": "PASS \u2014 19 bounded model/artifact/publication checks and authenticated hosted browser observations",
+      "outstandingWork": "None for the selected private interactive prototype format. Installed native/backend/device/provider/physical acceptance remains separate."
+    },
+    {
+      "id": "MEXP-08",
+      "requirement": "Represent web-delegated business feature families as explicitly proposed mobile designs",
+      "priority": "P1",
+      "scope": "Scope addition: mobile design proposals for business tools currently delegated to a browser. Full native/backend implementation is outside this prototype phase.",
+      "uiReference": "User correction: I want the interactive prototype for mobile app not web",
+      "route": "Actual native screen keys and field-workspace tabs",
+      "implementationFiles": [
+        "prototypes/easygas-mobile/MobileModule.tsx",
+        "prototypes/easygas-mobile/modules.mjs",
+        "prototypes/easygas-mobile/mobile-data.ts"
+      ],
+      "dataSource": "apps/mobile/*.tsx and shared native business-rule sources; sanitized synthetic fixture data",
+      "securityControl": "No live business mutation, credentials, payment, notification, GPS or qualified physical evidence",
+      "testFiles": [
+        "tests/mobile-experience-prototype.test.ts",
+        "scripts/test-mobile-prototype.mjs",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MEXP-MOBILE-CONCEPTS",
+        "MEXP-REPORTS-ASSIGNMENT",
+        "MEXP-CATALOGUE",
+        "MEXP-BROWSER-EVIDENCE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-prototype/evidence/acceptance-tests.txt",
+        "docs/mobile-prototype/evidence/mobile-screen-audit.json",
+        "docs/mobile-prototype/evidence/phone-fit.json",
+        "docs/mobile-prototype/evidence/mobile-journeys.json",
+        "docs/mobile-prototype/evidence/mobile-exceptions.json"
+      ],
+      "acceptanceGate": "MEXP-G8",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "20 labelled proposed workspaces / 39 role entries; review records stay pending and preserve balances; Inventory handoff stays in the app.",
+      "testResult": "PASS \u2014 19 bounded model/artifact checks and recorded browser observations",
+      "outstandingWork": "None for this bounded prototype requirement. Full native/backend/device/provider/physical acceptance remains separate and unclaimed."
+    }
+  ],
+  "gates": [
+    {
+      "id": "MEXP-G1",
+      "status": "PASS",
+      "description": "Audit the actual mobile screen and role navigation inventory"
+    },
+    {
+      "id": "MEXP-G2",
+      "status": "PASS",
+      "description": "Reproduce the native app designs and interaction patterns for all six roles"
+    },
+    {
+      "id": "MEXP-G3",
+      "status": "PASS",
+      "description": "Provide tappable mobile navigation, contextual sheets and account/product/service flows"
+    },
+    {
+      "id": "MEXP-G4",
+      "status": "PASS",
+      "description": "Provide shared order delivery and service journeys with exception states"
+    },
+    {
+      "id": "MEXP-G5",
+      "status": "PASS",
+      "description": "Keep synthetic prototype state isolated from all real APIs and device side effects"
+    },
+    {
+      "id": "MEXP-G6",
+      "status": "PASS",
+      "description": "Verify phone layouts, role scopes and complete interaction journeys"
+    },
+    {
+      "id": "MEXP-G7",
+      "status": "PASS",
+      "description": "Deliver the selected mobile prototype format and preserve honest traceability"
+    },
+    {
+      "id": "MEXP-G8",
+      "description": "Represent web-delegated business feature families as explicitly proposed mobile designs",
+      "status": "PASS"
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 8,
+      "verified": 8,
+      "partial": 0,
+      "total": 8
+    },
+    "criticalRequirements": {
+      "verified": 1,
+      "total": 1
+    },
+    "gates": {
+      "passed": 8,
+      "total": 8
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "User clarified mobile app rather than web. Preserve EXP-01\u201308 as historical web work; create distinct MEXP IDs and audit actual native app features. No web-only feature is silently claimed as mobile implementation."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "User selected a clickable mobile prototype with a private review link. Added MEXP-08 for explicitly labelled native proposals where the current mobile app opens browser tools. Retain all 300 feature items as design coverage; individual feature/native backend acceptance remains unclaimed."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Private mobile release succeeded; actual authenticated hosted role/phone/delivery/reset checks recorded. All eight bounded prototype requirements/gates verified. Full 300-feature control/native/provider/physical acceptance is unclaimed and retains its separate denominators."
+    }
+  ]
+}
