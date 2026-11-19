@@ -1,0 +1,30 @@
+{
+  "base": "https://easygas-client-demo.vercel.app",
+  "phase": "after",
+  "reads": [
+    {
+      "action": "navigation.access/orders/invoice.order/delivery.photos/doorstep.list",
+      "status": 200,
+      "completedReference": "EG-2026-FD9F2C67",
+      "retainedPhotos": 1
+    }
+  ],
+  "denials": [
+    {
+      "action": "customer navigation.access",
+      "status": 403
+    },
+    {
+      "action": "customer other-order invoice",
+      "status": 404
+    }
+  ],
+  "preservation": {
+    "ordersHash": "0d726abc2c9f655bcf81df66d6bf1fd771b7bf142c283479de27f10028936a99",
+    "verifiedLedgerHash": "b9a0a7ac280d747333e0c99a500645deaa1c09f69ccffde353da9048c0090c31",
+    "invoiceHash": "137ee42e03a22bf872948b17853d79eb5237c4ca8c98fc0cbaa83f6670af9ee1",
+    "count": 8,
+    "paystack": "test/available",
+    "bulkEnabled": true
+  }
+}

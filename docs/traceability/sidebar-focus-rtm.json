@@ -41,7 +41,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Shared sidebar scroll restoration and nearest active-item reveal implemented and verified in actual local expanded/compact/mobile navigation; role and route controls unchanged.",
       "testResult": "PASS \u201415 navigation regressions,1 recorded-browser-evidence validator, local desktop/compact/mobile/reload/direct-entry/Back checks, web production build and TypeScript;0 test failures/skips.",
-      "outstandingWork": "None within bounded local sidebar phase. Hosted rollout, physical Firefox/Safari and formal accessibility acceptance unperformed; broader production gates remain in prior matrices. Earlier demo release and local order-modal work preserved."
+      "outstandingWork": "No remaining bounded local implementation or authorised demo rollout work; hosted rollout verified under OSREL-01\u201303. Physical/Firefox/Safari/formal-accessibility/native/provider and broader production acceptance remain in prior matrices; production NO-GO, actual-import hold and retain-all preserved."
     },
     {
       "id": "NAVFOCUS-02",
@@ -83,7 +83,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Shared sidebar scroll restoration and nearest active-item reveal implemented and verified in actual local expanded/compact/mobile navigation; role and route controls unchanged.",
       "testResult": "PASS \u201415 navigation regressions,1 recorded-browser-evidence validator, local desktop/compact/mobile/reload/direct-entry/Back checks, web production build and TypeScript;0 test failures/skips.",
-      "outstandingWork": "None within bounded local sidebar phase. Hosted rollout, physical Firefox/Safari and formal accessibility acceptance unperformed; broader production gates remain in prior matrices. Earlier demo release and local order-modal work preserved."
+      "outstandingWork": "No remaining bounded local implementation or authorised demo rollout work; hosted rollout verified under OSREL-01\u201303. Physical/Firefox/Safari/formal-accessibility/native/provider and broader production acceptance remain in prior matrices; production NO-GO, actual-import hold and retain-all preserved."
     }
   ],
   "changeLog": [
@@ -94,6 +94,10 @@
     {
       "date": "2026-11-19",
       "change": "Implemented per-user/per-mode tab scroll continuity, bounded active-item reveal and preference-hydration ordering.15 regressions and1 browser-evidence validator pass; actual expanded/compact/mobile, reload, saved-group and Back visibility, Escape restoration, build/types verified locally. No deployment, business mutation or prior acceptance waiver."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Subsequent explicit user request authorises client-demo rollout under OSREL-01\u201303. Both changes deployed fromf63bcf2, Ready53xp97, actual hosted desktop/phone and data-preservation checks pass. Original bounded local-phase IDs, evidence and scope retained; production NO-GO/import/retain-all unchanged."
     }
   ],
   "coverage": {
@@ -128,5 +132,12 @@
       "description": "Keep active navigation visible in expanded, compact and mobile modes without stealing keyboard focus",
       "status": "PASS"
     }
-  ]
+  ],
+  "rollout": {
+    "matrix": "docs/traceability/order-sidebar-demo-release-rtm.json",
+    "deployment": "dpl_53xp97q2UbSFcUuhpu3yssNjjtoU",
+    "status": "VERIFIED_COMPLETE",
+    "date": "2026-11-19",
+    "origin": "https://easygas-client-demo.vercel.app"
+  }
 }

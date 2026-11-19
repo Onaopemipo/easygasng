@@ -16,3 +16,5 @@ Executed:15 regressions,1 saved-browser-evidence validator, actual desktop/compa
 Changes:19 November2026—scope recorded before implementation; active group expansion waits for saved preference hydration, restored offsets are tab/user/mode scoped, active visibility adjusts only the menu viewport. Final local checks pass. No scope removed.
 
 Outstanding outside local scope: hosted rollout, physical Firefox/Safari and formal accessibility checks are unperformed. Existing demo release, order-modal work, production NO-GO, actual-import hold and retain-all remain unchanged.
+
+Subsequent authorised rollout (19 November2026): both changes are now deployed and verified in [OSREL-01–03](order-sidebar-demo-release-rtm.md). The earlier local-phase rollout limitation is superseded by that release; original IDs, acceptance scope and production holds remain.

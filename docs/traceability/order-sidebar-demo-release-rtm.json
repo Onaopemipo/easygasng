@@ -14,7 +14,13 @@
         "apps/web/components/admin-order-details.tsx",
         "apps/web/components/admin.tsx",
         "apps/web/lib/service.ts",
-        "scripts/check-order-sidebar-demo.mjs"
+        "scripts/check-order-sidebar-demo.mjs",
+        "apps/web/components/order-invoice.tsx",
+        "apps/web/components/order-operations.tsx",
+        "apps/web/components/order-additions.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/app/globals.css",
+        "scripts/check-order-sidebar-browser-evidence.mjs"
       ],
       "dataSource": "Exact committed source, linked easygas-client-demo project, existing scoped orders/invoices/history/navigation reads",
       "securityControl": "Existing role/branch/order ownership, consent, invoice, delivery and retention controls remain; deployment only, no new business writes",
@@ -22,19 +28,36 @@
         "tests/admin-order-modal.test.ts",
         "tests/navigation.test.ts",
         "tests/sidebar-scroll.test.ts",
-        "scripts/check-order-sidebar-demo.mjs"
+        "scripts/check-order-sidebar-demo.mjs",
+        "scripts/check-order-sidebar-browser-evidence.mjs"
       ],
       "testIds": [
         "AORD-SUMMARY",
-        "NAVFOCUS-BOUNDS"
+        "NAVFOCUS-BOUNDS",
+        "OSREL-HTTP",
+        "OSREL-BROWSER"
       ],
       "negativeTests": [],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/20261119-order-sidebar-release.md",
+        "docs/deployment/evidence/20261119-order-sidebar/regression.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/final-hosted.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/browser-validation.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/browser-checks.json",
+        "docs/deployment/evidence/20261119-order-sidebar/candidate-build.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/source-integrity.json",
+        "docs/deployment/evidence/20261119-order-sidebar/candidate-identity.json",
+        "docs/deployment/evidence/20261119-order-sidebar/stable-inspect.json",
+        "docs/deployment/evidence/20261119-order-sidebar/promotion.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/rollback.json",
+        "docs/deployment/evidence/20261119-order-sidebar/hosted-before.json",
+        "docs/deployment/evidence/20261119-order-sidebar/hosted-after.json"
+      ],
       "acceptanceGate": "OSREL-G01",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Deployment scope recorded before execution",
-      "testResult": "Pending release checks",
-      "outstandingWork": "Candidate identity/build, promotion, hosted API and desktop/mobile acceptance, preservation readback"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact source f63bcf2 built and Ready in the existing linked project, promoted and stable-alias readback confirmed; actual hosted desktop/mobile interactions and before/after scoped data comparisons pass.",
+      "testResult": "PASS \u201479 combined regression tests, cloud build/TypeScript, hosted API scope/preservation check and browser-observation validator;11 actual desktop/mobile observations and9 interactions.0 failed/skipped final checks.",
+      "outstandingWork": "None for bounded client-demo rollout. Physical Firefox/Safari/native/provider/formal-accessibility and broader production acceptance remain in prior matrices; production NO-GO, actual-import hold and retain-all preserved. No business operations or remote Git push performed."
     },
     {
       "id": "OSREL-02",
@@ -49,7 +72,13 @@
         "apps/web/components/admin-order-details.tsx",
         "apps/web/components/admin.tsx",
         "apps/web/lib/service.ts",
-        "scripts/check-order-sidebar-demo.mjs"
+        "scripts/check-order-sidebar-demo.mjs",
+        "apps/web/components/order-invoice.tsx",
+        "apps/web/components/order-operations.tsx",
+        "apps/web/components/order-additions.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/app/globals.css",
+        "scripts/check-order-sidebar-browser-evidence.mjs"
       ],
       "dataSource": "Exact committed source, linked easygas-client-demo project, existing scoped orders/invoices/history/navigation reads",
       "securityControl": "Existing role/branch/order ownership, consent, invoice, delivery and retention controls remain; deployment only, no new business writes",
@@ -57,19 +86,36 @@
         "tests/admin-order-modal.test.ts",
         "tests/navigation.test.ts",
         "tests/sidebar-scroll.test.ts",
-        "scripts/check-order-sidebar-demo.mjs"
+        "scripts/check-order-sidebar-demo.mjs",
+        "scripts/check-order-sidebar-browser-evidence.mjs"
       ],
       "testIds": [
         "AORD-SUMMARY",
-        "NAVFOCUS-BOUNDS"
+        "NAVFOCUS-BOUNDS",
+        "OSREL-HTTP",
+        "OSREL-BROWSER"
       ],
       "negativeTests": [],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/20261119-order-sidebar-release.md",
+        "docs/deployment/evidence/20261119-order-sidebar/regression.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/final-hosted.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/browser-validation.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/browser-checks.json",
+        "docs/deployment/evidence/20261119-order-sidebar/candidate-build.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/source-integrity.json",
+        "docs/deployment/evidence/20261119-order-sidebar/candidate-identity.json",
+        "docs/deployment/evidence/20261119-order-sidebar/stable-inspect.json",
+        "docs/deployment/evidence/20261119-order-sidebar/promotion.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/rollback.json",
+        "docs/deployment/evidence/20261119-order-sidebar/hosted-before.json",
+        "docs/deployment/evidence/20261119-order-sidebar/hosted-after.json"
+      ],
       "acceptanceGate": "OSREL-G02",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Deployment scope recorded before execution",
-      "testResult": "Pending release checks",
-      "outstandingWork": "Candidate identity/build, promotion, hosted API and desktop/mobile acceptance, preservation readback"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact source f63bcf2 built and Ready in the existing linked project, promoted and stable-alias readback confirmed; actual hosted desktop/mobile interactions and before/after scoped data comparisons pass.",
+      "testResult": "PASS \u201479 combined regression tests, cloud build/TypeScript, hosted API scope/preservation check and browser-observation validator;11 actual desktop/mobile observations and9 interactions.0 failed/skipped final checks.",
+      "outstandingWork": "None for bounded client-demo rollout. Physical Firefox/Safari/native/provider/formal-accessibility and broader production acceptance remain in prior matrices; production NO-GO, actual-import hold and retain-all preserved. No business operations or remote Git push performed."
     },
     {
       "id": "OSREL-03",
@@ -84,7 +130,13 @@
         "apps/web/components/admin-order-details.tsx",
         "apps/web/components/admin.tsx",
         "apps/web/lib/service.ts",
-        "scripts/check-order-sidebar-demo.mjs"
+        "scripts/check-order-sidebar-demo.mjs",
+        "apps/web/components/order-invoice.tsx",
+        "apps/web/components/order-operations.tsx",
+        "apps/web/components/order-additions.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/app/globals.css",
+        "scripts/check-order-sidebar-browser-evidence.mjs"
       ],
       "dataSource": "Exact committed source, linked easygas-client-demo project, existing scoped orders/invoices/history/navigation reads",
       "securityControl": "Existing role/branch/order ownership, consent, invoice, delivery and retention controls remain; deployment only, no new business writes",
@@ -92,65 +144,94 @@
         "tests/admin-order-modal.test.ts",
         "tests/navigation.test.ts",
         "tests/sidebar-scroll.test.ts",
-        "scripts/check-order-sidebar-demo.mjs"
+        "scripts/check-order-sidebar-demo.mjs",
+        "scripts/check-order-sidebar-browser-evidence.mjs"
       ],
       "testIds": [
         "AORD-SUMMARY",
-        "NAVFOCUS-BOUNDS"
+        "NAVFOCUS-BOUNDS",
+        "OSREL-HTTP",
+        "OSREL-BROWSER"
       ],
       "negativeTests": [
         "AORD-SCOPE: canonical staff provisional flag is scoped, absent from customer payloads and cannot expose another customer's order"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/20261119-order-sidebar-release.md",
+        "docs/deployment/evidence/20261119-order-sidebar/regression.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/final-hosted.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/browser-validation.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/browser-checks.json",
+        "docs/deployment/evidence/20261119-order-sidebar/candidate-build.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/source-integrity.json",
+        "docs/deployment/evidence/20261119-order-sidebar/candidate-identity.json",
+        "docs/deployment/evidence/20261119-order-sidebar/stable-inspect.json",
+        "docs/deployment/evidence/20261119-order-sidebar/promotion.txt",
+        "docs/deployment/evidence/20261119-order-sidebar/rollback.json",
+        "docs/deployment/evidence/20261119-order-sidebar/hosted-before.json",
+        "docs/deployment/evidence/20261119-order-sidebar/hosted-after.json"
+      ],
       "acceptanceGate": "OSREL-G03",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Deployment scope recorded before execution",
-      "testResult": "Pending release checks",
-      "outstandingWork": "Candidate identity/build, promotion, hosted API and desktop/mobile acceptance, preservation readback"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact source f63bcf2 built and Ready in the existing linked project, promoted and stable-alias readback confirmed; actual hosted desktop/mobile interactions and before/after scoped data comparisons pass.",
+      "testResult": "PASS \u201479 combined regression tests, cloud build/TypeScript, hosted API scope/preservation check and browser-observation validator;11 actual desktop/mobile observations and9 interactions.0 failed/skipped final checks.",
+      "outstandingWork": "None for bounded client-demo rollout. Physical Firefox/Safari/native/provider/formal-accessibility and broader production acceptance remain in prior matrices; production NO-GO, actual-import hold and retain-all preserved. No business operations or remote Git push performed."
     }
   ],
   "gates": [
     {
       "id": "OSREL-G01",
       "description": "Deploy the sidebar fix and order details redesign together to the existing client demo",
-      "status": "OPEN"
+      "status": "PASS"
     },
     {
       "id": "OSREL-G02",
       "description": "Verify hosted sidebar continuity and compact order details on desktop and phone",
-      "status": "OPEN"
+      "status": "PASS"
     },
     {
       "id": "OSREL-G03",
       "description": "Preserve canonical access, retained orders and verified ledger while recording release identity and rollback",
-      "status": "OPEN"
+      "status": "PASS"
     }
   ],
   "changeLog": [
     {
       "date": "2026-11-19",
       "change": "Explicit user authorises sidebar+order-modal deployment to existing client demo. Local AORD/NAVFOCUS IDs and prior release retained; production NO-GO/import/retain-all preserved."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "79/79 combined regressions and cloud build/types pass.446 clean archived upload files match commit. Ready project/source identity validated; promoted deployment53xp97 to stable demo.11 actual desktop/mobile observations and9 interactions pass. Final API readback confirms8orders/verified ledger/invoice hashes unchanged (staff-only provisional projection omitted from comparison); customer denials retained. Harness selector/layout/REPL-recording corrections documented with superseded validator failure retained; no product-control workaround or business writes.3/3 requirements/gates verified,1/1critical; no exclusions or prior gate waiver."
     }
   ],
   "coverage": {
     "requirements": {
-      "implemented": 0,
-      "verified": 0,
+      "implemented": 3,
+      "verified": 3,
       "total": 3
     },
     "criticalRequirements": {
-      "verified": 0,
+      "verified": 1,
       "total": 1
     },
     "routes": {
-      "verified": 0,
+      "verified": 1,
       "total": 1
     },
     "gates": {
-      "passed": 0,
+      "passed": 3,
       "total": 3
     },
     "excluded": 0,
     "denominatorNote": "All3 bounded rollout requirements counted; shared sidebar does not imply acceptance of all page features."
+  },
+  "release": {
+    "applicationSource": "f63bcf276d26c5f9d407e1c60ad8b9b5876355b4",
+    "deployment": "dpl_53xp97q2UbSFcUuhpu3yssNjjtoU",
+    "origin": "https://easygas-client-demo.vercel.app",
+    "rollback": "dpl_EJBovTu4raszj1ASCq2pkVJYj8LF",
+    "databaseMigration": false,
+    "nativeBuild": false
   }
 }

@@ -18,3 +18,5 @@ Actual implementation paths, authoritative data, controls, executed named tests,
 Outstanding: no bounded local implementation remains; hosted rollout not performed. Existing production NO-GO, actual-import hold, retain-all and physical/Firefox/formal-accessibility/native/provider/populated-proof visual and broader acceptance gaps remain separate.
 
 Matrix validation: [executed report](../admin-order-modal/evidence/traceability.txt), deliberately outside row evidence to avoid self-referential validation.
+
+Subsequent authorised rollout (19 November2026): both changes are now deployed and verified in [OSREL-01–03](order-sidebar-demo-release-rtm.md). The earlier local-phase rollout limitation is superseded by that release; original IDs, acceptance scope and production holds remain.
