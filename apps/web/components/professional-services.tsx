@@ -1642,7 +1642,7 @@ export function BookingCard({
             : b.status.replaceAll("_", " ")}
         </span>
       </div>
-      {b.schedule_pending && (
+      {b.schedule_pending && b.status === "pending_confirmation" && (
         <Notice message="Your preferred visit time is awaiting confirmation. EasyGas is arranging a provider." />
       )}
       <p>
@@ -2092,7 +2092,7 @@ export function BookingCard({
             canIssue={["owner", "finance"].includes(user.role)}
           />
         )}
-      {["failed", "cancelled"].includes(b.status) && (
+      {!b.schedule_pending && ["failed", "cancelled"].includes(b.status) && (
         <section className="panel">
           <h3>Financial exception review</h3>
           <p>

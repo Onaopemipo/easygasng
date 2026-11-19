@@ -25,6 +25,7 @@ const { BookingSummaries, bookingMatches } = await import(
 const { ServiceRequestLauncher, CustomerServiceCatalogue } = await import(
   "../apps/web/components/service-request"
 );
+const { BookingCard } = await import("../apps/web/components/professional-services");
 function request(f: Awaited<ReturnType<typeof fixture>>, extra = {}) {
   const { slotId, ...input } = f.input();
   return {
@@ -307,10 +308,12 @@ test("CSBK-API04: preferred-time changes remain unassigned, versioned and noncol
       version: after.version,
       reason: "Withdraw an unconfirmed request after the preferred day",
     });
-    assert.equal(
-      (await f.call("customer", "bookings", { id: created.id }))[0].status,
-      "cancelled",
-    );
+    const cancelled = (await f.call("customer", "bookings", { id: created.id }))[0];
+    assert.equal(cancelled.status, "cancelled");
+    const cancelledView = renderToStaticMarkup(React.createElement(BookingCard, {
+      booking: cancelled, user: {...f.actors.customer, role: "customer"}, done: () => {}, compact: true,
+    }));
+    assert.doesNotMatch(cancelledView, /arranging a provider|Financial exception review/);
   } finally {
     await f.db.close?.();
   }

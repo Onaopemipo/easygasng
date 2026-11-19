@@ -44,10 +44,10 @@
       ],
       "evidence": [],
       "acceptanceGate": "DREL2-G01",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Authorised scope recorded before release",
-      "testResult": "NOT RUN",
-      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+      "status": "PARTIAL",
+      "reason": "Implementation source published and staged Ready with local focused/type/build validation.081 applied and exact canonical preservation verified. Final exact-source cloud suite, stable promotion and named hosted acceptance remain pending.",
+      "testResult": "PASS bounded local checks; hosted release acceptance NOT RUN",
+      "outstandingWork": "Await successful797-check cloud validation, promote staged release and execute actual customer/named-order UI acceptance."
     },
     {
       "id": "DREL2-02",
@@ -76,12 +76,18 @@
         "CSBK-API02: unassigned requests reject invalid time, coverage, stale pricing, inactive service, mixed slot inputs and foreign follow-ups without orphan rows",
         "CSBK-API03: ownership and actual qualified assignment remain mandatory before confirming or progressing a request"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/customer-service-bookings/evidence/tests.txt",
+        "docs/deployment/evidence/20261119-all-fixes/migration081-reconciliation.json",
+        "docs/deployment/evidence/20261119-all-fixes/final-candidate-before081-status.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-candidate-after081-status.txt",
+        "docs/deployment/20261119-all-fixes-release.md"
+      ],
       "acceptanceGate": "DREL2-G02",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Authorised scope recorded before release",
-      "testResult": "NOT RUN",
-      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "081 applied atomically to confirmed isolated demo after encrypted archive verification. Independent153-table count comparison and22 exact canonical row/hash comparisons preserve existing order/stock/financial data and historical audits; expected migration entry and appended denied-security audits reconciled. Restricted runtime unchanged.",
+      "testResult": "PASS: service request API regressions and actual isolated demo migration/archive reconciliation/readiness503\u2192200",
+      "outstandingWork": "No remaining bounded migration work. Encrypted archive verified/read-only decoded; independent restore drill not claimed."
     },
     {
       "id": "DREL2-03",
@@ -112,10 +118,10 @@
       "negativeTests": [],
       "evidence": [],
       "acceptanceGate": "DREL2-G03",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Authorised scope recorded before release",
-      "testResult": "NOT RUN",
-      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+      "status": "PARTIAL",
+      "reason": "Implementation source published and staged Ready with local focused/type/build validation.081 applied and exact canonical preservation verified. Final exact-source cloud suite, stable promotion and named hosted acceptance remain pending.",
+      "testResult": "PASS bounded local checks; hosted release acceptance NOT RUN",
+      "outstandingWork": "Await successful797-check cloud validation, promote staged release and execute actual customer/named-order UI acceptance."
     },
     {
       "id": "DREL2-04",
@@ -164,10 +170,10 @@
       ],
       "evidence": [],
       "acceptanceGate": "DREL2-G04",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Authorised scope recorded before release",
-      "testResult": "NOT RUN",
-      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+      "status": "PARTIAL",
+      "reason": "Implementation source published and staged Ready with local focused/type/build validation.081 applied and exact canonical preservation verified. Final exact-source cloud suite, stable promotion and named hosted acceptance remain pending.",
+      "testResult": "PASS bounded local checks; hosted release acceptance NOT RUN",
+      "outstandingWork": "Await successful797-check cloud validation, promote staged release and execute actual customer/named-order UI acceptance."
     },
     {
       "id": "DREL2-05",
@@ -225,7 +231,7 @@
     },
     {
       "id": "DREL2-G02",
-      "status": "NOT RUN",
+      "status": "PASS",
       "criteria": "Apply service-request migration081 only to the isolated demo database while preserving canonical records and restricted runtime access"
     },
     {
@@ -256,6 +262,10 @@
     {
       "date": "2026-11-19",
       "change": "Hosted preparation found qualification picker excluded backend-eligible finance/manager/driver employees. Picker expanded to exactly those existing eligible roles, owner-only and branch-scoped; driver remains dispensing-only in canonical mutation. New regression TAV-LPG covers inclusion and permission/self-verification/inactive exclusions. No grants made during diagnosis."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Live service request EGS-AD0E7F94 accepted with no provider/invoice; cancellation preserved history but exposed stale pending-scheduling/financial-review messages. Two guarded display conditions corrected, canonical API-to-render cancellation regression added to CSBK-API04, historical reviewed hashes retained in releaseFollowups. LPG recovery continues on validated deployed LPG source while this presentation follow-up validates."
     }
   ]
 }
