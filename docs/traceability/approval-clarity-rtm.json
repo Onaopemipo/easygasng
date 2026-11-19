@@ -1,0 +1,169 @@
+{
+  "phase": "Approval Centre clarity and single-owner EasyRewards policy",
+  "productionDecision": "Existing production NO-GO, actual-import hold and retain-all unchanged",
+  "requirements": [
+    {
+      "id": "APC-01",
+      "requirement": "Clearly identify Requested by and show authoritative revision-specific approval progress",
+      "priority": "P1",
+      "scope": "Existing Approval Centre /admin/approvals and loyalty.policy sole-owner authority; existing named request remains unapplied without its owner action",
+      "uiReference": "User reported155D9564 falsely read as approved and reiterated one admin/business owner",
+      "route": "/admin/approvals",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/approval-progress.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Current users, scoped change_requests, revision-bound approval_decisions and immutable owner authority audit_events; existing setting version",
+      "securityControl": "Explicit existing owner opt-in, own-request only, recent identity verification, immutable authority, expiry/version/validation and restricted review controls preserved",
+      "testFiles": [
+        "tests/approval-clarity.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/approval-pagination.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "testIds": [
+        "APC-OWNER",
+        "APC-PROGRESS",
+        "APC-SECURITY",
+        "APC-LABELS"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/approval-clarity/evidence/regression.txt",
+        "docs/approval-clarity/evidence/types.txt",
+        "docs/approval-clarity/evidence/build.txt"
+      ],
+      "acceptanceGate": "APC-G01",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Implemented and58/58 focused governance/rewards checks pass, types/build pass. Exact-source client-demo deployment and actual desktop/phone acceptance pending.",
+      "testResult": "PASS \u201458/58 focused checks, types and production build; hosted acceptance pending",
+      "outstandingWork": "Exact-source demo deployment, actual owner/dual-progress desktop/phone review and unchanged business readback"
+    },
+    {
+      "id": "APC-02",
+      "requirement": "Allow the sole owner to authorise their own EasyRewards business policy with verified audited owner authority; preserve restricted controls",
+      "priority": "P0",
+      "scope": "Existing Approval Centre /admin/approvals and loyalty.policy sole-owner authority; existing named request remains unapplied without its owner action",
+      "uiReference": "User reported155D9564 falsely read as approved and reiterated one admin/business owner",
+      "route": "/admin/approvals",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/approval-progress.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Current users, scoped change_requests, revision-bound approval_decisions and immutable owner authority audit_events; existing setting version",
+      "securityControl": "Explicit existing owner opt-in, own-request only, recent identity verification, immutable authority, expiry/version/validation and restricted review controls preserved",
+      "testFiles": [
+        "tests/approval-clarity.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/approval-pagination.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "testIds": [
+        "APC-OWNER",
+        "APC-PROGRESS",
+        "APC-SECURITY",
+        "APC-LABELS"
+      ],
+      "negativeTests": [
+        "APC-SECURITY"
+      ],
+      "evidence": [
+        "docs/approval-clarity/evidence/regression.txt",
+        "docs/approval-clarity/evidence/types.txt",
+        "docs/approval-clarity/evidence/build.txt"
+      ],
+      "acceptanceGate": "APC-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Implemented and58/58 focused governance/rewards checks pass, types/build pass. Exact-source client-demo deployment and actual desktop/phone acceptance pending.",
+      "testResult": "PASS \u201458/58 focused checks, types and production build; hosted acceptance pending",
+      "outstandingWork": "Exact-source demo deployment, actual owner/dual-progress desktop/phone review and unchanged business readback"
+    },
+    {
+      "id": "APC-03",
+      "requirement": "Deploy the exact source to the client demo, verify desktop/phone and preserve existing records",
+      "priority": "P0",
+      "scope": "Existing Approval Centre /admin/approvals and loyalty.policy sole-owner authority; existing named request remains unapplied without its owner action",
+      "uiReference": "User reported155D9564 falsely read as approved and reiterated one admin/business owner",
+      "route": "/admin/approvals",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/approval-progress.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Current users, scoped change_requests, revision-bound approval_decisions and immutable owner authority audit_events; existing setting version",
+      "securityControl": "Explicit existing owner opt-in, own-request only, recent identity verification, immutable authority, expiry/version/validation and restricted review controls preserved",
+      "testFiles": [
+        "tests/approval-clarity.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/approval-pagination.test.ts",
+        "tests/shared-approval-gas.test.ts"
+      ],
+      "testIds": [
+        "APC-OWNER",
+        "APC-PROGRESS",
+        "APC-SECURITY",
+        "APC-LABELS"
+      ],
+      "negativeTests": [
+        "APC-SECURITY"
+      ],
+      "evidence": [
+        "docs/approval-clarity/evidence/regression.txt",
+        "docs/approval-clarity/evidence/types.txt",
+        "docs/approval-clarity/evidence/build.txt"
+      ],
+      "acceptanceGate": "APC-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Implemented and58/58 focused governance/rewards checks pass, types/build pass. Exact-source client-demo deployment and actual desktop/phone acceptance pending.",
+      "testResult": "PASS \u201458/58 focused checks, types and production build; hosted acceptance pending",
+      "outstandingWork": "Exact-source demo deployment, actual owner/dual-progress desktop/phone review and unchanged business readback"
+    }
+  ],
+  "gates": [
+    {
+      "id": "APC-G01",
+      "description": "Clearly identify Requested by and show authoritative revision-specific approval progress",
+      "status": "OPEN"
+    },
+    {
+      "id": "APC-G02",
+      "description": "Allow the sole owner to authorise their own EasyRewards business policy with verified audited owner authority; preserve restricted controls",
+      "status": "OPEN"
+    },
+    {
+      "id": "APC-G03",
+      "description": "Deploy the exact source to the client demo, verify desktop/phone and preserve existing records",
+      "status": "OPEN"
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 3,
+      "verified": 0,
+      "total": 3
+    },
+    "criticalRequirements": {
+      "verified": 0,
+      "total": 2
+    },
+    "gates": {
+      "passed": 0,
+      "total": 3
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "User explicitly requests Requested by/progress, demo deployment and single-admin fit. Preserve all prior phase IDs. Scope adds explicit sole-owner authority for loyalty.policy only under existing opt-in; no automatic application of the named existing pending request. Financial operations, access/payment and qualified safety controls retain their current approval rules. Dual-review requests retain0/2; owner EasyRewards uses0/1."
+    }
+  ]
+}

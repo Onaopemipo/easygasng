@@ -83,6 +83,7 @@ import {
 } from "./auth";
 import {
   canAutoApproveDefinition,
+  approvalProgress,
   hasQualifiedSafetyReviewer,
   audit,
   propose,
@@ -1350,6 +1351,7 @@ export async function dispatch(
               "failed",
             ].includes(r.status) &&
             new Date(r.expires_at).getTime() > Date.now();
+          r.approval_progress = d ? await approvalProgress(tx, r, d) : null;
           r.state = r.status.toUpperCase();
           r.decisions = (
             await tx.query(

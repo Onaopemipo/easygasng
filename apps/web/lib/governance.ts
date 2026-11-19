@@ -372,7 +372,9 @@ export function canAutoApproveDefinition(d: Row) {
     (d.key === "delivery.fee" ||
       d.key === "gas.quantity_policy" ||
       (d.value_type === "location" && d.key.startsWith("location.")));
-  return d.key === "gas.price_per_kg" || d.value_type === "checklist" ||
+  // EasyRewards programme economics are a business-owner decision. This does
+  // not authorise points adjustments, refunds, access or payment configuration.
+  return d.key === "loyalty.policy" || d.key === "gas.price_per_kg" || d.value_type === "checklist" ||
     (d.risk < 4 && (d.required_roles.length === 0 || ownerOnlyOrderingSetting));
 }
 export function ownerAutoApprovalEnabled() {
@@ -424,9 +426,9 @@ export async function hasQualifiedSafetyReviewer(tx: SQL, ids: string[]) {
     WHERE q.user_id=ANY($1::text[]) AND q.code='safety_review' AND q.expires_at>now()
       AND q.verified_by<>q.user_id AND verifier.active=true AND verifier.role='owner' LIMIT 1`, [ids]));
 }
-export async function validApprovals(tx: SQL, r: Row, d: Row) {
+export async function approvalProgress(tx: SQL, r: Row, d: Row) {
+  const ownerMode = canAutoApproveDefinition(d) && r.requester_role === "owner" && d.value_type !== "checklist";
   const ownerAuthorized = canAutoApproveDefinition(d) && await ownerRequestAuthorized(tx, r);
-  if (ownerAuthorized && d.value_type !== "checklist") return true;
   const decisions = (
     await tx.query(
       "SELECT a.*,u.role AS current_role,u.active,u.branch_id FROM approval_decisions a JOIN users u ON u.id=a.approver_id WHERE a.request_id=$1 AND a.revision=$2 AND a.decision='approve'",
@@ -457,16 +459,29 @@ export async function validApprovals(tx: SQL, r: Row, d: Row) {
     } else if (!d.approve_roles.includes(a.current_role)) continue;
     valid.push(a);
   }
-  if (d.value_type === "checklist" && !(await hasQualifiedSafetyReviewer(tx, valid.map((a) => a.approver_id))))
-    return false;
+  const qualifiedReviewRequired = d.value_type === "checklist" &&
+    !(await hasQualifiedSafetyReviewer(tx, valid.map((a) => a.approver_id)));
   if (ownerAuthorized) valid.push({ approver_id: r.requester_id, current_role: "owner" });
   const unique = [...new Map(valid.map((a) => [a.approver_id, a])).values()];
-  return (
-    unique.length >= (d.risk === 4 ? 2 : 1) &&
-    d.required_roles.every((role: string) =>
-      unique.some((a) => a.current_role === role),
-    )
+  const missingRoles = d.required_roles.filter((role: string) =>
+    !unique.some((a) => a.current_role === role));
+  const required = ownerMode ? 1 : d.risk === 4 ? 2 : 1;
+  const complete = !qualifiedReviewRequired && (
+    (ownerAuthorized && d.value_type !== "checklist") ||
+    (unique.length >= (d.risk === 4 ? 2 : 1) && missingRoles.length === 0)
   );
+  return {
+    mode: ownerMode ? "owner" : "independent",
+    approved: ownerMode ? (complete ? 1 : 0) : Math.min(required, unique.length),
+    required,
+    complete,
+    owner_approved: Boolean(ownerAuthorized),
+    missing_roles: ownerMode ? (complete ? [] : ["owner"]) : missingRoles,
+    qualified_review_required: qualifiedReviewRequired,
+  };
+}
+export async function validApprovals(tx: SQL, r: Row, d: Row) {
+  return (await approvalProgress(tx, r, d)).complete;
 }
 async function applyApproved(
   tx: SQL,

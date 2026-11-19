@@ -1,4 +1,5 @@
 "use client";
+import { approvalStatusLabel } from "../../../packages/business-rules/src/approval-progress";
 import { FieldCaption } from "./field-caption";
 import DriverExperience from "./driver-experience";
 import TechnicianWorkspace from "./technician-workspace";
@@ -2115,7 +2116,7 @@ function Approvals({
               <thead>
                 <tr>
                   <th>Requested change</th>
-                  <th>Requester</th>
+                  <th>Requested by</th>
                   <th>Risk</th>
                   <th>Status</th>
                   <th>Submitted</th>
@@ -2133,7 +2134,7 @@ function Approvals({
                         {r.id.slice(0, 8).toUpperCase()} · {r.scope}
                       </small>
                     </td>
-                    <td>{r.requester}</td>
+                    <td><span className="approval-requested-by">Requested by</span>{r.requester}</td>
                     <td>
                       <span className={`risk risk-${r.risk}`}>
                         Level {r.risk}
@@ -2141,7 +2142,7 @@ function Approvals({
                     </td>
                     <td>
                       <span className={`status ${r.status}`}>
-                        {r.status.replaceAll("_", " ")}
+                        {approvalStatusLabel(r)}
                       </span>
                     </td>
                     <td>
@@ -2340,8 +2341,7 @@ function Approvals({
             <Notice type="error" message={selected.failure_reason} />
           )}
           <p>
-            State: {selected.state ?? selected.status.toUpperCase()} · Approval
-            policy captured at submission
+            {approvalStatusLabel(selected)} · Review progress is checked against the current request version
           </p>
           <div className="proposal-context">
             <h3>Reason for change</h3>
@@ -2358,12 +2358,21 @@ function Approvals({
           <Notice
             message={
               selected.owner_auto_approval
-                ? "Admin requests are approved automatically. Existing pending requests can be approved below. Current authority, effective date and activation checks remain enforced."
+                ? "This business setting can be authorised by its requesting Admin. No second Admin is needed. Use Approve after verifying your identity. Effective date and activation checks still apply."
                 : selected.risk === 4
-                  ? "Two distinct authorised approvers are required, including the specified owner and finance roles. Each must verify their identity."
+                  ? "This restricted change needs two distinct authorised reviewers. The requester cannot review it. Required roles: " + selected.required_roles.map((role: string) => roleLabel(role)).join(", ") + ". Identity verification is required."
                   : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
             }
           />
+          {selected.approval_progress?.qualified_review_required && (
+            <p className="muted">An independent, currently qualified safety reviewer is still required.</p>
+          )}
+          {selected.approval_progress?.mode === "independent" && selected.approval_progress?.missing_roles?.length > 0 && (
+            <p className="muted">Still needed: {selected.approval_progress.missing_roles.map((role: string) => roleLabel(role)).join(", ")}.</p>
+          )}
+          {selected.approval_progress?.owner_approved && (
+            <p className="muted">Admin authorisation recorded for this request version.</p>
+          )}
           {selected.can_owner_apply && (
             <button
               className="button full"
