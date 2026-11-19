@@ -2357,8 +2357,10 @@ function Approvals({
           </div>
           <Notice
             message={
-              selected.owner_auto_approval
+              selected.owner_auto_approval && selected.approval_progress?.mode === "owner"
                 ? "This business setting can be authorised by its requesting Admin. No second Admin is needed. Use Approve after verifying your identity. Effective date and activation checks still apply."
+                : selected.owner_auto_approval
+                  ? "The requesting Admin can record owner authorisation. An independent qualified safety review is still required before activation."
                 : selected.risk === 4
                   ? "This restricted change needs two distinct authorised reviewers. The requester cannot review it. Required roles: " + selected.required_roles.map((role: string) => roleLabel(role)).join(", ") + ". Identity verification is required."
                   : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
