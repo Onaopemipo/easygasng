@@ -23,16 +23,25 @@
         "tests/admin-order-modal.test.ts",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "testIds": [],
-      "negativeTests": [
-        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      "testIds": [
+        "ROLEACC-PREFLIGHT",
+        "ROLEACC-ACCESS"
       ],
-      "evidence": [],
+      "negativeTests": [
+        "ROLEACC-ACCESS: customer, commercial, driver and technician cannot read or operate another account's protected order or finance"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/preflight.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/preexceptions.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/preflight.json",
+        "docs/deployment/evidence/20261119-role-acceptance/role-ui.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/browser-evidence.json"
+      ],
       "acceptanceGate": "ROLEACC-G01",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Approved acceptance scope registered before new business mutations",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Ten labelled accounts authenticated, including the independent second owner. Functional sales/dispatcher labels are canonical managers; inventory/finance labels are canonical finance. Customer ownership and restricted driver/technician scopes verified.",
+      "testResult": "PASS — executed hosted product API/UI assertions and mapped local regressions; see linked evidence. Synthetic demo scope only.",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
       "id": "ROLEACC-02",
@@ -56,16 +65,29 @@
         "tests/driver-lpg-workflow.test.ts",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "testIds": [],
-      "negativeTests": [
-        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      "testIds": [
+        "ROLEACC-QA-RENEWAL",
+        "ROLEACC-GAS-PREP",
+        "ROLEACC-GAS-GUARDS",
+        "ROLEACC-GAS"
       ],
-      "evidence": [],
+      "negativeTests": [
+        "ROLEACC-GAS-GUARDS: wrong-role, stale and incorrect simulated meter readings cannot dispense or complete without proof"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/qa-renewal.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/qa-renewal.json",
+        "docs/deployment/evidence/20261119-role-acceptance/gas-prepare.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/gas-guards.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/gas-completed.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/gas-completed.json",
+        "docs/deployment/evidence/20261119-role-acceptance/operations-regression.txt"
+      ],
       "acceptanceGate": "ROLEACC-G02",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Two-hour synthetic QA qualification/meter renewals approved by user; normal API renewal and gas acceptance underway",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Fresh6kg wallet order completed through normal scoped APIs and actual restricted driver UI, with independently verified synthetic qualifications, calibrated sandbox meter, custody, invoice, consented labelled proof and handover. Stock debited6000g once and load reconciled.",
+      "testResult": "PASS — executed hosted product API/UI assertions and mapped local regressions; see linked evidence. Synthetic demo scope only.",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
       "id": "ROLEACC-03",
@@ -88,16 +110,28 @@
         "tests/order-tracking.test.ts",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "testIds": [],
-      "negativeTests": [
-        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      "testIds": [
+        "ROLEACC-PRODUCT-PREP",
+        "ROLEACC-HANDOVER-GUARDS",
+        "ROLEACC-CASH-GUARDS",
+        "ROLEACC-COD"
       ],
-      "evidence": [],
+      "negativeTests": [
+        "ROLEACC-CASH-GUARDS: collected cash is not verified and the collector cannot reconcile their own collection"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/product-prepare.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/handover-guards.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/cash-guards.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/cod-refund-rejected.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/cod-refund-rejected.json",
+        "docs/deployment/evidence/20261119-role-acceptance/finance-cod-verified.jpg"
+      ],
       "acceptanceGate": "ROLEACC-G03",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Approved acceptance scope registered before new business mutations",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Fresh two-unit product COD order completed through driver pickup/arrival/proof then authorised owner-supervised cash handover. Collected cash remained unverified until a separate finance user reconciled it in the restored UI.",
+      "testResult": "PASS — executed hosted product API/UI assertions and mapped local regressions; see linked evidence. Synthetic demo scope only.",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
       "id": "ROLEACC-04",
@@ -119,16 +153,24 @@
         "tests/paystack-policy.test.ts",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "testIds": [],
-      "negativeTests": [
-        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      "testIds": [
+        "ROLEACC-PAYMENT",
+        "ROLEACC-PROVIDER-GUARDS"
       ],
-      "evidence": [],
+      "negativeTests": [
+        "ROLEACC-PROVIDER-GUARDS: forged verification, foreign or cancelled targets, client-selected amount and unsigned success webhook cannot create payment success"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/preexceptions.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/payment-guards.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/payment-guards.json",
+        "docs/deployment/evidence/20261119-role-acceptance/payment-regression.txt"
+      ],
       "acceptanceGate": "ROLEACC-G04",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Approved acceptance scope registered before new business mutations",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Insufficient-wallet, quote tampering, nonexistent verification, foreign/staff/cancelled payment targets, client-forged success fields and unsigned success webhook rejected; no wallet/ledger/order effects. Local provider-failure regressions also pass.",
+      "testResult": "PASS — executed hosted product API/UI assertions and mapped local regressions; see linked evidence. Synthetic demo scope only.",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
       "id": "ROLEACC-05",
@@ -149,16 +191,26 @@
         "tests/order-tracking.test.ts",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "testIds": [],
-      "negativeTests": [
-        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      "testIds": [
+        "ROLEACC-CANCEL",
+        "ROLEACC-WALLET-CANCEL",
+        "ROLEACC-FAILED"
       ],
-      "evidence": [],
+      "negativeTests": [
+        "ROLEACC-FAILED: failed wallet delivery blocks cancellation/retry until an independent exact manifest return and preserves reservations"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/preexceptions.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/wallet-cancel.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/wallet-cancel.json",
+        "docs/deployment/evidence/20261119-role-acceptance/failed-returned.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/operations-regression.txt"
+      ],
       "acceptanceGate": "ROLEACC-G05",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Approved acceptance scope registered before new business mutations",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+      "status": "DEFECTIVE",
+      "reason": "Final cancelled-invoice review exposed authoritative wallet cancellation credit omitted from invoice settlement balance. A wallet-refunded cancelled order still appears financially settled, blocking legitimate void. Fix/regression/rollout underway.",
+      "testResult": "FAIL — final invoice reconciliation caught a fourth defect; prior mapped scenarios remain passed",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
       "id": "ROLEACC-06",
@@ -179,16 +231,29 @@
         "tests/order-tracking.test.ts",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "testIds": [],
-      "negativeTests": [
-        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      "testIds": [
+        "ROLEACC-FAILED",
+        "ROLEACC-RETRY",
+        "ROLEACC-RETRY-PROOF",
+        "ROLEACC-RETRY-COMPLETE"
       ],
-      "evidence": [],
+      "negativeTests": [
+        "ROLEACC-RETRY-PROOF: a new delivery attempt requires its own consented proof and cannot complete from a stale version"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/failed-returned.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/failed-returned.json",
+        "docs/deployment/evidence/20261119-role-acceptance/retry-prepared.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/retry-guards.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/retry-completed.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/retry-completed.json",
+        "docs/deployment/evidence/20261119-role-acceptance/driver-phone-retry-completed-history.jpg"
+      ],
       "acceptanceGate": "ROLEACC-G06",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Approved acceptance scope registered before new business mutations",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Failure created a dispatch-owned incident and customer-safe next step. Full independent return preceded rescheduling/reassignment; second attempt completed through phone driver UI with new consented proof, one wallet debit and one serial fulfilment. Incident resolved after successful retry, with history retained.",
+      "testResult": "PASS — executed hosted product API/UI assertions and mapped local regressions; see linked evidence. Synthetic demo scope only.",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
       "id": "ROLEACC-07",
@@ -201,23 +266,36 @@
         "apps/web/lib/commerce.ts",
         "apps/web/lib/reward-refunds.ts",
         "scripts/demo-role-acceptance-client.mjs",
-        "scripts/check-role-acceptance-demo.mjs"
+        "scripts/check-role-acceptance-demo.mjs",
+        "apps/web/lib/invoice-corrections.ts"
       ],
       "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
       "testFiles": [
-        "scripts/check-role-acceptance-demo.mjs"
+        "scripts/check-role-acceptance-demo.mjs",
+        "tests/refund-restricted-role.test.ts"
       ],
-      "testIds": [],
+      "testIds": [
+        "ROLEACC-COD",
+        "ROLEACC-REFUND",
+        "ROLEACC-REFUND-RUNTIME"
+      ],
       "negativeTests": [
-        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+        "ROLEACC-REFUND: UI partial refund approval posts one wallet credit, rejects over-refund and preserves stock and immutable invoice with independently approved credit note"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/cod-refund-rejected.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/refund-approved.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/refund-approved.json",
+        "docs/deployment/evidence/20261119-role-acceptance/refund-runtime-after.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/refund-regression.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/finance-refund-approved.jpg"
+      ],
       "acceptanceGate": "ROLEACC-G07",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Approved acceptance scope registered before new business mutations",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Restricted-runtime refund defect fixed by atomic INSERT of immutable allocation fields. Hosted rejection/approval, pending/key conflicts, final-decision immutability, over-refund, single wallet credit and unchanged physical stock verified. Original invoice snapshot retained with independently approved credit note.",
+      "testResult": "PASS — executed hosted product API/UI assertions and mapped local regressions; see linked evidence. Synthetic demo scope only.",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
       "id": "ROLEACC-08",
@@ -239,16 +317,27 @@
         "tests/driver-lpg-http.test.ts",
         "scripts/check-role-acceptance-demo.mjs"
       ],
-      "testIds": [],
-      "negativeTests": [
-        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      "testIds": [
+        "ROLEACC-HANDOVER-GUARDS",
+        "ROLEACC-GAS-GUARDS",
+        "ROLEACC-RETRY-PROOF",
+        "ROLEACC-COD"
       ],
-      "evidence": [],
+      "negativeTests": [
+        "ROLEACC-HANDOVER-GUARDS: restricted driver cash, stale progression, false handover, wrong code and cross-account completion are rejected"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/handover-guards.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/gas-guards.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/retry-guards.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/cod-refund-rejected.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/operations-regression.txt"
+      ],
       "acceptanceGate": "ROLEACC-G08",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Approved acceptance scope registered before new business mutations",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Wrong customer/role, stale versions, wrong handover code, missing attestation/proof, incorrect meter deltas and duplicate operations rejected or replayed without duplicate stock/cash/wallet effects.",
+      "testResult": "PASS — executed hosted product API/UI assertions and mapped local regressions; see linked evidence. Synthetic demo scope only.",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
       "id": "ROLEACC-09",
@@ -269,16 +358,28 @@
       "testFiles": [
         "tests/admin-order-modal.test.ts",
         "tests/customer-orders.test.ts",
-        "scripts/check-role-acceptance-demo.mjs"
+        "scripts/check-role-acceptance-demo.mjs",
+        "tests/role-acceptance-ui.test.ts",
+        "tests/role-acceptance-ui.test.ts"
       ],
-      "testIds": [],
+      "testIds": [
+        "ROLEACC-UI"
+      ],
       "negativeTests": [],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/role-ui.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/browser-evidence.json",
+        "docs/deployment/evidence/20261119-role-acceptance/sales-completed-modal-desktop.jpg",
+        "docs/deployment/evidence/20261119-role-acceptance/sales-order-modal-phone.jpg",
+        "docs/deployment/evidence/20261119-role-acceptance/driver-retry-phone-proof.jpg",
+        "docs/deployment/evidence/20261119-role-acceptance/customer-failure-phone-final.jpg",
+        "docs/deployment/evidence/20261119-role-acceptance/finance-refund-approved.jpg"
+      ],
       "acceptanceGate": "ROLEACC-G09",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Approved acceptance scope registered before new business mutations",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual role UI used for pickup/arrival/gas dispensing/proof/handover, owner COD and independent finance/refund approval. Eight routes and nine role/route views checked at1440x1000 and390x844; one-dialog completed order has zero forms and bounded history.",
+      "testResult": "PASS — executed hosted product API/UI assertions and mapped local regressions; see linked evidence. Synthetic demo scope only.",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     },
     {
       "id": "ROLEACC-10",
@@ -295,7 +396,8 @@
         "apps/web/lib/cylinder-allocation.ts",
         "apps/web/components/cash-reconciliation.tsx",
         "apps/web/components/reconciliation.tsx",
-        "apps/web/components/admin.tsx"
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/commerce.ts"
       ],
       "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
       "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
@@ -303,68 +405,94 @@
         "tests/customer-traceability.test.ts",
         "scripts/check-role-acceptance-demo.mjs",
         "tests/catalogue-cylinder-availability.test.ts",
-        "tests/cash-reconciliation.test.ts"
+        "tests/cash-reconciliation.test.ts",
+        "tests/refund-restricted-role.test.ts"
       ],
-      "testIds": [],
+      "testIds": [
+        "ROLEACC-FIX-HTTP",
+        "ROLEACC-REFUND-FIX-HTTP",
+        "ROLEACC-RECONCILE"
+      ],
       "negativeTests": [],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-role-acceptance/fix-hosted.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/refund-fix-hosted.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/final-reconciliation.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/final-reconciliation.json",
+        "docs/deployment/evidence/20261119-role-acceptance/fix-regression.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/operations-regression.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/refund-runtime-after.txt",
+        "docs/deployment/evidence/20261119-role-acceptance/refund-source-integrity.json",
+        "docs/deployment/evidence/20261119-role-acceptance/refund-stable-identity.json",
+        "docs/deployment/evidence/20261119-role-acceptance/refund-build.txt"
+      ],
       "acceptanceGate": "ROLEACC-G10",
-      "status": "PARTIAL",
-      "reason": "Three defects reproduced: serial-aware catalogue, unreachable independent cash review, and runtime refund immutable-source UPDATE. First two deployed/read back; atomic refund INSERT passes restricted-role regression, rollout pending.",
-      "testResult": "Preflight underway; no acceptance claimed",
-      "outstandingWork": "Continue hosted scenarios, qualify fix under broader regressions, deploy and verify public availability; reconcile run-owned records."
+      "status": "DEFECTIVE",
+      "reason": "Final cancelled-invoice review exposed authoritative wallet cancellation credit omitted from invoice settlement balance. A wallet-refunded cancelled order still appears financially settled, blocking legitimate void. Fix/regression/rollout underway.",
+      "testResult": "FAIL — final invoice reconciliation caught a fourth defect; prior mapped scenarios remain passed",
+      "outstandingWork": "None within this bounded synthetic hosted pass. Physical safety/calibration/travel, live provider, native-device/GPS and commercial production gates remain governed by existing matrices and NO-GO."
     }
   ],
   "gates": [
     {
       "id": "ROLEACC-G01",
       "description": "Authenticate functional role accounts and verify permitted navigation and scoped records",
-      "status": "OPEN"
+      "status": "PASS",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     },
     {
       "id": "ROLEACC-G02",
       "description": "Complete a fresh gas wallet order through sales, dispatch, qualified inspection, custody, metered fulfilment, proof and invoice",
-      "status": "OPEN"
+      "status": "PASS",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     },
     {
       "id": "ROLEACC-G03",
       "description": "Complete a fresh physical-product cash-on-delivery order with independent cash reconciliation",
-      "status": "OPEN"
+      "status": "PASS",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     },
     {
       "id": "ROLEACC-G04",
       "description": "Reject unsuccessful, unauthorised or tampered payment attempts without false payment or stock debit",
-      "status": "OPEN"
+      "status": "PASS",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     },
     {
       "id": "ROLEACC-G05",
       "description": "Cancel before pickup and protect cancellation after pickup until custody return; reconcile reservations and financial state",
-      "status": "OPEN"
+      "status": "OPEN",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     },
     {
       "id": "ROLEACC-G06",
       "description": "Record failed delivery with owned next steps, enforce full return and exercise safe retry or cancellation",
-      "status": "OPEN"
+      "status": "PASS",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     },
     {
       "id": "ROLEACC-G07",
       "description": "Exercise refund request, independent rejection/approval, allocation limits and replay safety on new synthetic orders",
-      "status": "OPEN"
+      "status": "PASS",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     },
     {
       "id": "ROLEACC-G08",
       "description": "Reject wrong-role/other-customer, stale/duplicate and incomplete handover attempts without unintended effects",
-      "status": "OPEN"
+      "status": "PASS",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     },
     {
       "id": "ROLEACC-G09",
       "description": "Verify hosted customer, sales, dispatch, driver and finance screens for happy and exception states on desktop/phone viewport",
-      "status": "OPEN"
+      "status": "PASS",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     },
     {
       "id": "ROLEACC-G10",
       "description": "Fix reproduced defects, redeploy if needed and reconcile new changes while preserving prior records and decisions",
-      "status": "OPEN"
+      "status": "OPEN",
+      "evidence": "Mapped requirement evidence; synthetic hosted demo acceptance only"
     }
   ],
   "changeLog": [
@@ -383,27 +511,42 @@
     {
       "date": "2026-11-19",
       "change": "User explicitly approved two-hour demo-only renewals for four labelled QA qualifications and existing sandbox meter. Normal product APIs and independent owner verification will be used; no production controls changed. Third defect reproduced under restricted easygas_server role: refund.request inserted then attempted forbidden immutable-source UPDATE. Fixed by atomic INSERT, without widening permissions; focused regression now passes. Fresh gas and remaining exception acceptance continue."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Completed fresh6kg wallet gas, two-cylinder supervised COD, failed product delivery/full return/rescheduled phone retry, abandoned-card cancellation and prepaid cancellation. Partial refund rejected then separate request approved in actual UI; immutable invoice reconciled with independent note. Eight original orders identical. Three defects deployed; exact source and business-state readbacks recorded. Initial harness failures (HTTP read method, returned-at field, post-completion secret omission, cash field and resize transition measurements) retained as superseded investigation evidence, corrected without weakening product assertions."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Reopened ROLEACC-05/G05 and10/G10 before completion: final invoice void correctly refused because shared invoice balance omits automatic cancelled_order wallet credit. Original wallet and stock are correct; accounting read-model correction and focused negative regression are required. All10 requirements retained."
     }
   ],
   "coverage": {
     "requirements": {
-      "implemented": 0,
-      "verified": 0,
+      "implemented": 10,
+      "verified": 8,
       "total": 10
     },
     "criticalRequirements": {
-      "verified": 0,
+      "verified": 7,
       "total": 8
     },
     "routes": {
-      "verified": 0,
+      "verified": 8,
       "total": 8
     },
     "gates": {
-      "passed": 0,
+      "passed": 8,
       "total": 10
     },
     "excluded": 0,
-    "denominatorNote": "All10 approved acceptance areas retained; blocked, defective and untested requirements stay counted. Prior production and physical/native/provider gates remain in their matrices."
+    "denominatorNote": "All10 approved bounded synthetic acceptance requirements retained. Earlier production/native/device/physical/provider/import/retain-all requirements are not removed or counted as accepted by this pass."
+  },
+  "release": {
+    "sourceSha": "2e3affb468a0235b747344209051729aa26aeecf",
+    "deploymentId": "dpl_DYWrmvy6WxFVXrnkjZn6Q9TA89J3",
+    "url": "https://easygas-client-demo.vercel.app",
+    "qualificationExpiry": "2026-11-19T11:53:44.767Z",
+    "report": "docs/reports/role-order-delivery-acceptance-20261119.md"
   }
 }

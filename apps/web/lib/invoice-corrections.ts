@@ -46,8 +46,21 @@ export async function invoiceBalance(tx: SQL, invoice: any) {
       )
     )?.n ?? 0,
   );
+  // Cancellation restores wallet credit through its own immutable source entry,
+  // rather than a credit request. Count only that order/customer's actual credit.
+  const cancellationRefund = invoice.order_id
+    ? Number(
+        (
+          await one(
+            tx,
+            "SELECT COALESCE(sum(w.amount_kobo),0) AS n FROM wallet_entries w JOIN orders o ON o.id=$1 AND w.customer_id=o.customer_id WHERE o.status='cancelled' AND o.payment_method='wallet' AND w.kind='cancelled_order' AND w.reference=$2 AND w.amount_kobo>0",
+            [invoice.order_id, `cancellation:${invoice.order_id}`],
+          )
+        )?.n ?? 0,
+      )
+    : 0;
   const total = Number(invoice.total_kobo) + adjustment,
-    paid = Math.max(0, verified - refunded),
+    paid = Math.max(0, verified - refunded - cancellationRefund),
     version = 1 + active.length;
   return {
     notes,

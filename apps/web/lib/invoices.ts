@@ -110,13 +110,6 @@ export async function invoiceAction(
         reason: "Online payment provider is unconnected.",
       },
     };
-  const verified = Number(
-    (await one(
-      tx,
-      "SELECT COALESCE(sum(amount_kobo),0) AS n FROM verified_payments WHERE order_id=$1",
-      [order.id],
-    ))!.n,
-  );
   const refunded = Number(
     (await one(
       tx,
@@ -124,10 +117,10 @@ export async function invoiceAction(
       [order.id],
     ))!.n,
   );
-  const paid = Math.max(0, verified - refunded),
+  const corrected = await invoiceBalance(tx, invoice);
+  const paid = corrected.paidKobo,
     due = Math.max(0, Number(invoice.total_kobo) - paid),
     adjustmentRequired = order.status === "cancelled" || refunded > 0;
-  const corrected = await invoiceBalance(tx, invoice);
   const hasNotes = corrected.notes.some((n) => n.state === "approved");
   return {
     invoice: {
