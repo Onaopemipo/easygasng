@@ -1,0 +1,156 @@
+{
+  "phase": "Sidebar and order details client-demo rollout",
+  "requirements": [
+    {
+      "id": "OSREL-01",
+      "requirement": "Deploy the sidebar fix and order details redesign together to the existing client demo",
+      "priority": "P1",
+      "scope": "Existing client demo web application only; no migration, seed or business-state changes",
+      "uiReference": "User authorises deployment of sidebar and order modal,19 November2026",
+      "route": "/admin/*,/admin/orders",
+      "implementationFiles": [
+        "apps/web/components/admin-navigation.tsx",
+        "apps/web/lib/sidebar-scroll.ts",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/service.ts",
+        "scripts/check-order-sidebar-demo.mjs"
+      ],
+      "dataSource": "Exact committed source, linked easygas-client-demo project, existing scoped orders/invoices/history/navigation reads",
+      "securityControl": "Existing role/branch/order ownership, consent, invoice, delivery and retention controls remain; deployment only, no new business writes",
+      "testFiles": [
+        "tests/admin-order-modal.test.ts",
+        "tests/navigation.test.ts",
+        "tests/sidebar-scroll.test.ts",
+        "scripts/check-order-sidebar-demo.mjs"
+      ],
+      "testIds": [
+        "AORD-SUMMARY",
+        "NAVFOCUS-BOUNDS"
+      ],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "OSREL-G01",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Deployment scope recorded before execution",
+      "testResult": "Pending release checks",
+      "outstandingWork": "Candidate identity/build, promotion, hosted API and desktop/mobile acceptance, preservation readback"
+    },
+    {
+      "id": "OSREL-02",
+      "requirement": "Verify hosted sidebar continuity and compact order details on desktop and phone",
+      "priority": "P1",
+      "scope": "Existing client demo web application only; no migration, seed or business-state changes",
+      "uiReference": "User authorises deployment of sidebar and order modal,19 November2026",
+      "route": "/admin/*,/admin/orders",
+      "implementationFiles": [
+        "apps/web/components/admin-navigation.tsx",
+        "apps/web/lib/sidebar-scroll.ts",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/service.ts",
+        "scripts/check-order-sidebar-demo.mjs"
+      ],
+      "dataSource": "Exact committed source, linked easygas-client-demo project, existing scoped orders/invoices/history/navigation reads",
+      "securityControl": "Existing role/branch/order ownership, consent, invoice, delivery and retention controls remain; deployment only, no new business writes",
+      "testFiles": [
+        "tests/admin-order-modal.test.ts",
+        "tests/navigation.test.ts",
+        "tests/sidebar-scroll.test.ts",
+        "scripts/check-order-sidebar-demo.mjs"
+      ],
+      "testIds": [
+        "AORD-SUMMARY",
+        "NAVFOCUS-BOUNDS"
+      ],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "OSREL-G02",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Deployment scope recorded before execution",
+      "testResult": "Pending release checks",
+      "outstandingWork": "Candidate identity/build, promotion, hosted API and desktop/mobile acceptance, preservation readback"
+    },
+    {
+      "id": "OSREL-03",
+      "requirement": "Preserve canonical access, retained orders and verified ledger while recording release identity and rollback",
+      "priority": "P0",
+      "scope": "Existing client demo web application only; no migration, seed or business-state changes",
+      "uiReference": "User authorises deployment of sidebar and order modal,19 November2026",
+      "route": "/admin/*,/admin/orders",
+      "implementationFiles": [
+        "apps/web/components/admin-navigation.tsx",
+        "apps/web/lib/sidebar-scroll.ts",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/lib/service.ts",
+        "scripts/check-order-sidebar-demo.mjs"
+      ],
+      "dataSource": "Exact committed source, linked easygas-client-demo project, existing scoped orders/invoices/history/navigation reads",
+      "securityControl": "Existing role/branch/order ownership, consent, invoice, delivery and retention controls remain; deployment only, no new business writes",
+      "testFiles": [
+        "tests/admin-order-modal.test.ts",
+        "tests/navigation.test.ts",
+        "tests/sidebar-scroll.test.ts",
+        "scripts/check-order-sidebar-demo.mjs"
+      ],
+      "testIds": [
+        "AORD-SUMMARY",
+        "NAVFOCUS-BOUNDS"
+      ],
+      "negativeTests": [
+        "AORD-SCOPE: canonical staff provisional flag is scoped, absent from customer payloads and cannot expose another customer's order"
+      ],
+      "evidence": [],
+      "acceptanceGate": "OSREL-G03",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Deployment scope recorded before execution",
+      "testResult": "Pending release checks",
+      "outstandingWork": "Candidate identity/build, promotion, hosted API and desktop/mobile acceptance, preservation readback"
+    }
+  ],
+  "gates": [
+    {
+      "id": "OSREL-G01",
+      "description": "Deploy the sidebar fix and order details redesign together to the existing client demo",
+      "status": "OPEN"
+    },
+    {
+      "id": "OSREL-G02",
+      "description": "Verify hosted sidebar continuity and compact order details on desktop and phone",
+      "status": "OPEN"
+    },
+    {
+      "id": "OSREL-G03",
+      "description": "Preserve canonical access, retained orders and verified ledger while recording release identity and rollback",
+      "status": "OPEN"
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "Explicit user authorises sidebar+order-modal deployment to existing client demo. Local AORD/NAVFOCUS IDs and prior release retained; production NO-GO/import/retain-all preserved."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 0,
+      "verified": 0,
+      "total": 3
+    },
+    "criticalRequirements": {
+      "verified": 0,
+      "total": 1
+    },
+    "routes": {
+      "verified": 0,
+      "total": 1
+    },
+    "gates": {
+      "passed": 0,
+      "total": 3
+    },
+    "excluded": 0,
+    "denominatorNote": "All3 bounded rollout requirements counted; shared sidebar does not imply acceptance of all page features."
+  }
+}

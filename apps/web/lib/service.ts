@@ -832,7 +832,7 @@ export async function dispatch(
         }
         const orders = (
           await tx.query(
-            `SELECT o.*,u.name AS customer_name FROM orders o JOIN users u ON u.id=o.customer_id WHERE ${filter} ORDER BY o.created_at DESC LIMIT 100`,
+            `SELECT o.*,u.name AS customer_name${staff ? ",u.provisional AS customer_provisional" : ""} FROM orders o JOIN users u ON u.id=o.customer_id WHERE ${filter} ORDER BY o.created_at DESC LIMIT 100`,
             params,
           )
         ).rows;

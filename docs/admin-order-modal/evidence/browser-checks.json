@@ -1,0 +1,133 @@
+{
+  "observations": [
+    {
+      "name": "delivered-desktop",
+      "buttons": 5,
+      "dialogHeight": 368.2109375,
+      "dialogRight": 1100,
+      "dialogWidth": 760,
+      "dialogs": 1,
+      "forms": 0,
+      "pageWidth": 1440,
+      "text": "EG-QA-DELIVEREDdelivered\u20a615,800OverviewItemsPaymentHistoryCustomerSynthetic customer0801234567812 Synthetic Street, LekkiDelivery22 Nov 2026 \u00b7 14:00\u201318:00Lagos timeDriver: driver6 kg gasPayment: verified",
+      "viewportHeight": 1000,
+      "width": 1440
+    },
+    {
+      "name": "invoice-desktop",
+      "buttons": 4,
+      "dialogHeight": 952,
+      "dialogRight": 1100,
+      "dialogWidth": 760,
+      "dialogs": 1,
+      "forms": 0,
+      "pageWidth": 1440,
+      "text": "EG-QA-DELIVEREDdelivered\u20a615,800\u2190 Back to orderOrder invoicePayment availability depends on the approved payment configuration. Payment status comes from the verified ledger.Finance actionsMore Cooking. Less Worry.EasyGas Energy Solutions10a Marina, Onikan, Lagos, Nigeria+2347011960720InvoicePaid invoiceDocument No.EGI-0000000001Date issued19 Nov 2026, 07:52 am (Lagos)Due date2026-11-22Source referenceEG-QA-DELIVEREDBilled ToSynthetic customerEGC-A92A6BB03BD44C7CA9A616FD00469E6E12 Synthetic Street, LekkiInvoice DetailsDescriptionAmountCooking gas \u00b7 6 kg \u00b7 cylinder capacity 6 kg\u20a610,800.00Subtotal\u20a610,800.00Delivery\u20a65,000.00Discount\u20a60.00Original issued total\u20a615,800.00Effective invoice total\u20a615,8",
+      "viewportHeight": 1000,
+      "width": 1440
+    },
+    {
+      "name": "additions-desktop",
+      "buttons": 5,
+      "dialogHeight": 952,
+      "dialogRight": 1100,
+      "dialogWidth": 760,
+      "dialogs": 1,
+      "forms": 1,
+      "pageWidth": 1440,
+      "text": "EG-QA-PLACEDplaced\u20a68,500\u2190 Back to orderAdd itemsAdd products or gas to this order. The delivery fee stays the same.Product 1 (optional)No physical product12.5kg Empty Cylinder25kg Empty Cylinder50kg Empty Cylinder6kg Empty CylinderGas HoseQuantity 1 * (required)Add another productAdditional gas (kg) (optional)Cylinder capacity (kg) (optional)Customer request and reason * (required)Review supplementary requestCancel",
+      "viewportHeight": 1000,
+      "width": 1440
+    },
+    {
+      "name": "consent-desktop",
+      "buttons": 3,
+      "dialogHeight": 606.3828125,
+      "dialogRight": 1100,
+      "dialogWidth": 760,
+      "dialogs": 1,
+      "forms": 1,
+      "pageWidth": 1440,
+      "text": "EG-QA-PHONEplaced\u20a68,500\u2190 Back to orderRecord messaging consentSave consent recordChannel * (required)SMSWhatsAppPurpose * (required)Order completion invitationPhone verification codesCustomer explicitly requested this channel and purpose (optional)Consent evidence / request reference * (required)Save consent record",
+      "viewportHeight": 1000,
+      "width": 1440
+    },
+    {
+      "name": "delivered-mobile",
+      "buttons": 5,
+      "dialogHeight": 475.4375,
+      "dialogRight": 378,
+      "dialogWidth": 366,
+      "dialogs": 1,
+      "forms": 0,
+      "pageWidth": 390,
+      "text": "EG-QA-DELIVEREDdelivered\u20a615,800OverviewItemsPaymentHistoryCustomerSynthetic customer0801234567812 Synthetic Street, LekkiDelivery22 Nov 2026 \u00b7 14:00\u201318:00Lagos timeDriver: driver6 kg gasPayment: verified",
+      "viewportHeight": 844,
+      "width": 390
+    },
+    {
+      "name": "delivered-dark-mobile",
+      "buttons": 5,
+      "dialogHeight": 475.4375,
+      "dialogRight": 378,
+      "dialogWidth": 366,
+      "dialogs": 1,
+      "forms": 0,
+      "pageWidth": 390,
+      "text": "EG-QA-DELIVEREDdelivered\u20a615,800OverviewItemsPaymentHistoryCustomerSynthetic customer0801234567812 Synthetic Street, LekkiDelivery22 Nov 2026 \u00b7 14:00\u201318:00Lagos timeDriver: driver6 kg gasPayment: verified",
+      "viewportHeight": 844,
+      "width": 390
+    },
+    {
+      "name": "status-mobile",
+      "buttons": 3,
+      "dialogHeight": 467.390625,
+      "dialogRight": 378,
+      "dialogWidth": 366,
+      "dialogs": 1,
+      "forms": 1,
+      "pageWidth": 390,
+      "text": "EG-QA-PLACEDplaced\u20a68,500\u2190 Back to orderUpdate statusNext status * (required)Accept orderCancel orderOperational note * (required)Accept order",
+      "viewportHeight": 844,
+      "width": 390
+    }
+  ],
+  "interactions": [
+    {
+      "name": "payment",
+      "result": "PASS: payment summary opens canonical paid invoice inside the same single dialog; correction/re-auth controls are behind Finance actions; no invoice or payment mutation"
+    },
+    {
+      "name": "history",
+      "result": "PASS: original operational note retained on timeline;13 events paginate eight then five; Visit evidence loads lazily without messaging/consent forms"
+    },
+    {
+      "name": "draft",
+      "result": "PASS: active-order status form mounts only next-status and note; Back requires explicit discard and Keep editing preserves the typed note; no transition submitted"
+    },
+    {
+      "name": "additions",
+      "result": "PASS: eligible Add items action opens the existing quote/confirmation workflow directly in one focused view; no supplementary request submitted"
+    },
+    {
+      "name": "assignment",
+      "result": "PASS: Preparing action opens driver picker and note; Placed action omits driver/failure controls; no assignment submitted"
+    },
+    {
+      "name": "communication",
+      "result": "PASS: only canonical provisional customer exposes consent and invitation actions; each opens one form with order/customer ID hidden and explicit channel/purpose/evidence retained; no consent saved or message sent"
+    },
+    {
+      "name": "keyboard-dark",
+      "result": "PASS: phone Escape closes summary and returns focus to Details trigger; dark summary remains readable; original light mode restored"
+    },
+    {
+      "name": "phone-draft",
+      "result": "PASS: phone status action fits viewport; Keep editing preserves exact typed note, explicit Discard returns to unchanged Placed summary"
+    },
+    {
+      "name": "items",
+      "result": "PASS: Items tab displayed the canonical 6 kg gas line, cylinder capacity, per-kg price, subtotal and recorded inspection without mounting an inspection form."
+    }
+  ]
+}

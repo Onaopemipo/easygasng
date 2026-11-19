@@ -258,7 +258,9 @@ test("ADD-UI: staff detail exposes quote/confirmation and history without custom
   assert.match(source, /quoteHash:\s*quote.quoteHash/);
   assert.match(source, /Confirm addition with no extra delivery fee/);
   const admin = await readFile("apps/web/components/admin.tsx", "utf8");
-  assert.match(admin, /section === "orders" && <OrderAdditions/);
+  assert.match(admin, /<AdminOrderDetails/);
+  const detail = await readFile("apps/web/components/admin-order-details.tsx", "utf8");
+  assert.match(detail, /<OrderAdditions/);
 });
 test("ADD-06: invoicing, loading and any prior delivery attempt close additions even if a status is reset", async () => {
   const f = await fixture();

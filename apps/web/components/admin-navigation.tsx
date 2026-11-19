@@ -1,6 +1,7 @@
 "use client";
 import { staffRoleLabel } from "../../../packages/business-rules/src/staff-roles";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { parseSidebarScroll, sidebarScrollTop } from "../lib/sidebar-scroll";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -101,7 +102,9 @@ export default function AdminNavigation({
     [tooltip, setTooltip] = useState<{ label: string; top: number } | null>(
       null,
     ),
-    aside = useRef<HTMLElement>(null);
+    aside = useRef<HTMLElement>(null),
+    nav = useRef<HTMLElement>(null),
+    restoredScrollKey = useRef<string | null>(null);
   const taskOnly = ["driver", "technician"].includes(user?.role),
     groups = adminNavigation
       .map((g) => ({
@@ -109,6 +112,17 @@ export default function AdminNavigation({
         items: g.items.filter((i) => access?.allowed?.includes(i.id)),
       }))
       .filter((g) => g.items.length);
+  const activeGroup = groups.find((g) =>
+      g.items.some((i) => i.id === active?.id),
+    ),
+    activeExpanded = !activeGroup || expanded[activeGroup.id] !== false,
+    scrollKey = `easygas.navigation.scroll.v1:${user?.id}:${mobile ? "mobile" : collapsed ? "compact" : "expanded"}`;
+  const saveScroll = () => {
+    if (!ready || !nav.current?.clientHeight || (mobile && !open)) return;
+    try {
+      sessionStorage.setItem(scrollKey, String(nav.current.scrollTop));
+    } catch {}
+  };
   useEffect(() => {
     if (!user?.id) return;
     setReady(false);
@@ -144,13 +158,50 @@ export default function AdminNavigation({
     } catch {}
   }, [ready, user?.id, collapsed, expanded]);
   useEffect(() => {
+    if (!ready) return;
     const group = adminNavigation.find((g) =>
       g.items.some((i) => i.id === active?.id),
     );
     if (group) setExpanded((previous) => ({ ...previous, [group.id]: true }));
     setTooltip(null);
     onClose();
-  }, [path, onClose]);
+  }, [path, onClose, ready]);
+  useLayoutEffect(() => {
+    const menu = nav.current;
+    if (!ready || !user?.id || !menu || !activeExpanded || (mobile && !open))
+      return;
+    if (restoredScrollKey.current !== scrollKey) {
+      try {
+        menu.scrollTop = parseSidebarScroll(sessionStorage.getItem(scrollKey));
+      } catch {}
+      restoredScrollKey.current = scrollKey;
+    }
+    const revealActive = () => {
+      const link = menu.querySelector<HTMLElement>('a[aria-current="page"]');
+      if (!link || !menu.clientHeight) return;
+      const viewport = menu.getBoundingClientRect(),
+        item = link.getBoundingClientRect();
+      menu.scrollTop = sidebarScrollTop({
+        current: menu.scrollTop,
+        viewportTop: viewport.top,
+        viewportHeight: menu.clientHeight,
+        itemTop: item.top,
+        itemBottom: item.bottom,
+        scrollHeight: menu.scrollHeight,
+      });
+    };
+    revealActive();
+    const frame = requestAnimationFrame(revealActive);
+    // Saved group preferences animate after hydration; settle once at their final size.
+    const settle = setTimeout(revealActive, 250);
+    const resize = new ResizeObserver(revealActive);
+    resize.observe(menu);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(settle);
+      resize.disconnect();
+    };
+  }, [ready, user?.id, scrollKey, path, activeExpanded, mobile, open]);
   useEffect(() => {
     if (!mobile || !open) return;
     const previous = document.activeElement as HTMLElement | null,
@@ -242,7 +293,10 @@ export default function AdminNavigation({
             ? `, ${count} ${description ?? "items requiring attention"}${stale || refreshing ? `. ${countNote}` : ""}`
             : "")
         }
-        onClick={onClose}
+        onClick={() => {
+          saveScroll();
+          onClose();
+        }}
         onMouseEnter={(e) => reveal(e, item.label)}
         onMouseLeave={() => setTooltip(null)}
         onFocus={(e) => reveal(e, item.label)}
@@ -328,9 +382,13 @@ export default function AdminNavigation({
           </button>
         </div>
         <nav
+          ref={nav}
           aria-label={taskOnly ? "Assigned work" : "Administration"}
           className="workspace-nav"
-          onScroll={() => setTooltip(null)}
+          onScroll={() => {
+            setTooltip(null);
+            saveScroll();
+          }}
         >
           {groups.map((g) => (
             <section

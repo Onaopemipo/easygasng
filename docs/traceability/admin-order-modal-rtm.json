@@ -1,0 +1,294 @@
+{
+  "phase": "Staff order details modal redesign",
+  "requirements": [
+    {
+      "id": "AORD-01",
+      "requirement": "Compact summary-first order detail with focused tabs",
+      "priority": "P1",
+      "scope": "Local staff web order-detail redesign; customer/driver screens and deployed demo unchanged",
+      "uiReference": "Three user screenshots of oversized admin order detail,19 November2026",
+      "route": "/admin/orders",
+      "implementationFiles": [
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "Existing orders read supplies status, amounts, customer/address, driver and gas/product lines; no speculative totals. Terminal review text remains on History.",
+      "securityControl": "Default overview has zero forms; Items/Payment/History and a single focused action view preserve details on demand.",
+      "testFiles": [
+        "tests/admin-order-modal.test.ts",
+        "tests/admin-order-modal-browser-evidence.test.ts",
+        "tests/customer-orders.test.ts"
+      ],
+      "testIds": [
+        "AORD-SUMMARY",
+        "AORD-ACTIONS",
+        "AORD-BROWSER",
+        "CORD-05"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-order-modal/README.md",
+        "docs/admin-order-modal/evidence/regression.txt",
+        "docs/admin-order-modal/evidence/communications-tests.txt",
+        "docs/admin-order-modal/evidence/browser-validation.txt",
+        "docs/admin-order-modal/evidence/browser-checks.json",
+        "docs/admin-order-modal/evidence/control-preservation.json",
+        "docs/admin-order-modal/evidence/build.txt",
+        "docs/admin-order-modal/evidence/types.txt"
+      ],
+      "acceptanceGate": "AORD-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented and verified through62 distinct executed regression checks, actual synthetic desktop/phone interactions, successful web build/types and preservation evidence; original scoped controls and prior decisions retained.",
+      "testResult": "PASS —50 main regressions plus12 separate operations/communication checks,0 failures/skips;1 saved-browser-evidence validator,7 actual observations/9 interactions, production build and types.",
+      "outstandingWork": "None in this bounded local staff order-detail phase. Hosted rollout is unperformed and the existing11-page demo release is unchanged. Physical/Firefox/formal-accessibility/native/provider/populated-proof visual and broader production acceptance remain outside this local phase and in prior matrices; NO-GO/import/retain-all retained."
+    },
+    {
+      "id": "AORD-02",
+      "requirement": "Status- and role-aware actions in one focused dialog view",
+      "priority": "P1",
+      "scope": "Local staff web order-detail redesign; customer/driver screens and deployed demo unchanged",
+      "uiReference": "Three user screenshots of oversized admin order detail,19 November2026",
+      "route": "/admin/orders",
+      "implementationFiles": [
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/components/order-additions.tsx",
+        "apps/web/components/order-cylinder-inspection.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-additions.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/delivery.ts"
+      ],
+      "dataSource": "Existing orderTransitions, canonical order.additions eligibility, original order.transition/delivery.complete/coverage/cylinder APIs. Frontend action choices do not grant authority.",
+      "securityControl": "Only relevant fields/actions mount; contextual form replaces parent content. Back and Close retain explicit discard guard; original operation/version/inspection/handover requirements remain.",
+      "testFiles": [
+        "tests/admin-order-modal.test.ts",
+        "tests/admin-order-modal-browser-evidence.test.ts",
+        "tests/order-additions.test.ts",
+        "tests/order-additions-postgres.test.ts",
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts"
+      ],
+      "testIds": [
+        "AORD-ACTIONS",
+        "AORD-FORMS",
+        "AORD-BROWSER",
+        "ADD-02",
+        "ADD-04",
+        "ADD-06",
+        "ADD-PG",
+        "DLPG-04"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-order-modal/README.md",
+        "docs/admin-order-modal/evidence/regression.txt",
+        "docs/admin-order-modal/evidence/communications-tests.txt",
+        "docs/admin-order-modal/evidence/browser-validation.txt",
+        "docs/admin-order-modal/evidence/browser-checks.json",
+        "docs/admin-order-modal/evidence/control-preservation.json",
+        "docs/admin-order-modal/evidence/build.txt",
+        "docs/admin-order-modal/evidence/types.txt"
+      ],
+      "acceptanceGate": "AORD-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented and verified through62 distinct executed regression checks, actual synthetic desktop/phone interactions, successful web build/types and preservation evidence; original scoped controls and prior decisions retained.",
+      "testResult": "PASS —50 main regressions plus12 separate operations/communication checks,0 failures/skips;1 saved-browser-evidence validator,7 actual observations/9 interactions, production build and types.",
+      "outstandingWork": "None in this bounded local staff order-detail phase. Hosted rollout is unperformed and the existing11-page demo release is unchanged. Physical/Firefox/formal-accessibility/native/provider/populated-proof visual and broader production acceptance remain outside this local phase and in prior matrices; NO-GO/import/retain-all retained."
+    },
+    {
+      "id": "AORD-03",
+      "requirement": "Retain items, invoice, private visit/photo history and consent flows on demand",
+      "priority": "P1",
+      "scope": "Local staff web order-detail redesign; customer/driver screens and deployed demo unchanged",
+      "uiReference": "Three user screenshots of oversized admin order detail,19 November2026",
+      "route": "/admin/orders",
+      "implementationFiles": [
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/components/order-invoice.tsx",
+        "apps/web/components/order-operations.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/phone-activation.ts",
+        "apps/web/lib/channel-messaging.ts"
+      ],
+      "dataSource": "Canonical order events and last_update; doorstep.list/delivery.photos, invoice.order/issue/corrections, channels.consent and phone.invite. Invoice derives payment state from verified ledger. Existing users.provisional projects only for authorised staff order reads.",
+      "securityControl": "Customer/driver component defaults retained. Known context IDs are hidden, not removed from API requests; explicit channel/purpose/evidence and canonical consent/re-auth/ownership checks remain. Photos and immutable notes retain original policies.",
+      "testFiles": [
+        "tests/admin-order-modal.test.ts",
+        "tests/admin-order-modal-browser-evidence.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/post-meeting-invoices.test.ts",
+        "tests/financial-document-integration.test.ts"
+      ],
+      "testIds": [
+        "AORD-HISTORY",
+        "AORD-FORMS",
+        "AORD-BROWSER",
+        "OPS-T01",
+        "OPS-T02",
+        "OPS-T04",
+        "OPS-T05",
+        "OPS-T11",
+        "PM-T11"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-order-modal/README.md",
+        "docs/admin-order-modal/evidence/regression.txt",
+        "docs/admin-order-modal/evidence/communications-tests.txt",
+        "docs/admin-order-modal/evidence/browser-validation.txt",
+        "docs/admin-order-modal/evidence/browser-checks.json",
+        "docs/admin-order-modal/evidence/control-preservation.json",
+        "docs/admin-order-modal/evidence/build.txt",
+        "docs/admin-order-modal/evidence/types.txt"
+      ],
+      "acceptanceGate": "AORD-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented and verified through62 distinct executed regression checks, actual synthetic desktop/phone interactions, successful web build/types and preservation evidence; original scoped controls and prior decisions retained.",
+      "testResult": "PASS —50 main regressions plus12 separate operations/communication checks,0 failures/skips;1 saved-browser-evidence validator,7 actual observations/9 interactions, production build and types.",
+      "outstandingWork": "None in this bounded local staff order-detail phase. Hosted rollout is unperformed and the existing11-page demo release is unchanged. Physical/Firefox/formal-accessibility/native/provider/populated-proof visual and broader production acceptance remain outside this local phase and in prior matrices; NO-GO/import/retain-all retained."
+    },
+    {
+      "id": "AORD-04",
+      "requirement": "Preserve canonical role, scope, version, consent, invoice and delivery controls",
+      "priority": "P0",
+      "scope": "Local staff web order-detail redesign; customer/driver screens and deployed demo unchanged",
+      "uiReference": "Three user screenshots of oversized admin order detail,19 November2026",
+      "route": "/admin/orders",
+      "implementationFiles": [
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-additions.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/channel-messaging.ts",
+        "apps/web/lib/phone-activation.ts",
+        "apps/web/lib/financial-documents.ts",
+        "apps/web/components/order-operations.tsx",
+        "apps/web/components/order-invoice.tsx"
+      ],
+      "dataSource": "Existing scoped canonical orders, customer provisional state, immutable invoice/payment, stock reservation, custody, qualified inspection, consent and retained evidence. Only read-projection addition; no new mutation or schema.",
+      "securityControl": "Staff provisional flag obeys original scoping and is absent from customer payload; customer/driver cannot read another order. Unchanged backend branch/role/current-version, consent, re-auth, independent finance, handover, stock, retry and retention controls remain authoritative.",
+      "testFiles": [
+        "tests/admin-order-modal.test.ts",
+        "tests/order-additions.test.ts",
+        "tests/order-additions-postgres.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/driver-lpg-workflow.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "tests/financial-document-integration.test.ts"
+      ],
+      "testIds": [
+        "AORD-SCOPE",
+        "ADD-02",
+        "ADD-04",
+        "ADD-06",
+        "ADD-PG",
+        "OPS-T01",
+        "OPS-T02",
+        "OPS-T05",
+        "OPS-T11",
+        "DLPG-04",
+        "DOC-LIBRARY"
+      ],
+      "negativeTests": [
+        "AORD-SCOPE: canonical staff provisional flag is scoped, absent from customer payloads and cannot expose another customer",
+        "ADD-02: customer, driver and cross-branch staff cannot quote or create additions",
+        "ADD-04: stale prices, insufficient stock, paid orders and forged financial/address fields cannot alter the order",
+        "ADD-06: invoicing, loading and any prior delivery attempt close additions even if a status is reset",
+        "OPS-T01: phone activation requires possession, preserves identity, expires/revokes, commits failed attempts and rejects replay",
+        "OPS-T02: invoice notes need independent approval, never overwrite originals, invalidate stale requests and reject cross-customer access",
+        "OPS-T05: messaging encrypts contents, rechecks consent, quarantines uncertain sends and authenticates/deduplicates callbacks",
+        "OPS-T11: retain-all policy preserves expired proof bytes without widening access"
+      ],
+      "evidence": [
+        "docs/admin-order-modal/README.md",
+        "docs/admin-order-modal/evidence/regression.txt",
+        "docs/admin-order-modal/evidence/communications-tests.txt",
+        "docs/admin-order-modal/evidence/browser-validation.txt",
+        "docs/admin-order-modal/evidence/browser-checks.json",
+        "docs/admin-order-modal/evidence/control-preservation.json",
+        "docs/admin-order-modal/evidence/build.txt",
+        "docs/admin-order-modal/evidence/types.txt"
+      ],
+      "acceptanceGate": "AORD-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented and verified through62 distinct executed regression checks, actual synthetic desktop/phone interactions, successful web build/types and preservation evidence; original scoped controls and prior decisions retained.",
+      "testResult": "PASS —50 main regressions plus12 separate operations/communication checks,0 failures/skips;1 saved-browser-evidence validator,7 actual observations/9 interactions, production build and types.",
+      "outstandingWork": "None in this bounded local staff order-detail phase. Hosted rollout is unperformed and the existing11-page demo release is unchanged. Physical/Firefox/formal-accessibility/native/provider/populated-proof visual and broader production acceptance remain outside this local phase and in prior matrices; NO-GO/import/retain-all retained."
+    }
+  ],
+  "gates": [
+    {
+      "id": "AORD-G01",
+      "description": "Compact summary-first order detail with focused tabs",
+      "status": "PASS"
+    },
+    {
+      "id": "AORD-G02",
+      "description": "Status- and role-aware actions in one focused dialog view",
+      "status": "PASS"
+    },
+    {
+      "id": "AORD-G03",
+      "description": "Retain items, invoice, private visit/photo history and consent flows on demand",
+      "status": "PASS"
+    },
+    {
+      "id": "AORD-G04",
+      "description": "Preserve canonical role, scope, version, consent, invoice and delivery controls",
+      "status": "PASS"
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "All screenshot problems retained in bounded local staff order-detail scope. Prior11-page demo rollout, production NO-GO/import/retain-all and unrelated work preserved. New request does not authorize a further hosted rollout."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Extracted staff order detail from Records into summary/tabs and contextual single-dialog action views. No API mutation changes. Existing staff-scoped orders read adds only existing users.provisional flag so phone tools appear only for provisional accounts. ADD-UI source-integration expectation follows actual extracted component; quote/replay controls retained."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Active operational warnings remain on overview. Completed/cancelled review text retained as a recorded History note. Invoice embedded mode and compact additions opt in only on this staff screen; original customer/driver defaults retained. React import added for the newly exercised shared OperationForm SSR harness."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Final62/62 regressions include real local PostgreSQL addition concurrency and communication/retention negatives. Build/types,7 desktop/phone captures,9 interactions and saved-evidence validation pass. Default completed modal measures368px desktop and475px phone,0forms/5buttons including4section switches. No hosted deployment/business mutation or scope/NO-GO/import/retention waiver."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 4,
+      "verified": 4,
+      "total": 4
+    },
+    "criticalRequirements": {
+      "verified": 1,
+      "total": 1
+    },
+    "routes": {
+      "verified": 1,
+      "total": 1
+    },
+    "gates": {
+      "passed": 4,
+      "total": 4
+    },
+    "excluded": 0,
+    "denominatorNote": "Bounded local staff order-detail redesign only; all4 approved requirements counted, no earlier phase IDs/defects/gates removed or reclassified."
+  }
+}

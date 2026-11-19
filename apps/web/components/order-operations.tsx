@@ -184,11 +184,13 @@ export function OrderOperations({
   user,
   customer = false,
   embedded = false,
+  historyOnly = false,
 }: {
   order: any;
   user?: any;
   customer?: boolean;
   embedded?: boolean;
+  historyOnly?: boolean;
 }) {
   const [photos, setPhotos] = useState<any[] | null>(null),
     [amendments, setAmendments] = useState<any[]>([]),
@@ -199,10 +201,7 @@ export function OrderOperations({
       const a = await api("doorstep.list", { orderId: order.id });
       setAmendments(a.amendments);
       setDoorstepReady(a.commitEnabled === true);
-      if (
-        customer ||
-        ["owner", "manager", "driver"].includes(user?.role)
-      ) {
+      if (customer || ["owner", "manager", "driver"].includes(user?.role)) {
         const p = await api("delivery.photos?orderId=" + order.id);
         setPhotos(p.photos);
       } else setPhotos([]);
@@ -211,7 +210,9 @@ export function OrderOperations({
       setError(e.message);
     }
   }
-  useEffect(() => { if (embedded) load(); }, [embedded, order.id]);
+  useEffect(() => {
+    if (embedded) load();
+  }, [embedded, order.id]);
   const Container = embedded ? "section" : "details";
   async function photo(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -272,8 +273,10 @@ export function OrderOperations({
               <input name="alt" minLength={3} maxLength={250} required />
             </label>
             <label>
-              <input type="checkbox" name="photoConsent" required /> <FieldCaption required={true}>Customer
-              consented to this evidence photo.</FieldCaption>
+              <input type="checkbox" name="photoConsent" required />{" "}
+              <FieldCaption required={true}>
+                Customer consented to this evidence photo.
+              </FieldCaption>
             </label>
             <button className="button">Upload evidence</button>
           </form>
@@ -381,64 +384,98 @@ export function OrderOperations({
           ]}
         />
       )}{" "}
-      {["owner", "manager"].includes(user?.role) && (
+      {!historyOnly && ["owner", "manager"].includes(user?.role) && (
         <>
-          <OperationForm
-            title="Record requested phone messaging consent"
-            action="channels.consent"
-            fields={[
-              {
-                name: "customerId",
-                label: "Provisional customer ID",
-                value: order.customer_id,
-              },
-              {
-                name: "channel",
-                label: "Channel",
-                options: [
-                  { value: "sms", label: "SMS" },
-                  { value: "whatsapp", label: "WhatsApp" },
-                ],
-              },
-              {
-                name: "purpose",
-                label: "Purpose",
-                options: [
-                  {
-                    value: "transactional",
-                    label: "Order completion invitation",
-                  },
-                  { value: "otp", label: "Phone verification codes" },
-                ],
-              },
-              {
-                name: "enabled",
-                label: "Customer explicitly requested this channel and purpose",
-                type: "checkbox",
-              },
-              {
-                name: "evidence",
-                label: "Consent evidence / request reference",
-              },
-            ]}
-          />
-          <OperationForm
-            title="Send secure completion invitation"
-            action="phone.invite"
-            fields={[
-              { name: "orderId", label: "Order ID", value: order.id },
-              {
-                name: "channel",
-                label: "Channel",
-                options: [
-                  { value: "sms", label: "SMS" },
-                  { value: "whatsapp", label: "WhatsApp" },
-                ],
-              },
-            ]}
-          />
+          <OrderCommunication order={order} kind="consent" />
+          <OrderCommunication order={order} kind="invite" />
         </>
       )}
     </Container>
+  );
+}
+
+export function OrderCommunication({
+  order,
+  kind,
+  contextual = false,
+  onDone,
+}: {
+  order: any;
+  kind: "consent" | "invite";
+  contextual?: boolean;
+  onDone?: () => void;
+}) {
+  return kind === "consent" ? (
+    <OperationForm
+      title={
+        contextual
+          ? "Save consent record"
+          : "Record requested phone messaging consent"
+      }
+      action="channels.consent"
+      onDone={onDone}
+      fields={[
+        {
+          name: "customerId",
+          label: "Provisional customer ID",
+          type: contextual ? "hidden" : undefined,
+          value: order.customer_id,
+        },
+        {
+          name: "channel",
+          label: "Channel",
+          options: [
+            { value: "sms", label: "SMS" },
+            { value: "whatsapp", label: "WhatsApp" },
+          ],
+        },
+        {
+          name: "purpose",
+          label: "Purpose",
+          options: [
+            {
+              value: "transactional",
+              label: "Order completion invitation",
+            },
+            { value: "otp", label: "Phone verification codes" },
+          ],
+        },
+        {
+          name: "enabled",
+          label: "Customer explicitly requested this channel and purpose",
+          type: "checkbox",
+        },
+        {
+          name: "evidence",
+          label: "Consent evidence / request reference",
+        },
+      ]}
+    />
+  ) : (
+    <OperationForm
+      title={
+        contextual
+          ? "Send completion link"
+          : "Send secure completion invitation"
+      }
+      action="phone.invite"
+      onDone={onDone}
+      fields={[
+        {
+          name: "orderId",
+          label: "Order ID",
+          type: contextual ? "hidden" : undefined,
+          value: order.id,
+        },
+        {
+          name: "channel",
+          label: "Channel",
+          options: [
+            { value: "sms", label: "SMS" },
+            { value: "whatsapp", label: "WhatsApp" },
+          ],
+        },
+      ]}
+    />
   );
 }

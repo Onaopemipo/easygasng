@@ -8,10 +8,12 @@ export default function OrderAdditions({
   order,
   user,
   onChanged,
+  compact = false,
 }: {
   order: any;
   user: any;
   onChanged: () => void;
+  compact?: boolean;
 }) {
   const [data, setData] = useState<any>(null),
     [catalogue, setCatalogue] = useState<any>(null),
@@ -27,7 +29,12 @@ export default function OrderAdditions({
   const allowed = ["owner", "manager"].includes(user.role);
   async function load() {
     try {
-      setData(await api("order.additions", { orderId: order.id }));
+      const result = await api("order.additions", { orderId: order.id });
+      setData(result);
+      if (compact && result.eligible) {
+        setCatalogue({ products: result.products });
+        setOpen(true);
+      }
     } catch (e: any) {
       setError(e.message);
     }
@@ -80,14 +87,20 @@ export default function OrderAdditions({
   }
   return (
     <section className="surface workflow-form order-additions">
-      <h3>Add to this delivery</h3>
+      {!compact && <h3>Add to this delivery</h3>}
       <p>
-        One staff-only supplementary request, before rider assignment or
-        loading. Same customer, address and delivery window; no extra delivery
-        fee. Paid or invoiced orders require the existing correction process.
+        {compact
+          ? "Add products or gas to this order. The delivery fee stays the same."
+          : "One staff-only supplementary request, before rider assignment or loading. Same customer, address and delivery window; no extra delivery fee. Paid or invoiced orders require the existing correction process."}
       </p>
       {error && <Notice type="error" message={error} />}
-      {!data && !error && <EasyGasLoader size="sm" variant="section" label="Checking whether additions are available" />}
+      {!data && !error && (
+        <EasyGasLoader
+          size="sm"
+          variant="section"
+          label="Checking whether additions are available"
+        />
+      )}
       {data?.blockedReason && <p>{data.blockedReason}</p>}
       {data?.history?.map((a: any) => (
         <div className="order-addition-history" key={a.id}>
@@ -191,7 +204,9 @@ export default function OrderAdditions({
             />
           </label>
           <label>
-            <FieldCaption required={Boolean(kg.trim())}>Cylinder capacity (kg)</FieldCaption>
+            <FieldCaption required={Boolean(kg.trim())}>
+              Cylinder capacity (kg)
+            </FieldCaption>
             <input
               type="number"
               min="0.001"
@@ -201,7 +216,9 @@ export default function OrderAdditions({
             />
           </label>
           <label>
-            <FieldCaption required={true}>Customer request and reason</FieldCaption>
+            <FieldCaption required={true}>
+              Customer request and reason
+            </FieldCaption>
             <input
               required
               minLength={10}

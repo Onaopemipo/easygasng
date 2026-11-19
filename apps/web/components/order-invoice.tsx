@@ -3,22 +3,25 @@ import { FinancialDocumentPreview } from "./financial-document";
 import { ActionForm } from "./workflows";
 import { HostedPayment } from "./hosted-payment";
 import { InvoiceCorrections } from "./order-operations";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { api, Modal, Notice, money } from "./ui";
 export default function OrderInvoice({
   orderId,
   bookingId,
   canIssue = false,
+  embedded = false,
 }: {
   orderId?: string;
   bookingId?: string;
   canIssue?: boolean;
+  embedded?: boolean;
 }) {
   const [open, setOpen] = useState(false),
     [invoice, setInvoice] = useState<any>(null),
     [draft, setDraft] = useState<any>(null),
     [error, setError] = useState(""),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false),
+    [financeActions, setFinanceActions] = useState(false);
   async function load(issue = false) {
     setOpen(true);
     setBusy(true);
@@ -53,13 +56,19 @@ export default function OrderInvoice({
       setBusy(false);
     }
   }
+  useEffect(() => {
+    if (embedded) void load();
+  }, [embedded, orderId, bookingId]);
+  const Container = embedded ? "section" : Modal;
   return (
     <>
-      <button className="button secondary" onClick={() => load()}>
-        View invoice
-      </button>
+      {!embedded && (
+        <button className="button secondary" onClick={() => load()}>
+          View invoice
+        </button>
+      )}
       {open && (
-        <Modal
+        <Container
           title={bookingId ? "Service invoice" : "Order invoice"}
           onClose={() => setOpen(false)}
         >
@@ -77,7 +86,17 @@ export default function OrderInvoice({
               . This preview is not an issued invoice or receipt.
             </p>
           )}
-          {canIssue && (
+          {embedded && busy && <p role="status">Loading invoice…</p>}
+          {embedded && canIssue && invoice && (
+            <button
+              className="button secondary"
+              onClick={() => setFinanceActions((v) => !v)}
+              aria-expanded={financeActions}
+            >
+              Finance actions
+            </button>
+          )}
+          {canIssue && (!embedded || !invoice || financeActions) && (
             <ActionForm
               action="reauth"
               title="Verify your password for invoice actions"
@@ -147,7 +166,10 @@ export default function OrderInvoice({
                 <HostedPayment purpose="invoice" invoiceId={invoice.id} />
               )}
               {(invoice.notes ?? [])
-                .filter((n: any) => n.state === "approved" && invoice.notePdfAvailable)
+                .filter(
+                  (n: any) =>
+                    n.state === "approved" && invoice.notePdfAvailable,
+                )
                 .map((n: any) => (
                   <p key={n.id}>
                     <a
@@ -160,15 +182,17 @@ export default function OrderInvoice({
                     </small>
                   </p>
                 ))}
-              <InvoiceCorrections
-                orderId={orderId}
-                bookingId={bookingId}
-                staff={canIssue}
-                onChanged={() => load()}
-              />
+              {(!embedded || financeActions) && (
+                <InvoiceCorrections
+                  orderId={orderId}
+                  bookingId={bookingId}
+                  staff={canIssue}
+                  onChanged={() => load()}
+                />
+              )}
             </article>
           )}
-        </Modal>
+        </Container>
       )}
     </>
   );

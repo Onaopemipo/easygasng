@@ -1,0 +1,132 @@
+{
+  "phase": "Active sidebar visibility and scroll continuity",
+  "requirements": [
+    {
+      "id": "NAVFOCUS-01",
+      "requirement": "Preserve sidebar scroll across route changes and reveal the active menu with the smallest necessary adjustment",
+      "priority": "P1",
+      "scope": "Local shared staff web sidebar; existing routes, role access, order-modal work and hosted demo preserved",
+      "uiReference": "User reports repeatedly scrolling to active menu after every navigation,19 November2026",
+      "route": "/admin/*",
+      "implementationFiles": [
+        "apps/web/components/admin-navigation.tsx",
+        "apps/web/lib/sidebar-scroll.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing usePathname/activeNavigation and access.allowed; browser tab session stores only per-user navigation scroll offset",
+      "securityControl": "No role, route guard, business operation or backend changes; preserve aria-current and mobile focus trap",
+      "testFiles": [
+        "tests/sidebar-scroll.test.ts",
+        "tests/navigation.test.ts",
+        "tests/navigation-badge-render.test.ts",
+        "tests/sidebar-browser-evidence.test.ts"
+      ],
+      "testIds": [
+        "NAVFOCUS-BOUNDS",
+        "NAVFOCUS-STORAGE",
+        "NAVFOCUS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/sidebar-focus/README.md",
+        "docs/sidebar-focus/evidence/regression.txt",
+        "docs/sidebar-focus/evidence/browser-validation.txt",
+        "docs/sidebar-focus/evidence/browser-checks.json",
+        "docs/sidebar-focus/evidence/desktop.jpg",
+        "docs/sidebar-focus/evidence/mobile.jpg",
+        "docs/sidebar-focus/evidence/build.txt",
+        "docs/sidebar-focus/evidence/types.txt"
+      ],
+      "acceptanceGate": "NAVFOCUS-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Shared sidebar scroll restoration and nearest active-item reveal implemented and verified in actual local expanded/compact/mobile navigation; role and route controls unchanged.",
+      "testResult": "PASS \u201415 navigation regressions,1 recorded-browser-evidence validator, local desktop/compact/mobile/reload/direct-entry/Back checks, web production build and TypeScript;0 test failures/skips.",
+      "outstandingWork": "None within bounded local sidebar phase. Hosted rollout, physical Firefox/Safari and formal accessibility acceptance unperformed; broader production gates remain in prior matrices. Earlier demo release and local order-modal work preserved."
+    },
+    {
+      "id": "NAVFOCUS-02",
+      "requirement": "Keep active navigation visible in expanded, compact and mobile modes without stealing keyboard focus",
+      "priority": "P1",
+      "scope": "Local shared staff web sidebar; existing routes, role access, order-modal work and hosted demo preserved",
+      "uiReference": "User reports repeatedly scrolling to active menu after every navigation,19 November2026",
+      "route": "/admin/*",
+      "implementationFiles": [
+        "apps/web/components/admin-navigation.tsx",
+        "apps/web/lib/sidebar-scroll.ts",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing usePathname/activeNavigation and access.allowed; browser tab session stores only per-user navigation scroll offset",
+      "securityControl": "No role, route guard, business operation or backend changes; preserve aria-current and mobile focus trap",
+      "testFiles": [
+        "tests/sidebar-scroll.test.ts",
+        "tests/navigation.test.ts",
+        "tests/navigation-badge-render.test.ts",
+        "tests/sidebar-browser-evidence.test.ts"
+      ],
+      "testIds": [
+        "NAVFOCUS-BOUNDS",
+        "NAVFOCUS-STORAGE",
+        "NAVFOCUS-BROWSER"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/sidebar-focus/README.md",
+        "docs/sidebar-focus/evidence/regression.txt",
+        "docs/sidebar-focus/evidence/browser-validation.txt",
+        "docs/sidebar-focus/evidence/browser-checks.json",
+        "docs/sidebar-focus/evidence/desktop.jpg",
+        "docs/sidebar-focus/evidence/mobile.jpg",
+        "docs/sidebar-focus/evidence/build.txt",
+        "docs/sidebar-focus/evidence/types.txt"
+      ],
+      "acceptanceGate": "NAVFOCUS-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Shared sidebar scroll restoration and nearest active-item reveal implemented and verified in actual local expanded/compact/mobile navigation; role and route controls unchanged.",
+      "testResult": "PASS \u201415 navigation regressions,1 recorded-browser-evidence validator, local desktop/compact/mobile/reload/direct-entry/Back checks, web production build and TypeScript;0 test failures/skips.",
+      "outstandingWork": "None within bounded local sidebar phase. Hosted rollout, physical Firefox/Safari and formal accessibility acceptance unperformed; broader production gates remain in prior matrices. Earlier demo release and local order-modal work preserved."
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "Added two bounded local sidebar requirements. Existing production NO-GO, actual-import hold, retain-all, prior matrices and unrelated order-modal changes preserved. Hosted rollout not included in this follow-up."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Implemented per-user/per-mode tab scroll continuity, bounded active-item reveal and preference-hydration ordering.15 regressions and1 browser-evidence validator pass; actual expanded/compact/mobile, reload, saved-group and Back visibility, Escape restoration, build/types verified locally. No deployment, business mutation or prior acceptance waiver."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 2,
+      "verified": 2,
+      "total": 2
+    },
+    "criticalRequirements": {
+      "verified": 0,
+      "total": 0
+    },
+    "routes": {
+      "verified": 1,
+      "total": 1
+    },
+    "gates": {
+      "passed": 2,
+      "total": 2
+    },
+    "excluded": 0,
+    "denominatorNote": "Two bounded local sidebar requirements; no prior requirement removed. /admin/* denotes shared navigation, not completion of all page features."
+  },
+  "gates": [
+    {
+      "id": "NAVFOCUS-G01",
+      "description": "Preserve sidebar scroll across route changes and reveal the active menu with the smallest necessary adjustment",
+      "status": "PASS"
+    },
+    {
+      "id": "NAVFOCUS-G02",
+      "description": "Keep active navigation visible in expanded, compact and mobile modes without stealing keyboard focus",
+      "status": "PASS"
+    }
+  ]
+}

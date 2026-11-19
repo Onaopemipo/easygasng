@@ -588,3 +588,57 @@
  .compact-dialog .growth-detail-metrics {grid-template-columns:repeat(2,minmax(0,1fr));}
  .growth-workspace .compact-toolbar .compact-search {max-width:none;}
 }
+
+/* Summary-first staff order dialog; other order/customer flows retain their styles. */
+.admin-order-dialog {padding:24px;}
+.admin-order-dialog .modal {width:760px;max-height:calc(100dvh - 48px);padding:0;display:flex;flex-direction:column;overflow:hidden;}
+.admin-order-dialog .modal>.section-heading {padding:20px 24px 12px;margin:0;flex-shrink:0;}
+.admin-order-dialog .section-heading h2 {font-size:18px;overflow-wrap:anywhere;}
+.admin-order-dialog .aord-status {display:flex;align-items:center;justify-content:space-between;padding:0 24px 16px;gap:12px;flex-shrink:0;}
+.admin-order-dialog .aord-total {font-size:22px;font-weight:700;}
+.admin-order-dialog .compact-tabs {margin:0 24px;flex-shrink:0;}
+.admin-order-dialog .aord-tab-content,.admin-order-dialog .aord-action-view {padding:20px 24px;overflow:auto;min-height:0;font-size:14px;}
+.admin-order-dialog h3 {font-size:15px;margin:0 0 12px;}
+.admin-order-dialog p {margin:6px 0;font-size:14px;line-height:1.55;}
+.admin-order-dialog .aord-overview {display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;}
+.admin-order-dialog .aord-overview h3 {color:var(--muted);font-size:12px;font-weight:600;}
+.admin-order-dialog .aord-wide {grid-column:1/-1;}
+.admin-order-dialog .aord-order-line {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--line);font-size:13px;}
+.admin-order-dialog .aord-footer {display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:14px 24px;border-top:1px solid var(--line);flex-shrink:0;}
+.admin-order-dialog .aord-footer select {width:auto;max-width:220px;}
+.admin-order-dialog .aord-facts {display:grid;gap:10px;margin:0 0 20px;}
+.admin-order-dialog .aord-facts>div {display:flex;justify-content:space-between;gap:20px;}
+.admin-order-dialog .aord-facts dd {margin:0;text-align:right;}
+.admin-order-dialog .aord-facts dt {color:var(--muted);}
+.admin-order-dialog .aord-items>div {display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid var(--line);}
+.admin-order-dialog .aord-items small {display:block;font-size:12px;color:var(--muted);margin-top:6px;}
+.admin-order-dialog .aord-back {margin-bottom:20px;}
+.admin-order-dialog .aord-action-view>.workflow-form,.admin-order-dialog .aord-action-view>.panel,.admin-order-dialog .aord-action-view>.surface {border:0;box-shadow:none;padding:0;}
+.admin-order-dialog .aord-action-view>.panel>h3 {display:none;}
+.admin-order-dialog .aord-action-view label {font-size:13px;}
+.admin-order-dialog :is(input,select,textarea) {font-size:14px;min-height:40px;border-radius:8px;}
+.admin-order-dialog button,.admin-order-dialog .button {font-size:13px;min-height:38px;padding:9px 12px;border-radius:8px;}
+.admin-order-dialog .aord-tab-content>.panel,.admin-order-dialog .aord-tab-content section>.panel {border:0;padding:0;box-shadow:none;}
+.admin-order-dialog .product-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.admin-order-dialog .product-grid figure {margin:0;min-width:0;}
+.admin-order-dialog .product-grid img {width:100%;height:104px;object-fit:contain;background:var(--surface);}
+.admin-order-dialog figcaption {font-size:11px;line-height:1.5;overflow-wrap:anywhere;}
+.admin-order-dialog .notice {font-size:13px;margin:0 24px 12px;flex-shrink:0;}
+.admin-order-dialog .aord-action-view .notice {margin:12px 0;}
+@media(max-width:600px){
+ .admin-order-dialog {padding:12px;}
+ .admin-order-dialog .modal {width:100%;max-height:calc(100dvh - 24px);}
+ .admin-order-dialog .modal>.section-heading {padding:16px 16px 12px;}
+ .admin-order-dialog .aord-status {padding:0 16px 14px;}
+ .admin-order-dialog .compact-tabs {margin:0 16px;}
+ .admin-order-dialog .compact-tabs button {padding:10px 12px;}
+ .admin-order-dialog .aord-tab-content,.admin-order-dialog .aord-action-view {padding:16px;}
+ .admin-order-dialog .aord-overview {grid-template-columns:1fr;gap:16px;}
+ .admin-order-dialog .aord-footer {padding:12px 16px;flex-wrap:wrap;}
+ .admin-order-dialog .aord-footer>* {flex:1;max-width:100%;}
+ .admin-order-dialog .aord-total {font-size:20px;}
+}
+.admin-order-dialog .aord-history>.compact-tabs {margin:0 0 18px;}
+.admin-order-dialog .aord-timeline {list-style:none;padding:0;margin:0;}
+.admin-order-dialog .aord-timeline li {padding:0 0 16px 16px;margin:0 0 12px;border-left:2px solid var(--line);}
+.admin-order-dialog .aord-timeline time {display:block;color:var(--muted);font-size:12px;margin-top:4px;}

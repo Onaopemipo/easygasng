@@ -1,0 +1,359 @@
+/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-order-modal.test.ts:8
+  OrderHistory,
+  ^
+SyntaxError: The requested module '../apps/web/components/admin-order-details' does not provide an export named 'OrderHistory'
+    at #asyncInstantiate (node:internal/modules/esm/module_job:455:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:553:5)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.21.0
+✖ tests/admin-order-modal.test.ts (454.214458ms)
+✔ CORD-01: search and status grouping preserve failed deliveries and all terminal orders (0.477917ms)
+✔ CORD-02: actual initial page bounds eight orders to six summaries without mounting sensitive details, refund forms or document library (9.837625ms)
+✔ CORD-03: unknown identity snapshot renders no former customer orders and empty snapshots show a clear first-order state (3.248458ms)
+✔ CORD-04: refund labels resolve canonical source IDs privately and never expose technical IDs as customer labels (0.076375ms)
+✔ CORD-05: embedding visit history removes the extra disclosure while preserving the existing staff default (1.079833ms)
+✔ ADD-01: staff addition reserves current stock once on the original order with unchanged delivery fee and immutable history (1147.684583ms)
+✔ ADD-02: customer, driver and cross-branch staff cannot quote or create additions (759.236666ms)
+✔ ADD-03: assignment/departure cutoff rejects stale quotes and preserves quantities (829.236167ms)
+✔ ADD-04: stale prices, insufficient stock, paid orders and forged financial/address fields cannot alter the order (739.9475ms)
+✔ ADD-05: gas additions use configured pricing and reservations and require fresh inspection before dispatch (744.682958ms)
+✖ ADD-UI: staff detail exposes quote/confirmation and history without customer or driver controls (5.544167ms)
+✔ ADD-06: invoicing, loading and any prior delivery attempt close additions even if a status is reset (738.287083ms)
+✔ ADD-07: late failure rolls back added quantities, reservations, totals and history together (700.018667ms)
+✔ ADD-08: unprepared unpaid card order can be extended without creating a charge, but any prepared payment closes additions (717.890917ms)
+✔ PWD-01: password defaults masked and reveal control cannot submit the form (3.713333ms)
+✔ PWD-02: disabled password remains disabled and normal inputs have no reveal button (0.529292ms)
+✔ PWD-03: every audited web and native password entry uses the shared visibility control (7.276708ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 16
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7737.008333
+
+✖ failing tests:
+
+test at tests/admin-order-modal.test.ts:1:1
+✖ tests/admin-order-modal.test.ts (454.214458ms)
+  'test failed'
+
+test at tests/order-additions.test.ts:1:6315
+✖ ADD-UI: staff detail exposes quote/confirmation and history without customer or driver controls (5.544167ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /section === "orders" && <OrderAdditions/. Input:
+  
+  '"use client";\n' +
+    'import { FieldCaption } from "./field-caption";\n' +
+    'import DriverExperience from "./driver-experience";\n' +
+    'import TechnicianWorkspace from "./technician-workspace";\n' +
+    'import DriversWorkspace from "./drivers-workspace";\n' +
+    'import { privilegeById } from "../../../packages/business-rules/src/staff-privileges";\n' +
+    'import { NotificationsTray } from "./notifications-tray";\n' +
+    'import { effectiveDateInLagos } from "../../../packages/business-rules/src/effective-date";\n' +
+    'import { appAlert } from "./app-dialog";\n' +
+    'import { FormInput } from "./password-input";\n' +
+    'import SettingSummary, { readableSetting } from "./setting-summary";\n' +
+    'import PaymentGatewayPolicy from "./payment-gateway-policy";\n' +
+    'import InventoryWorkspace from "./inventory-workspace";\n' +
+    'import AdminOverview from "./admin-overview";\n' +
+    'import AuditHistory from "./audit-history";\n' +
+    'import OwnerGovernanceLinks from "./owner-governance-links";\n' +
+    'import AdminSearch from "./admin-search";\n' +
+    '\n' +
+    'import { OperationsExtensions } from "./operations-completion";\n' +
+    'import AssistedOrder from "./assisted-order";\n' +
+    'import AdminOrderDetails from "./admin-order-details";\n' +
+    'import { RewardsPolicyFields } from "./rewards-policy-fields";\n' +
+    'import DispatchTracking from "./order-tracking";\n' +
+    'import DispatchCentre from "./dispatch-centre";\n' +
+    'import { ThemeToggle } from "./theme-provider";\n' +
+    'import { TestimonialManagement } from "./testimonials";\n' +
+    '\n' +
+    'import { staffRoles } from "../../../packages/business-rules/src/staff-roles";\n' +
+    'import AdminNavigation, { roleLabel } from "./admin-navigation";\n' +
+    'import {\n' +
+    '  navigationItems,\n' +
+    '  failedNavigationSnapshot,\n' +
+    '  refreshingNavigationSnapshot,\n' +
+    '} from "../../../packages/business-rules/src/admin-navigation";\n' +
+    'import { BusinessCentre } from "./business-centre";\n' +
+    'import GasDeliveryAdmin from "./gas-delivery-admin";\n' +
+    'import CustomerManagement from "./customer-management";\n' +
+    'import StaffManagement from "./staff-management";\n' +
+    'import Readiness from "./readiness";\n' +
+    'import ProfessionalServices from "./professional-services";\n' +
+    'import ProductCatalogue from "./product-catalogue";\n' +
+    'import BundleAdmin from "./bundles";\n' +
+    'import Reconciliation from "./reconciliation";\n' +
+    'import PolicyAdmin from "./policies";\n' +
+    'import RecommendationAdmin from "./recommendations";\n' +
+    'import {\n' +
+    '  ActionForm,\n' +
+    '  Campaigns,\n' +
+    '  CreditManagement,\n' +
+    '  PointOfSale,\n' +
+    '  OperationsWorkspace,\n' +
+    '  SupportDesk,\n' +
+    '} from "./workflows";\n' +
+    'import {\n' +
+    '  useState,\n' +
+    '  useEffect,\n' +
+    '  useCallback,\n' +
+    '  useRef,\n' +
+    '  type FormEvent,\n' +
+    '} from "react";\n' +
+    'import Link, { WorkspaceAccess } from "./workspace-link";\n' +
+    'import { useRouter, useSearchParams } from "next/navigation";\n' +
+    'import {\n' +
+    '  House,\n' +
+    '  ClipboardList,\n' +
+    '  UsersRound,\n' +
+    '  Package,\n' +
+    '  Truck,\n' +
+    '  Wallet,\n' +
+    '  ChartNoAxesCombined,\n' +
+    '  Settings2,\n' +
+    '  ShieldCheck,\n' +
+    '  Bell,\n' +
+    '  Search,\n' +
+    '  CircleHelp,\n' +
+    '  ChevronDown,\n' +
+    '  ArrowRight,\n' +
+    '  Plus,\n' +
+    '  Check,\n' +
+    '  X,\n' +
+    '  RefreshCw,\n' +
+    '  CalendarDays,\n' +
+    '  Flame,\n' +
+    '  LogOut,\n' +
+    '  Menu,\n' +
+    '  History,\n' +
+    '  Banknote,\n' +
+    '  ClipboardCheck,\n' +
+    '  AlertCircle,\n' +
+    '  Leaf,\n' +
+    '  Boxes,\n' +
+    '  Download,\n' +
+    '  LockKeyhole,\n' +
+    '  SlidersHorizontal,\n' +
+    '  Clock,\n' +
+    '} from "lucide-react";\n' +
+    'import {\n' +
+    '  Logo,\n' +
+    '  Empty,\n' +
+    '  Loading,\n' +
+    '  Notice,\n' +
+    '  Modal,\n' +
+    '  api,\n' +
+    '  money,\n' +
+    '  ProductArt,\n' +
+    '} from "./ui";\n' +
+    'import OperationalIncidents from "./operational-incidents";\n' +
+    'export default function Admin({\n' +
+    '  section,\n' +
+    '  initialAccess,\n' +
+    '  initialCollapsed = false,\n' +
+    '}: {\n' +
+    '  section: string;\n' +
+    '  initialAccess: any;\n' +
+    '  initialCollapsed?: boolean;\n' +
+    '}) {\n' +
+    '  const [user, setUser] = useState<any>(initialAccess.user),\n' +
+    '    [access, setAccess] = useState<any>(initialAccess),\n' +
+    '    [collapsed, setCollapsed] = useState(initialCollapsed),\n' +
+    '    [showNotifications, setShowNotifications] = useState(false),\n' +
+    '    [menu, setMenu] = useState(false),\n' +
+    '    [error, setError] = useState(""),\n' +
+    '    [refresh, setRefresh] = useState(0),\n' +
+    '    [verify, setVerify] = useState(false),\n' +
+    '    [verified, setVerified] = useState(false);\n' +
+    '  const router = useRouter();\n' +
+    '  const signingOut = useRef(false);\n' +
+    '  const closeMenu = useCallback(() => setMenu(false), []);\n' +
+    '  useEffect(() => {\n' +
+    '    let live = true,\n' +
+    '      inFlight = false,\n' +
+    '      pendingController: AbortController | undefined;\n' +
+    '    async function update() {\n' +
+    '      if (\n' +
+    '        signingOut.current ||\n' +
+    '        inFlight ||\n' +
+    '        document.visibilityState === "hidden"\n' +
+    '      )\n' +
+    '        return;\n' +
+    '      inFlight = true;\n' +
+    '      setAccess(refreshingNavigationSnapshot);\n' +
+    '      const controller = new AbortController();\n' +
+    '      pendingController = controller;\n' +
+    '      const timeout = setTimeout(() => controller.abort(), 8000);\n' +
+    '      try {\n' +
+    '        const d = await api("navigation", undefined, {\n' +
+    '          signal: controller.signal,\n' +
+    '        });\n' +
+    '        if (!live || signingOut.current) return;\n' +
+    '        setUser(d.user);\n' +
+    '        setAccess(d);\n' +
+    '        setError("");\n' +
+    '        if (!d.allowed.includes(section) && d.allowed.length) {\n' +
+    '          const destination = navigationItems.find(n => d.allowed.includes(n.id));\n' +
+    '          if (destination) router.replace(destination.href);\n' +
+    '        }\n' +
+    '      } catch (e: any) {\n' +
+    '        if (!live) return;\n' +
+    '        setAccess(failedNavigationSnapshot);\n' +
+    '        if ([401, 403].includes(e.status)) {\n' +
+    '          setUser(null);\n' +
+    '          setAccess(null);\n' +
+    '          setShowNotifications(false);\n' +
+    '          router.replace(e.status === 401 ? "/login" : "/account");\n' +
+    '        } else\n' +
+    '          setError(\n' +
+    '            "Workspace counts could not refresh. Any visible counts are from the last successful check.",\n' +
+    '          );\n' +
+    '      } finally {\n' +
+    '        clearTimeout(timeout);\n' +
+    '        inFlight = false;\n' +
+    '        pendingController = undefined;\n' +
+    '      }\n' +
+    '    }\n' +
+    '    void update();\n' +
+    '    const timer = setInterval(update, 30000);\n' +
+    '    let committedTimer: ReturnType<typeof setTimeout> | undefined;\n' +
+    '    const committed = () => {\n' +
+    '      clearTimeout(committedTimer);\n' +
+    '      committedTimer = setTimeout(update, 300);\n' +
+    '    };\n' +
+    '    window.addEventListener("easygas:committed", committed);\n' +
+    '    window.addEventListener("focus", update);\n' +
+    '    document.addEventListener("visibilitychange", update);\n' +
+    '    return () => {\n' +
+    '      live = false;\n' +
+    '      pendingController?.abort();\n' +
+    '      clearInterval(timer);\n' +
+    '      clearTimeout(committedTimer);\n' +
+    '      window.removeEventListener("easygas:committed", committed);\n' +
+    '      window.removeEventListener("focus", update);\n' +
+    '      document.removeEventListener("visibilitychange", update);\n' +
+    '    };\n' +
+    '  }, [refresh, router, section]);\n' +
+    '  async function logout() {\n' +
+    '    if (signingOut.current) return;\n' +
+    '    signingOut.current = true;\n' +
+    '    try {\n' +
+    '      await api("logout", {});\n' +
+    '      setUser(null);\n' +
+    '      setAccess(null);\n' +
+    '      setShowNotifications(false);\n' +
+    '      try {\n' +
+    '        sessionStorage.removeItem("easygas.deliveryDraft");\n' +
+    '        sessionStorage.removeItem("easygas.pendingCheckout");\n' +
+    '      } catch {}\n' +
+    '      // Clear cached protected router payloads as well as the authenticated session.\n' +
+    '      window.location.assign("/login");\n' +
+    '    } catch (error: any) {\n' +
+    '      signingOut.current = false;\n' +
+    '      setError(\n' +
+    '        error.message ?? "Sign out could not complete. Please try again.",\n' +
+    '      );\n' +
+    '    }\n' +
+    '  }\n' +
+    '  return (\n' +
+    '    <WorkspaceAccess.Provider value={access?.allowed ?? []}>\n' +
+    '    <div\n' +
+    '      className={`admin-shell workspace-shell ${collapsed ? "sidebar-compact" : ""}`}\n' +
+    '    >\n' +
+    '      <AdminNavigation\n' +
+    '        user={user}\n' +
+    '        access={access}\n' +
+    '        open={menu}\n' +
+    '        onClose={closeMenu}\n' +
+    '        onLogout={logout}\n' +
+    '        collapsed={collapsed}\n' +
+    '        onCollapsedChange={setCollapsed}\n' +
+    '      />\n' +
+    '      <div className="admin-main">\n' +
+    '        <header className="admin-header">\n' +
+    '          <button\n' +
+    '            className="icon-button admin-menu"\n' +
+    '            id="workspace-menu-toggle"\n' +
+    '            aria-label="Toggle business menu"\n' +
+    '            aria-expanded={menu}\n' +
+    '            aria-controls="workspace-navigation"\n' +
+    '            onClick={() => setMenu(!menu)}\n' +
+    '          >\n' +
+    '            <Menu />\n' +
+    '          </button>\n' +
+    '          <AdminSearch\n' +
+    '            identity={`${user?.id}:${user?.role}:${user?.branchId}`}\n' +
+    '          />\n' +
+    '          <div className="admin-header-actions">\n' +
+    '            <ThemeToggle />\n' +
+    '            <button\n' +
+    '              className="icon-button"\n' +
+    '              aria-label="Refresh information"\n' +
+    '              onClick={() => setRefresh((n) => n + 1)}\n' +
+    '            >\n' +
+    '              <RefreshCw size={17} />\n' +
+    '            </button>\n' +
+    '            <button\n' +
+    '              className="icon-button notification-toggle"\n' +
+    '              aria-label="View notifications"\n' +
+    '              aria-haspopup="dialog"\n' +
+    '              aria-expanded={showNotifications}\n' +
+    '              onClick={() => setShowNotifications(!showNotifications)}\n' +
+    '            >\n' +
+    '              <Bell size={19} />\n' +
+    '              {Number(access?.unreadNotifications) > 0 && (\n' +
+    '                <span className="ac-unread-count">\n' +
+    '                  {Number(access.unreadNotifications) > 99\n' +
+    '                    ? "99+"\n' +
+    '                    : access.unreadNotifications}\n' +
+    '                </span>\n' +
+    '              )}\n' +
+    '            </button>\n' +
+    '            <Link href="/help" className="icon-button" aria-label="Help">\n' +
+    '              <CircleHelp size={19} />\n' +
+    '            </Link>\n' +
+    '            <details className="workspace-account-menu">\n' +
+    '              <summary className="admin-person" aria-label="Account menu">\n' +
+    '                <span className="avatar">{user?.name?.slice(0, 1) ?? "E"}</span>\n' +
+    '                <span>\n' +
+    '                  <strong>{user?.name ?? "Your account"}</strong>\n' +
+    '                  <small>{roleLabel(user?.role ?? "")}</small>\n' +
+    '                </span>\n' +
+    '                <ChevronDown size={14} />\n' +
+    '              </summary>\n' +
+    '              <div>\n' +
+    '                <Link href="/account">View Profile</Link>\n' +
+    '                <Link href="/help">Help &amp; Support</Link>\n' +
+    '                <button onClick={() => setVerify(true)}>Verify Identity</button>\n' +
+    '                <button onClick={logout}>Sign Out</button>\n' +
+    '              </div>\n' +
+    '            </details>\n' +
+    '          </div>\n' +
+    '        </header>\n' +
+    '        {showNotifications && (\n' +
+    '          <NotificationsTray\n' +
+    '            key={user?.id}\n' +
+    '            onClose={() => setShowNotifications(false)}\n' +
+    '            onRead={() => setRefresh((value) => value + 1)}\n' +
+    '          />\n' +
+    '        )}\n' +
+    '        <main\n' +
+    '          className="admin-content"\n' +
+    '          id="workspace-content"\n' +
+    '          key={`${user?.id}:${user?.role}:${user?.b'... 103866 more characters
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/order-additions.test.ts:261:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '"use client";\nimport { FieldCaption } from "./field-caption";\nimport DriverExperience from "./driver-experience";\nimport TechnicianWorkspace from "./technician-workspace";\nimport DriversWorkspace from "./drivers-workspace";\nimport { privilegeById } from "../../../packages/business-rules/src/staff-privileges";\nimport { NotificationsTray } from "./notifications-tray";\nimport { effectiveDateInLagos } from "../../../packages/business-rules/src/effective-date";\nimport { appAlert } from "./app-dialog";\nimport { FormInput } from "./password-input";\nimport SettingSummary, { readableSetting } from "./setting-summary";\nimport PaymentGatewayPolicy from "./payment-gateway-policy";\nimport InventoryWorkspace from "./inventory-workspace";\nimport AdminOverview from "./admin-overview";\nimport AuditHistory from "./audit-history";\nimport OwnerGovernanceLinks from "./owner-governance-links";\nimport AdminSearch from "./admin-search";\n\nimport { OperationsExtensions } from "./operations-completion";\nimport AssistedOrder from "./assisted-order";\nimport AdminOrderDetails from "./admin-order-details";\nimport { RewardsPolicyFields } from "./rewards-policy-fields";\nimport DispatchTracking from "./order-tracking";\nimport DispatchCentre from "./dispatch-centre";\nimport { ThemeToggle } from "./theme-provider";\nimport { TestimonialManagement } from "./testimonials";\n\nimport { staffRoles } from "../../../packages/business-rules/src/staff-roles";\nimport AdminNavigation, { roleLabel } from "./admin-navigation";\nimport {\n  navigationItems,\n  failedNavigationSnapshot,\n  refreshingNavigationSnapshot,\n} from "../../../packages/business-rules/src/admin-navigation";\nimport { BusinessCentre } from "./business-centre";\nimport GasDeliveryAdmin from "./gas-delivery-admin";\nimport CustomerManagement from "./customer-management";\nimport StaffManagement from "./staff-management";\nimport Readiness from "./readiness";\nimport ProfessionalServices from "./professional-services";\nimport ProductCatalogue from "./product-catalogue";\nimport BundleAdmin from "./bundles";\nimport Reconciliation from "./reconciliation";\nimport PolicyAdmin from "./policies";\nimport RecommendationAdmin from "./recommendations";\nimport {\n  ActionForm,\n  Campaigns,\n  CreditManagement,\n  PointOfSale,\n  OperationsWorkspace,\n  SupportDesk,\n} from "./workflows";\nimport {\n  useState,\n  useEffect,\n  useCallback,\n  useRef,\n  type FormEvent,\n} from "react";\nimport Link, { WorkspaceAccess } from "./workspace-link";\nimport { useRouter, useSearchParams } from "next/navigation";\nimport {\n  House,\n  ClipboardList,\n  UsersRound,\n  Package,\n  Truck,\n  Wallet,\n  ChartNoAxesCombined,\n  Settings2,\n  ShieldCheck,\n  Bell,\n  Search,\n  CircleHelp,\n  ChevronDown,\n  ArrowRight,\n  Plus,\n  Check,\n  X,\n  RefreshCw,\n  CalendarDays,\n  Flame,\n  LogOut,\n  Menu,\n  History,\n  Banknote,\n  ClipboardCheck,\n  AlertCircle,\n  Leaf,\n  Boxes,\n  Download,\n  LockKeyhole,\n  SlidersHorizontal,\n  Clock,\n} from "lucide-react";\nimport {\n  Logo,\n  Empty,\n  Loading,\n  Notice,\n  Modal,\n  api,\n  money,\n  ProductArt,\n} from "./ui";\nimport OperationalIncidents from "./operational-incidents";\nexport default function Admin({\n  section,\n  initialAccess,\n  initialCollapsed = false,\n}: {\n  section: string;\n  initialAccess: any;\n  initialCollapsed?: boolean;\n}) {\n  const [user, setUser] = useState<any>(initialAccess.user),\n    [access, setAccess] = useState<any>(initialAccess),\n    [collapsed, setCollapsed] = useState(initialCollapsed),\n    [showNotifications, setShowNotifications] = useState(false),\n    [menu, setMenu] = useState(false),\n    [error, setError] = useState(""),\n    [refresh, setRefresh] = useState(0),\n    [verify, setVerify] = useState(false),\n    [verified, setVerified] = useState(false);\n  const router = useRouter();\n  const signingOut = useRef(false);\n  const closeMenu = useCallback(() => setMenu(false), []);\n  useEffect(() => {\n    let live = true,\n      inFlight = false,\n      pendingController: AbortController | undefined;\n    async function update() {\n      if (\n        signingOut.current ||\n        inFlight ||\n        document.visibilityState === "hidden"\n      )\n        return;\n      inFlight = true;\n      setAccess(refreshingNavigationSnapshot);\n      const controller = new AbortController();\n      pendingController = controller;\n      const timeout = setTimeout(() => controller.abort(), 8000);\n      try {\n        const d = await api("navigation", undefined, {\n          signal: controller.signal,\n        });\n        if (!live || signingOut.current) return;\n        setUser(d.user);\n        setAccess(d);\n        setError("");\n        if (!d.allowed.includes(section) && d.allowed.length) {\n          const destination = navigationItems.find(n => d.allowed.includes(n.id));\n          if (destination) router.replace(destination.href);\n        }\n      } catch (e: any) {\n        if (!live) return;\n        setAccess(failedNavigationSnapshot);\n        if ([401, 403].includes(e.status)) {\n          setUser(null);\n          setAccess(null);\n          setShowNotifications(false);\n          router.replace(e.status === 401 ? "/login" : "/account");\n        } else\n          setError(\n            "Workspace counts could not refresh. Any visible counts are from the last successful check.",\n          );\n      } finally {\n        clearTimeout(timeout);\n        inFlight = false;\n        pendingController = undefined;\n      }\n    }\n    void update();\n    const timer = setInterval(update, 30000);\n    let committedTimer: ReturnType<typeof setTimeout> | undefined;\n    const committed = () => {\n      clearTimeout(committedTimer);\n      committedTimer = setTimeout(update, 300);\n    };\n    window.addEventListener("easygas:committed", committed);\n    window.addEventListener("focus", update);\n    document.addEventListener("visibilitychange", update);\n    return () => {\n      live = false;\n      pendingController?.abort();\n      clearInterval(timer);\n      clearTimeout(committedTimer);\n      window.removeEventListener("easygas:committed", committed);\n      window.removeEventListener("focus", update);\n      document.removeEventListener("visibilitychange", update);\n    };\n  }, [refresh, router, section]);\n  async function logout() {\n    if (signingOut.current) return;\n    signingOut.current = true;\n    try {\n      await api("logout", {});\n      setUser(null);\n      setAccess(null);\n      setShowNotifications(false);\n      try {\n        sessionStorage.removeItem("easygas.deliveryDraft");\n        sessionStorage.removeItem("easygas.pendingCheckout");\n      } catch {}\n      // Clear cached protected router payloads as well as the authenticated session.\n      window.location.assign("/login");\n    } catch (error: any) {\n      signingOut.current = false;\n      setError(\n        error.message ?? "Sign out could not complete. Please try again.",\n      );\n    }\n  }\n  return (\n    <WorkspaceAccess.Provider value={access?.allowed ?? []}>\n    <div\n      className={`admin-shell workspace-shell ${collapsed ? "sidebar-compact" : ""}`}\n    >\n      <AdminNavigation\n        user={user}\n        access={access}\n        open={menu}\n        onClose={closeMenu}\n        onLogout={logout}\n        collapsed={collapsed}\n        onCollapsedChange={setCollapsed}\n      />\n      <div className="admin-main">\n        <header className="admin-header">\n          <button\n            className="icon-button admin-menu"\n            id="workspace-menu-toggle"\n            aria-label="Toggle business menu"\n            aria-expanded={menu}\n            aria-controls="workspace-navigation"\n            onClick={() => setMenu(!menu)}\n          >\n            <Menu />\n          </button>\n          <AdminSearch\n            identity={`${user?.id}:${user?.role}:${user?.branchId}`}\n          />\n          <div className="admin-header-actions">\n            <ThemeToggle />\n            <button\n              className="icon-button"\n              aria-label="Refresh information"\n              onClick={() => setRefresh((n) => n + 1)}\n            >\n              <RefreshCw size={17} />\n            </button>\n            <button\n              className="icon-button notification-toggle"\n              aria-label="View notifications"\n              aria-haspopup="dialog"\n              aria-expanded={showNotifications}\n              onClick={() => setShowNotifications(!showNotifications)}\n            >\n              <Bell size={19} />\n              {Number(access?.unreadNotifications) > 0 && (\n                <span className="ac-unread-count">\n                  {Number(access.unreadNotifications) > 99\n                    ? "99+"\n                    : access.unreadNotifications}\n                </span>\n              )}\n            </button>\n            <Link href="/help" className="icon-button" aria-label="Help">\n              <CircleHelp size={19} />\n            </Link>\n            <details className="workspace-account-menu">\n              <summary className="admin-person" aria-label="Account menu">\n                <span className="avatar">{user?.name?.slice(0, 1) ?? "E"}</span>\n                <span>\n                  <strong>{user?.name ?? "Your account"}</strong>\n                  <small>{roleLabel(user?.role ?? "")}</small>\n                </span>\n                <ChevronDown size={14} />\n              </summary>\n              <div>\n                <Link href="/account">View Profile</Link>\n                <Link href="/help">Help &amp; Support</Link>\n                <button onClick={() => setVerify(true)}>Verify Identity</button>\n                <button onClick={logout}>Sign Out</button>\n              </div>\n            </details>\n          </div>\n        </header>\n        {showNotifications && (\n          <NotificationsTray\n            key={user?.id}\n            onClose={() => setShowNotifications(false)}\n            onRead={() => setRefresh((value) => value + 1)}\n          />\n        )}\n        <main\n          className="admin-content"\n          id="workspace-content"\n          key={`${user?.id}:${user?.role}:${user?.b'... 103866 more characters,
+    expected: /section === "orders" && <OrderAdditions/,
+    operator: 'match',
+    diff: 'simple'
+  }
