@@ -1,23 +1,16 @@
-# Driver web trip controls
+# Driver web trips and actual named demo workflow
 
-PARTIAL — hosted execution of EG-2026-7BB8640B exposed missing bulk LPG custody/metering controls in the driver web experience. Trip/inspection/assignment/pickup/arrival/proof succeeded; final handover was rejected. Existing public commercial production NO-GO preserved.
+Canonical mapping: [JSON](web-driver-trips-rtm.json). Stable IDs, exact implementation/data/security/test/gate mapping and historical status changes are retained there.
 
-**4/6 requirements verified;1 defective and1 partial. 4/6 gates pass;1 fails and1 remains pending. 1/3 critical requirements verified.** All six requirements remain in denominators. [Named hosted execution and evidence](../web-driver-trips/demo-order-EG-2026-7BB8640B.md) · [Historical release](../web-driver-trips/README.md) · [Full matrix](web-driver-trips-rtm.json)
+| ID | Requirement | Priority | Status | Gate |
+|---|---|---|---|---|
+| DWT-01 | Start and manage own duty trip from driver web Home and Profile | P1 | VERIFIED_COMPLETE | DWT-01-G |
+| DWT-02 | Preserve canonical trip ownership, branch, suitability, replay and custody controls | P0 | VERIFIED_COMPLETE | DWT-02-G |
+| DWT-03 | Responsive, explicit consent and authoritative error/reconnect states | P1 | VERIFIED_COMPLETE | DWT-03-G |
+| DWT-04 | Release to the synthetic demo with fulfilment enabled and Paystack sandbox | P1 | VERIFIED_COMPLETE | DWT-04-G |
+| DWT-05 | Complete the paid synthetic delivery through the driver web interface without requiring the native app | P0 | VERIFIED_COMPLETE | DWT-05-G |
+| DWT-06 | Complete the existing paid demo order EG-2026-7BB8640B through the actual web UI with Demo Driver and an inspected cylinder | P0 | VERIFIED_COMPLETE | DWT-06-G |
 
-| ID | Requirement | Status |
-| --- | --- | --- |
-| DWT-01 | Start and manage own duty trip from driver web Home and Profile | VERIFIED_COMPLETE |
-| DWT-02 | Preserve canonical trip ownership, branch, suitability, replay and custody controls | VERIFIED_COMPLETE |
-| DWT-03 | Responsive, explicit consent and authoritative error/reconnect states | VERIFIED_COMPLETE |
-| DWT-04 | Release to the synthetic demo with fulfilment enabled and Paystack sandbox | VERIFIED_COMPLETE |
-| DWT-05 | Complete the paid synthetic delivery through the driver web interface without requiring the native app | DEFECTIVE |
-| DWT-06 | Complete named hosted order EG-2026-7BB8640B entirely through the web | PARTIAL |
+Verified **6/6**, critical **3/3**, gates **6/6**. Every incomplete requirement remains in the denominator.
 
-Historical66 focused checks, isolated browser workflows, web756/756/native CI and hosted read-only acceptance are preserved. They did not prove production-mode bulk gas fulfilment. The named hosted run changed authorised synthetic trip/order/cylinder/inspection/proof records; final delivery did not succeed. A user-approved short-lived cylinder qualification renewal was independently audited. Additional one-hour demo bulk renewals are now approved but not yet applied. Fulfilment remains enabled and Paystack sandbox; no new charge, guard bypass or live operation.
-
-Simulator continuation (19 November): existing assignment/notification/timeline observed on the hosted-demo-connected iOS preview. [Evidence](../web-driver-trips/evidence/order-7BB8640B/simulator-assignment-observation.txt). No new assignment/charge/handover or GPS permission change; DWT-05 DEFECTIVE/DWT-06 PARTIAL and all denominators unchanged.
-
-
-### Local vehicle-dispensing repair continuation
-
-19 November2026 user-approved local repair: vehicle-dispensed LPG web workflow and serial-based cylinder selection implemented in DLPG-01–04. Local API/HTTP/production-mode/PostgreSQL/browser acceptance recorded separately. Hosted EG-2026-7BB8640B remains unchanged/incomplete; deployed DWT-05 DEFECTIVE and DWT-06 PARTIAL, all historical evidence, native/physical/NO-GO/import holds retained.
+Actual named hosted EG-2026-7BB8640B isDelivered with independent zero-return reconciliation and trip closure.18 canonical checks verify a single6kg debit,filledcustomer cylinder,unchanged original invoice/payment/receipt/wallet rows and unrelated orders. See [reconciliation](../deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.json) and [release report](../deployment/20261119-all-fixes-release.md). Synthetic DEMO-QA evidence is not physical certification. Commercial production NO-GO, retain-all,import and unrelated native/physical/provider/formal-accessibility holds remain.

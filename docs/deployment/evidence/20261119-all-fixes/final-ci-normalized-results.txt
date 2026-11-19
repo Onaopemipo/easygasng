@@ -1,0 +1,805 @@
+Source: GitHub Actions run44457056157, exact commit600b0fddd1a90e6c5edecfd5f81b2c539c6f5196
+Artifact14498968107 SHA256 3fb6d080fb228dddd0fbea1481f50397d0e95174d3c5f6c3a01f1c010826806b; normalized from actual TAP success records.
+✔ ACI-01: older recorded migrations repair missing default-address field without losing addresses or inferring a default
+✔ ONBOARD-01: staff email acceptance, replacement before access and replay rejection
+✔ ONBOARD-02: admin-created customer must accept and replace the emailed password
+✔ ONBOARD-03: recovery covers staff and customers with bounded sends and single-use links
+✔ ADR-01: full house addresses identify a single configured locality
+✔ ADR-04: addresses without commas match only explicit locality and city suffixes
+✔ ADR-02: ambiguous, unknown and street-name matches require confirmation
+✔ ADR-03: changing or deleting an address cannot reuse a previous automatic match
+✔ ADR-07: address edits preserve explicitly selected and saved areas
+✔ ADR-08: an automatic suggestion follows the address and respects current choices
+✔ ADM-HTTP18: admin reads enforce authentication, read-only HTTP methods and a persistent per-user search budget
+✔ ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero-data states
+✔ ADM-AUTH03: dashboard and search reject customer, forged role and cross-branch scope
+✔ ADM-SEARCH12: search returns permitted records only and treats wildcards/injection as literal input
+✔ ADM-REL01: failed order widget is isolated without discarding other canonical widgets
+✔ ADM-FILTER03: invalid dates, oversized ranges and excessive pages are rejected
+✔ ADM-BIZ02: receipts exclude unverified collections and match the existing finance definition after reconciliation
+✔ ADM-AUTH01: single canonical login returns actual role, never accepts a requested privilege
+✔ ADM-NOTIFY12: unread totals are not limited to display rows and links recheck branch and module access
+✔ APPROVAL-PAGE01: server pagination covers more than 200 records with stable ordering, filtering, totals and bounded pages
+✔ APPROVAL-SCOPE01: pagination and summary enforce branch and view permissions; field roles cannot read requests
+✔ APPROVAL-HTTP01: paginated approvals require authentication and are read only over HTTP
+✔ DAN-PG01: concurrent assignment retries commit one driver notification and rolled-back writes publish none
+✔ DAN-01: owner first assignment notifies only its driver once across operation replay and keeps customer code private
+✔ DAN-02: enhanced first assignment and reassignment each notify the receiving driver exactly once
+✔ DAN-03: unavailable driver rejection and a failure after attempt creation leave no phantom assignment alert
+✔ AUDIT-PAGE01: server pages beyond the legacy200 cap with stable ties, full-history literal search and no mutation
+✔ AUDIT-PAGE02: authorised administrator retains global read; customer/operational roles and invalid pagination are rejected
+✔ encrypted backup verifies authentication and restores the actual database in isolation
+✔ encrypted restore preserves completed service reports, verified receipts and immutable history
+✔ BULK-HTTP01: actual read handler enforces GET, authentication, staff/driver scope and disabled release configuration
+✔ BULK-PG01: separate connections serialize duplicate vehicle loads and rollback preserves canonical reservations and custody history
+✔ BULK-05: independent cash reconciliation cannot duplicate existing verified order principal
+✔ BULK-04: last-unit reservations, capacity, expired qualification and disabled-feature negatives preserve physical custody
+✔ BULK-01: loading reserves only buffer; independent acknowledgement, return and replay preserve canonical mass
+✔ BULK-02: cancelling loaded gas retains vehicle reservation and discrepancy holds closure without inventing adjustments
+✔ BULK-03: metered dispensing enforces arrival, invoice payment, safety and exact quantity; fulfilment debits canonical gas once
+✔ METER-02: emergency retirement stops dispensing and requires current owner verification and qualification
+✔ METER-01: renewed calibration preserves evidence, rejects stale/unauthorised changes and retires without releasing custody
+✔ RECOVERY-01: shared independent approval atomically reconciles measured loss and releases only vehicle buffer once
+✔ RECOVERY-02: changed balances, stale versions and disabled release cannot activate a stock recovery
+✔ RECOVERY-03: future measurements, insufficient reserved stock and expired maker qualifications fail closed
+✔ independently governed bundles calculate service-only savings and atomically snapshot linked fulfilments
+✔ CRM-RETURN-01: campaign return reporting requires paid delivered purchase, real completion time and no refund; branch reads stay scoped
+✔ CRM-BRANCH-01: moved customers are excluded from new campaign audiences
+✔ CRM-PAGE-01: bounded search pages retain every scoped customer and targeted follow-ups are not limited to the first page
+✔ requested catalogue prices are exact, separate empty cylinders from refills and never invent stock
+✔ CATALOGUE-UPGRADE01: upgrade preserves stock, reservations and confirmed order prices and only imports once
+✔ mixed checkout is atomic across product reservations, technician availability and replay
+✔ managed categories, variant metadata and archiving cannot bypass approved prices or compatibility review
+✔ image validation rejects active/invalid formats and keeps booking photographs private and report evidence locked
+✔ downloadable report escapes customer-controlled markup and distinguishes unsafe outcomes from certification
+✔ reviewed recommendations count real events, never claim unknown compatibility and disappear for unavailable products
+✔ finance reports separate service receipts, pending cash, liabilities and unknown profit without truncating ledger pagination
+✔ CHECKOUT-PREFILL01: prefer the saved default, fall back to a usable legacy address and then to the account contact
+✔ CHECKOUT-SAVE01: preferred delivery phone fills new and default addresses while alternate addresses keep their contact
+✔ purchase credit requires independent verification, is append-only and cannot replay funding
+✔ wallet checkout debits once and cancellation restores exact purchase credit once
+✔ insufficient wallet funds cannot reserve stock or create a payment
+✔ POS uses approved server prices, prevents overselling and verifies cash-up independently
+✔ refund credit requires customer consent and cannot exceed the original verified order
+✔ new point-to-wallet conversions are closed while historical outcomes remain replayable
+✔ concurrent wallet checkouts cannot overdraw the same purchase-credit balance
+✔ prepaid wallet delivery collects no cash and cannot earn from unapproved seeded economics
+✔ MWEB-03-GATE: disabled card checkout cannot reserve stock; enabled sandbox card remains unpaid and cannot dispatch
+✔ POS-MONEY01: naira input is converted exactly and rejects excess precision and exponents
+✔ credits workspace pages the full scoped history and hides maker decisions
+✔ COMPACT-STEP01: steppers follow backend increments and precision without filling the cylinder
+✔ COMPACT-MONEY01: fractional naira are displayed without rounding away kobo
+✔ CGP-PG: independent PostgreSQL transactions reject concurrent duplicate profiles and stale supply writes
+✔ CGP-T08: recurring count intersects active plans and active authorisations
+✔ CGP-T06: missing optional sources stay unavailable and expired sessions fail closed
+✔ CGP-T37: repeat profile creation cannot duplicate a refill size
+✔ CGP-T27: a stale supply report cannot overwrite a confirmed report or append duplicates
+✔ CGP-T31: cross-customer, staff and expired sessions cannot read or mutate private profiles
+✔ CREDIT-SEARCH01: authorised quick search matches names, email, phone and ID, excluding inactive/staff/cross-branch customers
+✔ CREDIT-SELECT01: selected canonical account receives only a pending credit request; wallet and unrelated customers remain unchanged
+✔ CREDIT-HTTP01: financial customer search is authenticated GET with strict validation and no POST mutation
+✔ CREDIT-FORM01: real credit form submits selected canonical IDs as hidden fields and never asks staff to copy an ID
+✔ CRM-PAGE01: all follow-ups remain reachable with stable equal-date pagination and branch-private cursors
+✔ CRM-HTTP01: summary and paged follow-ups use actual authenticated GET handlers; mutations and private reads remain separated
+✔ ALERT-QUEUE: dialogs remain ordered, cancel safely, ignore stale/double clicks and abort abandoned actions without confirming
+✔ ALERT-MESSAGE: technical errors become actionable while payment, safety and pending-state explanations remain exact
+✔ ALERT-WIRING: browser/native native-alert calls are replaced; async forms retain their element and required approval reason
+✔ CACC-UI01: profile is the default settings entry with navigation and no open editor or unrelated forms
+✔ CACC-UI02: addresses and privacy summaries expose focused actions without open forms or secret session identifiers
+✔ CACC-UI03: communication fields use server contract names, bounded hour choices and independent saved values
+✔ CACC-API01: address edits remain owner-scoped and preserve recipient details, default and archive semantics
+✔ CACC-API02: preferences and channel purposes persist independently and reject invalid hours or another customer's marketing change
+✔ CACC-API03: privacy requires fresh password verification, retains deletion records and cannot revoke another customer's session
+✔ CACC-UI04: public review entry opens the dedicated reviews settings section
+✔ CD-R: all 15 customer routes are unique and grouped; service descendants and tracking match safely
+✔ CD-D: safe login return rejects external, encoded, admin and malformed destinations
+✔ CD-G,H: shared cart roundtrip preserves quantities through public/account/login navigation without duplicate products
+✔ CD-J: empty dashboard has zero actual counts and no fabricated records
+✔ CD-I,K,V,Z: order summary, actual unread counts, activity and strict identity ownership
+✔ CD-L,M,Z: authoritative wallet/reward entries include reversals and remain customer-owned
+✔ CD-O,Q: verified delivered history excludes unpaid/cancelled/other accounts and counts each gas line once
+✔ CD-U,Z: default address comes only from active owned backend locations
+✔ CD-E,F: revoked and expired sessions cannot retrieve any dashboard source
+✔ CD-Y: refill source failure does not prevent independent orders, wallet or history responses
+✔ CD-Z: browser-supplied customer IDs cannot widen existing customer API reads
+✔ CD-63: customer overview query timing is measured on isolated local database
+✔ CD-N: all five feedback states are owned; snooze and self-reports suppress obsolete reminders without manufacturing purchases
+✔ ONB-004: verified customer home only; staff, unresolved links and non-home screens cannot auto-open
+✔ ONB-004: any historical seen value is respected without using identity data
+✔ ONB-001/002/003: navigation is bounded and claims preserve actual availability and verification constraints
+✔ CM-01: customer creation, scoped management and privilege rejection
+✔ CUI-DATA: physical cylinders and issued invoices are canonical, owned, read-only and reject staff/identity injection
+✔ CUI-NAV: notification targets are allowlisted and never execute external links or malformed order identifiers
+✔ CUI-SCOPE: later onboarding and native configuration changes are explicitly traced
+✔ CUI-LINK: native destinations are allowlisted, reject credential URLs and retain only validated owned-order selectors
+✔ CUI-HTTP: customer read resources use GET-compatible query actions instead of forbidden POST bodies
+✔ CNIN-UI01: actual summary list keeps delivery codes and full instructions out of initial markup
+✔ CNIN-UI02: notification presentation preserves sandbox/payment meaning and safe destinations
+✔ CNIN-UI03: empty search and unread states remain distinct and read items have no duplicate read action
+✔ CORD-01: search and status grouping preserve failed deliveries and all terminal orders
+✔ CORD-02: actual initial page bounds eight orders to six summaries without mounting sensitive details, refund forms or document library
+✔ CORD-03: unknown identity snapshot renders no former customer orders and empty snapshots show a clear first-order state
+✔ CORD-04: refund labels resolve canonical source IDs privately and never expose technical IDs as customer labels
+✔ CORD-05: embedding visit history removes the extra disclosure while preserving the existing staff default
+✔ CSBK-UI01: compact booking summaries label preferred times without mounting contact, payment or reports
+✔ CSBK-UI02: service launcher offers booking without loading technician availability or an expanded form
+✔ CSBK-API01: requests are accepted with no available technician, reserve no capacity, notify coordination and recover without duplication
+✔ CSBK-API02: unassigned requests reject invalid time, coverage, stale pricing, inactive service, mixed slot inputs and foreign follow-ups without orphan rows
+✔ CSBK-API03: ownership and actual qualified assignment remain mandatory before confirming or progressing a request
+✔ CSBK-API04: preferred-time changes remain unassigned, versioned and noncollectible without technician availability
+✔ CSBK-UI03: catalogue keeps customer booking in a dialog and public sign-in retains the requested service
+✔ CSBK-API05: lost commit acknowledgement recovers one owned preferred-time request and one preference record
+✔ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate
+✔ limited delegation requires independent owner review and cannot approve grantor requests or exceed its ceiling
+✔ revoked delegation invalidates scheduled approval before activation
+✔ financial and security settings cannot be delegated through the limited grant workflow
+✔ DEMO-GUARD01: isolated role fixtures refuse production and hosted database environments
+✔ Supabase migration creates an unexposed schema with RLS and a restricted server role
+✔ the restricted trusted-server role can run the complete local order-to-cash workflow
+✔ the restricted runtime role supports new accounts, catalogue, purchasing, credit, support and maintenance without owner privileges
+✔ DDI-S024: unavailable drivers cannot receive a legacy manual assignment
+✔ DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection
+✔ DDI-READ01: scoped counts include every matching record and pagination never changes totals
+✔ DDI-READ02: dispatch reads reject customer/driver access and cross-branch filters
+✔ DDI-READ03: empty-date dashboard reports actual zeros and unknown contact
+✔ DDI-CONTACT01: foreground contact is independently measured, scoped and expires without changing availability
+✔ DDI-PAY01: unverified payment and revoked COD exception block canonical assignment with no attempt
+✔ DDI-S031: expired authorisation prevents driver acknowledgement without a response
+✔ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes
+✔ DDI-S016: Lagos date boundaries and contact freshness never use upload time or future observations
+✔ DDI-READ04: literal search and status filters share scope and hide private order internals
+✔ DDI-KPI01: completed counts use actual Lagos delivery date rather than scheduled date
+✔ DDI-MASS01: vehicle mass is read once from custody and never added to inclusive branch stock
+✔ DDI-DECLINE01: declined assignments surface in exceptions and replay retains one response
+✔ DDI-S084: production assignment stays disabled without both explicit release approvals
+✔ DDI-PAY02: legacy invoice-less fulfilment uses the shared net-payment authority after an approved refund
+✔ DDI-S060: missing serialized cylinder allocation blocks dispatch before a delivery attempt
+✔ DISP-CUSTODY01: dispatch recommendation and final backend guard include unallocated physical vehicle LPG
+✔ DDI-PHOTO01: customer latest proof follows completed canonical deliveries; expired private URLs deny access while bytes/history remain
+✔ ROUTE-PG01: independent connections serialize destination revisions and preserve immutable history
+✔ ROUTE-01: Lagos deadlines, stop allowance and explicit whole-route cost
+✔ ROUTE-02: configured HTTPS OSRM contract, OFF flag and bounded invalid responses
+✔ ROUTE-03: authorised destination revisions and stale-context rejection using canonical orders/trips
+✔ BRAND-01: all SMTP email uses escaped branded HTML, embedded logo and original plain text
+✔ DOOR-MULTI01: every cylinder has distinct inspection, per-cylinder meter evidence and one settled supplementary obligation
+✔ DOOR-MULTI02: partial execution credits only unfilled lines, restores only undispensed vehicle mass and retains paid credit for finance
+✔ DOOR-01: exact consent, independent debit/cash verification and metered supplement share canonical stock without second fee
+✔ DOOR-02: rejected debit cancellation restores buffer without releasing branch custody or erasing consent
+✔ DOOR-03: changed prices, insufficient physical buffer, unsafe ownership and disabled release leave custody unchanged
+✔ DOOR-04: exact cash, stale meter version and consent expiry fail closed; linked credit cancels without inventing a refund
+✔ DOOR-05: finance can reconcile cash reported in time after meter retirement and quote expiry without permitting gas handover
+✔ DOOR-PG01: independent connections serialize reservation, cash verification and metered supplement; forced abort preserves stock and custody
+✔ DOOR-PRODUCT01: acknowledged vehicle products share original consent/invoice/verified cash/code and one fee; return releases only remaining custody
+✔ DOOR-PRODUCT02: manifested empty cylinders cannot be sold from branch and transfer exact serial ownership once on original visit
+✔ DAPP-ELIGIBILITY: alert candidates exclude foreign, expired, answered, malformed, closed and stale attempts
+✔ DAPP-PRIVACY: lock-screen payload has reference and opaque scoped IDs; dedupe persists per attempt without contact, code or payment data
+✔ DAPP-ACK: real assigned records drive popup eligibility; explicit canonical response records once and cannot change pickup/payment or acknowledge foreign/stale/expired assignments
+✔ DAPP-CONFIG: notification/chime native modules link in all shells; packaged PCM cue is short and recording/background audio stay disabled
+✔ DRV-T46–55: closed history is scoped, chronologically paged and filtered in Lagos without exposing customer data
+✔ DRV-T42–43: directions require verified coordinates and status wording follows the attempt
+✔ DRVS-CONFIG: nested local driver shell resolves inherited plugins and still rejects non-local build profiles
+✔ DRVS-NATIVE-LINK: the nested driver release declares the native SVG loader dependency
+✔ DLPG-HTTP01: actual cylinder discovery read handler permits scoped staff GET and rejects public, customer and POST access
+✔ DLPG-HTTP02: actual registration POST preserves reauthentication and canonical operation replay without duplicating cylinder IDs
+✔ DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit
+✔ DLPG-02: arrived missing-custody recovery is fresh, scoped, versioned, independently qualified and replay-safe without status rewind or dispensing
+✔ DLPG-03: order cylinder discovery links marked serial to generated ID, scopes ownership and recovers registration without duplicates
+✔ DLPG-UI01: driver sees actionable missing custody, observed acknowledgement and metered dispensing before handover
+✔ DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations
+✔ DRVS-DATA: counts distinguish authoritative zero from missing, malformed or stale data
+✔ DRVS-CONTACT: foreground freshness cannot imply availability, GPS or trip consent
+✔ DRVS-NEXT: the next card only selects current assigned attempts, prioritises active handover and never mutates the source
+✔ DRVS-SCOPE: current attempt removal and branch revocation stay authoritative, and history never gains customer contacts
+✔ DRVS-PRESERVED: historical business baselines retain explicitly reviewed notification and technician continuations
+✔ DR-BOUNDARY-01 delivery-only sessions reject legacy cash, sales and stock endpoints
+✔ DR-GPS-BOUNDARY: trip GPS authority does not grant fuel, cash or fleet-wide reads
+✔ DR-BOUNDARY-02 delivery-only sessions reject skipped or invented order transitions
+✔ DR-BOUNDARY-03 canonical delivery reads and guarded completion remain available
+✔ DR-COMPAT-01 legacy session policy remains unchanged pending explicit cutover
+✔ DR-WEB-01: driver web navigation reaches only the authorised deliveries workspace
+✔ DR-INTEGRATION-01 restricted canonical session enforces role, availability and legacy completion denial
+✔ LDR-SIZE-xs: bounded 30px graphic
+✔ LDR-SIZE-sm: bounded 48px graphic
+✔ LDR-SIZE-md: bounded 72px graphic
+✔ LDR-SIZE-lg: bounded 120px graphic
+✔ LDR-SIZE-xl: bounded 180px graphic
+✔ LDR-DIM--1: validates numeric dimensions
+✔ LDR-DIM-16: validates numeric dimensions
+✔ LDR-DIM-24: validates numeric dimensions
+✔ LDR-DIM-48: validates numeric dimensions
+✔ LDR-DIM-120: validates numeric dimensions
+✔ LDR-DIM-999: validates numeric dimensions
+✔ LDR-DIM-NaN: validates numeric dimensions
+✔ LDR-DIM-Infinity: validates numeric dimensions
+✔ LDR-PROGRESS-undefined: no timer-generated progress
+✔ LDR-PROGRESS-NaN: no timer-generated progress
+✔ LDR-PROGRESS-Infinity: no timer-generated progress
+✔ LDR-PROGRESS--1: no timer-generated progress
+✔ LDR-PROGRESS-0: no timer-generated progress
+✔ LDR-PROGRESS-0.5: no timer-generated progress
+✔ LDR-PROGRESS-1: no timer-generated progress
+✔ LDR-PROGRESS-4: no timer-generated progress
+✔ LDR-MONOTONIC: a request never regresses unless its operation identity resets
+✔ LDR-ENDPOINT-0: marker remains on the arc endpoint
+✔ LDR-ENDPOINT-0.25: marker remains on the arc endpoint
+✔ LDR-ENDPOINT-0.5: marker remains on the arc endpoint
+✔ LDR-ENDPOINT-0.75: marker remains on the arc endpoint
+✔ LDR-ENDPOINT-1: marker remains on the arc endpoint
+✔ LDR-SSR: central-only accessible SVG is deterministic and contains no visible text
+✔ LDR-DETERMINATE-0: exposes actual accessible progress
+✔ LDR-DETERMINATE-0.5: exposes actual accessible progress
+✔ LDR-DETERMINATE-1: exposes actual accessible progress
+✔ LDR-UNKNOWN-undefined: unknown work is indeterminate
+✔ LDR-UNKNOWN-NaN: unknown work is indeterminate
+✔ LDR-UNKNOWN-Infinity: unknown work is indeterminate
+✔ LDR-IDS: multiple indicators have unique paint servers
+✔ LDR-STATIC: test override pauses orbit without removing status
+✔ LDR-WRAPPER-page: appropriate local wrapper
+✔ LDR-WRAPPER-section: appropriate local wrapper
+✔ LDR-WRAPPER-action: appropriate local wrapper
+✔ LDR-WRAPPER-overlay: appropriate local wrapper
+✔ LDR-ROLLBACK: presentation fallback remains accessible and does not invent data
+✔ LDR-NATIVE-THEME-false: same theme-selected vector with no visible labels
+✔ LDR-NATIVE-THEME-true: same theme-selected vector with no visible labels
+✔ LDR-NATIVE-PROGRESS-0: uses shared real arc geometry
+✔ LDR-NATIVE-PROGRESS-0.5: uses shared real arc geometry
+✔ LDR-NATIVE-PROGRESS-1: uses shared real arc geometry
+✔ LDR-NATIVE-SIZE-xs: bounded native view matches web token
+✔ LDR-NATIVE-SIZE-sm: bounded native view matches web token
+✔ LDR-NATIVE-SIZE-md: bounded native view matches web token
+✔ LDR-NATIVE-SIZE-lg: bounded native view matches web token
+✔ LDR-NATIVE-SIZE-xl: bounded native view matches web token
+✔ LDR-FEEDBACK-ERROR: failures outrank pending flags and keep retry without a loader
+✔ LDR-FEEDBACK-LOADING: one native accessible progress target
+✔ LDR-FEEDBACK-EMPTY: empty state is not described as loading
+✔ ER-14: cumulative partial line refunds prorate discount and points, preserve delivery, and finish with an exact remaining refund
+✔ ER-10O: approved catalogue offers enforce expiry, budget, point cost and lifetime reuse; unapproved edits cannot publish
+✔ ER-19R: independently approved referral hold blocks posting until separately approved clearance and audited retry
+✔ ER-31S: Smart Refill offers require approved active offers, communication consent and real forecast history
+✔ ER-04S: completed service labour earns only after independent payment verification and full refund reverses once
+✔ ER-14Z: refund of an entirely points-funded product restores points without fictional monetary wallet credit
+✔ ER-31P: approved Smart Refill offer uses verified historical sources and disappears on consent withdrawal
+✔ ER-30G: decimal gas plus accessory discount preserves one delivery fee, quoted versions and exact reservations
+✔ ER-PG36: real PostgreSQL duplicate workers/refund approvals, encrypted backup and isolated restore preserve committed effects
+✔ ER-PGSEC: migrated private schema works under the restricted runtime role and rejects public ledger access
+✔ ER-11: independent PostgreSQL connections cannot spend the same points across simultaneous checkouts
+✔ ERD-T10: missing values stay unavailable and restricted points never enable an offer
+✔ ERD-T46: existing summary caps history and protects account ownership, role and session
+✔ ERD-T18: referral summary reflects approved referral policy and issuance independently of retail earning
+✔ ERD-T11: pending award count stays separate from posted points and the posted order reference is owned
+✔ ER-01: additive migration preserves customer IDs and immutable legacy balances
+✔ ER-03: unapproved example economics and self approval cannot issue or redeem
+✔ ER-05: unverified COD and cancelled orders never enqueue; verified fulfilment awards once from immutable policy
+✔ ER-08: integer kobo calculations round down without floating point rewards
+✔ ER-10: checkout discount enforces min, cap, exclusions; same cart replay posts once and cancellation restores once
+✔ ER-13: failed wallet checkout rolls back discount and inventory with no leaked point hold
+✔ ER-15: full refund reverses original award once without point-only wallet debit
+✔ ER-22: reward ownership, strict API inputs, branch scope and session revocation are enforced
+✔ ER-25: worker failure retains durable retry source, rolls back optional posting and then succeeds once
+✔ ER-37: emergency issuance flag pauses pending jobs and retains real history
+✔ ER-18: approved referral first verified fulfilment awards once, hides identities and reverses once on refund
+✔ ER-21: manual point correction requires independent owner and finance approvals and cannot change wallet money
+✔ ER-26: a lost checkout response recovers the owned committed result and rejects changed payload
+✔ ER-38: referral sharing rejects localhost and private IDs and uses only the configured HTTPS public domain
+✔ ER-25Q: optional enqueue failure preserves verified fulfilment and records a durable finance incident
+✔ ER-36: upgrade from revision 42 preserves legacy history and encrypted isolated restore preserves the new point ledger
+✔ ER-16: spent award reversal restricts point spending and opens finance review without debiting monetary wallet
+✔ ER-32: authorised reconciliation separates points from monetary liability and rechecks export scope
+✔ ER-09: queued line eligibility and approved economics stay frozen across later policy and category changes
+✔ ER-06: failed delivery never queues an award and excluded categories cannot receive checkout discounts
+✔ ER-15F: independently verified full refund restores exactly the discounted monetary total and points only once
+✔ ER-18Q: delayed worker awards the actual first eligible referral purchase even after a later purchase completes
+✔ DATE-02: date-only selection uses Lagos midnight and rejects malformed dates
+✔ DATE-03: date control preserves change handler and closes on valid selection; checkbox rows place control before label
+✔ XLS-PREVIEW-01: reconciliation and safety regression tests pass
+✔ XLS-PREVIEW-02: recorded review remains unapproved with zero business writes
+✔ DOC-IDENTITY-email: malformed or unsupported identity cannot activate
+✔ DOC-IDENTITY-site: malformed or unsupported identity cannot activate
+✔ DOC-IDENTITY-site-credentials: malformed or unsupported identity cannot activate
+✔ DOC-IDENTITY-unverified: malformed or unsupported identity cannot activate
+✔ DOC-IDENTITY-script: malformed or unsupported identity cannot activate
+✔ DOC-IDENTITY-unknown-key: malformed or unsupported identity cannot activate
+✔ DOC-IDENTITY-phone: malformed or unsupported identity cannot activate
+✔ DOC-IDENTITY-APPROVAL: legal identity requires independent approval and never rewrites issued documents
+✔ DOC-LIBRARY: authenticated HTTP own/scoped documents, filters, source totals, note privacy and no financial side effects
+✔ DOC-STATUS-BUDGET: status filtering refuses incomplete page-only counts above its canonical read budget
+✔ DOC-PDF-A4: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-RECEIPT: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-LONG-ID: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-LONG-NAME: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-LONG-ADDRESS: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-NAIRA: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-OPTIONAL-IDENTITY: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-MULTIPAGE: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-LONG-ITEM: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-CREDIT-NOTE: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-MAX-AMOUNT: bounded A4 generation preserves content without mutating the source
+✔ DOC-PDF-UNICODE: bounded A4 generation preserves content without mutating the source
+✔ DOC-ROLLBACK: disabled flag and historical snapshots retain legacy renderer
+✔ DOC-STATE-UNPAID: invoice status never becomes a payment verification badge
+✔ DOC-STATE-FALSE-PAID-FLAG: invoice status never becomes a payment verification badge
+✔ DOC-STATE-PARTIAL: invoice status never becomes a payment verification badge
+✔ DOC-STATE-PAID: invoice status never becomes a payment verification badge
+✔ DOC-STATE-ZERO-DUE-UNPAID: invoice status never becomes a payment verification badge
+✔ DOC-STATE-VOID: invoice status never becomes a payment verification badge
+✔ DOC-STATE-UNKNOWN-BALANCE: invoice status never becomes a payment verification badge
+✔ DOC-STATE-OVERDUE: invoice status never becomes a payment verification badge
+✔ DOC-STATE-ADJUSTED: invoice status never becomes a payment verification badge
+✔ DOC-STATE-CREDIT-BALANCE: invoice status never becomes a payment verification badge
+✔ DOC-MONEY-0: integer minor units retain exact cents
+✔ DOC-MONEY-1: integer minor units retain exact cents
+✔ DOC-MONEY-99: integer minor units retain exact cents
+✔ DOC-MONEY-100: integer minor units retain exact cents
+✔ DOC-MONEY-700508: integer minor units retain exact cents
+✔ DOC-MONEY-1000000000000: integer minor units retain exact cents
+✔ DOC-AMOUNT-REJECT-0: invalid amount cannot render as an authoritative total
+✔ DOC-AMOUNT-REJECT-1: invalid amount cannot render as an authoritative total
+✔ DOC-AMOUNT-REJECT-2: invalid amount cannot render as an authoritative total
+✔ DOC-AMOUNT-REJECT-3: invalid amount cannot render as an authoritative total
+✔ DOC-AMOUNT-REJECT-4: invalid amount cannot render as an authoritative total
+✔ DOC-AMOUNT-REJECT-5: invalid amount cannot render as an authoritative total
+✔ DOC-AMOUNT-REJECT-6: invalid amount cannot render as an authoritative total
+✔ DOC-AMOUNT-REJECT-7: invalid amount cannot render as an authoritative total
+✔ DOC-AMOUNT-REJECT-8: invalid amount cannot render as an authoritative total
+✔ DOC-RECEIPT-DENY-posting: receipt refuses absent or mismatched verified evidence
+✔ DOC-RECEIPT-DENY-ledger: receipt refuses absent or mismatched verified evidence
+✔ DOC-RECEIPT-DENY-state: receipt refuses absent or mismatched verified evidence
+✔ DOC-RECEIPT-DENY-environment: receipt refuses absent or mismatched verified evidence
+✔ DOC-RECEIPT-DENY-gross: receipt refuses absent or mismatched verified evidence
+✔ DOC-RECEIPT-DENY-principal: receipt refuses absent or mismatched verified evidence
+✔ DOC-RECEIPT-DENY-due: receipt refuses absent or mismatched verified evidence
+✔ DOC-RECEIPT-DENY-paid: receipt refuses absent or mismatched verified evidence
+✔ DOC-RECEIPT: verified collection is distinct from settlement and wallet liability
+✔ DOC-NOTE-credit: adjustment retains original reference and never confirms refund
+✔ DOC-NOTE-debit: adjustment retains original reference and never confirms refund
+✔ DOC-NOTE-void: adjustment retains original reference and never confirms refund
+✔ DOC-NOTE-DENY: pending adjustments cannot become approved documents
+✔ DOC-LEGAL-OMIT: absent RC, TIN, email and website never copy mockup values
+✔ DOC-ESCAPE: customer, references and identity remain inert text
+✔ DOC-SNAPSHOT: rendering never mutates issued items or identifiers
+✔ DOC-DATE: issue date is rendered in Africa/Lagos and invalid date is honest
+✔ DOC-LIMIT: document line count is bounded before rendering
+✔ DOC-PRIVATE-DIAGNOSTIC: optional configuration and approval metadata do not leak into the customer document model
+✔ FC-01: native field values and placeholders use the same accessible theme surface
+✔ FC-02: mobile screens keep the native input theme and password control
+✔ FC-03: web placeholders have a theme colour and full opacity
+✔ BLK-01: independent tasks continue while a feature is blocked
+✔ BLK-02: resolving a blocker enables only dependency-ready work
+✔ BLK-03: invalid graphs fail instead of silently skipping tasks
+✔ THEME-RESOLVE: explicit preferences apply across customer and staff workspaces
+✔ THEME-BOOTSTRAP: pre-hydration theme tolerates storage failures and follows system only when requested
+✔ BLK-04: readiness explains inherited blockers and demands reassessment after resolution
+✔ THEME-CONTRAST: dark text, muted text, CTA and input boundaries meet declared contrast thresholds
+✔ THEME-ROLLBACK: the deployment flag forces light before hydration without overwriting a stored dark preference
+✔ THEME-STAFF: every administration route honours light, dark and system without role-specific exceptions
+✔ direct URL API refuses unauthenticated financial settings
+✔ web cookie and mobile bearer requests enforce identical restricted-setting rules
+✔ mobile bearer tokens cannot approve fabricated requests or impersonate privileged identities
+✔ cross-origin mutation is refused before processing credentials
+✔ JSON is mandatory and GET cannot mutate state
+✔ native sign-in returns an opaque token, web sign-in keeps it in an HttpOnly cookie
+✔ oversized JSON bodies and malformed origin values are refused
+✔ aggregate authentication budget persists across identities and resets after its window
+✔ G,H: live subscriptions reject forged branch scope, deduplicate committed snapshots and terminate after suspension
+✔ inactive branch and cross-branch staff checkout fail before any reservation
+✔ GAS-CYL-01: quote checks inspected empty-cylinder stock separately from a refill
+✔ cylinder sales require eligible serials, preserve reservation and transfer actual ownership once
+✔ cancellation releases serial allocation; second custody issue requires a return
+✔ failed-delivery reassignment cannot overbook an occupied window
+✔ refill history uses fulfilment dates and ignores unproven delivery timestamps
+✔ F,N: operational dashboard and sales inventory must not expose financial metrics or costs
+✔ A–E,M: governed corrections preserve reservations, stale counts fail and movements cannot be altered
+✔ G,H,L,N,O: branch tampering, protected exports, suspended accounts and forged permissions fail closed
+✔ I,J,P: expenses require independent approval, real payment evidence and append-only reversal
+✔ controlled transfers reserve, dispatch, partially receive and quarantine damage without duplicate effects
+✔ supplier purchases do not add stock; independently approved partial receipts cannot overreceive
+✔ report availability schedules deduplicate, recheck roles and never claim external delivery
+✔ K: quarantine release requires current independently documented qualifications; failed qualifications do not change custody
+✔ valuation uses an approved method and complete acquisition movements, never selling prices
+✔ E: competing corrections cannot apply stale snapshots or lose updates in serialized PGlite
+✔ stocktake sessions snapshot categories, generate scoped count sheets, reconcile all counts and reject intervening movements
+✔ INV-017HTTP: read/export permissions, limits and mutation method boundary are enforced at HTTP
+✔ INV-011–012: stock read separates gas and units and does not subtract quarantined quantities twice
+✔ INV-006: server paging, literal search, states and exports use the same authorised filters
+✔ INV-030,051,052: roles, revoked sessions and branch IDOR fail closed without exposing acquisition costs
+✔ INV-026,043: paginated movement history preserves references, quantities and original ledger rows
+✔ INV-027–028: complete approved acquisition basis produces reconciled category values, never retail prices
+✔ INV-PDF01: authorised download uses immutable original plus approved notes; anonymous/foreign/driver reads fail closed
+✔ LINK-CONTACT01: server normalizes equivalent Nigerian formats and rejects invalid or foreign contacts with actionable text
+✔ LINK-CONTACT02: saved linked appointments expose correction and validate before API submission
+✔ LRT-T012: invalid, future, expired and late observations cannot be published as recent
+✔ LRT-T010: scope removal and old snapshots cannot restore rider coordinates
+✔ LRT-T008: owned active stop gets committed GPS and foreign orders, revoked consent and sessions get no coordinates
+✔ LRT-T007: fleet reads exclude foreign branches and enforce a per-user owner denial
+✔ LOCAL-01: early recorded rewards revision upgrades without losing customer, points or legacy redemption history
+✔ MENU-01: workspace links hide denied menus and preserve public links
+✔ MENU-02: role and revoked privileges filter menus without granting backend authority
+✔ MUI-01: saved appearance overrides system and corrupt preferences safely follow system
+✔ MOBILE-DEP-01: every installed glob consumer uses the integrity-pinned reviewed security patch
+✔ MOBILE-DEP-02: malicious repeated extglobs finish in bounded processes for every installed copy
+✔ MOBILE-DEP-03: Metro glob APIs and codegen file discovery retain expected matching
+✔ MOB-API01: local demo permits only loopback HTTP and released clients keep HTTPS and origin validation
+✔ MUI-01: all 99 screens map the original customer and administration navigation; later additions are traced
+✔ MUI-02: every screen renders populated and five alternate states without missing navigation targets
+✔ MUI-03: field roles retain dedicated navigation through shared account screens and business visibility cannot grant excluded routes
+✔ MUI-04: prototype never calls live APIs and preserves unavailable payment/GPS and physical safety boundaries
+✔ MUI-05: design type stays at least 15px and declares compact layouts, reduced motion and keyboard focus
+✔ MWEB-02: auth switching keeps checkout return and rejects external destinations; carts retain only bounded product quantities
+✔ MWEB-03-UI: card payment remains distinct from payment confirmation and never prompts paid, COD or cancelled orders
+✔ MWEB-04: route waits use full viewport; page waits and local waits have separate containers
+✔ INV-BADGE-02: actual sidebar renders the same alert during refresh/failure and removes it only for a confirmed zero
+✔ RM-01–05,12,13: all 30 routes, exact groups/order, unique IDs and safe nested active matching
+✔ RM-06,08,09: mode-independent role visibility preserves dedicated assignment experiences
+✔ navigation preferences reject corrupt storage and badge overflow remains bounded
+✔ RM-07,10,11: fresh authentication, branch scope, counter aggregates and role/session revocation
+✔ approval badge agrees with independent eligibility, excludes requester, recipient, expired and already-decided requests
+✔ counter accuracy covers actionable orders/deliveries, configured inventory thresholds and unresolved financial items
+✔ bounded delegation is included in approval counters only while independently valid
+✔ INV-BADGE-01: refresh and transient failure retain explicitly labelled confirmed counts without changing grants
+✔ ADMIN-LANDING-01: permitted navigation maps actual backend read allowlists for every existing staff role
+✔ navigation aggregates run under the restricted private-schema runtime without new grants
+✔ DRIVER-NAV-01: driver directory and sidebar follow branch, role and dispatch privilege
+✔ DRIVER-MGMT-01: directory management reuses audited staff actions and protects active assignments
+✔ NOTIF-SCOPE: paginated filters and bulk reads stay recipient-scoped and preserve first read timestamps
+✔ CNIN-API01: customer search is global, literal, bounded and recipient-scoped with canonical totals and pages
+✔ CNIN-API02: customer order destinations require ownership even when an own notification references another customer's order
+✔ GPS-OFF01: offline capture authority expires and rejects off-trip, future and invalid observations
+✔ GPS-OFF02: delayed driver GPS sync preserves observed time/history, replays once and cannot grant fuel/finance access
+✔ GPS-OFF03: acknowledged GPS sequence cannot be reused after queue empties or a capture crashes
+✔ ADM-INC-01: the incident register browses older records and preserves scoped counts and filters
+✔ OPS-PG01: independent connections serialize invoice decisions, request replay and vehicle trip ownership
+✔ OPS-T01: phone activation requires possession, preserves identity, expires/revokes, commits failed attempts and rejects replay
+✔ OPS-T02: invoice notes need independent approval, never overwrite originals, invalidate stale requests and reject cross-customer access
+✔ OPS-T03: trip capture is account scoped, replay safe, bounded to duty, and reports actual purchases separately
+✔ OPS-T04: proof photos are private, append-only, retain historical records and reject invalid image input
+✔ OPS-T05: messaging encrypts contents, rechecks consent, quarantines uncertain sends and authenticates/deduplicates callbacks
+✔ OPS-T06: GPS rejects impossible jumps and gaps; no distance-derived actual fuel claim
+✔ FIELD-GPS-02: fleet summary requires current accurate consented trip evidence and ignores future uploaded fixes
+✔ OPS-T07: enhanced dispatch requires a suitable active trip, records acknowledgement and rejects stale versions
+✔ OPS-T08: win-back uses true completed delivery timestamps, preserves low-data state and requires marketing consent
+✔ OPS-T09: doorstep review preserves original order, rejects driver-as-customer consent and never commits unverified van stock
+✔ OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption
+✔ OPS-T11: retain-all policy preserves expired proof bytes without widening access
+✔ ADD-PG: concurrent addition retries post once and assignment competes on the same locked order
+✔ ADD-01: staff addition reserves current stock once on the original order with unchanged delivery fee and immutable history
+✔ ADD-02: customer, driver and cross-branch staff cannot quote or create additions
+✔ ADD-03: assignment/departure cutoff rejects stale quotes and preserves quantities
+✔ ADD-04: stale prices, insufficient stock, paid orders and forged financial/address fields cannot alter the order
+✔ ADD-05: gas additions use configured pricing and reservations and require fresh inspection before dispatch
+✔ ADD-UI: staff detail exposes quote/confirmation and history without customer or driver controls
+✔ ADD-06: invoicing, loading and any prior delivery attempt close additions even if a status is reset
+✔ ADD-07: late failure rolls back added quantities, reservations, totals and history together
+✔ ADD-08: unprepared unpaid card order can be extended without creating a charge, but any prepared payment closes additions
+✔ TRK-17: independent PostgreSQL connections serialize final-capacity assignment and duplicate proof
+✔ TRK-01: committed versioned history is immutable and only owned orders are returned
+✔ TRK-04: skipped transitions, stale versions, branch and inactive dispatch fail without business effects
+✔ TRK-11: pickup requires assignment and exact quantities; completion requires pickup and actual handover
+✔ TRK-12: proof expires, wrong guesses rate limit, and attempt reassignment rotates the code
+✔ TRK-15: stable retries and ambiguous commit recovery produce one stock, cash and handover effect
+✔ TRK-27: held failed deliveries cannot be reissued or cancelled until physical return reconciliation
+✔ TRK-18: outbox publication survives retry without duplicate in-app messages
+✔ TRK-21: snapshots reject older versions and remove revoked assignment records; GPS stays unavailable
+✔ TRK-09: failed reassignment and rescheduling revalidate capacity with no attempted reservation changes
+✔ TRK-20: reassigned branch, revoked session and unrelated driver cannot read or mutate assigned delivery
+✔ TRK-23: API never fabricates GPS, ETA or a proof for an unfulfilled order
+✔ TRK-02: linked support requests verify customer ownership and preserve order branch
+✔ TRK-31: encrypted isolated restore preserves committed tracking, proof, operation outcome and outbox
+✔ TRK-14: assigned driver help opens one branch incident without committing delivery or cash
+✔ TRK-20S: real authenticated snapshot stream isolates customer orders and closes after session revocation
+✔ TRK-rollback: emergency write stop preserves history and rejects fulfilment with no event or stock effects
+✔ TRK-07: a legacy held failed refill cannot be reissued through another order
+✔ TRK-14F: structured unsafe-cylinder failure creates critical incident and immutable next-step evidence
+✔ OWNER-AUTO-PG: independent PostgreSQL owner submissions and repeated applications serialize one version and one authorisation
+✔ OWNER-AUTO01: owner submissions auto-apply once with immutable authority proof; staff remain independently reviewed
+✔ OWNER-AUTO02: old pending requests are actionable only by their verified owner; drafts stay inactive until submission
+✔ OWNER-AUTO03: scheduling, current authority, stale versions, expiry, self privileges and live-payment blockers survive auto approval
+✔ OWNER-AUTO04: owner approval does not replace independent qualified safety review or invent safety evidence
+✔ OWNER-AUTO05: governed inventory request binds immutable operation before automatic application and never posts twice
+✔ OWNER-AUTO06: owner rollback uses the same audited policy and preserves historical versions
+✔ OWNER-AUTO07: verified owners can confirm delivery coverage; staff requests and blank boundaries still block ordering
+✔ OWNER-AUTO08: an existing owner coverage request can be approved by its requester without approving other pending requests
+✔ OWNER-AUTO-UI: owner apply action and status-specific guidance replace unconditional independent-review messaging
+✔ PW-MIN01: eight-character registration, login, change and reset work while short passwords, wrong current password and token replay fail
+✔ PW-MIN02: all account entry points use the shared eight-character policy and retain separate backup encryption rules
+✔ PWD-01: password defaults masked and reveal control cannot submit the form
+✔ PWD-02: disabled password remains disabled and normal inputs have no reveal button
+✔ PWD-03: every audited web and native password entry uses the shared visibility control
+✔ PAY-FEE: zero, waiver discontinuities, caps and smallest integer gross match exhaustive search
+✔ PAY-FEE-LIMIT: merchant absorption, maximum/invalid amounts and exact wallet principal remain distinct
+✔ PAY-FEE-PRINCIPAL-MAX: payable limits include fees, caps, rounding and the waiver discontinuity
+✔ PAY-WALLET-LIMIT: configuration and quote include the fee in the transaction limit without creating failed intents
+✔ MERCHANT-DOC-01: verified payment produces a private EasyGas receipt and at most one branded email
+✔ PAY-RETURN-01: native callback retains the merchant origin and intent without accepting a redirect URL
+✔ PAY-POST: exact principal wallet credit, stable init, authenticated duplicate webhook and ledger immutability
+✔ PAY-ZERO-EFFECT: forged events, wrong amount/currency/environment, cross-customer and driver requests never credit funds
+✔ PAY-RECOVERY: initialization timeout never launches a second charge; fee variance is separate from principal
+✔ PAY-RESUME: failed provider states persist without wallet effects
+✔ PAY-EXPIRY: prepared quote expiry is visible and cannot initialize
+✔ PAY-INVOICE: verified collection allocates principal to existing immutable invoice, never fees or duplicate revenue
+✔ WALLET-CARD: wallet checkout restricts approved channels to card and rejects transfer-only policy
+✔ WALLET-INSTANT: signed webhook verifies and credits card funding without waiting for worker or manual approval
+✔ DOC-POSTING-SNAPSHOT: new receipt preserves captured identity and customer despite later changes
+✔ MWEB-03: direct card orders retain server totals, ownership, fee consent and exactly-once ledger posting
+✔ WALLET-CARD-BRANCH: new unassigned customer can fund once in a single active branch; ambiguous context and forged branch are rejected
+✔ WALLET-CONFIG-SCOPE: missing wallet context is reported without disabling existing invoice/order card capability
+✔ PAY-POLICY: missing merchant terms, dashboard fee double charge, live activation and undeclared secrets fail closed
+✔ PAY-LINK: native payment return carries only one opaque intent ID; success/amount/provider redirects cannot authorize payment
+✔ PAY-PG-CONCURRENCY: separate connections post once; aborted posting rolls back wallet, audit and receipt
+✔ PAY-SIGNATURE: raw bytes, timestamp, rotation, malformed headers and no legacy downgrade
+✔ PAY-ADAPTER: hosted callback, test key, amount/currency/environment identity and transport validation
+✔ A: routine opening hours save immediately, persist and create a version and audit event
+✔ B: price proposal retains current price until an independent manager approves
+✔ C: settlement changes require verification and two distinct independent owner/finance approvers
+✔ D: self-approval fails without changing request, settings or decisions
+✔ E: revoked authority takes effect on existing sessions immediately
+✔ F: concurrent setting proposals cannot overwrite a newer activated version
+✔ G: rejecting wallet policy preserves its active value and records the rejection
+✔ H: rollback creates a new governed version without rewriting history
+✔ I: emergency disable requires verification, an allowlisted protective action, and owner notification
+✔ J1: sales cannot read protected financial settings or infer bank metadata
+✔ J2: client-provided roles, approval levels and requester identities are rejected
+✔ J3: staff cannot request their own promotion, including owners
+✔ J4: direct approval calls without authority are refused
+✔ J5: approval classification cannot be downgraded through policy settings
+✔ J6: Branch Managers can request finance access but cannot approve it
+✔ J7: managers cannot read or propose changes across branches
+✔ J8: invalid, expired and revoked sessions cannot authorise operations
+✔ J9: suspended accounts lose authority without waiting for session expiry
+✔ J10: branch operational staff cannot approve protected financial decisions
+✔ J11: rejected protected operations create persistent security audit events
+✔ approvals, version history and financial ledgers reject UPDATE and DELETE
+✔ failed product activation retains independent decisions and records FAILED without changing the live value
+✔ material revisions invalidate old decisions and return to a new draft revision
+✔ expired requests cannot be approved
+✔ invalid configuration values do not create a request or modify state
+✔ stock receipts are idempotent and conflicting receipt replays are rejected
+✔ checkout uses server prices, reserves once, prevents overselling and preserves agreed order prices
+✔ checkout refuses out-of-coverage addresses and forged totals
+✔ customers cannot view another customer order history or staff reports
+✔ forecasts require verified cylinder-specific history and never invent sensor readings
+✔ verified customer code completes delivery once; independent finance reconciliation recognises revenue once
+✔ scheduled changes remain inactive until explicitly revalidated at their effective date
+✔ protected staff changes require independent approvals and revoke the target sessions
+✔ requester authority is rechecked before activation
+✔ branch permission changes cannot move a target through a forged request scope
+✔ recent-password verification throttles failed attempts persistently
+✔ delivery and business-hour settings reject invalid or empty configuration
+✔ production publication settings hide drafts while authorised staff can still manage them
+✔ successful sign-in rotates and revokes the previously supplied browser session
+✔ PM-T34: two or three verified refills produce preliminary low-confidence purchase estimates without false sensors
+✔ PM-T01: opaque immutable customer IDs, phone lookup, duplicate detection and branch privacy
+✔ PM-T09: assisted checkout preserves customer identity, operator attribution, one fee, retry and failure rollback
+✔ PM-T08: legacy checkout retry fingerprints survive the added source metadata
+✔ PM-T10: assisted quotes require confirmed coverage, preserve branch prices and one fee, and never reserve during review
+✔ PM-T11: invoice issue is immutable, numbered, ownership-scoped and derives settlement only from verified ledger
+✔ PM-T47: independent PostgreSQL callers serialize provisional creation and invoice issuance without duplicate business effects
+✔ PM-T18: restricted private-schema runtime can create customer IDs and invoices while anonymous reads and invoice edits fail
+✔ multi-connection PostgreSQL: independent approvals and duplicate activation
+✔ downloaded template has Excel BOM and blocks unchanged example
+✔ CSV supports reordered headers, escaped quotes, commas, multiline fields and CRLF
+✔ CSV rejects malformed quotes, columns and headers
+✔ JSON compatibility and draft-only validation protect existing catalogue
+✔ PRODUCT-UI01: operational form redesign preserves labels, hidden identifiers, required controls and money precision
+✔ PRODUCT-UI02: support filters authorised records without mutation and combines customer, subject and status
+✔ PRODUCT-UI03: workspace headings escape record content and describe the workspace
+✔ PRODUCT-UI04: approval labels are Approve while backend authority and owner-apply action are retained
+✔ PRODUCT-AUDIT01: every registered web route and native shell stays in the audit denominator
+✔ AUD-01: release preflight and runtime reject weakened TLS and enforce certificate/hostname verification
+✔ AUD-02: owner retry and competing workers cannot duplicate an in-flight SMTP message
+✔ AUD-03: interrupted SMTP requires expired lease, stopped-worker attestation and audited provider reconciliation
+✔ AUD-04: verified TLS accepts a trusted matching certificate and rejects untrusted/wrong-host peers
+✔ PR-03: encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys
+✔ PR-04: release audit rejects privileged owners and detects missing RLS and public grants under the actual runtime role
+✔ PR-08: supervised worker completes a real maintenance transaction and exits cleanly on SIGTERM
+✔ PR-01: release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions
+✔ PR-SCHEMA-01: release checks cover every shipped SQL migration
+✔ PR-02: readiness rejects missing migrations, absent/stale worker and future heartbeat
+✔ PR-DEMO-STATUS: only the configured hosted client demo can use schema-only readiness
+✔ PR-07: signed native configuration refuses local API origins and unconfirmed identifiers
+✔ service drafts are not sellable; checklist and price activation require independent qualified approval
+✔ booking is customer-owned, replay-safe and overlapping technician appointments cannot both reserve
+✔ qualification expiry, stale service versions and out-of-area addresses reject booking without side effects
+✔ quotation revisions preserve price history; only latest customer approval reserves materials
+✔ approved service work reconciles material issue/use/return, report, customer acknowledgement and independent cash exactly once
+✔ unsafe inspection cannot become safety clearance or customer-acknowledged success
+✔ service deposit uses existing wallet ledger and cancellation refund requires separate finance approval
+✔ HDR-03: all seven primary links retain approved order and verified destinations
+✔ HDR-05: exact, nested and anchor matches avoid false prefixes and duplicate Home selection
+✔ HDR-06: public search uses actual supplied names, safely encoded IDs and real help destinations
+✔ HDR-23: unpublished products never enter public search results
+✔ HDR-25: explicit server-authorised preview matches the local catalogue without treating drafts as published
+✔ HDR-26: catalogue authorises previews only in development and production still excludes unpublished products
+✔ CD-N-feedback: snooze expires exactly at 24 hours and respects verified refill chronology
+✔ CD-N-feedback: self-report suppresses outdated estimates until a new verified purchase; later level reports cannot resurrect it
+✔ REPORT-EMPTY01: empty schedule and delivery lists show one helpful state and populated lists retain distinct records
+✔ ORIGIN-01: JSON and media accept same-port local aliases but reject cross-site, cross-port and malformed origins
+✔ ORIGIN-02: production never enables loopback aliases and requires the configured exact origin
+✔ POS-PG01: independent connections serialize till opening, sale replay, stock deduction and cash-up
+✔ authorised recurring COD creates a real order once and advances the plan
+✔ price ceiling failure does not reserve stock or create a payment and does not repeat endlessly
+✔ revocation prevents future automatic orders
+✔ delivery capacity rejects overbooking before additional stock reservations
+✔ campaigns require independent approval, consent at delivery and deduplicate in-app delivery
+✔ EO-PG: independent PostgreSQL connections serialize duplicate operations and final-slot competition
+✔ EO-01: sequential and concurrent same-key retries recover one authoritative booking; conflicts and cross-customer reuse reject
+✔ EO-03: injected failure after outbox write rolls back booking, capacity, operation result, notifications and money
+✔ EO-04: lost commit acknowledgement is reconciled using the persisted result without another business event
+✔ RC-04: failed and competing rescheduling preserve a single capacity allocation and reject stale cancellation
+✔ RC-15: encrypted backup restores booking, operation, quotation, inventory, notifications and audit relationships
+✔ BK-23: communication opt-out is respected while in-app history remains authoritative
+✔ EO-09: approval and material issue retries have one inventory effect; expired quotations cannot authorise work
+✔ RC-10: interrupted report publication preserves in-progress work; unsafe completion is rejected; permission revocation blocks recovery
+✔ BK-quiet: durable service events are scheduled after overnight and same-day quiet periods
+✔ EO-10: wallet and independently approved refund failures roll back and replay without duplicate money
+✔ RC-13: failed additive migration rolls back DDL without losing a valid booking
+✔ BK-private: operation persistence works under the restricted trusted server role and committed results are immutable
+✔ EO-contract: public service mutations require a stable identity and stale-sensitive changes require a version
+✔ SVC-CANCEL01: late pre-work cancellation uses existing independent finance approval and preserves money
+✔ SVC-CANCEL02: changed booking and chargeable work invalidate pre-work cancellation authority
+✔ SDR-T005: money and details preserve real zero and configured content, with honest missing states
+✔ SDR-T025: changed service version and stale slots cannot reach review; slot times use Lagos
+✔ SDR-T022: real slot read distinguishes configuration, coverage, qualification and absence without exposing staff
+✔ SDR-T030: service sign-in return preserves known booking context and drops unrecognised parameters
+✔ SVC-DOC01: customer report strips internal acquisition costs without rewriting canonical evidence or quoted prices
+✔ SVC-EX01: failed chargeable work uses customer-agreed dual-approved settlement and exact invoice credit/excess refund without certifying completion
+✔ SVC-EX02: declined quote can close with an honest unsuccessful report and cannot charge unapproved labour
+✔ specific compatibility requires independent qualified review and expires with reviewer qualification
+✔ follow-ups require completed work, respect service consent and quiet hours, deduplicate and link rebooking
+✔ policy publication requires independently approved real content and effective date
+✔ all new service tables and workflows function under the restricted private-schema server role
+✔ incremental Supabase migration upgrades the previous catalogue schema without losing existing records
+✔ production gates remain truthful and customer export includes owned service records only
+✔ SINV-DRAFT01: persistent immutable revisions, replay, source-bound issue and private draft history
+✔ SINV-DRAFT02: changed approved source invalidates saved draft, resave requires optimistic revision
+✔ SINV-DISPUTE01: customer dispute holds collection, preserves report and requires authorised independent review
+✔ PRIVACY-RETAIN01: explicit retain-all policy records truthful disposition and preserves owned records
+✔ SINV-HTTP01: real JSON and private PDF handlers work under restricted runtime and deny foreign/anonymous/technician access
+✔ SINV-PG01: independent connections issue one immutable service invoice, replay one request and rollback aborted issue
+✔ SINV-01: existing service draft, verified work, immutable issued invoice, ledger balance and private ownership
+✔ SINV-02: shared independent service correction revokes old requests and cannot authorise new work or overwrite reports
+✔ SINV-03: completed-work refund preserves earned charges, revalidates historical requests and credits only excess once
+✔ SINV-04: unused quoted materials reconcile by independent credit on the same invoice and refund only the actual excess
+✔ SINV-05: equal-price quotation revision invalidates prior source-bound payment request and revocation stops reuse
+✔ SINV-06: pending invoice correction blocks backend work even after actual independent cash verification
+✔ SINV-07: failed/cancelled service remains historical and cannot create a collectible request despite a prior successful report
+✔ SINV-08: existing full-service refund review remains available and cannot turn its refunded invoice into a new collectible debt
+✔ SVC-REC01: expired work authority stops new use but independent recovery reconciles actual issued/used/damaged/returned stock exactly once
+✔ SETUP-01: payment summary preserves false flags and exact money without raw object dumps
+✔ SETUP-02: existing proposal roles, approval and history actions remain; tools are collapsed
+✔ SETUP-03: locations show readable visibility and missing coverage without inventing approval
+✔ DATE-01: payment-setting proposals accept Lagos offsets and UTC without activation; naive, invalid and out-of-window dates fail
+✔ SETUP-MONEY01: stored kobo displays as naira exactly once for gas, delivery, zero and fractional naira
+✔ A–C,K: draft, permissions, status injection and independent review share one authoritative workflow
+✔ D,G: distinct dual approval and revisions invalidate prior decisions by revision
+✔ E,H,J,O: schedule, stale requests, idempotent activation and append-only reversal
+✔ F,L,M,N: fee rejection, expired request, revoked approver and governed location lifecycle
+✔ I: activation database failure leaves active value intact, records failure, and revalidates a retry
+✔ decimal calculator matches confirmed gas quantities and rejects unsafe precision
+✔ COVERAGE-01: gas checkout snapshots prices, charges one fee, reserves grams once, prevents stale prices and preserves safety
+✔ delivery fee is once per order in every area; inactive locations retain addresses and flag affected orders
+✔ verified gas-cylinder filling and delivery consume bulk stock once and preserve custody restrictions
+✔ gas report exports preserve totals and escape untrusted spreadsheet and HTML text
+✔ confirmed cylinder maintenance is an unpublished draft governed by the existing service and safety approvals
+✔ COMPACT-QUOTE01: selected location gates a read-only fractional quote without reserving stock
+✔ SHOP-GUARD: shopping fixture refuses production and hosted database configuration before accessing accounts
+✔ SR-T55: activity uses dated saved reports and verified refill references only
+✔ SR-T09: Smart Refill distinguishes an unavailable offer list from a confirmed empty list without requiring schedules
+✔ SR-T32: refill writes validate the form, audit the owned profile and leave financial and stock records intact
+✔ SR-T40: impossible refill intervals stay unavailable and consistent verified history earns high confidence
+✔ SR-T46: verified multi-cylinder orders are excluded from profile history and the last verified date
+✔ staff invitations are manageable without granting privileges, renew invalidates old links and accepted accounts appear in staff management
+✔ staff edits, suspension, reinstatement and invitation revocation enforce authority, branch and session safeguards
+✔ staff management invitation actions run with restricted runtime grants and business-wide administrators retain access to previous branch invitations
+✔ STAFF-INV-01/02: selected privileges are reviewed, never applied before independent approval, and enforced after activation
+✔ STAFF-INV-02: inviting owners cannot attach protected grants to driver roles or provide arbitrary privileges
+✔ DRIVER-AVAIL-01: invited drivers default to available only on approved activation and keep later choices
+✔ STAFF-PRIV-PG: concurrent administrators cannot overwrite privilege revisions; committed revocation blocks an existing session
+✔ STAFF-PRIV01: per-user grant, deny and role default work end to end without changing roles; existing sessions recheck every request
+✔ STAFF-PRIV02: privilege changes require fresh administrative identity and reject self escalation, forged fields, stale versions and protected-role grants
+✔ STAFF-PRIV03: merged administrators can edit cross-branch users; protected approval, qualification and runtime session boundaries remain intact
+✔ STAFF-PRIV04: restricted database runtime can grant, revoke and reset privileges with append-only audited history
+✔ STAFF-PRIV05: privilege endpoints require authenticated read/write methods and reject unverified HTTP mutations
+✔ STAFF-PRIV06: invalid batches roll back all changes, cached outcomes obey revocation, and field-only sessions cannot administer privileges
+✔ STAFF-PRIV07: role or branch changes invalidate additional grants while explicit revocations remain enforced
+✔ STAFF-PRIV08: reverting an identity change cannot silently reactivate an old grant, and identity changes invalidate an open editor revision
+✔ STAFF-ROLE08: staff roles have short display names and keep their canonical identities
+✔ STAFF-ROLE01–03: legacy identities upgrade atomically with overrides, session renewal and approval history
+✔ STAFF-ROLE04–06: branch isolation, qualified checklist review and independent financial approvals
+✔ SUPPORT-C01: list scans all scoped pages; search reaches beyond 100 requests
+✔ SUPPORT-C02: immutable reply idempotency, message pagination and private-note isolation
+✔ SUPPORT-C03: authenticated image upload, private reads, validation, replay and limits
+✔ SUPPORT-C04: Lagos work windows, governed SLA policy, snapshots and one-time escalation
+✔ SUPPORT-C05: concurrent reply and attachment retries commit one record each in PostgreSQL
+✔ TF-DATA: technician summary and paged jobs are scoped, uncapped and honest about unknown history
+✔ TF-TIME: Lagos periods, missing history and assessment labels never fabricate completion
+✔ TECH-T56 independent PostgreSQL connections serialize one paid work authorisation
+✔ FIELD-RECOVERY-01: interrupted acknowledgement recovers committed receipt without a second mutation
+✔ FIELD-RECOVERY-02: changed assignment/version, closed job, cross-account and work authorisation never replay
+✔ FIELD-RECOVERY-03: expired credentials stop replay and retain later records; stable fingerprints ignore transport operation keys
+✔ FIELD-PHOTO-01: queued photograph version is rechecked in the canonical locked booking before bytes or history change
+✔ FIELD-SCOPE-01: production field roles cannot use legacy tokens to bypass scoped financial and unsafe completion boundaries
+✔ TEC-DATA: daily overview, next appointment, active/upcoming lists and terminal history derive from owned canonical records
+✔ TEC-SEC: overview and filters reject identity/role/branch tampering; qualifications require independent active verifier
+✔ TEC-PRESENT: review labels never authorise work, unknown counts stay unknown and dates use Lagos
+✔ TEC-CONFIG: nested technician shell resolves real local plugins and preserves local-only runtime guard
+✔ TECH-T26 unpaid work start fails at backend and changes no booking state
+✔ TECH-T21 quotation needs independent owner decision, customer approval and verified payment
+✔ TECH-T02 technician capability excludes finance, approvals, delivery and unrestricted stock
+✔ TECH-T08 restricted session enforces assignment scope and cannot collect or fake payments
+✔ TECH-T04 suspended, wrong-branch and expired-qualification actors cannot authorise paid work
+✔ TECH-T40 successful report requires current consented private proof; retries retain one image
+✔ TECH-T09 assignment response is versioned, idempotent and required before restricted visit progression
+✔ SBV-002: a restricted session can browse the public catalogue while management remains protected
+✔ TAV-HTTP: directory uses bounded authenticated GET, rejects field access and POST, and enforces branch scope
+✔ TAV-PG: independent PostgreSQL connections serialize competing availability without duplicate slots
+✔ TAV-LPG: independent verification lists active branch loading and dispensing employees without changing qualification authority
+✔ TAV-READ: scoped authoritative directory includes inactive staff, filters, paging and honest schedule states
+✔ TAV-SCOPE: field technicians and customers cannot use management APIs, branch tampering and invalid filters fail closed
+✔ TAV-SCHEDULE: overlap, unavailable technician, self verification, revoked qualifications and booked blocking cannot bypass backend
+✔ TAV-TIME: Lagos conversion is device-independent and rejects invalid dates; navigation and field shell are preserved
+✔ TM-PG: independent PostgreSQL connections prevent duplicate/stale moderation and consent withdrawal wins publication races
+✔ TM-01: eligible purchase saves a private draft; publication requires separate approval
+✔ TM-02: ineligible, duplicate, ownership, consent and unsafe input are rejected
+✔ TM-15: stale moderation cannot publish or overwrite a newer customer version
+✔ TM-09: withdrawing published consent immediately removes public feedback and cannot be reversed by a moderator
+✔ TM-16: notification failure rolls back the entire transition and safe retry produces one event
+✔ TM-11: photos remain private until separately consented and moderated; withdrawal revokes public image access
+✔ TM-RUNTIME: the restricted server can run publication, browser roles cannot read records, and history cannot be changed
+✔ HP-CONTENT: editorial and testimonial policy changes reuse independent approvals and reject unsafe content
+✔ TM-MEDIA-HTTP: upload requires photo consent; public image responses are never cached and withdrawal revokes anonymous reads
+✔ HP-DATA: homepage reads published products with backend prices and active services through a bounded read model
+✔ TM-MANAGEMENT: owner searches and paginates all matches, exports filtered rows, and lower roles are denied
+✔ TM-WITHDRAW-STALE: customer consent revocation wins over a stale screen and retries have one effect
+✔ TM-EXPORT: existing identity-verified account export includes only owned testimonial versions and consent history
+✔ TM-ENTRY: completed-transaction links select only an eligible owned transaction and prioritize an existing submission
+✔ PR-05: SMTP outbox sends once, never retries unknown outcomes, rejects unauthorised retry and preserves private message content
+✔ PR-06: expired recovery messages cancel, explicit SMTP rejection backs off, and insecure SMTP configuration is refused
+✔ FIELD-GPS-01: recent location excludes future, stale, inaccurate, invalid and off-duty evidence regardless of upload order
+✔ GPS-REC01: committed lost response clears only acknowledged evidence without replay or timestamp changes
+✔ GPS-REC02: conflicted trip is held while independent trip sync continues; non-GPS is untouched
+✔ GPS-REC03: unknown commit, revoked authority and wrong account retain all unacknowledged evidence
+✔ GPS-REC04: an unrelated committed receipt never discards a different observation
+✔ SIGNIN-01: email and verified phone resolve to the same account and retain legacy login
+✔ SIGNIN-02: unverified and ambiguous numbers fail closed and phone variants share a retry limit
+✔ SIGNIN-03: verified phone cannot bypass field role or temporary password requirements
+✔ MANIFEST-HTTP01: actual handlers allow scoped driver receipt but reject customer access and restricted-driver stock issue
+✔ MANIFEST-PG01: independent connections serialize physical capacity and replay; forced abort preserves custody and canonical reservations
+✔ MANIFEST-01: qualified issue, independent exact receipt and measured capacity protect canonical branch inventory
+✔ MANIFEST-02: loss/quarantine remains held until exact independent owner and finance recovery; no fabricated cost
+✔ MANIFEST-03: inactive-driver custody needs exact independent recovery approval even when all stock is found
+✔ VDEMO-SEC01: Source bundle excludes local environment and data files
+✔ VDEMO-SEC02: hosted demo bootstrap fails before connecting without explicit dedicated-resource confirmation
+✔ WALLET-ORDER-01: payment options expose only the authenticated balance and governed delivery-branch methods
+✔ WALLET-ORDER-02: the exact full order total including delivery is debited once and replay stays paid
+✔ WALLET-ORDER-03: insufficient or changed balances roll back order, payment and stock reservations
+✔ WALLET-ORDER-PG: independent cross-branch purchases cannot overdraw one wallet and concurrent retries debit once
+✔ WALLET-ORDER-HTTP: authenticated payment choices use GET, private no-store responses and reject identity injection
+✔ WALLET-UI: top-up methods render without inventing a receiving bank or claiming an unverified balance
+✔ WALLET-QUIET: default wallet shows balance and transactions without mounting funding or document filters
+✔ WALLET-BANK: pending transfer, scoped independent approval, rejection and exactly-once ledger
+✔ WALLET-BRANCH: unassigned customers use authoritative active context without mutating identity; ambiguous and foreign addresses cannot choose funding branch
+✔ DWT-PROOFNEG: web completion requires payment, arrival, current consented proof, correct code and full handover without granting cash authority
+✔ DWT-SEC: restricted driver web trip lifecycle keeps ownership, suitability, branch, replay and odometer controls
+✔ CRM-CANCEL01: scoped cancellation stops unsent messages, preserves in-flight/accepted evidence and dedupe reports actual state
+✔ addresses, preferences and sessions are customer-owned
+✔ recovery is non-enumerating, single-use, expires and revokes sessions
+✔ verification cannot be forged, reused or consumed for password reset
+✔ support persists replies, hides staff notes and rejects cross-customer access
+✔ new products remain unpriced and unpublished with approval definitions
+✔ supplier purchasing requires independent approval and receives stock once
+✔ cylinder inspections quarantine failures and prevent unsafe filling or custody
+✔ branch transfers remove source stock and destination receipt is independent and idempotent
+✔ refill profiles require owned eligible data and report insufficient history honestly
+✔ staff invitation acceptance cannot grant privileges and suspension revokes live sessions
+✔ maintenance expires requests, activates scheduled routine values and flags overdue cylinders once
+✔ product import creates protected drafts and cannot overwrite existing catalogue records
+✔ catalogue branch browsing enforces current user scope
+✔ SUPPORT-DESK01: staff intake reuses scoped customer identity and inbox totals preserve private notes
+✔ CHECKOUT-SAVE02: checkout contact and address are opt-in, scoped, retry-safe and independent of sign-in
+ℹ tests 797
+ℹ pass 797
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0

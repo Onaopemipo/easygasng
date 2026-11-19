@@ -42,12 +42,24 @@
         "DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit",
         "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-all-fixes/final-ci-normalized-results.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-ci-jobs.json",
+        "docs/deployment/evidence/20261119-all-fixes/final-ci-artifact.json",
+        "docs/deployment/evidence/20261119-all-fixes/final-deployment.json",
+        "docs/deployment/evidence/20261119-all-fixes/final-stable-status.txt",
+        "docs/deployment/evidence/20261119-all-fixes/hosted-customer-acceptance.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-cancelled-booking-ax.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-cancelled-booking.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/final-driver-history-ax.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-driver-delivered.jpg",
+        "docs/deployment/20261119-all-fixes-release.md"
+      ],
       "acceptanceGate": "DREL2-G01",
-      "status": "PARTIAL",
-      "reason": "Implementation source published and staged Ready with local focused/type/build validation.081 applied and exact canonical preservation verified. Final exact-source cloud suite, stable promotion and named hosted acceptance remain pending.",
-      "testResult": "PASS bounded local checks; hosted release acceptance NOT RUN",
-      "outstandingWork": "Await successful797-check cloud validation, promote staged release and execute actual customer/named-order UI acceptance."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All authorised pending source changes published; final source600b0fddd1a90e6c5edecfd5f81b2c539c6f5196 passed exact-source cloud validation and Ready deployment was promoted to stable demo.081 and actual named web recovery/reconciliation verified. Final follow-up changes only two cancelled-request display guards; operational LPG source identical to actual execution sourceaa85fc7.",
+      "testResult": "PASS:797/797 exact-source cloud tests,0 failures/0 skipped; web build/types/audit and native types/dependencies/audit; stable readiness200; actual hosted customer and driver acceptance.",
+      "outstandingWork": "No remaining bounded demo release work. Commercial production, physical measurement/certification, installed native/provider, formal accessibility and independent backup restore acceptance remain separate; prior holds preserved."
     },
     {
       "id": "DREL2-02",
@@ -101,7 +113,8 @@
         "apps/web/components/customer-notifications.tsx",
         "apps/web/components/customer-account.tsx",
         "apps/web/components/customer-bookings.tsx",
-        "apps/web/components/service-request.tsx"
+        "apps/web/components/service-request.tsx",
+        "apps/web/components/professional-services.tsx"
       ],
       "dataSource": "Exact Git/Vercel commit, isolated demo migrations and canonical authenticated order/custody/stock/payment records",
       "securityControl": "Retain sandbox and permanent fulfilment; restricted runtime; no fabricated historical dispensing, broad grants, real payment or guard bypass",
@@ -113,15 +126,28 @@
       ],
       "testIds": [
         "CSBK-API01",
-        "CACC-API01"
+        "CACC-API01",
+        "CSBK-API04"
       ],
       "negativeTests": [],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-all-fixes/final-ci-normalized-results.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-ci-jobs.json",
+        "docs/deployment/evidence/20261119-all-fixes/final-ci-artifact.json",
+        "docs/deployment/evidence/20261119-all-fixes/final-deployment.json",
+        "docs/deployment/evidence/20261119-all-fixes/final-stable-status.txt",
+        "docs/deployment/evidence/20261119-all-fixes/hosted-customer-acceptance.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-cancelled-booking-ax.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-cancelled-booking.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/final-driver-history-ax.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-driver-delivered.jpg",
+        "docs/deployment/20261119-all-fixes-release.md"
+      ],
       "acceptanceGate": "DREL2-G03",
-      "status": "PARTIAL",
-      "reason": "Implementation source published and staged Ready with local focused/type/build validation.081 applied and exact canonical preservation verified. Final exact-source cloud suite, stable promotion and named hosted acceptance remain pending.",
-      "testResult": "PASS bounded local checks; hosted release acceptance NOT RUN",
-      "outstandingWork": "Await successful797-check cloud validation, promote staged release and execute actual customer/named-order UI acceptance."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual desktop/mobile customer Orders,Notifications,Account/profile/address/security/privacy/preferences/reviews and service pages inspected. Preferred-time requestEGS-AD0E7F94 accepted without provider/capacity or payment, then cancelled with history retained. Final deployed600b0fd readback verifies stale provider-arranging/financial-review messages absent. Existing details and controls preserved.",
+      "testResult": "PASS:797/797 exact-source cloud tests,0 failures/0 skipped; web build/types/audit and native types/dependencies/audit; stable readiness200; actual hosted customer and driver acceptance.",
+      "outstandingWork": "No remaining bounded demo release work. Commercial production, physical measurement/certification, installed native/provider, formal accessibility and independent backup restore acceptance remain separate; prior holds preserved."
     },
     {
       "id": "DREL2-04",
@@ -168,12 +194,26 @@
         "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations",
         "TAV-LPG: independent verification lists active branch loading and dispensing employees without changing qualification authority"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-all-fixes/ci-normalized-results.txt",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.json",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.txt",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-driver-delivered.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-load-reconciled.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-paid-invoice.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-sandbox-receipt.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-invoice-receipt-readback.txt",
+        "docs/deployment/20261119-all-fixes-release.md",
+        "docs/deployment/evidence/20261119-all-fixes/final-ci-normalized-results.txt",
+        "docs/deployment/evidence/20261119-all-fixes/presentation-followup-equivalence.json",
+        "docs/deployment/evidence/20261119-all-fixes/final-driver-history-ax.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-driver-delivered.jpg"
+      ],
       "acceptanceGate": "DREL2-G04",
-      "status": "PARTIAL",
-      "reason": "Implementation source published and staged Ready with local focused/type/build validation.081 applied and exact canonical preservation verified. Final exact-source cloud suite, stable promotion and named hosted acceptance remain pending.",
-      "testResult": "PASS bounded local checks; hosted release acceptance NOT RUN",
-      "outstandingWork": "Await successful797-check cloud validation, promote staged release and execute actual customer/named-order UI acceptance."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual named-order web recovery, independent qualifications/custody/receipt, exact meter allocation, existing consented proof/customer-code handover and trip closure observed.18 restricted canonical reconciliation checks pass; original invoice/receipt/payment/wallet rows and unrelated orders unchanged.",
+      "testResult": "PASS: actual hosted driver/customer/Inventory UI and18 canonical/archive reconciliation checks,797/797 exact deployed-source cloud tests",
+      "outstandingWork": "No remaining named synthetic web workflow action. Physical measurement/certification, formal accessibility, installed native/provider and commercial production acceptance remain outside this bounded demo run."
     },
     {
       "id": "DREL2-05",
@@ -215,18 +255,32 @@
         "DLPG-01: restricted driver completes measured LPG acknowledgement, arrival, dispensing, proof, handover and return with one canonical debit",
         "DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-all-fixes/ci-normalized-results.txt",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.json",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.txt",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-driver-delivered.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-load-reconciled.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-paid-invoice.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-sandbox-receipt.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-invoice-receipt-readback.txt",
+        "docs/deployment/20261119-all-fixes-release.md",
+        "docs/deployment/evidence/20261119-all-fixes/final-ci-normalized-results.txt",
+        "docs/deployment/evidence/20261119-all-fixes/presentation-followup-equivalence.json",
+        "docs/deployment/evidence/20261119-all-fixes/final-driver-history-ax.txt",
+        "docs/deployment/evidence/20261119-all-fixes/final-driver-delivered.jpg"
+      ],
       "acceptanceGate": "DREL2-G05",
-      "status": "NOT_IMPLEMENTED",
-      "reason": "Authorised scope recorded before release",
-      "testResult": "NOT RUN",
-      "outstandingWork": "Preflight, migration, release and hosted acceptance pending"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual named-order web recovery, independent qualifications/custody/receipt, exact meter allocation, existing consented proof/customer-code handover and trip closure observed.18 restricted canonical reconciliation checks pass; original invoice/receipt/payment/wallet rows and unrelated orders unchanged.",
+      "testResult": "PASS: actual hosted driver/customer/Inventory UI and18 canonical/archive reconciliation checks,797/797 exact deployed-source cloud tests",
+      "outstandingWork": "No remaining named synthetic web workflow action. Physical measurement/certification, formal accessibility, installed native/provider and commercial production acceptance remain outside this bounded demo run."
     }
   ],
   "gates": [
     {
       "id": "DREL2-G01",
-      "status": "NOT RUN",
+      "status": "PASS",
       "criteria": "Publish all authorised pending fixes and verify the exact demo deployment against successful release validation"
     },
     {
@@ -236,17 +290,17 @@
     },
     {
       "id": "DREL2-G03",
-      "status": "NOT RUN",
+      "status": "PASS",
       "criteria": "Verify deployed customer Orders, Notifications, Account and service booking pages including preferred-time requests without technician capacity"
     },
     {
       "id": "DREL2-G04",
-      "status": "NOT RUN",
+      "status": "PASS",
       "criteria": "Recover and complete existing synthetic order EG-2026-7BB8640B through the actual web workflow with audited qualifications, custody, dispensing and customer handover"
     },
     {
       "id": "DREL2-G05",
-      "status": "NOT RUN",
+      "status": "PASS",
       "criteria": "Reconcile exact demo stock, cylinder, invoice/payment and returned vehicle custody without new charges or duplicate fulfilment"
     }
   ],
@@ -266,6 +320,28 @@
     {
       "date": "2026-11-19",
       "change": "Live service request EGS-AD0E7F94 accepted with no provider/invoice; cancellation preserved history but exposed stale pending-scheduling/financial-review messages. Two guarded display conditions corrected, canonical API-to-render cancellation regression added to CSBK-API04, historical reviewed hashes retained in releaseFollowups. LPG recovery continues on validated deployed LPG source while this presentation follow-up validates."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Actual EG-2026-7BB8640B delivered19Nov05:21WAT via unchanged driver UI guarded LPG source. One audited missing-custody recovery,6000g acknowledged/dispensed, zero return independently reconciled,trip ended at synthetic odometer1000/GPSoff.18 canonical checks pass including one6000g debit,stock5991kg/reserved13kg,filledcustomer cylinder,original invoice15830/balance0 and originalsandboxreceipt16172.59 unchanged. Remaining release/customer gate is final cancelled-request presentation follow-up, not operational recovery."
+    },
+    {
+      "date": "2026-11-19",
+      "requirement": "DREL2-01",
+      "previousStatus": "PARTIAL",
+      "previousReason": "Implementation source published and staged Ready with local focused/type/build validation.081 applied and exact canonical preservation verified. Final exact-source cloud suite, stable promotion and named hosted acceptance remain pending.",
+      "change": "Resolved with exact-source CI44457056157, stable promotion dpl_6MewDCoCGcTpw1UKyqpeVpdFBe2C and actual hosted customer/driver readback."
+    },
+    {
+      "date": "2026-11-19",
+      "requirement": "DREL2-03",
+      "previousStatus": "PARTIAL",
+      "previousReason": "Implementation source published and staged Ready with local focused/type/build validation.081 applied and exact canonical preservation verified. Final exact-source cloud suite, stable promotion and named hosted acceptance remain pending.",
+      "change": "Resolved with exact-source CI44457056157, stable promotion dpl_6MewDCoCGcTpw1UKyqpeVpdFBe2C and actual hosted customer/driver readback."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Final stable source600b0fd/cloud run44457056157/artifact14498968107 verified.797 pass/0fail/0skip; Ready dpl_6MewDCoCGcTpw1UKyqpeVpdFBe2C promoted. Actual cancelled-request readback and post-promotion DriverHistory Delivered captured. All5 bounded release requirements and gates pass; critical4/4. No wider production/native/physical/provider/import/retention scope dropped or reclassified."
     }
   ]
 }

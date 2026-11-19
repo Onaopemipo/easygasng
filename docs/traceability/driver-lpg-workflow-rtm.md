@@ -1,16 +1,14 @@
-# Driver vehicle LPG workflow repair — 19 November 2026
+# Vehicle-dispensed LPG web workflow
 
-Four bounded local web requirements verified; commercial production NO-GO, retain-all, actual-import hold and unrelated work preserved. User confirms LPG is dispensed from the vehicle at the customer address.
+Canonical mapping: [JSON](driver-lpg-workflow-rtm.json). Stable IDs, exact implementation/data/security/test/gate mapping and historical status changes are retained there.
 
-| ID | Requirement | Verification | Gate/status |
-|---|---|---|---|
-| DLPG-01 | Complete vehicle load issue, driver acknowledgement, metered dispensing and handover through the web with canonical stock and payment controls | DLPG-01, DLPG-04, DLPG-UI01, DWT-PROOFNEG; API/HTTP/browser, final build/types | DLPG-G01 PASS / VERIFIED_COMPLETE |
-| DLPG-02 | Recover a picked-up or arrived order missing LPG allocation through explicit measured and audited custody intake, without rewinding or inventing dispensing | DLPG-02, BULK-PG01; API/HTTP/browser, final build/types | DLPG-G02 PASS / VERIFIED_COMPLETE |
-| DLPG-03 | Select the actual cylinder by serial with an owned/allocated branch-scoped record and qualified inspection rather than typing internal IDs | DLPG-03, DLPG-04, DLPG-HTTP01, DLPG-HTTP02; API/HTTP/browser, final build/types | DLPG-G03 PASS / VERIFIED_COMPLETE |
-| DLPG-04 | Show actionable order and trip LPG readiness, versioned retry-safe controls and return reconciliation with responsive driver views | DLPG-01, DLPG-UI01, DLPG-04; API/HTTP/browser, final build/types | DLPG-G04 PASS / VERIFIED_COMPLETE |
+| ID | Requirement | Priority | Status | Gate |
+|---|---|---|---|---|
+| DLPG-01 | Complete vehicle load issue, driver acknowledgement, metered dispensing and handover through the web with canonical stock and payment controls | P0 | VERIFIED_COMPLETE | DLPG-G01 |
+| DLPG-02 | Recover a picked-up or arrived order missing LPG allocation through explicit measured and audited custody intake, without rewinding or inventing dispensing | P0 | VERIFIED_COMPLETE | DLPG-G02 |
+| DLPG-03 | Select the actual cylinder by serial with an owned/allocated branch-scoped record and qualified inspection rather than typing internal IDs | P0 | VERIFIED_COMPLETE | DLPG-G03 |
+| DLPG-04 | Show actionable order and trip LPG readiness, versioned retry-safe controls and return reconciliation with responsive driver views | P1 | VERIFIED_COMPLETE | DLPG-G04 |
 
-Implementation4/4, verification4/4, critical3/3, gates4/4. Browser route coverage3/4; Settings shares the built/tested cylinder component but its entire route was not replayed. All four routes remain counted. 51 focused checks and1 independent PostgreSQL test pass.
+Verified **4/4**, critical **3/3**, gates **4/4**. Every incomplete requirement remains in the denominator.
 
-[Machine matrix](driver-lpg-workflow-rtm.json) maps actual files, authoritative records, controls, full negative test titles and logs/screenshots. [Implementation/runbook](../driver-lpg-workflow/README.md).
-
-Hosted release and named EG-2026-7BB8640B completion remain unverified; existing DWT-05 DEFECTIVE/DWT-06 PARTIAL retained for the deployed version. Physical operations, valid real qualification/calibration evidence, native and formal accessibility acceptance are not implied by synthetic tests. No hosted flags, stock, payments or order state changed.
+Actual named hosted EG-2026-7BB8640B isDelivered with independent zero-return reconciliation and trip closure.18 canonical checks verify a single6kg debit,filledcustomer cylinder,unchanged original invoice/payment/receipt/wallet rows and unrelated orders. See [reconciliation](../deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.json) and [release report](../deployment/20261119-all-fixes-release.md). Synthetic DEMO-QA evidence is not physical certification. Commercial production NO-GO, retain-all,import and unrelated native/physical/provider/formal-accessibility holds remain.

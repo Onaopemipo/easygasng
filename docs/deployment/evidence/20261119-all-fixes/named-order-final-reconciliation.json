@@ -1,0 +1,317 @@
+{
+  "checkedAt": "2026-11-19T04:37:19.435Z",
+  "source": "actual restricted demo PostgreSQL readback after web-only operational mutations; authenticated pre081 archive comparison",
+  "checks": {
+    "delivered": true,
+    "paidPrincipalPreserved": true,
+    "onlyExpectedOrderFieldsChanged": true,
+    "unrelatedOrdersPreserved": true,
+    "exactlyOne6000gFulfilment": true,
+    "stockMatches5991kgOnHand13kgReserved": true,
+    "oneFulfilledAllocation": true,
+    "loadReconciled": true,
+    "driverAndReceiverIndependent": true,
+    "tripClosedWithoutGPS": true,
+    "arrivedHistoryPreserved": true,
+    "cylinderFilled": true,
+    "oneAuditedRecovery": true,
+    "priorValidConsentedProofPreserved": true,
+    "originalInvoicePreserved": true,
+    "noFinancialLedgerChanges": true,
+    "qaServiceCancelledWithoutCharge": true,
+    "approvedDemoQualificationsOnly": true
+  },
+  "order": {
+    "id": "c22eac68-f5e2-4ba4-8c26-6f02a028d24b",
+    "reference": "EG-2026-7BB8640B",
+    "status": "delivered",
+    "total_kobo": "1583000",
+    "payment_status": "verified",
+    "delivered_at": "2026-11-19 04:21:29.061275+00",
+    "tracking_version": "8"
+  },
+  "changedOrderFields": [
+    "status",
+    "delivered_at",
+    "tracking_version"
+  ],
+  "stock": {
+    "branch_id": "lagos",
+    "grams": "5991000",
+    "reserved_grams": "13000",
+    "threshold_grams": null
+  },
+  "moves": [
+    {
+      "grams": "-6000",
+      "kind": "fulfilled",
+      "reference": "c22eac68-f5e2-4ba4-8c26-6f02a028d24b:fulfilled"
+    }
+  ],
+  "load": {
+    "id": "4340bb3c-aa5a-48b6-bdc7-4a05a2aa0efe",
+    "trip_id": "21031730-c8fe-4592-a2f8-8988e5e981e6",
+    "meter_id": "95fd7658-9c52-48d5-92d4-e5e9482ad783",
+    "branch_id": "lagos",
+    "loaded_grams": "6000",
+    "buffer_grams": "0",
+    "dispensed_grams": "6000",
+    "meter_reading_grams": "9000",
+    "issued_by": "f9060b70-12bd-4342-92a9-2a844661d6c6",
+    "acknowledged_by": "944e48b6-9ccb-478c-8a77-e00e152b0889",
+    "received_by": "f9060b70-12bd-4342-92a9-2a844661d6c6",
+    "state": "reconciled",
+    "declared_return_grams": "0",
+    "version": 5,
+    "created_at": "2026-11-19T04:19:34.271Z"
+  },
+  "allocation": [
+    {
+      "order_id": "c22eac68-f5e2-4ba4-8c26-6f02a028d24b",
+      "load_id": "4340bb3c-aa5a-48b6-bdc7-4a05a2aa0efe",
+      "grams": "6000",
+      "dispensed_grams": "6000",
+      "state": "fulfilled"
+    }
+  ],
+  "trip": {
+    "id": "21031730-c8fe-4592-a2f8-8988e5e981e6",
+    "vehicle_id": "6183ad5e-ae02-4473-a50d-a0cf9d576801",
+    "driver_id": "944e48b6-9ccb-478c-8a77-e00e152b0889",
+    "start_odometer": "1000",
+    "end_odometer": "1000",
+    "location_consent": false,
+    "started_at": "2026-11-18T13:44:39.036Z",
+    "ended_at": "2026-11-19T04:24:42.813Z"
+  },
+  "attempts": [
+    {
+      "id": "f2493972-0626-4d79-b751-5908cb317cbe",
+      "assignment_version": 4,
+      "state": "delivered",
+      "picked_up_at": "2026-11-18 13:57:04.773231+00",
+      "arrived_at": "2026-11-18 13:57:39.463908+00",
+      "completed_at": "2026-11-19 04:21:29.061275+00"
+    }
+  ],
+  "cylinder": {
+    "id": "4214df22-8d80-4307-8a67-d7bb3655dcac",
+    "serial": "SANDBOX-CUSTOMER-7BB8640B",
+    "size_kg": "6",
+    "ownership": "customer",
+    "status": "filled",
+    "test_due": "2027-02-17T14:00:00.000Z"
+  },
+  "events": [
+    {
+      "kind": "load.recovered",
+      "actor_id": "f9060b70-12bd-4342-92a9-2a844661d6c6",
+      "created_at": "2026-11-19T04:19:34.271Z",
+      "evidence": "DEMO-QA-7BB8640B synthetic recovery: simulated current vehicle LPG 6000g and meter 3000g, continuing prior demo counter. No prior dispensing for this order. Preserve arrived attempt/version7. No real physical measurement or delivery asserted."
+    },
+    {
+      "kind": "load.acknowledge",
+      "actor_id": "944e48b6-9ccb-478c-8a77-e00e152b0889",
+      "created_at": "2026-11-19T04:20:23.607Z",
+      "evidence": "DEMO-QA-7BB8640B: independent synthetic driver acknowledgement of simulated 6000g custody and cumulative meter3000g. Isolated demo verification only; no real LPG handling or physical measurement asserted."
+    },
+    {
+      "kind": "dispense",
+      "actor_id": "944e48b6-9ccb-478c-8a77-e00e152b0889",
+      "created_at": "2026-11-19T04:20:46.920Z",
+      "evidence": "DEMO-QA-7BB8640B: simulated dispensing6000g into existing customer cylinder SANDBOX-CUSTOMER-7BB8640B. Demo cumulative meter3000g to9000g. Isolated synthetic acceptance only; not real physical dispensing evidence."
+    },
+    {
+      "kind": "fulfilled",
+      "actor_id": "944e48b6-9ccb-478c-8a77-e00e152b0889",
+      "created_at": "2026-11-19T04:21:29.061Z",
+      "evidence": null
+    },
+    {
+      "kind": "return.declare",
+      "actor_id": "944e48b6-9ccb-478c-8a77-e00e152b0889",
+      "created_at": "2026-11-19T04:22:08.656Z",
+      "evidence": "DEMO-QA-7BB8640B: synthetic return declaration.6000g demo load fully dispensed;0g remaining, no buffer. No real physical return or measurement asserted; independent inventory reconciliation required."
+    },
+    {
+      "kind": "return.received",
+      "actor_id": "f9060b70-12bd-4342-92a9-2a844661d6c6",
+      "created_at": "2026-11-19T04:23:16.516Z",
+      "evidence": "DEMO-QA-7BB8640B: independent synthetic inventory receipt confirms0g remaining after6000g dispensed; matches driver declaration, no loss/buffer adjustment. No real physical return asserted."
+    }
+  ],
+  "recoveryAudit": [
+    {
+      "action": "bulk.missing_custody.recovered",
+      "actor_id": "f9060b70-12bd-4342-92a9-2a844661d6c6",
+      "detail": {
+        "loadId": "4340bb3c-aa5a-48b6-bdc7-4a05a2aa0efe",
+        "reason": "DEMO-QA-7BB8640B synthetic recovery: simulated current vehicle LPG 6000g and meter 3000g, continuing prior demo counter. No prior dispensing for this order. Preserve arrived attempt/version7. No real physical measurement or delivery asserted.",
+        "orderId": "c22eac68-f5e2-4ba4-8c26-6f02a028d24b",
+        "version": 7,
+        "actorRole": "finance",
+        "attemptId": "f2493972-0626-4d79-b751-5908cb317cbe",
+        "observedAt": "2026-11-19T04:19:33.249Z",
+        "recordedAt": "2026-11-19T04:19:36.571Z",
+        "actorBranch": "lagos",
+        "notDispensed": true,
+        "noPriorDispensingAsserted": true
+      },
+      "created_at": "2026-11-19T04:19:34.271Z"
+    }
+  ],
+  "invoice": [
+    {
+      "id": "45fd5536-9399-4c86-861a-0d44b90d8de1",
+      "invoice_number": "EGI-0000000004",
+      "order_id": "c22eac68-f5e2-4ba4-8c26-6f02a028d24b",
+      "total_kobo": "1583000"
+    }
+  ],
+  "proofs": [
+    {
+      "id": "dd57038b-5ab4-4242-ba89-0ef83797fd93",
+      "attempt_id": "f2493972-0626-4d79-b751-5908cb317cbe",
+      "consent": true,
+      "created_at": "2026-11-19T01:23:00.886Z",
+      "retain_until": "2026-11-20T01:23:01.308Z"
+    },
+    {
+      "id": "437e0b35-5eb5-4bed-9378-ae0e3de8caae",
+      "attempt_id": "f2493972-0626-4d79-b751-5908cb317cbe",
+      "consent": true,
+      "created_at": "2026-11-18T13:57:51.130Z",
+      "retain_until": "2026-11-19T13:57:51.553Z"
+    }
+  ],
+  "qualifications": [
+    {
+      "name": "Demo driver",
+      "role": "driver",
+      "code": "bulk_lpg_dispensing",
+      "verified_by": "55847307-1b01-429f-a0ed-b8b1d1880fe8",
+      "user_id": "944e48b6-9ccb-478c-8a77-e00e152b0889",
+      "expires_at": "2026-11-19T05:11:00.000Z",
+      "evidence": "DEMO-QA-7BB8640B: user-authorised renewal for isolated synthetic bulk LPG workflow verification only. Simulated independent review; under one hour; not a real operating qualification or certificate."
+    },
+    {
+      "name": "Demo finance",
+      "role": "finance",
+      "code": "bulk_lpg_loading",
+      "verified_by": "55847307-1b01-429f-a0ed-b8b1d1880fe8",
+      "user_id": "f9060b70-12bd-4342-92a9-2a844661d6c6",
+      "expires_at": "2026-11-19T05:11:00.000Z",
+      "evidence": "DEMO-QA-7BB8640B: user-authorised renewal for isolated synthetic bulk LPG workflow verification only. Simulated independent review; under one hour; not a real operating qualification or certificate."
+    },
+    {
+      "name": "Demo owner",
+      "role": "owner",
+      "code": "bulk_lpg_metering",
+      "verified_by": "98975b7d-08c7-424e-a8fa-5a8132340ffc",
+      "user_id": "55847307-1b01-429f-a0ed-b8b1d1880fe8",
+      "expires_at": "2026-11-19T05:11:00.000Z",
+      "evidence": "DEMO-QA-7BB8640B: user-authorised renewal for isolated synthetic bulk LPG workflow verification only. Simulated independent review; under one hour; not a real operating qualification or certificate."
+    }
+  ],
+  "financialChecks": [
+    {
+      "table": "channel_receipts",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "customer_invoices",
+      "beforeRows": 4,
+      "afterRows": 4,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "invoice_note_events",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "invoice_notes",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "invoice_payment_requests",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "payment_attempts",
+      "beforeRows": 17,
+      "afterRows": 17,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "payment_exceptions",
+      "beforeRows": 1,
+      "afterRows": 1,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "payment_intents",
+      "beforeRows": 17,
+      "afterRows": 17,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "payment_postings",
+      "beforeRows": 8,
+      "afterRows": 8,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "payment_provider_events",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "service_invoice_drafts",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "stock_receipts",
+      "beforeRows": 5,
+      "afterRows": 5,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "transfer_receipts",
+      "beforeRows": 0,
+      "afterRows": 0,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "verified_payments",
+      "beforeRows": 5,
+      "afterRows": 5,
+      "exactRowsPreserved": true
+    },
+    {
+      "table": "wallet_entries",
+      "beforeRows": 5,
+      "afterRows": 5,
+      "exactRowsPreserved": true
+    }
+  ],
+  "booking": {
+    "id": "ad0e7f94-ad80-417f-b5d0-6db6d0d4a959",
+    "reference": "EGS-AD0E7F94",
+    "status": "cancelled",
+    "technician_id": null,
+    "request_only": true,
+    "slot_technician": null,
+    "invoices": 0
+  }
+}

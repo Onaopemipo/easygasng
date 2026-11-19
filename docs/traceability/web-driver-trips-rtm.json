@@ -1,7 +1,7 @@
 {
   "phase": "Driver web trip controls \u2014 18 November 2026",
   "baseline": "6dacd21",
-  "releaseDecision": "PARTIAL for the named hosted web order. DWT-05 downgraded DEFECTIVE after production-mode bulk custody guard exposed a missing driver web workflow; DWT-06 handover incomplete. Prior deployed trip controls remain. Commercial production NO-GO preserved.",
+  "releaseDecision": "VERIFIED bounded web/demo journey; commercial production NO-GO and native/physical/provider/import/retention decisions preserved.",
   "requirements": [
     {
       "id": "DWT-01",
@@ -226,13 +226,22 @@
         "docs/web-driver-trips/evidence/release.txt",
         "docs/web-driver-trips/evidence/ci-web-tests.txt",
         "docs/web-driver-trips/demo-order-EG-2026-7BB8640B.md",
-        "docs/web-driver-trips/evidence/order-7BB8640B/handover-blocked-bulk-custody.jpg"
+        "docs/web-driver-trips/evidence/order-7BB8640B/handover-blocked-bulk-custody.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/ci-normalized-results.txt",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.json",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.txt",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-driver-delivered.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-load-reconciled.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-paid-invoice.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-sandbox-receipt.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-invoice-receipt-readback.txt",
+        "docs/deployment/20261119-all-fixes-release.md"
       ],
       "acceptanceGate": "DWT-05-G",
-      "status": "DEFECTIVE",
-      "reason": "Actual named hosted run reaches acknowledged assignment, inspected pickup, departure, arrival and proof upload, but driver.complete rejects missing acknowledged bulk LPG custody and metered dispensing. DriverExperience omits the existing BulkLPGPanel. Earlier isolated browser success did not exercise the production-mode bulk requirement and is insufficient for complete gas-order web acceptance.",
-      "testResult": "FAIL hosted end-to-end handover: Bulk LPG requires acknowledged vehicle custody and verified metered dispensing. Prior focused and isolated browser passes retained as bounded historical evidence only.",
-      "outstandingWork": "Expose guarded bulk load acknowledgement/dispensing in driver web, provide independently qualified staff loading/current meter workflow and run production-equivalent bulk-enabled browser acceptance. Do not weaken the completion guard."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual existing paid demo order EG-2026-7BB8640B completed through web after independently verified short-lived demo bulk renewals, existing meter recalibration, explicit fresh audited missing-custody recovery,driver acknowledgement,6000g metered dispensing,retained consented proof and customer-owned handover code. Driver History and customer Orders showDelivered;independent zero-return reconciliation andtripclosure passed. Canonical one-time stock/cylinder/payment/invoice/receipt reconciliation passed.",
+      "testResult": "PASS:797/797 deployed-source cloud tests,actual hosted CUA delivery/reconciliation and18 restricted canonical checks",
+      "outstandingWork": "None for this bounded synthetic web journey. No physical delivery/certification,commercial activation,provider settlement or installed-native acceptance inferred."
     },
     {
       "id": "DWT-06",
@@ -282,13 +291,22 @@
         "docs/web-driver-trips/evidence/order-7BB8640B/simulator-preview-build.json",
         "docs/web-driver-trips/evidence/order-7BB8640B/simulator-assignment-observation.txt",
         "docs/web-driver-trips/evidence/order-7BB8640B/simulator-assignment-notification.png",
-        "docs/web-driver-trips/evidence/order-7BB8640B/simulator-assigned-order.png"
+        "docs/web-driver-trips/evidence/order-7BB8640B/simulator-assigned-order.png",
+        "docs/deployment/evidence/20261119-all-fixes/ci-normalized-results.txt",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.json",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-reconciliation.txt",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-driver-delivered.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-load-reconciled.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-paid-invoice.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-final-sandbox-receipt.jpg",
+        "docs/deployment/evidence/20261119-all-fixes/named-order-invoice-receipt-readback.txt",
+        "docs/deployment/20261119-all-fixes-release.md"
       ],
       "acceptanceGate": "DWT-06-G",
-      "status": "PARTIAL",
-      "reason": "Actual hosted web run started Demo driver trip, issued/reconciled EasyGas invoice, confirmed synthetic coverage, accepted/prepared/assigned order, registered customer intake, renewed existing finance cylinder_inspection qualification with explicit user approval and independent owner verification, inspected the cylinder, recorded filling eligibility, verified private assignment notification, acknowledged/picked up/departed/arrived and uploaded labelled synthetic proof. Handover was rejected by preserved bulk custody/metered dispensing guard; no completion success inferred.",
-      "testResult": "PARTIAL \u2014 actual UI pickup/arrival/proof passed; final handover rejected. Invoice principal15830 + processing342.59 = sandbox receipt16172.59; paid invoice balance0. No new charge.",
-      "outstandingWork": "User approved necessary existing one-hour demo bulk renewals on19 November; apply them with independent verification when web recovery controls are ready. Repair missing web bulk workflow and complete guarded custody/metering and named handover through web; order currently out_for_delivery with arrived attempt. Cylinder renewal was executed; approved bulk renewals have not yet been submitted. Check stock ledger/final cylinder custody after successful completion. Existing commercial/physical/provider/import gates remain."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual existing paid demo order EG-2026-7BB8640B completed through web after independently verified short-lived demo bulk renewals, existing meter recalibration, explicit fresh audited missing-custody recovery,driver acknowledgement,6000g metered dispensing,retained consented proof and customer-owned handover code. Driver History and customer Orders showDelivered;independent zero-return reconciliation andtripclosure passed. Canonical one-time stock/cylinder/payment/invoice/receipt reconciliation passed.",
+      "testResult": "PASS:797/797 deployed-source cloud tests,actual hosted CUA delivery/reconciliation and18 restricted canonical checks",
+      "outstandingWork": "None for this bounded synthetic web journey. No physical delivery/certification,commercial activation,provider settlement or installed-native acceptance inferred."
     }
   ],
   "gates": [
@@ -319,14 +337,14 @@
     {
       "id": "DWT-05-G",
       "requirement": "Complete the paid synthetic delivery through the driver web interface without requiring the native app",
-      "status": "FAIL",
-      "reason": "Hosted bulk-enabled gas handover fails; required driver web bulk custody/metering workflow missing. Previous isolated non-production browser pass retained, gate explicitly downgraded."
+      "status": "PASS",
+      "reason": "Named hosted web recovery-to-delivery/independent return/trip closure and actual financial/stock reconciliation verified; see all-fixes release evidence."
     },
     {
       "id": "DWT-06-G",
       "requirement": "Complete the existing paid demo order EG-2026-7BB8640B through the actual web UI with Demo Driver and an inspected cylinder",
-      "status": "PENDING",
-      "reason": "Trip/inspection/assignment/pickup/arrival/proof and financial document reconciliation observed. Final handover remains blocked by bulk custody; additional one-hour demo bulk renewals approved but not yet applied; guarded web recovery remains required."
+      "status": "PASS",
+      "reason": "Named hosted web recovery-to-delivery/independent return/trip closure and actual financial/stock reconciliation verified; see all-fixes release evidence."
     }
   ],
   "changeLog": [
@@ -377,16 +395,32 @@
         "docs/traceability/driver-lpg-workflow-rtm.json",
         "docs/driver-lpg-workflow/evidence/tests.txt"
       ]
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Explicit user-authorised hosted operational continuation resolved DWT-05 defect and DWT-06 partial. All historical failed screenshots/reasons retained; latest closure evidence appended. No native/physical/provider/commercial/import/retention gate waived.",
+      "resolvedPriorStates": [
+        {
+          "id": "DWT-05",
+          "previousStatus": "DEFECTIVE",
+          "previousReason": "Actual named hosted run reaches acknowledged assignment, inspected pickup, departure, arrival and proof upload, but driver.complete rejects missing acknowledged bulk LPG custody and metered dispensing. DriverExperience omits the existing BulkLPGPanel. Earlier isolated browser success did not exercise the production-mode bulk requirement and is insufficient for complete gas-order web acceptance."
+        },
+        {
+          "id": "DWT-06",
+          "previousStatus": "PARTIAL",
+          "previousReason": "Actual hosted web run started Demo driver trip, issued/reconciled EasyGas invoice, confirmed synthetic coverage, accepted/prepared/assigned order, registered customer intake, renewed existing finance cylinder_inspection qualification with explicit user approval and independent owner verification, inspected the cylinder, recorded filling eligibility, verified private assignment notification, acknowledged/picked up/departed/arrived and uploaded labelled synthetic proof. Handover was rejected by preserved bulk custody/metered dispensing guard; no completion success inferred."
+        }
+      ]
     }
   ],
   "coverage": {
-    "implemented": 5,
-    "verified": 4,
+    "implemented": 6,
+    "verified": 6,
     "total": 6,
-    "criticalVerified": 1,
+    "criticalVerified": 3,
     "criticalTotal": 3,
-    "gatesPassed": 4,
+    "gatesPassed": 6,
     "gatesTotal": 6,
-    "scope": "All six bounded requirements retained: four verified, one defective and one partial. Original production/physical/provider/native requirements and import hold retained."
+    "scope": "All six bounded web requirements verified including actual named hosted synthetic order. Commercial/native/physical/provider/import and retain-all decisions preserved."
   }
 }
