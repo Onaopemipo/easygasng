@@ -116,6 +116,48 @@ if (phase === "cash-guards") test("ROLEACC-CASH-GUARDS: collected cash is not ve
   await writeFile(evidenceRoot + "/cash-guards.json", JSON.stringify({ reference: o.reference, collectionId: collection.id, denied, refund, payment: "collected/unverified" }, null, 2) + "\n");
   await c.check("ROLEACC-CASH-GUARDS", "Collector self-reconciliation403 and refund-before-verification409; actual synthetic collection remains unverified until independent finance");
 });
+if (phase === "fix-readback") test("ROLEACC-FIX-HTTP: deployed catalogue matches eligible serials and scoped cash review preserves all orders, ledger and stock", async () => {
+  const c = await client();
+  const data = { orders: await c.ok("owner", "orders"), ledger: await c.ok("finance", "finance.ledger"), inventory: await c.ok("inventory", "inventory"), gas: (await c.ok("inventory", "inventory.workspace")).gas };
+  for (const [name, value] of Object.entries(data)) assert.deepEqual(value, c.state.fixBaseline[name], name + " unchanged by deployment");
+  const products = (await c.ok("customer", "catalogue")).products;
+  assert.equal(products.find((p) => p.id === "cylinder-empty-6").available, 1);
+  for (const product of products.filter((p) => p.category === "Empty cylinders" && p.id !== "cylinder-empty-6")) assert.equal(product.available, 0);
+  const collections = await c.ok("finance", "cash.collections");
+  assert.equal(collections.find((r) => r.id === c.state.cashCollection).collector_id, c.state.roles.owner.id);
+  await reject(c, "customer", "cash.collections", undefined, [403]);
+  const beforeIds = new Set(c.state.baseline.orders.data.map((o) => o.id));
+  assert.deepEqual(data.orders.filter((o) => beforeIds.has(o.id)), c.state.baseline.orders.data);
+  await writeFile(evidenceRoot + "/fix-hosted-after.json", JSON.stringify({ ...Object.fromEntries(Object.entries(data).map(([k, v]) => [k + "Hash", hash(v)])), advertisedEmptyCylinders: products.filter((p) => p.category === "Empty cylinders").map((p) => ({ id: p.id, available: p.available })), protectedOriginalOrders: beforeIds.size }, null, 2) + "\n");
+  await c.check("ROLEACC-FIX-HTTP", "After promotion, serial-aware availability and independent cash collector context work; all current10orders/ledger/stock and8original orders unchanged by code deployment");
+});
+if (phase === "product-verified") test("ROLEACC-COD: supervised COD delivery and independent finance verification post one settlement; rejected partial refund leaves wallet and stock unchanged", async () => {
+  const c = await client(), o = await snapshot(c, "product-cod");
+  assert.equal(o.status, "delivered"); assert.equal(o.payment_status, "verified");
+  const invoice = (await c.ok("customer", "invoice.order", { orderId: o.id })).invoice;
+  assert.equal(invoice.status, "paid"); assert.equal(Number(invoice.paidKobo), 5700000); assert.equal(invoice.amountDueKobo, 0);
+  const wallet = await c.ok("customer", "wallet"), stock = await c.ok("inventory", "inventory"), ledger = await c.ok("finance", "finance.ledger");
+  const replayCheckout = await c.ok("customer", "checkout", c.state.orders["product-cod"].input); assert.equal(replayCheckout.id, o.id);
+  await reject(c, "customer", "checkout", { ...c.state.orders["product-cod"].input, items: [{ productId: "cylinder-empty-6", quantity: 1 }] }, [409], /already used/);
+  await c.reauth("finance"); await c.ok("finance", "cash.reconcile", { id: c.state.cashCollection });
+  const handover = JSON.parse(await (await import("node:fs/promises")).readFile(".data/role-acceptance-handover.json", "utf8"));
+  await c.ok("owner", "delivery.complete", { orderId: o.id, version: handover.version, code: handover.code, collectedKobo: 5700000, handover: true, operationKey: c.key("semantic-delivery-replay") });
+  assert.deepEqual(await c.ok("finance", "finance.ledger"), ledger);
+  assert.deepEqual(await c.ok("inventory", "inventory"), stock); assert.deepEqual(await c.ok("customer", "wallet"), wallet);
+  const source = (await c.ok("customer", "refund.lines?orderId=" + o.id))[0]; assert.equal(Number(source.remaining), 2);
+  const request = { orderId: o.id, lines: [{ source: source.source, quantity: 1 }], reason: note("Synthetic rejected partial refund acceptance case"), acceptWalletCredit: true, idempotencyKey: c.key("refund-rejected") };
+  const made = await c.ok("customer", "refund.request", request);
+  assert.equal((await c.ok("customer", "refund.request", request)).id, made.id);
+  const pendingConflict = await reject(c, "customer", "refund.request", { ...request, idempotencyKey: c.key("second-pending-refund") }, [409], /awaiting independent review/);
+  const keyConflict = await reject(c, "customer", "refund.request", { ...request, lines: [{ source: source.source, quantity: 2 }] }, [409], /conflicts/);
+  await c.ok("finance", "credit.decide", { id: made.id, decision: "rejected", reason: note("Independent rejection of the labelled test refund") });
+  await c.ok("finance", "credit.decide", { id: made.id, decision: "rejected", reason: note("Independent rejection of the labelled test refund") });
+  const changedDecision = await reject(c, "finance", "credit.decide", { id: made.id, decision: "approved", reason: note("A rejected decision cannot be overwritten") }, [409], /already been decided/);
+  assert.deepEqual(await c.ok("customer", "wallet"), wallet); assert.deepEqual(await c.ok("inventory", "inventory"), stock);
+  c.state.walletBeforeRefund = wallet; c.state.productPaidStock = stock; c.state.originalProductInvoice = invoice; c.state.refundRejected = made.id; c.state.refundSource = source.source; await c.save();
+  await writeFile(evidenceRoot + "/cod-refund-rejected.json", JSON.stringify({ reference: o.reference, status: o.status, payment: "verified", invoice: invoice.invoice_number, settledKobo: invoice.paidKobo, amountDueKobo: invoice.amountDueKobo, rejectedRefund: made.id, pendingConflict, keyConflict, changedDecision, walletUnchanged: true, stockUnchangedByReplayAndRejection: true }, null, 2) + "\n");
+  await c.check("ROLEACC-COD", "₦57,000 COD settled independently once; checkout/cash/delivery replay has no extra posting; pending/key/changed-decision refund conflicts rejected; rejected refund leaves money/stock unchanged");
+});
 async function reject(c, role, action, body, statuses, message) {
   const r = await c.call(role, action, body);
   assert.ok(statuses.includes(r.status), `${role} ${action} expected ${statuses}, got ${r.status}: ${r.data.error ?? ""}`);
@@ -215,3 +257,36 @@ if (phase === "preexceptions") {
     await writeFile(evidenceRoot + "/preexceptions.json", JSON.stringify({ results, fundingRequest: request.id, labelledOrders: c.state.orders, checks: c.state.checks }, (key, value) => key === "input" ? undefined : value, 2) + "\n");
   });
 }
+if (phase === "renew-safety") test("ROLEACC-QA-RENEWAL: explicitly approved two-hour synthetic qualifications and existing sandbox meter renew independently through product APIs", async () => {
+  const c = await client();
+  c.state.qaRenewal ??= { approvedBy: "User explicitly approved two-hour demo-only renewals in this chat", startedAt: new Date().toISOString(), expiresAt: new Date(Date.now() + 2 * 3600000).toISOString(), qualifications: [] };
+  const renewal = c.state.qaRenewal; assert.ok(Date.parse(renewal.expiresAt) > Date.now()); await c.save();
+  await c.login("administrator");
+  const admin = (await c.ok("administrator", "me")).user; assert.equal(admin.role, "owner");
+  c.state.roles.administrator = { id: admin.id, canonicalRole: admin.role }; await c.save();
+  const targets = [["finance", "cylinder_inspection", "owner"], ["inventory", "bulk_lpg_loading", "owner"], ["driver", "bulk_lpg_dispensing", "owner"], ["owner", "bulk_lpg_metering", "administrator"]];
+  for (const [target, code, verifier] of targets) {
+    const userId = c.state.roles[target].id;
+    if (renewal.qualifications.some(q => q.userId === userId && q.code === code)) continue;
+    await c.reauth(verifier);
+    const input = { userId, code, expiresAt: renewal.expiresAt, evidence: note("User-approved two-hour demo-only simulated " + code + "; synthetic QA only, not a real safety certification"), operationKey: c.key("qualify:" + target + ":" + code) };
+    await c.save(); await c.ok(verifier, "technician.qualify", input);
+    renewal.qualifications.push({ userId, code, verifiedBy: c.state.roles[verifier].id, expiresAt: renewal.expiresAt }); await c.save();
+  }
+  if (!renewal.meter) {
+    const summary = await c.ok("owner", "bulk.summary");
+    const meter = summary.meters.find(m => m.id === "95fd7658-9c52-48d5-92d4-e5e9482ad783"); assert.ok(meter);
+    assert.equal(meter.vehicle_id, c.state.trip.vehicleId);
+    await c.reauth("owner");
+    const input = { meterId: meter.id, expectedCalibrationExpiresAt: new Date(meter.calibration_expires_at).toISOString(), expectedCalibrationReference: meter.calibration_reference,
+      calibrationReference: label + "-SYNTHETIC-QA-ONLY-2H", calibrationExpiresAt: renewal.expiresAt, reason: note("User-approved two-hour demo-only sandbox meter renewal; no real calibration claim"), operationKey: c.key("meter.renew") };
+    await c.save(); await c.ok("owner", "bulk.meter.recalibrate", input);
+    renewal.meter = { id: meter.id, previousExpiry: meter.calibration_expires_at, expiresAt: renewal.expiresAt, reference: input.calibrationReference }; await c.save();
+  }
+  const q = (await c.ok("owner", "services.manage")).qualifications;
+  for (const expected of renewal.qualifications) {
+    const actual = q.find(r => r.user_id === expected.userId && r.code === expected.code); assert.ok(actual); assert.equal(Date.parse(actual.expires_at), Date.parse(renewal.expiresAt)); assert.notEqual(actual.user_id, actual.verified_by);
+  }
+  await writeFile(evidenceRoot + "/qa-renewal.json", JSON.stringify(renewal, null, 2) + "\n");
+  await c.check("ROLEACC-QA-RENEWAL", "Explicitly approved2h labelled QA-only qualifications independently verified; existing sandbox meter renewed; unchanged production controls and no actual safety certification");
+});

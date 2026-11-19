@@ -229,16 +229,17 @@ export async function commerceAction(
     const allocation = await prepareRefund(tx, o, d.lines);
     const rid = id();
     await tx.query(
-      "INSERT INTO credit_requests(id,customer_id,order_id,amount_kobo,kind,requested_by,reason,branch_id) VALUES ($1,$2,$3,$4,'refund',$2,$5,$6)",
-      [rid, user.id, o.id, allocation.amountKobo, d.reason, o.branch_id],
-    );
-    await tx.query(
-      "UPDATE credit_requests SET refund_lines=$1,refund_fingerprint=$2,refund_operation_key=$3 WHERE id=$4",
+      "INSERT INTO credit_requests(id,customer_id,order_id,amount_kobo,kind,requested_by,reason,branch_id,refund_lines,refund_fingerprint,refund_operation_key) VALUES ($1,$2,$3,$4,'refund',$2,$5,$6,$7,$8,$9)",
       [
+        rid,
+        user.id,
+        o.id,
+        allocation.amountKobo,
+        d.reason,
+        o.branch_id,
         JSON.stringify(allocation.snapshot),
         fingerprint,
         d.idempotencyKey ?? null,
-        rid,
       ],
     );
     await audit(tx, user, "refund.requested", rid);

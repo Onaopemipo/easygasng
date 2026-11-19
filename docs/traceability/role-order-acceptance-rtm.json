@@ -63,7 +63,7 @@
       "evidence": [],
       "acceptanceGate": "ROLEACC-G02",
       "status": "NOT_IMPLEMENTED",
-      "reason": "Preflight found expired time-limited sandbox qualification/meter evidence. Awaiting explicit user answer for two-hour demo-only renewals; continuing independent product/payment/exception paths.",
+      "reason": "Two-hour synthetic QA qualification/meter renewals approved by user; normal API renewal and gas acceptance underway",
       "testResult": "Preflight underway; no acceptance claimed",
       "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
     },
@@ -310,7 +310,7 @@
       "evidence": [],
       "acceptanceGate": "ROLEACC-G10",
       "status": "PARTIAL",
-      "reason": "Two reproduced defects: catalogue overstates eligible empty-cylinder serials; redesigned finance routing leaves legacy cash-verification component unreachable. Both local fixes retain canonical stock/reauth/independence controls; focused tests/build and hosted rollout underway.",
+      "reason": "Three defects reproduced: serial-aware catalogue, unreachable independent cash review, and runtime refund immutable-source UPDATE. First two deployed/read back; atomic refund INSERT passes restricted-role regression, rollout pending.",
       "testResult": "Preflight underway; no acceptance claimed",
       "outstandingWork": "Continue hosted scenarios, qualify fix under broader regressions, deploy and verify public availability; reconcile run-owned records."
     }
@@ -374,11 +374,15 @@
     },
     {
       "date": "2026-11-19",
-      "change": "Preflight9labelled accounts confirms canonical owner/manager/finance/driver/technician roles. Existing8orders protected. Four pre-exception checks pass: access, insufficient wallet/tampered quote rollback, abandoned-card cancellation/replay, independent normal simulated credit. QA customer credited\u20a650,000 via explicit synthetic receipt with self-approval403 and finance-approved replay safety. Catalogue serial-stock mismatch reproduced (local5available vs0eligible; hosted20advertised/noeligible serials); corrected locally without weakening allocation/inspection. Initial HTTP-method/capacity/baseline test-harness assumptions corrected; superseded logs retained."
+      "change": "Preflight9labelled accounts confirms canonical owner/manager/finance/driver/technician roles. Existing8orders protected. Four pre-exception checks pass: access, insufficient wallet/tampered quote rollback, abandoned-card cancellation/replay, independent normal simulated credit. QA customer credited₦50,000 via explicit synthetic receipt with self-approval403 and finance-approved replay safety. Catalogue serial-stock mismatch reproduced (local5available vs0eligible; hosted20advertised/noeligible serials); corrected locally without weakening allocation/inspection. Initial HTTP-method/capacity/baseline test-harness assumptions corrected; superseded logs retained."
     },
     {
       "date": "2026-11-19",
       "change": "New synthetic product COD order EG-2026-7BE57634 accepted/prepared by sales and assigned by dispatcher; finance-issued invoice, driver UI acknowledgement/pickup/departure/arrival and labelled proof upload pass. Restricted driver correctly cannot verify/collect cash; owner supervised handover records collected/unverified only. Wrong-role/customer, stale, handover-attestation and wrong-code guards pass; collector self-reconciliation and premature refund rejected. Cash review UI is unreachable after earlier finance redesign; restored as dedicated reconciliation tab with required identity check and collector self-review hidden. Existing eight orders unchanged; gas flow still awaits demo-only safety renewal approval."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "User explicitly approved two-hour demo-only renewals for four labelled QA qualifications and existing sandbox meter. Normal product APIs and independent owner verification will be used; no production controls changed. Third defect reproduced under restricted easygas_server role: refund.request inserted then attempted forbidden immutable-source UPDATE. Fixed by atomic INSERT, without widening permissions; focused regression now passes. Fresh gas and remaining exception acceptance continue."
     }
   ],
   "coverage": {
