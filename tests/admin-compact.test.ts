@@ -121,7 +121,8 @@ test("ACMP-FIN: unavailable profits remain distinct from zero and secondary fina
       completeness: { expenses: true },
     },
   });
-  assert.equal((html.match(/Unavailable/g) || []).length, 2);
+  assert.equal((html.match(/<strong>Unavailable<\/strong>/g) || []).length, 2);
+  assert.match(html, /does not mean zero profit/);
   assert.match(html, /125\.00/);
   assert.match(html, /No recorded expenses/);
   assert.doesNotMatch(html, /9,999\.99|role="dialog"|<form/);

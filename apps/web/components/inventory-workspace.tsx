@@ -254,7 +254,9 @@ export default function InventoryWorkspace({ user }: { user: any }) {
         : money(data.valuation.totalKobo),
       Box,
       "purple",
-      "Acquisition costs only",
+      data?.valuation.totalKobo == null
+        ? "Cost evidence incomplete · not zero value"
+        : "Acquisition costs only",
     ],
   ];
   function toolbar() {
@@ -398,9 +400,13 @@ export default function InventoryWorkspace({ user }: { user: any }) {
       <section className="inventory-workspace">
         <h1>Inventory</h1>
         <Notice type="error" message={error} />
-        <button className="button secondary" onClick={() => load()}>Retry inventory</button>
+        <button className="button secondary" onClick={() => load()}>
+          Retry inventory
+        </button>
       </section>
-    ) : <Loading page label="Loading inventory records" />;
+    ) : (
+      <Loading page label="Loading inventory records" />
+    );
   }
   return (
     <div className="inventory-workspace">
@@ -450,11 +456,13 @@ export default function InventoryWorkspace({ user }: { user: any }) {
         </div>
       </section>
       <div className="iw-freshness" role="status">
-        {loading
-          ? <ActionLoadingIndicator label="Refreshing inventory records" />
-          : error
-            ? "Stale / unavailable — " + error
-            : `As of ${new Date(data.generatedAt).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })} · Africa/Lagos · ${data.scope}`}
+        {loading ? (
+          <ActionLoadingIndicator label="Refreshing inventory records" />
+        ) : error ? (
+          "Stale / unavailable — " + error
+        ) : (
+          `As of ${new Date(data.generatedAt).toLocaleString("en-NG", { timeZone: "Africa/Lagos" })} · Africa/Lagos · ${data.scope}`
+        )}
         <button
           className="button secondary"
           disabled={loading}

@@ -16,6 +16,13 @@ export async function readiness(tx: SQL, user: Actor) {
   const staff = await count(
     "SELECT count(*)::int n FROM users WHERE role='owner' AND active=true",
   );
+  const financeStaff = await count(
+    "SELECT count(*)::int n FROM users WHERE role='finance' AND active=true",
+  );
+  const gateway = await one(
+    tx,
+    "SELECT value FROM settings WHERE key='payment.gateway' AND scope='lagos'",
+  );
   const stock = await count(
     "SELECT count(*)::int n FROM inventory WHERE published=true AND price_kobo>0 AND quantity-reserved>0",
   );
@@ -76,9 +83,11 @@ export async function readiness(tx: SQL, user: Actor) {
       gate(
         7,
         "Independent business authority",
-        staff >= 2 ? "unverified" : "blocked",
+        staff >= 1 ? "unverified" : "blocked",
         staff +
-          " active owner account(s); independent policy and sensitive approvals require sufficient verified people.",
+          " active Admin/business owner account(s), " +
+          financeStaff +
+          " active Inventory/finance account(s). One business owner is supported. Restricted actions still require distinct eligible reviewers; verify maker, reviewer and executor responsibilities for the actual staff and branches.",
       ),
       gate(
         8,
@@ -104,8 +113,10 @@ export async function readiness(tx: SQL, user: Actor) {
       gate(
         11,
         "Online payments",
-        "disabled",
-        "Unconnected by user decision. Do not advertise or activate online payment.",
+        gateway?.value?.enabled ? "unverified" : "disabled",
+        gateway?.value?.enabled
+          ? "The configured gateway is enabled for sandbox/test payments only. Live merchant ownership, provider acceptance and commercial release remain unverified."
+          : "The configured payment gateway is disabled. Do not advertise online payment until the approved provider and release gates are satisfied.",
       ),
       gate(
         12,

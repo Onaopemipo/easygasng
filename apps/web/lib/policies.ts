@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { type SQL } from "./db";
 import { allow, type Actor } from "./auth";
+import { canAutoApproveDefinition } from "./governance";
 export const legalConfig = z
   .object({
     title: z.string().trim().min(3).max(150),
@@ -30,8 +31,13 @@ export async function policyAction(
   if (action === "policies.manage") {
     if (!user) return undefined;
     allow(user, ["owner"]);
-    return (await tx.query("SELECT * FROM legal_documents ORDER BY title"))
-      .rows;
+    return (
+      await tx.query(`SELECT l.*,d.risk,d.value_type,d.category,d.required_roles,d.key
+      FROM legal_documents l JOIN setting_definitions d ON d.key='legal.'||l.kind ORDER BY l.title`)
+    ).rows.map((r) => ({
+      ...r,
+      owner_auto_approval: canAutoApproveDefinition(r),
+    }));
   }
   return undefined;
 }

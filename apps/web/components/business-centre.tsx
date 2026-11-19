@@ -1936,6 +1936,8 @@ export function FinanceOverview({ data }: { data: any }) {
         <strong>{format(finance[key])}</strong>
       </article>)}
     </div>
+    {(finance.grossProfitKobo == null || finance.netProfitKobo == null) &&
+      <p>Profit is unavailable until acquisition, labour, overhead and expense inputs reconcile. Unavailable does not mean zero profit.</p>}
     <div className="finance-panels">
       <section className="surface">
         <h2>Revenue trend</h2>

@@ -552,7 +552,7 @@ export default function TechnicianWorkspace({ user }: { user: any }) {
                   <Wrench />
                   Professional Services
                 </Link>
-                <Link href="/support">
+                <Link href="/contact">
                   <Headphones />
                   Contact support
                 </Link>

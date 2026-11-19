@@ -398,7 +398,9 @@ export function BulkLPGPanel({ user }: { user: any }) {
   return (
     <details className="panel">
       <summary>Bulk LPG loading, dispensing and returns</summary>
-      <button type="button" className="button secondary" onClick={refresh}>Refresh LPG records</button>
+      <button type="button" className="button secondary" onClick={refresh}>
+        Refresh LPG records
+      </button>
       {!data && !error && <p role="status">Loading custody records…</p>}
       {error && <Notice type="error" message={error} />}
       <p>
@@ -444,6 +446,13 @@ export function BulkLPGPanel({ user }: { user: any }) {
               {meter.active ? "Active" : "Retired"} · Calibration expires{" "}
               {new Date(meter.calibration_expires_at).toLocaleString()}
             </p>
+            {meter.active &&
+              Date.parse(meter.calibration_expires_at) <= Date.now() && (
+                <Notice
+                  type="error"
+                  message="Calibration expired. This meter cannot be used for LPG loading or dispensing until an authorised qualified reviewer records current calibration evidence."
+                />
+              )}
             <p>Evidence: {meter.calibration_reference}</p>
             {meter.active &&
               ["recalibrate", "retire"].map((operation) => (

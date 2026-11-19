@@ -273,6 +273,8 @@ export function Recovery({
       ) : requiresLink && !/^[a-f0-9]{64}$/.test(link?.token ?? "") ? (
         <Notice type="error" message={mode === "invite"
           ? "Open the invitation link in your email. Ask your administrator for a new invitation if the link has expired."
+          : mode === "verify"
+            ? "Open the verification link in your EasyGas email. If it has expired, sign in and request a new verification email from Account & privacy."
           : "Open the link in your EasyGas email. If your reset link has expired, request a new one."} />
       ) : (
         <ActionForm
@@ -294,6 +296,7 @@ export function Recovery({
         />
       )}
       {mode === "reset" && <Link href="/forgot-password">Request a new reset link</Link>}
+      {mode === "verify" && <Link href="/account-settings">Request a new verification email in your account</Link>}
       <Link href="/login">Return to sign in</Link>
     </div>
   );

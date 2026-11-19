@@ -409,7 +409,7 @@ export default function AdminOverview({ user }: { user: any }) {
                       ? <ActionLoadingIndicator label={`Loading ${label}`} />
                       : value == null ? "Unavailable" : money(value)}
                   </strong>
-                  <small className="ac-metric-note">Selected period</small>
+                  <small className="ac-metric-note">{label === "Net profit" && !financeLoading && value == null ? "Cost evidence incomplete · not zero profit" : "Selected period"}</small>
                 </Link>
               ))}
             </section>

@@ -1,5 +1,5 @@
 "use client";
-import {ProductHeading} from "./product-workspace";
+import { ProductHeading } from "./product-workspace";
 import React, { useEffect, useState } from "react";
 import Link from "./workspace-link";
 import { api, Notice, Loading } from "./ui";
@@ -44,7 +44,7 @@ export function LegalDocument({
             <h2>{r.title}</h2>
             <p>
               Version {r.version} · Effective{" "}
-              {new Date(r.effective_at).toLocaleDateString()}
+              {new Date(r.effective_at).toLocaleDateString("en-NG", { timeZone: "Africa/Lagos" })} · Lagos time
             </p>
             <div className="policy-content">{r.content}</div>
           </article>
@@ -56,7 +56,7 @@ export function LegalDocument({
       {compact ? <h2>{doc.title}</h2> : <h1>{doc.title}</h1>}
       <p>
         Version {doc.version} · Effective{" "}
-        {new Date(doc.effective_at).toLocaleDateString()}
+        {new Date(doc.effective_at).toLocaleDateString("en-NG", { timeZone: "Africa/Lagos" })} · Lagos time
       </p>
       <div className="policy-content">{doc.content}</div>
     </article>
@@ -73,11 +73,16 @@ export default function PolicyAdmin({ user }: { user: any }) {
   }, [version]);
   return (
     <section className="product-workspace governed-workspace">
-      <ProductHeading eyebrow="ADMINISTRATION & CONTROL" title="Customer policy publication" description="Manage policy versions and review publication requests." />
+      <ProductHeading
+        eyebrow="ADMINISTRATION & CONTROL"
+        title="Customer policy publication"
+        description="Manage policy versions and review publication requests."
+      />
       <p>
-        Use business-reviewed text. Publishing a document does not establish
-        legal, financial or LPG certification. An independent owner must approve
-        each proposal.
+        Use business-reviewed text and confirm the effective date before
+        publishing. Your existing owner authority determines whether a policy
+        can be applied directly or needs independent approval. Financial, access
+        and qualified safety controls remain separate.
       </p>
       {error && <Notice type="error" message={error} />}{" "}
       {rows.map((r) => (
@@ -88,7 +93,11 @@ export default function PolicyAdmin({ user }: { user: any }) {
           {user.role === "owner" ? (
             <ServiceForm
               title="Propose policy content"
-              submit="Request independent owner approval"
+              submit={
+                r.owner_auto_approval
+                  ? "Apply reviewed policy"
+                  : "Request independent owner approval"
+              }
               fields={[
                 { name: "title", label: "Title", value: r.title },
                 {

@@ -1,0 +1,61 @@
+# Proposed client demo notices
+
+Review copy only. No content has been published. Nine blank policy records exist, including the Delivery document embedded on the delivery page. These notices make the current synthetic demo scope explicit without inventing commercial rights, refund promises or warranty periods.
+
+## Privacy Policy
+
+CLIENT DEMO ONLY. This version applies to the EasyGas client demo at easygas-client-demo.vercel.app. The demo uses synthetic test records and sandbox payment services. It is not an offer to supply real gas, goods, paid services or financial products. Commercial production remains NO-GO. These demo notices do not establish legal, financial or LPG certification and do not replace business-reviewed commercial policies.
+
+Use synthetic names, addresses, contact details and evidence in demo journeys. Do not enter real card information, identification documents, location evidence or sensitive personal data. Account and operational records are restricted by role, branch and ownership. Account & privacy provides supported preferences, saved-address choices, session controls, data export and privacy request intake. Historical records are retained under the current retain-all decision; a deletion request is not immediate erasure. Optional Google Analytics through Google Tag Manager measures signed-out public-page visits only after analytics consent. Private workspaces, signed-in sessions, checkout and URLs containing query values are excluded. Advertising consent remains denied. Cookie settings allows consent changes. Contact EasyGas through Contact Us for questions. Before commercial use, the business must approve its data controller identity, lawful processing bases, processors and transfers, retention periods, individual rights and complaint contacts.
+
+## Terms and Conditions
+
+CLIENT DEMO ONLY. This version applies to the EasyGas client demo at easygas-client-demo.vercel.app. The demo uses synthetic test records and sandbox payment services. It is not an offer to supply real gas, goods, paid services or financial products. Commercial production remains NO-GO. These demo notices do not establish legal, financial or LPG certification and do not replace business-reviewed commercial policies.
+
+Use an individual demo account and only the permissions assigned to it. Do not share credentials or use another person’s role. Catalogue prices, availability and quotations are synthetic examples and may change. A submitted order, payment record or approval has its own status; no demo record represents real payment, stock, delivery or work. Do not rely on a demo result as an operational safety certificate or commercial commitment. Do not upload unlawful or real sensitive material. Report problems with the reference and a redacted screenshot through Contact Us. Before commercial use, the business must approve its legal identity, customer eligibility, contract formation, payment terms, liabilities, governing law and dispute arrangements.
+
+## Delivery Policy
+
+CLIENT DEMO ONLY. This version applies to the EasyGas client demo at easygas-client-demo.vercel.app. The demo uses synthetic test records and sandbox payment services. It is not an offer to supply real gas, goods, paid services or financial products. Commercial production remains NO-GO. These demo notices do not establish legal, financial or LPG certification and do not replace business-reviewed commercial policies.
+
+Demo delivery areas, windows, quantities, addresses and charges illustrate the application workflow. A supported area does not verify every address. The actual order records coverage, quotation, qualified inspection, dispatch, vehicle custody, metered dispensing and handover evidence as applicable. Availability does not establish live GPS, an accurate ETA or physical arrival. An expired meter or qualification blocks the affected operation. Demo photographs, meter readings and customer codes are synthetic; they must not be represented as physical evidence. No real LPG or travel is authorised by this demo notice. Before commercial use, the business must approve actual service areas, delivery charges and timing, access requirements, failed-visit handling and customer handover procedures.
+
+## Refund Policy
+
+CLIENT DEMO ONLY. This version applies to the EasyGas client demo at easygas-client-demo.vercel.app. The demo uses synthetic test records and sandbox payment services. It is not an offer to supply real gas, goods, paid services or financial products. Commercial production remains NO-GO. These demo notices do not establish legal, financial or LPG certification and do not replace business-reviewed commercial policies.
+
+Refunds in this demo illustrate reviewed correction of synthetic orders and payments. Use the original order and payment reference. A submitted request is not a completed refund. Wallet credit and provider refunds have separate governed paths; do not issue both for the same obligation. Check the resulting ledger and payment state before reporting completion. Provider callbacks and return pages alone do not establish verified funds. Demo balances have no cash value. Before commercial use, the business must approve refund eligibility, fee treatment, method, time limits, processing times and escalation arrangements.
+
+## Cancellation Policy
+
+CLIENT DEMO ONLY. This version applies to the EasyGas client demo at easygas-client-demo.vercel.app. The demo uses synthetic test records and sandbox payment services. It is not an offer to supply real gas, goods, paid services or financial products. Commercial production remains NO-GO. These demo notices do not establish legal, financial or LPG certification and do not replace business-reviewed commercial policies.
+
+Use the available cancellation action on the relevant demo order or booking. Eligibility depends on its current state; dispatch, paid work, materials or completed services can require reviewed exception handling. A cancellation does not automatically settle stock custody, cash, invoices or refund execution. Retain the original reference and audit history. For an unavailable action, contact the responsible staff rather than creating duplicate records. Before commercial use, the business must approve cancellation windows, charges, no-show terms, refunds and rules for work already started.
+
+## Service Booking Terms
+
+CLIENT DEMO ONLY. This version applies to the EasyGas client demo at easygas-client-demo.vercel.app. The demo uses synthetic test records and sandbox payment services. It is not an offer to supply real gas, goods, paid services or financial products. Commercial production remains NO-GO. These demo notices do not establish legal, financial or LPG certification and do not replace business-reviewed commercial policies.
+
+A preferred visit time is a request. EasyGas confirms provider and scheduling arrangements before a visit. The preferred-time request does not collect payment. Assessment, quotation, current customer approval, independent business review where required, payment and work authorisation are separate stages. Additional work and materials need a current approved scope. Only qualified personnel perform actual work. Reports and customer acknowledgement are recorded separately from financial close. The demo does not guarantee a slot, provider, physical service or compatibility. Before commercial use, the business must approve service scope, inclusions, exclusions, assessments, scheduling, payment and customer concern handling.
+
+## Service Warranty Terms
+
+CLIENT DEMO ONLY. This version applies to the EasyGas client demo at easygas-client-demo.vercel.app. The demo uses synthetic test records and sandbox payment services. It is not an offer to supply real gas, goods, paid services or financial products. Commercial production remains NO-GO. These demo notices do not establish legal, financial or LPG certification and do not replace business-reviewed commercial policies.
+
+This demo demonstrates recording service findings, completion reports, customer concerns and reviewed settlements. It does not grant a real workmanship, parts or manufacturer warranty. Preserve the original booking, invoice, report and evidence when reviewing a concern. An assessment or compatibility suggestion does not establish a manufacturer guarantee. Never change an immutable report to hide an earlier result. Before commercial use, the business must approve applicable warranty periods, covered work and parts, exclusions, claim evidence, inspection arrangements and remedies, and distinguish manufacturer terms from EasyGas obligations.
+
+## Prepaid Purchase Credit Terms
+
+CLIENT DEMO ONLY. This version applies to the EasyGas client demo at easygas-client-demo.vercel.app. The demo uses synthetic test records and sandbox payment services. It is not an offer to supply real gas, goods, paid services or financial products. Commercial production remains NO-GO. These demo notices do not establish legal, financial or LPG certification and do not replace business-reviewed commercial policies.
+
+Demo purchase credit is synthetic test value for demonstrating wallet funding, verified credits and explicit order spending. It has no cash value. Funding principal, provider fees and total charged are separate figures. Pending funding is not available credit; a reviewed request is not an executed credit or refund. Use the original reference for disputes and avoid duplicate top-ups. Wallet balances and rewards points are different records. Recurring spending requires its own explicit authorisation and controls. Before commercial use, the business must approve credit ownership, funding and spending limits, fees, expiry if any, reversals, refunds and dispute handling.
+
+## Loyalty Programme Terms
+
+CLIENT DEMO ONLY. This version applies to the EasyGas client demo at easygas-client-demo.vercel.app. The demo uses synthetic test records and sandbox payment services. It is not an offer to supply real gas, goods, paid services or financial products. Commercial production remains NO-GO. These demo notices do not establish legal, financial or LPG certification and do not replace business-reviewed commercial policies.
+
+The audited demo retains rewards history while earning, redemption and referrals are disabled under the current effective programme controls. Points are distinct from purchase credit and have no cash value in this demo. A submitted policy proposal is not a decision or activation. The sole business owner uses the existing scoped owner-authority route where eligible; restricted financial and safety operations retain independent controls. Do not promise points or discounts while controls are disabled. Before commercial use, the business must approve eligibility, earn and redemption rates, expiry, exclusions, referrals, reversals and customer dispute arrangements.
+
+## Publication and acceptance
+
+The requested decision is publication of exactly these nine demo-only notices using the existing owner policy, with the current effective time and immutable request history. This does not approve real commercial policies or alter production NO-GO. Commercial decisions listed in each notice still need the business owner’s actual terms and review.
