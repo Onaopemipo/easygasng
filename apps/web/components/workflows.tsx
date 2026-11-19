@@ -1,5 +1,7 @@
 "use client";
 import { FieldCaption } from "./field-caption";
+import { WorkspaceDialog, WorkspaceTabs } from "./compact-workspace";
+import { CampaignRecords } from "./engagement-records";
 import CreditCustomerSearch, {type CreditCustomer} from "./credit-customer-search";
 import { confirmAction } from "./app-dialog";
 import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
@@ -347,12 +349,12 @@ export function SupportDesk({ staff = false }: { staff?: boolean }) {
   const newButton = (label: string, secondary = false) =>
     <button className={`button ${secondary ? "secondary" : ""}`} type="button" onClick={() => setForm("new")}><Plus size={18} aria-hidden="true" />{label}</button>;
   return (
-    <div className="workflow-stack product-workspace support-workspace support-desk">
+    <div className={`workflow-stack product-workspace support-workspace support-desk ${staff ? "admin-compact" : ""}`}>
       <header className="support-hero">
         <span className="support-hero-icon"><Headset aria-hidden="true" size={42} /></span>
         <div><span className="eyebrow">{staff ? "Customer experience" : "Help & support"}</span>
           <h1>{staff ? "Support Desk" : "Your support conversations"}</h1>
-          <p>Keep every conversation and update in one place. Manage requests, track progress and reply faster.</p>
+          <p>{staff ? "Manage customer conversations, assignments and service levels." : "Keep every conversation and update in one place. Manage requests, track progress and reply faster."}</p>
         </div>
       </header>
       {actionError && <Notice type="error" message={actionError} />}
@@ -360,12 +362,12 @@ export function SupportDesk({ staff = false }: { staff?: boolean }) {
       {error && <div><Notice type="error" message={error} /><button className="button secondary" onClick={reload}>Retry requests</button></div>}
       {!data && !error && <Loading />}
       {data && <>
-        <section className="support-metrics" aria-label="Support request totals">
+        {!staff && <section className="support-metrics" aria-label="Support request totals">
           {supportStatuses.map(([key, label, Icon]) => <article className="surface support-metric" key={key}>
             <span className={`support-metric-icon is-${key}`}><Icon size={25} aria-hidden="true" /></span>
             <div><span>{key === "all" ? "Total requests" : label}</span><strong>{data.totals[key === "all" ? "total" : key]}</strong></div>
           </article>)}
-        </section>
+        </section>}
         <section className="surface support-inbox" aria-label="Support inbox">
           <div className="support-inbox-top">
             <div className="support-status-controls" role="group" aria-label="Filter by request status">
@@ -374,17 +376,18 @@ export function SupportDesk({ staff = false }: { staff?: boolean }) {
                   aria-pressed={status === key} onClick={() => { setStatus(key); resetList(); }}>
                   <Icon size={17} aria-hidden="true" />{label} ({data.totals[key === "all" ? "total" : key]})
                 </button>)}
+              {staff && <button type="button" className={`support-status-control ${status === "closed" ? "is-active" : ""}`} aria-pressed={status === "closed"} onClick={() => { setStatus("closed"); resetList(); }}>Closed</button>}
             </div>
             {canAct && newButton("New request")}
           </div>
           <div className="support-filters" role="search" aria-label="Find support requests">
             <label className="support-search"><Search size={18} aria-hidden="true" /><FormInput aria-label="Search requests" type="search" maxLength={100} value={search}
               placeholder="Search by subject, customer or request ID…" onChange={e => { setSearch(e.target.value); resetList(); }} /></label>
-            <select aria-label="Request status" value={status} onChange={e => { setStatus(e.target.value); resetList(); }}>
+            {!staff && <select aria-label="Request status" value={status} onChange={e => { setStatus(e.target.value); resetList(); }}>
               <option value="all">All statuses</option>
               {supportStatuses.slice(1).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
               <option value="closed">Closed</option>
-            </select>
+            </select>}
             <label className="support-search"><CalendarDays size={18} aria-hidden="true" />
               <select aria-label="Last activity date" value={days} onChange={e => { setDays(e.target.value); resetList(); }}>
                 <option value="">All time</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option>
@@ -450,7 +453,7 @@ export function SupportDesk({ staff = false }: { staff?: boolean }) {
           </div>}
         </section>
       </>}
-      {form && (form === "new" || form === "sla" || ticket) && <Modal title={title} onClose={() => setForm(null)}>
+      {form && (form === "new" || form === "sla" || ticket) && <Modal className={staff ? "compact-dialog" : undefined} title={title} onClose={() => setForm(null)}>
         {form === "note" && <p>Only authorised support staff can see this note.</p>}
         {form === "sla" ? <SupportSlaForm branch={data?.branch} done={done} /> : form === "attachment" ? <SupportAttachmentForm requestId={ticket.id} staff={staff} done={done} /> : <ActionForm contextual key={`${form}:${ticket?.id ?? orderId}`} title={title} onDone={done}
           action={form === "new" ? "support.create" : form === "manage" ? "support.update" : "support.reply"}
@@ -1009,7 +1012,7 @@ export function CreditManagement() {
   const [page, setPage] = useState(1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [revision, setRevision] = useState(0);
-  const query = new URLSearchParams({ view: "workspace", tab, q: search, page: String(page) });
+  const query = new URLSearchParams({ view: "workspace", tab, q: search, page: String(page), pageSize: "8" });
   const { data, error, pending } = useSupportRecords("credits?" + query, revision, true);
   const reload = () => setRevision(value => value + 1);
   const c = pending ? undefined : data?.rows.find((row: any) => row.id === selectedId);
@@ -1019,8 +1022,12 @@ export function CreditManagement() {
     return `₦${(value / 100n).toLocaleString("en-NG")}.${String(value % 100n).padStart(2, "0")}`;
   };
   return (
-    <div className="workflow-stack product-workspace">
+    <div className="workflow-stack product-workspace admin-compact credits-compact">
       <ProductHeading eyebrow="FINANCE" title="Credits & Refunds" description="Find a customer, record purchase credit and review refund requests." />
+      <div className="compact-toolbar"><span>Purchase credit &amp; refund requests</span><div className="compact-actions">
+        <button className="button secondary" onClick={() => { setTab("refunds"); setPage(1); }}>Review refunds</button>
+        <button className="button" onClick={() => setDialog("credit")}>Record credit</button>
+      </div></div>
       {error && <Notice type="error" message={error} />}
       {!data && !error && <Loading />}
       {data && <div className="finance-primary">
@@ -1031,36 +1038,31 @@ export function CreditManagement() {
           ["Completed approvals", data.summary.completed],
         ].map(([label, value]) => <article className="surface finance-metric" key={label}><span>{label}</span><strong>{value}</strong></article>)}
       </div>}
-      <div className="finance-panels">
-        <section className="surface"><h2>Find a customer</h2><CreditCustomerSearch selected={selectedCustomer} onSelect={setSelectedCustomer} /></section>
-        <section className="surface"><h2>Quick actions</h2><div className="finance-actions">
-          <button className="button" disabled={!selectedCustomer?.credit_branch_id} onClick={() => setDialog("credit")}>Record credit</button>
-          <button className="button secondary" onClick={() => setDialog("refund")}>Review refunds</button>
-        </div>{!selectedCustomer?.credit_branch_id && <p>Select a customer with an authorised branch to record credit.</p>}</section>
-      </div>
-      <section className="surface support-inbox">
+      <section className="surface support-inbox credit-list">
         <div className="support-status-controls" role="group" aria-label="Request status">
           {tabs.map(([key, label]) => <button type="button" key={key} className={`support-status-control ${key === tab ? "is-active" : ""}`} aria-pressed={key === tab} onClick={() => { setTab(key); setPage(1); }}>{label}{data ? ` (${data.summary[key]})` : ""}</button>)}
         </div>
         <label>Search requests<FormInput type="search" maxLength={100} value={search} placeholder="Customer, reference or request ID" onChange={event => { setSearch(event.target.value); setPage(1); }} /></label>
         {pending && data ? <Loading /> : data && <>
-          {data.rows.length ? <div className="workflow-stack">
-            {data.rows.map((row: any) => <button type="button" className="button secondary" key={row.id} onClick={() => setSelectedId(row.id)}>
-              {row.customer_name} · {amount(String(row.amount_kobo))} · {row.kind.replaceAll("_", " ")} · {row.status === "approved" ? "Credited to wallet" : row.status}
-            </button>)}
+          {data.rows.length ? <div className="table-scroll"><table><thead><tr><th>Customer / reference</th><th>Type</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+            {data.rows.map((row: any) => <tr key={row.id}><td><strong>{row.customer_name}</strong><small>{row.order_reference ?? row.receipt_reference ?? row.id}</small></td><td>{row.kind.replaceAll("_", " ")}</td><td>{amount(String(row.amount_kobo))}</td><td>{row.status === "approved" ? "Credited to wallet" : row.status}</td><td><button type="button" className="button secondary" onClick={() => setSelectedId(row.id)}>Review</button></td></tr>)}
+          </tbody></table>
           </div> : <Empty title={data.summary.all ? "No matching requests" : "No credit or refund requests yet"}>Requests appear here when they are submitted for verification.</Empty>}
-          <SupportPagination page={page} pages={Math.max(page, Math.ceil(data.total / 20))} change={setPage} label="Request pages" />
+          <SupportPagination page={page} pages={Math.max(page, Math.ceil(data.total / data.pageSize))} change={setPage} label="Request pages" />
         </>}
       </section>
-      {dialog === "credit" && selectedCustomer && <Modal title="Record purchase credit" onClose={() => setDialog(null)}>
+      {dialog === "credit" && <Modal className="compact-dialog" title="Record purchase credit" onClose={() => setDialog(null)}>
+        <CreditCustomerSearch selected={selectedCustomer} onSelect={setSelectedCustomer} />
+        {selectedCustomer?.credit_branch_id && <>
         <ActionForm contextual action="reauth" title="Verify identity" fields={[{ name: "password", label: "Your password", type: "password" }]} submit="Verify identity" />
         <CustomerCreditRequestForm customer={selectedCustomer} onDone={() => { setDialog(null); reload(); }} />
+        </>}
       </Modal>}
       {dialog === "refund" && <Modal title="Review refund requests" onClose={() => setDialog(null)}>
         <p>Customers can request eligible refunds from their orders. Approved purchase-credit refunds post to the wallet. Provider-funded refunds require the provider workflow.</p>
         <button className="button" onClick={() => { setTab("refunds"); setPage(1); setDialog(null); }}>Show refund requests</button>
       </Modal>}
-      {c && <Modal title="Request details" onClose={() => setSelectedId(null)}>
+      {c && <Modal className="compact-dialog" title="Request details" onClose={() => setSelectedId(null)}>
         <section className="surface workflow-form" key={c.id}>
           <h3>
             {c.customer_name} · {money(c.amount_kobo)} ·{" "}
@@ -1388,80 +1390,207 @@ export function RecurringOrders() {
 }
 export function Campaigns() {
   const { data, error, reload } = useRecords("campaigns");
-  if (error) return <Notice type="error" message={error} />;
+  const [tab, setTab] = useState("campaigns"),
+    [search, setSearch] = useState(""),
+    [status, setStatus] = useState(""),
+    [creating, setCreating] = useState(false),
+    [selectedId, setSelectedId] = useState<string | null>(null);
+  if (error)
+    return (
+      <>
+        <Notice type="error" message={error} />
+        <button className="button secondary" onClick={reload}>
+          Retry campaigns
+        </button>
+      </>
+    );
   if (!data) return <Loading />;
+  const rows = data.filter(
+    (c: any) =>
+      (!status || c.status === status) &&
+      `${c.title} ${c.branch_id} ${c.segment}`
+        .toLowerCase()
+        .includes(search.trim().toLowerCase()),
+  );
+  const selected = data.find((c: any) => c.id === selectedId);
   return (
-    <div className="workflow-stack product-workspace campaigns-workspace">
-      <ProductHeading eyebrow="GROWTH & ENGAGEMENT" title="Customer campaigns" description="Create relevant messages, review delivery and manage approved campaigns." />
-      <details className="surface product-disclosure"><summary>Rewards reconciliation</summary><div className="product-disclosure-body"><EasyRewardsReport /></div></details>
-      <p>
-        In-app messages only. Recipients must have opted into marketing and have
-        an order in the branch. Delivery rechecks consent, active accounts and
-        Lagos quiet hours.
-      </p>
-      <details className="surface product-disclosure"><summary>Create a campaign</summary>
-      <ActionForm
-        action="campaign.create"
-        title="Draft a campaign"
-        fields={[
-          { name: "branchId", label: "Branch ID", value: "lagos" },
-          { name: "title", label: "Title" },
-          { name: "body", label: "Message", type: "textarea" },
-          {
-            name: "segment",
-            label: "Audience",
-            options: [
-              { value: "all", label: "All opted-in customers" },
-              { value: "inactive", label: "No orders in the last 30 days" },
-              { value: "repeat", label: "At least two delivered orders" },
-            ],
-          },
+    <section className="admin-compact growth-workspace campaigns-workspace">
+      <div className="compact-toolbar">
+        <ProductHeading
+          eyebrow="GROWTH & ENGAGEMENT"
+          title="Customer campaigns"
+          description="Draft, review and track your in-app campaigns."
+        />
+        <button className="button" onClick={() => setCreating(true)}>
+          New campaign
+        </button>
+      </div>
+      <WorkspaceTabs
+        label="Campaign workspace"
+        value={tab}
+        onChange={setTab}
+        tabs={[
+          ["campaigns", "Campaigns"],
+          ["rewards", "Rewards reconciliation"],
         ]}
-        onDone={reload}
       />
-      </details>
-      <h2 className="product-section-title">Campaign history <span className="product-result-count">{data.length} campaigns</span></h2>
-      {data.length === 0 && <Empty title="No campaigns yet">Create your first draft above. Only eligible, opted-in customers receive approved messages.</Empty>}
-      {data.map((c: any) => (
-        <section className="surface workflow-form campaign-card" key={c.id}>
-          <h3>
-            {c.title} · {c.status}
-          </h3>
-          <p>{c.body}</p>
-          <small>
-            {c.recipients} selected · {c.sent} published in-app · {c.pending}{" "}
-            pending · {c.skipped} skipped
-          </small>
-          <p>
-            {c.returning_customers_30d} recipient(s) made a qualifying verified,
-            delivered purchase within 30 days after publication. This is a
-            time-based association, not proof that the campaign caused the
-            purchase. Counts can overlap between campaigns.
+      {tab === "campaigns" ? (
+        <section className="surface">
+          <div className="compact-toolbar">
+            <FormInput
+              className="compact-search"
+              type="search"
+              aria-label="Search campaigns"
+              placeholder="Search campaigns…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div className="compact-actions">
+              <select
+                aria-label="Campaign status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="">All statuses</option>
+                {["draft", "approved", "completed", "cancelled"].map((v) => (
+                  <option key={v} value={v}>
+                    {v}
+                  </option>
+                ))}
+              </select>
+              <button className="button secondary" onClick={reload}>
+                Refresh
+              </button>
+            </div>
+          </div>
+          <p className="muted">
+            {rows.length} matching campaigns in loaded records
           </p>
-          {["draft", "approved"].includes(c.status) && (
+          <CampaignRecords
+            key={`${search}:${status}`}
+            rows={rows}
+            open={(c) => setSelectedId(c.id)}
+          />
+        </section>
+      ) : (
+        <section className="surface">
+          <EasyRewardsReport />
+        </section>
+      )}
+      <WorkspaceDialog
+        title="Campaign delivery rules"
+        trigger="Delivery & approval rules"
+      >
+        <p>
+          In-app messages only. Recipients must have opted into marketing and
+          have an order in the branch. Delivery rechecks consent, active
+          accounts and Lagos quiet hours. A different authorised colleague must
+          approve a draft before delivery.
+        </p>
+      </WorkspaceDialog>
+      {creating && (
+        <Modal
+          className="compact-dialog"
+          title="New campaign"
+          onClose={() => setCreating(false)}
+        >
+          <p>
+            Save a draft for independent review. This action does not publish a
+            message.
+          </p>
+          <ActionForm
+            contextual
+            action="campaign.create"
+            title="Draft a campaign"
+            submit="Create draft"
+            fields={[
+              { name: "branchId", label: "Branch", value: "lagos" },
+              { name: "title", label: "Title" },
+              { name: "body", label: "Message", type: "textarea" },
+              {
+                name: "segment",
+                label: "Audience",
+                options: [
+                  { value: "all", label: "All opted-in customers" },
+                  { value: "inactive", label: "No orders in the last 30 days" },
+                  { value: "repeat", label: "At least two delivered orders" },
+                ],
+              },
+            ]}
+            onDone={() => {
+              setCreating(false);
+              reload();
+            }}
+          />
+        </Modal>
+      )}
+      {selected && (
+        <Modal
+          className="compact-dialog"
+          title={selected.title}
+          onClose={() => setSelectedId(null)}
+        >
+          <p>
+            {selected.status} · {selected.branch_id}
+          </p>
+          <p className="growth-message">{selected.body}</p>
+          <div className="compact-metrics growth-detail-metrics">
+            {[
+              ["Audience", selected.recipients],
+              ["Delivered in-app", selected.sent],
+              ["Pending", selected.pending],
+              ["Skipped", selected.skipped],
+            ].map(([label, value]) => (
+              <article className="surface" key={label}>
+                <h3>{label}</h3>
+                <strong>{value}</strong>
+              </article>
+            ))}
+          </div>
+          <details>
+            <summary>Purchase follow-up</summary>
+            <p>
+              {selected.returning_customers_30d} recipients made a qualifying
+              verified, delivered purchase within 30 days after publication.
+              This is an association, not proof of campaign attribution. Counts
+              can overlap between campaigns.
+            </p>
+          </details>
+          {["draft", "approved"].includes(selected.status) && (
             <ActionForm
+              contextual
+              key={selected.id + selected.status}
               action="campaign.decide"
               title="Review campaign"
+              submit="Save decision"
               fields={[
-                { name: "id", label: "", type: "hidden", value: c.id },
+                { name: "id", label: "", type: "hidden", value: selected.id },
                 {
                   name: "decision",
                   label: "Decision",
-                  options: (c.status === "draft"
+                  options: (selected.status === "draft"
                     ? ["approved", "cancelled"]
                     : ["cancelled"]
-                  ).map((value) => ({ value, label: value })),
+                  ).map((value) => ({
+                    value,
+                    label:
+                      value === "approved"
+                        ? "Approve independently reviewed draft"
+                        : "Cancel campaign",
+                  })),
                 },
               ]}
-              onDone={reload}
+              onDone={() => {
+                setSelectedId(null);
+                reload();
+              }}
             />
           )}
-        </section>
-      ))}
-    </div>
+        </Modal>
+      )}
+    </section>
   );
 }
-
 export function DownloadPersonalData() {
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);

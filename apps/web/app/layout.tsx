@@ -11,6 +11,7 @@ import "./service-details.css";
 import "./easyrewards.css";
 import "./public-width.css";
 import "./customer-introduction.css";
+import "./admin-compact.css";
 
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };

@@ -1,0 +1,192 @@
+{
+  "phase": "All redesigned admin pages demo release \u2014 19 November 2026",
+  "requirements": [
+    {
+      "id": "ARDREL-01",
+      "requirement": "Deploy every pending redesigned admin page as one reproducible source snapshot",
+      "priority": "P0",
+      "scope": "Eleven redesigned admin web routes on existing isolated client demo",
+      "uiReference": "User request: deploy all redesigned pages and verify they work, 19 November 2026",
+      "route": "/admin/support,/admin/bookings,/admin/services,/admin/quotations,/admin/finance,/admin/reconciliation,/admin/credits,/admin/reports,/admin/campaigns,/admin/recommendations,/admin/testimonials",
+      "implementationFiles": [
+        "apps/web/app/admin-compact.css",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/components/engagement-records.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/reconciliation.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/recommendations.tsx",
+        "apps/web/components/testimonials.tsx"
+      ],
+      "dataSource": "Exact committed web source; linked easygas-client-demo Vercel project; existing canonical role/branch scoped APIs and retained synthetic demo database",
+      "securityControl": "Preserve existing identity/consent/independent approvals, financial and stock controls; no schema migration, seed, live payment, provider/native activation or commercial-production approval",
+      "testFiles": [
+        "tests/admin-compact-documents.test.ts",
+        "tests/admin-compact-credits.test.ts",
+        "tests/testimonials.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ACMP-DOCS: compact document pages preserve canonical records, totals and status filtering and reject invalid page sizes",
+        "TM-15: stale moderation cannot publish or overwrite a newer customer version"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-admin-redesign/start-deployment.json"
+      ],
+      "acceptanceGate": "ARDREL-G01",
+      "status": "PARTIAL",
+      "reason": "Existing local implementations verified in ACMP/GROW matrices; combined release regression and hosted rollout/acceptance starting.",
+      "testResult": "NOT RUN for this combined release",
+      "outstandingWork": "Exact source snapshot, full regression, staged cloud build, promotion and eleven-route hosted functional acceptance."
+    },
+    {
+      "id": "ARDREL-02",
+      "requirement": "Verify hosted data access and existing approval/scope controls",
+      "priority": "P0",
+      "scope": "Canonical read/export endpoints and authenticated owner/customer access",
+      "uiReference": "User request: deploy all redesigned pages and verify they work, 19 November 2026",
+      "route": "/admin/support,/admin/bookings,/admin/services,/admin/quotations,/admin/finance,/admin/reconciliation,/admin/credits,/admin/reports,/admin/campaigns,/admin/recommendations,/admin/testimonials",
+      "implementationFiles": [
+        "apps/web/app/admin-compact.css",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/components/engagement-records.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/reconciliation.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/recommendations.tsx",
+        "apps/web/components/testimonials.tsx"
+      ],
+      "dataSource": "Exact committed web source; linked easygas-client-demo Vercel project; existing canonical role/branch scoped APIs and retained synthetic demo database",
+      "securityControl": "Preserve existing identity/consent/independent approvals, financial and stock controls; no schema migration, seed, live payment, provider/native activation or commercial-production approval",
+      "testFiles": [
+        "tests/admin-compact-documents.test.ts",
+        "tests/admin-compact-credits.test.ts",
+        "tests/testimonials.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ACMP-DOCS: compact document pages preserve canonical records, totals and status filtering and reject invalid page sizes",
+        "TM-15: stale moderation cannot publish or overwrite a newer customer version"
+      ],
+      "evidence": [
+        "docs/deployment/evidence/20261119-admin-redesign/start-deployment.json"
+      ],
+      "acceptanceGate": "ARDREL-G02",
+      "status": "PARTIAL",
+      "reason": "Existing local implementations verified in ACMP/GROW matrices; combined release regression and hosted rollout/acceptance starting.",
+      "testResult": "NOT RUN for this combined release",
+      "outstandingWork": "Exact source snapshot, full regression, staged cloud build, promotion and eleven-route hosted functional acceptance."
+    },
+    {
+      "id": "ARDREL-03",
+      "requirement": "Verify all eleven live workspaces and main interactions on desktop and phone",
+      "priority": "P1",
+      "scope": "Hosted web navigation, tabs, dialogs, filters, existing record review and exports",
+      "uiReference": "User request: deploy all redesigned pages and verify they work, 19 November 2026",
+      "route": "/admin/support,/admin/bookings,/admin/services,/admin/quotations,/admin/finance,/admin/reconciliation,/admin/credits,/admin/reports,/admin/campaigns,/admin/recommendations,/admin/testimonials",
+      "implementationFiles": [
+        "apps/web/app/admin-compact.css",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/components/engagement-records.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/reconciliation.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/recommendations.tsx",
+        "apps/web/components/testimonials.tsx"
+      ],
+      "dataSource": "Exact committed web source; linked easygas-client-demo Vercel project; existing canonical role/branch scoped APIs and retained synthetic demo database",
+      "securityControl": "Preserve existing identity/consent/independent approvals, financial and stock controls; no schema migration, seed, live payment, provider/native activation or commercial-production approval",
+      "testFiles": [
+        "tests/admin-compact-documents.test.ts",
+        "tests/admin-compact-credits.test.ts",
+        "tests/testimonials.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-admin-redesign/start-deployment.json"
+      ],
+      "acceptanceGate": "ARDREL-G03",
+      "status": "PARTIAL",
+      "reason": "Existing local implementations verified in ACMP/GROW matrices; combined release regression and hosted rollout/acceptance starting.",
+      "testResult": "NOT RUN for this combined release",
+      "outstandingWork": "Exact source snapshot, full regression, staged cloud build, promotion and eleven-route hosted functional acceptance."
+    },
+    {
+      "id": "ARDREL-04",
+      "requirement": "Preserve prior decisions and release evidence with honest coverage",
+      "priority": "P1",
+      "scope": "Traceability, source/deployment identity, rollback and retained records",
+      "uiReference": "User request: deploy all redesigned pages and verify they work, 19 November 2026",
+      "route": "/admin/support,/admin/bookings,/admin/services,/admin/quotations,/admin/finance,/admin/reconciliation,/admin/credits,/admin/reports,/admin/campaigns,/admin/recommendations,/admin/testimonials",
+      "implementationFiles": [
+        "apps/web/app/admin-compact.css",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/components/engagement-records.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/reconciliation.tsx",
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/recommendations.tsx",
+        "apps/web/components/testimonials.tsx"
+      ],
+      "dataSource": "Exact committed web source; linked easygas-client-demo Vercel project; existing canonical role/branch scoped APIs and retained synthetic demo database",
+      "securityControl": "Preserve existing identity/consent/independent approvals, financial and stock controls; no schema migration, seed, live payment, provider/native activation or commercial-production approval",
+      "testFiles": [
+        "tests/admin-compact-documents.test.ts",
+        "tests/admin-compact-credits.test.ts",
+        "tests/testimonials.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/deployment/evidence/20261119-admin-redesign/start-deployment.json"
+      ],
+      "acceptanceGate": "ARDREL-G04",
+      "status": "PARTIAL",
+      "reason": "Existing local implementations verified in ACMP/GROW matrices; combined release regression and hosted rollout/acceptance starting.",
+      "testResult": "NOT RUN for this combined release",
+      "outstandingWork": "Exact source snapshot, full regression, staged cloud build, promotion and eleven-route hosted functional acceptance."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ARDREL-G01",
+      "description": "Deploy every pending redesigned admin page as one reproducible source snapshot",
+      "status": "OPEN"
+    },
+    {
+      "id": "ARDREL-G02",
+      "description": "Verify hosted data access and existing approval/scope controls",
+      "status": "OPEN"
+    },
+    {
+      "id": "ARDREL-G03",
+      "description": "Verify all eleven live workspaces and main interactions on desktop and phone",
+      "status": "OPEN"
+    },
+    {
+      "id": "ARDREL-G04",
+      "description": "Preserve prior decisions and release evidence with honest coverage",
+      "status": "OPEN"
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "Explicit user authorization to deploy all pending redesigned pages to existing client demo. Eleven routes retained. Prior eight-page and three-page matrices retained; production NO-GO, actual-import hold, retain-all and all unrelated gaps preserved."
+    }
+  ],
+  "coverage": {
+    "totalRequirements": 4,
+    "verifiedRequirements": 0,
+    "totalRoutes": 11,
+    "verifiedRoutes": 0,
+    "totalGates": 4,
+    "passedGates": 0,
+    "exclusions": 0
+  }
+}

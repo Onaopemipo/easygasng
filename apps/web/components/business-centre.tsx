@@ -1,4 +1,5 @@
 "use client";
+import { RecordPages, WorkspaceDialog, WorkspaceTabs } from "./compact-workspace";
 import { FieldCaption } from "./field-caption";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "./workspace-link";
@@ -116,17 +117,20 @@ function Table({
     </Empty>
   );
 }
+function PagedTable(props: React.ComponentProps<typeof Table>) {
+  return <RecordPages rows={props.rows}>{rows => <Table {...props} rows={rows} />}</RecordPages>;
+}
 export function ReportActivityTables({ schedules, deliveries }: { schedules: any[]; deliveries: any[] }) {
   if (!schedules.length && !deliveries.length)
     return <Empty title="No scheduled reports yet">Create a report schedule above. Generated reports will appear here when they are ready.</Empty>;
   return <>
     <section aria-label="Report schedules">
       <h3>Report schedules</h3>
-      {schedules.length ? <Table rows={schedules} columns={["id", "report", "frequency", "next_run", "active"]} /> : <p>No report schedules have been created.</p>}
+      {schedules.length ? <PagedTable rows={schedules} columns={["id", "report", "frequency", "next_run", "active"]} /> : <p>No report schedules have been created.</p>}
     </section>
     <section aria-label="Generated reports">
       <h3>Generated reports</h3>
-      {deliveries.length ? <Table rows={deliveries} /> : <p>No scheduled reports are ready yet.</p>}
+      {deliveries.length ? <PagedTable rows={deliveries} /> : <p>No scheduled reports are ready yet.</p>}
     </section>
   </>;
 }
@@ -208,6 +212,8 @@ export function BusinessCentre({
     [scopedFinance, setScopedFinance] = useState<any>(null),
     [financeError, setFinanceError] = useState(""),
     [recordExpense, setRecordExpense] = useState(false),
+    [financeView, setFinanceView] = useState("overview"),
+    [reportView, setReportView] = useState("reports"),
     [tab, setTab] = useState(inventoryTab ?? "stock"),
     [search, setSearch] = useState(""),
     [category, setCategory] = useState(""),
@@ -366,7 +372,7 @@ export function BusinessCentre({
       (k !== "refills" || ["owner", "manager"].includes(user.role)),
   );
   return (
-    <div className={mode === "finance" ? "business-centre finance-workspace" : "business-centre"}>
+    <div className={mode === "finance" ? "business-centre finance-workspace admin-compact" : mode === "reports" ? "business-centre admin-compact reports-compact" : "business-centre"}>
       <section className="business-heading">
         <div>
           <p className="eyebrow">EASYGAS BUSINESS</p>
@@ -1257,7 +1263,7 @@ export function BusinessCentre({
             />
           ) : (
             <>
-              {user.role === "owner" && <div className="ac-snapshot">
+              {user.role === "owner" && financeView === "overview" && <div className="ac-snapshot">
                 <label>Branch <select value={branchFilter} onChange={event => setBranchFilter(event.target.value)}>
                   <option value="">All authorised branches</option>
                   {data.branches.map((branch: any) => <option key={branch.id} value={branch.id}>{branch.name}</option>)}
@@ -1267,13 +1273,13 @@ export function BusinessCentre({
                 <Link href={"/admin/reports?" + new URLSearchParams({ ...Object.fromEntries(new URLSearchParams(financeQuery)), report: "payments" })}>Payment reports &amp; export</Link>
                 <Link href="/admin/reconciliation">Reconciliation</Link>
               </div>}
-              {financeError ? <Notice type="error" message={financeError} /> : scoped && scopedFinance?.query !== financeQuery ? <Loading /> :
-                <FinanceOverview data={scoped ? scopedFinance.snapshot : data} onRecordExpense={() => setRecordExpense(true)} />}
+              <div className="compact-toolbar"><WorkspaceTabs label="Finance workspace" value={financeView} onChange={setFinanceView} tabs={[["overview", "Overview"], ["expenses", "Expenses"]]} /><button className="button" onClick={() => setRecordExpense(true)}>Record expense</button></div>
+              {financeView === "overview" && (financeError ? <Notice type="error" message={financeError} /> : scoped && scopedFinance?.query !== financeQuery ? <Loading /> :
+                <FinanceOverview data={scoped ? scopedFinance.snapshot : data} />)}
 
-              {user.role === "owner" && (
-                <details className="surface">
-                  <summary>Manage expense categories</summary>
-                  <ActionForm
+              {financeView === "expenses" && user.role === "owner" && (
+                <WorkspaceDialog title="Manage expense categories">
+                  <ActionForm contextual
                     action="expense.category"
                     title="Add or activate an expense category"
                     onDone={reload}
@@ -1296,12 +1302,11 @@ export function BusinessCentre({
                     Existing category labels are retained for historical
                     records. Use a new identifier for a renamed category.
                   </p>
-                </details>
+                </WorkspaceDialog>
               )}
-              <Notice message="Approval does not pay an expense. Recording and actual payment evidence are separate. No payment provider is connected. Procurement expenses may overlap with stock costs; profit remains unavailable." />
-              <div className="business-grid">
-                {recordExpense && <Modal title="Record expense" onClose={() => setRecordExpense(false)}>
-                <ActionForm
+              {financeView === "expenses" && <p className="muted">Approval, recording and verified payment are separate steps. Corrections retain the original history.</p>}
+                {recordExpense && <Modal className="compact-dialog" title="Record expense" onClose={() => setRecordExpense(false)}>
+                <ActionForm contextual
                   action="expense.create"
                   title="Submit expense for independent approval"
                   onDone={() => { setRecordExpense(false); reload(); }}
@@ -1344,15 +1349,16 @@ export function BusinessCentre({
                   ]}
                 />
                 </Modal>}
-                <section className="surface">
+                {financeView === "expenses" && <section className="surface">
                   <h2>Expense controls</h2>
                   <p>
                     Submit → independent approval → record → verify actual
                     payment. Corrections preserve the original event history.
                   </p>
                   <Link href="/admin/approvals">Open Approval Centre →</Link>
-                  {["record", "pay", "reverse"].map((action) => (
-                    <ActionForm
+                  <div className="compact-actions">{["record", "pay", "reverse"].map((action) => (
+                    <WorkspaceDialog key={action} title={action === "pay" ? "Verify actual payment evidence" : title(action) + " expense"}>
+                    <ActionForm contextual
                       key={action}
                       action={"expense." + action}
                       title={
@@ -1362,7 +1368,7 @@ export function BusinessCentre({
                       }
                       onDone={reload}
                       fields={[
-                        { name: "id", label: "Expense ID" },
+                        { name: "id", label: "Expense", options: data.expenses.map((expense: any) => ({ value: expense.id, label: `${expense.reference} · ${expense.payee} · ${money(expense.amount_kobo)} · ${expense.status}` })) },
                         {
                           name: "reference",
                           label: "Unique evidence / operation reference",
@@ -1374,10 +1380,10 @@ export function BusinessCentre({
                         },
                       ]}
                     />
-                  ))}
-                </section>
-              </div>
-              <Table
+                    </WorkspaceDialog>
+                  ))}</div>
+                </section>}
+              {financeView === "expenses" && <section className="surface"><h2>Expense history</h2><PagedTable
                 rows={data.expenses}
                 columns={[
                   "id",
@@ -1389,7 +1395,7 @@ export function BusinessCentre({
                   "status",
                   "approval_state",
                 ]}
-              />
+              /></section>}
               <Link href="/admin/reconciliation">
                 Verified payment ledger and cash reconciliation →
               </Link>
@@ -1399,7 +1405,12 @@ export function BusinessCentre({
       )}
       {mode === "reports" && (
         <section className="surface">
-          <h2>Reporting centre</h2>
+          <WorkspaceTabs label="Reporting workspace" value={reportView} onChange={setReportView} tabs={[["reports", "Reports"], ["schedules", "Scheduled reports"]]} />
+          {reportError && <Notice type="error" message={reportError} />}
+          {reportView === "reports" && <>
+          <div className="compact-toolbar">
+            <label className="compact-search">Report<select value={report} onChange={e => { setReport(e.target.value); setResult(null); }}>{reports.map(r => <option key={r} value={r}>{labels[r]}</option>)}</select></label>
+            <WorkspaceDialog title="Report filters" trigger={`Filters${[branchFilter, from, to, category, location, status, payment, customerCategory].filter(Boolean).length ? " · " + [branchFilter, from, to, category, location, status, payment, customerCategory].filter(Boolean).length : ""}`}>
           <div className="business-filters">
             <label>
               Report
@@ -1420,14 +1431,13 @@ export function BusinessCentre({
             <label>
               Branch
               {user.role === "owner" ? (
-                <input
+                <select
                   value={branchFilter}
                   onChange={(e) => {
                     setBranchFilter(e.target.value);
                     setResult(null);
                   }}
-                  placeholder="All authorised branches"
-                />
+                ><option value="">All authorised branches</option>{data.branches.map((b: any) => <option value={b.id} key={b.id}>{b.name}</option>)}</select>
               ) : (
                 <input readOnly value={branchId} />
               )}
@@ -1581,6 +1591,9 @@ export function BusinessCentre({
               </select>
             </label>
           </div>
+          <p>Changes apply to the next report and export. Dates use Lagos time.</p>
+          </WorkspaceDialog></div>
+          <p className="muted">{branchFilter || "All authorised branches"} · {from || "Start of history"} → {to || "Latest"}{category && ` · ${category}`}{location && ` · Location ${location}`}{status && ` · ${status}`}{payment && ` · ${payment}`}{customerCategory && ` · ${customerCategory}`}</p>
           <div className="business-actions">
             <button className="button" onClick={() => run()}>
               Generate report
@@ -1605,7 +1618,6 @@ export function BusinessCentre({
               </>
             )}
           </div>
-          {reportError && <Notice type="error" message={reportError} />}
           <p>
             Money fields are kobo in exports. Choose a date range within the
             recorded history. Current inventory and liabilities are
@@ -1618,14 +1630,18 @@ export function BusinessCentre({
                 {result.scope} · Generated{" "}
                 {new Date(result.generatedAt).toLocaleString()}
               </p>
-              <Table rows={result.rows} />
-              {result.limitations.map((l: string) => (
+              <RecordPages key={result.generatedAt} rows={result.rows}>{rows => <Table rows={rows} columns={Object.keys(result.rows[0] ?? {}).filter(key => key !== "id")} />}</RecordPages>
+              <details><summary>Report scope &amp; limitations</summary>{result.limitations.map((l: string) => (
                 <p key={l}>{l}</p>
-              ))}
+              ))}</details>
             </>
           )}
+          {!result && <div className="empty-state"><h2>Choose a report to get started</h2><p>Set filters, then generate a report from authorised business records.</p></div>}
+          </>}
+          {reportView === "schedules" && <>
           {["owner", "finance", "manager"].includes(user.role) && (
-            <ActionForm
+            <WorkspaceDialog title="Schedule a report" trigger="New schedule">
+            <ActionForm contextual
               action="report.schedule"
               title="Schedule in-app report availability"
               onDone={reload}
@@ -1649,17 +1665,17 @@ export function BusinessCentre({
                 },
               ]}
             />
+            </WorkspaceDialog>
           )}
           <ReportActivityTables schedules={data.schedules} deliveries={data.reportDeliveries} />
-          {data.reportDeliveries
-            .filter((d: any) => d.status === "available_in_app")
-            .map((d: any) => (
+          {data.reportDeliveries.some((d: any) => d.status === "available_in_app") && <WorkspaceDialog title="Open generated report"><RecordPages rows={data.reportDeliveries.filter((d: any) => d.status === "available_in_app")}>{available => available.map((d: any) => (
               <button
                 className="button secondary"
                 key={d.id}
                 onClick={async () => {
                   try {
                     setResult(await api("report.delivery", { id: d.id }));
+                    setReportView("reports");
                     setReportError("");
                   } catch (e: any) {
                     setReportError(e.message);
@@ -1670,15 +1686,18 @@ export function BusinessCentre({
                 Open scheduled report ·{" "}
                 {new Date(d.scheduled_for).toLocaleDateString()}
               </button>
-            ))}
+            ))}</RecordPages></WorkspaceDialog>}
           {data.schedules.some((s: any) => s.active) && (
-            <ActionForm
+            <WorkspaceDialog title="Cancel report schedule">
+            <ActionForm contextual
               action="report.schedule.cancel"
               title="Cancel your report schedule"
               onDone={reload}
-              fields={[{ name: "id", label: "Schedule ID" }]}
+              fields={[{ name: "id", label: "Schedule", options: data.schedules.filter((s: any) => s.active).map((s: any) => ({ value: s.id, label: `${labels[s.report] ?? s.report} · ${s.frequency}` })) }]}
             />
+            </WorkspaceDialog>
           )}
+          </>}
         </section>
       )}
       {selectedProduct && (
@@ -1896,7 +1915,7 @@ const financeMoney = new Intl.NumberFormat("en-NG", {
   currency: "NGN",
 });
 
-function FinanceOverview({ data, onRecordExpense }: { data: any; onRecordExpense: () => void }) {
+export function FinanceOverview({ data }: { data: any }) {
   const finance = data.finance;
   const breakdown = new Map<string, number>();
   const recorded = finance.recordedExpensesKobo;
@@ -1936,13 +1955,12 @@ function FinanceOverview({ data, onRecordExpense }: { data: any; onRecordExpense
             </li>)}
           </ul>}
       </section>
-      <section className="surface finance-quick-actions">
-        <h2>Quick actions</h2>
-        <button className="button" onClick={onRecordExpense}>Record expense</button>
-      </section>
     </div>
+    <WorkspaceDialog title="Financial balances & limitations" trigger="More financial details">
+    <p>Procurement expenses may overlap with stock costs; profit remains unavailable until costs reconcile. Totals below follow the selected snapshot scope.</p>
     <FinanceCards data={{ finance: Object.fromEntries(
       Object.entries(finance).filter(([key]) => !financePrimary.some(([primary]) => primary === key)),
     ) }} />
+    </WorkspaceDialog>
   </>;
 }

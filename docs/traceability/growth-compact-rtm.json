@@ -1,0 +1,261 @@
+{
+  "phase": "Growth admin compact redesign",
+  "requirements": [
+    {
+      "id": "GROW-01",
+      "requirement": "Compact campaigns workspace with focused dialogs and bounded records",
+      "priority": "P1",
+      "scope": "Local responsive admin web presentation",
+      "uiReference": "User screenshot 1, 19 November 2026",
+      "route": "/admin/campaigns",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/easyrewards.tsx",
+        "apps/web/lib/scheduling.ts",
+        "apps/web/components/engagement-records.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css"
+      ],
+      "dataSource": "Existing authenticated campaigns read (latest 100 scoped records), campaign.create/decide and EasyRewardsReport; canonical campaigns/campaign_recipients and actual follow-up records from scheduling.ts. Local pagination/search apply to loaded records, not full history.",
+      "securityControl": "Existing actor/role/branch checks; independent approval, recipient consent and active-account/branch eligibility rechecked at delivery, quiet hours and deduplication preserved. Create/review dialogs use existing mutation APIs; only draft creation is offered in creation flow.",
+      "testFiles": [
+        "tests/growth-compact.test.ts",
+        "tests/growth-compact-browser-evidence.test.ts",
+        "tests/campaign-return.test.ts",
+        "tests/scheduling.test.ts"
+      ],
+      "testIds": [
+        "GROW-CAMPAIGN",
+        "GROW-UI01",
+        "CRM-RETURN-01",
+        "CRM-BRANCH-01"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/growth-compact/README.md",
+        "docs/growth-compact/evidence/regression.txt",
+        "docs/growth-compact/evidence/browser-validation.txt",
+        "docs/growth-compact/evidence/browser-checks.json",
+        "docs/growth-compact/evidence/build.txt",
+        "docs/growth-compact/evidence/types.txt"
+      ],
+      "acceptanceGate": "GROW-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented compact default records, focused dialogs and separate secondary tabs; executed regression, local responsive browser observations and production web build/types pass.",
+      "testResult": "PASS — 42/42 focused regression checks (0 failures/skips), 4/4 browser-evidence validations, six desktop/phone observations and 17 interaction checks; web build/types pass.",
+      "outstandingWork": "No outstanding implementation in this bounded local three-route web phase. Hosted rollout is unperformed. Existing campaign latest-100 read scope is unchanged; no global-history claim. Native, physical/provider, Firefox and formal accessibility acceptance remain outside this phase and in prior matrices. Production NO-GO, actual-import hold, retain-all and all unrelated phase gaps remain unchanged.",
+      "namedBackendTests": [
+        "campaigns require independent approval, consent at delivery and deduplicate in-app delivery"
+      ]
+    },
+    {
+      "id": "GROW-02",
+      "requirement": "Compact recommendations workspace with focused dialogs and bounded records",
+      "priority": "P1",
+      "scope": "Local responsive admin web presentation",
+      "uiReference": "User screenshot 2, 19 November 2026",
+      "route": "/admin/recommendations",
+      "implementationFiles": [
+        "apps/web/components/recommendations.tsx",
+        "apps/web/lib/catalogue.ts",
+        "apps/web/components/engagement-records.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css"
+      ],
+      "dataSource": "recommendations.manage, products.manage and services.manage; original recommendation.propose/approve APIs and canonical product_service_rules and recorded recommendation events in catalogue.ts. Performance displays actual loaded-rule event counters.",
+      "securityControl": "Original owner/manager proposal and independent-owner approval checks retained server-side. Incompatible rules explicitly labelled Do not recommend; unknown compatibility remains assessment-only. No automatic paid-item addition or fabricated conversion metrics.",
+      "testFiles": [
+        "tests/growth-compact.test.ts",
+        "tests/growth-compact-browser-evidence.test.ts",
+        "tests/catalogue-services-integration.test.ts"
+      ],
+      "testIds": [
+        "GROW-RULE",
+        "GROW-UI02"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/growth-compact/README.md",
+        "docs/growth-compact/evidence/regression.txt",
+        "docs/growth-compact/evidence/browser-validation.txt",
+        "docs/growth-compact/evidence/browser-checks.json",
+        "docs/growth-compact/evidence/build.txt",
+        "docs/growth-compact/evidence/types.txt"
+      ],
+      "acceptanceGate": "GROW-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented compact default records, focused dialogs and separate secondary tabs; executed regression, local responsive browser observations and production web build/types pass.",
+      "testResult": "PASS — 42/42 focused regression checks (0 failures/skips), 4/4 browser-evidence validations, six desktop/phone observations and 17 interaction checks; web build/types pass.",
+      "outstandingWork": "No outstanding implementation in this bounded local three-route web phase. Hosted rollout is unperformed. Existing campaign latest-100 read scope is unchanged; no global-history claim. Native, physical/provider, Firefox and formal accessibility acceptance remain outside this phase and in prior matrices. Production NO-GO, actual-import hold, retain-all and all unrelated phase gaps remain unchanged.",
+      "namedBackendTests": [
+        "reviewed recommendations count real events, never claim unknown compatibility and disappear for unavailable products"
+      ]
+    },
+    {
+      "id": "GROW-03",
+      "requirement": "Compact testimonials workspace with focused dialogs and bounded records",
+      "priority": "P1",
+      "scope": "Local responsive admin web presentation",
+      "uiReference": "User screenshot 3, 19 November 2026",
+      "route": "/admin/testimonials",
+      "implementationFiles": [
+        "apps/web/components/testimonials.tsx",
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/engagement-records.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css"
+      ],
+      "dataSource": "Canonical testimonials.manage/analytics/export and testimonial.detail/transition APIs in testimonials.ts; testimonial records, immutable versions and audit events. Existing supported server page size 8 and one pager; filtered CSV exports full filtered set. All eight statuses retained.",
+      "securityControl": "Canonical role/ownership, consent and withdrawal, recent authentication, latest-version moderation and independent approval retained. Approval and publication remain separate explicit actions. Detail reads use latest canonical version; moderation/history moved into review dialog, never dropped. Retention controls unchanged.",
+      "testFiles": [
+        "tests/growth-compact.test.ts",
+        "tests/growth-compact-browser-evidence.test.ts",
+        "tests/testimonials.test.ts",
+        "tests/testimonial-postgres.test.ts"
+      ],
+      "testIds": [
+        "GROW-FEEDBACK",
+        "GROW-UI03",
+        "TM-MANAGEMENT",
+        "TM-15",
+        "TM-09",
+        "TM-11",
+        "TM-WITHDRAW-STALE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/growth-compact/README.md",
+        "docs/growth-compact/evidence/regression.txt",
+        "docs/growth-compact/evidence/browser-validation.txt",
+        "docs/growth-compact/evidence/browser-checks.json",
+        "docs/growth-compact/evidence/build.txt",
+        "docs/growth-compact/evidence/types.txt"
+      ],
+      "acceptanceGate": "GROW-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented compact default records, focused dialogs and separate secondary tabs; executed regression, local responsive browser observations and production web build/types pass.",
+      "testResult": "PASS — 42/42 focused regression checks (0 failures/skips), 4/4 browser-evidence validations, six desktop/phone observations and 17 interaction checks; web build/types pass.",
+      "outstandingWork": "No outstanding implementation in this bounded local three-route web phase. Hosted rollout is unperformed. Existing campaign latest-100 read scope is unchanged; no global-history claim. Native, physical/provider, Firefox and formal accessibility acceptance remain outside this phase and in prior matrices. Production NO-GO, actual-import hold, retain-all and all unrelated phase gaps remain unchanged."
+    },
+    {
+      "id": "GROW-04",
+      "requirement": "Preserve canonical scope, consent, independent review, separate publication and immutable history controls across all three redesigned workspaces",
+      "priority": "P0",
+      "scope": "Cross-cutting control preservation for local three-route web presentation",
+      "uiReference": "User AGENTS.md preservation and traceability requirements",
+      "route": "/admin/campaigns,/admin/recommendations,/admin/testimonials",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/recommendations.tsx",
+        "apps/web/components/testimonials.tsx",
+        "apps/web/lib/scheduling.ts",
+        "apps/web/lib/catalogue.ts",
+        "apps/web/lib/testimonials.ts",
+        "apps/web/lib/testimonial-schema.ts",
+        "apps/web/components/engagement-records.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css"
+      ],
+      "dataSource": "Existing authenticated canonical scheduling, catalogue and testimonial APIs/tables; no new backend mutation, schema migration or production-data source.",
+      "securityControl": "Existing branch/actor checks, independent approvals, consent-at-delivery, no incompatible or unverified compatibility claim, testimonial re-authentication/immutable versions/withdrawal/latest-version guards and distinct publication actions remain. Draft-close guard, Escape/focus restoration and full filtered export verified locally. Previous production/import/retention decisions remain.",
+      "testFiles": [
+        "tests/growth-compact.test.ts",
+        "tests/growth-compact-browser-evidence.test.ts",
+        "tests/campaign-return.test.ts",
+        "tests/scheduling.test.ts",
+        "tests/catalogue-services-integration.test.ts",
+        "tests/testimonials.test.ts",
+        "tests/testimonial-postgres.test.ts"
+      ],
+      "testIds": [
+        "CRM-RETURN-01",
+        "CRM-BRANCH-01",
+        "TM-02",
+        "TM-15",
+        "TM-09",
+        "TM-WITHDRAW-STALE",
+        "GROW-INTERACT"
+      ],
+      "negativeTests": [
+        "CRM-RETURN-01: campaign return reporting requires paid delivered purchase, real completion time and no refund; branch reads stay scoped",
+        "campaigns require independent approval, consent at delivery and deduplicate in-app delivery",
+        "reviewed recommendations count real events, never claim unknown compatibility and disappear for unavailable products",
+        "TM-02: ineligible, duplicate, ownership, consent and unsafe input are rejected",
+        "TM-15: stale moderation cannot publish or overwrite a newer customer version",
+        "TM-09: withdrawing published consent immediately removes public feedback and cannot be reversed by a moderator",
+        "TM-WITHDRAW-STALE: customer consent revocation wins over a stale screen and retries have one effect"
+      ],
+      "evidence": [
+        "docs/growth-compact/README.md",
+        "docs/growth-compact/evidence/regression.txt",
+        "docs/growth-compact/evidence/browser-validation.txt",
+        "docs/growth-compact/evidence/browser-checks.json",
+        "docs/growth-compact/evidence/build.txt",
+        "docs/growth-compact/evidence/types.txt"
+      ],
+      "acceptanceGate": "GROW-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Canonical backends unchanged; existing negative control tests and PostgreSQL integration executed successfully. Browser review inspected/discarded drafts without delivery or publication.",
+      "testResult": "PASS — 42/42 focused regression checks including PostgreSQL (0 failures/skips), 4/4 browser-evidence validations; build/types pass.",
+      "outstandingWork": "No outstanding implementation in this bounded local three-route web phase. Hosted rollout is unperformed. Existing campaign latest-100 read scope is unchanged; no global-history claim. Native, physical/provider, Firefox and formal accessibility acceptance remain outside this phase and in prior matrices. Production NO-GO, actual-import hold, retain-all and all unrelated phase gaps remain unchanged."
+    }
+  ],
+  "gates": [
+    {
+      "id": "GROW-G01",
+      "description": "Campaigns responsive list/dialog acceptance",
+      "status": "PASS"
+    },
+    {
+      "id": "GROW-G02",
+      "description": "Recommendations responsive list/dialog acceptance",
+      "status": "PASS"
+    },
+    {
+      "id": "GROW-G03",
+      "description": "Testimonials responsive list/dialog acceptance",
+      "status": "PASS"
+    },
+    {
+      "id": "GROW-G04",
+      "description": "Canonical control negatives, existing PostgreSQL integration, dialog/export/focus acceptance and build/types pass",
+      "status": "PASS"
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "Three screenshot routes retained; prior eight-workspace redesign and all production/import/retention decisions preserved."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Added explicit cross-cutting GROW-04 preservation requirement; GROW-01–03 stable. New dialogs/tabs preserve original APIs and all eight feedback statuses. Testimonial consumer requests existing supported page size 8; campaign read remains latest 100, labelled loaded records. No backend mutations, schema or prior scope decisions changed."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Completed bounded local implementation: 42/42 focused regression checks with PostgreSQL enabled and 0 failures/skips; six captured desktop/phone observations, 17 interaction checks and four evidence validations pass. Production web build/types pass. Hosted rollout remains unperformed; prior eight-workspace work and all NO-GO/import/retain-all holds preserved."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 4,
+      "verified": 4,
+      "total": 4
+    },
+    "criticalRequirements": {
+      "verified": 1,
+      "total": 1
+    },
+    "routes": {
+      "verified": 3,
+      "total": 3
+    },
+    "gates": {
+      "passed": 4,
+      "total": 4
+    },
+    "excluded": 0,
+    "denominatorNote": "Bounded local three-route web redesign only. All four requirements remain counted; no prior phase requirement, defect or gate removed or reclassified. Hosted and wider acceptance remain explicitly unclaimed."
+  }
+}

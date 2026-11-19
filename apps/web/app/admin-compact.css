@@ -1,0 +1,589 @@
+/* Bounded staff workspaces. Customer and technician experiences keep their own styles. */
+.admin-compact {
+  --compact-border: var(--line, #dfe7e1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  font-size: 14px;
+}
+.admin-compact
+  :is(.page-heading, .product-heading, .business-heading, .support-hero) {
+  margin: 0;
+  padding: 0;
+  gap: 12px;
+  min-height: 0;
+  align-items: center;
+}
+.admin-compact
+  :is(
+    h1,
+    .page-heading h1,
+    .product-heading h1,
+    .business-heading h1,
+    .support-hero h1
+  ) {
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  margin: 0 0 6px;
+}
+.admin-compact :is(h2, .surface h2) {
+  font-size: 18px;
+  line-height: 1.35;
+  margin: 0 0 12px;
+  letter-spacing: -0.3px;
+}
+.admin-compact h3 {
+  font-size: 15px;
+  line-height: 1.4;
+  margin: 0 0 8px;
+}
+.admin-compact :is(.eyebrow, .support-hero-icon) {
+  display: none;
+}
+.admin-compact
+  :is(
+    p,
+    .page-heading p,
+    .product-heading p,
+    .business-heading p,
+    .support-hero p
+  ) {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 4px 0 10px;
+  max-width: 85ch;
+}
+.admin-compact .surface {
+  padding: 18px;
+  border-radius: 12px;
+  min-width: 0;
+  box-shadow: none;
+}
+.admin-compact :is(.button, button.secondary) {
+  min-height: 36px;
+  padding: 8px 14px;
+  font-size: 13px;
+  line-height: 1.3;
+  border-radius: 8px;
+  gap: 6px;
+}
+.admin-compact :is(input, select, textarea) {
+  font-size: 14px;
+  min-height: 38px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  width: 100%;
+  min-width: 0;
+}
+.admin-compact label {
+  font-size: 13px;
+  gap: 6px;
+  margin: 0;
+}
+.admin-compact :is(.workflow-stack, .stack) {
+  gap: 12px;
+}
+.compact-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.compact-toolbar > .compact-tabs {
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 auto;
+}
+.compact-toolbar .compact-search {
+  max-width: 340px;
+  flex: 1;
+  min-width: 170px;
+}
+.compact-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.admin-compact .compact-actions select {
+  width: auto;
+  max-width: 220px;
+}
+.compact-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--compact-border);
+  overflow: auto;
+  flex-shrink: 0;
+}
+.compact-tabs button {
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: inherit;
+  padding: 11px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+.compact-tabs a {
+  white-space: nowrap;
+  color: inherit;
+  padding: 11px 14px;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+}
+.compact-tabs .is-active {
+  border-color: #128241;
+  color: var(--green, #087135);
+  font-weight: 700;
+}
+.admin-compact :is(.finance-primary, .support-metrics, .compact-metrics) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+.admin-compact
+  :is(.finance-metric, .support-metric, .compact-metrics > .surface) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px 16px;
+  min-height: 0;
+  background: var(--surface, #fff);
+}
+.admin-compact
+  :is(.finance-metric strong, .support-metric strong, .compact-metrics strong) {
+  font-size: 23px;
+  line-height: 1.25;
+  margin: 0;
+}
+.admin-compact :is(.finance-metric span, .compact-metrics h3) {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted, #67756e);
+  margin: 0;
+}
+.admin-compact .support-metric-icon {
+  display: none;
+}
+.admin-compact .support-metric > div {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  gap: 8px;
+}
+.admin-compact :is(.table-wrap, .table-scroll) {
+  max-width: 100%;
+  overflow: auto;
+  margin: 0;
+}
+.admin-compact table {
+  font-size: 13px;
+  width: 100%;
+}
+.admin-compact :is(th, td) {
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.35;
+  vertical-align: middle;
+  max-width: 340px;
+  overflow-wrap: anywhere;
+}
+.admin-compact th {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.admin-compact td small {
+  display: block;
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--muted, #67756e);
+  margin-top: 3px;
+}
+.compact-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+.compact-pagination > span:first-child {
+  margin-right: auto;
+}
+.admin-compact :is(.empty, .empty-state, .support-empty) {
+  padding: 28px 16px;
+  min-height: 0;
+  margin: 0;
+}
+.admin-compact .empty-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 12px;
+}
+.admin-compact .empty-state :is(svg, .empty-icon),
+.admin-compact .support-empty-icon {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 12px;
+}
+.admin-compact .support-inbox {
+  padding: 0;
+  overflow: hidden;
+}
+.admin-compact :is(.support-inbox-top, .support-filters, .support-list-limit) {
+  padding: 12px 16px;
+  margin: 0;
+  gap: 10px;
+}
+.admin-compact .support-status-control {
+  padding: 7px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.admin-compact .support-list-limit {
+  font-size: 11px;
+  flex-wrap: wrap;
+}
+.admin-compact .support-filters {
+  display: flex;
+  flex-wrap: wrap;
+}
+.admin-compact .support-search {
+  flex: 1;
+  min-width: 160px;
+}
+.admin-compact .support-filters > select {
+  width: auto;
+}
+.admin-compact .support-layout {
+  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.6fr);
+  min-height: 360px;
+  max-height: 570px;
+  gap: 0;
+}
+.admin-compact .support-request-list {
+  overflow: auto;
+  padding: 12px;
+  gap: 8px;
+  border-right: 1px solid var(--compact-border);
+}
+.admin-compact .ticket-select {
+  padding: 12px;
+  text-align: left;
+  border-radius: 8px;
+  gap: 4px;
+}
+.admin-compact .support-conversation {
+  overflow: auto;
+  border: 0;
+  border-radius: 0;
+}
+.admin-compact .support-placeholder {
+  min-height: 0;
+}
+.admin-compact .support-thread {
+  gap: 10px;
+}
+.admin-compact .support-message {
+  padding: 12px;
+}
+.admin-compact .support-thread-header {
+  gap: 10px;
+}
+.admin-compact .support-thread-header small {
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+.admin-compact .support-sla-summary {
+  padding: 8px;
+  font-size: 11px;
+}
+.admin-compact .support-attachments img {
+  max-height: 80px;
+}
+.admin-compact .finance-panels {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+.admin-compact .finance-breakdown {
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+.admin-compact .finance-breakdown li {
+  padding: 8px 0;
+  gap: 8px;
+  font-size: 13px;
+}
+.admin-compact .business-live {
+  font-size: 11px;
+  margin: 0;
+}
+.admin-compact :is(.ac-snapshot, .business-filters) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  align-items: end;
+  margin: 0;
+}
+.admin-compact .document-library {
+  margin: 0;
+}
+.admin-compact .document-library form {
+  gap: 10px;
+}
+.admin-compact .document-library td {
+  padding: 10px 12px;
+}
+.admin-compact .document-library td p {
+  margin: 2px 0;
+  font-size: 12px;
+}
+.admin-compact .document-library h2 {
+  margin-bottom: 4px;
+}
+.admin-compact .credit-list {
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+.admin-compact .credit-list .button {
+  justify-content: flex-start;
+  text-align: left;
+}
+.admin-compact .service-tabs {
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.compact-dialog .modal {
+  width: min(800px, calc(100vw - 32px));
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
+  padding: 24px;
+}
+.compact-dialog :is(.surface, .workflow-form) {
+  padding: 16px;
+  border-radius: 10px;
+}
+.compact-dialog :is(h2, .section-heading h2) {
+  font-size: 20px;
+}
+.compact-dialog :is(input, select, textarea) {
+  font-size: 14px;
+  min-height: 38px;
+  padding: 9px;
+  width: 100%;
+  min-width: 0;
+}
+.compact-dialog label {
+  font-size: 13px;
+  margin: 0;
+  gap: 6px;
+}
+.compact-dialog .workflow-form label {
+  margin: 0;
+  gap: 6px;
+}
+.compact-dialog :is(input[type="checkbox"], input[type="radio"]) {
+  width: 18px;
+  min-height: 18px;
+  height: 18px;
+  padding: 0;
+}
+.admin-compact > .button {
+  align-self: flex-start;
+}
+.compact-dialog .business-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.compact-dialog :is(.service-form-grid, .business-grid, .service-grid) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.compact-dialog .workflow-form {
+  gap: 16px;
+}
+.compact-dialog .button {
+  min-height: 38px;
+  padding: 9px 16px;
+  font-size: 14px;
+}
+.compact-dialog .business-kpis {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.compact-dialog .business-kpi {
+  padding: 14px;
+}
+.compact-dialog .business-kpi strong {
+  font-size: 22px;
+}
+.admin-compact button:focus-visible,
+.compact-dialog button:focus-visible {
+  outline: 2px solid #18874d;
+  outline-offset: 3px;
+}
+@media (max-width: 700px) {
+  .admin-compact.staff-services-compact .table-scroll table {
+    min-width: 800px;
+  }
+  .admin-compact.reconciliation-workspace > .compact-metrics {
+    grid-template-columns: repeat(5, minmax(165px, 1fr));
+    overflow: auto;
+    max-width: 100%;
+    padding-bottom: 6px;
+  }
+  .admin-compact .document-library .table-scroll {
+    overflow: auto;
+  }
+  .admin-compact .document-library .table-scroll table {
+    display: table;
+    min-width: 800px;
+  }
+  .admin-compact .document-library td:last-child {
+    white-space: nowrap;
+  }
+  .admin-compact .document-library thead {
+    display: table-header-group;
+  }
+  .admin-compact .document-library tbody {
+    display: table-row-group;
+  }
+  .admin-compact .document-library tr {
+    display: table-row;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .admin-compact .document-library :is(th, td) {
+    display: table-cell;
+    width: auto;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .admin-compact .document-library td:before {
+    display: none;
+  }
+  .admin-compact {
+    gap: 12px;
+  }
+  .admin-compact
+    :is(
+      h1,
+      .page-heading h1,
+      .product-heading h1,
+      .business-heading h1,
+      .support-hero h1
+    ) {
+    font-size: 24px;
+  }
+  .admin-compact :is(.finance-primary, .support-metrics, .compact-metrics) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .admin-compact
+    :is(.finance-metric, .support-metric, .compact-metrics > .surface) {
+    padding: 12px;
+  }
+  .admin-compact
+    :is(
+      .finance-metric strong,
+      .support-metric strong,
+      .compact-metrics strong
+    ) {
+    font-size: 20px;
+    overflow-wrap: anywhere;
+  }
+  .admin-compact .finance-panels {
+    grid-template-columns: 1fr;
+  }
+  .admin-compact .support-layout {
+    display: block;
+    max-height: none;
+    min-height: 0;
+  }
+  .admin-compact .support-layout.has-selection .support-request-list {
+    display: none;
+  }
+  .admin-compact .support-request-list {
+    max-height: 480px;
+    border: 0;
+  }
+  .admin-compact .support-conversation {
+    max-height: 65dvh;
+  }
+  .admin-compact .support-back {
+    display: inline-flex;
+  }
+  .admin-compact .support-placeholder {
+    display: none;
+  }
+  .admin-compact .support-inbox-top {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .admin-compact .support-status-controls {
+    overflow: auto;
+    flex-wrap: nowrap;
+    max-width: 100%;
+  }
+  .admin-compact .support-thread-header {
+    display: block;
+  }
+  .admin-compact :is(.ac-snapshot, .business-filters) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .admin-compact .table-wrap table,
+  .admin-compact .table-scroll table {
+    min-width: 600px;
+  }
+  .admin-compact .compact-toolbar {
+    align-items: flex-start;
+  }
+  .compact-dialog .modal {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    padding: 16px;
+  }
+  .compact-dialog :is(.service-form-grid, .business-grid, .service-grid) {
+    grid-template-columns: 1fr;
+  }
+  .compact-dialog .business-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Growth administration: lists remain primary; editing stays in focused dialogs. */
+.growth-workspace .compact-toolbar > .product-heading {flex:1;min-width:220px;}
+.growth-workspace .growth-statuses {display:flex;gap:8px;overflow:auto;max-width:100%;padding:4px 0 12px;}
+.growth-workspace .growth-statuses button {white-space:nowrap;flex-shrink:0;}
+.growth-workspace .growth-excerpt {display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:290px;}
+.growth-workspace input[type="checkbox"] {width:17px;min-height:17px;height:17px;padding:0;accent-color:var(--green,#087135);}
+.growth-workspace .table-scroll table {min-width:680px;}
+.growth-workspace.testimonials-workspace .table-scroll table {min-width:850px;}
+.growth-message {white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;padding:16px;background:var(--raised,#f5f8f5);border-radius:8px;margin:12px 0;}
+.compact-dialog .growth-detail-metrics {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+.compact-dialog .growth-detail-metrics .surface {padding:12px;}
+.compact-dialog .growth-detail-metrics strong {font-size:22px;}
+.growth-workspace > .surface {display:grid;gap:12px;}
+.compact-dialog .compact-tabs {margin-bottom:16px;}
+@media(max-width:700px){
+ .growth-workspace .compact-toolbar > .product-heading {flex-basis:100%;}
+ .compact-dialog .growth-detail-metrics {grid-template-columns:repeat(2,minmax(0,1fr));}
+ .growth-workspace .compact-toolbar .compact-search {max-width:none;}
+}

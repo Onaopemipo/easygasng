@@ -1,4 +1,6 @@
 "use client";
+import { DialogDraft, RecordPages, WorkspaceDialog, WorkspaceTabs } from "./compact-workspace";
+import { TestimonialRecords, testimonialStatuses } from "./engagement-records";
 import { FieldCaption } from "./field-caption";
 import { EasyGasLoader } from "./easygas-loader";
 import React, { useEffect, useState, useRef, type FormEvent } from "react";
@@ -509,6 +511,11 @@ export function TestimonialManagement() {
   const [rows, setRows] = useState<any[]>([]),
     [metrics, setMetrics] = useState<any>(null),
     [detail, setDetail] = useState<any>(null),
+    [detailId, setDetailId] = useState<string | null>(null),
+    [detailLoading, setDetailLoading] = useState(false),
+    [detailTab, setDetailTab] = useState("review"),
+    [tab, setTab] = useState("reviews"),
+    [filterDialog, setFilterDialog] = useState(false),
     [decision, setDecision] = useState<any>(null),
     [loading, setLoading] = useState(true),
     [selected, setSelected] = useState<any[]>([]),
@@ -521,7 +528,8 @@ export function TestimonialManagement() {
     [rating, setRating] = useState(""),
     [page, setPage] = useState(0),
     [busy, setBusy] = useState(false);
-  const generation = useRef(0);
+  const generation = useRef(0),
+    detailGeneration = useRef(0);
   function filters() {
     const q = new URLSearchParams({ sort });
     if (search.trim()) q.set("q", search.trim());
@@ -536,7 +544,7 @@ export function TestimonialManagement() {
     try {
       const q = filters();
       q.set("page", String(page));
-      q.set("limit", "10");
+      q.set("limit", "8");
       const [list, stats] = await Promise.all([
         api("testimonials.manage?" + q),
         api("testimonials.analytics"),
@@ -547,7 +555,12 @@ export function TestimonialManagement() {
       setTotal(list.total);
       setMetrics(stats);
     } catch (e: any) {
-      if (current === generation.current) setError(e.message);
+      if (current === generation.current) {
+        setError(e.message);
+        setRows([]);
+        setTotal(0);
+        setMetrics(null);
+      }
     } finally {
       if (current === generation.current) setLoading(false);
     }
@@ -560,6 +573,7 @@ export function TestimonialManagement() {
     };
   }, [search, status, rating, since, sort, page]);
   const filtered = rows;
+  const commands: Record<string, string> = { APPROVED: "Approve testimonial", PUBLISHED: "Publish testimonial", HIDDEN: "Hide testimonial", REJECTED: "Reject testimonial", CHANGES_REQUESTED: "Request changes" };
   async function exportCsv() {
     setError("");
     try {
@@ -597,11 +611,27 @@ export function TestimonialManagement() {
     }
   }
   async function showDetail(id: string) {
+    const current = ++detailGeneration.current;
+    setError("");
+    setDetail(null);
+    setDetailId(id);
+    setDetailLoading(true);
+    setDetailTab("review");
     try {
-      setDetail(await api("testimonial.detail?id=" + encodeURIComponent(id)));
+      const result = await api(
+        "testimonial.detail?id=" + encodeURIComponent(id),
+      );
+      if (current === detailGeneration.current) setDetail(result);
     } catch (e: any) {
-      setError(e.message);
+      if (current === detailGeneration.current) setError(e.message);
+    } finally {
+      if (current === detailGeneration.current) setDetailLoading(false);
     }
+  }
+  function closeDetail() {
+    detailGeneration.current++;
+    setDetailId(null);
+    setDetail(null);
   }
   function moderate(row: any, next: string) {
     setError("");
@@ -622,6 +652,7 @@ export function TestimonialManagement() {
         reason,
       });
       setDecision(null);
+      closeDetail();
       await load();
     } catch (e: any) {
       setError(e.message);
@@ -629,231 +660,349 @@ export function TestimonialManagement() {
       setBusy(false);
     }
   }
+  const currentRow = detail
+    ? { ...detail.versions[detail.versions.length - 1], ...detail.testimonial }
+    : null;
+  const actions: Record<string, string[]> = {
+    PENDING_REVIEW: ["APPROVED", "CHANGES_REQUESTED", "REJECTED"],
+    APPROVED: ["PUBLISHED", "HIDDEN"],
+    PUBLISHED: ["HIDDEN"],
+    HIDDEN: ["PUBLISHED"],
+  };
+  const count = (state: string) =>
+    metrics?.counts.find((r: any) => r.status === state)?.count ?? 0;
+  const publishedCount =
+    metrics?.publishedRatings.reduce(
+      (n: number, r: any) => n + Number(r.count),
+      0,
+    ) ?? 0;
   return (
-    <>
-      <div className="page-heading">
-        <h1>Customer Testimonials</h1>
-        <p>
-          Review authentic customer feedback, consent and publication. Approval
-          and publication are separate actions.
-        </p>
+    <section className="admin-compact growth-workspace testimonials-workspace">
+      <div className="compact-toolbar">
+        <div className="product-heading">
+          <h1>Customer testimonials</h1>
+          <p>Review feedback, consent and publication.</p>
+        </div>
+        <div className="compact-actions">
+          <button className="button secondary" onClick={exportCsv}>
+            Export{" "}
+            {selected.length ? `selected (${selected.length})` : "filtered"} CSV
+          </button>
+          <button className="button secondary" onClick={() => void load()}>
+            Refresh
+          </button>
+        </div>
       </div>
-      {error && <Notice message={error} />}
-      <div className="metric-grid">
-        {Object.keys(labels).map((s) => (
-          <article className="surface" key={s}>
-            <h3>{labels[s]}</h3>
-            <strong>
-              {metrics
-                ? (metrics.counts.find((r: any) => r.status === s)?.count ?? 0)
-                : "—"}
-            </strong>
-          </article>
-        ))}
-      </div>
-      {metrics && (
-        <section className="surface">
-          <h2>Published rating distribution</h2>
-          <p>
-            Retention review due: {metrics.retention?.due ?? 0} · Total
-            submissions:{" "}
-            {metrics.counts.reduce((n: number, r: any) => n + r.count, 0)} ·
-            Average published rating:{" "}
-            {metrics.publishedRatings.reduce(
-              (n: number, r: any) => n + r.count,
-              0,
-            )
+      {error && !detailId && !decision && (
+        <Notice type="error" message={error} />
+      )}
+      {tab === "analytics" && <div className="compact-metrics">
+        {[
+          [
+            "Submissions",
+            metrics
+              ? metrics.counts.reduce(
+                  (n: number, r: any) => n + Number(r.count),
+                  0,
+                )
+              : "—",
+          ],
+          ["Pending review", metrics ? count("PENDING_REVIEW") : "—"],
+          ["Published", metrics ? count("PUBLISHED") : "—"],
+          [
+            "Published rating",
+            publishedCount
               ? (
                   metrics.publishedRatings.reduce(
-                    (n: number, r: any) => n + r.rating * r.count,
+                    (n: number, r: any) =>
+                      n + Number(r.rating) * Number(r.count),
                     0,
-                  ) /
-                  metrics.publishedRatings.reduce(
-                    (n: number, r: any) => n + r.count,
-                    0,
-                  )
-                ).toFixed(1)
-              : "No published ratings"}{" "}
-            · Average approval time:{" "}
-            {metrics.turnaround?.average_hours
-              ? Number(metrics.turnaround.average_hours).toFixed(1) + " hours"
-              : "No approval history"}
-          </p>
-          <p>
-            {metrics.publishedRatings
-              .map((r: any) => `${r.rating} stars: ${r.count}`)
-              .join(" · ") || "No published ratings yet."}
-          </p>
-          <h3>Submissions over the last six months</h3>
-          <p>
-            {metrics.monthly
-              .map((r: any) => `${r.month}: ${r.count}`)
-              .join(" · ") || "No submissions in this period."}
-          </p>
-        </section>
-      )}
-      <section className="surface">
-        <div className="testimonial-controls">
-          <label>
-            Submitted on or after
-            <input
-              type="date"
-              value={since}
-              onChange={(e) => {
-                setSince(e.target.value);
-                setPage(0);
-              }}
-            />
-          </label>
-          <label>
-            Sort
-            <select
-              value={sort}
-              onChange={(e) => {
-                setSort(e.target.value);
-                setPage(0);
-              }}
-            >
-              <option value="newest">Newest first</option>
-              <option value="oldest">Oldest first</option>
-              <option value="rating">Lowest rating first</option>
-            </select>
-          </label>
-          <button className="button secondary" onClick={exportCsv}>
-            Export {selected.length ? "selected" : "filtered"} CSV
-          </button>
-          <label>
-            Search feedback
-            <input
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(0);
-              }}
-            />
-          </label>
-          <label>
-            Status
-            <select
-              value={status}
-              onChange={(e) => {
-                setStatus(e.target.value);
-                setPage(0);
-              }}
-            >
-              <option value="">All statuses</option>
-              {Object.entries(labels).map(([k, v]) => (
-                <option value={k} key={k}>
-                  {v}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Rating
-            <select
-              value={rating}
-              onChange={(e) => {
-                setRating(e.target.value);
-                setPage(0);
-              }}
-            >
-              <option value="">All ratings</option>
-              {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n}>{n}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-        {loading && (
-          <EasyGasLoader
-            size="sm"
-            variant="section"
-            label="Loading testimonial records"
-          />
-        )}
-        <p>
-          {total} matching submissions. Page {page + 1} of{" "}
-          {Math.max(1, Math.ceil(total / 10))}.
-        </p>
-        {filtered.map((r) => (
-          <article className="surface" key={r.id}>
-            <label className="testimonial-consent">
+                  ) / publishedCount
+                ).toFixed(1) + " / 5"
+              : metrics ? "No ratings" : "—",
+          ],
+        ].map(([label, value]) => (
+          <article className="surface" key={label}>
+            <h3>{label}</h3>
+            <strong>{value}</strong>
+          </article>
+        ))}
+      </div>}
+      <WorkspaceTabs
+        label="Testimonial workspace"
+        value={tab}
+        onChange={setTab}
+        tabs={[
+          ["reviews", "Feedback"],
+          ["analytics", "Analytics"],
+        ]}
+      />
+      {tab === "reviews" ? (
+        <section className="surface">
+          <div
+            className="growth-statuses"
+            role="group"
+            aria-label="Feedback status"
+          >
+            {[
+              ["", "All feedback"],
+              ["PENDING_REVIEW", "Pending review"],
+              ["APPROVED", "Approved"],
+              ["PUBLISHED", "Published"],
+            ].map(([key, label]) => (
+              <button
+                className={`button ${status === key ? "" : "secondary"}`}
+                aria-pressed={status === key}
+                key={key}
+                onClick={() => {
+                  setStatus(key);
+                  setPage(0);
+                }}
+              >
+                {label}
+                {metrics &&
+                  ` (${key ? count(key) : metrics.counts.reduce((n: number, r: any) => n + Number(r.count), 0)})`}
+              </button>
+            ))}
+          </div>
+          <div className="compact-toolbar">
+            <label className="compact-search">
+              Search feedback
               <input
-                type="checkbox"
-                aria-label={`Select feedback from ${r.display_name}`}
-                checked={selected.some((x) => x.id === r.id)}
-                onChange={(e) =>
-                  setSelected(
-                    e.target.checked
-                      ? [...selected, r]
-                      : selected.filter((x) => x.id !== r.id),
-                  )
-                }
+                type="search"
+                maxLength={200}
+                placeholder="Search name or feedback…"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setPage(0);
+                }}
               />
-              Select feedback
             </label>
             <button
               className="button secondary"
-              onClick={() => showDetail(r.id)}
+              onClick={() => setFilterDialog(true)}
             >
-              Review original & history
+              Filters
+              {[status, rating, since, sort !== "newest" ? sort : ""].filter(
+                Boolean,
+              ).length
+                ? " · " +
+                  [status, rating, since, sort !== "newest" ? sort : ""].filter(
+                    Boolean,
+                  ).length
+                : ""}
             </button>
-            <h3>
-              {r.display_name} · {r.rating}/5 · {labels[r.status]}
-            </h3>
-            <p>{r.body}</p>
-            <p>
-              Consent: {r.consent ? "Granted" : "Not granted"} · Version{" "}
-              {r.current_version} · Revision {r.revision}
-            </p>
-            <div className="testimonial-controls">
-              {(
-                {
-                  PENDING_REVIEW: ["APPROVED", "CHANGES_REQUESTED", "REJECTED"],
-                  APPROVED: ["PUBLISHED", "HIDDEN"],
-                  PUBLISHED: ["HIDDEN"],
-                  HIDDEN: ["PUBLISHED"],
-                } as Record<string, string[]>
-              )[r.status]?.map((next) => (
+            {selected.length > 0 && (
+              <button
+                className="button secondary"
+                onClick={() => setSelected([])}
+              >
+                Clear selection ({selected.length})
+              </button>
+            )}
+          </div>
+          {loading ? (
+            <EasyGasLoader
+              size="sm"
+              variant="section"
+              label="Loading testimonial records"
+            />
+          ) : error ? (
+            <p>Records could not be loaded. Refresh to retry.</p>
+          ) : (
+            <>
+              <p className="muted">{total} matching submissions</p>
+              <TestimonialRecords
+                rows={filtered}
+                selected={selected}
+                select={(row, checked) =>
+                  setSelected(
+                    checked
+                      ? [...selected.filter((s) => s.id !== row.id), row]
+                      : selected.filter((s) => s.id !== row.id),
+                  )
+                }
+                open={(r) => void showDetail(r.id)}
+              />
+              {total > 8 && (
+                <nav className="compact-pagination" aria-label="Feedback pages">
+                  <button
+                    className="button secondary"
+                    disabled={page === 0}
+                    onClick={() => setPage(page - 1)}
+                  >
+                    Previous
+                  </button>
+                  <span>
+                    Page {page + 1} of {Math.max(1, Math.ceil(total / 8))}
+                  </span>
+                  <button
+                    className="button secondary"
+                    disabled={(page + 1) * 8 >= total}
+                    onClick={() => setPage(page + 1)}
+                  >
+                    Next
+                  </button>
+                </nav>
+              )}
+            </>
+          )}
+        </section>
+      ) : (
+        <>
+          {metrics && (
+            <section className="surface">
+              <h2>Published rating distribution</h2>
+              <p>
+                Retention review due: {metrics.retention?.due ?? 0} · Total
+                submissions:{" "}
+                {metrics.counts.reduce((n: number, r: any) => n + r.count, 0)} ·
+                Average published rating:{" "}
+                {metrics.publishedRatings.reduce(
+                  (n: number, r: any) => n + r.count,
+                  0,
+                )
+                  ? (
+                      metrics.publishedRatings.reduce(
+                        (n: number, r: any) => n + r.rating * r.count,
+                        0,
+                      ) /
+                      metrics.publishedRatings.reduce(
+                        (n: number, r: any) => n + r.count,
+                        0,
+                      )
+                    ).toFixed(1)
+                  : "No published ratings"}{" "}
+                · Average approval time:{" "}
+                {metrics.turnaround?.average_hours != null
+                  ? Number(metrics.turnaround.average_hours).toFixed(1) +
+                    " hours"
+                  : "No approval history"}
+              </p>
+              <p>
+                {metrics.publishedRatings
+                  .map((r: any) => `${r.rating} stars: ${r.count}`)
+                  .join(" · ") || "No published ratings yet."}
+              </p>
+              <h3>Submissions over the last six months</h3>
+              <p>
+                {metrics.monthly
+                  .map((r: any) => `${r.month}: ${r.count}`)
+                  .join(" · ") || "No submissions in this period."}
+              </p>
+            </section>
+          )}
+          <section className="surface">
+            <h2>All submission states</h2>
+            <div className="growth-statuses">
+              {Object.entries(testimonialStatuses).map(([key, label]) => (
                 <button
                   className="button secondary"
-                  disabled={busy}
-                  key={next}
-                  onClick={() => moderate(r, next)}
+                  key={key}
+                  onClick={() => {
+                    setStatus(key);
+                    setPage(0);
+                    setTab("reviews");
+                  }}
                 >
-                  {labels[next]}
+                  {label}: {metrics ? count(key) : "—"}
                 </button>
               ))}
             </div>
-          </article>
-        ))}
-        <div className="testimonial-controls">
-          <button
-            className="button secondary"
-            disabled={page === 0}
-            onClick={() => setPage(page - 1)}
-          >
-            Previous
-          </button>
-          <span>Page {page + 1}</span>
-          <button
-            className="button secondary"
-            disabled={(page + 1) * 10 >= total}
-            onClick={() => setPage(page + 1)}
-          >
-            Next
-          </button>
-        </div>
+          </section>
+        </>
+      )}
+      <WorkspaceDialog
+        title="Feedback moderation rules"
+        trigger="Moderation & consent rules"
+      >
+        <p>
+          Approval and publication are separate actions. Confirm original
+          feedback and consent before deciding. Negative ratings alone are not a
+          reason to reject genuine feedback.
+        </p>
         <p>
           Sensitive moderation requires recent password verification through
-          your account controls. Settings follow the shared independent approval
-          workflow.
+          your <Link href="/account">account controls</Link>. Settings follow
+          independent approval. Retention and consent-withdrawal controls remain
+          in effect.
         </p>
-      </section>
+      </WorkspaceDialog>
+      {filterDialog && (
+        <Modal
+          className="compact-dialog"
+          title="Feedback filters"
+          onClose={() => setFilterDialog(false)}
+        >
+          <div className="business-filters">
+            <label>
+              Status
+              <select
+                value={status}
+                onChange={(e) => {
+                  setStatus(e.target.value);
+                  setPage(0);
+                }}
+              >
+                <option value="">All statuses</option>
+                {Object.entries(labels).map(([key, label]) => (
+                  <option key={key} value={key}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Rating
+              <select
+                value={rating}
+                onChange={(e) => {
+                  setRating(e.target.value);
+                  setPage(0);
+                }}
+              >
+                <option value="">All ratings</option>
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <option key={n}>{n}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Submitted on or after
+              <input
+                type="date"
+                value={since}
+                onChange={(e) => {
+                  setSince(e.target.value);
+                  setPage(0);
+                }}
+              />
+            </label>
+            <label>
+              Sort
+              <select
+                value={sort}
+                onChange={(e) => {
+                  setSort(e.target.value);
+                  setPage(0);
+                }}
+              >
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="rating">Lowest rating first</option>
+              </select>
+            </label>
+          </div>
+          <button className="button" onClick={() => setFilterDialog(false)}>
+            Done
+          </button>
+        </Modal>
+      )}
       {decision && (
         <Modal
-          title={`${labels[decision.next]} testimonial`}
+          className="compact-dialog"
+          title={commands[decision.next]}
           onClose={() => setDecision(null)}
         >
           <p>
@@ -861,69 +1010,151 @@ export function TestimonialManagement() {
             A negative rating is not a reason to reject a genuine review.
           </p>
           <blockquote>{decision.row.body}</blockquote>
-          <form onSubmit={confirmModeration}>
-            <label>
-              <FieldCaption required={true}>Review category</FieldCaption>
-              <select name="category" required>
-                <option value="Authenticity and consent">
-                  Authenticity and consent
-                </option>
-                <option value="Privacy">Privacy</option>
-                <option value="Abuse or unsafe content">
-                  Abuse or unsafe content
-                </option>
-                <option value="Eligibility or requested correction">
-                  Eligibility or requested correction
-                </option>
-              </select>
-            </label>
-            <label>
-              <FieldCaption required={true}>Moderation reason</FieldCaption>
-              <textarea name="reason" required minLength={5} maxLength={900} />
-            </label>
-            {error && <Notice message={error} />}
-            <button className="button" disabled={busy}>
-              Confirm {labels[decision.next].toLowerCase()}
-            </button>
-          </form>
-        </Modal>
-      )}
-      {detail && (
-        <Modal
-          title="Original feedback & moderation history"
-          onClose={() => setDetail(null)}
-        >
-          <h3>Feedback versions</h3>
-          {detail.versions.map((v: any) => (
-            <article className="surface" key={v.version}>
-              <h4>
-                Version {v.version} · {v.rating}/5
-              </h4>
-              <p>{v.body}</p>
-              <p>
-                Display name: {v.display_name} · Text consent:{" "}
-                {v.consent ? "Granted" : "Not granted"} · Photo consent:{" "}
-                {v.photo_consent ? "Granted" : "Not granted"}
-              </p>
-              {v.image_id && (
-                <img
-                  src={`/api/media/${v.image_id}`}
-                  alt="Customer supplied moderation photo"
-                  width="160"
-                  height="160"
+          <DialogDraft key={decision.row.id + decision.next}>
+            <form
+              className="workflow-form product-form"
+              onSubmit={confirmModeration}
+            >
+              <label>
+                <FieldCaption required={true}>Review category</FieldCaption>
+                <select name="category" required>
+                  <option value="Authenticity and consent">
+                    Authenticity and consent
+                  </option>
+                  <option value="Privacy">Privacy</option>
+                  <option value="Abuse or unsafe content">
+                    Abuse or unsafe content
+                  </option>
+                  <option value="Eligibility or requested correction">
+                    Eligibility or requested correction
+                  </option>
+                </select>
+              </label>
+              <label>
+                <FieldCaption required={true}>Moderation reason</FieldCaption>
+                <textarea
+                  name="reason"
+                  required
+                  minLength={5}
+                  maxLength={900}
                 />
-              )}
-            </article>
-          ))}
-          <h3>Immutable moderation events</h3>
-          {detail.events.map((e: any, i: number) => (
-            <p key={i}>
-              {new Date(e.created_at).toLocaleString()} ·{" "}
-              {e.from_status ?? "New"} → {e.to_status} · {e.reason}
-            </p>
-          ))}
+              </label>
+              {error && <Notice message={error} />}
+              <button className="button" disabled={busy}>
+                {commands[decision.next]}
+              </button>
+            </form>
+          </DialogDraft>
         </Modal>
       )}
-    </>
+      {detailId && !decision && (
+        <Modal
+          className="compact-dialog"
+          title="Review customer feedback"
+          onClose={closeDetail}
+        >
+          {error && <Notice type="error" message={error} />}
+          {detailLoading ? (
+            <EasyGasLoader
+              size="sm"
+              variant="section"
+              label="Loading feedback history"
+            />
+          ) : (
+            detail &&
+            currentRow && (
+              <>
+                <WorkspaceTabs
+                  label="Feedback details"
+                  value={detailTab}
+                  onChange={setDetailTab}
+                  tabs={[
+                    ["review", "Review"],
+                    ["history", "Versions & history"],
+                  ]}
+                />
+                {detailTab === "review" ? (
+                  <>
+                    <h3>
+                      {currentRow.display_name} · {currentRow.rating}/5
+                    </h3>
+                    <p>
+                      {labels[currentRow.status]} · Consent:{" "}
+                      {currentRow.consent ? "Granted" : "Not granted"}
+                    </p>
+                    <blockquote className="growth-message">
+                      {currentRow.body}
+                    </blockquote>
+                    <div className="compact-actions">
+                      {actions[currentRow.status]?.map((next) => (
+                        <button
+                          className="button secondary"
+                          disabled={busy}
+                          key={next}
+                          onClick={() => moderate(currentRow, next)}
+                        >
+                          {next === "APPROVED"
+                            ? "Approve"
+                            : next === "PUBLISHED"
+                              ? "Publish"
+                              : next === "HIDDEN"
+                                ? "Hide"
+                                : next === "CHANGES_REQUESTED" ? "Request changes" : "Reject"}
+                        </button>
+                      ))}
+                    </div>
+                    <p>Approval does not publish this testimonial.</p>
+                  </>
+                ) : (
+                  <>
+                    <h3>Feedback versions</h3>
+                    <RecordPages rows={detail.versions}>
+                      {(versions) =>
+                        versions.map((v: any) => (
+                          <article className="surface" key={v.version}>
+                            <h4>
+                              Version {v.version} · {v.rating}/5
+                            </h4>
+                            <p>{v.body}</p>
+                            <p>
+                              Display name: {v.display_name} · Text consent:{" "}
+                              {v.consent ? "Granted" : "Not granted"} · Photo
+                              consent:{" "}
+                              {v.photo_consent ? "Granted" : "Not granted"}
+                            </p>
+                            {v.image_id && (
+                              <img
+                                src={`/api/media/${v.image_id}`}
+                                alt="Customer supplied moderation photo"
+                                width="160"
+                                height="160"
+                              />
+                            )}
+                          </article>
+                        ))
+                      }
+                    </RecordPages>
+                    <h3>Moderation events</h3>
+                    <RecordPages rows={detail.events}>
+                      {(events) =>
+                        events.map((e: any, i: number) => (
+                          <p key={i}>
+                            {new Date(e.created_at).toLocaleString("en-NG", {
+                              timeZone: "Africa/Lagos",
+                            })}{" "}
+                            (Lagos) · {e.from_status ?? "New"} → {e.to_status} ·{" "}
+                            {e.reason}
+                          </p>
+                        ))
+                      }
+                    </RecordPages>
+                  </>
+                )}
+              </>
+            )
+          )}
+        </Modal>
+      )}
+    </section>
   );
 }

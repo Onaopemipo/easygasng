@@ -27,6 +27,7 @@ export async function financialDocuments(tx: SQL, user: Actor, input: unknown) {
       from: z.iso.date().optional(),
       to: z.iso.date().optional(),
       page: z.coerce.number().int().positive().max(100000).default(1),
+      pageSize: z.coerce.number().int().min(1).max(20).default(20),
     })
     .strict()
     .parse(input);
@@ -73,8 +74,8 @@ export async function financialDocuments(tx: SQL, user: Actor, input: unknown) {
   const selected = (
     await tx.query(
       sql +
-        ` ORDER BY issued_at DESC,id DESC LIMIT ${d.status === "all" ? 20 : 100} OFFSET $7`,
-      [...args, d.status === "all" ? (d.page - 1) * 20 : 0],
+        ` ORDER BY issued_at DESC,id DESC LIMIT ${d.status === "all" ? d.pageSize : 100} OFFSET $7`,
+      [...args, d.status === "all" ? (d.page - 1) * d.pageSize : 0],
     )
   ).rows;
   const rows = [];
@@ -117,10 +118,10 @@ export async function financialDocuments(tx: SQL, user: Actor, input: unknown) {
     rows:
       d.status === "all"
         ? filtered
-        : filtered.slice((d.page - 1) * 20, d.page * 20),
+        : filtered.slice((d.page - 1) * d.pageSize, d.page * d.pageSize),
     total: d.status === "all" ? count : filtered.length,
     page: d.page,
-    pageSize: 20,
+    pageSize: d.pageSize,
     branches: customer
       ? []
       : (

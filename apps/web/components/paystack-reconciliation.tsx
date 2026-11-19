@@ -1,6 +1,7 @@
 "use client";
+import { RecordPages, WorkspaceDialog } from "./compact-workspace";
 import { FieldCaption } from "./field-caption";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api, Loading, money, Notice } from "./ui";
 export default function PaystackReconciliation() {
   const [from, setFrom] = useState(() =>
@@ -13,27 +14,30 @@ export default function PaystackReconciliation() {
     [report, setReport] = useState<any>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(true);
+  const generation = useRef(0);
+  function invalidate() { generation.current++; setReport(null); setError(""); setBusy(false); }
   async function load() {
+    const current = ++generation.current;
     setBusy(true);
     setReport(null);
     setError("");
     try {
-      setReport(
-        await api("finance.paystack", {
+      const result = await api("finance.paystack", {
           from: from + "T00:00:00Z",
           to: to + "T00:00:00Z",
           ...(purpose ? { purpose } : {}),
           limit: 200,
-        }),
-      );
+        });
+      if (current === generation.current) setReport(result);
     } catch (e: any) {
-      setError(e.message);
+      if (current === generation.current) setError(e.message);
     } finally {
-      setBusy(false);
+      if (current === generation.current) setBusy(false);
     }
   }
   useEffect(() => {
     load();
+    return () => { generation.current++; };
   }, []);
   function download() {
     const cell = (v: unknown) =>
@@ -73,7 +77,7 @@ export default function PaystackReconciliation() {
         separate from recognised sales. No bank settlement is inferred.
       </p>
       <form
-        className="service-grid"
+        className="business-filters"
         onSubmit={(e) => {
           e.preventDefault();
           load();
@@ -85,7 +89,7 @@ export default function PaystackReconciliation() {
             type="date"
             required
             value={from}
-            onChange={(e) => setFrom(e.target.value)}
+            onChange={(e) => { setFrom(e.target.value); invalidate(); }}
           />
         </label>
         <label>
@@ -94,12 +98,12 @@ export default function PaystackReconciliation() {
             type="date"
             required
             value={to}
-            onChange={(e) => setTo(e.target.value)}
+            onChange={(e) => { setTo(e.target.value); invalidate(); }}
           />
         </label>
         <label>
           <FieldCaption required={false}>Purpose</FieldCaption>
-          <select value={purpose} onChange={(e) => setPurpose(e.target.value)}>
+          <select value={purpose} onChange={(e) => { setPurpose(e.target.value); invalidate(); }}>
             <option value="">All purposes</option>
             <option value="invoice">Invoice</option>
             <option value="service">Service</option>
@@ -114,7 +118,7 @@ export default function PaystackReconciliation() {
       {busy && <Loading label="Loading reconciliation records" />}
       {report && (
         <>
-          <div className="service-grid">
+          <div className="compact-metrics">
             {[
               ["Gross customer collections", report.grossCollectionsKobo],
               [
@@ -153,9 +157,9 @@ export default function PaystackReconciliation() {
             onClick={download}
             disabled={!report.rows.length}
           >
-            Export displayed collections CSV (kobo)
+            Export loaded collections CSV (kobo)
           </button>
-          <div className="table-scroll">
+          <RecordPages key={`${from}:${to}:${purpose}:${report.rows[0]?.id}`} rows={report.rows}>{visible => <div className="table-scroll">
             <table>
               <thead>
                 <tr>
@@ -173,7 +177,7 @@ export default function PaystackReconciliation() {
                 </tr>
               </thead>
               <tbody>
-                {report.rows.map((r: any) => (
+                {visible.map((r: any) => (
                   <tr key={r.id}>
                     <td>{r.provider_reference}</td>
                     <td>{r.purpose}</td>
@@ -190,27 +194,29 @@ export default function PaystackReconciliation() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </div>}</RecordPages>
+          <WorkspaceDialog title="Collection exceptions & unmatched events" trigger={`Exceptions (${report.exceptions.length})${report.unmatchedEvents?.length ? " · Unmatched events (" + report.unmatchedEvents.length + ")" : ""}`}>
           <h3>Exceptions (up to 200)</h3>
           {!report.exceptions.length ? (
             <p>No scoped exception records in this window.</p>
           ) : (
-            report.exceptions.map((e: any) => (
+            <RecordPages rows={report.exceptions}>{visible => visible.map((e: any) => (
               <p key={e.id}>
                 {e.reference} · {e.category.replaceAll("_", " ")} · {e.status}
               </p>
-            ))
+            ))}</RecordPages>
           )}
           {!!report.unmatchedEvents?.length && (
             <>
               <h3>Unmatched provider events — owner review</h3>
-              {report.unmatchedEvents.map((e: any) => (
+              <RecordPages rows={report.unmatchedEvents}>{visible => visible.map((e: any) => (
                 <p key={e.id}>
                   {e.reference} · {e.event_type} · {e.state}
                 </p>
-              ))}
+              ))}</RecordPages>
             </>
           )}
+          </WorkspaceDialog>
         </>
       )}
     </section>

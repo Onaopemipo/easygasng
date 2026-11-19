@@ -1,4 +1,5 @@
 "use client";
+import { DialogDraft, RecordPages, WorkspaceDialog } from "./compact-workspace";
 import {
   ServiceRequestLauncher,
   CustomerServiceCatalogue,
@@ -55,7 +56,7 @@ import { BundleOffers } from "./bundles";
 import { ServiceFollowups } from "./service-followups";
 import { ImageUpload } from "./image-upload";
 import { serviceMutation } from "./service-mutation";
-import { api, Notice, Loading, money } from "./ui";
+import { api, Notice, Loading, money, Modal } from "./ui";
 type Field = {
   name: string;
   label: string;
@@ -424,6 +425,8 @@ export default function ProfessionalServices({
       />
     );
   }
+  if (staff && !technician && !publicPage && ["catalogue", "bookings", "quotations"].includes(mode))
+    return <StaffServiceWorkspace mode={mode} user={user} catalogue={workspace?.services ?? catalogue} bookings={bookings} manager={Boolean(manager)} reload={reload} revision={version} />;
   return (
     <div className="service-workspace product-workspace">
       <div className="page-heading">
@@ -618,6 +621,266 @@ export default function ProfessionalServices({
         </>
       )}
     </div>
+  );
+}
+export function StaffServiceWorkspace({
+  mode,
+  user,
+  catalogue,
+  bookings,
+  manager,
+  reload,
+  revision,
+}: {
+  mode: string;
+  user: any;
+  catalogue: any[];
+  bookings: any[];
+  manager: boolean;
+  reload: () => void;
+  revision: number;
+}) {
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const isCatalogue = mode === "catalogue";
+  const source = isCatalogue
+    ? catalogue
+    : bookings.filter(
+        (b) =>
+          mode !== "quotations" || b.status === "awaiting_customer_approval",
+      );
+  const rows = source.filter(
+    (r) =>
+      (!status ||
+        (isCatalogue ? (r.config.active ? "active" : "draft") : r.status) ===
+          status) &&
+      [
+        r.name,
+        r.reference,
+        r.snapshot?.name,
+        r.customerName,
+        r.technician?.name,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+        .includes(query.trim().toLowerCase()),
+  );
+  const selected = source.find((r) => r.id === selectedId);
+  const states = isCatalogue
+    ? ["active", "draft"]
+    : [...new Set(source.map((r) => r.status))];
+  const heading = isCatalogue
+    ? "Professional services"
+    : mode === "quotations"
+      ? "Service quotations"
+      : "Service bookings";
+  return (
+    <section className="admin-compact staff-services-compact">
+      <header className="product-heading">
+        <div>
+          <h1>{heading}</h1>
+          <p>
+            {isCatalogue
+              ? "Manage pricing, availability and approved service checklists."
+              : mode === "quotations"
+                ? "Bookings awaiting customer quotation approval."
+                : "Review appointments and manage assigned work."}
+          </p>
+        </div>
+      </header>
+      <nav className="compact-tabs" aria-label="Service workspaces">
+        {[
+          ["bookings", "Bookings"],
+          ["catalogue", "Service catalogue"],
+          ["quotations", "Quotations"],
+        ].map(([id, label]) => (
+          <Link
+            key={id}
+            aria-current={id === mode ? "page" : undefined}
+            className={id === mode ? "is-active" : ""}
+            href={`/admin/${id === "catalogue" ? "services" : id}`}
+          >
+            {label}
+          </Link>
+        ))}
+        <Link href="/admin/technicians">Technicians</Link>
+      </nav>
+      <section className="surface">
+        <div className="compact-toolbar">
+          <FormInput
+            className="compact-search"
+            aria-label={`Search ${heading.toLowerCase()}`}
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={
+              isCatalogue ? "Search services…" : "Search reference or service…"
+            }
+          />
+          <div className="compact-actions">
+            <select
+              aria-label="Filter records by status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="">All statuses</option>
+              {states.map((s) => (
+                <option key={s} value={s}>
+                  {s.replaceAll("_", " ")}
+                </option>
+              ))}
+            </select>
+            <button className="button secondary" onClick={reload}>
+              Refresh
+            </button>
+          </div>
+        </div>
+        <p className="muted">
+          {rows.length} {isCatalogue ? "services" : "bookings"} in loaded
+          records
+        </p>
+        {!rows.length ? (
+          <div className="empty-state">
+            <h2>
+              {source.length
+                ? "No matching records"
+                : isCatalogue
+                  ? "No services available"
+                  : mode === "quotations"
+                    ? "No quotations awaiting approval"
+                    : "No bookings yet"}
+            </h2>
+            <p>
+              {source.length
+                ? "Try another search or status."
+                : "Records will appear here when available."}
+            </p>
+          </div>
+        ) : (
+          <RecordPages key={`${mode}:${query}:${status}`} rows={rows}>
+            {(visible) => (
+              <div className="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>{isCatalogue ? "Service" : "Booking"}</th>
+                      <th>Status</th>
+                      <th>{isCatalogue ? "Pricing" : "Visit · Lagos"}</th>
+                      <th>{isCatalogue ? "Duration" : "Verified paid"}</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {visible.map((r) => (
+                      <tr key={r.id}>
+                        <td>
+                          <strong>
+                            {isCatalogue ? r.name : r.snapshot.name}
+                          </strong>
+                          <small>
+                            {isCatalogue ? `Version ${r.version}` : r.reference}
+                          </small>
+                        </td>
+                        <td>
+                          <span className="status-badge">
+                            {isCatalogue
+                              ? r.config.active
+                                ? "Active"
+                                : "Draft"
+                              : r.status.replaceAll("_", " ")}
+                          </span>
+                        </td>
+                        <td>
+                          {isCatalogue ? (
+                            r.config.priceKobo == null ? (
+                              "Quotation required"
+                            ) : (
+                              money(r.config.priceKobo)
+                            )
+                          ) : (
+                            <>
+                              {new Intl.DateTimeFormat("en-NG", {
+                                dateStyle: "medium",
+                                timeStyle: "short",
+                                timeZone: "Africa/Lagos",
+                              }).format(new Date(r.starts_at))}
+                              {r.schedule_pending && (
+                                <small>Preferred time</small>
+                              )}
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          {isCatalogue
+                            ? `${r.config.durationMinutes} min`
+                            : money(r.billing.paidKobo)}
+                        </td>
+                        <td>
+                          <button
+                            className="button secondary"
+                            onClick={() => setSelectedId(r.id)}
+                          >
+                            {isCatalogue && manager ? "Manage" : "View details"}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </RecordPages>
+        )}
+      </section>
+      {isCatalogue && (
+        <WorkspaceDialog
+          title="Service approval controls"
+          trigger="About service approvals"
+        >
+          <p>
+            Draft services are not bookable. Configuration requires independent
+            owner approval; safety checklists require an owner and a currently
+            qualified safety reviewer.
+          </p>
+          <Link href="/admin/approvals">Open Approval Centre</Link>
+        </WorkspaceDialog>
+      )}
+      {selected && (
+        <Modal
+          className="compact-dialog"
+          title={isCatalogue ? selected.name : selected.reference}
+          onClose={() => setSelectedId(null)}
+        >
+          <DialogDraft key={`${selected.id}:${revision}`}>
+          {isCatalogue ? (
+            manager ? (
+              <ServiceEditor
+                key={`${selected.id}:${revision}`}
+                service={selected}
+                done={reload}
+                expanded
+              />
+            ) : (
+              <>
+                <p>{selected.config.description}</p>
+                <p>{servicePrice(selected.config)}</p>
+              </>
+            )
+          ) : (
+            <BookingCard
+              key={`${selected.id}:${selected.version}`}
+              booking={selected}
+              user={user}
+              done={reload}
+              compact
+            />
+          )}
+          </DialogDraft>
+        </Modal>
+      )}
+    </section>
   );
 }
 function ServiceDetail({
@@ -1199,13 +1462,15 @@ function ScheduledBookingForm({
 function ServiceEditor({
   service: s,
   done,
+  expanded = false,
 }: {
   service: any;
   done: () => void;
+  expanded?: boolean;
 }) {
   const c = s.config;
   return (
-    <details className="surface service-editor">
+    <details className="surface service-editor" open={expanded || undefined}>
       <summary>
         <strong>{s.name}</strong> · {c.active ? "Open" : "Draft"} · version{" "}
         {s.version}
@@ -1340,8 +1605,10 @@ function ServiceEditor({
           })
         }
       />
-      <ImageUpload serviceId={s.id} branchId={s.branch_id} done={done} />
-      <ChecklistEditor service={s} done={done} />
+      {expanded ? <>
+        <details className="surface"><summary>Service image</summary><ImageUpload serviceId={s.id} branchId={s.branch_id} done={done} /></details>
+        <details className="surface"><summary>Inspection checklist</summary><ChecklistEditor service={s} done={done} /></details>
+      </> : <><ImageUpload serviceId={s.id} branchId={s.branch_id} done={done} /><ChecklistEditor service={s} done={done} /></>}
     </details>
   );
 }

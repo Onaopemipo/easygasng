@@ -40,6 +40,7 @@ export async function commerceAction(
         tab: z.enum(["all", "credits", "refunds", "pending", "completed"]).default("all"),
         q: z.string().trim().max(100).default(""),
         page: z.coerce.number().int().min(1).max(1000000).default(1),
+        pageSize: z.coerce.number().int().min(1).max(20).default(20),
       }).strict().parse(input);
       return one(tx, `
         WITH scoped AS (
@@ -54,9 +55,9 @@ export async function commerceAction(
             OR ($4='pending' AND status='pending') OR ($4='completed' AND status='approved'))
           AND ($5='' OR strpos(lower(concat_ws(' ',customer_name,order_reference,receipt_reference,id)),lower($5))>0)
         ), page_rows AS (
-          SELECT * FROM filtered ORDER BY created_at DESC,id DESC LIMIT 20 OFFSET $6
+          SELECT * FROM filtered ORDER BY created_at DESC,id DESC LIMIT $7 OFFSET $6
         )
-        SELECT (SELECT count(*)::int FROM filtered) AS total,
+        SELECT $7::int AS "pageSize", (SELECT count(*)::int FROM filtered) AS total,
           (SELECT COALESCE(jsonb_agg((to_jsonb(p) || jsonb_build_object('amount_kobo',p.amount_kobo::text)) ORDER BY created_at DESC,id DESC),'[]') FROM page_rows p) AS rows,
           (SELECT jsonb_build_object(
             'all',count(*),'credits',count(*) FILTER (WHERE kind<>'refund'),
@@ -66,7 +67,7 @@ export async function commerceAction(
             'creditsKobo',COALESCE(sum(amount_kobo) FILTER (WHERE kind<>'refund' AND status='approved'),0)::text,
             'refundsKobo',COALESCE(sum(amount_kobo) FILTER (WHERE kind='refund' AND status='approved'),0)::text
           ) FROM scoped) AS summary`,
-        [user.role === "owner", user.branch_id, user.id, filters.tab, filters.q, (filters.page-1)*20]);
+        [user.role === "owner", user.branch_id, user.id, filters.tab, filters.q, (filters.page-1)*filters.pageSize, filters.pageSize]);
     }
     return (
       await tx.query(

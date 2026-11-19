@@ -1,0 +1,485 @@
+{
+  "phase": "Eight compact admin web workspaces",
+  "requirements": [
+    {
+      "id": "ACMP-01",
+      "requirement": "Compact support inbox with bounded records and focused dialogs",
+      "priority": "P1",
+      "scope": "Local responsive web presentation; existing workflow semantics retained",
+      "uiReference": "User supplied admin screenshots, 19 November 2026",
+      "route": "/admin/support",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/components/support-controls.tsx",
+        "apps/web/lib/support-desk.ts",
+        "apps/web/lib/support-sla.ts"
+      ],
+      "dataSource": "support.list, support.detail; existing scoped and paged support APIs",
+      "securityControl": "Existing authenticated role and branch APIs, approval/re-authentication/evidence controls retained; no new mutation APIs",
+      "testFiles": [
+        "tests/admin-compact.test.ts",
+        "tests/admin-compact-browser-evidence.test.ts",
+        "tests/support-completion.test.ts"
+      ],
+      "testIds": [
+        "ACMP-UI01",
+        "SUPPORT-C01",
+        "SUPPORT-C02",
+        "SUPPORT-C03",
+        "SUPPORT-C04",
+        "SUPPORT-C05"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-compact/README.md",
+        "docs/admin-compact/evidence/browser-checks.json",
+        "docs/admin-compact/evidence/browser-validation.txt",
+        "docs/admin-compact/evidence/final-focused.txt",
+        "docs/admin-compact/evidence/full-regression.txt",
+        "docs/admin-compact/evidence/types.txt",
+        "docs/admin-compact/evidence/build.txt"
+      ],
+      "acceptanceGate": "ACMP-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local web presentation and canonical-control preservation verified by executed regression, responsive browser observations and successful web build/types.",
+      "testResult": "PASS \u2014 815/815 full PostgreSQL-enabled regression, zero failures/skips; 35 focused checks (subset), 16 responsive observations, modal/focus/draft/export checks, build and types.",
+      "outstandingWork": "No outstanding work in this bounded local web phase. Hosted deployment remains unperformed. Native, physical/provider, Firefox/formal accessibility and broader production acceptance remain in prior matrices; production NO-GO, import hold and retain-all decisions unchanged."
+    },
+    {
+      "id": "ACMP-02",
+      "requirement": "Compact service bookings with bounded records and focused dialogs",
+      "priority": "P1",
+      "scope": "Local responsive web presentation; existing workflow semantics retained",
+      "uiReference": "User supplied admin screenshots, 19 November 2026",
+      "route": "/admin/bookings",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "bookings; canonical BookingCard actions",
+      "securityControl": "Existing authenticated role and branch APIs, approval/re-authentication/evidence controls retained; no new mutation APIs",
+      "testFiles": [
+        "tests/admin-compact.test.ts",
+        "tests/admin-compact-browser-evidence.test.ts",
+        "tests/customer-service-booking-redesign.test.ts"
+      ],
+      "testIds": [
+        "ACMP-BOOK",
+        "ACMP-PAGE",
+        "ACMP-UI02"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-compact/README.md",
+        "docs/admin-compact/evidence/browser-checks.json",
+        "docs/admin-compact/evidence/browser-validation.txt",
+        "docs/admin-compact/evidence/final-focused.txt",
+        "docs/admin-compact/evidence/full-regression.txt",
+        "docs/admin-compact/evidence/types.txt",
+        "docs/admin-compact/evidence/build.txt"
+      ],
+      "acceptanceGate": "ACMP-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local web presentation and canonical-control preservation verified by executed regression, responsive browser observations and successful web build/types.",
+      "testResult": "PASS \u2014 815/815 full PostgreSQL-enabled regression, zero failures/skips; 35 focused checks (subset), 16 responsive observations, modal/focus/draft/export checks, build and types.",
+      "outstandingWork": "No outstanding work in this bounded local web phase. Hosted deployment remains unperformed. Native, physical/provider, Firefox/formal accessibility and broader production acceptance remain in prior matrices; production NO-GO, import hold and retain-all decisions unchanged."
+    },
+    {
+      "id": "ACMP-03",
+      "requirement": "Compact service catalogue with bounded records and focused dialogs",
+      "priority": "P1",
+      "scope": "Local responsive web presentation; existing workflow semantics retained",
+      "uiReference": "User supplied admin screenshots, 19 November 2026",
+      "route": "/admin/services",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "services.manage and services.catalogue; existing ServiceEditor approval actions",
+      "securityControl": "Existing authenticated role and branch APIs, approval/re-authentication/evidence controls retained; no new mutation APIs",
+      "testFiles": [
+        "tests/admin-compact.test.ts",
+        "tests/admin-compact-browser-evidence.test.ts",
+        "tests/customer-service-booking-redesign.test.ts"
+      ],
+      "testIds": [
+        "ACMP-CAT",
+        "ACMP-UI03"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-compact/README.md",
+        "docs/admin-compact/evidence/browser-checks.json",
+        "docs/admin-compact/evidence/browser-validation.txt",
+        "docs/admin-compact/evidence/final-focused.txt",
+        "docs/admin-compact/evidence/full-regression.txt",
+        "docs/admin-compact/evidence/types.txt",
+        "docs/admin-compact/evidence/build.txt"
+      ],
+      "acceptanceGate": "ACMP-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local web presentation and canonical-control preservation verified by executed regression, responsive browser observations and successful web build/types.",
+      "testResult": "PASS \u2014 815/815 full PostgreSQL-enabled regression, zero failures/skips; 35 focused checks (subset), 16 responsive observations, modal/focus/draft/export checks, build and types.",
+      "outstandingWork": "No outstanding work in this bounded local web phase. Hosted deployment remains unperformed. Native, physical/provider, Firefox/formal accessibility and broader production acceptance remain in prior matrices; production NO-GO, import hold and retain-all decisions unchanged."
+    },
+    {
+      "id": "ACMP-04",
+      "requirement": "Compact service quotations with bounded records and focused dialogs",
+      "priority": "P1",
+      "scope": "Local responsive web presentation; existing workflow semantics retained",
+      "uiReference": "User supplied admin screenshots, 19 November 2026",
+      "route": "/admin/quotations",
+      "implementationFiles": [
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/lib/professional-services.ts"
+      ],
+      "dataSource": "bookings awaiting_customer_approval; existing quotation actions",
+      "securityControl": "Existing authenticated role and branch APIs, approval/re-authentication/evidence controls retained; no new mutation APIs",
+      "testFiles": [
+        "tests/admin-compact.test.ts",
+        "tests/admin-compact-browser-evidence.test.ts",
+        "tests/customer-service-booking-redesign.test.ts"
+      ],
+      "testIds": [
+        "ACMP-QUOTE",
+        "ACMP-UI04"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-compact/README.md",
+        "docs/admin-compact/evidence/browser-checks.json",
+        "docs/admin-compact/evidence/browser-validation.txt",
+        "docs/admin-compact/evidence/final-focused.txt",
+        "docs/admin-compact/evidence/full-regression.txt",
+        "docs/admin-compact/evidence/types.txt",
+        "docs/admin-compact/evidence/build.txt"
+      ],
+      "acceptanceGate": "ACMP-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local web presentation and canonical-control preservation verified by executed regression, responsive browser observations and successful web build/types.",
+      "testResult": "PASS \u2014 815/815 full PostgreSQL-enabled regression, zero failures/skips; 35 focused checks (subset), 16 responsive observations, modal/focus/draft/export checks, build and types.",
+      "outstandingWork": "No outstanding work in this bounded local web phase. Hosted deployment remains unperformed. Native, physical/provider, Firefox/formal accessibility and broader production acceptance remain in prior matrices; production NO-GO, import hold and retain-all decisions unchanged."
+    },
+    {
+      "id": "ACMP-05",
+      "requirement": "Compact financial summary with bounded records and focused dialogs",
+      "priority": "P1",
+      "scope": "Local responsive web presentation; existing workflow semantics retained",
+      "uiReference": "User supplied admin screenshots, 19 November 2026",
+      "route": "/admin/finance",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/business-operation.ts"
+      ],
+      "dataSource": "business.snapshot; expense.* approvals and payment evidence",
+      "securityControl": "Existing authenticated role and branch APIs, approval/re-authentication/evidence controls retained; no new mutation APIs",
+      "testFiles": [
+        "tests/admin-compact.test.ts",
+        "tests/admin-compact-browser-evidence.test.ts",
+        "tests/inventory-finance.test.ts"
+      ],
+      "testIds": [
+        "ACMP-FIN",
+        "I,J,P",
+        "ACMP-UI05"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-compact/README.md",
+        "docs/admin-compact/evidence/browser-checks.json",
+        "docs/admin-compact/evidence/browser-validation.txt",
+        "docs/admin-compact/evidence/final-focused.txt",
+        "docs/admin-compact/evidence/full-regression.txt",
+        "docs/admin-compact/evidence/types.txt",
+        "docs/admin-compact/evidence/build.txt"
+      ],
+      "acceptanceGate": "ACMP-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local web presentation and canonical-control preservation verified by executed regression, responsive browser observations and successful web build/types.",
+      "testResult": "PASS \u2014 815/815 full PostgreSQL-enabled regression, zero failures/skips; 35 focused checks (subset), 16 responsive observations, modal/focus/draft/export checks, build and types.",
+      "outstandingWork": "No outstanding work in this bounded local web phase. Hosted deployment remains unperformed. Native, physical/provider, Firefox/formal accessibility and broader production acceptance remain in prior matrices; production NO-GO, import hold and retain-all decisions unchanged."
+    },
+    {
+      "id": "ACMP-06",
+      "requirement": "Compact financial reconciliation with bounded records and focused dialogs",
+      "priority": "P1",
+      "scope": "Local responsive web presentation; existing workflow semantics retained",
+      "uiReference": "User supplied admin screenshots, 19 November 2026",
+      "route": "/admin/reconciliation",
+      "implementationFiles": [
+        "apps/web/components/reconciliation.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/components/document-library.tsx",
+        "apps/web/components/paystack-reconciliation.tsx",
+        "apps/web/lib/financial-documents.ts"
+      ],
+      "dataSource": "finance.summary, finance.ledger, finance.paystack and documents.list",
+      "securityControl": "Existing authenticated role and branch APIs, approval/re-authentication/evidence controls retained; no new mutation APIs",
+      "testFiles": [
+        "tests/admin-compact.test.ts",
+        "tests/admin-compact-browser-evidence.test.ts",
+        "tests/admin-compact-documents.test.ts",
+        "tests/financial-document-integration.test.ts"
+      ],
+      "testIds": [
+        "ACMP-DOCS",
+        "DOC-LIBRARY",
+        "DOC-STATUS-BUDGET",
+        "ACMP-UI06"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-compact/README.md",
+        "docs/admin-compact/evidence/browser-checks.json",
+        "docs/admin-compact/evidence/browser-validation.txt",
+        "docs/admin-compact/evidence/final-focused.txt",
+        "docs/admin-compact/evidence/full-regression.txt",
+        "docs/admin-compact/evidence/types.txt",
+        "docs/admin-compact/evidence/build.txt"
+      ],
+      "acceptanceGate": "ACMP-G06",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local web presentation and canonical-control preservation verified by executed regression, responsive browser observations and successful web build/types.",
+      "testResult": "PASS \u2014 815/815 full PostgreSQL-enabled regression, zero failures/skips; 35 focused checks (subset), 16 responsive observations, modal/focus/draft/export checks, build and types.",
+      "outstandingWork": "No outstanding work in this bounded local web phase. Hosted deployment remains unperformed. Native, physical/provider, Firefox/formal accessibility and broader production acceptance remain in prior matrices; production NO-GO, import hold and retain-all decisions unchanged."
+    },
+    {
+      "id": "ACMP-07",
+      "requirement": "Compact credits and refunds with bounded records and focused dialogs",
+      "priority": "P1",
+      "scope": "Local responsive web presentation; existing workflow semantics retained",
+      "uiReference": "User supplied admin screenshots, 19 November 2026",
+      "route": "/admin/credits",
+      "implementationFiles": [
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/components/credit-customer-search.tsx",
+        "apps/web/lib/commerce.ts"
+      ],
+      "dataSource": "credits workspace, credit.customers, credit.request and credit.decide",
+      "securityControl": "Existing authenticated role and branch APIs, approval/re-authentication/evidence controls retained; no new mutation APIs",
+      "testFiles": [
+        "tests/admin-compact.test.ts",
+        "tests/admin-compact-browser-evidence.test.ts",
+        "tests/admin-compact-credits.test.ts",
+        "tests/credit-customer-search.test.ts"
+      ],
+      "testIds": [
+        "ACMP-CREDITS",
+        "CREDIT-SEARCH01",
+        "CREDIT-SELECT01",
+        "CREDIT-HTTP01",
+        "ACMP-UI07"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-compact/README.md",
+        "docs/admin-compact/evidence/browser-checks.json",
+        "docs/admin-compact/evidence/browser-validation.txt",
+        "docs/admin-compact/evidence/final-focused.txt",
+        "docs/admin-compact/evidence/full-regression.txt",
+        "docs/admin-compact/evidence/types.txt",
+        "docs/admin-compact/evidence/build.txt"
+      ],
+      "acceptanceGate": "ACMP-G07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local web presentation and canonical-control preservation verified by executed regression, responsive browser observations and successful web build/types.",
+      "testResult": "PASS \u2014 815/815 full PostgreSQL-enabled regression, zero failures/skips; 35 focused checks (subset), 16 responsive observations, modal/focus/draft/export checks, build and types.",
+      "outstandingWork": "No outstanding work in this bounded local web phase. Hosted deployment remains unperformed. Native, physical/provider, Firefox/formal accessibility and broader production acceptance remain in prior matrices; production NO-GO, import hold and retain-all decisions unchanged."
+    },
+    {
+      "id": "ACMP-08",
+      "requirement": "Compact reports and analytics with bounded records and focused dialogs",
+      "priority": "P1",
+      "scope": "Local responsive web presentation; existing workflow semantics retained",
+      "uiReference": "User supplied admin screenshots, 19 November 2026",
+      "route": "/admin/reports",
+      "implementationFiles": [
+        "apps/web/components/business-centre.tsx",
+        "apps/web/components/compact-workspace.tsx",
+        "apps/web/app/admin-compact.css",
+        "apps/web/lib/business-reporting.ts",
+        "apps/web/components/owner-governance-links.tsx"
+      ],
+      "dataSource": "business.report/export and report.schedule canonical APIs",
+      "securityControl": "Existing authenticated role and branch APIs, approval/re-authentication/evidence controls retained; no new mutation APIs",
+      "testFiles": [
+        "tests/admin-compact.test.ts",
+        "tests/admin-compact-browser-evidence.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/report-empty-state.test.ts"
+      ],
+      "testIds": [
+        "ACMP-REPORT",
+        "ACMP-INTERACT",
+        "ACMP-UI08"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-compact/README.md",
+        "docs/admin-compact/evidence/browser-checks.json",
+        "docs/admin-compact/evidence/browser-validation.txt",
+        "docs/admin-compact/evidence/final-focused.txt",
+        "docs/admin-compact/evidence/full-regression.txt",
+        "docs/admin-compact/evidence/types.txt",
+        "docs/admin-compact/evidence/build.txt"
+      ],
+      "acceptanceGate": "ACMP-G08",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local web presentation and canonical-control preservation verified by executed regression, responsive browser observations and successful web build/types.",
+      "testResult": "PASS \u2014 815/815 full PostgreSQL-enabled regression, zero failures/skips; 35 focused checks (subset), 16 responsive observations, modal/focus/draft/export checks, build and types.",
+      "outstandingWork": "No outstanding work in this bounded local web phase. Hosted deployment remains unperformed. Native, physical/provider, Firefox/formal accessibility and broader production acceptance remain in prior matrices; production NO-GO, import hold and retain-all decisions unchanged."
+    },
+    {
+      "id": "ACMP-09",
+      "requirement": "Preserve authenticated scope, canonical financial source adapters and independent mutation controls",
+      "priority": "P0",
+      "scope": "Cross-cutting preservation for all eight redesigned web workspaces",
+      "uiReference": "User AGENTS.md preservation and traceability requirements",
+      "route": "/admin/support,/admin/bookings,/admin/services,/admin/quotations,/admin/finance,/admin/reconciliation,/admin/credits,/admin/reports",
+      "implementationFiles": [
+        "apps/web/lib/financial-documents.ts",
+        "apps/web/lib/commerce.ts",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/web/components/business-centre.tsx"
+      ],
+      "dataSource": "Existing role/branch API checks, immutable invoices, canonical credit requests and verified records; validated page-size contracts default to previous20 and accept1\u201320",
+      "securityControl": "No permission or approval relaxation; no new money/stock/fulfilment mutation API. Unauthorized scopes and invalid sizes rejected; exports retain filtered canonical rows. Previous NO-GO/import/retain-all decisions preserved.",
+      "testFiles": [
+        "tests/admin-compact-documents.test.ts",
+        "tests/admin-compact-credits.test.ts",
+        "tests/credit-customer-search.test.ts",
+        "tests/financial-document-integration.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/support-completion.test.ts"
+      ],
+      "testIds": [
+        "ACMP-DOCS",
+        "ACMP-CREDITS",
+        "CREDIT-SEARCH01",
+        "DOC-LIBRARY",
+        "SUPPORT-C02",
+        "G,H,L,N,O"
+      ],
+      "negativeTests": [
+        "ACMP-DOCS: compact document pages preserve canonical records, totals and status filtering and reject invalid page sizes",
+        "ACMP-CREDITS: one server pager retains all scoped credit requests and rejects invalid size, role and branch access",
+        "CREDIT-SEARCH01: authorised quick search matches names, email, phone and ID, excluding inactive/staff/cross-branch customers"
+      ],
+      "evidence": [
+        "docs/admin-compact/README.md",
+        "docs/admin-compact/evidence/browser-checks.json",
+        "docs/admin-compact/evidence/browser-validation.txt",
+        "docs/admin-compact/evidence/final-focused.txt",
+        "docs/admin-compact/evidence/full-regression.txt",
+        "docs/admin-compact/evidence/types.txt",
+        "docs/admin-compact/evidence/build.txt"
+      ],
+      "acceptanceGate": "ACMP-G09",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local web presentation and canonical-control preservation verified by executed regression, responsive browser observations and successful web build/types.",
+      "testResult": "PASS \u2014 815/815 full PostgreSQL-enabled regression, zero failures/skips; 35 focused checks (subset), 16 responsive observations, modal/focus/draft/export checks, build and types.",
+      "outstandingWork": "No outstanding work in this bounded local web phase. Hosted deployment remains unperformed. Native, physical/provider, Firefox/formal accessibility and broader production acceptance remain in prior matrices; production NO-GO, import hold and retain-all decisions unchanged."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ACMP-G01",
+      "description": "Support inbox desktop/mobile and canonical workflow preservation",
+      "status": "PASS"
+    },
+    {
+      "id": "ACMP-G02",
+      "description": "Service bookings desktop/mobile and canonical workflow preservation",
+      "status": "PASS"
+    },
+    {
+      "id": "ACMP-G03",
+      "description": "Service catalogue desktop/mobile and canonical workflow preservation",
+      "status": "PASS"
+    },
+    {
+      "id": "ACMP-G04",
+      "description": "Service quotations desktop/mobile and canonical workflow preservation",
+      "status": "PASS"
+    },
+    {
+      "id": "ACMP-G05",
+      "description": "Financial summary desktop/mobile and canonical workflow preservation",
+      "status": "PASS"
+    },
+    {
+      "id": "ACMP-G06",
+      "description": "Financial reconciliation desktop/mobile and canonical workflow preservation",
+      "status": "PASS"
+    },
+    {
+      "id": "ACMP-G07",
+      "description": "Credits and refunds desktop/mobile and canonical workflow preservation",
+      "status": "PASS"
+    },
+    {
+      "id": "ACMP-G08",
+      "description": "Reports and analytics desktop/mobile and canonical workflow preservation",
+      "status": "PASS"
+    },
+    {
+      "id": "ACMP-G09",
+      "description": "Negative scope/size checks, canonical totals and existing independent controls pass",
+      "status": "PASS"
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "All eight supplied areas included; no previous requirement or production decision removed"
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Added explicit cross-cutting ACMP-09 preservation requirement. Bounded document/credit reads accept validated pageSize1\u201320 with previous default20; only redesigned staff consumers request8. No mutation semantics or schema migrations changed."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Initial raw search input failed existing PWD-03 convention; corrected to shared FormInput. Initial aggregate browser evidence retained stale measurements; manifest reconciled with final captured observations, with earlier manifest retained. Current focused checks pass; full regression rerun is in progress."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Final 815/815 regression has 0 failures/skips. Single server-backed credit pager verified after adding a validated optional read size. All 9 requirements/gates verified for bounded local web scope; no deployment/native build or prior release decision change."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 9,
+      "verified": 9,
+      "total": 9
+    },
+    "criticalRequirements": {
+      "verified": 1,
+      "total": 1
+    },
+    "routes": {
+      "verified": 8,
+      "total": 8
+    },
+    "gates": {
+      "passed": 9,
+      "total": 9
+    },
+    "excluded": 0,
+    "denominatorNote": "Local eight-workspace web redesign only; no prior phase requirement or gate removed or reclassified."
+  }
+}

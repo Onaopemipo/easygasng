@@ -1,0 +1,962 @@
+✔ ACI-01: older recorded migrations repair missing default-address field without losing addresses or inferring a default (1053.977083ms)
+✔ ONBOARD-01: staff email acceptance, replacement before access and replay rejection (1402.316917ms)
+✔ ONBOARD-02: admin-created customer must accept and replace the emailed password (1078.294375ms)
+✔ ONBOARD-03: recovery covers staff and customers with bounded sends and single-use links (1011.705333ms)
+✔ ADR-01: full house addresses identify a single configured locality (0.90525ms)
+✔ ADR-04: addresses without commas match only explicit locality and city suffixes (0.066583ms)
+✔ ADR-02: ambiguous, unknown and street-name matches require confirmation (0.107958ms)
+✔ ADR-03: changing or deleting an address cannot reuse a previous automatic match (0.051167ms)
+✔ ADR-07: address edits preserve explicitly selected and saved areas (0.159333ms)
+✔ ADR-08: an automatic suggestion follows the address and respects current choices (0.064209ms)
+✖ ACMP-UI01: support desktop and phone layouts fit with bounded content and no default dialog (1.084209ms)
+✖ ACMP-UI02: bookings desktop and phone layouts fit with bounded content and no default dialog (0.135208ms)
+✖ ACMP-UI03: services desktop and phone layouts fit with bounded content and no default dialog (0.085333ms)
+✖ ACMP-UI04: quotations desktop and phone layouts fit with bounded content and no default dialog (0.062833ms)
+✖ ACMP-UI05: finance desktop and phone layouts fit with bounded content and no default dialog (0.067958ms)
+✖ ACMP-UI06: reconciliation desktop and phone layouts fit with bounded content and no default dialog (2.476833ms)
+✔ ACMP-UI07: credits desktop and phone layouts fit with bounded content and no default dialog (0.31425ms)
+✖ ACMP-UI08: reports desktop and phone layouts fit with bounded content and no default dialog (0.144333ms)
+✔ ACMP-INTERACT: recorded browser checks cover canonical lookup, draft guards, focus, document pages and full CSV export (0.5395ms)
+✔ ACMP-DOCS: compact document pages preserve canonical records, totals and status filtering and reject invalid page sizes (1191.227875ms)
+✔ ACMP-PAGE: record windows retain every loaded record without duplicates or out-of-range blanks (4.093958ms)
+✔ ACMP-BOOK: staff booking list bounds rows and excludes private details and unselected action forms (3.843625ms)
+✔ ACMP-QUOTE: quotation scope and explicit empty/search states do not display unrelated bookings (1.679ms)
+✔ ACMP-CAT: one catalogue table shows draft state and no public booking card or inline service editor (1.746458ms)
+✔ ACMP-FIN: unavailable profits remain distinct from zero and secondary financial details stay out of the overview (0.733667ms)
+✔ ACMP-DIALOG: secondary workflows do not mount until requested and tabs retain accessible current state (0.283791ms)
+✔ ACMP-REPORT: schedule history retains records with bounded tables and one empty state (1.591916ms)
+Admin isolated HTTP search60 request total ms: 221
+✔ ADM-HTTP18: admin reads enforce authentication, read-only HTTP methods and a persistent per-user search budget (1174.621333ms)
+✔ ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero-data states (972.986875ms)
+✔ ADM-AUTH03: dashboard and search reject customer, forged role and cross-branch scope (836.881791ms)
+✔ ADM-SEARCH12: search returns permitted records only and treats wildcards/injection as literal input (740.633834ms)
+✔ ADM-REL01: failed order widget is isolated without discarding other canonical widgets (716.101959ms)
+✔ ADM-FILTER03: invalid dates, oversized ranges and excessive pages are rejected (716.705583ms)
+✔ ADM-BIZ02: receipts exclude unverified collections and match the existing finance definition after reconciliation (864.660917ms)
+✔ ADM-AUTH01: single canonical login returns actual role, never accepts a requested privilege (823.87175ms)
+✔ ADM-NOTIFY12: unread totals are not limited to display rows and links recheck branch and module access (758.672417ms)
+✔ APPROVAL-PAGE01: server pagination covers more than 200 records with stable ordering, filtering, totals and bounded pages (1130.51625ms)
+✔ APPROVAL-SCOPE01: pagination and summary enforce branch and view permissions; field roles cannot read requests (664.992042ms)
+✔ APPROVAL-HTTP01: paginated approvals require authentication and are read only over HTTP (656.743708ms)
+✔ DAN-PG01: concurrent assignment retries commit one driver notification and rolled-back writes publish none (742.478333ms)
+✔ DAN-01: owner first assignment notifies only its driver once across operation replay and keeps customer code private (1042.592875ms)
+✔ DAN-02: enhanced first assignment and reassignment each notify the receiving driver exactly once (912.616459ms)
+✔ DAN-03: unavailable driver rejection and a failure after attempt creation leave no phantom assignment alert (767.782458ms)
+✔ AUDIT-PAGE01: server pages beyond the legacy200 cap with stable ties, full-history literal search and no mutation (1036.829792ms)
+✔ AUDIT-PAGE02: authorised administrator retains global read; customer/operational roles and invalid pagination are rejected (759.770583ms)
+✔ encrypted backup verifies authentication and restores the actual database in isolation (1456.299167ms)
+✔ encrypted restore preserves completed service reports, verified receipts and immutable history (1560.028083ms)
+✔ BULK-HTTP01: actual read handler enforces GET, authentication, staff/driver scope and disabled release configuration (974.594958ms)
+✔ BULK-PG01: separate connections serialize duplicate vehicle loads and rollback preserves canonical reservations and custody history (836.237708ms)
+✔ BULK-05: independent cash reconciliation cannot duplicate existing verified order principal (967.286166ms)
+✔ BULK-04: last-unit reservations, capacity, expired qualification and disabled-feature negatives preserve physical custody (789.317125ms)
+✔ BULK-01: loading reserves only buffer; independent acknowledgement, return and replay preserve canonical mass (779.885625ms)
+✔ BULK-02: cancelling loaded gas retains vehicle reservation and discrepancy holds closure without inventing adjustments (733.994ms)
+✔ BULK-03: metered dispensing enforces arrival, invoice payment, safety and exact quantity; fulfilment debits canonical gas once (792.283709ms)
+✔ METER-02: emergency retirement stops dispensing and requires current owner verification and qualification (1073.519166ms)
+✔ METER-01: renewed calibration preserves evidence, rejects stale/unauthorised changes and retires without releasing custody (795.403791ms)
+✔ RECOVERY-01: shared independent approval atomically reconciles measured loss and releases only vehicle buffer once (1065.034458ms)
+✔ RECOVERY-02: changed balances, stale versions and disabled release cannot activate a stock recovery (776.909833ms)
+✔ RECOVERY-03: future measurements, insufficient reserved stock and expired maker qualifications fail closed (808.544459ms)
+✔ independently governed bundles calculate service-only savings and atomically snapshot linked fulfilments (1257.915ms)
+✔ CRM-RETURN-01: campaign return reporting requires paid delivered purchase, real completion time and no refund; branch reads stay scoped (984.345208ms)
+✔ CRM-BRANCH-01: moved customers are excluded from new campaign audiences (758.904209ms)
+✔ CRM-PAGE-01: bounded search pages retain every scoped customer and targeted follow-ups are not limited to the first page (762.668125ms)
+✔ requested catalogue prices are exact, separate empty cylinders from refills and never invent stock (852.632458ms)
+✔ CATALOGUE-UPGRADE01: upgrade preserves stock, reservations and confirmed order prices and only imports once (693.041208ms)
+✔ mixed checkout is atomic across product reservations, technician availability and replay (1221.277625ms)
+✔ managed categories, variant metadata and archiving cannot bypass approved prices or compatibility review (926.031792ms)
+✔ image validation rejects active/invalid formats and keeps booking photographs private and report evidence locked (987.076333ms)
+✔ downloadable report escapes customer-controlled markup and distinguishes unsafe outcomes from certification (2.0815ms)
+✔ reviewed recommendations count real events, never claim unknown compatibility and disappear for unavailable products (900.229792ms)
+✔ finance reports separate service receipts, pending cash, liabilities and unknown profit without truncating ledger pagination (1003.64525ms)
+✔ CHECKOUT-PREFILL01: prefer the saved default, fall back to a usable legacy address and then to the account contact (0.733875ms)
+✔ CHECKOUT-SAVE01: preferred delivery phone fills new and default addresses while alternate addresses keep their contact (0.071333ms)
+✔ purchase credit requires independent verification, is append-only and cannot replay funding (899.991333ms)
+✔ wallet checkout debits once and cancellation restores exact purchase credit once (46.550292ms)
+✔ insufficient wallet funds cannot reserve stock or create a payment (8.205ms)
+✔ POS uses approved server prices, prevents overselling and verifies cash-up independently (75.453208ms)
+✔ refund credit requires customer consent and cannot exceed the original verified order (47.167875ms)
+✔ new point-to-wallet conversions are closed while historical outcomes remain replayable (9.054708ms)
+✔ concurrent wallet checkouts cannot overdraw the same purchase-credit balance (37.49375ms)
+✔ prepaid wallet delivery collects no cash and cannot earn from unapproved seeded economics (102.190167ms)
+✔ MWEB-03-GATE: disabled card checkout cannot reserve stock; enabled sandbox card remains unpaid and cannot dispatch (88.746459ms)
+✔ POS-MONEY01: naira input is converted exactly and rejects excess precision and exponents (0.233917ms)
+✔ credits workspace pages the full scoped history and hides maker decisions (10.728708ms)
+✔ COMPACT-STEP01: steppers follow backend increments and precision without filling the cylinder (0.598459ms)
+✔ COMPACT-MONEY01: fractional naira are displayed without rounding away kobo (9.387583ms)
+✔ CGP-PG: independent PostgreSQL transactions reject concurrent duplicate profiles and stale supply writes (627.739ms)
+✔ CGP-T08: recurring count intersects active plans and active authorisations (1132.998584ms)
+✔ CGP-T06: missing optional sources stay unavailable and expired sessions fail closed (0.769125ms)
+✔ CGP-T37: repeat profile creation cannot duplicate a refill size (11.992541ms)
+✔ CGP-T27: a stale supply report cannot overwrite a confirmed report or append duplicates (12.512917ms)
+✔ CGP-T31: cross-customer, staff and expired sessions cannot read or mutate private profiles (11.166834ms)
+✔ CREDIT-SEARCH01: authorised quick search matches names, email, phone and ID, excluding inactive/staff/cross-branch customers (1151.963917ms)
+✔ CREDIT-SELECT01: selected canonical account receives only a pending credit request; wallet and unrelated customers remain unchanged (923.802916ms)
+✔ CREDIT-HTTP01: financial customer search is authenticated GET with strict validation and no POST mutation (920.687042ms)
+✔ CREDIT-FORM01: real credit form submits selected canonical IDs as hidden fields and never asks staff to copy an ID (149.935667ms)
+✔ CRM-PAGE01: all follow-ups remain reachable with stable equal-date pagination and branch-private cursors (1040.67675ms)
+✔ CRM-HTTP01: summary and paged follow-ups use actual authenticated GET handlers; mutations and private reads remain separated (963.066167ms)
+✔ ALERT-QUEUE: dialogs remain ordered, cancel safely, ignore stale/double clicks and abort abandoned actions without confirming (0.718625ms)
+✔ ALERT-MESSAGE: technical errors become actionable while payment, safety and pending-state explanations remain exact (0.594ms)
+✔ ALERT-WIRING: browser/native native-alert calls are replaced; async forms retain their element and required approval reason (5.938833ms)
+✔ CACC-UI01: profile is the default settings entry with navigation and no open editor or unrelated forms (6.856458ms)
+✔ CACC-UI02: addresses and privacy summaries expose focused actions without open forms or secret session identifiers (13.591542ms)
+✔ CACC-UI03: communication fields use server contract names, bounded hour choices and independent saved values (1.197583ms)
+✔ CACC-API01: address edits remain owner-scoped and preserve recipient details, default and archive semantics (1138.022ms)
+✔ CACC-API02: preferences and channel purposes persist independently and reject invalid hours or another customer's marketing change (918.260917ms)
+✔ CACC-API03: privacy requires fresh password verification, retains deletion records and cannot revoke another customer's session (1006.829542ms)
+✔ CACC-UI04: public review entry opens the dedicated reviews settings section (1.352125ms)
+{"measurement":"local PGlite order summary milliseconds","samples":10,"median":0.9881250000000819,"max":1.0376249999999345}
+✔ CD-R: all 15 customer routes are unique and grouped; service descendants and tracking match safely (855.873208ms)
+✔ CD-D: safe login return rejects external, encoded, admin and malformed destinations (0.442208ms)
+✔ CD-G,H: shared cart roundtrip preserves quantities through public/account/login navigation without duplicate products (0.436709ms)
+✔ CD-J: empty dashboard has zero actual counts and no fabricated records (20.566375ms)
+✔ CD-I,K,V,Z: order summary, actual unread counts, activity and strict identity ownership (21.816167ms)
+✔ CD-L,M,Z: authoritative wallet/reward entries include reversals and remain customer-owned (5.206416ms)
+✔ CD-O,Q: verified delivered history excludes unpaid/cancelled/other accounts and counts each gas line once (8.767916ms)
+✔ CD-U,Z: default address comes only from active owned backend locations (12.92525ms)
+✔ CD-E,F: revoked and expired sessions cannot retrieve any dashboard source (6.54875ms)
+✔ CD-Y: refill source failure does not prevent independent orders, wallet or history responses (8.0385ms)
+✔ CD-Z: browser-supplied customer IDs cannot widen existing customer API reads (38.249583ms)
+✔ CD-63: customer overview query timing is measured on isolated local database (10.121666ms)
+✔ CD-N: all five feedback states are owned; snooze and self-reports suppress obsolete reminders without manufacturing purchases (227.743709ms)
+✔ ONB-004: verified customer home only; staff, unresolved links and non-home screens cannot auto-open (0.359333ms)
+✔ ONB-004: any historical seen value is respected without using identity data (0.073459ms)
+✔ ONB-001/002/003: navigation is bounded and claims preserve actual availability and verification constraints (0.381333ms)
+✔ CM-01: customer creation, scoped management and privilege rejection (938.911ms)
+✔ CUI-DATA: physical cylinders and issued invoices are canonical, owned, read-only and reject staff/identity injection (976.114833ms)
+✔ CUI-NAV: notification targets are allowlisted and never execute external links or malformed order identifiers (0.331708ms)
+✔ CUI-SCOPE: later onboarding and native configuration changes are explicitly traced (4.251ms)
+✔ CUI-LINK: native destinations are allowlisted, reject credential URLs and retain only validated owned-order selectors (0.528667ms)
+✔ CUI-HTTP: customer read resources use GET-compatible query actions instead of forbidden POST bodies (0.254125ms)
+✔ CNIN-UI01: actual summary list keeps delivery codes and full instructions out of initial markup (16.165208ms)
+✔ CNIN-UI02: notification presentation preserves sandbox/payment meaning and safe destinations (0.222208ms)
+✔ CNIN-UI03: empty search and unread states remain distinct and read items have no duplicate read action (1.182333ms)
+✔ CORD-01: search and status grouping preserve failed deliveries and all terminal orders (0.481958ms)
+✔ CORD-02: actual initial page bounds eight orders to six summaries without mounting sensitive details, refund forms or document library (10.403875ms)
+✔ CORD-03: unknown identity snapshot renders no former customer orders and empty snapshots show a clear first-order state (3.433459ms)
+✔ CORD-04: refund labels resolve canonical source IDs privately and never expose technical IDs as customer labels (0.084333ms)
+✔ CORD-05: embedding visit history removes the extra disclosure while preserving the existing staff default (1.194542ms)
+✔ CSBK-UI01: compact booking summaries label preferred times without mounting contact, payment or reports (4.073167ms)
+✔ CSBK-UI02: service launcher offers booking without loading technician availability or an expanded form (3.009792ms)
+✔ CSBK-API01: requests are accepted with no available technician, reserve no capacity, notify coordination and recover without duplication (1142.456209ms)
+✔ CSBK-API02: unassigned requests reject invalid time, coverage, stale pricing, inactive service, mixed slot inputs and foreign follow-ups without orphan rows (934.249833ms)
+✔ CSBK-API03: ownership and actual qualified assignment remain mandatory before confirming or progressing a request (940.969208ms)
+✔ CSBK-API04: preferred-time changes remain unassigned, versioned and noncollectible without technician availability (925.789ms)
+✔ CSBK-UI03: catalogue keeps customer booking in a dialog and public sign-in retains the requested service (2.640875ms)
+✔ CSBK-API05: lost commit acknowledgement recovers one owned preferred-time request and one preference record (904.658958ms)
+✔ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (563.413417ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (1.519083ms)
+✔ limited delegation requires independent owner review and cannot approve grantor requests or exceed its ceiling (1018.902083ms)
+✔ revoked delegation invalidates scheduled approval before activation (825.707792ms)
+✔ financial and security settings cannot be delegated through the limited grant workflow (768.410708ms)
+✔ DEMO-GUARD01: isolated role fixtures refuse production and hosted database environments (320.483458ms)
+✔ Supabase migration creates an unexposed schema with RLS and a restricted server role (1320.196125ms)
+✔ the restricted trusted-server role can run the complete local order-to-cash workflow (1086.090708ms)
+✔ the restricted runtime role supports new accounts, catalogue, purchasing, credit, support and maintenance without owner privileges (966.922333ms)
+✔ DDI-S024: unavailable drivers cannot receive a legacy manual assignment (1017.704416ms)
+✔ DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection (760.288167ms)
+✔ DDI-READ01: scoped counts include every matching record and pagination never changes totals (963.401875ms)
+✔ DDI-READ02: dispatch reads reject customer/driver access and cross-branch filters (710.486333ms)
+✔ DDI-READ03: empty-date dashboard reports actual zeros and unknown contact (719.711708ms)
+✔ DDI-CONTACT01: foreground contact is independently measured, scoped and expires without changing availability (745.479875ms)
+✔ DDI-PAY01: unverified payment and revoked COD exception block canonical assignment with no attempt (746.093166ms)
+✔ DDI-S031: expired authorisation prevents driver acknowledgement without a response (740.656375ms)
+✔ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes (10.430958ms)
+✔ DDI-S016: Lagos date boundaries and contact freshness never use upload time or future observations (0.593125ms)
+✔ DDI-READ04: literal search and status filters share scope and hide private order internals (747.911625ms)
+✔ DDI-KPI01: completed counts use actual Lagos delivery date rather than scheduled date (758.572541ms)
+✔ DDI-MASS01: vehicle mass is read once from custody and never added to inclusive branch stock (737.838333ms)
+✔ DDI-DECLINE01: declined assignments surface in exceptions and replay retains one response (756.166167ms)
+✔ DDI-S084: production assignment stays disabled without both explicit release approvals (730.889125ms)
+✔ DDI-PAY02: legacy invoice-less fulfilment uses the shared net-payment authority after an approved refund (724.666375ms)
+✔ DDI-S060: missing serialized cylinder allocation blocks dispatch before a delivery attempt (729.580584ms)
+✔ DISP-CUSTODY01: dispatch recommendation and final backend guard include unallocated physical vehicle LPG (1016.800875ms)
+✔ DDI-PHOTO01: customer latest proof follows completed canonical deliveries; expired private URLs deny access while bytes/history remain (1148.255584ms)
+✔ ROUTE-PG01: independent connections serialize destination revisions and preserve immutable history (720.474125ms)
+✔ ROUTE-01: Lagos deadlines, stop allowance and explicit whole-route cost (2.536084ms)
+✔ ROUTE-02: configured HTTPS OSRM contract, OFF flag and bounded invalid responses (2.036042ms)
+✔ ROUTE-03: authorised destination revisions and stale-context rejection using canonical orders/trips (1087.387042ms)
+✔ BRAND-01: all SMTP email uses escaped branded HTML, embedded logo and original plain text (2.761917ms)
+✔ DOOR-MULTI01: every cylinder has distinct inspection, per-cylinder meter evidence and one settled supplementary obligation (1134.257625ms)
+✔ DOOR-MULTI02: partial execution credits only unfilled lines, restores only undispensed vehicle mass and retains paid credit for finance (877.085ms)
+✔ DOOR-01: exact consent, independent debit/cash verification and metered supplement share canonical stock without second fee (1146.416166ms)
+✔ DOOR-02: rejected debit cancellation restores buffer without releasing branch custody or erasing consent (818.842125ms)
+✔ DOOR-03: changed prices, insufficient physical buffer, unsafe ownership and disabled release leave custody unchanged (835.829208ms)
+✔ DOOR-04: exact cash, stale meter version and consent expiry fail closed; linked credit cancels without inventing a refund (843.013542ms)
+
+Interrupted while running:
+
+⚠ tests/doorstep-execution.test.ts (tests/doorstep-execution.test.ts:1:1)
+✖ tests/doorstep-execution.test.ts (4566.505375ms)
+✖ tests/doorstep-postgres.test.ts
+✖ tests/doorstep-products.test.ts
+✖ tests/driver-assignment-alerts.test.ts
+✖ tests/driver-experience-redesign.test.ts
+✖ tests/driver-local-config.test.ts
+✖ tests/driver-lpg-http.test.ts
+✖ tests/driver-lpg-workflow.test.ts
+✖ tests/driver-saas-redesign.test.ts
+✖ tests/driver-workspace.test.ts
+✖ tests/easygas-loader.test.ts
+✖ tests/easyrewards-completion.test.ts
+✖ tests/easyrewards-postgres-completion.test.ts
+✖ tests/easyrewards-postgres.test.ts
+✖ tests/easyrewards-redesign.test.ts
+✖ tests/easyrewards.test.ts
+✖ tests/effective-date.test.ts
+✖ tests/excel-preview.test.ts
+✖ tests/financial-document-integration.test.ts
+✖ tests/financial-document-pdf.test.ts
+✖ tests/financial-document.test.ts
+✖ tests/form-contrast.test.ts
+✖ tests/homepage-task-register.test.ts
+✖ tests/http.test.ts
+✖ tests/integrity-regressions.test.ts
+✖ tests/inventory-finance.test.ts
+✖ tests/inventory-workspace-http.test.ts
+✖ tests/inventory-workspace.test.ts
+✖ tests/invoice-pdf.test.ts
+✖ tests/linked-request-contact.test.ts
+✖ tests/live-rider-tracking.test.ts
+✖ tests/local-rewards-upgrade.test.ts
+✖ tests/menu-visibility.test.ts
+✖ tests/mobile-appearance.test.ts
+✖ tests/mobile-dependencies.test.ts
+✖ tests/mobile-origin.test.ts
+✖ tests/mobile-ui-design.test.ts
+✖ tests/mobile-web-corrections.test.ts
+✖ tests/navigation-badge-render.test.ts
+✖ tests/navigation.test.ts
+✖ tests/notification-inbox.test.ts
+✖ tests/offline-driver-location.test.ts
+✖ tests/operational-incidents.test.ts
+✖ tests/operations-completion-postgres.test.ts
+✖ tests/operations-completion.test.ts
+✖ tests/order-additions-postgres.test.ts
+✖ tests/order-additions.test.ts
+✖ tests/order-tracking-postgres.test.ts
+✖ tests/order-tracking.test.ts
+✖ tests/owner-auto-approval-postgres.test.ts
+✖ tests/owner-auto-approval.test.ts
+✖ tests/password-minimum.test.ts
+✖ tests/password-visibility.test.ts
+✖ tests/payment-fees.test.ts
+✖ tests/paystack-orchestration.test.ts
+✖ tests/paystack-policy.test.ts
+✖ tests/paystack-postgres.test.ts
+✖ tests/paystack-provider.test.ts
+✖ tests/platform.test.ts
+✖ tests/post-meeting-forecast.test.ts
+✖ tests/post-meeting-identity.test.ts
+✖ tests/post-meeting-invoices.test.ts
+✖ tests/post-meeting-postgres.test.ts
+✖ tests/post-meeting-private-role.test.ts
+✖ tests/postgres-approval-concurrency.test.ts
+✖ tests/product-import.test.ts
+✖ tests/product-ui.test.ts
+✖ tests/production-audit-findings.test.ts
+✖ tests/production-backup-postgres.test.ts
+✖ tests/production-release.test.ts
+✖ tests/professional-services.test.ts
+✖ tests/public-header.test.ts
+✖ tests/refill-feedback.test.ts
+✖ tests/report-empty-state.test.ts
+✖ tests/request-origin.test.ts
+✖ tests/retail-pos-postgres.test.ts
+✖ tests/scheduling.test.ts
+✖ tests/service-booking-postgres.test.ts
+✖ tests/service-booking-recovery.test.ts
+✖ tests/service-cancellation-review.test.ts
+✖ tests/service-detail-redesign.test.ts
+✖ tests/service-document-privacy.test.ts
+✖ tests/service-exception-settlements.test.ts
+✖ tests/service-governance.test.ts
+✖ tests/service-invoice-drafts.test.ts
+✖ tests/service-invoices-http.test.ts
+✖ tests/service-invoices-postgres.test.ts
+✖ tests/service-invoices.test.ts
+✖ tests/service-material-recovery.test.ts
+✖ tests/settings-cleanup.test.ts
+✖ tests/settings-datetime.test.ts
+✖ tests/settings-money.test.ts
+✖ tests/shared-approval-gas.test.ts
+✖ tests/shopping-demo.test.ts
+✖ tests/smart-refill-redesign.test.ts
+✖ tests/staff-management.test.ts
+✖ tests/staff-privileges-postgres.test.ts
+✖ tests/staff-privileges.test.ts
+✖ tests/staff-role-consolidation.test.ts
+✖ tests/support-completion.test.ts
+✖ tests/technician-four-screen.test.ts
+✖ tests/technician-postgres.test.ts
+✖ tests/technician-recovery.test.ts
+✖ tests/technician-saas.test.ts
+✖ tests/technician-work.test.ts
+✖ tests/technicians-availability-http.test.ts
+✖ tests/technicians-availability-postgres.test.ts
+✖ tests/technicians-availability.test.ts
+✖ tests/testimonial-postgres.test.ts
+✖ tests/testimonials.test.ts
+✖ tests/transactional-mail.test.ts
+✖ tests/trip-location-evidence.test.ts
+✖ tests/trip-recovery.test.ts
+✖ tests/unified-sign-in.test.ts
+✖ tests/vehicle-products-http.test.ts
+✖ tests/vehicle-products-postgres.test.ts
+✖ tests/vehicle-products.test.ts
+✖ tests/vercel-demo.test.ts
+✖ tests/wallet-order.test.ts
+✖ tests/wallet-topups-ui.test.ts
+✖ tests/wallet-topups.test.ts
+✖ tests/web-driver-trips.test.ts
+✖ tests/winback-cancellation.test.ts
+✖ tests/workflows.test.ts
+ℹ tests 309
+ℹ suites 0
+ℹ pass 178
+ℹ fail 7
+ℹ cancelled 124
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 109554.248792
+
+✖ failing tests:
+
+test at tests/admin-compact-browser-evidence.test.ts:1:374
+✖ ACMP-UI01: support desktop and phone layouts fit with bounded content and no default dialog (1.084209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-compact-browser-evidence.test.ts:20:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/admin-compact-browser-evidence.test.ts:1:374
+✖ ACMP-UI02: bookings desktop and phone layouts fit with bounded content and no default dialog (0.135208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-compact-browser-evidence.test.ts:20:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/admin-compact-browser-evidence.test.ts:1:374
+✖ ACMP-UI03: services desktop and phone layouts fit with bounded content and no default dialog (0.085333ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-compact-browser-evidence.test.ts:20:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/admin-compact-browser-evidence.test.ts:1:374
+✖ ACMP-UI04: quotations desktop and phone layouts fit with bounded content and no default dialog (0.062833ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-compact-browser-evidence.test.ts:20:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/admin-compact-browser-evidence.test.ts:1:374
+✖ ACMP-UI05: finance desktop and phone layouts fit with bounded content and no default dialog (0.067958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-compact-browser-evidence.test.ts:20:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/admin-compact-browser-evidence.test.ts:1:374
+✖ ACMP-UI06: reconciliation desktop and phone layouts fit with bounded content and no default dialog (2.476833ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  591 !== 390
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-compact-browser-evidence.test.ts:23:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 591,
+    expected: 390,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/admin-compact-browser-evidence.test.ts:1:374
+✖ ACMP-UI08: reports desktop and phone layouts fit with bounded content and no default dialog (0.144333ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-compact-browser-evidence.test.ts:20:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/doorstep-execution.test.ts:1:1
+✖ tests/doorstep-execution.test.ts (4566.505375ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/doorstep-postgres.test.ts:1:1
+✖ tests/doorstep-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/doorstep-products.test.ts:1:1
+✖ tests/doorstep-products.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-assignment-alerts.test.ts:1:1
+✖ tests/driver-assignment-alerts.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-experience-redesign.test.ts:1:1
+✖ tests/driver-experience-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-local-config.test.ts:1:1
+✖ tests/driver-local-config.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-lpg-http.test.ts:1:1
+✖ tests/driver-lpg-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-lpg-workflow.test.ts:1:1
+✖ tests/driver-lpg-workflow.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-saas-redesign.test.ts:1:1
+✖ tests/driver-saas-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-workspace.test.ts:1:1
+✖ tests/driver-workspace.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easygas-loader.test.ts:1:1
+✖ tests/easygas-loader.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards-completion.test.ts:1:1
+✖ tests/easyrewards-completion.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards-postgres-completion.test.ts:1:1
+✖ tests/easyrewards-postgres-completion.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards-postgres.test.ts:1:1
+✖ tests/easyrewards-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards-redesign.test.ts:1:1
+✖ tests/easyrewards-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards.test.ts:1:1
+✖ tests/easyrewards.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/effective-date.test.ts:1:1
+✖ tests/effective-date.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/excel-preview.test.ts:1:1
+✖ tests/excel-preview.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/financial-document-integration.test.ts:1:1
+✖ tests/financial-document-integration.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/financial-document-pdf.test.ts:1:1
+✖ tests/financial-document-pdf.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/financial-document.test.ts:1:1
+✖ tests/financial-document.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/form-contrast.test.ts:1:1
+✖ tests/form-contrast.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/homepage-task-register.test.ts:1:1
+✖ tests/homepage-task-register.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/http.test.ts:1:1
+✖ tests/http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/integrity-regressions.test.ts:1:1
+✖ tests/integrity-regressions.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/inventory-finance.test.ts:1:1
+✖ tests/inventory-finance.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/inventory-workspace-http.test.ts:1:1
+✖ tests/inventory-workspace-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/inventory-workspace.test.ts:1:1
+✖ tests/inventory-workspace.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/invoice-pdf.test.ts:1:1
+✖ tests/invoice-pdf.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/linked-request-contact.test.ts:1:1
+✖ tests/linked-request-contact.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/live-rider-tracking.test.ts:1:1
+✖ tests/live-rider-tracking.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/local-rewards-upgrade.test.ts:1:1
+✖ tests/local-rewards-upgrade.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/menu-visibility.test.ts:1:1
+✖ tests/menu-visibility.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-appearance.test.ts:1:1
+✖ tests/mobile-appearance.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-dependencies.test.ts:1:1
+✖ tests/mobile-dependencies.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-origin.test.ts:1:1
+✖ tests/mobile-origin.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-ui-design.test.ts:1:1
+✖ tests/mobile-ui-design.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-web-corrections.test.ts:1:1
+✖ tests/mobile-web-corrections.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/navigation-badge-render.test.ts:1:1
+✖ tests/navigation-badge-render.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/navigation.test.ts:1:1
+✖ tests/navigation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/notification-inbox.test.ts:1:1
+✖ tests/notification-inbox.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/offline-driver-location.test.ts:1:1
+✖ tests/offline-driver-location.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/operational-incidents.test.ts:1:1
+✖ tests/operational-incidents.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/operations-completion-postgres.test.ts:1:1
+✖ tests/operations-completion-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/operations-completion.test.ts:1:1
+✖ tests/operations-completion.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/order-additions-postgres.test.ts:1:1
+✖ tests/order-additions-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/order-additions.test.ts:1:1
+✖ tests/order-additions.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/order-tracking-postgres.test.ts:1:1
+✖ tests/order-tracking-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/order-tracking.test.ts:1:1
+✖ tests/order-tracking.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/owner-auto-approval-postgres.test.ts:1:1
+✖ tests/owner-auto-approval-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/owner-auto-approval.test.ts:1:1
+✖ tests/owner-auto-approval.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/password-minimum.test.ts:1:1
+✖ tests/password-minimum.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/password-visibility.test.ts:1:1
+✖ tests/password-visibility.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/payment-fees.test.ts:1:1
+✖ tests/payment-fees.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/paystack-orchestration.test.ts:1:1
+✖ tests/paystack-orchestration.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/paystack-policy.test.ts:1:1
+✖ tests/paystack-policy.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/paystack-postgres.test.ts:1:1
+✖ tests/paystack-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/paystack-provider.test.ts:1:1
+✖ tests/paystack-provider.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/platform.test.ts:1:1
+✖ tests/platform.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-forecast.test.ts:1:1
+✖ tests/post-meeting-forecast.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-identity.test.ts:1:1
+✖ tests/post-meeting-identity.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-invoices.test.ts:1:1
+✖ tests/post-meeting-invoices.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-postgres.test.ts:1:1
+✖ tests/post-meeting-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-private-role.test.ts:1:1
+✖ tests/post-meeting-private-role.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/postgres-approval-concurrency.test.ts:1:1
+✖ tests/postgres-approval-concurrency.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/product-import.test.ts:1:1
+✖ tests/product-import.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/product-ui.test.ts:1:1
+✖ tests/product-ui.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/production-audit-findings.test.ts:1:1
+✖ tests/production-audit-findings.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/production-backup-postgres.test.ts:1:1
+✖ tests/production-backup-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/production-release.test.ts:1:1
+✖ tests/production-release.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/professional-services.test.ts:1:1
+✖ tests/professional-services.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/public-header.test.ts:1:1
+✖ tests/public-header.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/refill-feedback.test.ts:1:1
+✖ tests/refill-feedback.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/report-empty-state.test.ts:1:1
+✖ tests/report-empty-state.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/request-origin.test.ts:1:1
+✖ tests/request-origin.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/retail-pos-postgres.test.ts:1:1
+✖ tests/retail-pos-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/scheduling.test.ts:1:1
+✖ tests/scheduling.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-booking-postgres.test.ts:1:1
+✖ tests/service-booking-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-booking-recovery.test.ts:1:1
+✖ tests/service-booking-recovery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-cancellation-review.test.ts:1:1
+✖ tests/service-cancellation-review.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-detail-redesign.test.ts:1:1
+✖ tests/service-detail-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-document-privacy.test.ts:1:1
+✖ tests/service-document-privacy.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-exception-settlements.test.ts:1:1
+✖ tests/service-exception-settlements.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-governance.test.ts:1:1
+✖ tests/service-governance.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-invoice-drafts.test.ts:1:1
+✖ tests/service-invoice-drafts.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-invoices-http.test.ts:1:1
+✖ tests/service-invoices-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-invoices-postgres.test.ts:1:1
+✖ tests/service-invoices-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-invoices.test.ts:1:1
+✖ tests/service-invoices.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-material-recovery.test.ts:1:1
+✖ tests/service-material-recovery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-cleanup.test.ts:1:1
+✖ tests/settings-cleanup.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-datetime.test.ts:1:1
+✖ tests/settings-datetime.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-money.test.ts:1:1
+✖ tests/settings-money.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/shared-approval-gas.test.ts:1:1
+✖ tests/shared-approval-gas.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/shopping-demo.test.ts:1:1
+✖ tests/shopping-demo.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/smart-refill-redesign.test.ts:1:1
+✖ tests/smart-refill-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/staff-management.test.ts:1:1
+✖ tests/staff-management.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/staff-privileges-postgres.test.ts:1:1
+✖ tests/staff-privileges-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/staff-privileges.test.ts:1:1
+✖ tests/staff-privileges.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/staff-role-consolidation.test.ts:1:1
+✖ tests/staff-role-consolidation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/support-completion.test.ts:1:1
+✖ tests/support-completion.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-four-screen.test.ts:1:1
+✖ tests/technician-four-screen.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-postgres.test.ts:1:1
+✖ tests/technician-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-recovery.test.ts:1:1
+✖ tests/technician-recovery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-saas.test.ts:1:1
+✖ tests/technician-saas.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-work.test.ts:1:1
+✖ tests/technician-work.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technicians-availability-http.test.ts:1:1
+✖ tests/technicians-availability-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technicians-availability-postgres.test.ts:1:1
+✖ tests/technicians-availability-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technicians-availability.test.ts:1:1
+✖ tests/technicians-availability.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/testimonial-postgres.test.ts:1:1
+✖ tests/testimonial-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/testimonials.test.ts:1:1
+✖ tests/testimonials.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/transactional-mail.test.ts:1:1
+✖ tests/transactional-mail.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/trip-location-evidence.test.ts:1:1
+✖ tests/trip-location-evidence.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/trip-recovery.test.ts:1:1
+✖ tests/trip-recovery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/unified-sign-in.test.ts:1:1
+✖ tests/unified-sign-in.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/vehicle-products-http.test.ts:1:1
+✖ tests/vehicle-products-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/vehicle-products-postgres.test.ts:1:1
+✖ tests/vehicle-products-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/vehicle-products.test.ts:1:1
+✖ tests/vehicle-products.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/vercel-demo.test.ts:1:1
+✖ tests/vercel-demo.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/wallet-order.test.ts:1:1
+✖ tests/wallet-order.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/wallet-topups-ui.test.ts:1:1
+✖ tests/wallet-topups-ui.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/wallet-topups.test.ts:1:1
+✖ tests/wallet-topups.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/web-driver-trips.test.ts:1:1
+✖ tests/web-driver-trips.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/winback-cancellation.test.ts:1:1
+✖ tests/winback-cancellation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/workflows.test.ts:1:1
+✖ tests/workflows.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'

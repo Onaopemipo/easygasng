@@ -1,0 +1,248 @@
+{
+  "environment": "Disposable local synthetic fixture; no hosted business changes",
+  "checks": [
+    {
+      "route": "support",
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "workspaceHeight": 1016,
+      "heading": "Support Desk",
+      "rows": 0,
+      "dialogs": 0,
+      "inboxHeight": 480
+    },
+    {
+      "route": "support",
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "pageWidth": 1440,
+      "workspaceHeight": 886,
+      "heading": "Support Desk",
+      "rows": 0,
+      "dialogs": 0,
+      "inboxHeight": 570
+    },
+    {
+      "route": "bookings",
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "workspaceHeight": 792,
+      "heading": "Service bookings",
+      "rows": 8,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "bookings",
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "pageWidth": 1440,
+      "workspaceHeight": 802,
+      "heading": "Service bookings",
+      "rows": 8,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "services",
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "workspaceHeight": 642,
+      "heading": "Professional services",
+      "rows": 5,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "services",
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "pageWidth": 1440,
+      "workspaceHeight": 635,
+      "heading": "Professional services",
+      "rows": 5,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "quotations",
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "workspaceHeight": 376,
+      "heading": "Service quotations",
+      "rows": 0,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "quotations",
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "pageWidth": 1440,
+      "workspaceHeight": 386,
+      "heading": "Service quotations",
+      "rows": 0,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "finance",
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "workspaceHeight": 943,
+      "heading": "Financial Summary",
+      "rows": 0,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "finance",
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "pageWidth": 1440,
+      "workspaceHeight": 586,
+      "heading": "Financial Summary",
+      "rows": 0,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "credits",
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "workspaceHeight": 1115,
+      "heading": "Credits & Refunds",
+      "rows": 8,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "credits",
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "pageWidth": 1440,
+      "workspaceHeight": 978,
+      "heading": "Credits & Refunds",
+      "rows": 8,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "reports",
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "workspaceHeight": 718,
+      "heading": "Reports & analytics",
+      "rows": 0,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "reports",
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "pageWidth": 1440,
+      "workspaceHeight": 560,
+      "heading": "Reports & analytics",
+      "rows": 0,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "reconciliation",
+      "label": "mobile",
+      "width": 390,
+      "height": 844,
+      "pageWidth": 390,
+      "workspaceHeight": 1202,
+      "heading": "Financial reconciliation",
+      "rows": 8,
+      "dialogs": 0,
+      "inboxHeight": null
+    },
+    {
+      "route": "reconciliation",
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "pageWidth": 1440,
+      "workspaceHeight": 972,
+      "heading": "Financial reconciliation",
+      "rows": 8,
+      "dialogs": 0,
+      "inboxHeight": null
+    }
+  ],
+  "interactions": [
+    {
+      "name": "booking-dialog",
+      "result": "PASS: phone dialog 350px wide, 684px high in 390x844; Escape closes and restores View details focus"
+    },
+    {
+      "name": "credit-customer-selection",
+      "result": "PASS: canonical synthetic customer lookup and selection exposes identity verification and pending-request form; no credit submitted"
+    },
+    {
+      "name": "expense-draft",
+      "result": "PASS: dirty expense close requires explicit discard, restores Record expense focus; no expense submitted"
+    },
+    {
+      "name": "service-draft",
+      "result": "PASS: dirty service close requires explicit discard, restores Manage focus; no proposal submitted"
+    },
+    {
+      "name": "support-reply",
+      "result": "PASS: selected phone conversation exposes scoped Reply dialog and required message; no reply submitted"
+    },
+    {
+      "name": "report-export",
+      "result": "PASS: 8 visible rows; CSV contains header plus all 10 filtered rows; no truncation to visible page"
+    },
+    {
+      "name": "report-schedule",
+      "result": "PASS: separate Scheduled reports view, single empty state, New schedule dialog with required branch/report/frequency"
+    },
+    {
+      "name": "document-pagination",
+      "result": "PASS: 10 matching documents, 8 on page 1 and remaining 2 on page 2; previous/next states correct"
+    },
+    {
+      "name": "report-filters",
+      "result": "PASS: 350px-wide, 824px-high internally scrolling phone dialog in 390x844; all filters retained"
+    },
+    {
+      "name": "dark-mode",
+      "result": "PASS: reconciliation totals, filters and documents remain readable; original light theme restored"
+    },
+    {
+      "name": "document-dialog",
+      "result": "PASS: existing document preview opens in a 620px-wide, 900px-high dialog within 1440x1000; closes normally"
+    },
+    {
+      "name": "credit-single-pager",
+      "result": "PASS: one canonical server pager; 8 records on page 1, remaining 4 on page 2; Previous restores page 1"
+    }
+  ],
+  "measurementNote": "Manifest reconciled with the final 16 measurements returned by the browser capture tool; initial closure-held aggregate was stale and is retained separately. Final screenshots and accessibility snapshots correspond to these captures."
+}

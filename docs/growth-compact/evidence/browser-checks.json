@@ -1,0 +1,173 @@
+{
+  "observations": [
+    {
+      "route": "campaigns",
+      "label": "desktop",
+      "dialogs": 0,
+      "forms": 0,
+      "heading": "Customer campaigns",
+      "height": 1000,
+      "pageWidth": 1440,
+      "rows": 8,
+      "width": 1440,
+      "workspaceHeight": 890
+    },
+    {
+      "route": "recommendations",
+      "label": "desktop",
+      "dialogs": 0,
+      "forms": 0,
+      "heading": "Recommendations",
+      "height": 1000,
+      "pageWidth": 1440,
+      "rows": 8,
+      "width": 1440,
+      "workspaceHeight": 890
+    },
+    {
+      "route": "campaigns",
+      "label": "mobile",
+      "dialogs": 0,
+      "forms": 0,
+      "heading": "Customer campaigns",
+      "height": 844,
+      "pageWidth": 390,
+      "rows": 8,
+      "width": 390,
+      "workspaceHeight": 924
+    },
+    {
+      "route": "recommendations",
+      "label": "mobile",
+      "dialogs": 0,
+      "forms": 0,
+      "heading": "Recommendations",
+      "height": 844,
+      "pageWidth": 390,
+      "rows": 8,
+      "width": 390,
+      "workspaceHeight": 977
+    },
+    {
+      "route": "testimonials",
+      "label": "mobile",
+      "dialogs": 0,
+      "forms": 0,
+      "heading": "Customer testimonials",
+      "height": 844,
+      "pageWidth": 390,
+      "rows": 8,
+      "width": 390,
+      "workspaceHeight": 1016
+    },
+    {
+      "route": "testimonials",
+      "label": "desktop",
+      "dialogs": 0,
+      "forms": 0,
+      "heading": "Customer testimonials",
+      "height": 1000,
+      "pageWidth": 1440,
+      "rows": 8,
+      "width": 1440,
+      "workspaceHeight": 982
+    }
+  ],
+  "interactions": [
+    {
+      "name": "campaign-draft",
+      "result": "PASS: create dialog retains branch/title/message/audience fields; unsaved close requires explicit discard; no draft submitted"
+    },
+    {
+      "name": "campaign-detail",
+      "result": "PASS: selected record exposes full body, actual recipient/sent/pending/skipped counts, purchase follow-up and existing decision form; no decision submitted"
+    },
+    {
+      "name": "campaign-rewards",
+      "result": "PASS: existing rewards reconciliation available on a separate tab"
+    },
+    {
+      "name": "campaign-empty",
+      "result": "PASS: completed filter with no matches shows compact empty state and retains New campaign action"
+    },
+    {
+      "name": "recommendation-proposal",
+      "result": "PASS: product/service/relationship/evidence form opens in dialog and guards unsaved evidence; no proposal submitted"
+    },
+    {
+      "name": "recommendation-review",
+      "result": "PASS: incompatible rule labelled Do not recommend; full evidence and independent owner review preserved"
+    },
+    {
+      "name": "recommendation-performance",
+      "result": "PASS: recorded displayed/selected/booked/completed counters appear in separate performance tab"
+    },
+    {
+      "name": "recommendation-filter",
+      "result": "PASS: Active filter with zero active rules shows compact no-matching state"
+    },
+    {
+      "name": "testimonial-history",
+      "result": "PASS: full original 3-star feedback and consent available; versions and immutable dated events on separate detail tab"
+    },
+    {
+      "name": "testimonial-draft",
+      "result": "PASS: approval reason draft requires explicit discard; no moderation decision submitted"
+    },
+    {
+      "name": "testimonial-pagination",
+      "result": "PASS: 10 total, eight first-page rows and two on page 2"
+    },
+    {
+      "name": "testimonial-export",
+      "result": "PASS: eight visible rows; filtered CSV contains header plus all ten rows"
+    },
+    {
+      "name": "testimonial-selection",
+      "result": "PASS: selected checkbox changes export label to selected (1); Clear selection restores filtered export"
+    },
+    {
+      "name": "testimonial-empty",
+      "result": "PASS: Published (0) filter shows No matching testimonials"
+    },
+    {
+      "name": "testimonial-analytics",
+      "result": "PASS: analytics, retention review, rating distribution, month counts and all eight states remain on Analytics tab"
+    },
+    {
+      "name": "keyboard",
+      "result": "PASS: Escape closes phone feedback dialog and restores Review feedback focus"
+    },
+    {
+      "name": "dark",
+      "result": "PASS: phone feedback table and controls readable in dark mode; original light mode restored"
+    }
+  ],
+  "dialogs": [
+    {
+      "name": "feedback-filters",
+      "width": 350,
+      "right": 370,
+      "height": 474,
+      "viewportWidth": 390,
+      "viewportHeight": 844,
+      "statusOptions": 9
+    },
+    {
+      "name": "feedback-review",
+      "width": 350,
+      "right": 370,
+      "height": 416,
+      "viewportWidth": 390,
+      "viewportHeight": 844
+    },
+    {
+      "name": "campaign-create",
+      "width": 350,
+      "right": 370,
+      "height": 590,
+      "viewportWidth": 390,
+      "viewportHeight": 844
+    }
+  ]
+}

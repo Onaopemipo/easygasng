@@ -1,0 +1,44 @@
+✔ ACMP-PAGE: record windows retain every loaded record without duplicates or out-of-range blanks (4.628708ms)
+✔ ACMP-BOOK: staff booking list bounds rows and excludes private details and unselected action forms (3.842375ms)
+✔ ACMP-QUOTE: quotation scope and explicit empty/search states do not display unrelated bookings (1.568042ms)
+✔ ACMP-CAT: one catalogue table shows draft state and no public booking card or inline service editor (1.748041ms)
+✔ ACMP-FIN: unavailable profits remain distinct from zero and secondary financial details stay out of the overview (0.714209ms)
+✔ ACMP-DIALOG: secondary workflows do not mount until requested and tabs retain accessible current state (0.253542ms)
+✔ ACMP-REPORT: schedule history retains records with bounded tables and one empty state (1.684417ms)
+✔ CREDIT-SEARCH01: authorised quick search matches names, email, phone and ID, excluding inactive/staff/cross-branch customers (1337.944333ms)
+✔ CREDIT-SELECT01: selected canonical account receives only a pending credit request; wallet and unrelated customers remain unchanged (975.056792ms)
+✔ CREDIT-HTTP01: financial customer search is authenticated GET with strict validation and no POST mutation (957.543791ms)
+✔ CREDIT-FORM01: real credit form submits selected canonical IDs as hidden fields and never asks staff to copy an ID (109.647417ms)
+✔ CSBK-UI01: compact booking summaries label preferred times without mounting contact, payment or reports (3.685208ms)
+✔ CSBK-UI02: service launcher offers booking without loading technician availability or an expanded form (0.714084ms)
+✔ CSBK-API01: requests are accepted with no available technician, reserve no capacity, notify coordination and recover without duplication (1175.798334ms)
+✔ CSBK-API02: unassigned requests reject invalid time, coverage, stale pricing, inactive service, mixed slot inputs and foreign follow-ups without orphan rows (947.5245ms)
+✔ CSBK-API03: ownership and actual qualified assignment remain mandatory before confirming or progressing a request (989.675375ms)
+✔ CSBK-API04: preferred-time changes remain unassigned, versioned and noncollectible without technician availability (930.626958ms)
+✔ CSBK-UI03: catalogue keeps customer booking in a dialog and public sign-in retains the requested service (2.5035ms)
+✔ CSBK-API05: lost commit acknowledgement recovers one owned preferred-time request and one preference record (889.472458ms)
+✔ F,N: operational dashboard and sales inventory must not expose financial metrics or costs (1086.122125ms)
+✔ A–E,M: governed corrections preserve reservations, stale counts fail and movements cannot be altered (960.620209ms)
+✔ G,H,L,N,O: branch tampering, protected exports, suspended accounts and forged permissions fail closed (921.652625ms)
+✔ I,J,P: expenses require independent approval, real payment evidence and append-only reversal (1005.818625ms)
+✔ controlled transfers reserve, dispatch, partially receive and quarantine damage without duplicate effects (925.273125ms)
+✔ supplier purchases do not add stock; independently approved partial receipts cannot overreceive (901.860375ms)
+✔ report availability schedules deduplicate, recheck roles and never claim external delivery (858.067166ms)
+✔ K: quarantine release requires current independently documented qualifications; failed qualifications do not change custody (930.836125ms)
+✔ valuation uses an approved method and complete acquisition movements, never selling prices (902.831875ms)
+✔ E: competing corrections cannot apply stale snapshots or lose updates in serialized PGlite (879.636042ms)
+✔ stocktake sessions snapshot categories, generate scoped count sheets, reconcile all counts and reject intervening movements (900.580583ms)
+✔ REPORT-EMPTY01: empty schedule and delivery lists show one helpful state and populated lists retain distinct records (4.894166ms)
+✔ SUPPORT-C01: list scans all scoped pages; search reaches beyond 100 requests (878.520291ms)
+✔ SUPPORT-C02: immutable reply idempotency, message pagination and private-note isolation (17.634708ms)
+✔ SUPPORT-C03: authenticated image upload, private reads, validation, replay and limits (53.430875ms)
+✔ SUPPORT-C04: Lagos work windows, governed SLA policy, snapshots and one-time escalation (53.256333ms)
+﹣ SUPPORT-C05: concurrent reply and attachment retries commit one record each in PostgreSQL (0.057667ms) # SKIP
+ℹ tests 36
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 22264.129167

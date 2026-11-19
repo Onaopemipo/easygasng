@@ -7,9 +7,11 @@ import { documentMoney } from "../../../packages/business-rules/src/financial-do
 export function DocumentLibrary({
   initialType = "all",
   compact = false,
+  pageSize = 20,
 }: {
   initialType?: "all" | "invoice" | "receipt";
   compact?: boolean;
+  pageSize?: 8 | 20;
 }) {
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
@@ -36,6 +38,7 @@ export function DocumentLibrary({
         .filter(([, v]) => v !== "")
         .map(([k, v]) => [k, String(v)]),
     );
+    if (pageSize !== 20) q.set("pageSize", String(pageSize));
     api("documents.list?" + q)
       .then((r) => {
         if (generation.current === current) setData(r);
@@ -53,7 +56,7 @@ export function DocumentLibrary({
     return () => {
       generation.current++;
     };
-  }, [filters, revision]);
+  }, [filters, revision, pageSize]);
   const extraFilters = (
     <>
       <label>
@@ -216,9 +219,7 @@ export function DocumentLibrary({
                   {data.rows.map((r: any) => (
                     <tr key={r.id}>
                       <td data-label="Document">
-                        {r.model.title}
-                        <br />
-                        {r.number}
+                        {r.model.title}{pageSize === 8 ? " · " : <br />}{r.number}
                         <small>{r.model.issuedAt}</small>
                       </td>
                       <td data-label="Status">
