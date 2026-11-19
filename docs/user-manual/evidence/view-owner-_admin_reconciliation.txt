@@ -1,0 +1,294 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders, 2 New orders awaiting acceptance":
+        - /url: /admin/orders
+        - generic: Orders
+        - generic: "2"
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk, 3 Open or in-progress support requests":
+        - /url: /admin/support
+        - generic: Support Desk
+        - generic: "3"
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory, 4 Physical product and bulk gas balances at or below configured thresholds":
+        - /url: /admin/inventory
+        - generic: Inventory
+        - generic: "4"
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries, 3 Accepted or preparing orders awaiting a driver":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+        - generic: "3"
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents, 10 Open or acknowledged operational incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+        - generic: "10"
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "37"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Financial Reconciliation
+  - heading "Financial reconciliation" [level=1]
+  - paragraph: Review verified payments, documents and outstanding liabilities.
+  - region "Reconciliation totals":
+    - article:
+      - heading "Product revenue" [level=3]
+      - strong: ₦119,845
+    - article:
+      - heading "POS revenue" [level=3]
+      - strong: ₦0
+    - article:
+      - heading "Completed service revenue" [level=3]
+      - strong: ₦0
+    - article:
+      - heading "Unverified cash" [level=3]
+      - strong: ₦0
+    - article:
+      - heading "Purchase-credit liability" [level=3]
+      - strong: ₦196,600
+  - navigation "Reconciliation workspace":
+    - button "Invoices & receipts" [pressed]
+    - button "Payment ledger"
+    - button "Cash reconciliation"
+    - button "Service costs"
+    - button "Paystack collections"
+  - button "About these figures"
+  - region "Invoices and payment receipts":
+    - heading "Invoices & receipts" [level=2]
+    - paragraph: View and download your issued invoices and verified payment receipts.
+    - text: Search documents
+    - textbox "Search documents":
+      - /placeholder: Number, source reference or customer
+    - text: Document type
+    - combobox "Document type":
+      - option "All documents" [selected]
+      - option "Invoices"
+      - option "Payment receipts"
+    - generic "More filters"
+    - option "All statuses" [selected]
+    - option "Unpaid invoice"
+    - option "Partially paid invoice"
+    - option "Paid invoice"
+    - option "Voided invoice"
+    - option "Reconciliation required"
+    - option "Payment Verified"
+    - button "Search"
+    - button "Refresh"
+    - paragraph: 17 matching documents
+    - table:
+      - rowgroup:
+        - row "Document Status Balance / amount paid Actions":
+          - columnheader "Document"
+          - columnheader "Status"
+          - columnheader "Balance / amount paid"
+          - columnheader "Actions"
+      - rowgroup:
+        - row "Invoice · EGI-0000000009 19 Nov 2026, 11:09 am (Lagos) Voided invoice ₦0.00 View document Download PDF":
+          - cell "Invoice · EGI-0000000009 19 Nov 2026, 11:09 am (Lagos)":
+            - text: Invoice · EGI-0000000009
+            - generic: 19 Nov 2026, 11:09 am (Lagos)
+          - cell "Voided invoice"
+          - cell "₦0.00"
+          - cell "View document Download PDF":
+            - button "View document"
+            - link "Download PDF":
+              - /url: /api/invoices/73a378e0-e65d-485b-bf2f-2c0814c2c419
+        - row "Invoice · EGI-0000000008 19 Nov 2026, 11:04 am (Lagos) Paid invoice ₦0.00 View document Download PDF":
+          - cell "Invoice · EGI-0000000008 19 Nov 2026, 11:04 am (Lagos)":
+            - text: Invoice · EGI-0000000008
+            - generic: 19 Nov 2026, 11:04 am (Lagos)
+          - cell "Paid invoice"
+          - cell "₦0.00"
+          - cell "View document Download PDF":
+            - button "View document"
+            - link "Download PDF":
+              - /url: /api/invoices/86852179-9c4f-4be1-a79f-2092dbacaa54
+        - row "Invoice · EGI-0000000007 19 Nov 2026, 10:57 am (Lagos) Paid invoice ₦0.00 View document Download PDF":
+          - cell "Invoice · EGI-0000000007 19 Nov 2026, 10:57 am (Lagos)":
+            - text: Invoice · EGI-0000000007
+            - generic: 19 Nov 2026, 10:57 am (Lagos)
+          - cell "Paid invoice"
+          - cell "₦0.00"
+          - cell "View document Download PDF":
+            - button "View document"
+            - link "Download PDF":
+              - /url: /api/invoices/aa7c77b7-81b7-4cf8-9152-d7b135452798
+        - row "Invoice · EGI-0000000006 19 Nov 2026, 10:29 am (Lagos) Paid invoice ₦0.00 View document Download PDF":
+          - cell "Invoice · EGI-0000000006 19 Nov 2026, 10:29 am (Lagos)":
+            - text: Invoice · EGI-0000000006
+            - generic: 19 Nov 2026, 10:29 am (Lagos)
+          - cell "Paid invoice"
+          - cell "₦0.00"
+          - cell "View document Download PDF":
+            - button "View document"
+            - link "Download PDF":
+              - /url: /api/invoices/bcab8f98-1cdc-4d10-ad84-8354ed9ec379
+        - row "Invoice · EGI-0000000005 19 Nov 2026, 06:03 am (Lagos) Paid invoice ₦0.00 View document Download PDF":
+          - cell "Invoice · EGI-0000000005 19 Nov 2026, 06:03 am (Lagos)":
+            - text: Invoice · EGI-0000000005
+            - generic: 19 Nov 2026, 06:03 am (Lagos)
+          - cell "Paid invoice"
+          - cell "₦0.00"
+          - cell "View document Download PDF":
+            - button "View document"
+            - link "Download PDF":
+              - /url: /api/invoices/0ef2f7cf-f877-42cb-879a-531544c34368
+        - row "Invoice · EGI-0000000004 18 Nov 2026, 02:35 pm (Lagos) Paid invoice ₦0.00 View document Download PDF":
+          - cell "Invoice · EGI-0000000004 18 Nov 2026, 02:35 pm (Lagos)":
+            - text: Invoice · EGI-0000000004
+            - generic: 18 Nov 2026, 02:35 pm (Lagos)
+          - cell "Paid invoice"
+          - cell "₦0.00"
+          - cell "View document Download PDF":
+            - button "View document"
+            - link "Download PDF":
+              - /url: /api/invoices/c22eac68-f5e2-4ba4-8c26-6f02a028d24b
+        - row "Payment Receipt · TEST-7e57b625-90ca-47e5-8228-2306eaa7cb6e 18 Nov 2026, 12:40 am (Lagos) Payment Verified · SANDBOX ₦16,172.59 View document Download PDF":
+          - cell "Payment Receipt · TEST-7e57b625-90ca-47e5-8228-2306eaa7cb6e 18 Nov 2026, 12:40 am (Lagos)":
+            - text: Payment Receipt · TEST-7e57b625-90ca-47e5-8228-2306eaa7cb6e
+            - generic: 18 Nov 2026, 12:40 am (Lagos)
+          - cell "Payment Verified · SANDBOX":
+            - text: Payment Verified
+            - strong: · SANDBOX
+          - cell "₦16,172.59"
+          - cell "View document Download PDF":
+            - button "View document"
+            - link "Download PDF":
+              - /url: /api/receipts?format=pdf&intentId=750be21e-2c4a-4e68-8b18-a71f1e5628cf
+        - row "Payment Receipt · TEST-201f06ee-e4d6-412a-9f59-51e82f509a5c 18 Nov 2026, 12:35 am (Lagos) Payment Verified · SANDBOX ₦99,593.91 View document Download PDF":
+          - cell "Payment Receipt · TEST-201f06ee-e4d6-412a-9f59-51e82f509a5c 18 Nov 2026, 12:35 am (Lagos)":
+            - text: Payment Receipt · TEST-201f06ee-e4d6-412a-9f59-51e82f509a5c
+            - generic: 18 Nov 2026, 12:35 am (Lagos)
+          - cell "Payment Verified · SANDBOX":
+            - text: Payment Verified
+            - strong: · SANDBOX
+          - cell "₦99,593.91"
+          - cell "View document Download PDF":
+            - button "View document"
+            - link "Download PDF":
+              - /url: /api/receipts?format=pdf&intentId=c06fee41-7283-4268-94d7-550ae23db3c4
+    - navigation "Document pages":
+      - button "Previous" [disabled]
+      - generic: Page 1
+      - button "Next"
+- text: EasyGas Business · NGN · Africa/Lagos

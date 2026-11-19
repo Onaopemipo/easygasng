@@ -1,0 +1,401 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders":
+        - /url: /admin/orders
+        - generic: Orders
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory, 4 Physical product and bulk gas balances at or below configured thresholds":
+        - /url: /admin/inventory
+        - generic: Inventory
+        - generic: "4"
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Approval Centre, 2 Unexpired requests awaiting your independent decision":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+        - generic: "2"
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents, 4 Open or acknowledged operational incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+        - generic: "4"
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov finance, Inventory"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov finance
+    - generic: Inventory
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "3"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov finance
+    - generic: Inventory
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Inventory
+  - generic "Vehicle product manifests and returns"
+  - heading "Inventory" [level=1]
+  - paragraph: Monitor stock levels, acquisition values and movements. Gas in kg; physical goods in units.
+  - button "Stock Movement":
+    - text: Stock Movement
+  - button "Export Stock CSV":
+    - text: Export Stock CSV
+  - button "Add Stock":
+    - text: Add Stock
+  - status:
+    - text: As of 19/11/2026, 16:24:08 · Africa/Lagos · lagos
+    - button "Refresh"
+  - region "Inventory metrics":
+    - generic: Physical stock
+    - strong: 77 units
+    - generic: 0 units reserved
+    - generic: Available gas
+    - strong: 5,966 kg
+    - generic: Bulk LPG only
+    - generic: Held / damaged
+    - strong: 0 units
+    - generic: 0 kg held
+    - generic: Reorder alerts
+    - strong: "4"
+    - generic: At/below reorder level
+    - generic: Eligible stock value
+    - strong: Unavailable
+    - generic: Acquisition costs only
+  - paragraph: Cards cover the selected branch scope, before table filters. Physical on-hand includes held goods; available stock excludes holds already removed by the ledger. Cylinder quantities do not certify serial eligibility.
+  - tablist "Inventory workflows":
+    - tab "Stock" [selected]
+    - tab "Receipts"
+    - tab "Adjustments"
+    - tab "Returns"
+    - tab "Transfers"
+    - tab "Purchases"
+    - tab "History"
+  - tabpanel "Stock":
+    - generic "Stock categories":
+      - button "All stock records (9)" [pressed]
+      - button "Gas (1)"
+      - button "Cylinders (4)"
+      - button "Accessories (2)"
+      - button "Other physical / kits (2)"
+    - text: Search
+    - textbox "Search":
+      - /placeholder: Product, SKU or branch
+    - text: Branch
+    - combobox "Branch":
+      - option "Lagos" [selected]
+    - text: Stock state
+    - combobox "Stock state":
+      - option "All stock states" [selected]
+      - option "Healthy"
+      - option "At/below reorder threshold"
+      - option "Low stock (positive)"
+      - option "Out of stock"
+      - option "Held / damaged"
+      - option "Reserved"
+    - text: Sort
+    - combobox "Sort":
+      - option "Product name" [selected]
+      - option "Available ascending"
+      - option "Available descending"
+      - option "Branch name"
+    - button "Clear filters"
+    - table "Authoritative branch stock; kg and units are separate.":
+      - caption: Authoritative branch stock; kg and units are separate.
+      - rowgroup:
+        - row "Product / Item SKU Category Branch / Location On hand Reserved Available Held Reorder level Status Actions":
+          - columnheader "Product / Item"
+          - columnheader "SKU"
+          - columnheader "Category"
+          - columnheader "Branch / Location"
+          - columnheader "On hand"
+          - columnheader "Reserved"
+          - columnheader "Available"
+          - columnheader "Held"
+          - columnheader "Reorder level"
+          - columnheader "Status"
+          - columnheader "Actions"
+      - rowgroup:
+        - row "Illustration of a 12.5kg green gas cylinder 12.5kg Empty Cylinder cylinder-empty-12 Empty cylinders Lagos 20 units 0 units 20 units 0 units 10 units Healthy":
+          - cell "Illustration of a 12.5kg green gas cylinder 12.5kg Empty Cylinder":
+            - img "Illustration of a 12.5kg green gas cylinder"
+            - strong: 12.5kg Empty Cylinder
+          - cell "cylinder-empty-12"
+          - cell "Empty cylinders"
+          - cell "Lagos"
+          - cell "20 units"
+          - cell "0 units"
+          - cell "20 units"
+          - cell "0 units"
+          - cell "10 units"
+          - cell "Healthy":
+            - generic: Healthy
+          - cell:
+            - generic "Actions for 12.5kg Empty Cylinder": •••
+        - row "Illustration of a 25kg green gas cylinder 25kg Empty Cylinder cylinder-empty-25 Empty cylinders Lagos 20 units 0 units 20 units 0 units 10 units Healthy":
+          - cell "Illustration of a 25kg green gas cylinder 25kg Empty Cylinder":
+            - img "Illustration of a 25kg green gas cylinder"
+            - strong: 25kg Empty Cylinder
+          - cell "cylinder-empty-25"
+          - cell "Empty cylinders"
+          - cell "Lagos"
+          - cell "20 units"
+          - cell "0 units"
+          - cell "20 units"
+          - cell "0 units"
+          - cell "10 units"
+          - cell "Healthy":
+            - generic: Healthy
+          - cell:
+            - generic "Actions for 25kg Empty Cylinder": •••
+        - row "Illustration of a 50kg green gas cylinder 50kg Empty Cylinder cylinder-empty-50 Empty cylinders Lagos 20 units 0 units 20 units 0 units 10 units Healthy":
+          - cell "Illustration of a 50kg green gas cylinder 50kg Empty Cylinder":
+            - img "Illustration of a 50kg green gas cylinder"
+            - strong: 50kg Empty Cylinder
+          - cell "cylinder-empty-50"
+          - cell "Empty cylinders"
+          - cell "Lagos"
+          - cell "20 units"
+          - cell "0 units"
+          - cell "20 units"
+          - cell "0 units"
+          - cell "10 units"
+          - cell "Healthy":
+            - generic: Healthy
+          - cell:
+            - generic "Actions for 50kg Empty Cylinder": •••
+        - row "Illustration of a 6kg green gas cylinder 6kg Empty Cylinder cylinder-empty-6 Empty cylinders Lagos 17 units 0 units 17 units 0 units 10 units Healthy":
+          - cell "Illustration of a 6kg green gas cylinder 6kg Empty Cylinder":
+            - img "Illustration of a 6kg green gas cylinder"
+            - strong: 6kg Empty Cylinder
+          - cell "cylinder-empty-6"
+          - cell "Empty cylinders"
+          - cell "Lagos"
+          - cell "17 units"
+          - cell "0 units"
+          - cell "17 units"
+          - cell "0 units"
+          - cell "10 units"
+          - cell "Healthy":
+            - generic: Healthy
+          - cell:
+            - generic "Actions for 6kg Empty Cylinder": •••
+        - row "Cooking gas Cooking Gas (kg) GAS-KG Gas Lagos 5,979 kg 13 kg 5,966 kg 0 kg Unconfigured Threshold unset":
+          - cell "Cooking gas Cooking Gas (kg)":
+            - img "Cooking gas"
+            - strong: Cooking Gas (kg)
+          - cell "GAS-KG"
+          - cell "Gas"
+          - cell "Lagos"
+          - cell "5,979 kg"
+          - cell "13 kg"
+          - cell "5,966 kg"
+          - cell "0 kg"
+          - cell "Unconfigured"
+          - cell "Threshold unset":
+            - generic: Threshold unset
+          - cell:
+            - generic "Actions for Cooking Gas (kg)": •••
+        - row "Double Burner burner Cookers Lagos 0 units 0 units 0 units 0 units 10 units Out of stock":
+          - cell "Double Burner":
+            - strong: Double Burner
+          - cell "burner"
+          - cell "Cookers"
+          - cell "Lagos"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "10 units"
+          - cell "Out of stock":
+            - generic: Out of stock
+          - cell:
+            - generic "Actions for Double Burner": •••
+        - row "Gas hose illustration Gas Hose hose Accessories Lagos 0 units 0 units 0 units 0 units 10 units Out of stock":
+          - cell "Gas hose illustration Gas Hose":
+            - img "Gas hose illustration"
+            - strong: Gas Hose
+          - cell "hose"
+          - cell "Accessories"
+          - cell "Lagos"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "10 units"
+          - cell "Out of stock":
+            - generic: Out of stock
+          - cell:
+            - generic "Actions for Gas Hose": •••
+        - row "Gas Regulator regulator Accessories Lagos 0 units 0 units 0 units 0 units 10 units Out of stock":
+          - cell "Gas Regulator":
+            - strong: Gas Regulator
+          - cell "regulator"
+          - cell "Accessories"
+          - cell "Lagos"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "10 units"
+          - cell "Out of stock":
+            - generic: Out of stock
+          - cell:
+            - generic "Actions for Gas Regulator": •••
+        - row "Kitchen Starter Kit kit Bundles Lagos 0 units 0 units 0 units 0 units 10 units Out of stock":
+          - cell "Kitchen Starter Kit":
+            - strong: Kitchen Starter Kit
+          - cell "kit"
+          - cell "Bundles"
+          - cell "Lagos"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "0 units"
+          - cell "10 units"
+          - cell "Out of stock":
+            - generic: Out of stock
+          - cell:
+            - generic "Actions for Kitchen Starter Kit": •••
+    - generic: Showing 1–9 of 9 records
+    - button "Previous" [disabled]
+    - generic: Page 1
+    - button "Next" [disabled]
+  - heading "Bulk Gas Balances" [level=2]:
+    - text: Bulk Gas Balances
+  - table:
+    - rowgroup:
+      - row "Branch On hand (kg) Reserved (kg) Held (kg) Available (kg) Threshold (kg)":
+        - columnheader "Branch"
+        - columnheader "On hand (kg)"
+        - columnheader "Reserved (kg)"
+        - columnheader "Held (kg)"
+        - columnheader "Available (kg)"
+        - columnheader "Threshold (kg)"
+    - rowgroup:
+      - row "Lagos 5,979 13 0 5,966 Unconfigured":
+        - cell "Lagos"
+        - cell "5,979"
+        - cell "13"
+        - cell "0"
+        - cell "5,966"
+        - cell "Unconfigured"
+  - heading "Inventory Value by Category" [level=2]
+  - strong: Unavailable
+  - paragraph: Acquisition costs and independently approved valuation policy are required.
+  - link "Review valuation and reconciliation →":
+    - /url: /admin/reports
+  - complementary:
+    - heading "Inventory Alerts" [level=2]
+    - button "4 stock records at/below threshold →":
+      - text: 4 stock records at/below threshold →
+    - button "4 records out of stock →":
+      - text: 4 records out of stock →
+    - link "0 pending inventory approvals →":
+      - /url: /admin/approvals
+    - generic: Sidebar alerts use your full navigation scope; these alerts follow the selected branch. Pending approvals are separate.
+    - heading "Quick Actions" [level=2]
+    - button "Add Stock":
+      - text: Add Stock
+    - button "Adjust / Stocktake":
+      - text: Adjust / Stocktake
+    - button "Transfer Stock":
+      - text: Transfer Stock
+    - button "Review Returns":
+      - text: Review Returns
+    - link "Record service usage in the authorised job →":
+      - /url: /admin/bookings
+    - heading "Recent Stock Movements" [level=2]
+    - button "View all movements →"
+    - strong: fulfilled
+    - generic: "-1 units · 86852179-9c4f-4be1-a79f-2092dbacaa54:fulfil:cylinder-empty-6"
+    - generic: 19/11/2026, 11:10:16
+    - strong: released
+    - generic: "-0.5 kg · 73a378e0-e65d-485b-bf2f-2c0814c2c419:released"
+    - generic: 19/11/2026, 11:09:16
+    - strong: reserved
+    - generic: 0.5 kg · 73a378e0-e65d-485b-bf2f-2c0814c2c419:reserved
+    - generic: 19/11/2026, 11:09:06
+    - strong: reserved
+    - generic: 1 units · 86852179-9c4f-4be1-a79f-2092dbacaa54:reserve:cylinder-empty-6
+    - generic: 19/11/2026, 11:04:26
+    - strong: fulfilled
+    - generic: "-6 kg · aa7c77b7-81b7-4cf8-9152-d7b135452798:fulfilled"
+    - generic: 19/11/2026, 11:03:21
+- text: EasyGas Business · NGN · Africa/Lagos

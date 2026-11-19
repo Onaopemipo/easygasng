@@ -1,0 +1,1198 @@
+[
+  {
+    "group": "Public and customer",
+    "route": "/",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-home.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/gas-order",
+    "observedRoles": [
+      "customer",
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_gas-order.txt",
+      "evidence/view-customer-_gas-order.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/policies",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_policies.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/refund",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Unpublished policy",
+    "evidence": [
+      "evidence/view-public-_refund.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/cancellation",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Unpublished policy",
+    "evidence": [
+      "evidence/view-public-_cancellation.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/service-terms",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Unpublished policy",
+    "evidence": [
+      "evidence/view-public-_service-terms.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/warranty",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Unpublished policy",
+    "evidence": [
+      "evidence/view-public-_warranty.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/credit-terms",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Unpublished policy",
+    "evidence": [
+      "evidence/view-public-_credit-terms.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/loyalty-terms",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Unpublished policy",
+    "evidence": [
+      "evidence/view-public-_loyalty-terms.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/services",
+    "observedRoles": [
+      "customer",
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_services.txt",
+      "evidence/view-customer-_services.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/bookings",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_bookings.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/combined-checkout",
+    "observedRoles": [
+      "customer",
+      "public"
+    ],
+    "classification": "Empty or signed out guard",
+    "evidence": [
+      "evidence/view-public-_combined-checkout.txt",
+      "evidence/view-customer-_combined-checkout.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/notifications",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_notifications.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/recurring",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_recurring.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/purchase-credit",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_purchase-credit.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/account-settings",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_account-settings.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/support",
+    "observedRoles": [
+      "customer",
+      "technician"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_support.txt",
+      "evidence/view-technician-_support.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/consumption",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_consumption.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/forgot-password",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_forgot-password.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/reset-password",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Missing context guard",
+    "evidence": [
+      "evidence/view-public-_reset-password.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/verify-email",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Missing context guard",
+    "evidence": [
+      "evidence/view-public-_verify-email.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/accept-invitation",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Missing context guard",
+    "evidence": [
+      "evidence/view-public-_accept-invitation.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/products",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_products.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/how-it-works",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_how-it-works.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/about",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_about.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/business",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_business.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/help",
+    "observedRoles": [
+      "customer",
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_help.txt",
+      "evidence/view-customer-_help.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/account",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_account.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/login",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_login.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/register",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_register.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/cart",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Empty or signed out guard",
+    "evidence": [
+      "evidence/view-public-_cart.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/checkout",
+    "observedRoles": [
+      "customer",
+      "public"
+    ],
+    "classification": "Empty or signed out guard",
+    "evidence": [
+      "evidence/view-public-_checkout.txt",
+      "evidence/view-customer-_checkout.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/track",
+    "observedRoles": [
+      "customer",
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_track.txt",
+      "evidence/view-customer-_track.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/orders",
+    "observedRoles": [
+      "customer",
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_orders.txt",
+      "evidence/view-customer-_orders.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/wallet",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_wallet.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/rewards",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_rewards.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/schedules",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_schedules.txt"
+    ]
+  },
+  {
+    "group": "Customer",
+    "route": "/refill",
+    "observedRoles": [
+      "customer"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-customer-_refill.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/privacy",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Unpublished policy",
+    "evidence": [
+      "evidence/view-public-_privacy.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/terms",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Unpublished policy",
+    "evidence": [
+      "evidence/view-public-_terms.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/delivery",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_delivery.txt"
+    ]
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/contact",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_contact.txt"
+    ]
+  },
+  {
+    "group": "Overview",
+    "route": "/admin",
+    "label": "Dashboard",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "business.snapshot",
+    "observedRoles": [
+      "manager",
+      "owner",
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin.txt",
+      "evidence/view-public-_admin.txt",
+      "evidence/view-manager-_admin.txt"
+    ]
+  },
+  {
+    "group": "Sales & Customers",
+    "route": "/admin/orders",
+    "label": "Orders",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "orders",
+    "observedRoles": [
+      "manager",
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_orders.txt",
+      "evidence/view-manager-_admin_orders.txt"
+    ]
+  },
+  {
+    "group": "Sales & Customers",
+    "route": "/admin/pos",
+    "label": "Retail POS",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "pos",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_pos.txt"
+    ]
+  },
+  {
+    "group": "Sales & Customers",
+    "route": "/admin/customers",
+    "label": "Customers",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "customers",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_customers.txt"
+    ]
+  },
+  {
+    "group": "Sales & Customers",
+    "route": "/admin/support",
+    "label": "Support Desk",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "support.list",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_support.txt"
+    ]
+  },
+  {
+    "group": "Products & Stock",
+    "route": "/admin/products",
+    "label": "Products",
+    "roles": [
+      "owner",
+      "manager",
+      "finance",
+      "technician"
+    ],
+    "action": "products.manage",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_products.txt"
+    ]
+  },
+  {
+    "group": "Products & Stock",
+    "route": "/admin/inventory",
+    "label": "Inventory",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "business.snapshot",
+    "observedRoles": [
+      "finance",
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_inventory.txt",
+      "evidence/view-finance-_admin_inventory.txt"
+    ]
+  },
+  {
+    "group": "Products & Stock",
+    "route": "/admin/cylinders",
+    "label": "Cylinders",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "cylinders",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_cylinders.txt"
+    ]
+  },
+  {
+    "group": "Products & Stock",
+    "route": "/admin/bundles",
+    "label": "Product & Service Bundles",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "bundles.manage",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_bundles.txt"
+    ]
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/deliveries",
+    "label": "Deliveries",
+    "roles": [
+      "owner",
+      "manager",
+      "driver"
+    ],
+    "action": "orders",
+    "observedRoles": [
+      "driver",
+      "manager",
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_deliveries.txt",
+      "evidence/view-manager-_admin_deliveries.txt",
+      "evidence/view-driver-_admin_deliveries.txt"
+    ]
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/bookings",
+    "label": "Service Bookings",
+    "roles": [
+      "owner",
+      "manager",
+      "technician",
+      "finance"
+    ],
+    "action": "bookings",
+    "observedRoles": [
+      "owner",
+      "technician"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_bookings.txt",
+      "evidence/view-technician-_admin_bookings.txt",
+      "evidence/view-technician-_admin_bookings_view=profile.txt",
+      "evidence/view-technician-_admin_bookings_view=history.txt",
+      "evidence/view-technician-_admin_bookings_view=jobs.txt"
+    ]
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/services",
+    "label": "Professional Services",
+    "roles": [
+      "owner",
+      "manager",
+      "technician",
+      "finance"
+    ],
+    "action": "services.manage",
+    "observedRoles": [
+      "owner",
+      "technician"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_services.txt",
+      "evidence/view-technician-_admin_services.txt"
+    ]
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/technicians",
+    "label": "Technicians",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "services.manage",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_technicians.txt"
+    ]
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/drivers",
+    "label": "Drivers",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "drivers.workspace",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_drivers.txt"
+    ]
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/quotations",
+    "label": "Quotations",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "bookings",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_quotations.txt"
+    ]
+  },
+  {
+    "group": "Finance & Performance",
+    "route": "/admin/finance",
+    "label": "Wallet & Payments",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "action": "business.snapshot",
+    "observedRoles": [
+      "finance",
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_finance.txt",
+      "evidence/view-finance-_admin_finance.txt"
+    ]
+  },
+  {
+    "group": "Finance & Performance",
+    "route": "/admin/reconciliation",
+    "label": "Financial Reconciliation",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "action": "finance.summary",
+    "observedRoles": [
+      "finance",
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_reconciliation.txt",
+      "evidence/view-finance-_admin_reconciliation.txt"
+    ]
+  },
+  {
+    "group": "Finance & Performance",
+    "route": "/admin/credits",
+    "label": "Credits & Refunds",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "action": "credits",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_credits.txt"
+    ]
+  },
+  {
+    "group": "Finance & Performance",
+    "route": "/admin/reports",
+    "label": "Reports & Analytics",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "business.snapshot",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_reports.txt"
+    ]
+  },
+  {
+    "group": "Growth & Engagement",
+    "route": "/admin/campaigns",
+    "label": "Campaigns",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "campaigns",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_campaigns.txt"
+    ]
+  },
+  {
+    "group": "Growth & Engagement",
+    "route": "/admin/recommendations",
+    "label": "Recommendations",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "recommendations.manage",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_recommendations.txt"
+    ]
+  },
+  {
+    "group": "Growth & Engagement",
+    "route": "/admin/testimonials",
+    "label": "Customer Testimonials",
+    "roles": [
+      "owner"
+    ],
+    "action": "testimonials.manage",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_testimonials.txt"
+    ]
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/staff",
+    "label": "Staff Management",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "staff.manage",
+    "observedRoles": [
+      "manager",
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_staff.txt",
+      "evidence/view-manager-_admin_staff.txt"
+    ]
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/approvals",
+    "label": "Approval Centre",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "approvals",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_approvals.txt"
+    ]
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/settings",
+    "label": "Settings",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "settings",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_settings.txt"
+    ]
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/operations",
+    "label": "Operations Centre",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "purchasing",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_operations.txt"
+    ]
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/incidents",
+    "label": "Operational Incidents",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "incidents",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_incidents.txt"
+    ]
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/policies",
+    "label": "Customer Policies",
+    "roles": [
+      "owner"
+    ],
+    "action": "policies.manage",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_policies.txt"
+    ]
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/audit",
+    "label": "Audit History",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "action": "audit",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_audit.txt"
+    ]
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/readiness",
+    "label": "Launch Readiness",
+    "roles": [
+      "owner"
+    ],
+    "action": "production.readiness",
+    "observedRoles": [
+      "owner"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-owner-_admin_readiness.txt"
+    ]
+  },
+  {
+    "group": "Special entry point",
+    "route": "/activate",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Missing context guard",
+    "evidence": [
+      "evidence/view-public-_activate.txt"
+    ]
+  },
+  {
+    "group": "Special entry point",
+    "route": "/payment-request",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Missing context guard",
+    "evidence": [
+      "evidence/view-public-_payment-request.txt"
+    ]
+  },
+  {
+    "group": "Special entry point",
+    "route": "/payment-return",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Missing context guard",
+    "evidence": [
+      "evidence/view-public-_payment-return.txt"
+    ]
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/cylinder-empty-6",
+    "label": "6kg Empty Cylinder",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_products_cylinder-empty-6.txt"
+    ]
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/refill-6",
+    "label": "6kg Refill",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_products_refill-6.txt"
+    ]
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/cylinder-empty-12",
+    "label": "12.5kg Empty Cylinder",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_products_cylinder-empty-12.txt"
+    ]
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/refill-12",
+    "label": "12.5kg Refill",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_products_refill-12.txt"
+    ]
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/cylinder-empty-25",
+    "label": "25kg Empty Cylinder",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_products_cylinder-empty-25.txt"
+    ]
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/refill-25",
+    "label": "25kg Refill",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_products_refill-25.txt"
+    ]
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/cylinder-empty-50",
+    "label": "50kg Empty Cylinder",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_products_cylinder-empty-50.txt"
+    ]
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/refill-50",
+    "label": "50kg Refill",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_products_refill-50.txt"
+    ]
+  },
+  {
+    "group": "Service detail",
+    "route": "/services/cooker-installation",
+    "label": "Cooker Installation",
+    "observedRoles": [
+      "customer",
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_services_cooker-installation.txt",
+      "evidence/view-customer-_services_cooker-installation.txt"
+    ]
+  },
+  {
+    "group": "Service detail",
+    "route": "/services/cooker-servicing",
+    "label": "Cooker Servicing",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_services_cooker-servicing.txt"
+    ]
+  },
+  {
+    "group": "Service detail",
+    "route": "/services/cylinder-installation",
+    "label": "Cylinder Installation",
+    "observedRoles": [
+      "public"
+    ],
+    "classification": "Observed read only",
+    "evidence": [
+      "evidence/view-public-_services_cylinder-installation.txt"
+    ]
+  }
+]

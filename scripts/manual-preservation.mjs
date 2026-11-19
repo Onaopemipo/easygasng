@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile} from 'node:fs/promises';
+import {client,hash} from './demo-role-acceptance-client.mjs';
+const c=await client();
+const after={orders:await c.ok('owner','orders'),ledger:await c.ok('finance','finance.ledger'),inventory:await c.ok('inventory','inventory'),gas:(await c.ok('inventory','inventory.workspace')).gas,wallet:await c.ok('customer','wallet'),policy:(await c.ok('owner','settings?scope=lagos')).filter(s=>s.key==='loyalty.policy').map(s=>({key:s.key,value:s.value,version:s.version}))};
+const before=JSON.parse(await readFile('.data/user-manual-before.json','utf8'));
+assert.deepEqual(after,before);
+const result={testId:'UM-PRESERVATION',checkedAt:new Date().toISOString(),status:'PASS',businessUnchanged:true,orders:after.orders.length,hashes:Object.fromEntries(Object.entries(after).map(([k,v])=>[k+'Hash',hash(v)])),scope:'Orders, ledger, inventory, gas, customer wallet and current loyalty policy normal HTTP readbacks; no hosted database access'};
+await writeFile('docs/user-manual/evidence/business-after.json',JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify(result));

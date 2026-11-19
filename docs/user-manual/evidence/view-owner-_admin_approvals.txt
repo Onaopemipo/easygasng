@@ -1,0 +1,389 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders, 2 New orders awaiting acceptance":
+        - /url: /admin/orders
+        - generic: Orders
+        - generic: "2"
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk, 3 Open or in-progress support requests":
+        - /url: /admin/support
+        - generic: Support Desk
+        - generic: "3"
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory, 4 Physical product and bulk gas balances at or below configured thresholds":
+        - /url: /admin/inventory
+        - generic: Inventory
+        - generic: "4"
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries, 3 Accepted or preparing orders awaiting a driver":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+        - generic: "3"
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents, 10 Open or acknowledged operational incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+        - generic: "10"
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "37"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Approval Centre
+  - navigation "Admin management shortcuts":
+    - paragraph: ADMIN · MANAGEMENT & GOVERNANCE
+    - link "Business Controls":
+      - /url: /admin/settings
+    - link "Reports & Branches":
+      - /url: /admin/reports
+    - link "Approval Review":
+      - /url: /admin/approvals
+    - link "Roles & Access":
+      - /url: /admin/staff
+    - link "Audit History":
+      - /url: /admin/audit
+    - paragraph: Review evidence and eligibility before deciding. An approved change may still await scheduled activation or independent execution.
+  - heading "Approval Centre" [level=1]
+  - paragraph: Review changes, manage decisions and track every approval in one place.
+  - button "Verify Identity":
+    - text: Verify Identity
+  - generic "Approval summary":
+    - button "Awaiting review 3":
+      - text: Awaiting review
+      - strong: "3"
+    - button "Scheduled 0":
+      - text: Scheduled
+      - strong: "0"
+    - button "Activated 27":
+      - text: Activated
+      - strong: "27"
+    - button "Needs attention 0":
+      - text: Needs attention
+      - strong: "0"
+  - generic: Totals across your authorised records. Search and filters apply to the request list below.
+  - heading "Change requests" [level=2]
+  - paragraph: Open a request to review its details and available actions.
+  - searchbox "Search approval requests"
+  - generic: Status
+  - combobox "Status":
+    - option "All requests" [selected]
+    - option "Awaiting review"
+    - option "High risk"
+    - option "Active"
+    - option "Rejected"
+    - option "Scheduled"
+    - option "draft"
+    - option "changes requested"
+    - option "approved"
+    - option "partially approved"
+    - option "applying"
+    - option "failed"
+    - option "cancelled"
+    - option "expired"
+    - option "superseded"
+    - option "rolled back"
+  - navigation "Approval request filters":
+    - button "All requests 32" [pressed]:
+      - text: All requests
+      - generic: "32"
+    - button "Awaiting review 3":
+      - text: Awaiting review
+      - generic: "3"
+    - button "High risk 11":
+      - text: High risk
+      - generic: "11"
+    - button "Activated 27":
+      - text: Activated
+      - generic: "27"
+  - table:
+    - rowgroup:
+      - row "Requested change Requested by Risk Status Submitted Actions":
+        - columnheader "Requested change"
+        - columnheader "Requested by"
+        - columnheader "Risk"
+        - columnheader "Status"
+        - columnheader "Submitted"
+        - columnheader "Actions":
+          - generic: Actions
+    - rowgroup:
+      - row "EasyRewards policy 155D9564 · lagos Requested by Demo QA 10 Nov owner Level 4 Awaiting owner approval · 0/1 19/11/2026 Review":
+        - cell "EasyRewards policy 155D9564 · lagos":
+          - strong: EasyRewards policy
+          - generic: 155D9564 · lagos
+        - cell "Requested by Demo QA 10 Nov owner":
+          - generic: Requested by
+          - text: Demo QA 10 Nov owner
+        - cell "Level 4":
+          - generic: Level 4
+        - cell "Awaiting owner approval · 0/1":
+          - generic: Awaiting owner approval · 0/1
+        - cell "19/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+      - row "EasyRewards policy 4D4E0719 · lagos Requested by Demo QA 10 Nov owner Level 4 Awaiting owner approval · 0/1 19/11/2026 Review":
+        - cell "EasyRewards policy 4D4E0719 · lagos":
+          - strong: EasyRewards policy
+          - generic: 4D4E0719 · lagos
+        - cell "Requested by Demo QA 10 Nov owner":
+          - generic: Requested by
+          - text: Demo QA 10 Nov owner
+        - cell "Level 4":
+          - generic: Level 4
+        - cell "Awaiting owner approval · 0/1":
+          - generic: Awaiting owner approval · 0/1
+        - cell "19/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+      - row "Maximum purchase credit funding B3D34074 · lagos Requested by Demo QA 10 Nov owner Level 3 active 18/11/2026 Review":
+        - cell "Maximum purchase credit funding B3D34074 · lagos":
+          - strong: Maximum purchase credit funding
+          - generic: B3D34074 · lagos
+        - cell "Requested by Demo QA 10 Nov owner":
+          - generic: Requested by
+          - text: Demo QA 10 Nov owner
+        - cell "Level 3":
+          - generic: Level 3
+        - cell "active":
+          - generic: active
+        - cell "18/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+      - row "Reward earning enabled C62AB12B · lagos Requested by Demo QA 10 Nov owner Level 3 active 18/11/2026 Review":
+        - cell "Reward earning enabled C62AB12B · lagos":
+          - strong: Reward earning enabled
+          - generic: C62AB12B · lagos
+        - cell "Requested by Demo QA 10 Nov owner":
+          - generic: Requested by
+          - text: Demo QA 10 Nov owner
+        - cell "Level 3":
+          - generic: Level 3
+        - cell "active":
+          - generic: active
+        - cell "18/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+      - row "Gas price per kilogram C9995F57 · lagos Requested by Demo QA 10 Nov owner Level 3 active 18/11/2026 Review":
+        - cell "Gas price per kilogram C9995F57 · lagos":
+          - strong: Gas price per kilogram
+          - generic: C9995F57 · lagos
+        - cell "Requested by Demo QA 10 Nov owner":
+          - generic: Requested by
+          - text: Demo QA 10 Nov owner
+        - cell "Level 3":
+          - generic: Level 3
+        - cell "active":
+          - generic: active
+        - cell "18/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+      - row "Purchase credit spending enabled BBE2F535 · lagos Requested by Demo QA 10 Nov owner Level 3 active 18/11/2026 Review":
+        - cell "Purchase credit spending enabled BBE2F535 · lagos":
+          - strong: Purchase credit spending enabled
+          - generic: BBE2F535 · lagos
+        - cell "Requested by Demo QA 10 Nov owner":
+          - generic: Requested by
+          - text: Demo QA 10 Nov owner
+        - cell "Level 3":
+          - generic: Level 3
+        - cell "active":
+          - generic: active
+        - cell "18/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+      - row "Ajah AA073320 · lagos Requested by Demo QA Admin / Business Owner Level 3 active 16/11/2026 Review":
+        - cell "Ajah AA073320 · lagos":
+          - strong: Ajah
+          - generic: AA073320 · lagos
+        - cell "Requested by Demo QA Admin / Business Owner":
+          - generic: Requested by
+          - text: Demo QA Admin / Business Owner
+        - cell "Level 3":
+          - generic: Level 3
+        - cell "active":
+          - generic: active
+        - cell "16/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+      - row "Lekki 1D6D8552 · lagos Requested by Demo QA Admin / Business Owner Level 3 active 16/11/2026 Review":
+        - cell "Lekki 1D6D8552 · lagos":
+          - strong: Lekki
+          - generic: 1D6D8552 · lagos
+        - cell "Requested by Demo QA Admin / Business Owner":
+          - generic: Requested by
+          - text: Demo QA Admin / Business Owner
+        - cell "Level 3":
+          - generic: Level 3
+        - cell "active":
+          - generic: active
+        - cell "16/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+      - row "Victoria Island 35635B3A · lagos Requested by Demo QA Admin / Business Owner Level 3 active 16/11/2026 Review":
+        - cell "Victoria Island 35635B3A · lagos":
+          - strong: Victoria Island
+          - generic: 35635B3A · lagos
+        - cell "Requested by Demo QA Admin / Business Owner":
+          - generic: Requested by
+          - text: Demo QA Admin / Business Owner
+        - cell "Level 3":
+          - generic: Level 3
+        - cell "active":
+          - generic: active
+        - cell "16/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+      - row "Lagos Island D2D3C9B4 · lagos Requested by Demo QA Admin / Business Owner Level 3 active 16/11/2026 Review":
+        - cell "Lagos Island D2D3C9B4 · lagos":
+          - strong: Lagos Island
+          - generic: D2D3C9B4 · lagos
+        - cell "Requested by Demo QA Admin / Business Owner":
+          - generic: Requested by
+          - text: Demo QA Admin / Business Owner
+        - cell "Level 3":
+          - generic: Level 3
+        - cell "active":
+          - generic: active
+        - cell "16/11/2026"
+        - cell "Review":
+          - button "Review":
+            - text: Review
+  - generic "Approval pagination":
+    - status: Showing 1–10 of 32 requests
+    - text: Rows per page
+    - combobox "Approval rows per page":
+      - option "10" [selected]
+      - option "20"
+      - option "50"
+    - button "First" [disabled]
+    - button "Previous" [disabled]
+    - generic: Page 1 of 4
+    - button "Next"
+    - button "Last"
+- text: EasyGas Business · NGN · Africa/Lagos

@@ -1,0 +1,208 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- link "Skip to content":
+  - /url: "#main"
+- complementary "Customer navigation":
+  - link "EasyGas home":
+    - /url: /
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar":
+  - generic: DQ
+  - strong: Hello, Demo.
+  - generic: customer.qa10nov@demo.easygas.invalid
+  - navigation "Customer workspace":
+    - link "Overview":
+      - /url: /account
+      - generic: Overview
+    - link "Notifications":
+      - /url: /notifications
+      - generic: Notifications
+      - generic "20 items": "20"
+    - link "Account & Privacy":
+      - /url: /account-settings
+      - generic: Account & Privacy
+    - button "Gas & Services" [expanded]:
+      - text: Gas & Services
+    - link "Professional Services":
+      - /url: /services
+      - generic: Professional Services
+    - link "Service Appointments":
+      - /url: /bookings
+      - generic: Service Appointments
+    - link "Cooking Gas Profiles":
+      - /url: /consumption
+      - generic: Cooking Gas Profiles
+    - button "Orders & Payments" [expanded]:
+      - text: Orders & Payments
+    - link "My Orders":
+      - /url: /orders
+      - generic: My Orders
+    - link "My Wallet":
+      - /url: /wallet
+      - generic: My Wallet
+    - link "Credit & Redemption":
+      - /url: /purchase-credit
+      - generic: Credit & Redemption
+    - button "Rewards & Plans" [expanded]:
+      - text: Rewards & Plans
+    - link "EasyRewards":
+      - /url: /rewards
+      - generic: EasyRewards
+    - link "Refill Plans":
+      - /url: /schedules
+      - generic: Refill Plans
+    - link "Recurring Orders":
+      - /url: /recurring
+      - generic: Recurring Orders
+    - link "Smart Refill":
+      - /url: /refill
+      - generic: Smart Refill
+    - button "Support" [expanded]:
+      - text: Support
+    - link "Help & Support":
+      - /url: /help
+      - generic: Help & Support
+    - link "Support Conversations":
+      - /url: /support
+      - generic: Support Conversations
+      - generic "1 items": "1"
+  - link "Back to Website":
+    - /url: /
+    - generic: Back to Website
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - textbox "Search products":
+    - /placeholder: Search products by name or category…
+  - button "Submit product search":
+  - link "Back to Website":
+    - /url: /
+    - generic: Back to Website
+  - link "Set Delivery Location":
+    - /url: /account-settings
+    - generic: Set Delivery Location
+  - link "Notifications, 20 unread":
+    - /url: /notifications
+  - link "Shopping cart, 0 items":
+    - /url: /cart
+    - generic: "0"
+  - button "Switch to dark mode":
+  - generic "Open account menu":
+    - generic: DQ
+- main:
+  - text: YOUR EASYGAS
+  - heading "My Orders" [level=1]
+  - paragraph: Manage deliveries, track progress and find your receipts.
+  - link "New order":
+    - /url: /products
+    - text: New order
+  - navigation "Orders workspace":
+    - button "Orders 5" [pressed]:
+      - text: Orders
+      - generic: "5"
+    - button "Invoices & receipts":
+      - text: Invoices & receipts
+  - status "Last checked 19 Nov, 16:19 (Lagos)": Live updates connected
+  - button "Refresh orders":
+  - region "Your orders":
+    - generic "Filter orders":
+      - button "All orders 5" [pressed]:
+        - text: All orders
+        - generic: "5"
+      - button "Active 0":
+        - text: Active
+        - generic: "0"
+      - button "Delivered 3":
+        - text: Delivered
+        - generic: "3"
+      - button "Cancelled 2":
+        - text: Cancelled
+        - generic: "2"
+    - textbox "Search orders":
+      - /placeholder: Search orders…
+    - article:
+      - heading "EG-2026-1F4E85C7" [level=2]
+      - generic: Cancelled
+      - paragraph: 0.5 kg gas · 6 kg cylinder
+      - text: 19 Nov 2026
+      - text: Victoria Island
+      - strong: ₦5,900
+      - generic: Payment refunded
+      - button "View details":
+        - text: View details
+      - button "View invoice"
+    - article:
+      - heading "EG-2026-E02D78B1" [level=2]
+      - generic: Delivered
+      - paragraph: 1 × 6kg Empty Cylinder
+      - text: 19 Nov 2026
+      - text: Victoria Island
+      - strong: ₦31,000
+      - generic: Payment verified
+      - button "View details":
+        - text: View details
+      - button "View invoice"
+    - article:
+      - heading "EG-2026-404B6EE8" [level=2]
+      - generic: Delivered
+      - paragraph: 6 kg gas · 6 kg cylinder
+      - text: 19 Nov 2026
+      - text: Victoria Island
+      - strong: ₦15,800
+      - generic: Payment verified
+      - button "View details":
+        - text: View details
+      - button "View invoice"
+    - article:
+      - heading "EG-2026-7BE57634" [level=2]
+      - generic: Delivered
+      - paragraph: 2 × 6kg Empty Cylinder
+      - text: 19 Nov 2026
+      - text: Victoria Island
+      - strong: ₦57,000
+      - generic: Payment verified
+      - button "View details":
+        - text: View details
+      - button "View invoice"
+    - article:
+      - heading "EG-2026-C1D1199D" [level=2]
+      - generic: Cancelled
+      - paragraph: 0.5 kg gas · 6 kg cylinder
+      - text: 19 Nov 2026
+      - text: Victoria Island
+      - strong: ₦5,900
+      - generic: Payment unpaid
+      - button "View details":
+        - text: View details
+      - button "View invoice"
+    - generic: 1–5 of 5 orders
+    - button "Previous orders page" [disabled]:
+    - generic: Page 1 of 1
+    - button "Next orders page" [disabled]:
+  - dialog "Order details":
+    - heading "Order details" [level=2]
+    - button "Close dialog" [active]:
+    - strong: EG-2026-1F4E85C7
+    - paragraph: 0.5 kg gas · 6 kg cylinder
+    - generic: Cancelled
+    - generic "Order detail sections":
+      - button "Overview" [pressed]
+      - button "Delivery updates"
+      - button "Visit & photo history"
+    - term: Delivery address
+    - definition:
+      - text: DEMO-QA-ROLE-20261119 — synthetic QA address
+      - text: Victoria Island
+    - term: Scheduled delivery
+    - definition:
+      - text: 19 Nov 2026
+      - text: 14:00–18:00 (Lagos)
+    - term: Order total
+    - definition: ₦5,900
+    - term: Payment
+    - definition: refunded
+    - link "Get help or change delivery":
+      - /url: /support?orderId=73a378e0-e65d-485b-bf2f-2c0814c2c419
+- link "Continue Shopping":
+  - /url: /products
+  - text: Continue Shopping

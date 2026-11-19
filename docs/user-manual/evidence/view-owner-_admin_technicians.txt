@@ -1,0 +1,252 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders, 2 New orders awaiting acceptance":
+        - /url: /admin/orders
+        - generic: Orders
+        - generic: "2"
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk, 3 Open or in-progress support requests":
+        - /url: /admin/support
+        - generic: Support Desk
+        - generic: "3"
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory, 4 Physical product and bulk gas balances at or below configured thresholds":
+        - /url: /admin/inventory
+        - generic: Inventory
+        - generic: "4"
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries, 3 Accepted or preparing orders awaiting a driver":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+        - generic: "3"
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents, 10 Open or acknowledged operational incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+        - generic: "10"
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "37"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Technicians
+  - heading "Technicians & Availability" [level=1]
+  - paragraph: Manage your technicians, qualifications and service availability in one place.
+  - button "Availability":
+    - text: Availability
+  - button "Verify qualification"
+  - button "Add Technician":
+    - text: Add Technician
+  - navigation "Professional services":
+    - link "Services":
+      - /url: /services
+    - link "My Bookings":
+      - /url: /admin/bookings
+    - link "Manage Services":
+      - /url: /admin/services
+    - link "Technicians":
+      - /url: /admin/technicians
+    - link "Quotations":
+      - /url: /admin/quotations
+    - link "Incidents":
+      - /url: /admin/incidents
+  - status: Updated 19 Nov 2026, 16:11 · Africa/Lagos
+  - button "Refresh":
+    - text: Refresh
+  - region "Technician summary":
+    - button "Total Technicians 3" [pressed]:
+      - text: Total Technicians
+      - strong: "3"
+    - button "Active 3":
+      - text: Active
+      - strong: "3"
+    - button "On Assignment 0":
+      - text: On Assignment
+      - strong: "0"
+    - button "Available Today 0":
+      - text: Available Today
+      - strong: "0"
+  - heading "Technicians" [level=2]
+  - button "all" [pressed]
+  - button "active"
+  - button "inactive"
+  - text: Search technicians
+  - textbox "Search technicians":
+    - /placeholder: Name, ID or qualification
+  - button "Filters"
+  - table "Technicians":
+    - row "Technician Skills / qualifications Status Actions":
+      - columnheader "Technician"
+      - columnheader "Skills / qualifications"
+      - columnheader "Status"
+      - columnheader "Actions"
+    - 'row "Demo QA 10 Nov technician ID: 758f4c3d Lagos No verified qualifications 0 current verified Not schedulable today View Demo QA 10 Nov technician"':
+      - 'cell "Demo QA 10 Nov technician ID: 758f4c3d Lagos"':
+        - strong: Demo QA 10 Nov technician
+        - generic "758f4c3d-cec0-49cb-9480-942e3c608f98": "ID: 758f4c3d"
+        - generic: Lagos
+      - cell "No verified qualifications 0 current verified":
+        - text: No verified qualifications
+        - text: 0 current verified
+      - cell "Not schedulable today":
+        - generic: Not schedulable today
+      - cell "View Demo QA 10 Nov technician":
+        - button "View Demo QA 10 Nov technician": View
+    - 'row "Demo QA Service Technician ID: 4dfc1f54 Lagos No verified qualifications 0 current verified Not schedulable today View Demo QA Service Technician"':
+      - 'cell "Demo QA Service Technician ID: 4dfc1f54 Lagos"':
+        - strong: Demo QA Service Technician
+        - generic "4dfc1f54-c0e1-4a31-aba2-9da1d0728a9b": "ID: 4dfc1f54"
+        - generic: Lagos
+      - cell "No verified qualifications 0 current verified":
+        - text: No verified qualifications
+        - text: 0 current verified
+      - cell "Not schedulable today":
+        - generic: Not schedulable today
+      - cell "View Demo QA Service Technician":
+        - button "View Demo QA Service Technician": View
+    - 'row "Demo technician ID: 26e230a8 Lagos lpg service 1 current verified Not schedulable today View Demo technician"':
+      - 'cell "Demo technician ID: 26e230a8 Lagos"':
+        - strong: Demo technician
+        - generic "26e230a8-dc71-4b1c-8e41-22e104b05015": "ID: 26e230a8"
+        - generic: Lagos
+      - cell "lpg service 1 current verified":
+        - text: lpg service
+        - text: 1 current verified
+      - cell "Not schedulable today":
+        - generic: Not schedulable today
+      - cell "View Demo technician":
+        - button "View Demo technician": View
+  - generic: 3 matching technicians
+  - button "Previous" [disabled]
+  - generic: Page 1
+  - button "Next" [disabled]
+  - complementary:
+    - heading "Upcoming Availability" [level=2]:
+      - text: Upcoming Availability
+    - text: Calendar date (Africa/Lagos)
+    - textbox "Calendar date (Africa/Lagos)"
+    - button "Create availability":
+      - text: Create availability
+    - paragraph: No upcoming appointments for this selection.
+    - button "Previous" [disabled]
+    - generic: "1"
+    - button "Next" [disabled]
+- text: EasyGas Business · NGN · Africa/Lagos

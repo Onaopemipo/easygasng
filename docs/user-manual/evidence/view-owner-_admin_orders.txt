@@ -1,0 +1,310 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders, 2 New orders awaiting acceptance":
+        - /url: /admin/orders
+        - generic: Orders
+        - generic: "2"
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk, 3 Open or in-progress support requests":
+        - /url: /admin/support
+        - generic: Support Desk
+        - generic: "3"
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory, 4 Physical product and bulk gas balances at or below configured thresholds":
+        - /url: /admin/inventory
+        - generic: Inventory
+        - generic: "4"
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries, 3 Accepted or preparing orders awaiting a driver":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+        - generic: "3"
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents, 10 Open or acknowledged operational incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+        - generic: "10"
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "37"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Orders
+  - heading "Your orders, in one place." [level=1]
+  - paragraph: Records are limited to your account permissions and branch scope.
+  - button "Create phone-assisted order"
+  - heading "Orders" [level=2]
+  - textbox "Search records":
+    - /placeholder: Search records…
+  - table:
+    - rowgroup:
+      - row "Reference Customer Amount Status Payment":
+        - columnheader "Reference"
+        - columnheader "Customer"
+        - columnheader "Amount"
+        - columnheader "Status"
+        - columnheader "Payment"
+        - columnheader
+    - rowgroup:
+      - row "EG-2026-1F4E85C7 Demo QA 10 Nov customer ₦5,900 cancelled refunded Details":
+        - cell "EG-2026-1F4E85C7":
+          - strong: EG-2026-1F4E85C7
+        - cell "Demo QA 10 Nov customer"
+        - cell "₦5,900"
+        - cell "cancelled":
+          - generic: cancelled
+        - cell "refunded"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-E02D78B1 Demo QA 10 Nov customer ₦31,000 delivered verified Details":
+        - cell "EG-2026-E02D78B1":
+          - strong: EG-2026-E02D78B1
+        - cell "Demo QA 10 Nov customer"
+        - cell "₦31,000"
+        - cell "delivered":
+          - generic: delivered
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-404B6EE8 Demo QA 10 Nov customer ₦15,800 delivered verified Details":
+        - cell "EG-2026-404B6EE8":
+          - strong: EG-2026-404B6EE8
+        - cell "Demo QA 10 Nov customer"
+        - cell "₦15,800"
+        - cell "delivered":
+          - generic: delivered
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-7BE57634 Demo QA 10 Nov customer ₦57,000 delivered verified Details":
+        - cell "EG-2026-7BE57634":
+          - strong: EG-2026-7BE57634
+        - cell "Demo QA 10 Nov customer"
+        - cell "₦57,000"
+        - cell "delivered":
+          - generic: delivered
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-C1D1199D Demo QA 10 Nov customer ₦5,900 cancelled unpaid Details":
+        - cell "EG-2026-C1D1199D":
+          - strong: EG-2026-C1D1199D
+        - cell "Demo QA 10 Nov customer"
+        - cell "₦5,900"
+        - cell "cancelled":
+          - generic: cancelled
+        - cell "unpaid"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-FD9F2C67 Demo customer ₦15,800 delivered verified Details":
+        - cell "EG-2026-FD9F2C67":
+          - strong: EG-2026-FD9F2C67
+        - cell "Demo customer"
+        - cell "₦15,800"
+        - cell "delivered":
+          - generic: delivered
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-027A088D Demo customer ₦15,800 preparing verified Details":
+        - cell "EG-2026-027A088D":
+          - strong: EG-2026-027A088D
+        - cell "Demo customer"
+        - cell "₦15,800"
+        - cell "preparing":
+          - generic: preparing
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-7BB8640B Demo customer ₦15,830 delivered verified Details":
+        - cell "EG-2026-7BB8640B":
+          - strong: EG-2026-7BB8640B
+        - cell "Demo customer"
+        - cell "₦15,830"
+        - cell "delivered":
+          - generic: delivered
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-E8ED8AE8 Demo customer ₦10,415 delivered verified Details":
+        - cell "EG-2026-E8ED8AE8":
+          - strong: EG-2026-E8ED8AE8
+        - cell "Demo customer"
+        - cell "₦10,415"
+        - cell "delivered":
+          - generic: delivered
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-B723F6DE Sarafa Adebisi ₦10,415 placed unpaid Details":
+        - cell "EG-2026-B723F6DE":
+          - strong: EG-2026-B723F6DE
+        - cell "Sarafa Adebisi"
+        - cell "₦10,415"
+        - cell "placed":
+          - generic: placed
+        - cell "unpaid"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-1D67D79C Sarafa Adebisi ₦8,610 preparing verified Details":
+        - cell "EG-2026-1D67D79C":
+          - strong: EG-2026-1D67D79C
+        - cell "Sarafa Adebisi"
+        - cell "₦8,610"
+        - cell "preparing":
+          - generic: preparing
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-53274B42 Demo customer ₦6,800 placed unpaid Details":
+        - cell "EG-2026-53274B42":
+          - strong: EG-2026-53274B42
+        - cell "Demo customer"
+        - cell "₦6,800"
+        - cell "placed":
+          - generic: placed
+        - cell "unpaid"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+      - row "EG-2026-53A6EA69 Demo customer ₦6,800 accepted verified Details":
+        - cell "EG-2026-53A6EA69":
+          - strong: EG-2026-53A6EA69
+        - cell "Demo customer"
+        - cell "₦6,800"
+        - cell "accepted":
+          - generic: accepted
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+- text: EasyGas Business · NGN · Africa/Lagos

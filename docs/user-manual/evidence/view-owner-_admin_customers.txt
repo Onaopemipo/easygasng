@@ -1,0 +1,389 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders":
+        - /url: /admin/orders
+        - generic: Orders
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk":
+        - /url: /admin/support
+        - generic: Support Desk
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory":
+        - /url: /admin/inventory
+        - generic: Inventory
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+  - status: Updating action counts…
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - generic "Retention and win-back follow-ups"
+  - text: Workspace
+  - generic: /
+  - text: Customers
+  - heading "Customers" [level=1]
+  - paragraph: Manage your customers, view their activity and support their cooking gas journey.
+  - button "Add Customer":
+    - text: Add Customer
+  - text: Total Customers
+  - strong: "8"
+  - generic: All registered customers
+  - text: Active Customers
+  - strong: "3"
+  - generic: Placed at least one order
+  - text: New Customers
+  - strong: "8"
+  - generic: In the last 30 days
+  - text: Inactive Customers
+  - strong: "5"
+  - generic: No orders yet
+  - textbox "Search customers":
+    - /placeholder: Search customers…
+  - combobox "Customer status":
+    - option "All statuses" [selected]
+    - option "Active"
+    - option "Inactive"
+    - option "Suspended"
+  - combobox "Customer location":
+    - option "All locations" [selected]
+    - option "Lagos"
+  - combobox "Sort customers":
+    - option "Join date (newest)" [selected]
+    - option "Join date (oldest)"
+    - option "Name (A–Z)"
+  - button "Reset"
+  - table:
+    - rowgroup:
+      - row "Select page Customer Contact Information Orders Total Spent Joined Status Actions":
+        - columnheader "Select page":
+          - checkbox "Select page"
+        - columnheader "Customer"
+        - columnheader "Contact Information"
+        - columnheader "Orders"
+        - columnheader "Total Spent"
+        - columnheader "Joined"
+        - columnheader "Status"
+        - columnheader "Actions"
+    - rowgroup:
+      - row "Select GY G GY EGC-F67BF504D0CE49B8A9C4ADD61A1EA5D6 kateriyoung107@gmail.com Not provided 0 orders ₦0 19/11/2026 No assigned branch Inactive Actions for GY":
+        - cell "Select GY":
+          - checkbox "Select GY"
+        - cell "G GY EGC-F67BF504D0CE49B8A9C4ADD61A1EA5D6":
+          - generic: G
+          - strong: GY
+          - generic: EGC-F67BF504D0CE49B8A9C4ADD61A1EA5D6
+        - cell "kateriyoung107@gmail.com Not provided":
+          - text: kateriyoung107@gmail.com
+          - text: Not provided
+        - cell "0 orders":
+          - strong: "0"
+          - generic: orders
+        - cell "₦0":
+          - strong: ₦0
+        - cell "19/11/2026 No assigned branch":
+          - text: 19/11/2026
+          - generic: No assigned branch
+        - cell "Inactive":
+          - generic: Inactive
+        - cell "Actions for GY":
+          - button "Actions for GY":
+      - row "Select Wallet order sandbox QA Wo Wallet order sandbox QA EGC-5FF8AA6ADCBE4BD1BDE74BFC78E228F4 wallet-order-89246452-993e-4a55-a728-4da7df3137ba@example.test 08012345678 0 orders ₦0 18/11/2026 No assigned branch Inactive Actions for Wallet order sandbox QA":
+        - cell "Select Wallet order sandbox QA":
+          - checkbox "Select Wallet order sandbox QA"
+        - cell "Wo Wallet order sandbox QA EGC-5FF8AA6ADCBE4BD1BDE74BFC78E228F4":
+          - generic: Wo
+          - strong: Wallet order sandbox QA
+          - generic: EGC-5FF8AA6ADCBE4BD1BDE74BFC78E228F4
+        - cell "wallet-order-89246452-993e-4a55-a728-4da7df3137ba@example.test 08012345678":
+          - text: wallet-order-89246452-993e-4a55-a728-4da7df3137ba@example.test
+          - text: "08012345678"
+        - cell "0 orders":
+          - strong: "0"
+          - generic: orders
+        - cell "₦0":
+          - strong: ₦0
+        - cell "18/11/2026 No assigned branch":
+          - text: 18/11/2026
+          - generic: No assigned branch
+        - cell "Inactive":
+          - generic: Inactive
+        - cell "Actions for Wallet order sandbox QA":
+          - button "Actions for Wallet order sandbox QA":
+      - row "Select Habeebah bello Hb Habeebah bello EGC-6A78C50BD6784213B78F01E462B7C39D bellohabeebah23@gmail.com Not provided 0 orders ₦0 14/11/2026 No assigned branch Inactive Actions for Habeebah bello":
+        - cell "Select Habeebah bello":
+          - checkbox "Select Habeebah bello"
+        - cell "Hb Habeebah bello EGC-6A78C50BD6784213B78F01E462B7C39D":
+          - generic: Hb
+          - strong: Habeebah bello
+          - generic: EGC-6A78C50BD6784213B78F01E462B7C39D
+        - cell "bellohabeebah23@gmail.com Not provided":
+          - text: bellohabeebah23@gmail.com
+          - text: Not provided
+        - cell "0 orders":
+          - strong: "0"
+          - generic: orders
+        - cell "₦0":
+          - strong: ₦0
+        - cell "14/11/2026 No assigned branch":
+          - text: 14/11/2026
+          - generic: No assigned branch
+        - cell "Inactive":
+          - generic: Inactive
+        - cell "Actions for Habeebah bello":
+          - button "Actions for Habeebah bello":
+      - row "Select Ogungbenro PHILIP MUYIWA OP Ogungbenro PHILIP MUYIWA EGC-F3A14561FE4A4441AFDD7E7C506357E8 onaopemipo2026@gmail.com Not provided 0 orders ₦0 11/11/2026 No assigned branch Inactive Actions for Ogungbenro PHILIP MUYIWA":
+        - cell "Select Ogungbenro PHILIP MUYIWA":
+          - checkbox "Select Ogungbenro PHILIP MUYIWA"
+        - cell "OP Ogungbenro PHILIP MUYIWA EGC-F3A14561FE4A4441AFDD7E7C506357E8":
+          - generic: OP
+          - strong: Ogungbenro PHILIP MUYIWA
+          - generic: EGC-F3A14561FE4A4441AFDD7E7C506357E8
+        - cell "onaopemipo2026@gmail.com Not provided":
+          - text: onaopemipo2026@gmail.com
+          - text: Not provided
+        - cell "0 orders":
+          - strong: "0"
+          - generic: orders
+        - cell "₦0":
+          - strong: ₦0
+        - cell "11/11/2026 No assigned branch":
+          - text: 11/11/2026
+          - generic: No assigned branch
+        - cell "Inactive":
+          - generic: Inactive
+        - cell "Actions for Ogungbenro PHILIP MUYIWA":
+          - button "Actions for Ogungbenro PHILIP MUYIWA":
+      - row "Select Demo QA 10 Nov customer DQ Demo QA 10 Nov customer EGC-220192AEC484443DA911B3640A49619B customer.qa10nov@demo.easygas.invalid Not provided 5 orders ₦109,700 10/11/2026 Lagos Active Actions for Demo QA 10 Nov customer":
+        - cell "Select Demo QA 10 Nov customer":
+          - checkbox "Select Demo QA 10 Nov customer"
+        - cell "DQ Demo QA 10 Nov customer EGC-220192AEC484443DA911B3640A49619B":
+          - generic: DQ
+          - strong: Demo QA 10 Nov customer
+          - generic: EGC-220192AEC484443DA911B3640A49619B
+        - cell "customer.qa10nov@demo.easygas.invalid Not provided":
+          - text: customer.qa10nov@demo.easygas.invalid
+          - text: Not provided
+        - cell "5 orders":
+          - strong: "5"
+          - generic: orders
+        - cell "₦109,700":
+          - strong: ₦109,700
+        - cell "10/11/2026 Lagos":
+          - text: 10/11/2026
+          - generic: Lagos
+        - cell "Active":
+          - generic: Active
+        - cell "Actions for Demo QA 10 Nov customer":
+          - button "Actions for Demo QA 10 Nov customer":
+      - row "Select Demo QA 10 Nov commercial DQ Demo QA 10 Nov commercial EGC-BB9BB6BB471D41D78EA822EB2303CFE8 commercial.qa10nov@demo.easygas.invalid Not provided 0 orders ₦0 10/11/2026 Lagos Inactive Actions for Demo QA 10 Nov commercial":
+        - cell "Select Demo QA 10 Nov commercial":
+          - checkbox "Select Demo QA 10 Nov commercial"
+        - cell "DQ Demo QA 10 Nov commercial EGC-BB9BB6BB471D41D78EA822EB2303CFE8":
+          - generic: DQ
+          - strong: Demo QA 10 Nov commercial
+          - generic: EGC-BB9BB6BB471D41D78EA822EB2303CFE8
+        - cell "commercial.qa10nov@demo.easygas.invalid Not provided":
+          - text: commercial.qa10nov@demo.easygas.invalid
+          - text: Not provided
+        - cell "0 orders":
+          - strong: "0"
+          - generic: orders
+        - cell "₦0":
+          - strong: ₦0
+        - cell "10/11/2026 Lagos":
+          - text: 10/11/2026
+          - generic: Lagos
+        - cell "Inactive":
+          - generic: Inactive
+        - cell "Actions for Demo QA 10 Nov commercial":
+          - button "Actions for Demo QA 10 Nov commercial":
+      - row "Select Sarafa Adebisi SA Sarafa Adebisi EGC-0318592F172646D686FE9FB2B4A4CEDE olumuyiwa461@gmail.com Not provided 2 orders ₦8,610 10/11/2026 No assigned branch Active Actions for Sarafa Adebisi":
+        - cell "Select Sarafa Adebisi":
+          - checkbox "Select Sarafa Adebisi"
+        - cell "SA Sarafa Adebisi EGC-0318592F172646D686FE9FB2B4A4CEDE":
+          - generic: SA
+          - strong: Sarafa Adebisi
+          - generic: EGC-0318592F172646D686FE9FB2B4A4CEDE
+        - cell "olumuyiwa461@gmail.com Not provided":
+          - text: olumuyiwa461@gmail.com
+          - text: Not provided
+        - cell "2 orders":
+          - strong: "2"
+          - generic: orders
+        - cell "₦8,610":
+          - strong: ₦8,610
+        - cell "10/11/2026 No assigned branch":
+          - text: 10/11/2026
+          - generic: No assigned branch
+        - cell "Active":
+          - generic: Active
+        - cell "Actions for Sarafa Adebisi":
+          - button "Actions for Sarafa Adebisi":
+      - row "Select Demo customer Dc Demo customer EGC-B511EE97E4A5450A89A7E54FC46B5D99 philipmuyiwa@gmail.com +2347087226644 6 orders ₦64,645 09/11/2026 Lagos Active Actions for Demo customer":
+        - cell "Select Demo customer":
+          - checkbox "Select Demo customer"
+        - cell "Dc Demo customer EGC-B511EE97E4A5450A89A7E54FC46B5D99":
+          - generic: Dc
+          - strong: Demo customer
+          - generic: EGC-B511EE97E4A5450A89A7E54FC46B5D99
+        - cell "philipmuyiwa@gmail.com +2347087226644":
+          - text: philipmuyiwa@gmail.com
+          - text: "+2347087226644"
+        - cell "6 orders":
+          - strong: "6"
+          - generic: orders
+        - cell "₦64,645":
+          - strong: ₦64,645
+        - cell "09/11/2026 Lagos":
+          - text: 09/11/2026
+          - generic: Lagos
+        - cell "Active":
+          - generic: Active
+        - cell "Actions for Demo customer":
+          - button "Actions for Demo customer":
+  - generic: Showing 1–8 of 8 customers
+  - button "Previous page" [disabled]:
+  - generic: "1"
+  - button "Next page" [disabled]:
+  - combobox "Customers per page":
+    - option "10 per page" [selected]
+    - option "25 per page"
+    - option "50 per page"
+  - heading "Customer Support" [level=2]
+  - paragraph: View customer enquiries and support conversations.
+  - link "Open Support Desk":
+    - /url: /admin/support
+    - text: Open Support Desk
+  - heading "Customer Insights" [level=2]
+  - paragraph: Understand customer activity and ordering patterns.
+  - link "View Reports":
+    - /url: /admin/reports
+    - text: View Reports
+  - heading "Export Customers" [level=2]
+  - paragraph: Download the filtered customer list, or selected rows, for offline analysis.
+  - button "Export CSV":
+    - text: Export CSV
+- text: EasyGas Business · NGN · Africa/Lagos

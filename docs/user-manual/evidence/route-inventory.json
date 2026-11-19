@@ -1,0 +1,553 @@
+[
+  {
+    "group": "Public and customer",
+    "route": "/"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/gas-order"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/policies"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/refund"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/cancellation"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/service-terms"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/warranty"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/credit-terms"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/loyalty-terms"
+  },
+  {
+    "group": "Customer",
+    "route": "/services"
+  },
+  {
+    "group": "Customer",
+    "route": "/bookings"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/combined-checkout"
+  },
+  {
+    "group": "Customer",
+    "route": "/notifications"
+  },
+  {
+    "group": "Customer",
+    "route": "/recurring"
+  },
+  {
+    "group": "Customer",
+    "route": "/purchase-credit"
+  },
+  {
+    "group": "Customer",
+    "route": "/account-settings"
+  },
+  {
+    "group": "Customer",
+    "route": "/support"
+  },
+  {
+    "group": "Customer",
+    "route": "/consumption"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/forgot-password"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/reset-password"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/verify-email"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/accept-invitation"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/products"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/how-it-works"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/about"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/business"
+  },
+  {
+    "group": "Customer",
+    "route": "/help"
+  },
+  {
+    "group": "Customer",
+    "route": "/account"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/login"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/register"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/cart"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/checkout"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/track"
+  },
+  {
+    "group": "Customer",
+    "route": "/orders"
+  },
+  {
+    "group": "Customer",
+    "route": "/wallet"
+  },
+  {
+    "group": "Customer",
+    "route": "/rewards"
+  },
+  {
+    "group": "Customer",
+    "route": "/schedules"
+  },
+  {
+    "group": "Customer",
+    "route": "/refill"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/privacy"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/terms"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/delivery"
+  },
+  {
+    "group": "Public or transaction",
+    "route": "/contact"
+  },
+  {
+    "group": "Overview",
+    "route": "/admin",
+    "label": "Dashboard",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "business.snapshot"
+  },
+  {
+    "group": "Sales & Customers",
+    "route": "/admin/orders",
+    "label": "Orders",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "orders"
+  },
+  {
+    "group": "Sales & Customers",
+    "route": "/admin/pos",
+    "label": "Retail POS",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "pos"
+  },
+  {
+    "group": "Sales & Customers",
+    "route": "/admin/customers",
+    "label": "Customers",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "customers"
+  },
+  {
+    "group": "Sales & Customers",
+    "route": "/admin/support",
+    "label": "Support Desk",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "support.list"
+  },
+  {
+    "group": "Products & Stock",
+    "route": "/admin/products",
+    "label": "Products",
+    "roles": [
+      "owner",
+      "manager",
+      "finance",
+      "technician"
+    ],
+    "action": "products.manage"
+  },
+  {
+    "group": "Products & Stock",
+    "route": "/admin/inventory",
+    "label": "Inventory",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "business.snapshot"
+  },
+  {
+    "group": "Products & Stock",
+    "route": "/admin/cylinders",
+    "label": "Cylinders",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "cylinders"
+  },
+  {
+    "group": "Products & Stock",
+    "route": "/admin/bundles",
+    "label": "Product & Service Bundles",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "bundles.manage"
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/deliveries",
+    "label": "Deliveries",
+    "roles": [
+      "owner",
+      "manager",
+      "driver"
+    ],
+    "action": "orders"
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/bookings",
+    "label": "Service Bookings",
+    "roles": [
+      "owner",
+      "manager",
+      "technician",
+      "finance"
+    ],
+    "action": "bookings"
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/services",
+    "label": "Professional Services",
+    "roles": [
+      "owner",
+      "manager",
+      "technician",
+      "finance"
+    ],
+    "action": "services.manage"
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/technicians",
+    "label": "Technicians",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "services.manage"
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/drivers",
+    "label": "Drivers",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "drivers.workspace"
+  },
+  {
+    "group": "Delivery & Services",
+    "route": "/admin/quotations",
+    "label": "Quotations",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "bookings"
+  },
+  {
+    "group": "Finance & Performance",
+    "route": "/admin/finance",
+    "label": "Wallet & Payments",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "action": "business.snapshot"
+  },
+  {
+    "group": "Finance & Performance",
+    "route": "/admin/reconciliation",
+    "label": "Financial Reconciliation",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "action": "finance.summary"
+  },
+  {
+    "group": "Finance & Performance",
+    "route": "/admin/credits",
+    "label": "Credits & Refunds",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "action": "credits"
+  },
+  {
+    "group": "Finance & Performance",
+    "route": "/admin/reports",
+    "label": "Reports & Analytics",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "business.snapshot"
+  },
+  {
+    "group": "Growth & Engagement",
+    "route": "/admin/campaigns",
+    "label": "Campaigns",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "campaigns"
+  },
+  {
+    "group": "Growth & Engagement",
+    "route": "/admin/recommendations",
+    "label": "Recommendations",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "recommendations.manage"
+  },
+  {
+    "group": "Growth & Engagement",
+    "route": "/admin/testimonials",
+    "label": "Customer Testimonials",
+    "roles": [
+      "owner"
+    ],
+    "action": "testimonials.manage"
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/staff",
+    "label": "Staff Management",
+    "roles": [
+      "owner",
+      "manager"
+    ],
+    "action": "staff.manage"
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/approvals",
+    "label": "Approval Centre",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "approvals"
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/settings",
+    "label": "Settings",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "settings"
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/operations",
+    "label": "Operations Centre",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "purchasing"
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/incidents",
+    "label": "Operational Incidents",
+    "roles": [
+      "owner",
+      "manager",
+      "finance"
+    ],
+    "action": "incidents"
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/policies",
+    "label": "Customer Policies",
+    "roles": [
+      "owner"
+    ],
+    "action": "policies.manage"
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/audit",
+    "label": "Audit History",
+    "roles": [
+      "owner",
+      "finance"
+    ],
+    "action": "audit"
+  },
+  {
+    "group": "Administration & Control",
+    "route": "/admin/readiness",
+    "label": "Launch Readiness",
+    "roles": [
+      "owner"
+    ],
+    "action": "production.readiness"
+  },
+  {
+    "group": "Special entry point",
+    "route": "/activate"
+  },
+  {
+    "group": "Special entry point",
+    "route": "/payment-request"
+  },
+  {
+    "group": "Special entry point",
+    "route": "/payment-return"
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/cylinder-empty-6",
+    "label": "6kg Empty Cylinder"
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/refill-6",
+    "label": "6kg Refill"
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/cylinder-empty-12",
+    "label": "12.5kg Empty Cylinder"
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/refill-12",
+    "label": "12.5kg Refill"
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/cylinder-empty-25",
+    "label": "25kg Empty Cylinder"
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/refill-25",
+    "label": "25kg Refill"
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/cylinder-empty-50",
+    "label": "50kg Empty Cylinder"
+  },
+  {
+    "group": "Product detail",
+    "route": "/products/refill-50",
+    "label": "50kg Refill"
+  },
+  {
+    "group": "Service detail",
+    "route": "/services/cooker-installation",
+    "label": "Cooker Installation"
+  },
+  {
+    "group": "Service detail",
+    "route": "/services/cooker-servicing",
+    "label": "Cooker Servicing"
+  },
+  {
+    "group": "Service detail",
+    "route": "/services/cylinder-installation",
+    "label": "Cylinder Installation"
+  }
+]

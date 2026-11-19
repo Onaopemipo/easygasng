@@ -1,0 +1,305 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders, 2 New orders awaiting acceptance":
+        - /url: /admin/orders
+        - generic: Orders
+        - generic: "2"
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk, 3 Open or in-progress support requests":
+        - /url: /admin/support
+        - generic: Support Desk
+        - generic: "3"
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory, 4 Physical product and bulk gas balances at or below configured thresholds":
+        - /url: /admin/inventory
+        - generic: Inventory
+        - generic: "4"
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries, 3 Accepted or preparing orders awaiting a driver":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+        - generic: "3"
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents, 10 Open or acknowledged operational incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+        - generic: "10"
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "37"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Deliveries
+  - heading "Dispatch Centre" [level=1]
+  - paragraph: Manage deliveries, assign drivers, track progress and reconcile stock
+  - text: Polling updates
+  - generic: Last checked 16:11:38
+  - generic: Operations date (Lagos)
+  - textbox "Operations date (Lagos)": 2026-11-19
+  - button "Refresh dispatch":
+  - button "0 Ready for Dispatch":
+    - strong: "0"
+    - text: Ready for Dispatch
+    - generic: ›
+  - button "0 Assigned":
+    - strong: "0"
+    - text: Assigned
+    - generic: ›
+  - button "0 In Transit":
+    - strong: "0"
+    - text: In Transit
+    - generic: ›
+  - button "5 Delivered Today":
+    - strong: "5"
+    - text: Delivered Today
+    - generic: ›
+  - button "0 Failed / Exception":
+    - strong: "0"
+    - text: Failed / Exception
+    - generic: ›
+  - button "0 Drivers Online":
+    - strong: "0"
+    - text: Drivers Online
+    - generic: ›
+  - button "Dispatch overview"
+  - button "Manifests, LPG, trips & returns"
+  - button "Order tracking & actions"
+  - region "Dispatch orders":
+    - tablist "Delivery queues":
+      - tab "Dispatch Queue (1)" [selected]
+      - tab "Live Deliveries (0)"
+      - tab "Completed (5)"
+      - tab "Exceptions (0)"
+    - textbox "Search orders":
+      - /placeholder: Search by order ID, customer or address…
+    - combobox "Branch":
+      - option "All Branches" [selected]
+      - option "Lagos"
+    - combobox "Area":
+      - option "All Areas" [selected]
+      - option "Victoria Island"
+    - combobox "Priority":
+      - option "Priority" [selected]
+      - option "Overdue"
+      - option "Normal"
+    - combobox "Delivery window":
+      - option "All Windows" [selected]
+      - option "09:00–12:00"
+      - option "14:00–18:00"
+    - combobox "Delivery status":
+      - option "All Statuses" [selected]
+      - option "accepted"
+      - option "preparing"
+      - option "assigned"
+      - option "out for delivery"
+      - option "delivered"
+      - option "delivery failed"
+    - combobox "Sort deliveries":
+      - option "Oldest first" [selected]
+      - option "Newest first"
+      - option "Customer name"
+    - table:
+      - rowgroup:
+        - row "Order ID Customer Address Order Payment Priority Action":
+          - columnheader "Order ID"
+          - columnheader "Customer"
+          - columnheader "Address"
+          - columnheader "Order"
+          - columnheader "Payment"
+          - columnheader "Priority"
+          - columnheader "Action"
+      - rowgroup:
+        - row "EG-2026-027A088D 09:00–12:00 preparing Demo customer 27 Ademola Odeku, VI Victoria Island 6 kg Payment review Normal Assign Driver View details Blocked · review":
+          - cell "EG-2026-027A088D 09:00–12:00 preparing":
+            - strong: EG-2026-027A088D
+            - generic: 09:00–12:00
+            - generic: preparing
+          - cell "Demo customer"
+          - cell "27 Ademola Odeku, VI Victoria Island":
+            - text: 27 Ademola Odeku, VI
+            - generic: Victoria Island
+          - cell "6 kg":
+            - generic: 6 kg
+          - cell "Payment review":
+            - generic: Payment review
+          - cell "Normal":
+            - generic: Normal
+          - cell "Assign Driver View details Blocked · review":
+            - button "Assign Driver"
+            - button "View details"
+            - generic "Verified cylinder inspection and filling eligibility are required before dispatch.": Blocked · review
+    - generic: Showing 1–1 of 1 orders
+    - button "Previous page" [disabled]:
+    - generic: "1"
+    - button "Next page" [disabled]:
+  - complementary:
+    - heading "Delivery map" [level=2]
+    - paragraph: Recorded rider locations. Arrival estimates are unavailable here.
+    - text: Driver
+    - combobox "Driver":
+      - option "All visible drivers" [selected]
+    - text: Location status
+    - combobox "Location status":
+      - option "All recorded locations" [selected]
+      - option "Recent observations"
+      - option "Last known only"
+    - paragraph: No rider locations are available to display.
+    - heading "Active Drivers (3)" [level=2]
+    - paragraph: Online means foreground contact within90 seconds. Unknown/stale contact is separate from availability and GPS.
+    - generic: D
+    - strong: Demo QA 10 Nov driver
+    - generic: Unavailable · Contact unknown
+    - generic: No contact recorded
+    - generic: 0 deliveries
+    - generic: GPS unavailable
+    - generic "View status details"
+    - generic: D
+    - strong: Demo QA Delivery Driver
+    - generic: Available for assignment · Contact unknown
+    - generic: No contact recorded
+    - generic: 0 deliveries
+    - generic: GPS unavailable
+    - generic "View status details"
+    - generic: D
+    - strong: Demo driver
+    - generic: Available for assignment · Stale contact
+    - generic: Last contact 16:02:06
+    - generic: 0 deliveries
+    - generic: GPS unavailable
+    - generic "View status details"
+  - heading "Today’s Operations" [level=2]
+  - term: Gas Loaded (Out)
+  - definition: 18 kg
+  - term: Gas Delivered
+  - definition: 18 kg
+  - term: Gas Remaining (Est.)
+  - definition: 0 kg
+  - paragraph: "Branch scope; loading, deliveries and verified returns use the selected Lagos date. Order search filters do not partition vehicle mass. Remaining is current open-load custody, including held loads; it is not a physical stock verification. Held loads: 0. Verified returns: 0 kg. Return discrepancies recorded: 0."
+  - heading "Quick Actions" [level=2]
+  - button "Create Vehicle Manifest":
+    - strong: Create Vehicle Manifest
+  - button "Record Gas Loading":
+    - strong: Record Gas Loading
+  - button "Log Fuel Purchase":
+    - strong: Log Fuel Purchase
+  - button "Record Returns & Reconciliation":
+    - strong: Record Returns & Reconciliation
+- text: EasyGas Business · NGN · Africa/Lagos

@@ -1,0 +1,316 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders":
+        - /url: /admin/orders
+        - generic: Orders
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk":
+        - /url: /admin/support
+        - generic: Support Desk
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory":
+        - /url: /admin/inventory
+        - generic: Inventory
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+  - status: Updating action counts…
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Staff Management
+  - navigation "Admin management shortcuts":
+    - paragraph: ADMIN · MANAGEMENT & GOVERNANCE
+    - link "Business Controls":
+      - /url: /admin/settings
+    - link "Reports & Branches":
+      - /url: /admin/reports
+    - link "Approval Review":
+      - /url: /admin/approvals
+    - link "Roles & Access":
+      - /url: /admin/staff
+    - link "Audit History":
+      - /url: /admin/audit
+  - heading "Staff Management" [level=1]
+  - paragraph: Add colleagues, review invitations and manage existing staff accounts.
+  - generic "More Actions":
+    - text: More Actions
+  - button "Add New Staff":
+    - text: Add New Staff
+  - article:
+    - strong: "27"
+    - heading "Total Staff" [level=2]
+    - paragraph: All active and inactive accounts
+  - article:
+    - strong: "27"
+    - heading "Active Staff" [level=2]
+    - paragraph: Enabled to access the system
+  - article:
+    - strong: "0"
+    - heading "Pending Invitation" [level=2]
+    - paragraph: Awaiting account activation
+  - article:
+    - strong: "0"
+    - heading "Suspended" [level=2]
+    - paragraph: Temporarily disabled
+  - strong: Important Information
+  - paragraph: Choose staff access when sending an invitation. After the recipient accepts, the request goes to the Approval Centre for independent review. Verify your password before sensitive actions.
+  - button "Dismiss information":
+  - searchbox "Search staff"
+  - combobox "Filter by branch":
+    - option "All Branches" [selected]
+    - option "Lagos"
+  - combobox "Filter by role":
+    - option "All Roles" [selected]
+    - option "Admin"
+    - option "Inventory"
+    - option "Service Manager"
+    - option "Driver"
+    - option "Technician"
+  - combobox "Filter by status":
+    - option "All Statuses" [selected]
+    - option "Active"
+    - option "Pending Invite"
+    - option "Suspended"
+    - option "Expired Invite"
+  - generic "Filter":
+    - text: Filter
+  - table:
+    - rowgroup:
+      - row "Select all staff on this page Staff Member Role Branch Status Last Login Actions":
+        - columnheader "Select all staff on this page":
+          - checkbox "Select all staff on this page"
+        - columnheader "Staff Member"
+        - columnheader "Role"
+        - columnheader "Branch"
+        - columnheader "Status"
+        - columnheader "Last Login"
+        - columnheader "Actions"
+    - rowgroup:
+      - row "Select Demo QA 10 Nov administrator DQ Demo QA 10 Nov administrator administrator.qa10nov@demo.easygas.invalid Admin Lagos Active 19 Nov 2026, 10:54":
+        - cell "Select Demo QA 10 Nov administrator":
+          - checkbox "Select Demo QA 10 Nov administrator"
+        - cell "DQ Demo QA 10 Nov administrator administrator.qa10nov@demo.easygas.invalid":
+          - generic: DQ
+          - strong: Demo QA 10 Nov administrator
+          - generic: administrator.qa10nov@demo.easygas.invalid
+        - cell "Admin":
+          - generic: Admin
+        - cell "Lagos":
+          - text: Lagos
+        - cell "Active":
+          - generic: Active
+        - cell "19 Nov 2026, 10:54"
+        - cell:
+          - generic "Actions for Demo QA 10 Nov administrator":
+      - row "Select Demo QA 10 Nov dispatcher DQ Demo QA 10 Nov dispatcher dispatcher.qa10nov@demo.easygas.invalid Service Manager Lagos Active 19 Nov 2026, 11:14":
+        - cell "Select Demo QA 10 Nov dispatcher":
+          - checkbox "Select Demo QA 10 Nov dispatcher"
+        - cell "DQ Demo QA 10 Nov dispatcher dispatcher.qa10nov@demo.easygas.invalid":
+          - generic: DQ
+          - strong: Demo QA 10 Nov dispatcher
+          - generic: dispatcher.qa10nov@demo.easygas.invalid
+        - cell "Service Manager":
+          - generic: Service Manager
+        - cell "Lagos":
+          - text: Lagos
+        - cell "Active":
+          - generic: Active
+        - cell "19 Nov 2026, 11:14"
+        - cell:
+          - generic "Actions for Demo QA 10 Nov dispatcher":
+      - row "Select Demo QA 10 Nov driver DQ Demo QA 10 Nov driver driver.qa10nov@demo.easygas.invalid Driver Lagos Active 19 Nov 2026, 11:08":
+        - cell "Select Demo QA 10 Nov driver":
+          - checkbox "Select Demo QA 10 Nov driver"
+        - cell "DQ Demo QA 10 Nov driver driver.qa10nov@demo.easygas.invalid":
+          - generic: DQ
+          - strong: Demo QA 10 Nov driver
+          - generic: driver.qa10nov@demo.easygas.invalid
+        - cell "Driver":
+          - generic: Driver
+        - cell "Lagos":
+          - text: Lagos
+        - cell "Active":
+          - generic: Active
+        - cell "19 Nov 2026, 11:08"
+        - cell:
+          - generic "Actions for Demo QA 10 Nov driver":
+      - row "Select Demo QA 10 Nov finance DQ Demo QA 10 Nov finance finance.qa10nov@demo.easygas.invalid Inventory Lagos Active 19 Nov 2026, 11:11":
+        - cell "Select Demo QA 10 Nov finance":
+          - checkbox "Select Demo QA 10 Nov finance"
+        - cell "DQ Demo QA 10 Nov finance finance.qa10nov@demo.easygas.invalid":
+          - generic: DQ
+          - strong: Demo QA 10 Nov finance
+          - generic: finance.qa10nov@demo.easygas.invalid
+        - cell "Inventory":
+          - generic: Inventory
+        - cell "Lagos":
+          - text: Lagos
+        - cell "Active":
+          - generic: Active
+        - cell "19 Nov 2026, 11:11"
+        - cell:
+          - generic "Actions for Demo QA 10 Nov finance":
+      - row "Select Demo QA 10 Nov inventory DQ Demo QA 10 Nov inventory inventory.qa10nov@demo.easygas.invalid Inventory Lagos Active 19 Nov 2026, 11:04":
+        - cell "Select Demo QA 10 Nov inventory":
+          - checkbox "Select Demo QA 10 Nov inventory"
+        - cell "DQ Demo QA 10 Nov inventory inventory.qa10nov@demo.easygas.invalid":
+          - generic: DQ
+          - strong: Demo QA 10 Nov inventory
+          - generic: inventory.qa10nov@demo.easygas.invalid
+        - cell "Inventory":
+          - generic: Inventory
+        - cell "Lagos":
+          - text: Lagos
+        - cell "Active":
+          - generic: Active
+        - cell "19 Nov 2026, 11:04"
+        - cell:
+          - generic "Actions for Demo QA 10 Nov inventory":
+      - row "Select Demo QA 10 Nov manager DQ Demo QA 10 Nov manager manager.qa10nov@demo.easygas.invalid Service Manager Lagos Active 19 Nov 2026, 16:09":
+        - cell "Select Demo QA 10 Nov manager":
+          - checkbox "Select Demo QA 10 Nov manager"
+        - cell "DQ Demo QA 10 Nov manager manager.qa10nov@demo.easygas.invalid":
+          - generic: DQ
+          - strong: Demo QA 10 Nov manager
+          - generic: manager.qa10nov@demo.easygas.invalid
+        - cell "Service Manager":
+          - generic: Service Manager
+        - cell "Lagos":
+          - text: Lagos
+        - cell "Active":
+          - generic: Active
+        - cell "19 Nov 2026, 16:09"
+        - cell:
+          - generic "Actions for Demo QA 10 Nov manager":
+  - generic: Showing 1 to 6 of 27 staff records
+  - button "Previous page" [disabled]:
+  - button "1"
+  - button "2"
+  - button "5"
+  - button "Next page":
+- text: EasyGas Business · NGN · Africa/Lagos

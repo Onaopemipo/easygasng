@@ -1,0 +1,204 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders":
+        - /url: /admin/orders
+        - generic: Orders
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk":
+        - /url: /admin/support
+        - generic: Support Desk
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory":
+        - /url: /admin/inventory
+        - generic: Inventory
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+  - status: Updating action counts…
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - generic "Bulk LPG loading, dispensing and returns"
+  - text: Workspace
+  - generic: /
+  - text: Operations Centre
+  - generic: BUSINESS OPERATIONS
+  - heading "Operations centre" [level=1]
+  - paragraph: Manage purchasing, catalogue and branch operations from one workspace.
+  - group "Operations workspace":
+    - button "Purchasing" [pressed]
+    - button "Catalogue"
+    - button "Cylinders"
+    - button "Branches"
+    - button "Staff"
+    - button "Maintenance"
+    - button "Delegations"
+    - button "Email"
+  - paragraph: Each action is checked against your role and branch. Verify your password using your profile menu before a sensitive action.
+  - status:
+    - generic: Purchases use the shared Approval Centre. Approval is independent; receipt records actual incoming goods. Use Inventory for gas purchases, partial receipts and governed transfers.
+  - paragraph:
+    - link "Open Inventory management →":
+      - /url: /admin/inventory
+    - text: ·
+    - link "Review or cancel pending approval →":
+      - /url: /admin/approvals
+  - heading "Add supplier" [level=3]
+  - text: Branch ID *
+  - generic: (required)
+  - textbox "Branch ID (required)": lagos
+  - text: Supplier name *
+  - generic: (required)
+  - textbox "Supplier name (required)"
+  - text: Contact details *
+  - generic: (required)
+  - textbox "Contact details (required)"
+  - button "Save"
+  - heading "Request a purchase" [level=3]
+  - text: Supplier *
+  - generic: (required)
+  - combobox "Supplier (required)":
+    - option "Choose…" [selected]
+    - option "Petrocam"
+  - text: Product *
+  - generic: (required)
+  - combobox "Product (required)":
+    - option "Choose…" [selected]
+    - option "6kg Empty Cylinder"
+    - option "12.5kg Empty Cylinder"
+    - option "25kg Empty Cylinder"
+    - option "50kg Empty Cylinder"
+    - option "Double Burner"
+    - option "Gas Hose"
+    - option "Gas Regulator"
+    - option "Kitchen Starter Kit"
+  - text: Quantity *
+  - generic: (required)
+  - spinbutton "Quantity (required)"
+  - text: Unit cost (₦) *
+  - generic: (required)
+  - spinbutton "Unit cost (₦) (required)"
+  - button "Save"
+- text: EasyGas Business · NGN · Africa/Lagos

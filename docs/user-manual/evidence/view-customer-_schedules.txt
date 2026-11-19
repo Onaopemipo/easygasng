@@ -1,0 +1,120 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- link "Skip to content":
+  - /url: "#main"
+- complementary "Customer navigation":
+  - link "EasyGas home":
+    - /url: /
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar":
+  - generic: DQ
+  - strong: Hello, Demo.
+  - generic: customer.qa10nov@demo.easygas.invalid
+  - navigation "Customer workspace":
+    - link "Overview":
+      - /url: /account
+      - generic: Overview
+    - link "Notifications":
+      - /url: /notifications
+      - generic: Notifications
+      - generic "20 items": "20"
+    - link "Account & Privacy":
+      - /url: /account-settings
+      - generic: Account & Privacy
+    - button "Gas & Services" [expanded]:
+      - text: Gas & Services
+    - link "Professional Services":
+      - /url: /services
+      - generic: Professional Services
+    - link "Service Appointments":
+      - /url: /bookings
+      - generic: Service Appointments
+    - link "Cooking Gas Profiles":
+      - /url: /consumption
+      - generic: Cooking Gas Profiles
+    - button "Orders & Payments" [expanded]:
+      - text: Orders & Payments
+    - link "My Orders":
+      - /url: /orders
+      - generic: My Orders
+    - link "My Wallet":
+      - /url: /wallet
+      - generic: My Wallet
+    - link "Credit & Redemption":
+      - /url: /purchase-credit
+      - generic: Credit & Redemption
+    - button "Rewards & Plans" [expanded]:
+      - text: Rewards & Plans
+    - link "EasyRewards":
+      - /url: /rewards
+      - generic: EasyRewards
+    - link "Refill Plans":
+      - /url: /schedules
+      - generic: Refill Plans
+    - link "Recurring Orders":
+      - /url: /recurring
+      - generic: Recurring Orders
+    - link "Smart Refill":
+      - /url: /refill
+      - generic: Smart Refill
+    - button "Support" [expanded]:
+      - text: Support
+    - link "Help & Support":
+      - /url: /help
+      - generic: Help & Support
+    - link "Support Conversations":
+      - /url: /support
+      - generic: Support Conversations
+      - generic "1 items": "1"
+  - link "Back to Website":
+    - /url: /
+    - generic: Back to Website
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - textbox "Search products":
+    - /placeholder: Search products by name or category…
+  - button "Submit product search":
+  - link "Back to Website":
+    - /url: /
+    - generic: Back to Website
+  - link "Set Delivery Location":
+    - /url: /account-settings
+    - generic: Set Delivery Location
+  - link "Notifications, 20 unread":
+    - /url: /notifications
+  - link "Shopping cart, 0 items":
+    - /url: /cart
+    - generic: "0"
+  - button "Switch to dark mode":
+  - generic "Open account menu":
+    - generic: DQ
+- main:
+  - generic: YOUR EASYGAS
+  - heading "Refill Plans" [level=1]
+  - status:
+    - generic: Refill plans save your preferred dates. They do not automatically charge you or dispatch gas; each order requires confirmation.
+  - heading "Plan your next refill" [level=2]
+  - text: Gas refill *
+  - generic: (required)
+  - combobox "Gas refill (required)":
+    - option "Choose an available product" [selected]
+    - option "6kg Refill"
+    - option "12.5kg Refill"
+    - option "25kg Refill"
+    - option "50kg Refill"
+  - text: Frequency *
+  - generic: (required)
+  - combobox "Frequency (required)":
+    - option "Every 7 days" [selected]
+    - option "Every 14 days"
+    - option "Every 28 days"
+    - option "Every 42 days"
+  - text: First refill date *
+  - generic: (required)
+  - textbox "First refill date (required)"
+  - button "Save Refill Plan":
+    - text: Save Refill Plan
+- link "Continue Shopping":
+  - /url: /products
+  - text: Continue Shopping

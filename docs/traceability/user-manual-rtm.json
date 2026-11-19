@@ -1,0 +1,333 @@
+{
+  "phase": "Entire website audit and customised illustrated user manual",
+  "productionDecision": "Existing commercial production NO-GO, actual-import hold and retain-all unchanged",
+  "requirements": [
+    {
+      "id": "UM-01",
+      "requirement": "Inventory and inspect the public and customer website including special and dynamic entry points",
+      "priority": "P1",
+      "scope": "Current client-demo web application and repository; six role perspectives. Native installed apps, live providers, physical certification and destructive/financial write testing are outside this read-only audit.",
+      "uiReference": "User request on 20 November 2026 for entire website audit and customised screenshot manual; prior one Admin/business owner instruction",
+      "route": "All inventoried public/customer/admin website routes plus driver and technician in-page workspaces",
+      "implementationFiles": [
+        "docs/user-manual/build_audit.py",
+        "docs/user-manual/evidence/route-inventory.json",
+        "docs/user-manual/evidence/route-coverage.json"
+      ],
+      "dataSource": "Current deployed UI and scoped read APIs, repository route/component/workflow sources and prior named acceptance evidence",
+      "securityControl": "Existing synthetic QA identities; no credentials in deliverables; no order/payment/stock/approval/qualification mutation or live-provider transaction. Preserve role and production holds.",
+      "testFiles": [
+        "tests/user-manual.test.ts"
+      ],
+      "testIds": [
+        "UM-COVERAGE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/user-manual/evidence/route-inventory.json",
+        "docs/user-manual/evidence/route-coverage.json",
+        "docs/user-manual/evidence/browser-audit.json",
+        "docs/user-manual/evidence/subviews.json",
+        "docs/user-manual/evidence/responsive.json",
+        "docs/user-manual/evidence/deployment.json"
+      ],
+      "acceptanceGate": "UM-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All 86 inventoried route surfaces inspected in 109 recorded role-route observations plus field-workspace subviews. Eight unpublished policies and guarded/empty states remain in the route denominator; no full transactional certification claimed.",
+      "testResult": "PASS",
+      "outstandingWork": "None for the bounded audit/documentation deliverable. Website remediation WEB-A01–WEB-A07 and production/native/physical/provider/full-transaction acceptance remain open and are not waived."
+    },
+    {
+      "id": "UM-02",
+      "requirement": "Audit the business workspaces and current role boundaries without changing business records",
+      "priority": "P0",
+      "scope": "Current client-demo web application and repository; six role perspectives. Native installed apps, live providers, physical certification and destructive/financial write testing are outside this read-only audit.",
+      "uiReference": "User request on 20 November 2026 for entire website audit and customised screenshot manual; prior one Admin/business owner instruction",
+      "route": "All inventoried public/customer/admin website routes plus driver and technician in-page workspaces",
+      "implementationFiles": [
+        "scripts/audit-user-manual.mjs",
+        "scripts/manual-preservation.mjs",
+        "docs/user-manual/findings.json"
+      ],
+      "dataSource": "Current deployed UI and scoped read APIs, repository route/component/workflow sources and prior named acceptance evidence",
+      "securityControl": "Existing synthetic QA identities; no credentials in deliverables; no order/payment/stock/approval/qualification mutation or live-provider transaction. Preserve role and production holds.",
+      "testFiles": [
+        "tests/user-manual.test.ts",
+        "scripts/audit-user-manual.mjs",
+        "scripts/manual-preservation.mjs"
+      ],
+      "testIds": [
+        "UM-ROLE-BOUNDS",
+        "UM-PRESERVATION",
+        "UM-COVERAGE",
+        "UM-FINDINGS"
+      ],
+      "negativeTests": [
+        "UM-ROLE-BOUNDS"
+      ],
+      "evidence": [
+        "docs/user-manual/evidence/role-boundaries.json",
+        "docs/user-manual/evidence/role-boundaries.txt",
+        "docs/user-manual/evidence/role-access.json",
+        "docs/user-manual/evidence/business-before.json",
+        "docs/user-manual/evidence/business-after.json",
+        "docs/user-manual/evidence/safety-readback.json"
+      ],
+      "acceptanceGate": "UM-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "15/15 selected expected HTTP results, including 9 negative controls. Current role workspaces inspected. Final normal product readbacks equal the pre-audit 13-order/ledger/inventory/gas/wallet/policy baseline. No hosted DB access or business writes.",
+      "testResult": "PASS",
+      "outstandingWork": "None for the bounded audit/documentation deliverable. Website remediation WEB-A01–WEB-A07 and production/native/physical/provider/full-transaction acceptance remain open and are not waived."
+    },
+    {
+      "id": "UM-03",
+      "requirement": "Create a customised workflow manual with genuine relevant screenshots and single-owner EasyGas guidance",
+      "priority": "P1",
+      "scope": "Current client-demo web application and repository; six role perspectives. Native installed apps, live providers, physical certification and destructive/financial write testing are outside this read-only audit.",
+      "uiReference": "User request on 20 November 2026 for entire website audit and customised screenshot manual; prior one Admin/business owner instruction",
+      "route": "All inventoried public/customer/admin website routes plus driver and technician in-page workspaces",
+      "implementationFiles": [
+        "docs/user-manual/build_manual.py",
+        "docs/user-manual/manual-content.json",
+        "output/manual/EasyGas-User-Manual.docx",
+        "output/pdf/EasyGas-User-Manual.pdf"
+      ],
+      "dataSource": "Current deployed UI and scoped read APIs, repository route/component/workflow sources and prior named acceptance evidence",
+      "securityControl": "Existing synthetic QA identities; no credentials in deliverables; no order/payment/stock/approval/qualification mutation or live-provider transaction. Preserve role and production holds.",
+      "testFiles": [
+        "tests/user-manual.test.ts",
+        "docs/user-manual/validate_artifacts.py"
+      ],
+      "testIds": [
+        "UM-ARTIFACTS",
+        "UM-VISUAL"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/user-manual/evidence/artifact-validation.json",
+        "docs/user-manual/evidence/visual-review.json"
+      ],
+      "acceptanceGate": "UM-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "33-page customised manual with 31 task chapters, 25 genuine screenshots, six role perspectives, linked contents and explicit single-owner 0/1 guidance. PDF and editable Word verified.",
+      "testResult": "PASS",
+      "outstandingWork": "None for the bounded audit/documentation deliverable. Website remediation WEB-A01–WEB-A07 and production/native/physical/provider/full-transaction acceptance remain open and are not waived."
+    },
+    {
+      "id": "UM-04",
+      "requirement": "Produce readable verified artifacts and an evidence-based audit report with complete scope accounting",
+      "priority": "P1",
+      "scope": "Current client-demo web application and repository; six role perspectives. Native installed apps, live providers, physical certification and destructive/financial write testing are outside this read-only audit.",
+      "uiReference": "User request on 20 November 2026 for entire website audit and customised screenshot manual; prior one Admin/business owner instruction",
+      "route": "All inventoried public/customer/admin website routes plus driver and technician in-page workspaces",
+      "implementationFiles": [
+        "docs/user-manual/build_audit.py",
+        "docs/user-manual/validate_artifacts.py",
+        "docs/user-manual/findings.json",
+        "output/pdf/EasyGas-Website-Audit.pdf"
+      ],
+      "dataSource": "Current deployed UI and scoped read APIs, repository route/component/workflow sources and prior named acceptance evidence",
+      "securityControl": "Existing synthetic QA identities; no credentials in deliverables; no order/payment/stock/approval/qualification mutation or live-provider transaction. Preserve role and production holds.",
+      "testFiles": [
+        "tests/user-manual.test.ts",
+        "docs/user-manual/validate_artifacts.py"
+      ],
+      "testIds": [
+        "UM-ARTIFACTS",
+        "UM-VISUAL",
+        "UM-FINDINGS",
+        "UM-MATRIX"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/user-manual/evidence/artifact-validation.json",
+        "docs/user-manual/evidence/visual-review.json",
+        "docs/user-manual/evidence/route-coverage.json",
+        "docs/user-manual/evidence/validation.txt"
+      ],
+      "acceptanceGate": "UM-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "13-page audit with seven open/blocked findings, route appendix, evidence, responsibilities, next actions and explicit acceptance limits. All 46 final rendered pages visually reviewed; artifact integrity/coverage/matrix checks pass.",
+      "testResult": "PASS",
+      "outstandingWork": "None for the bounded audit/documentation deliverable. Website remediation WEB-A01–WEB-A07 and production/native/physical/provider/full-transaction acceptance remain open and are not waived."
+    }
+  ],
+  "gates": [
+    {
+      "id": "UM-G01",
+      "description": "Inventory and inspect the public and customer website including special and dynamic entry points",
+      "status": "PASS",
+      "reason": "Bounded audit/documentation evidence accepted; not a commercial website acceptance gate"
+    },
+    {
+      "id": "UM-G02",
+      "description": "Audit the business workspaces and current role boundaries without changing business records",
+      "status": "PASS",
+      "reason": "Bounded audit/documentation evidence accepted; not a commercial website acceptance gate"
+    },
+    {
+      "id": "UM-G03",
+      "description": "Create a customised workflow manual with genuine relevant screenshots and single-owner EasyGas guidance",
+      "status": "PASS",
+      "reason": "Bounded audit/documentation evidence accepted; not a commercial website acceptance gate"
+    },
+    {
+      "id": "UM-G04",
+      "description": "Produce readable verified artifacts and an evidence-based audit report with complete scope accounting",
+      "status": "PASS",
+      "reason": "Bounded audit/documentation evidence accepted; not a commercial website acceptance gate"
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 4,
+      "verified": 4,
+      "total": 4
+    },
+    "criticalRequirements": {
+      "verified": 1,
+      "total": 1
+    },
+    "routes": {
+      "inspected": 86,
+      "total": 86,
+      "functionalAcceptance": "Not claimed; guards, unpublished policies and empty states retained"
+    },
+    "gates": {
+      "passed": 4,
+      "total": 4
+    },
+    "findings": {
+      "closed": 0,
+      "open": 5,
+      "blocked": 2,
+      "total": 7
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "Scope registered for whole website read-only audit and user manual. Inventory denominators retained including untested/blocked states. No app fixes/deployment, policy activation, native build or qualification renewal inferred."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Audit and manual completed without app changes or deployment. All 86 surfaces/4 documentation requirements retained; seven website findings stay open or blocked. Commercial NO-GO, actual-import hold, retain-all and unrelated changes preserved. Artifact hashes, final full-page visual review, 15 access checks and unchanged business readbacks recorded."
+    }
+  ],
+  "findings": [
+    {
+      "id": "WEB-A01",
+      "status": "OPEN",
+      "priority": "High",
+      "kind": "Business publication gap",
+      "requirementIds": [
+        "UM-01",
+        "UM-04"
+      ],
+      "outstandingWork": "Prepare and review the business-approved versions in Customer Policies, complete the required approval and publication steps, then re-open every public link. Verify title, version, effective date, content and consent-linked references.",
+      "evidence": [
+        "docs/user-manual/evidence/view-public-_privacy.txt",
+        "docs/user-manual/evidence/view-public-_terms.txt",
+        "docs/user-manual/evidence/view-public-_refund.txt",
+        "docs/user-manual/evidence/view-public-_cancellation.txt",
+        "docs/user-manual/evidence/view-public-_service-terms.txt",
+        "docs/user-manual/evidence/view-public-_warranty.txt",
+        "docs/user-manual/evidence/view-public-_credit-terms.txt",
+        "docs/user-manual/evidence/view-public-_loyalty-terms.txt",
+        "docs/user-manual/evidence/view-owner-_admin_policies.txt"
+      ]
+    },
+    {
+      "id": "WEB-A02",
+      "status": "OPEN",
+      "priority": "Medium",
+      "kind": "Reproduced product defect",
+      "requirementIds": [
+        "UM-02",
+        "UM-04"
+      ],
+      "outstandingWork": "Point the shortcut to an appropriate staff help or dispatch destination, or implement narrowly scoped staff support. Preserve customer and branch isolation; do not grant technicians broad customer-support access.",
+      "evidence": [
+        "docs/user-manual/evidence/view-technician-_support.txt",
+        "docs/user-manual/evidence/view-technician-_admin_bookings.txt"
+      ]
+    },
+    {
+      "id": "WEB-A03",
+      "status": "OPEN",
+      "priority": "Low",
+      "kind": "Reproduced copy defect",
+      "requirementIds": [
+        "UM-01",
+        "UM-04"
+      ],
+      "outstandingWork": "Use verification-specific missing or expired link guidance, including the correct resend route. Keep reset and invitation messages scoped to their own flow.",
+      "evidence": [
+        "docs/user-manual/evidence/view-public-_verify-email.txt",
+        "docs/user-manual/evidence/view-public-_reset-password.txt"
+      ]
+    },
+    {
+      "id": "WEB-A04",
+      "status": "BLOCKED",
+      "priority": "High",
+      "kind": "Operational prerequisite",
+      "requirementIds": [
+        "UM-02",
+        "UM-04"
+      ],
+      "outstandingWork": "Before another authorised synthetic journey, obtain appropriate current demo-only review and evidence for the meter and required staff qualifications. Real operation needs genuine qualified evidence, not QA placeholders.",
+      "evidence": [
+        "docs/user-manual/evidence/safety-readback.json"
+      ]
+    },
+    {
+      "id": "WEB-A05",
+      "status": "BLOCKED",
+      "priority": "Critical",
+      "kind": "Existing release decision",
+      "requirementIds": [
+        "UM-02",
+        "UM-04"
+      ],
+      "outstandingWork": "Assign owners and evidence to every current gate, resolve incidents and complete the established release acceptance process. Preserve the actual-import hold and retain-all decisions.",
+      "evidence": [
+        "docs/user-manual/evidence/view-owner-_admin_readiness.txt",
+        "docs/user-manual/evidence/view-owner-_admin_incidents.txt"
+      ]
+    },
+    {
+      "id": "WEB-A06",
+      "status": "OPEN",
+      "priority": "Medium",
+      "kind": "Operating model review",
+      "requirementIds": [
+        "UM-02",
+        "UM-04"
+      ],
+      "outstandingWork": "Document real maker, reviewer and executor responsibilities for the small company. Confirm how each restricted request can be processed by authorised staff without fake owners or shared identities.",
+      "evidence": [
+        "docs/user-manual/evidence/view-owner-_admin_approvals.txt",
+        "docs/user-manual/evidence/role-access.json"
+      ]
+    },
+    {
+      "id": "WEB-A07",
+      "status": "OPEN",
+      "priority": "Information",
+      "kind": "Reporting and telemetry limit",
+      "requirementIds": [
+        "UM-02",
+        "UM-04"
+      ],
+      "outstandingWork": "Maintain clear unknown-state copy and train users to supply authoritative cost, stock and telemetry evidence. Complete native/device acceptance separately when needed.",
+      "evidence": [
+        "docs/user-manual/evidence/view-owner-_admin.txt",
+        "docs/user-manual/evidence/view-owner-_admin_finance.txt",
+        "docs/user-manual/evidence/view-manager-_admin_deliveries.txt",
+        "docs/user-manual/evidence/driver-trip.txt"
+      ]
+    }
+  ]
+}

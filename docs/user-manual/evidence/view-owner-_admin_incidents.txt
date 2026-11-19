@@ -1,0 +1,342 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders":
+        - /url: /admin/orders
+        - generic: Orders
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk":
+        - /url: /admin/support
+        - generic: Support Desk
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory":
+        - /url: /admin/inventory
+        - generic: Inventory
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: Demo QA 10 Nov owner, Admin"':
+    - /url: /account
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+  - status: Updating action counts…
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: D
+    - strong: Demo QA 10 Nov owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Operational Incidents
+  - heading "Operational incidents" [level=1]
+  - paragraph: Review reported incidents and record follow-up actions.
+  - generic "Filter by incident status":
+    - button "All incidents 12" [pressed]:
+      - text: All incidents
+      - strong: "12"
+    - button "Open 10":
+      - text: Open
+      - strong: "10"
+    - button "Acknowledged 0":
+      - text: Acknowledged
+      - strong: "0"
+    - button "Resolved 2":
+      - text: Resolved
+      - strong: "2"
+  - region "Incident register":
+    - heading "Incident register" [level=2]
+    - searchbox "Search incidents"
+    - combobox "Filter by severity":
+      - option "All severities" [selected]
+      - option "Critical"
+      - option "High"
+      - option "Medium"
+      - option "Low"
+    - table "Incident register":
+      - rowgroup:
+        - row "Incident Severity Status Branch Reported (WAT) Actions":
+          - columnheader "Incident"
+          - columnheader "Severity"
+          - columnheader "Status"
+          - columnheader "Branch"
+          - columnheader "Reported (WAT)"
+          - columnheader "Actions"
+      - rowgroup:
+        - 'row "Delivery failure Order EG-2026-E02D78B1 [customer_unavailable]: DEMO-QA-ROLE-20261119: failed-wallet delivery_failed. Synthetic QA only; no real goods, funds, travel or certification.. Next step: dispatch review; physically reconcile held goods before reassignment. Medium Resolved Lagos 19 Nov 2026, 11:05 Actions for Delivery failure · 7e26cf15-42e3-4408-90ac-e9540a47d6ae"':
+          - 'cell "Delivery failure Order EG-2026-E02D78B1 [customer_unavailable]: DEMO-QA-ROLE-20261119: failed-wallet delivery_failed. Synthetic QA only; no real goods, funds, travel or certification.. Next step: dispatch review; physically reconcile held goods before reassignment."':
+            - strong: Delivery failure
+            - generic: "Order EG-2026-E02D78B1 [customer_unavailable]: DEMO-QA-ROLE-20261119: failed-wallet delivery_failed. Synthetic QA only; no real goods, funds, travel or certification.. Next step: dispatch review; physically reconcile held goods before reassignment."
+          - cell "Medium":
+            - generic: Medium
+          - cell "Resolved":
+            - generic: Resolved
+          - cell "Lagos"
+          - cell "19 Nov 2026, 11:05":
+            - time: 19 Nov 2026, 11:05
+          - cell "Actions for Delivery failure · 7e26cf15-42e3-4408-90ac-e9540a47d6ae":
+            - button "Actions for Delivery failure · 7e26cf15-42e3-4408-90ac-e9540a47d6ae":
+        - row "Operation failure Operation failed (error). Diagnostic reference 1f74bf27-5298-4041-aaf2-2ad59f12a2f5. Review protected server logs; no credentials or request body are included. High Open Lagos 19 Nov 2026, 10:46 Actions for Operation failure · 1f74bf27-5298-4041-aaf2-2ad59f12a2f5":
+          - cell "Operation failure Operation failed (error). Diagnostic reference 1f74bf27-5298-4041-aaf2-2ad59f12a2f5. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (error). Diagnostic reference 1f74bf27-5298-4041-aaf2-2ad59f12a2f5. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Open":
+            - generic: Open
+          - cell "Lagos"
+          - cell "19 Nov 2026, 10:46":
+            - time: 19 Nov 2026, 10:46
+          - cell "Actions for Operation failure · 1f74bf27-5298-4041-aaf2-2ad59f12a2f5":
+            - button "Actions for Operation failure · 1f74bf27-5298-4041-aaf2-2ad59f12a2f5":
+        - 'row "Delivery failure Order EG-2026-E8ED8AE8 [other]: SANDBOX ONLY · EG-2026-E8ED8AE8 · simulated demo; no physical equipment or delivery; first attempt lacked the required synthetic metered custody record. Next step: dispatch review; physically reconcile held goods before reassignment. Medium Open Lagos 17 Nov 2026, 02:53 Actions for Delivery failure · aef57399-c4f1-4de9-9be5-140f1448e99c"':
+          - 'cell "Delivery failure Order EG-2026-E8ED8AE8 [other]: SANDBOX ONLY · EG-2026-E8ED8AE8 · simulated demo; no physical equipment or delivery; first attempt lacked the required synthetic metered custody record. Next step: dispatch review; physically reconcile held goods before reassignment."':
+            - strong: Delivery failure
+            - generic: "Order EG-2026-E8ED8AE8 [other]: SANDBOX ONLY · EG-2026-E8ED8AE8 · simulated demo; no physical equipment or delivery; first attempt lacked the required synthetic metered custody record. Next step: dispatch review; physically reconcile held goods before reassignment."
+          - cell "Medium":
+            - generic: Medium
+          - cell "Open":
+            - generic: Open
+          - cell "Lagos"
+          - cell "17 Nov 2026, 02:53":
+            - time: 17 Nov 2026, 02:53
+          - cell "Actions for Delivery failure · aef57399-c4f1-4de9-9be5-140f1448e99c":
+            - button "Actions for Delivery failure · aef57399-c4f1-4de9-9be5-140f1448e99c":
+        - row "Operation failure Operation failed (error). Diagnostic reference 1d458686-90aa-46d6-bb0e-3ebc44cd9074. Review protected server logs; no credentials or request body are included. High Resolved Business-wide 15 Nov 2026, 14:56 Actions for Operation failure · 1d458686-90aa-46d6-bb0e-3ebc44cd9074":
+          - cell "Operation failure Operation failed (error). Diagnostic reference 1d458686-90aa-46d6-bb0e-3ebc44cd9074. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (error). Diagnostic reference 1d458686-90aa-46d6-bb0e-3ebc44cd9074. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Resolved":
+            - generic: Resolved
+          - cell "Business-wide"
+          - cell "15 Nov 2026, 14:56":
+            - time: 15 Nov 2026, 14:56
+          - cell "Actions for Operation failure · 1d458686-90aa-46d6-bb0e-3ebc44cd9074":
+            - button "Actions for Operation failure · 1d458686-90aa-46d6-bb0e-3ebc44cd9074":
+        - row "Operation failure Operation failed (error). Diagnostic reference a1808a3a-a5ae-4427-9393-ae3057e08d4e. Review protected server logs; no credentials or request body are included. High Open Business-wide 15 Nov 2026, 14:51 Actions for Operation failure · a1808a3a-a5ae-4427-9393-ae3057e08d4e":
+          - cell "Operation failure Operation failed (error). Diagnostic reference a1808a3a-a5ae-4427-9393-ae3057e08d4e. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (error). Diagnostic reference a1808a3a-a5ae-4427-9393-ae3057e08d4e. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Open":
+            - generic: Open
+          - cell "Business-wide"
+          - cell "15 Nov 2026, 14:51":
+            - time: 15 Nov 2026, 14:51
+          - cell "Actions for Operation failure · a1808a3a-a5ae-4427-9393-ae3057e08d4e":
+            - button "Actions for Operation failure · a1808a3a-a5ae-4427-9393-ae3057e08d4e":
+        - row "Operation failure Operation failed (error). Diagnostic reference a5710fae-994b-4087-ba04-3fc721fa762f. Review protected server logs; no credentials or request body are included. High Open Lagos 15 Nov 2026, 14:44 Actions for Operation failure · a5710fae-994b-4087-ba04-3fc721fa762f":
+          - cell "Operation failure Operation failed (error). Diagnostic reference a5710fae-994b-4087-ba04-3fc721fa762f. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (error). Diagnostic reference a5710fae-994b-4087-ba04-3fc721fa762f. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Open":
+            - generic: Open
+          - cell "Lagos"
+          - cell "15 Nov 2026, 14:44":
+            - time: 15 Nov 2026, 14:44
+          - cell "Actions for Operation failure · a5710fae-994b-4087-ba04-3fc721fa762f":
+            - button "Actions for Operation failure · a5710fae-994b-4087-ba04-3fc721fa762f":
+        - row "Operation failure Operation failed (error). Diagnostic reference 0d42b635-f114-471d-b88d-2f0cfa4f681d. Review protected server logs; no credentials or request body are included. High Open Lagos 13 Nov 2026, 19:29 Actions for Operation failure · 0d42b635-f114-471d-b88d-2f0cfa4f681d":
+          - cell "Operation failure Operation failed (error). Diagnostic reference 0d42b635-f114-471d-b88d-2f0cfa4f681d. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (error). Diagnostic reference 0d42b635-f114-471d-b88d-2f0cfa4f681d. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Open":
+            - generic: Open
+          - cell "Lagos"
+          - cell "13 Nov 2026, 19:29":
+            - time: 13 Nov 2026, 19:29
+          - cell "Actions for Operation failure · 0d42b635-f114-471d-b88d-2f0cfa4f681d":
+            - button "Actions for Operation failure · 0d42b635-f114-471d-b88d-2f0cfa4f681d":
+        - row "Operation failure Operation failed (error). Diagnostic reference b9f8d8f4-0c42-4167-89b3-0bf0775cf611. Review protected server logs; no credentials or request body are included. High Open Business-wide 11 Nov 2026, 03:58 Actions for Operation failure · b9f8d8f4-0c42-4167-89b3-0bf0775cf611":
+          - cell "Operation failure Operation failed (error). Diagnostic reference b9f8d8f4-0c42-4167-89b3-0bf0775cf611. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (error). Diagnostic reference b9f8d8f4-0c42-4167-89b3-0bf0775cf611. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Open":
+            - generic: Open
+          - cell "Business-wide"
+          - cell "11 Nov 2026, 03:58":
+            - time: 11 Nov 2026, 03:58
+          - cell "Actions for Operation failure · b9f8d8f4-0c42-4167-89b3-0bf0775cf611":
+            - button "Actions for Operation failure · b9f8d8f4-0c42-4167-89b3-0bf0775cf611":
+        - row "Operation failure Operation failed (error). Diagnostic reference 2ccc4dab-be56-413b-b6a0-0c9f273f11c1. Review protected server logs; no credentials or request body are included. High Open Business-wide 11 Nov 2026, 03:58 Actions for Operation failure · 2ccc4dab-be56-413b-b6a0-0c9f273f11c1":
+          - cell "Operation failure Operation failed (error). Diagnostic reference 2ccc4dab-be56-413b-b6a0-0c9f273f11c1. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (error). Diagnostic reference 2ccc4dab-be56-413b-b6a0-0c9f273f11c1. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Open":
+            - generic: Open
+          - cell "Business-wide"
+          - cell "11 Nov 2026, 03:58":
+            - time: 11 Nov 2026, 03:58
+          - cell "Actions for Operation failure · 2ccc4dab-be56-413b-b6a0-0c9f273f11c1":
+            - button "Actions for Operation failure · 2ccc4dab-be56-413b-b6a0-0c9f273f11c1":
+        - row "Operation failure Operation failed (error). Diagnostic reference fe13e764-f00a-4b05-9d11-bb9e177324e5. Review protected server logs; no credentials or request body are included. High Open Business-wide 10 Nov 2026, 15:41 Actions for Operation failure · fe13e764-f00a-4b05-9d11-bb9e177324e5":
+          - cell "Operation failure Operation failed (error). Diagnostic reference fe13e764-f00a-4b05-9d11-bb9e177324e5. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (error). Diagnostic reference fe13e764-f00a-4b05-9d11-bb9e177324e5. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Open":
+            - generic: Open
+          - cell "Business-wide"
+          - cell "10 Nov 2026, 15:41":
+            - time: 10 Nov 2026, 15:41
+          - cell "Actions for Operation failure · fe13e764-f00a-4b05-9d11-bb9e177324e5":
+            - button "Actions for Operation failure · fe13e764-f00a-4b05-9d11-bb9e177324e5":
+        - row "Operation failure Operation failed (Error). Diagnostic reference 8d604630-6c4b-4985-a955-20fda5752499. Review protected server logs; no credentials or request body are included. High Open Business-wide 9 Nov 2026, 11:16 Actions for Operation failure · 8d604630-6c4b-4985-a955-20fda5752499":
+          - cell "Operation failure Operation failed (Error). Diagnostic reference 8d604630-6c4b-4985-a955-20fda5752499. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (Error). Diagnostic reference 8d604630-6c4b-4985-a955-20fda5752499. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Open":
+            - generic: Open
+          - cell "Business-wide"
+          - cell "9 Nov 2026, 11:16":
+            - time: 9 Nov 2026, 11:16
+          - cell "Actions for Operation failure · 8d604630-6c4b-4985-a955-20fda5752499":
+            - button "Actions for Operation failure · 8d604630-6c4b-4985-a955-20fda5752499":
+        - row "Operation failure Operation failed (Error). Diagnostic reference bd58e7ed-ab20-4b09-be6e-1f29b34a44cb. Review protected server logs; no credentials or request body are included. High Open Business-wide 9 Nov 2026, 11:16 Actions for Operation failure · bd58e7ed-ab20-4b09-be6e-1f29b34a44cb":
+          - cell "Operation failure Operation failed (Error). Diagnostic reference bd58e7ed-ab20-4b09-be6e-1f29b34a44cb. Review protected server logs; no credentials or request body are included.":
+            - strong: Operation failure
+            - generic: Operation failed (Error). Diagnostic reference bd58e7ed-ab20-4b09-be6e-1f29b34a44cb. Review protected server logs; no credentials or request body are included.
+          - cell "High":
+            - generic: High
+          - cell "Open":
+            - generic: Open
+          - cell "Business-wide"
+          - cell "9 Nov 2026, 11:16":
+            - time: 9 Nov 2026, 11:16
+          - cell "Actions for Operation failure · bd58e7ed-ab20-4b09-be6e-1f29b34a44cb":
+            - button "Actions for Operation failure · bd58e7ed-ab20-4b09-be6e-1f29b34a44cb":
+    - generic "Incident pagination":
+      - status: Showing 1–12 of 12 incidents
+      - button "Previous" [disabled]:
+        - text: Previous
+      - button "Next" [disabled]:
+        - text: Next
+- text: EasyGas Business · NGN · Africa/Lagos

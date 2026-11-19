@@ -1,0 +1,132 @@
+[
+  {
+    "id": "WEB-A01",
+    "title": "Eight customer policies await publication",
+    "priority": "High",
+    "kind": "Business publication gap",
+    "status": "OPEN",
+    "owner": "Admin and approved policy reviewer",
+    "observed": "All eight public policy pages show Policy awaiting business publication. The policy directory renders, but it does not supply the missing approved documents. The cookie settings link points to the unpublished privacy page.",
+    "reproduce": "Open Privacy, Terms, Refund, Cancellation, Service terms, Warranty, Credit terms and Loyalty terms from the website or policy directory.",
+    "impact": "Customers cannot read the approved current terms and privacy information through those links. This is a launch and customer-information gap, not a server crash.",
+    "action": "Prepare and review the business-approved versions in Customer Policies, complete the required approval and publication steps, then re-open every public link. Verify title, version, effective date, content and consent-linked references.",
+    "acceptance": "All eight links display their approved current documents and correct versions, with policy publication and customer consent handling tested. Do not count a draft or directory link as publication.",
+    "evidence": [
+      "view-public-_privacy.txt",
+      "view-public-_terms.txt",
+      "view-public-_refund.txt",
+      "view-public-_cancellation.txt",
+      "view-public-_service-terms.txt",
+      "view-public-_warranty.txt",
+      "view-public-_credit-terms.txt",
+      "view-public-_loyalty-terms.txt",
+      "view-owner-_admin_policies.txt"
+    ]
+  },
+  {
+    "id": "WEB-A02",
+    "title": "Technician support shortcut reaches a denied page",
+    "priority": "Medium",
+    "kind": "Reproduced product defect",
+    "status": "OPEN",
+    "owner": "Web implementation owner",
+    "observed": "Technician Home offers Contact support. It opens /support, whose customer conversation read returns Your account does not have permission for this action.",
+    "reproduce": "Sign in as the existing Technician, open Home and follow Contact support. The customer support heading renders, followed by the permission error.",
+    "impact": "A technician seeking help reaches a dead end from a first-class workspace action. The endpoint denial itself is an access control working as intended.",
+    "action": "Point the shortcut to an appropriate staff help or dispatch destination, or implement narrowly scoped staff support. Preserve customer and branch isolation; do not grant technicians broad customer-support access.",
+    "acceptance": "The Technician support action reaches useful help with no permission error, and customer/driver/finance negative access checks continue to deny unrelated workspaces.",
+    "evidence": [
+      "view-technician-_support.txt",
+      "view-technician-_admin_bookings.txt"
+    ],
+    "source": "apps/web/components/technician-workspace.tsx",
+    "shot": "audit-technician-support.jpg"
+  },
+  {
+    "id": "WEB-A03",
+    "title": "Email verification error refers to a reset link",
+    "priority": "Low",
+    "kind": "Reproduced copy defect",
+    "status": "OPEN",
+    "owner": "Web implementation owner",
+    "observed": "The missing-token /verify-email page is titled Confirm your email address but its warning says If your reset link has expired, request a new one.",
+    "reproduce": "Open /verify-email without a token. Compare the verification heading with the reset-link wording.",
+    "impact": "The recovery instruction describes the wrong task and can send a customer to password reset while attempting email verification.",
+    "action": "Use verification-specific missing or expired link guidance, including the correct resend route. Keep reset and invitation messages scoped to their own flow.",
+    "acceptance": "Missing and expired verification links show correct instructions; valid-token verification and reuse rejection are tested separately.",
+    "evidence": [
+      "view-public-_verify-email.txt",
+      "view-public-_reset-password.txt"
+    ]
+  },
+  {
+    "id": "WEB-A04",
+    "title": "Sandbox meter calibration is expired",
+    "priority": "High",
+    "kind": "Operational prerequisite",
+    "status": "BLOCKED",
+    "owner": "Authorised qualified operations reviewer",
+    "observed": "A normal inventory bulk summary read at 15:25:59 UTC on 19 November shows the active sandbox meter calibration expired at 11:53:44 UTC that day. Active does not mean currently calibrated.",
+    "reproduce": "Review the authorised bulk gas equipment summary and compare calibration expiry with current time. No loading, dispensing or renewal was attempted.",
+    "impact": "The current sandbox is not ready for another gas journey requiring valid calibration. Correct safety rejection must not be treated as a software defect to bypass.",
+    "action": "Before another authorised synthetic journey, obtain appropriate current demo-only review and evidence for the meter and required staff qualifications. Real operation needs genuine qualified evidence, not QA placeholders.",
+    "acceptance": "Current authorised evidence covers the entire intended journey and expired-evidence negative checks still fail. The earlier two-hour renewal grants no continuing authority.",
+    "evidence": [
+      "safety-readback.json"
+    ]
+  },
+  {
+    "id": "WEB-A05",
+    "title": "Commercial launch readiness remains NO GO",
+    "priority": "Critical",
+    "kind": "Existing release decision",
+    "status": "BLOCKED",
+    "owner": "Admin and release gate owners",
+    "observed": "Launch Readiness states Production readiness \u00b7 NO-GO. The captured page reports nine unresolved high or critical incidents and incomplete external health/error alerting and on-call ownership, alongside other unverified gates.",
+    "reproduce": "Open Launch Readiness as Admin and inspect each gate and its current evidence. Compare with Operational Incidents rather than using demo uptime as readiness proof.",
+    "impact": "This documentation audit cannot authorise commercial operation. Existing provider, native/device, physical, data-import and retention decisions remain separate.",
+    "action": "Assign owners and evidence to every current gate, resolve incidents and complete the established release acceptance process. Preserve the actual-import hold and retain-all decisions.",
+    "acceptance": "Every required production gate has executed accepted evidence and the authorised release decision changes through the governed process. No gate is waived here.",
+    "evidence": [
+      "view-owner-_admin_readiness.txt",
+      "view-owner-_admin_incidents.txt"
+    ],
+    "shot": "admin-readiness.jpg"
+  },
+  {
+    "id": "WEB-A06",
+    "title": "Restricted approvals need a workable staffing arrangement",
+    "priority": "Medium",
+    "kind": "Operating model review",
+    "status": "OPEN",
+    "owner": "Sole Admin and eligible finance staff",
+    "observed": "The scoped sole-owner EasyRewards policy request shows Awaiting owner approval \u00b7 0/1. Restricted financial, access, payment and safety requests retain independent review requirements.",
+    "reproduce": "Review the named EasyRewards request and compare its eligibility with the type-specific approval controls. Requested by identifies the author, not an accepted decision.",
+    "impact": "One business owner is compatible with the scoped owner path. It does not by itself establish enough eligible independent reviewers for every restricted transaction.",
+    "action": "Document real maker, reviewer and executor responsibilities for the small company. Confirm how each restricted request can be processed by authorised staff without fake owners or shared identities.",
+    "acceptance": "A real authorised operating arrangement covers each restricted action while requester exclusion, identity, revision and expiry checks remain enforced.",
+    "evidence": [
+      "view-owner-_admin_approvals.txt",
+      "role-access.json"
+    ]
+  },
+  {
+    "id": "WEB-A07",
+    "title": "Financial and location summaries have deliberate unknown states",
+    "priority": "Information",
+    "kind": "Reporting and telemetry limit",
+    "status": "OPEN",
+    "owner": "Finance and operations data owners",
+    "observed": "Net profit or inventory value can show Unavailable where cost evidence is incomplete. Dispatch can show unknown GPS or unavailable ETA. The driver web trip form says it does not record GPS.",
+    "reproduce": "Review the dashboard, financial summary, dispatch map and driver Manage trip text. Do not infer missing values from availability switches.",
+    "impact": "A user can misread missing evidence as zero profit, zero value or live tracking. No calculation or tracking defect was established by those states.",
+    "action": "Maintain clear unknown-state copy and train users to supply authoritative cost, stock and telemetry evidence. Complete native/device acceptance separately when needed.",
+    "acceptance": "Reports reconcile to accepted inputs and tracking claims match verified telemetry capability; unknown values are never silently replaced with zero or a guessed ETA.",
+    "evidence": [
+      "view-owner-_admin.txt",
+      "view-owner-_admin_finance.txt",
+      "view-manager-_admin_deliveries.txt",
+      "driver-trip.txt"
+    ]
+  }
+]
