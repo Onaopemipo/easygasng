@@ -1,0 +1,405 @@
+{
+  "phase": "Hosted role-based order-to-delivery and exceptions acceptance",
+  "productionDecision": "Existing commercial production NO-GO, actual-import hold and retain-all preserved; synthetic demo acceptance only",
+  "requirements": [
+    {
+      "id": "ROLEACC-01",
+      "requirement": "Authenticate functional role accounts and verify permitted navigation and scoped records",
+      "priority": "P0",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-roles.ts",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "tests/navigation.test.ts",
+        "tests/admin-order-modal.test.ts",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G01",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Approved acceptance scope registered before new business mutations",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+    },
+    {
+      "id": "ROLEACC-02",
+      "requirement": "Complete a fresh gas wallet order through sales, dispatch, qualified inspection, custody, metered fulfilment, proof and invoice",
+      "priority": "P0",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/delivery.ts",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "tests/driver-lpg-workflow.test.ts",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G02",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Preflight found expired time-limited sandbox qualification/meter evidence. Awaiting explicit user answer for two-hour demo-only renewals; continuing independent product/payment/exception paths.",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+    },
+    {
+      "id": "ROLEACC-03",
+      "requirement": "Complete a fresh physical-product cash-on-delivery order with independent cash reconciliation",
+      "priority": "P0",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/financial-documents.ts",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G03",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Approved acceptance scope registered before new business mutations",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+    },
+    {
+      "id": "ROLEACC-04",
+      "requirement": "Reject unsuccessful, unauthorised or tampered payment attempts without false payment or stock debit",
+      "priority": "P0",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/lib/checkout-payments.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/payments/orchestrator.ts",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "tests/paystack-policy.test.ts",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G04",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Approved acceptance scope registered before new business mutations",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+    },
+    {
+      "id": "ROLEACC-05",
+      "requirement": "Cancel before pickup and protect cancellation after pickup until custody return; reconcile reservations and financial state",
+      "priority": "P0",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/operations.ts",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G05",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Approved acceptance scope registered before new business mutations",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+    },
+    {
+      "id": "ROLEACC-06",
+      "requirement": "Record failed delivery with owned next steps, enforce full return and exercise safe retry or cancellation",
+      "priority": "P0",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G06",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Approved acceptance scope registered before new business mutations",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+    },
+    {
+      "id": "ROLEACC-07",
+      "requirement": "Exercise refund request, independent rejection/approval, allocation limits and replay safety on new synthetic orders",
+      "priority": "P0",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/reward-refunds.ts",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G07",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Approved acceptance scope registered before new business mutations",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+    },
+    {
+      "id": "ROLEACC-08",
+      "requirement": "Reject wrong-role/other-customer, stale/duplicate and incomplete handover attempts without unintended effects",
+      "priority": "P0",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/delivery.ts",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "tests/order-tracking.test.ts",
+        "tests/driver-lpg-http.test.ts",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROLEACC-PREFLIGHT: authenticated demo roles, original records and operational prerequisites are inventoried before mutations"
+      ],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G08",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Approved acceptance scope registered before new business mutations",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+    },
+    {
+      "id": "ROLEACC-09",
+      "requirement": "Verify hosted customer, sales, dispatch, driver and finance screens for happy and exception states on desktop/phone viewport",
+      "priority": "P1",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/customer-orders.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "tests/admin-order-modal.test.ts",
+        "tests/customer-orders.test.ts",
+        "scripts/check-role-acceptance-demo.mjs"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G09",
+      "status": "NOT_IMPLEMENTED",
+      "reason": "Approved acceptance scope registered before new business mutations",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Execute hosted normal/exception scenarios, retain failed or blocked requirements, fix genuine defects, verify UI and reconcile authoritative deltas"
+    },
+    {
+      "id": "ROLEACC-10",
+      "requirement": "Fix reproduced defects, redeploy if needed and reconcile new changes while preserving prior records and decisions",
+      "priority": "P1",
+      "scope": "Existing hosted client demo only, new labelled synthetic orders through normal product controls; no direct hosted database writes, policy weakening, live payment or real gas/travel claim",
+      "uiReference": "User requests full role-based order-to-delivery and exceptions acceptance, fixes and RTM update19November2026",
+      "route": "/,/orders,/track,/admin/orders,/admin/deliveries,/admin/finance,/admin/credits,/admin/inventory",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/components/admin-order-details.tsx",
+        "scripts/demo-role-acceptance-client.mjs",
+        "scripts/check-role-acceptance-demo.mjs",
+        "apps/web/lib/cylinder-allocation.ts",
+        "apps/web/components/cash-reconciliation.tsx",
+        "apps/web/components/reconciliation.tsx",
+        "apps/web/components/admin.tsx"
+      ],
+      "dataSource": "Existing scoped hosted API/UI order, payment, stock, custody, proof and invoice records; labelled customer/sales/dispatch/finance/inventory/driver accounts mapped to actual canonical roles",
+      "securityControl": "Existing qualification/independent custody/finance/consent/branch/ownership/version/idempotency/retention controls remain authoritative; only new run-owned orders may mutate",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "scripts/check-role-acceptance-demo.mjs",
+        "tests/catalogue-cylinder-availability.test.ts",
+        "tests/cash-reconciliation.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "ROLEACC-G10",
+      "status": "PARTIAL",
+      "reason": "Two reproduced defects: catalogue overstates eligible empty-cylinder serials; redesigned finance routing leaves legacy cash-verification component unreachable. Both local fixes retain canonical stock/reauth/independence controls; focused tests/build and hosted rollout underway.",
+      "testResult": "Preflight underway; no acceptance claimed",
+      "outstandingWork": "Continue hosted scenarios, qualify fix under broader regressions, deploy and verify public availability; reconcile run-owned records."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ROLEACC-G01",
+      "description": "Authenticate functional role accounts and verify permitted navigation and scoped records",
+      "status": "OPEN"
+    },
+    {
+      "id": "ROLEACC-G02",
+      "description": "Complete a fresh gas wallet order through sales, dispatch, qualified inspection, custody, metered fulfilment, proof and invoice",
+      "status": "OPEN"
+    },
+    {
+      "id": "ROLEACC-G03",
+      "description": "Complete a fresh physical-product cash-on-delivery order with independent cash reconciliation",
+      "status": "OPEN"
+    },
+    {
+      "id": "ROLEACC-G04",
+      "description": "Reject unsuccessful, unauthorised or tampered payment attempts without false payment or stock debit",
+      "status": "OPEN"
+    },
+    {
+      "id": "ROLEACC-G05",
+      "description": "Cancel before pickup and protect cancellation after pickup until custody return; reconcile reservations and financial state",
+      "status": "OPEN"
+    },
+    {
+      "id": "ROLEACC-G06",
+      "description": "Record failed delivery with owned next steps, enforce full return and exercise safe retry or cancellation",
+      "status": "OPEN"
+    },
+    {
+      "id": "ROLEACC-G07",
+      "description": "Exercise refund request, independent rejection/approval, allocation limits and replay safety on new synthetic orders",
+      "status": "OPEN"
+    },
+    {
+      "id": "ROLEACC-G08",
+      "description": "Reject wrong-role/other-customer, stale/duplicate and incomplete handover attempts without unintended effects",
+      "status": "OPEN"
+    },
+    {
+      "id": "ROLEACC-G09",
+      "description": "Verify hosted customer, sales, dispatch, driver and finance screens for happy and exception states on desktop/phone viewport",
+      "status": "OPEN"
+    },
+    {
+      "id": "ROLEACC-G10",
+      "description": "Fix reproduced defects, redeploy if needed and reconcile new changes while preserving prior records and decisions",
+      "status": "OPEN"
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "User explicitly authorises full role-based order-to-delivery and exception acceptance, fixes and traceability.10 requirements retained. Current sourcef63bcf2/Ready53xp97 baseline; prior8orders protected. Functional sales/dispatch/inventory labels may map to consolidated manager/finance roles and will be reported truthfully. No physical delivery/provider/device/production acceptance substituted by synthetic tests."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Preflight9labelled accounts confirms canonical owner/manager/finance/driver/technician roles. Existing8orders protected. Four pre-exception checks pass: access, insufficient wallet/tampered quote rollback, abandoned-card cancellation/replay, independent normal simulated credit. QA customer credited\u20a650,000 via explicit synthetic receipt with self-approval403 and finance-approved replay safety. Catalogue serial-stock mismatch reproduced (local5available vs0eligible; hosted20advertised/noeligible serials); corrected locally without weakening allocation/inspection. Initial HTTP-method/capacity/baseline test-harness assumptions corrected; superseded logs retained."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "New synthetic product COD order EG-2026-7BE57634 accepted/prepared by sales and assigned by dispatcher; finance-issued invoice, driver UI acknowledgement/pickup/departure/arrival and labelled proof upload pass. Restricted driver correctly cannot verify/collect cash; owner supervised handover records collected/unverified only. Wrong-role/customer, stale, handover-attestation and wrong-code guards pass; collector self-reconciliation and premature refund rejected. Cash review UI is unreachable after earlier finance redesign; restored as dedicated reconciliation tab with required identity check and collector self-review hidden. Existing eight orders unchanged; gas flow still awaits demo-only safety renewal approval."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 0,
+      "verified": 0,
+      "total": 10
+    },
+    "criticalRequirements": {
+      "verified": 0,
+      "total": 8
+    },
+    "routes": {
+      "verified": 0,
+      "total": 8
+    },
+    "gates": {
+      "passed": 0,
+      "total": 10
+    },
+    "excluded": 0,
+    "denominatorNote": "All10 approved acceptance areas retained; blocked, defective and untested requirements stay counted. Prior production and physical/native/provider gates remain in their matrices."
+  }
+}

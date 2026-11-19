@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ProductHeading } from "./product-workspace";
 import { DocumentLibrary } from "./document-library";
 import PaystackReconciliation from "./paystack-reconciliation";
+import CashReconciliation from "./cash-reconciliation";
 import {
   RecordPages,
   WorkspaceDialog,
@@ -10,7 +11,7 @@ import {
 } from "./compact-workspace";
 import { api, money, Notice, Loading, Empty } from "./ui";
 
-export default function Reconciliation() {
+export default function Reconciliation({ user }: { user?: { id: string } }) {
   const [data, setData] = useState<any>(null),
     [rows, setRows] = useState<any[]>([]),
     [cursor, setCursor] = useState<string | null>(null),
@@ -85,6 +86,7 @@ export default function Reconciliation() {
           tabs={[
             ["documents", "Invoices & receipts"],
             ["ledger", "Payment ledger"],
+            ["cash", "Cash reconciliation"],
             ["services", "Service costs"],
             ["collections", "Paystack collections"],
           ]}
@@ -108,6 +110,7 @@ export default function Reconciliation() {
       </div>
       {tab === "documents" && <DocumentLibrary compact pageSize={8} />}
       {tab === "collections" && <PaystackReconciliation />}
+      {tab === "cash" && <CashReconciliation user={user} refresh={revision} onChange={() => setRevision(v => v + 1)} />}
       {tab === "services" && (
         <section className="surface">
           <h2>Service invoices &amp; material costs</h2>

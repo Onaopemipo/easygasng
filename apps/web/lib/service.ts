@@ -1,4 +1,5 @@
 import { normaliseCustomerPhone } from "../../../packages/business-rules/src/customer-identity";
+import { availableEmptyCylinderPredicate } from "./cylinder-allocation";
 import { customerRiderLocation } from "./customer-rider-location";
 import { unavailableRiderLocation } from "../../../packages/business-rules/src/rider-location";
 import { notificationInbox, markNotificationsRead } from "./notification-inbox";
@@ -219,7 +220,7 @@ export async function dispatch(
             process.env.NODE_ENV !== "production" && d.view !== "homepage",
           products: (
             await tx.query(
-              "SELECT p.*,(SELECT id FROM media_assets m WHERE m.product_id=p.id AND m.archived=false ORDER BY position,created_at LIMIT 1) AS image_id,(SELECT COALESCE(jsonb_agg(jsonb_build_object('id',m.id,'alt',m.alt) ORDER BY m.position,m.created_at),'[]'::jsonb) FROM media_assets m WHERE m.product_id=p.id AND m.archived=false) AS images,CASE WHEN p.category='Gas refills' THEN round(p.size_kg*(SELECT (value::text)::numeric FROM settings WHERE key='gas.price_per_kg' AND scope='lagos'))::bigint ELSE i.price_kobo END AS price_kobo,i.published,CASE WHEN p.category='Gas refills' THEN floor(COALESCE((SELECT grams-reserved_grams FROM gas_stock WHERE branch_id='lagos'),0)/NULLIF(p.size_kg*1000,0))::bigint ELSE COALESCE(i.quantity-i.reserved,0) END AS available FROM products p LEFT JOIN inventory i ON i.product_id=p.id AND i.branch_id='lagos' WHERE p.archived=false AND EXISTS(SELECT 1 FROM product_categories c WHERE c.name=p.category AND c.active=true) AND ($1::boolean OR i.published=true) ORDER BY p.size_kg NULLS LAST,p.name LIMIT $2",
+              `SELECT p.*,(SELECT id FROM media_assets m WHERE m.product_id=p.id AND m.archived=false ORDER BY position,created_at LIMIT 1) AS image_id,(SELECT COALESCE(jsonb_agg(jsonb_build_object('id',m.id,'alt',m.alt) ORDER BY m.position,m.created_at),'[]'::jsonb) FROM media_assets m WHERE m.product_id=p.id AND m.archived=false) AS images,CASE WHEN p.category='Gas refills' THEN round(p.size_kg*(SELECT (value::text)::numeric FROM settings WHERE key='gas.price_per_kg' AND scope='lagos'))::bigint ELSE i.price_kobo END AS price_kobo,i.published,CASE WHEN p.category='Gas refills' THEN floor(COALESCE((SELECT grams-reserved_grams FROM gas_stock WHERE branch_id='lagos'),0)/NULLIF(p.size_kg*1000,0))::bigint WHEN p.category='Empty cylinders' THEN LEAST(COALESCE(i.quantity-i.reserved,0),(SELECT count(*) FROM cylinders c WHERE c.branch_id='lagos' AND c.size_kg=p.size_kg AND ${availableEmptyCylinderPredicate})) ELSE COALESCE(i.quantity-i.reserved,0) END AS available FROM products p LEFT JOIN inventory i ON i.product_id=p.id AND i.branch_id='lagos' WHERE p.archived=false AND EXISTS(SELECT 1 FROM product_categories c WHERE c.name=p.category AND c.active=true) AND ($1::boolean OR i.published=true) ORDER BY p.size_kg NULLS LAST,p.name LIMIT $2`,
               [
                 process.env.NODE_ENV !== "production" && d.view !== "homepage",
                 d.view === "homepage" ? 12 : null,
@@ -981,7 +982,7 @@ export async function dispatch(
         allow(user, ["owner", "finance"]);
         return (
           await tx.query(
-            `SELECT c.id,c.amount_kobo,c.created_at,c.verified_at,o.reference,o.branch_id,u.name AS collector FROM cash_collections c JOIN orders o ON o.id=c.order_id JOIN users u ON u.id=c.collector_id WHERE ${user.role === "owner" ? "true" : "o.branch_id=$1"} ORDER BY c.created_at DESC`,
+            `SELECT c.id,c.collector_id,c.amount_kobo,c.created_at,c.verified_at,o.reference,o.branch_id,u.name AS collector FROM cash_collections c JOIN orders o ON o.id=c.order_id JOIN users u ON u.id=c.collector_id WHERE ${user.role === "owner" ? "true" : "o.branch_id=$1"} ORDER BY c.created_at DESC`,
             user.role === "owner" ? [] : [user.branch_id],
           )
         ).rows;

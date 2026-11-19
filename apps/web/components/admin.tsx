@@ -333,7 +333,7 @@ export default function Admin({
           ) : section === "recommendations" ? (
             <RecommendationAdmin user={user} />
           ) : section === "reconciliation" ? (
-            <Reconciliation />
+            <Reconciliation user={user} />
           ) : section === "incidents" ? (
             <OperationalIncidents key={`${user.id}:${user.role}:${user.branchId}`} refresh={refresh} />
           ) : section === "bookings" && user.role === "technician" ? (
