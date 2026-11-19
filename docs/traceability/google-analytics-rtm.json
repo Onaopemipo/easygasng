@@ -65,8 +65,8 @@
         "docs/analytics/evidence/published-container.json"
       ],
       "acceptanceGate": "ANALYTICS-G02",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Consent-first single GTM loader implemented; server session exclusion, fixed public URL allowlist, private-document latch, full-page navigation when loaded, withdrawal and storage/page restore handling. Local27regressions pass; hosted verification pending.",
+      "status": "DEFECTIVE",
+      "reason": "Desktop consent passes;390px Cookie settings obstructed by mobile navigation, corrected with footer clearance; final hosted retest pending.",
       "testResult": "PASS —27local analytics/navigation/order-modal/customer-order regressions; final build/deployment qualification underway",
       "outstandingWork": "Deploy and verify hosted consent, tag execution/private exclusion and reporting boundary. No ecommerce, user identification, advertising or production release inferred."
     },
@@ -185,6 +185,10 @@
     {
       "date": "2026-11-19",
       "change": "Local browser proves no script before consent/essential-only, supplied GTM loads after grant and is absent after entering login. Local business API unavailable independently; no local business acceptance claimed. Browser tooling exposes DOM/tag load state but not network collection requests; GA4 receipt/Realtime reporting remains unverified without Google-account/collection diagnostics."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "First Ready analytics deployment16a0518/dpl_5Yfr3e9cUkCTU44WUSDace2JfbAr passes hosted before-consent/essential/grant/onReady/signed-in/private/query/withdrawal checks; business hashes unchanged. Actual390px phone test reproduces Cookie settings obscured by fixed mobile navigation, causing an Orders click. Added footer clearance; redeploy and repeat phone interaction before closing UI gate. Initial phone observation retained as defective, not acceptance."
     }
   ]
 }
