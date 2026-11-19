@@ -17,3 +17,5 @@ All data is synthetic and local. Some forms are interaction previews. Phone-fram
 - [Requirements matrix](../traceability/mobile-experience-prototype-rtm.md)
 - [Implementation and local build](../../prototypes/easygas-mobile/README.md)
 - [Publication provenance](publication.json)
+
+Latest verification: [full role-based acceptance and remaining functional gaps](../mobile-acceptance/README.md). The original design-delivery matrix is historical; the new MACC matrix retains the separate functional denominator.

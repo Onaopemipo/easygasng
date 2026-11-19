@@ -1,0 +1,19 @@
+import fs from'node:fs/promises';import{features}from'../prototypes/easygas-experience/features.mjs';
+const evidence='docs/mobile-acceptance/evidence/';
+const pass={
+'FEATURE-02':{'Requested kg and capacity guidance':['MACC-PRICING','MACC-FINANCIAL'],'Order confirmation':['MACC-PRICING']},
+'FEATURE-05':{'Appearance':['MACC-UI-EVIDENCE']},
+'FEATURE-06':{'Balance and transactions':['MACC-REFUND-IDEMPOTENT'],'Refund history':['MACC-REFUND-IDEMPOTENT']},
+'FEATURE-07':{'Service booking':['MACC-SERVICE-CREATE','MACC-SERVICE-CANCEL']},
+'FEATURE-09':{'New conversation':['MACC-SUPPORT-VALIDATION','MACC-SUPPORT-OWNERSHIP']},
+'FEATURE-10':{'Unavailable profit explanation':['MACC-REPORT-FILTERS']},
+'FEATURE-12':{'Open till':['MACC-POS-CONTROLS'],'Opening float':['MACC-POS-CONTROLS'],'New sale':['MACC-POS-ONCE'],'Items and exact totals':['MACC-POS-FINITE','MACC-POS-STOCK'],'Receipt':['MACC-POS-ONCE'],'Till cash-up':['MACC-POS-CONTROLS'],'Close shift':['MACC-POS-CONTROLS']},
+'FEATURE-27':{'Generate report':['MACC-REPORT-FILTERS'],'Current stock and liability views':['MACC-PROPOSED-SCOPE']},
+'FEATURE-36':{'Light and dark themes':['MACC-UI-EVIDENCE'],'Dialogs and keyboard dismissal':['MACC-UI-EVIDENCE'],'Local state reset':['MACC-RESET']}
+};
+const partialFamilies=new Set(['FEATURE-11','FEATURE-15','FEATURE-16','FEATURE-17','FEATURE-18','FEATURE-20','FEATURE-21','FEATURE-22','FEATURE-23','FEATURE-24','FEATURE-25','FEATURE-26','FEATURE-27','FEATURE-28','FEATURE-29','FEATURE-30','FEATURE-31','FEATURE-32','FEATURE-33','FEATURE-34']);
+const blocked=/Card funding|Provider fees|Funding status|Provider|GPS|Map and telemetry|Photo evidence|Metered dispensing|Proof and cash|Independent verification|Equipment calibration|Qualification|Password verification|Email verification|Secure completion invitation/;
+const rows=features.flatMap(f=>f.items.map((name,i)=>{const ids=pass[f.id]?.[name];const status=ids?'VERIFIED_COMPLETE':blocked.test(name)?'BLOCKED':partialFamilies.has(f.id)?'PARTIAL':'NOT_TESTED';return{id:f.id+'.'+String(i+1).padStart(2,'0'),family:f.id,familyName:f.name,feature:name,status,scope:'Synthetic mobile review prototype only',testIds:ids||[],designObserved:true,evidence:ids?[evidence+'after-tests.txt',evidence+'screens.json',evidence+'proposed-forms.json']: [evidence+'screens.json'],reason:ids?'Executed local model and/or native UI evidence for the bounded prototype behavior.':status==='BLOCKED'?'Device, real identity, external provider or qualified physical evidence is intentionally unavailable in this prototype.':status==='PARTIAL'?'Design or review form exercised; underlying business execution is simulated or remains a pending review.':'Screen/family is represented; this named behavior was not individually exercised.',outstandingWork:ids?'Production/native/backend acceptance remains separate.':'Implement or individually verify this behavior before claiming functional acceptance.'};}));
+await fs.writeFile('docs/mobile-acceptance/feature-acceptance.json',JSON.stringify(rows,null,2)+'\n');const counts={};for(const r of rows)counts[r.status]=(counts[r.status]||0)+1;
+const before=JSON.parse(await fs.readFile(evidence+'before-results.json','utf8'));
+await fs.writeFile('docs/mobile-acceptance/coverage-summary.json',JSON.stringify({date:'2026-11-20',roles:6,visitor:true,screens:117,tabs:73,proposedForms:36,guidedJourneys:5,guidedSteps:29,phoneChecks:12,newModelChecks:38,priorChecks:19,focusedChecks:44,phaseRequirements:{verified:6,partial:3,total:9},phaseGates:{passed:6,total:9},hostedScreens:117,hostedExceptionConditions:8,fixGroups:14,initialChecks:before.results.length,initialFailures:before.results.filter(x=>x.status==='FAIL').length,featureItems:{...counts,total:rows.length,excluded:0},productionDecision:'NO-GO; actual-import hold and retain-all unchanged'},null,2)+'\n');console.log(JSON.stringify(counts));

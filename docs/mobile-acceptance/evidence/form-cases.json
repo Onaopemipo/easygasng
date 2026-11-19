@@ -1,0 +1,1043 @@
+[
+  {
+    "key": "inventory",
+    "title": "Inventory",
+    "tabs": [
+      "Stock",
+      "Receipts",
+      "Adjustments",
+      "Returns",
+      "Transfers",
+      "History"
+    ],
+    "actions": [
+      {
+        "label": "Receive stock",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Product or item",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "quantity",
+            "label": "Quantity received",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reference",
+            "label": "Receipt reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          }
+        ]
+      },
+      {
+        "label": "Stocktake",
+        "fields": [
+          {
+            "name": "quantity",
+            "label": "Counted quantity",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reason",
+            "label": "Count evidence",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Transfer stock",
+        "fields": [
+          {
+            "name": "destination",
+            "label": "Destination branch",
+            "type": "text",
+            "testValue": "MACC synthetic destination"
+          },
+          {
+            "name": "quantity",
+            "label": "Quantity",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reason",
+            "label": "Transfer note",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Record return",
+        "fields": [
+          {
+            "name": "quantity",
+            "label": "Returned quantity",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "condition",
+            "label": "Condition and evidence",
+            "type": "text",
+            "testValue": "MACC synthetic condition"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "products",
+    "title": "Product catalogue",
+    "tabs": [
+      "Products",
+      "Draft changes",
+      "Import preview"
+    ],
+    "actions": [
+      {
+        "label": "Propose product change",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Product name",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "priceKobo",
+            "label": "Proposed price (kobo)",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reason",
+            "label": "Reason for change",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Review import",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Import file reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "reason",
+            "label": "Validation notes",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "cylinders",
+    "title": "Cylinder records",
+    "tabs": [
+      "Cylinders",
+      "Inspection",
+      "Quarantine",
+      "Custody"
+    ],
+    "actions": [
+      {
+        "label": "Register cylinder",
+        "fields": [
+          {
+            "name": "serial",
+            "label": "Cylinder serial",
+            "type": "text",
+            "testValue": "MACC synthetic serial"
+          },
+          {
+            "name": "size_kg",
+            "label": "Nominal size (kg)",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "ownership",
+            "label": "Ownership",
+            "type": "text",
+            "testValue": "MACC synthetic ownership"
+          }
+        ]
+      },
+      {
+        "label": "Record inspection",
+        "fields": [
+          {
+            "name": "serial",
+            "label": "Cylinder serial",
+            "type": "text",
+            "testValue": "MACC synthetic serial"
+          },
+          {
+            "name": "reason",
+            "label": "Inspection evidence",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Record quarantine",
+        "fields": [
+          {
+            "name": "serial",
+            "label": "Cylinder serial",
+            "type": "text",
+            "testValue": "MACC synthetic serial"
+          },
+          {
+            "name": "reason",
+            "label": "Reason and evidence",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "purchasing",
+    "title": "Purchasing",
+    "tabs": [
+      "Purchases",
+      "Suppliers",
+      "Receipts"
+    ],
+    "actions": [
+      {
+        "label": "New purchase request",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Purchase description",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "quantity",
+            "label": "Quantity",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "supplier",
+            "label": "Supplier",
+            "type": "text",
+            "testValue": "MACC synthetic supplier"
+          },
+          {
+            "name": "reason",
+            "label": "Business reason",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Add supplier",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Supplier name",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "contact",
+            "label": "Contact reference",
+            "type": "text",
+            "testValue": "MACC synthetic contact"
+          }
+        ]
+      },
+      {
+        "label": "Record goods receipt",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Purchase reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "quantity",
+            "label": "Quantity received",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reason",
+            "label": "Receipt evidence",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "credits",
+    "title": "Credits & refunds",
+    "tabs": [
+      "All requests",
+      "Credits",
+      "Refunds",
+      "Pending",
+      "Completed"
+    ],
+    "actions": [
+      {
+        "label": "Request customer credit",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Customer",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "amount_kobo",
+            "label": "Amount (kobo)",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reference",
+            "label": "Payment or order reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "reason",
+            "label": "Evidence and reason",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Request refund",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Customer",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "reference",
+            "label": "Original order or invoice",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "amount_kobo",
+            "label": "Amount (kobo)",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reason",
+            "label": "Refund reason",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "reconciliation",
+    "title": "Reconciliation",
+    "tabs": [
+      "Documents",
+      "Payments",
+      "Cash review",
+      "Service costs",
+      "Adjustments"
+    ],
+    "actions": [
+      {
+        "label": "Review a collection",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Collection reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "amount_kobo",
+            "label": "Amount (kobo)",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reason",
+            "label": "Independent verification evidence",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Propose correction",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Original document",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "amount_kobo",
+            "label": "Adjustment (kobo)",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reason",
+            "label": "Reason and evidence",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "campaigns",
+    "title": "Customer campaigns",
+    "tabs": [
+      "Campaigns",
+      "Drafts",
+      "Delivery",
+      "Performance"
+    ],
+    "actions": [
+      {
+        "label": "New campaign",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Campaign name",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "audience",
+            "label": "Audience",
+            "type": "text",
+            "testValue": "MACC synthetic audience"
+          },
+          {
+            "name": "message",
+            "label": "Message",
+            "type": "textarea",
+            "testValue": "MACC synthetic message"
+          }
+        ]
+      },
+      {
+        "label": "Request approval",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Campaign reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "reason",
+            "label": "Review note",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "recommendations",
+    "title": "Recommendations",
+    "tabs": [
+      "Rules",
+      "Pending review",
+      "Performance"
+    ],
+    "actions": [
+      {
+        "label": "Propose recommendation",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Product",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "service",
+            "label": "Service",
+            "type": "text",
+            "testValue": "MACC synthetic service"
+          },
+          {
+            "name": "relationship",
+            "label": "Relationship",
+            "type": "text",
+            "testValue": "MACC synthetic relationship"
+          },
+          {
+            "name": "reason",
+            "label": "Rationale and specification evidence",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "testimonials",
+    "title": "Customer testimonials",
+    "tabs": [
+      "Review queue",
+      "Approved",
+      "Published",
+      "Analytics"
+    ],
+    "actions": [
+      {
+        "label": "Record review decision",
+        "fields": [
+          {
+            "name": "decision",
+            "label": "Approve, reject or request changes",
+            "type": "text",
+            "testValue": "MACC synthetic decision"
+          },
+          {
+            "name": "reason",
+            "label": "Moderation reason",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Review publication",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Approved feedback reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "reason",
+            "label": "Consent and publication evidence",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "incidents",
+    "title": "Operational incidents",
+    "tabs": [
+      "All incidents",
+      "Open",
+      "Acknowledged",
+      "Resolved"
+    ],
+    "actions": [
+      {
+        "label": "Report incident",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Incident title",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "severity",
+            "label": "Severity",
+            "type": "text",
+            "testValue": "MACC synthetic severity"
+          },
+          {
+            "name": "reason",
+            "label": "What happened and immediate action",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Record response",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Incident reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "status",
+            "label": "Acknowledged or resolved",
+            "type": "text",
+            "testValue": "MACC synthetic status"
+          },
+          {
+            "name": "reason",
+            "label": "Response and evidence",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "policies",
+    "title": "Customer policies",
+    "tabs": [
+      "Policies",
+      "Draft versions",
+      "Publication history"
+    ],
+    "actions": [
+      {
+        "label": "Propose policy revision",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Policy title",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "body",
+            "label": "Proposed wording",
+            "type": "textarea",
+            "testValue": "MACC synthetic body"
+          },
+          {
+            "name": "reason",
+            "label": "Reason for revision",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "branches",
+    "title": "Branches & coverage",
+    "tabs": [
+      "Branches",
+      "Delivery locations",
+      "Coverage review"
+    ],
+    "actions": [
+      {
+        "label": "Propose coverage change",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Location name",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "branch",
+            "label": "Responsible branch",
+            "type": "text",
+            "testValue": "MACC synthetic branch"
+          },
+          {
+            "name": "reason",
+            "label": "Boundary and operating evidence",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "mail",
+    "title": "Message delivery",
+    "tabs": [
+      "Outbox",
+      "Delivered",
+      "Needs attention"
+    ],
+    "actions": [
+      {
+        "label": "Review retry",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Message reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "reason",
+            "label": "Retry reason",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "deliveries",
+    "title": "Delivery dispatch",
+    "tabs": [
+      "Ready",
+      "Assigned",
+      "In transit",
+      "Completed"
+    ],
+    "actions": [
+      {
+        "label": "Review assignment",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Order reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "driver",
+            "label": "Eligible driver",
+            "type": "text",
+            "testValue": "MACC synthetic driver"
+          },
+          {
+            "name": "reason",
+            "label": "Capacity and readiness evidence",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "customers",
+    "title": "Customer records",
+    "tabs": [
+      "Customers",
+      "Follow-ups",
+      "History"
+    ],
+    "actions": [
+      {
+        "label": "New customer record",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Customer name",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "contact",
+            "label": "Contact reference",
+            "type": "text",
+            "testValue": "MACC synthetic contact"
+          }
+        ]
+      },
+      {
+        "label": "Add follow-up",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Customer reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "reason",
+            "label": "Follow-up note",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "bundles",
+    "title": "Product & service bundles",
+    "tabs": [
+      "Bundles",
+      "Drafts",
+      "Review"
+    ],
+    "actions": [
+      {
+        "label": "Propose bundle",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Bundle name",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "products",
+            "label": "Included products",
+            "type": "text",
+            "testValue": "MACC synthetic products"
+          },
+          {
+            "name": "service",
+            "label": "Included service",
+            "type": "text",
+            "testValue": "MACC synthetic service"
+          },
+          {
+            "name": "reason",
+            "label": "Scope and compatibility evidence",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "quotations",
+    "title": "Service quotations",
+    "tabs": [
+      "Drafts",
+      "Pending review",
+      "Customer acceptance",
+      "History"
+    ],
+    "actions": [
+      {
+        "label": "Propose quotation",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Booking reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "name",
+            "label": "Work scope",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "amount_kobo",
+            "label": "Total (kobo)",
+            "type": "number",
+            "testValue": "2"
+          },
+          {
+            "name": "reason",
+            "label": "Labour, materials and evidence",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      },
+      {
+        "label": "Request revision",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Quotation reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "reason",
+            "label": "Required changes",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "reports",
+    "title": "Reports & analytics",
+    "tabs": [
+      "Reports",
+      "Schedules",
+      "History"
+    ],
+    "actions": [
+      {
+        "label": "Generate report",
+        "fields": [
+          {
+            "name": "report",
+            "label": "Report",
+            "value": "payments",
+            "options": [
+              {
+                "value": "payments",
+                "label": "Payments"
+              },
+              {
+                "value": "sales",
+                "label": "Sales"
+              },
+              {
+                "value": "deliveries",
+                "label": "Deliveries"
+              },
+              {
+                "value": "services",
+                "label": "Services"
+              },
+              {
+                "value": "movements",
+                "label": "Stock movements"
+              },
+              {
+                "value": "expenses",
+                "label": "Expenses"
+              },
+              {
+                "value": "profit",
+                "label": "Profit completeness"
+              },
+              {
+                "value": "branches",
+                "label": "Branches"
+              }
+            ],
+            "testValue": "payments"
+          },
+          {
+            "name": "from",
+            "label": "From (YYYY-MM-DD)",
+            "type": "text",
+            "testValue": "2026-11-01"
+          },
+          {
+            "name": "to",
+            "label": "To (YYYY-MM-DD)",
+            "type": "text",
+            "testValue": "2026-11-30"
+          }
+        ]
+      },
+      {
+        "label": "Propose report schedule",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Schedule name",
+            "type": "text",
+            "testValue": "MACC synthetic name"
+          },
+          {
+            "name": "report",
+            "label": "Report type",
+            "type": "text",
+            "testValue": "MACC synthetic report"
+          },
+          {
+            "name": "reason",
+            "label": "Timing and audience",
+            "type": "text",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "equipment",
+    "title": "Equipment & verification",
+    "tabs": [
+      "Meters",
+      "Verification requests",
+      "History"
+    ],
+    "actions": [
+      {
+        "label": "Request verification",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Meter or qualification reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "reason",
+            "label": "Evidence and verification request",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "readiness",
+    "title": "Launch readiness · NO-GO",
+    "tabs": [
+      "Release gates",
+      "Evidence review",
+      "Outstanding"
+    ],
+    "actions": [
+      {
+        "label": "Record evidence review",
+        "fields": [
+          {
+            "name": "reference",
+            "label": "Gate reference",
+            "type": "text",
+            "testValue": "MACC synthetic reference"
+          },
+          {
+            "name": "reason",
+            "label": "Evidence and outstanding work",
+            "type": "textarea",
+            "testValue": "MACC synthetic reason"
+          }
+        ]
+      }
+    ]
+  }
+]

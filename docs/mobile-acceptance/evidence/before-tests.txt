@@ -1,0 +1,437 @@
+✔ MACC-ROLES: role-based mobile acceptance (3.574833ms)
+✖ MACC-AUTHORITY: role-based mobile acceptance (7.648417ms)
+✖ MACC-PRICING: role-based mobile acceptance (1.948791ms)
+✖ MACC-FINANCIAL: role-based mobile acceptance (1.336167ms)
+✖ MACC-EMPTY-CHECKOUT: role-based mobile acceptance (1.253333ms)
+✖ MACC-PAYMENT-STATE: role-based mobile acceptance (2.4495ms)
+✖ MACC-WALLET-INSUFFICIENT: role-based mobile acceptance (0.957125ms)
+✖ MACC-CHECKOUT-ONCE: role-based mobile acceptance (1.151416ms)
+✖ MACC-CUSTOMER-OWNERSHIP: role-based mobile acceptance (1.203167ms)
+✖ MACC-SUPPORT-OWNERSHIP: role-based mobile acceptance (1.383833ms)
+✖ MACC-SUPPORT-VALIDATION: role-based mobile acceptance (1.264959ms)
+✖ MACC-DELIVERY-OWNERSHIP: role-based mobile acceptance (2.085917ms)
+✖ MACC-TRANSITION-SEQUENCE: role-based mobile acceptance (1.348875ms)
+✖ MACC-TERMINAL-ORDER: role-based mobile acceptance (4.46775ms)
+✔ MACC-DELIVERY-EXCEPTIONS: role-based mobile acceptance (2.511416ms)
+✔ MACC-REFUND-IDEMPOTENT: role-based mobile acceptance (2.559208ms)
+✖ MACC-FIELD-TERMINAL: role-based mobile acceptance (7.696167ms)
+✔ MACC-SERVICE-FILTERS: role-based mobile acceptance (5.137125ms)
+✖ MACC-POS-FINITE: role-based mobile acceptance (1.403375ms)
+✖ MACC-POS-ONCE: role-based mobile acceptance (1.533042ms)
+✔ MACC-POS-CONTROLS: role-based mobile acceptance (1.294916ms)
+✖ MACC-REPORT-FILTERS: role-based mobile acceptance (1.324083ms)
+✔ MACC-PROPOSED-SCOPE: role-based mobile acceptance (1.521041ms)
+✖ MACC-REVIEW-VALIDATION: role-based mobile acceptance (1.15075ms)
+✖ MACC-PREVIEW-TRUTH: role-based mobile acceptance (0.998583ms)
+✔ MACC-RESET: role-based mobile acceptance (1.773792ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 7
+ℹ fail 19
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 314.641583
+
+✖ failing tests:
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-AUTHORITY: role-based mobile acceptance (7.648417ms)
+  AssertionError [ERR_ASSERTION]: {"id":"13ae7f43-30e7-476e-bcd1-fa69c33d2636","reference":"SV-PROTOTYPE-001","service_id":"cooker-servicing","branch_id":
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:5:57
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-PRICING: role-based mobile acceptance (1.948791ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 1580000
+  - 1040000
+  
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:6:56
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:6:7 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1580000,
+    expected: 1040000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-FINANCIAL: role-based mobile acceptance (1.336167ms)
+  AssertionError [ERR_ASSERTION]: {"id":"f6cd9d81-67de-419a-a53d-7f62e7da129c","reference":"EG-PROTOTYPE-014","customer_id":"df84772e-d900-4b22-a44e-58cf8
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:7:164
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-EMPTY-CHECKOUT: role-based mobile acceptance (1.253333ms)
+  AssertionError [ERR_ASSERTION]: {"id":"b6af6518-0fe1-4c1f-b304-b8dde658e9c2","reference":"EG-PROTOTYPE-014","customer_id":"df84772e-d900-4b22-a44e-58cf8
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:8:64
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-PAYMENT-STATE: role-based mobile acceptance (2.4495ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'verified'
+  - 'unpaid'
+  
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:9:134
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:9:7 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'verified',
+    expected: 'unpaid',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-WALLET-INSUFFICIENT: role-based mobile acceptance (0.957125ms)
+  Error: Prototype wallet balance is insufficient. Reset the prototype or choose cash for another journey.
+      at createOrder (file:///private/var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/macc-EQWjwL/runtime.mjs:87:110)
+      at Module.request (file:///private/var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/macc-EQWjwL/runtime.mjs:398:15)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:10:137
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-CHECKOUT-ONCE: role-based mobile acceptance (1.151416ms)
+  Error: Prototype wallet balance is insufficient. Reset the prototype or choose cash for another journey.
+      at createOrder (file:///private/var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/macc-EQWjwL/runtime.mjs:87:110)
+      at Module.request (file:///private/var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/macc-EQWjwL/runtime.mjs:398:15)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:11:214
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-CUSTOMER-OWNERSHIP: role-based mobile acceptance (1.203167ms)
+  AssertionError [ERR_ASSERTION]: {"invoice":{"id":"foreign-order","invoice_number":"PROTOTYPE-INV-001","status":"issued","total_kobo":1580000,"amountDueK
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:12:140
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-SUPPORT-OWNERSHIP: role-based mobile acceptance (1.383833ms)
+  AssertionError [ERR_ASSERTION]: {"id":"3bde29d1-b15e-4a38-ac8d-93304acf22d9","subject":"Private request","message":"Synthetic only","status":"open","cus
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:13:212
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-SUPPORT-VALIDATION: role-based mobile acceptance (1.264959ms)
+  AssertionError [ERR_ASSERTION]: {"id":"d43ba683-0232-4d8a-be53-16d31851a669","subject":"Prototype request","message":"","status":"open","customer_id":"d
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:14:68
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-DELIVERY-OWNERSHIP: role-based mobile acceptance (2.085917ms)
+  AssertionError [ERR_ASSERTION]: {"id":"3253059b-9ced-49bb-b14c-2d4eea4cc7c1","reference":"EG-PROTOTYPE-014","customer_id":"df84772e-d900-4b22-a44e-58cf8
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:15:82
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-TRANSITION-SEQUENCE: role-based mobile acceptance (1.348875ms)
+  AssertionError [ERR_ASSERTION]: {"id":"ddddb075-d872-49e3-962f-784910ac113e","reference":"EG-PROTOTYPE-014","customer_id":"df84772e-d900-4b22-a44e-58cf8
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:16:84
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-TERMINAL-ORDER: role-based mobile acceptance (4.46775ms)
+  AssertionError [ERR_ASSERTION]: {"id":"135cd160-1645-4509-b716-d28d789566c2","reference":"EG-PROTOTYPE-014","customer_id":"df84772e-d900-4b22-a44e-58cf8
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:17:169
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-FIELD-TERMINAL: role-based mobile acceptance (7.696167ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(!p.request('driver.snapshot').nextOrder||p.request('driver.snapshot').nextOrder.status!=='delivered')
+  
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:20:147
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:20:7 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-POS-FINITE: role-based mobile acceptance (1.403375ms)
+  AssertionError [ERR_ASSERTION]: {"id":"c6551a18-8d72-453a-8d7c-6b761616eca2","reference":"POS-PROTOTYPE-001","shift_id":"081591d5-df63-4948-824c-9cd487e
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:22:215
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-POS-ONCE: role-based mobile acceptance (1.533042ms)
+  AssertionError [ERR_ASSERTION]: {"id":"09c1e037-b864-441b-a758-5141181c0ed6","reference":"POS-PROTOTYPE-001","shift_id":"2324708c-66b5-49dd-b32e-8543026
+      at denied (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:550)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:23:450
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-REPORT-FILTERS: role-based mobile acceptance (1.324083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  13 !== 0
+  
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:25:159
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:25:7 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 13,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-REVIEW-VALIDATION: role-based mobile acceptance (1.15075ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:27:71
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:27:7 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-acceptance.mjs:3:359
+✖ MACC-PREVIEW-TRUTH: role-based mobile acceptance (0.998583ms)
+  AssertionError [ERR_ASSERTION]: The "string" argument must be of type string. Received type undefined (undefined)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:28:134
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:419)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:3:359)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-acceptance.mjs:28:7 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /preview/i,
+    operator: 'match',
+    diff: 'simple'
+  }

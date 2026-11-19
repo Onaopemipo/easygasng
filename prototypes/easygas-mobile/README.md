@@ -26,3 +26,7 @@ node prototypes/easygas-mobile/server.mjs
 Open `http://127.0.0.1:3028/`. The build uses React Native's browser renderer only as a review transport. It imports the mobile app source and applies three entry-screen adapters; it does not render the website UI. Expo/device capabilities are local review adapters. `source-manifest.json` records original file hashes.
 
 See `docs/mobile-prototype/AUDIT.md` and `docs/traceability/mobile-experience-prototype-rtm.json` for coverage, evidence and limits.
+
+## Role-based acceptance update
+
+See `docs/mobile-acceptance/README.md` for the full pass, repairs and retained functional gaps. Review controls now include offline, expired-session, empty-list and service availability conditions. Card orders remain unpaid; checkout totals and retry keys are validated. Eligible service slots are synthetic review examples. Mixed product/appointment execution is explicitly guarded; no request is silently dropped. Generic actions say interaction preview. Never enter a real password in a prototype form.

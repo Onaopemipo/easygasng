@@ -1,0 +1,128 @@
+{
+  "date": "2026-11-19T22:42:38.216Z",
+  "results": [
+    {
+      "id": "MACC-ROLES",
+      "status": "PASS"
+    },
+    {
+      "id": "MACC-AUTHORITY",
+      "status": "FAIL",
+      "reason": "{\"id\":\"13ae7f43-30e7-476e-bcd1-fa69c33d2636\",\"reference\":\"SV-PROTOTYPE-001\",\"service_id\":\"cooker-servicing\",\"branch_id\":"
+    },
+    {
+      "id": "MACC-PRICING",
+      "status": "FAIL",
+      "reason": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 1580000\n- 1040000\n"
+    },
+    {
+      "id": "MACC-FINANCIAL",
+      "status": "FAIL",
+      "reason": "{\"id\":\"f6cd9d81-67de-419a-a53d-7f62e7da129c\",\"reference\":\"EG-PROTOTYPE-014\",\"customer_id\":\"df84772e-d900-4b22-a44e-58cf8"
+    },
+    {
+      "id": "MACC-EMPTY-CHECKOUT",
+      "status": "FAIL",
+      "reason": "{\"id\":\"b6af6518-0fe1-4c1f-b304-b8dde658e9c2\",\"reference\":\"EG-PROTOTYPE-014\",\"customer_id\":\"df84772e-d900-4b22-a44e-58cf8"
+    },
+    {
+      "id": "MACC-PAYMENT-STATE",
+      "status": "FAIL",
+      "reason": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'verified'\n- 'unpaid'\n"
+    },
+    {
+      "id": "MACC-WALLET-INSUFFICIENT",
+      "status": "FAIL",
+      "reason": "Prototype wallet balance is insufficient. Reset the prototype or choose cash for another journey."
+    },
+    {
+      "id": "MACC-CHECKOUT-ONCE",
+      "status": "FAIL",
+      "reason": "Prototype wallet balance is insufficient. Reset the prototype or choose cash for another journey."
+    },
+    {
+      "id": "MACC-CUSTOMER-OWNERSHIP",
+      "status": "FAIL",
+      "reason": "{\"invoice\":{\"id\":\"foreign-order\",\"invoice_number\":\"PROTOTYPE-INV-001\",\"status\":\"issued\",\"total_kobo\":1580000,\"amountDueK"
+    },
+    {
+      "id": "MACC-SUPPORT-OWNERSHIP",
+      "status": "FAIL",
+      "reason": "{\"id\":\"3bde29d1-b15e-4a38-ac8d-93304acf22d9\",\"subject\":\"Private request\",\"message\":\"Synthetic only\",\"status\":\"open\",\"cus"
+    },
+    {
+      "id": "MACC-SUPPORT-VALIDATION",
+      "status": "FAIL",
+      "reason": "{\"id\":\"d43ba683-0232-4d8a-be53-16d31851a669\",\"subject\":\"Prototype request\",\"message\":\"\",\"status\":\"open\",\"customer_id\":\"d"
+    },
+    {
+      "id": "MACC-DELIVERY-OWNERSHIP",
+      "status": "FAIL",
+      "reason": "{\"id\":\"3253059b-9ced-49bb-b14c-2d4eea4cc7c1\",\"reference\":\"EG-PROTOTYPE-014\",\"customer_id\":\"df84772e-d900-4b22-a44e-58cf8"
+    },
+    {
+      "id": "MACC-TRANSITION-SEQUENCE",
+      "status": "FAIL",
+      "reason": "{\"id\":\"ddddb075-d872-49e3-962f-784910ac113e\",\"reference\":\"EG-PROTOTYPE-014\",\"customer_id\":\"df84772e-d900-4b22-a44e-58cf8"
+    },
+    {
+      "id": "MACC-TERMINAL-ORDER",
+      "status": "FAIL",
+      "reason": "{\"id\":\"135cd160-1645-4509-b716-d28d789566c2\",\"reference\":\"EG-PROTOTYPE-014\",\"customer_id\":\"df84772e-d900-4b22-a44e-58cf8"
+    },
+    {
+      "id": "MACC-DELIVERY-EXCEPTIONS",
+      "status": "PASS"
+    },
+    {
+      "id": "MACC-REFUND-IDEMPOTENT",
+      "status": "PASS"
+    },
+    {
+      "id": "MACC-FIELD-TERMINAL",
+      "status": "FAIL",
+      "reason": "The expression evaluated to a falsy value:\n\n  assert.ok(!p.request('driver.snapshot').nextOrder||p.request('driver.snapshot').nextOrder.status!=='delivered')\n"
+    },
+    {
+      "id": "MACC-SERVICE-FILTERS",
+      "status": "PASS"
+    },
+    {
+      "id": "MACC-POS-FINITE",
+      "status": "FAIL",
+      "reason": "{\"id\":\"c6551a18-8d72-453a-8d7c-6b761616eca2\",\"reference\":\"POS-PROTOTYPE-001\",\"shift_id\":\"081591d5-df63-4948-824c-9cd487e"
+    },
+    {
+      "id": "MACC-POS-ONCE",
+      "status": "FAIL",
+      "reason": "{\"id\":\"09c1e037-b864-441b-a758-5141181c0ed6\",\"reference\":\"POS-PROTOTYPE-001\",\"shift_id\":\"2324708c-66b5-49dd-b32e-8543026"
+    },
+    {
+      "id": "MACC-POS-CONTROLS",
+      "status": "PASS"
+    },
+    {
+      "id": "MACC-REPORT-FILTERS",
+      "status": "FAIL",
+      "reason": "Expected values to be strictly equal:\n\n13 !== 0\n"
+    },
+    {
+      "id": "MACC-PROPOSED-SCOPE",
+      "status": "PASS"
+    },
+    {
+      "id": "MACC-REVIEW-VALIDATION",
+      "status": "FAIL",
+      "reason": "Missing expected exception."
+    },
+    {
+      "id": "MACC-PREVIEW-TRUTH",
+      "status": "FAIL",
+      "reason": "The \"string\" argument must be of type string. Received type undefined (undefined)"
+    },
+    {
+      "id": "MACC-RESET",
+      "status": "PASS"
+    }
+  ]
+}
