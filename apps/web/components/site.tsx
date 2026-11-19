@@ -1,4 +1,5 @@
 "use client";
+import { analyticsNavigate } from "../lib/analytics-browser";
 import { CheckoutPaymentMethods } from "./checkout-payment-methods";
 import { SaveCheckoutDetails } from "./save-checkout-details";
 import { FieldCaption } from "./field-caption";
@@ -231,7 +232,7 @@ export default function Site({
   }, [toast]);
   function add(product: any, quantity = 1) {
     if (product.category === "Gas refills") {
-      router.push("/gas-order");
+      analyticsNavigate(router, "/gas-order");
       return;
     }
 
@@ -377,7 +378,7 @@ export default function Site({
                   }));
                   localStorage.setItem("easygas.cart", JSON.stringify(next));
                   setCart(next);
-                  router.push(
+                  analyticsNavigate(router,
                     "/services/" +
                       b.config.serviceId +
                       "?bundle=" +
@@ -770,7 +771,7 @@ function QuickOrder() {
         JSON.stringify({ address, date, window, customerId: user?.id }),
       );
     } catch {}
-    router.push("/cart");
+    analyticsNavigate(router, "/cart");
   }
   return (
     <form id="quick-order" className="quick-order" onSubmit={submit}>
@@ -1248,7 +1249,7 @@ function Auth({ register }: { register: boolean }) {
         localStorage.setItem("easygas.auth.changed", String(Date.now()));
       } catch {}
       setUser(me.user);
-      router.push(
+      analyticsNavigate(router,
         !["customer", "commercial"].includes(r.role)
           ? "/admin"
           : safeCustomerReturn(
@@ -2076,6 +2077,7 @@ function ContentPage({ path }: { path: string }) {
         EasyGas services. Payment card details are not collected by this
         application.
       </p>
+      {path === "/privacy" && <p>Optional Google Analytics, provided through Google Tag Manager, measures public-page visits for signed-out visitors only after you allow analytics. Signed-in sessions, private workspaces, checkout and URLs containing query values are excluded. Advertising consent stays denied. Use Cookie settings at the bottom of a public page to change your choice; essential services work without analytics.</p>}
       <p>
         Contact the business through your signed-in support account for
         questions about your information or an order.

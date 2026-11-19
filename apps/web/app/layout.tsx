@@ -1,4 +1,8 @@
 import { AppDialogProvider } from "../components/app-dialog";
+import GoogleAnalytics from "../components/google-analytics";
+import { analyticsSettings } from "../../../packages/business-rules/src/analytics";
+import { cookies } from "next/headers";
+import { Suspense } from "react";
 import { ThemeProvider } from "../components/theme-provider";
 import { themeBootstrapFor } from "../../../packages/business-rules/src/theme";
 import type { Metadata, Viewport } from "next";
@@ -26,12 +30,14 @@ export const metadata: Metadata = {
   description:
     "Cooking gas, cylinders and kitchen essentials. A simpler way to keep your kitchen cooking with EasyGas Energy Solutions.",
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const themeEnabled = process.env.EASYGAS_DARK_MODE !== "false";
+  const analytics = analyticsSettings(process.env);
+  const anonymous = !(await cookies()).has("easygas_session");
   return (
     <html lang="en-NG" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
@@ -66,6 +72,9 @@ export default function RootLayout({
           </aside>
         )}
         <ThemeProvider enabled={themeEnabled}>{children}<AppDialogProvider /></ThemeProvider>
+        <Suspense fallback={null}>
+          <GoogleAnalytics enabled={analytics.enabled && anonymous} demo={process.env.EASYGAS_CLIENT_DEMO === "true"} />
+        </Suspense>
       </body>
     </html>
   );

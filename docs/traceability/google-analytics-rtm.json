@@ -1,0 +1,190 @@
+{
+  "phase": "Consent-first Google Analytics via existing GTM",
+  "productionDecision": "Existing production NO-GO, actual-import hold and retain-all unchanged",
+  "requirements": [
+    {
+      "id": "ANALYTICS-01",
+      "requirement": "Load the supplied published GTM container once and use its existing GA4 destination without duplicate installation",
+      "priority": "P1",
+      "scope": "Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation.",
+      "uiReference": "User requests Google Analytics with supplied GTM container and GA4 measurement ID19November2026",
+      "route": "/,/products,/services,/privacy; private routes excluded",
+      "implementationFiles": [
+        "packages/business-rules/src/analytics.ts",
+        "apps/web/lib/analytics-browser.ts",
+        "apps/web/components/google-analytics.tsx",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/workspace-link.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Supplied public tag IDs, published Google container; URL and explicit local analytics consent only",
+      "securityControl": "No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied",
+      "testFiles": [
+        "tests/google-analytics.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/analytics/evidence/regression.txt",
+        "docs/analytics/evidence/published-container.json"
+      ],
+      "acceptanceGate": "ANALYTICS-G01",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Consent-first single GTM loader implemented; server session exclusion, fixed public URL allowlist, private-document latch, full-page navigation when loaded, withdrawal and storage/page restore handling. Local27regressions pass; hosted verification pending.",
+      "testResult": "PASS —27local analytics/navigation/order-modal/customer-order regressions; final build/deployment qualification underway",
+      "outstandingWork": "Deploy and verify hosted consent, tag execution/private exclusion and reporting boundary. No ecommerce, user identification, advertising or production release inferred."
+    },
+    {
+      "id": "ANALYTICS-02",
+      "requirement": "Persist optional analytics consent, load no Google resources before consent and support withdrawal",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation.",
+      "uiReference": "User requests Google Analytics with supplied GTM container and GA4 measurement ID19November2026",
+      "route": "/,/products,/services,/privacy; private routes excluded",
+      "implementationFiles": [
+        "packages/business-rules/src/analytics.ts",
+        "apps/web/lib/analytics-browser.ts",
+        "apps/web/components/google-analytics.tsx",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/workspace-link.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Supplied public tag IDs, published Google container; URL and explicit local analytics consent only",
+      "securityControl": "No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied",
+      "testFiles": [
+        "tests/google-analytics.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ANALYTICS-PRIVACY"
+      ],
+      "evidence": [
+        "docs/analytics/evidence/regression.txt",
+        "docs/analytics/evidence/published-container.json"
+      ],
+      "acceptanceGate": "ANALYTICS-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Consent-first single GTM loader implemented; server session exclusion, fixed public URL allowlist, private-document latch, full-page navigation when loaded, withdrawal and storage/page restore handling. Local27regressions pass; hosted verification pending.",
+      "testResult": "PASS —27local analytics/navigation/order-modal/customer-order regressions; final build/deployment qualification underway",
+      "outstandingWork": "Deploy and verify hosted consent, tag execution/private exclusion and reporting boundary. No ecommerce, user identification, advertising or production release inferred."
+    },
+    {
+      "id": "ANALYTICS-03",
+      "requirement": "Exclude signed-in, operational and sensitive URLs; unload tags before entering private pages",
+      "priority": "P0",
+      "scope": "Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation.",
+      "uiReference": "User requests Google Analytics with supplied GTM container and GA4 measurement ID19November2026",
+      "route": "/,/products,/services,/privacy; private routes excluded",
+      "implementationFiles": [
+        "packages/business-rules/src/analytics.ts",
+        "apps/web/lib/analytics-browser.ts",
+        "apps/web/components/google-analytics.tsx",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/workspace-link.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Supplied public tag IDs, published Google container; URL and explicit local analytics consent only",
+      "securityControl": "No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied",
+      "testFiles": [
+        "tests/google-analytics.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ANALYTICS-PRIVACY"
+      ],
+      "evidence": [
+        "docs/analytics/evidence/regression.txt",
+        "docs/analytics/evidence/published-container.json"
+      ],
+      "acceptanceGate": "ANALYTICS-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Consent-first single GTM loader implemented; server session exclusion, fixed public URL allowlist, private-document latch, full-page navigation when loaded, withdrawal and storage/page restore handling. Local27regressions pass; hosted verification pending.",
+      "testResult": "PASS —27local analytics/navigation/order-modal/customer-order regressions; final build/deployment qualification underway",
+      "outstandingWork": "Deploy and verify hosted consent, tag execution/private exclusion and reporting boundary. No ecommerce, user identification, advertising or production release inferred."
+    },
+    {
+      "id": "ANALYTICS-04",
+      "requirement": "Verify implementation, build, client-demo deployment and receiver evidence; preserve production holds",
+      "priority": "P1",
+      "scope": "Existing EasyGas web and client demo; supplied GTM-KLJ8FM96 and G-8Y34NXQMMK. Anonymous public pages after explicit consent; no ecommerce/user identification or advertising activation.",
+      "uiReference": "User requests Google Analytics with supplied GTM container and GA4 measurement ID19November2026",
+      "route": "/,/products,/services,/privacy; private routes excluded",
+      "implementationFiles": [
+        "packages/business-rules/src/analytics.ts",
+        "apps/web/lib/analytics-browser.ts",
+        "apps/web/components/google-analytics.tsx",
+        "apps/web/app/layout.tsx",
+        "apps/web/components/workspace-link.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Supplied public tag IDs, published Google container; URL and explicit local analytics consent only",
+      "securityControl": "No account/order/financial data in data layer; no Google loading before consent or on signed-in/private/query/token URLs; advertising consent denied",
+      "testFiles": [
+        "tests/google-analytics.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/analytics/evidence/regression.txt",
+        "docs/analytics/evidence/published-container.json"
+      ],
+      "acceptanceGate": "ANALYTICS-G04",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Consent-first single GTM loader implemented; server session exclusion, fixed public URL allowlist, private-document latch, full-page navigation when loaded, withdrawal and storage/page restore handling. Local27regressions pass; hosted verification pending.",
+      "testResult": "PASS —27local analytics/navigation/order-modal/customer-order regressions; final build/deployment qualification underway",
+      "outstandingWork": "Deploy and verify hosted consent, tag execution/private exclusion and reporting boundary. No ecommerce, user identification, advertising or production release inferred."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ANALYTICS-G01",
+      "description": "Load the supplied published GTM container once and use its existing GA4 destination without duplicate installation",
+      "status": "OPEN"
+    },
+    {
+      "id": "ANALYTICS-G02",
+      "description": "Persist optional analytics consent, load no Google resources before consent and support withdrawal",
+      "status": "OPEN"
+    },
+    {
+      "id": "ANALYTICS-G03",
+      "description": "Exclude signed-in, operational and sensitive URLs; unload tags before entering private pages",
+      "status": "OPEN"
+    },
+    {
+      "id": "ANALYTICS-G04",
+      "description": "Verify implementation, build, client-demo deployment and receiver evidence; preserve production holds",
+      "status": "OPEN"
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "implemented": 4,
+      "verified": 0,
+      "total": 4
+    },
+    "criticalRequirements": {
+      "verified": 0,
+      "total": 2
+    },
+    "gates": {
+      "passed": 0,
+      "total": 4
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-19",
+      "change": "Registered supplied IDs; fetched public GTM container200 and confirmed existing G-8Y34NXQMMK destination, auto page/history/form/contact settings. Use one GTM loader, consent-first public scope, and full document navigation while tags are loaded so listeners cannot persist into private pages. No admin Google-account or live-commerce release authorisation inferred."
+    },
+    {
+      "date": "2026-11-19",
+      "change": "Local browser proves no script before consent/essential-only, supplied GTM loads after grant and is absent after entering login. Local business API unavailable independently; no local business acceptance claimed. Browser tooling exposes DOM/tag load state but not network collection requests; GA4 receipt/Realtime reporting remains unverified without Google-account/collection diagnostics."
+    }
+  ]
+}
