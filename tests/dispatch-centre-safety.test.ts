@@ -1,3 +1,4 @@
+import { reviewedNativeHash } from "./helpers/reviewed-native-hash";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { fixture } from "./helpers/order-tracking-fixture";
@@ -314,7 +315,7 @@ test("DDI-AUDIT01: grouped navigation, customer/technician apps and financial or
     const source = await readFile(file);
     if (technicianContinuation.files[file])
       assert.equal(technicianContinuation.baseline[file], hash, file);
-    assert.equal(createHash("sha256").update(source).digest("hex"), auditContinuations.files[file] ?? assignmentAlertContinuation.files[file] ?? technicianContinuation.files[file] ?? hash, file);
+    assert.equal(createHash("sha256").update(source).digest("hex"), await reviewedNativeHash(file, auditContinuations.files[file] ?? assignmentAlertContinuation.files[file] ?? technicianContinuation.files[file] ?? hash), file);
   }
 });
 

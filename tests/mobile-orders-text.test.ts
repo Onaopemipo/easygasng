@@ -9,7 +9,7 @@ import { build } from "esbuild";
 import ts from "typescript";
 const require = createRequire(
     process.env.EASYGAS_NATIVE_TEST_PACKAGE ??
-      "/tmp/easygas-native-component-test/package.json",
+      path.resolve("tests/native-renderer/package.json"),
   ),
   React = require("react"),
   { create, act } = require("react-test-renderer");

@@ -1,3 +1,4 @@
+import { reviewedNativeHash } from "./helpers/reviewed-native-hash";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { fixture } from "./helpers/order-tracking-fixture";
@@ -128,7 +129,7 @@ test("CUI-SCOPE: later onboarding and native configuration changes are explicitl
       createHash("sha256")
         .update(source)
         .digest("hex"),
-      assignmentAlertConfig.changes[path]?.sha256 ?? mapsPhase.changes[path]?.sha256 ?? laterPhase.changes[path]?.sha256 ?? (path === introduction.path ? introduction.sha256 : hash),
+      await reviewedNativeHash(path, assignmentAlertConfig.changes[path]?.sha256 ?? mapsPhase.changes[path]?.sha256 ?? laterPhase.changes[path]?.sha256 ?? (path === introduction.path ? introduction.sha256 : hash)),
       path,
     );
   }

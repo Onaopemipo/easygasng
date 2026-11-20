@@ -5,7 +5,7 @@ import path from "node:path";
 import os from "node:os";
 import { createRequire } from "node:module";
 import { build } from "esbuild";
-const req = createRequire("/tmp/easygas-native-component-test/package.json"),
+const req = createRequire(path.resolve("tests/native-renderer/package.json")),
   React = req("react"),
   { create, act } = req("react-test-renderer");
 (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;

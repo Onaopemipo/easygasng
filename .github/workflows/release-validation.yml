@@ -40,6 +40,8 @@ jobs:
       - run: echo /usr/lib/postgresql/16/bin >> "$GITHUB_PATH"
       - run: npm ci
       - run: npm ci --prefix apps/mobile --ignore-scripts
+      - name: Install pinned native component test renderer
+        run: npm ci --prefix tests/native-renderer --ignore-scripts
       - name: Run web regression tests
         shell: bash
         run: |

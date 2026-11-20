@@ -10,7 +10,7 @@ import {
   canRequestOrderRefund,
   selectedRefundLines,
 } from "../packages/business-rules/src/native-order-authority";
-const req = createRequire("/tmp/easygas-native-component-test/package.json");
+const req = createRequire(path.resolve("tests/native-renderer/package.json"));
 const React = req("react"),
   { create, act } = req("react-test-renderer");
 (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
