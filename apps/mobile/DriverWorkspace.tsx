@@ -1098,7 +1098,7 @@ export default function DriverWorkspace({
                         label="Update Delivery Status"
                         onPress={() => setPhase("status")}
                       />
-                    )}{" "}
+                    )}
                     <Button
                       label="View Private Proof History"
                       secondary

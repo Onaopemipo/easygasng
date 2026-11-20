@@ -806,7 +806,7 @@ export function TechnicianScreens({
             accessibilityLabel="Loading authorised jobs"
             color={colors.primary}
           />
-        )}{" "}
+        )}
         {!!error && (
           <Card>
             <Copy>{error}</Copy>

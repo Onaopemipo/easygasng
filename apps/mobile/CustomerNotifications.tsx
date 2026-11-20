@@ -210,7 +210,7 @@ export default function CustomerNotifications({
                         : navigate(target.screen)
                     }
                   />
-                )}{" "}
+                )}
                 {!n.read_at && (
                   <Button
                     label={busy === n.id ? "Marking…" : "Mark as read"}

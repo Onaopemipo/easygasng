@@ -38,3 +38,5 @@ Payment category consolidation (20 November): [Payments & Wallet organisation gu
 Current full Admin Settings navigation (20 November): [nine-category guide and configuration tasks](admin-settings-navigation.md). This supersedes earlier category labels in the historical manual, while retaining all 77 settings, the payment consolidation, search aliases, authority and current values. See the complete audit/mapping and traceability linked from that guide.
 
 Current consolidated Settings acceptance: [roles, typed editors, history and exception tests](admin-settings-acceptance.md). Supplements the nine-category navigation guide; historical PDF/Word editions retained.
+
+Native mobile Orders repair (21 November): [preview instructions and acceptance limits](mobile-orders-preview.md). Includes reloading the existing Expo Go source preview and the separate open owner-session refund finding. Historical manual artifacts retained.

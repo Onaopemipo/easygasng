@@ -1147,7 +1147,7 @@ export function Appointment({
                 },
               ]}
             />
-          )}{" "}
+          )}
           {tech && m.state === "issued" && (
             <NativeForm
               api={(_, v) =>
@@ -1166,7 +1166,7 @@ export function Appointment({
                 },
               ]}
             />
-          )}{" "}
+          )}
           {store && m.state === "usage_recorded" && (
             <NativeForm
               api={(_, v) =>

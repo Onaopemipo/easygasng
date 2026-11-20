@@ -145,7 +145,7 @@ export default function DriverProof({
           disabled={busy}
           onPress={() => capture(false)}
         />
-      )}{" "}
+      )}
       {!!message && (
         <Text
           preserveColor

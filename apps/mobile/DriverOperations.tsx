@@ -212,7 +212,7 @@ export default function DriverOperations({
           ]}
           onDone={() => setTick((n) => n + 1)}
         />
-      )}{" "}
+      )}
       {trip && (
         <>
           <Text>Trip {trip.id}</Text>

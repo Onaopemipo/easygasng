@@ -331,7 +331,7 @@ export default function OrderVisit({
           ]}
           onDone={onDone}
         />
-      )}{" "}
+      )}
       {!driver && Number(invoice?.overpaidKobo) > 0 && (
         <NativeForm
           api={api}

@@ -1,0 +1,214 @@
+{
+  "phase": "Native Orders text-host rendering repair",
+  "productionDecision": "Production NO-GO, actual-import hold, retain-all and unrelated native/provider/operational gates retained",
+  "requirements": [
+    {
+      "id": "ORDTXT-01",
+      "requirement": "Orders and visit details render without native text-host errors",
+      "priority": "P1",
+      "scope": "Remove invalid literal whitespace outside native Text in Orders and matching sibling surfaces; no API/business/permission changes or new native binary.",
+      "uiReference": "User screenshot: Text strings must be rendered within a Text component; stack OrderVisit",
+      "route": "Native Orders/OrderVisit and matching customer/driver/technician surfaces",
+      "implementationFiles": [
+        "apps/mobile/OrderVisit.tsx"
+      ],
+      "dataSource": "Existing Orders/visit API responses and native JSX children; no data mutation needed.",
+      "securityControl": "Existing scoped API, token, invoice, payment and delivery controls retained.",
+      "testFiles": [
+        "tests/mobile-orders-text.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "ORDTXT-REPRO",
+        "ORDTXT-DETAILS",
+        "ORDTXT-ERRORS"
+      ],
+      "negativeTests": [
+        "ORDTXT-REPRO",
+        "ORDTXT-ERRORS"
+      ],
+      "evidence": [
+        "docs/mobile-orders-text-fix/README.md",
+        "docs/mobile-orders-text-fix/reviewed-source-changes.json",
+        "docs/mobile-orders-text-fix/evidence/regression-tests.txt",
+        "docs/mobile-orders-text-fix/evidence/mobile-typecheck.txt",
+        "docs/mobile-orders-text-fix/evidence/prototype-preservation.txt",
+        "docs/mobile-orders-text-fix/evidence/artifact-preservation.json",
+        "docs/mobile-orders-text-fix/evidence/simulator/observation.json",
+        "docs/mobile-orders-text-fix/evidence/simulator/orders-after-reload.jpg",
+        "docs/mobile-orders-text-fix/evidence/traceability-manual-tests.txt"
+      ],
+      "acceptanceGate": "ORDTXT-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Removed explicit JSX whitespace directly under View. Before-fix component fails native text-host invariant; repaired customer and driver states pass, including loaded photos/invoice/amendments and error feedback. Simulator Orders and visit read pass after full Expo source reload.",
+      "testResult": "PASS \u2014 24/24 selected regression tests, 5/5 prototype-preservation tests, 6/6 traceability/manual checks and mobile typecheck. iOS Orders entry and visit read executed after full reload; native binaries unchanged.",
+      "outstandingWork": "No remaining work for this scoped text-host repair. Seven sibling surfaces remain untested on-device in this phase; driver states use component fixtures. Separate owner refund forms show Order not found and remain open. Existing production/native/provider gates remain unchanged."
+    },
+    {
+      "id": "ORDTXT-02",
+      "requirement": "Same invalid spacer pattern removed from related native screens with guarded regression coverage",
+      "priority": "P1",
+      "scope": "Remove invalid literal whitespace outside native Text in Orders and matching sibling surfaces; no API/business/permission changes or new native binary.",
+      "uiReference": "User screenshot: Text strings must be rendered within a Text component; stack OrderVisit",
+      "route": "Native Orders/OrderVisit and matching customer/driver/technician surfaces",
+      "implementationFiles": [
+        "apps/mobile/CustomerNotifications.tsx",
+        "apps/mobile/DriverOperations.tsx",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/TechnicianScreens.tsx"
+      ],
+      "dataSource": "Existing Orders/visit API responses and native JSX children; no data mutation needed.",
+      "securityControl": "Existing scoped API, token, invoice, payment and delivery controls retained.",
+      "testFiles": [
+        "tests/mobile-orders-text.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "ORDTXT-GUARD",
+        "NATIVE-RTM-SOURCE"
+      ],
+      "negativeTests": [
+        "ORDTXT-REPRO",
+        "ORDTXT-ERRORS"
+      ],
+      "evidence": [
+        "docs/mobile-orders-text-fix/README.md",
+        "docs/mobile-orders-text-fix/reviewed-source-changes.json",
+        "docs/mobile-orders-text-fix/evidence/regression-tests.txt",
+        "docs/mobile-orders-text-fix/evidence/mobile-typecheck.txt",
+        "docs/mobile-orders-text-fix/evidence/prototype-preservation.txt",
+        "docs/mobile-orders-text-fix/evidence/artifact-preservation.json",
+        "docs/mobile-orders-text-fix/evidence/simulator/observation.json",
+        "docs/mobile-orders-text-fix/evidence/simulator/orders-after-reload.jpg",
+        "docs/mobile-orders-text-fix/evidence/traceability-manual-tests.txt"
+      ],
+      "acceptanceGate": "ORDTXT-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Nine literal spacers removed from eight source files. AST regression checks literal strings remain under Text-compatible hosts. Source continuation hashes and original prototype preservation pass. This is source-pattern acceptance, not a full live acceptance of seven sibling surfaces.",
+      "testResult": "PASS \u2014 24/24 selected regression tests, 5/5 prototype-preservation tests, 6/6 traceability/manual checks and mobile typecheck. iOS Orders entry and visit read executed after full reload; native binaries unchanged.",
+      "outstandingWork": "No remaining work for this scoped text-host repair. Seven sibling surfaces remain untested on-device in this phase; driver states use component fixtures. Separate owner refund forms show Order not found and remain open. Existing production/native/provider gates remain unchanged."
+    },
+    {
+      "id": "ORDTXT-03",
+      "requirement": "Current Expo Go Orders preview and traceability verified without new binaries",
+      "priority": "P1",
+      "scope": "Remove invalid literal whitespace outside native Text in Orders and matching sibling surfaces; no API/business/permission changes or new native binary.",
+      "uiReference": "User screenshot: Text strings must be rendered within a Text component; stack OrderVisit",
+      "route": "Native Orders/OrderVisit and matching customer/driver/technician surfaces",
+      "implementationFiles": [
+        "apps/mobile/CustomerNotifications.tsx",
+        "apps/mobile/DriverOperations.tsx",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/TechnicianScreens.tsx"
+      ],
+      "dataSource": "Existing Orders/visit API responses and native JSX children; no data mutation needed.",
+      "securityControl": "Existing scoped API, token, invoice, payment and delivery controls retained.",
+      "testFiles": [
+        "tests/mobile-orders-text.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "NATIVE-RTM-SOURCE",
+        "MEXP-ARTIFACT"
+      ],
+      "negativeTests": [
+        "ORDTXT-REPRO",
+        "ORDTXT-ERRORS"
+      ],
+      "evidence": [
+        "docs/mobile-orders-text-fix/README.md",
+        "docs/mobile-orders-text-fix/reviewed-source-changes.json",
+        "docs/mobile-orders-text-fix/evidence/regression-tests.txt",
+        "docs/mobile-orders-text-fix/evidence/mobile-typecheck.txt",
+        "docs/mobile-orders-text-fix/evidence/prototype-preservation.txt",
+        "docs/mobile-orders-text-fix/evidence/artifact-preservation.json",
+        "docs/mobile-orders-text-fix/evidence/simulator/observation.json",
+        "docs/mobile-orders-text-fix/evidence/simulator/orders-after-reload.jpg",
+        "docs/mobile-orders-text-fix/evidence/traceability-manual-tests.txt"
+      ],
+      "acceptanceGate": "ORDTXT-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing iPhone 17 Pro Expo Go 58 preview reloaded against repaired Metro source. Owner Operations > Orders and visit-details read visibly succeed without LogBox. Native artifacts and timestamps plus original prototype hashes unchanged; zero new native binaries.",
+      "testResult": "PASS \u2014 24/24 selected regression tests, 5/5 prototype-preservation tests, 6/6 traceability/manual checks and mobile typecheck. iOS Orders entry and visit read executed after full reload; native binaries unchanged.",
+      "outstandingWork": "No remaining work for this scoped text-host repair. Seven sibling surfaces remain untested on-device in this phase; driver states use component fixtures. Separate owner refund forms show Order not found and remain open. Existing production/native/provider gates remain unchanged."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ORDTXT-G01",
+      "description": "Orders and visit details render without native text-host errors",
+      "status": "PASS",
+      "reason": "Removed explicit JSX whitespace directly under View. Before-fix component fails native text-host invariant; repaired customer and driver states pass, including loaded photos/invoice/amendments and error feedback. Simulator Orders and visit read pass after full Expo source reload."
+    },
+    {
+      "id": "ORDTXT-G02",
+      "description": "Same invalid spacer pattern removed from related native screens with guarded regression coverage",
+      "status": "PASS",
+      "reason": "Nine literal spacers removed from eight source files. AST regression checks literal strings remain under Text-compatible hosts. Source continuation hashes and original prototype preservation pass. This is source-pattern acceptance, not a full live acceptance of seven sibling surfaces."
+    },
+    {
+      "id": "ORDTXT-G03",
+      "description": "Current Expo Go Orders preview and traceability verified without new binaries",
+      "status": "PASS",
+      "reason": "Existing iPhone 17 Pro Expo Go 58 preview reloaded against repaired Metro source. Owner Operations > Orders and visit-details read visibly succeed without LogBox. Native artifacts and timestamps plus original prototype hashes unchanged; zero new native binaries."
+    }
+  ],
+  "coverage": {
+    "implementation": {
+      "implemented": 3,
+      "total": 3
+    },
+    "requirements": {
+      "verified": 3,
+      "total": 3
+    },
+    "critical": {
+      "verified": 0,
+      "total": 0
+    },
+    "routes": {
+      "verified": 1,
+      "total": 8,
+      "untested": 7,
+      "basis": "One Orders/OrderVisit surface exercised on iOS; seven sibling surfaces source-guarded but not manually accepted."
+    },
+    "gates": {
+      "passed": 3,
+      "total": 3
+    },
+    "excluded": 0,
+    "sourcePattern": {
+      "verified": 8,
+      "total": 8
+    }
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Registered user-reported Orders runtime defect. Found nine explicit JSX whitespace literals in eight files under non-text hosts. Remove only those literals; preserve safe spaces inside Text, original manifests, source histories and no-new-binaries constraint."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Executed before/after component regression, customer and driver states, failed read feedback, source guard, selected existing regressions, typecheck, prototype/native preservation and full Expo Go source reload. 3/3 scoped repair gates pass; live surface coverage 1/8 retained with seven untested. Separate owner refund finding remains open."
+    }
+  ],
+  "openFindings": [
+    {
+      "id": "ORDTXT-F01",
+      "status": "OPEN_UNTESTED",
+      "finding": "Delivered-order refund forms show Order not found in existing owner session. No refund request submitted. Requires separate account-scoping/workflow investigation; not caused or resolved by removing JSX spacers.",
+      "evidence": "docs/mobile-orders-text-fix/evidence/simulator/observation.json"
+    }
+  ]
+}

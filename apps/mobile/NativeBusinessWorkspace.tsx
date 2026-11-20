@@ -1245,7 +1245,7 @@ export default function NativeBusinessWorkspace({
                   secondary
                   onPress={() => setPage((p) => p - 1)}
                 />
-              )}{" "}
+              )}
               {page < pages && (
                 <Button
                   label="Next page"
