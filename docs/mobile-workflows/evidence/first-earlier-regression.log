@@ -1,0 +1,72 @@
+✔ MEXP-ROLES: local prototype model (0.473084ms)
+✔ MEXP-ORDER-DELIVERY: local prototype model (9.009458ms)
+✔ MEXP-PAYMENT-FAILURE: local prototype model (1.574167ms)
+✔ MEXP-EXPIRED-CALIBRATION: local prototype model (2.300958ms)
+✔ MEXP-REFUND-ONCE: local prototype model (2.906833ms)
+✔ MEXP-SERVICE: local prototype model (4.654583ms)
+✔ MEXP-ROLE-DENIALS: local prototype model (3.186833ms)
+✔ MEXP-ISOLATION: local prototype model (14.235208ms)
+✖ MEXP-NATIVE-READ-SHAPES: local prototype model (5.469208ms)
+✔ MEXP-PROFILE-SUPPORT: local prototype model (4.829625ms)
+✔ MEXP-POS: local prototype model (5.938792ms)
+✖ MEXP-MOBILE-CONCEPTS: local prototype model (3.289209ms)
+✔ MEXP-REPORTS-ASSIGNMENT: local prototype model (2.264833ms)
+✔ MEXP-RESET-PERSISTENCE: local prototype model (1.535417ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 12
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 176.761125
+
+✖ failing tests:
+
+test at scripts/test-mobile-prototype.mjs:11:106
+✖ MEXP-NATIVE-READ-SHAPES: local prototype model (5.469208ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Array.isArray(p.request('refund.lines?orderId=prototype')))
+  
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-prototype.mjs:20:153
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-prototype.mjs:11:156)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-prototype.mjs:11:106)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-prototype.mjs:20:7 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/test-mobile-prototype.mjs:11:106
+✖ MEXP-MOBILE-CONCEPTS: local prototype model (3.289209ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(p.mobileModuleRows('inventory','Receipts').some(x=>x.id===row.id))
+  
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-prototype.mjs:23:351
+      at TestContext.<anonymous> (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-prototype.mjs:11:156)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+      at run (node:internal/test_runner/harness:398:12)
+      at test (node:internal/test_runner/harness:407:12)
+      at check (file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-prototype.mjs:11:106)
+      at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/scripts/test-mobile-prototype.mjs:23:7 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -18,10 +18,12 @@
       "testFiles": [
         "tests/mobile-acceptance.test.ts",
         "scripts/test-mobile-acceptance.mjs",
-        "scripts/validate-mobile-acceptance.mjs"
+        "scripts/validate-mobile-acceptance.mjs",
+        "scripts/validate-mobile-workflows.mjs"
       ],
       "testIds": [
-        "MACC-UI-EVIDENCE"
+        "MACC-UI-EVIDENCE",
+        "MW-UI"
       ],
       "negativeTests": [],
       "evidence": [
@@ -31,135 +33,166 @@
         "docs/mobile-acceptance/evidence/exceptions.json",
         "docs/mobile-acceptance/evidence/proposed-forms.json",
         "docs/mobile-acceptance/evidence/proposed-tabs.json",
-        "docs/mobile-acceptance/evidence/phones.json"
+        "docs/mobile-acceptance/evidence/phones.json",
+        "docs/mobile-workflows/evidence/artifact-tests.txt",
+        "docs/mobile-workflows/evidence/hosted.json",
+        "docs/mobile-workflows/publication.json"
       ],
       "acceptanceGate": "MACC-G01",
       "status": "VERIFIED_COMPLETE",
       "reason": "All 117 role-screen entries and seven perspectives exercised; native and proposed designs remain distinct.",
-      "testResult": "PASS \u2014 44 focused model/evidence checks; 19 prior regression checks",
+      "testResult": "PASS — 44 focused model/evidence checks; 19 prior regression checks",
       "outstandingWork": "None for this bounded acceptance activity; broader native/backend/provider/physical requirements remain separately open."
     },
     {
       "id": "MACC-02",
       "requirement": "Verify customer ordering, account, support and local financial readbacks",
       "priority": "P1",
-      "scope": "Full role-based interactive mobile prototype acceptance; synthetic browser-local data, actual native designs and labelled proposals. Installed binaries/backend/provider/physical acceptance remain separate.",
+      "scope": "Complete browser-local functional mobile prototype; external/device/installed-app acceptance remains separate.",
       "uiReference": "User: full role-based acceptance pass, exception cases, fix issues and update traceability",
       "route": "All 117 role-screen catalogue entries and interactive workflow surfaces",
       "implementationFiles": [
         "prototypes/easygas-mobile/model.ts",
-        "prototypes/easygas-mobile/acceptance-rules.ts"
+        "prototypes/easygas-mobile/acceptance-rules.ts",
+        "prototypes/easygas-mobile/domain.ts",
+        "prototypes/easygas-mobile/workflow.ts",
+        "prototypes/easygas-mobile/workflow-catalogue.ts",
+        "prototypes/easygas-mobile/WorkflowWorkspace.tsx"
       ],
       "dataSource": "Actual apps/mobile source, shared business rules and sanitized prototype fixtures",
       "securityControl": "Owner-private review, local-only network interception, scoped personas, no live funds/messages/device evidence or production change",
       "testFiles": [
         "tests/mobile-acceptance.test.ts",
         "scripts/test-mobile-acceptance.mjs",
-        "scripts/validate-mobile-acceptance.mjs"
+        "scripts/validate-mobile-acceptance.mjs",
+        "scripts/test-mobile-workflows.mjs",
+        "scripts/test-mobile-workflow-negatives.mjs",
+        "scripts/validate-mobile-workflows.mjs"
       ],
       "testIds": [
-        "MACC-PRICING",
-        "MACC-CHECKOUT-ONCE",
-        "MACC-SERVICE-CREATE",
-        "MACC-SERVICE-CANCEL",
-        "MACC-FLOW-EVIDENCE"
+        "FEATURE-03.05",
+        "FEATURE-06.01",
+        "FEATURE-07.04",
+        "MW-N03",
+        "MW-N06"
       ],
       "negativeTests": [],
       "evidence": [
-        "docs/mobile-acceptance/evidence/acceptance-tests.txt",
-        "docs/mobile-acceptance/evidence/screens.json",
-        "docs/mobile-acceptance/evidence/journeys.json",
-        "docs/mobile-acceptance/evidence/exceptions.json",
-        "docs/mobile-acceptance/evidence/proposed-forms.json",
-        "docs/mobile-acceptance/evidence/proposed-tabs.json",
-        "docs/mobile-acceptance/evidence/phones.json"
+        "docs/mobile-workflows/evidence/all-model-tests.txt",
+        "docs/mobile-workflows/evidence/feature-results.json",
+        "docs/mobile-workflows/evidence/local-workspace-scan.json",
+        "docs/mobile-workflows/evidence/local-screens.json",
+        "docs/mobile-workflows/evidence/local-flows.json",
+        "docs/mobile-workflows/evidence/phones.json",
+        "docs/mobile-workflows/evidence/hosted.json",
+        "docs/mobile-workflows/evidence/artifact-tests.txt",
+        "docs/mobile-workflows/publication.json"
       ],
       "acceptanceGate": "MACC-G02",
-      "status": "PARTIAL",
-      "reason": "Native gas/card-unpaid, service/cancel, support and local account checks pass. Linked checkout, provider funding and other account/cart/refill subfeatures remain guarded or not individually tested.",
-      "testResult": "PASS \u2014 44 focused model/evidence checks; 19 prior regression checks",
-      "outstandingWork": "See retained feature acceptance and functional sign-off gaps."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented local functional workflows with individually tested state transitions, exception guards, mobile browser readback and confirmed private publication.",
+      "testResult": "PASS — 381 automated feature/negative/regression checks; 36 workspace families,300 feature views,117 original screen entries and12 phone checks; hosted smoke and artifact checks passed.",
+      "outstandingWork": "None for the bounded private prototype gate after hosted confirmation. Installed native workspaces/API integration, real identity/provider/device/physical acceptance remain open; original14 blocked external items retained."
     },
     {
       "id": "MACC-03",
       "requirement": "Verify owner, manager and inventory operations with their scoped authority",
       "priority": "P1",
-      "scope": "Full role-based interactive mobile prototype acceptance; synthetic browser-local data, actual native designs and labelled proposals. Installed binaries/backend/provider/physical acceptance remain separate.",
+      "scope": "Complete browser-local functional mobile prototype; external/device/installed-app acceptance remains separate.",
       "uiReference": "User: full role-based acceptance pass, exception cases, fix issues and update traceability",
       "route": "All 117 role-screen catalogue entries and interactive workflow surfaces",
       "implementationFiles": [
         "prototypes/easygas-mobile/model.ts",
-        "prototypes/easygas-mobile/mobile-data.ts"
+        "prototypes/easygas-mobile/mobile-data.ts",
+        "prototypes/easygas-mobile/domain.ts",
+        "prototypes/easygas-mobile/workflow.ts",
+        "prototypes/easygas-mobile/workflow-catalogue.ts",
+        "prototypes/easygas-mobile/WorkflowWorkspace.tsx"
       ],
       "dataSource": "Actual apps/mobile source, shared business rules and sanitized prototype fixtures",
       "securityControl": "Owner-private review, local-only network interception, scoped personas, no live funds/messages/device evidence or production change",
       "testFiles": [
         "tests/mobile-acceptance.test.ts",
         "scripts/test-mobile-acceptance.mjs",
-        "scripts/validate-mobile-acceptance.mjs"
+        "scripts/validate-mobile-acceptance.mjs",
+        "scripts/test-mobile-workflows.mjs",
+        "scripts/test-mobile-workflow-negatives.mjs",
+        "scripts/validate-mobile-workflows.mjs"
       ],
       "testIds": [
-        "MACC-POS-ONCE",
-        "MACC-POS-CONTROLS",
-        "MACC-REPORT-FILTERS",
-        "MACC-GOVERNANCE-SCOPE",
-        "MACC-FLOW-EVIDENCE"
+        "FEATURE-16.04",
+        "FEATURE-31.02",
+        "MW-N10",
+        "MW-N11"
       ],
       "negativeTests": [],
       "evidence": [
-        "docs/mobile-acceptance/evidence/acceptance-tests.txt",
-        "docs/mobile-acceptance/evidence/screens.json",
-        "docs/mobile-acceptance/evidence/journeys.json",
-        "docs/mobile-acceptance/evidence/exceptions.json",
-        "docs/mobile-acceptance/evidence/proposed-forms.json",
-        "docs/mobile-acceptance/evidence/proposed-tabs.json",
-        "docs/mobile-acceptance/evidence/phones.json"
+        "docs/mobile-workflows/evidence/all-model-tests.txt",
+        "docs/mobile-workflows/evidence/feature-results.json",
+        "docs/mobile-workflows/evidence/local-workspace-scan.json",
+        "docs/mobile-workflows/evidence/local-screens.json",
+        "docs/mobile-workflows/evidence/local-flows.json",
+        "docs/mobile-workflows/evidence/phones.json",
+        "docs/mobile-workflows/evidence/hosted.json",
+        "docs/mobile-workflows/evidence/artifact-tests.txt",
+        "docs/mobile-workflows/publication.json"
       ],
       "acceptanceGate": "MACC-G03",
-      "status": "PARTIAL",
-      "reason": "POS manager/owner cash-up and scoped finance checks pass; all proposal forms exercised. Actual proposed stock, governance and growth execution remains pending-review/preview behavior.",
-      "testResult": "PASS \u2014 44 focused model/evidence checks; 19 prior regression checks",
-      "outstandingWork": "See retained feature acceptance and functional sign-off gaps."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented local functional workflows with individually tested state transitions, exception guards, mobile browser readback and confirmed private publication.",
+      "testResult": "PASS — 381 automated feature/negative/regression checks; 36 workspace families,300 feature views,117 original screen entries and12 phone checks; hosted smoke and artifact checks passed.",
+      "outstandingWork": "None for the bounded private prototype gate after hosted confirmation. Installed native workspaces/API integration, real identity/provider/device/physical acceptance remain open; original14 blocked external items retained."
     },
     {
       "id": "MACC-04",
       "requirement": "Verify driver and technician assignments, terminal states and service journeys",
       "priority": "P1",
-      "scope": "Full role-based interactive mobile prototype acceptance; synthetic browser-local data, actual native designs and labelled proposals. Installed binaries/backend/provider/physical acceptance remain separate.",
+      "scope": "Complete browser-local functional mobile prototype; external/device/installed-app acceptance remains separate.",
       "uiReference": "User: full role-based acceptance pass, exception cases, fix issues and update traceability",
       "route": "All 117 role-screen catalogue entries and interactive workflow surfaces",
       "implementationFiles": [
         "prototypes/easygas-mobile/model.ts",
-        "prototypes/easygas-mobile/screens.mjs"
+        "prototypes/easygas-mobile/screens.mjs",
+        "prototypes/easygas-mobile/domain.ts",
+        "prototypes/easygas-mobile/workflow.ts",
+        "prototypes/easygas-mobile/workflow-catalogue.ts",
+        "prototypes/easygas-mobile/WorkflowWorkspace.tsx"
       ],
       "dataSource": "Actual apps/mobile source, shared business rules and sanitized prototype fixtures",
       "securityControl": "Owner-private review, local-only network interception, scoped personas, no live funds/messages/device evidence or production change",
       "testFiles": [
         "tests/mobile-acceptance.test.ts",
         "scripts/test-mobile-acceptance.mjs",
-        "scripts/validate-mobile-acceptance.mjs"
+        "scripts/validate-mobile-acceptance.mjs",
+        "scripts/test-mobile-workflows.mjs",
+        "scripts/test-mobile-workflow-negatives.mjs",
+        "scripts/validate-mobile-workflows.mjs"
       ],
       "testIds": [
-        "MACC-FIELD-TERMINAL",
-        "MACC-TECHNICIAN-QUEUES",
-        "MACC-DRIVER-HISTORY-FILTERS",
-        "MACC-DELIVERY-EXCEPTIONS"
+        "FEATURE-19.09",
+        "FEATURE-20.12",
+        "FEATURE-21.10",
+        "MW-N12",
+        "MW-N13",
+        "MW-N17"
       ],
       "negativeTests": [],
       "evidence": [
-        "docs/mobile-acceptance/evidence/acceptance-tests.txt",
-        "docs/mobile-acceptance/evidence/screens.json",
-        "docs/mobile-acceptance/evidence/journeys.json",
-        "docs/mobile-acceptance/evidence/exceptions.json",
-        "docs/mobile-acceptance/evidence/proposed-forms.json",
-        "docs/mobile-acceptance/evidence/proposed-tabs.json",
-        "docs/mobile-acceptance/evidence/phones.json"
+        "docs/mobile-workflows/evidence/all-model-tests.txt",
+        "docs/mobile-workflows/evidence/feature-results.json",
+        "docs/mobile-workflows/evidence/local-workspace-scan.json",
+        "docs/mobile-workflows/evidence/local-screens.json",
+        "docs/mobile-workflows/evidence/local-flows.json",
+        "docs/mobile-workflows/evidence/phones.json",
+        "docs/mobile-workflows/evidence/hosted.json",
+        "docs/mobile-workflows/evidence/artifact-tests.txt",
+        "docs/mobile-workflows/publication.json"
       ],
       "acceptanceGate": "MACC-G04",
-      "status": "PARTIAL",
-      "reason": "Guided delivery/service and field queue/terminal controls pass. Native trip/custody, complete assessment/report/settlement and physical/device evidence are not fully accepted.",
-      "testResult": "PASS \u2014 44 focused model/evidence checks; 19 prior regression checks",
-      "outstandingWork": "See retained feature acceptance and functional sign-off gaps."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Implemented local functional workflows with individually tested state transitions, exception guards, mobile browser readback and confirmed private publication.",
+      "testResult": "PASS — 381 automated feature/negative/regression checks; 36 workspace families,300 feature views,117 original screen entries and12 phone checks; hosted smoke and artifact checks passed.",
+      "outstandingWork": "None for the bounded private prototype gate after hosted confirmation. Installed native workspaces/API integration, real identity/provider/device/physical acceptance remain open; original14 blocked external items retained."
     },
     {
       "id": "MACC-05",
@@ -178,7 +211,8 @@
       "testFiles": [
         "tests/mobile-acceptance.test.ts",
         "scripts/test-mobile-acceptance.mjs",
-        "scripts/validate-mobile-acceptance.mjs"
+        "scripts/validate-mobile-acceptance.mjs",
+        "scripts/validate-mobile-workflows.mjs"
       ],
       "testIds": [
         "MACC-FINANCIAL",
@@ -186,7 +220,8 @@
         "MACC-POS-FINITE",
         "MACC-STALE-QUOTE",
         "MACC-MIXED-GUARD",
-        "MACC-EXCEPTION-EVIDENCE"
+        "MACC-EXCEPTION-EVIDENCE",
+        "MW-COVERAGE"
       ],
       "negativeTests": [
         "MACC-FINANCIAL"
@@ -198,12 +233,15 @@
         "docs/mobile-acceptance/evidence/exceptions.json",
         "docs/mobile-acceptance/evidence/proposed-forms.json",
         "docs/mobile-acceptance/evidence/proposed-tabs.json",
-        "docs/mobile-acceptance/evidence/phones.json"
+        "docs/mobile-acceptance/evidence/phones.json",
+        "docs/mobile-workflows/evidence/artifact-tests.txt",
+        "docs/mobile-workflows/evidence/hosted.json",
+        "docs/mobile-workflows/publication.json"
       ],
       "acceptanceGate": "MACC-G05",
       "status": "VERIFIED_COMPLETE",
       "reason": "Executed invalid/empty/stale/duplicate/financial/state and availability/connection exceptions preserve local records and balances.",
-      "testResult": "PASS \u2014 44 focused model/evidence checks; 19 prior regression checks",
+      "testResult": "PASS — 44 focused model/evidence checks; 19 prior regression checks",
       "outstandingWork": "None for this bounded acceptance activity; broader native/backend/provider/physical requirements remain separately open."
     },
     {
@@ -222,14 +260,16 @@
       "testFiles": [
         "tests/mobile-acceptance.test.ts",
         "scripts/test-mobile-acceptance.mjs",
-        "scripts/validate-mobile-acceptance.mjs"
+        "scripts/validate-mobile-acceptance.mjs",
+        "scripts/validate-mobile-workflows.mjs"
       ],
       "testIds": [
         "MACC-AUTHORITY",
         "MACC-CUSTOMER-OWNERSHIP",
         "MACC-FIELD-SUPPORT-SCOPE",
         "MACC-DELIVERY-OWNERSHIP",
-        "MACC-GOVERNANCE-SCOPE"
+        "MACC-GOVERNANCE-SCOPE",
+        "MW-HOSTED"
       ],
       "negativeTests": [
         "MACC-AUTHORITY"
@@ -241,12 +281,15 @@
         "docs/mobile-acceptance/evidence/exceptions.json",
         "docs/mobile-acceptance/evidence/proposed-forms.json",
         "docs/mobile-acceptance/evidence/proposed-tabs.json",
-        "docs/mobile-acceptance/evidence/phones.json"
+        "docs/mobile-acceptance/evidence/phones.json",
+        "docs/mobile-workflows/evidence/artifact-tests.txt",
+        "docs/mobile-workflows/evidence/hosted.json",
+        "docs/mobile-workflows/publication.json"
       ],
       "acceptanceGate": "MACC-G06",
       "status": "VERIFIED_COMPLETE",
       "reason": "Explicit local persona, foreign record, assignment and governance denials executed. These do not certify real server authentication.",
-      "testResult": "PASS \u2014 44 focused model/evidence checks; 19 prior regression checks",
+      "testResult": "PASS — 44 focused model/evidence checks; 19 prior regression checks",
       "outstandingWork": "None for this bounded acceptance activity; broader native/backend/provider/physical requirements remain separately open."
     },
     {
@@ -267,12 +310,14 @@
       "testFiles": [
         "tests/mobile-acceptance.test.ts",
         "scripts/test-mobile-acceptance.mjs",
-        "scripts/validate-mobile-acceptance.mjs"
+        "scripts/validate-mobile-acceptance.mjs",
+        "scripts/validate-mobile-workflows.mjs"
       ],
       "testIds": [
         "MACC-REVIEW-VALIDATION",
         "MACC-UI-EVIDENCE",
-        "MACC-NOTICE-RESET"
+        "MACC-NOTICE-RESET",
+        "MW-UI"
       ],
       "negativeTests": [],
       "evidence": [
@@ -283,12 +328,15 @@
         "docs/mobile-acceptance/evidence/proposed-forms.json",
         "docs/mobile-acceptance/evidence/proposed-tabs.json",
         "docs/mobile-acceptance/evidence/phones.json",
-        "docs/mobile-acceptance/evidence/notice-reset.json"
+        "docs/mobile-acceptance/evidence/notice-reset.json",
+        "docs/mobile-workflows/evidence/artifact-tests.txt",
+        "docs/mobile-workflows/evidence/hosted.json",
+        "docs/mobile-workflows/publication.json"
       ],
       "acceptanceGate": "MACC-G07",
       "status": "VERIFIED_COMPLETE",
       "reason": "73 tabs,36 forms,12 phone checks,dark/light and Escape passed; malformed review forms rejected.",
-      "testResult": "PASS \u2014 44 focused model/evidence checks; 19 prior regression checks",
+      "testResult": "PASS — 44 focused model/evidence checks; 19 prior regression checks",
       "outstandingWork": "None for this bounded acceptance activity; broader native/backend/provider/physical requirements remain separately open."
     },
     {
@@ -307,10 +355,12 @@
       "testFiles": [
         "tests/mobile-acceptance.test.ts",
         "scripts/test-mobile-acceptance.mjs",
-        "scripts/validate-mobile-acceptance.mjs"
+        "scripts/validate-mobile-acceptance.mjs",
+        "scripts/validate-mobile-workflows.mjs"
       ],
       "testIds": [
-        "MACC-PRIVATE-RELEASE"
+        "MACC-PRIVATE-RELEASE",
+        "MW-HOSTED"
       ],
       "negativeTests": [],
       "evidence": [
@@ -325,12 +375,15 @@
         "docs/mobile-acceptance/evidence/hosted-screens.json",
         "docs/mobile-acceptance/evidence/hosted-journeys.json",
         "docs/mobile-acceptance/evidence/hosted-exceptions.json",
-        "docs/mobile-acceptance/evidence/hosted-reset-after-exception.json"
+        "docs/mobile-acceptance/evidence/hosted-reset-after-exception.json",
+        "docs/mobile-workflows/evidence/artifact-tests.txt",
+        "docs/mobile-workflows/evidence/hosted.json",
+        "docs/mobile-workflows/publication.json"
       ],
       "acceptanceGate": "MACC-G08",
       "status": "VERIFIED_COMPLETE",
       "reason": "Exact private final source23ef3d5567c16bd975098af331a59bd5229acd1c published successfully. Authenticated hosted117-screen/29-step/eight-condition acceptance; final reset, checkout and phone follow-up pass.",
-      "testResult": "PASS \u2014 44 focused model/evidence checks; 19 prior regression checks",
+      "testResult": "PASS — 44 focused model/evidence checks; 19 prior regression checks",
       "outstandingWork": "None for this private prototype release. Functional feature gaps and production/native/provider/physical acceptance remain separately open."
     },
     {
@@ -350,10 +403,12 @@
       "testFiles": [
         "tests/mobile-acceptance.test.ts",
         "scripts/test-mobile-acceptance.mjs",
-        "scripts/validate-mobile-acceptance.mjs"
+        "scripts/validate-mobile-acceptance.mjs",
+        "scripts/validate-mobile-workflows.mjs"
       ],
       "testIds": [
-        "MACC-FEATURE-DENOMINATOR"
+        "MACC-FEATURE-DENOMINATOR",
+        "MW-COVERAGE"
       ],
       "negativeTests": [],
       "evidence": [
@@ -363,12 +418,15 @@
         "docs/mobile-acceptance/evidence/exceptions.json",
         "docs/mobile-acceptance/evidence/proposed-forms.json",
         "docs/mobile-acceptance/evidence/proposed-tabs.json",
-        "docs/mobile-acceptance/evidence/phones.json"
+        "docs/mobile-acceptance/evidence/phones.json",
+        "docs/mobile-workflows/evidence/artifact-tests.txt",
+        "docs/mobile-workflows/evidence/hosted.json",
+        "docs/mobile-workflows/publication.json"
       ],
       "acceptanceGate": "MACC-G09",
       "status": "VERIFIED_COMPLETE",
       "reason": "All 300 named items retained:20 bounded verified,162 partial,14 blocked,104 untested; no exclusions or route-only acceptance.",
-      "testResult": "PASS \u2014 44 focused model/evidence checks; 19 prior regression checks",
+      "testResult": "PASS — 44 focused model/evidence checks; 19 prior regression checks",
       "outstandingWork": "None for this bounded acceptance activity; broader native/backend/provider/physical requirements remain separately open."
     }
   ],
@@ -381,17 +439,23 @@
     {
       "id": "MACC-G02",
       "description": "Verify customer ordering, account, support and local financial readbacks",
-      "status": "OPEN"
+      "status": "PASS",
+      "scope": "Browser-local functional prototype only",
+      "reason": "Confirmed implementation, positive/negative tests, mobile UI readback and owner-private deployment."
     },
     {
       "id": "MACC-G03",
       "description": "Verify owner, manager and inventory operations with their scoped authority",
-      "status": "OPEN"
+      "status": "PASS",
+      "scope": "Browser-local functional prototype only",
+      "reason": "Confirmed implementation, positive/negative tests, mobile UI readback and owner-private deployment."
     },
     {
       "id": "MACC-G04",
       "description": "Verify driver and technician assignments, terminal states and service journeys",
-      "status": "OPEN"
+      "status": "PASS",
+      "scope": "Browser-local functional prototype only",
+      "reason": "Confirmed implementation, positive/negative tests, mobile UI readback and owner-private deployment."
     },
     {
       "id": "MACC-G05",
@@ -421,8 +485,8 @@
   ],
   "coverage": {
     "requirements": {
-      "verified": 6,
-      "partial": 3,
+      "verified": 9,
+      "partial": 0,
       "total": 9
     },
     "criticalRequirements": {
@@ -430,7 +494,7 @@
       "total": 2
     },
     "gates": {
-      "passed": 6,
+      "passed": 9,
       "total": 9
     },
     "excluded": 0
@@ -452,14 +516,27 @@
     {
       "date": "2026-11-20",
       "change": "Final private release verified.117 hosted screens,29 guided steps,eight exception conditions; CSS-only follow-up has identical app JS and passes direct reset, corrected unpaid checkout and phone check.6/9 phase requirements verified;3 functional sign-offs remain partial. All300 feature items retained."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "User explicitly requested implementation of remaining preview-only mobile workflows, execution of untested feature cases and closure of MACC-G02/G03/G04 in the private prototype. Scope is complete browser-local functional simulation, including explicit local substitutes for provider/device effects. The original14 external/physical/identity blocked items remain separately blocked; production NO-GO/import/retain-all and installed-device acceptance are not waived. Stable MACC and FEATURE item IDs retained. Statuses remain partial until new implementation, negative tests and hosted acceptance pass."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Closed MACC-G02/G03/G04 only for implemented and tested browser-local mobile workflows. Preserved300 stable feature IDs, all9 MACC requirements/gates and14 separately blocked external requirements. New mobile workspaces remain isolated to prototype source; installed-app/native/backend/production NO-GO work is not declared complete."
     }
   ],
   "featureAcceptance": {
-    "verified": 20,
-    "partial": 162,
-    "blocked": 14,
-    "notTested": 104,
+    "path": "docs/mobile-acceptance/feature-acceptance.json",
+    "scope": "Local prototype functionality",
+    "verified": 300,
     "total": 300,
-    "excluded": 0
+    "excluded": 0,
+    "externalAcceptance": {
+      "blocked": 14,
+      "total": 14,
+      "excluded": 0,
+      "reason": "Explicit synthetic substitutes do not resolve original provider/device/physical/identity evidence requirements."
+    }
   }
 }

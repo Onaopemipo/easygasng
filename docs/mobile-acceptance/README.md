@@ -55,3 +55,9 @@ Exact source `23ef3d5567c16bd975098af331a59bd5229acd1c` published successfully w
 [Requirements matrix](../traceability/mobile-acceptance-rtm.md):6/9 verified and3 partial,2/2 critical,6/9 gates passed,zero exclusions. Full functional sign-off remains open for the retained gaps above.
 
 ![Hosted corrected checkout](evidence/hosted-checkout-phone.jpg)
+
+## Current continuation: functional prototype gates closed
+
+The preceding counts and gaps describe the earlier release and remain historical evidence. The user subsequently authorised implementation of the remaining local workflows. See the [current workflow guide](../mobile-workflows/README.md), [requirements matrix](../traceability/mobile-acceptance-rtm.md) and [publication provenance](../mobile-workflows/publication.json). All300 stable feature items now have individual passing local tests; the original14 external blocks remain separately blocked.381automated checks,3artifact/hosted checks and2matrix checks pass. MACC-G02/G03/G04 are closed for the private browser-local prototype;9/9bounded requirements/gates pass.
+
+This closure does not port new workflow components into `apps/mobile` or certify real APIs, installed binaries, providers, identity, hardware or physical delivery. That developed-app implementation and acceptance work remains open, together with production NO-GO/import/retain-all.
