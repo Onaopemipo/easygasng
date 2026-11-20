@@ -10,6 +10,6 @@
 
 Gates ORDTXT-G01–G03: **3/3 pass for this repair**. Implementation 3/3; requirements 3/3; source-pattern coverage 8/8; live surfaces **1/8**, with seven untested sibling surfaces retained in the denominator. Selected regressions 24/24, prototype-preservation checks 5/5 and mobile typecheck pass. These results do not certify a new full role-based acceptance pass.
 
-Open finding **ORDTXT-F01**: owner-session delivered-order refund forms show “Order not found”; no refund action executed. Separate investigation remains outstanding. Driver branches were tested with component fixtures; seven sibling screens were not manually tested.
+Finding **ORDTXT-F01 resolved in source/Expo preview** by [MORD-01–04](native-order-authority-rtm.md): customer actions now require the owning customer account, and owner invoice/visit reads pass without misplaced refund forms. The original observation is retained. Driver branches in this text repair were tested with component fixtures; seven sibling screens were not manually tested.
 
 Production **NO-GO**, actual-import hold, retain-all and unrelated native/provider/operational gates remain unchanged. No new mobile binary, install or prototype publication.

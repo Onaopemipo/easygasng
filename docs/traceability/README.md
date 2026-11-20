@@ -354,3 +354,5 @@ Transparent native logo source update verified: [matrix](mobile-transparent-logo
 Transparent logo simulator follow-up: [native preview evidence](../mobile-transparent-logo/evidence/simulator/observations.json). Existing Expo Go/Metro displays current source on iPhone17Pro; retained iOS tint fixed and light/dark/light checked. No new native binary; two of nine development-preview placements observed, with release/device gates unchanged.
 
 Native Orders text-host repair: [matrix](mobile-orders-text-fix-rtm.md). User-reported Orders/OrderVisit crash and identical sibling spacer defects; existing data/security/native-build constraints retained.
+
+Native Orders authority follow-up (21 November): [matrix](native-order-authority-rtm.md), resolving ORDTXT-F01 with role and refund exception coverage.

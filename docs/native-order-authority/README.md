@@ -1,0 +1,21 @@
+# Native Orders authority repair
+
+21 November 2026. **ORDTXT-F01 is resolved in native source and the existing Expo Go preview.** Staff were seeing customer refund forms because the screen used `!driver` as a substitute for customer authority. The customer-scoped API correctly rejected the resulting refund-line reads. No server permission was broadened.
+
+`native-order-authority.ts` now requires a customer/commercial role and matching `order.customer_id` before showing customer actions. `CustomerOrderRefunds` mounts refund forms only for delivered orders with verified payment. `OrderVisit` uses that ownership check for customer consent and invoice-excess requests. Staff retain existing scoped visit and invoice reads; their heading is **Orders**. Staff review remains in **Workspaces → Credits & refunds** for authorised owner/finance users.
+
+The partial-refund form now requires at least one positive whole quantity within the server-provided remaining amounts, a reason and explicit acceptance of purchase credit. It shows loading/empty/error states, retries a failed lookup, prevents concurrent taps, reuses the key after an uncertain submission, locks after success and ignores late lookup responses for a previous order. All source quantities, allocations, approvals and wallet writes remain server controlled.
+
+## Executed checks
+
+- [18 selected regressions](evidence/regressions.txt): seven-role component visibility, existing before/after text-host regression, own/foreign/unknown/ineligible orders, staff reads versus customer-only actions, invalid quantities, lookup failure/retry/empty results, consent, duplicate taps, retry identity and stale-order reads. Actual native components run with host adapters and synthetic API fixtures; child generic forms are adapters in these component checks.
+- [Two API tests](evidence/api-tests.txt): actual dispatcher with a disposable local SQL database under the restricted server role. Both customer and commercial orders pass owned reads and pending requests; 24 foreign/staff read/write attempts are denied. Invalid quantities fail. Replaying a request returns the same ID and no wallet credit posts before review. Existing independent approval, exactly-once credit and source-immutability test passes. These are synthetic local transactions, not hosted fulfilment.
+- [Mobile typecheck](evidence/typecheck.txt) and [five prototype preservation checks](evidence/prototype-preservation.txt) pass.
+- [Simulator observation](evidence/simulator-observation.json): after full Expo Go source reload, the existing owner session opens Orders and the delivered order `EG-2026-E02D78B1`. Visit details and paid invoice `EGI-0000000008` load; amount due is NGN 0. The delivered-order footer has no customer refund forms or “Order not found”, and no native text error. No sign-out or hosted financial write was performed.
+- [Native artifact preservation](evidence/artifact-preservation.json): original iOS bundle, Android APK and export hashes/sizes/nanosecond timestamps unchanged; no binary build or install. Original private prototype remains unchanged.
+
+The first API fixture attempt lacked the private-schema search path and failed before exercising product behaviour; the fixture setup was corrected and both final API tests pass.
+
+Scoped gates **4/4 pass**. Component/API roles **7/7**; actual on-device roles **1/7**, six untested. Native Orders and visit details **2/3 surfaces** observed; customer partial refund remains component/API tested rather than manually tested on-device. The prior text repair’s seven sibling-screen device gaps remain. Production NO-GO, actual-import hold, retain-all and unrelated device/provider/operational gates are unchanged.
+
+See [traceability](../traceability/native-order-authority-rtm.md), [source continuation](reviewed-source-changes.json) and [manual addendum](../user-manual/native-order-refunds.md). Historical matrices and evidence are retained. This JSX/state change needs no client-demo web/API deployment; the existing Expo Go preview uses Metro source. Previously built native binaries do not contain this change.

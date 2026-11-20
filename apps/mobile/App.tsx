@@ -42,11 +42,11 @@ import CustomerHome from "./CustomerHome";
 import Constants from "expo-constants";
 import { assertMobileApiOrigin } from "../../packages/business-rules/src/mobile-origin";
 import OrderVisit from "./OrderVisit";
+import CustomerOrderRefunds from "./CustomerOrderRefunds";
 import { DriverPhoto } from "./DriverPhoto";
 import DriverOperations from "./DriverOperations";
 import {
   NativeEasyRewards,
-  NativePartialRefund,
   NativeSmartOffers,
   NativeRewardSelector,
 } from "./EasyRewards";
@@ -1555,7 +1555,7 @@ export default function App() {
                 button("Show all orders", () => setOrderFilter(null), true)}
               {!customerView && (
                 <Text style={s.title}>
-                  {driver ? "Assigned Deliveries" : "Your Orders"}
+                  {driver ? "Assigned Deliveries" : "Orders"}
                 </Text>
               )}
               {driver && (
@@ -1632,6 +1632,7 @@ export default function App() {
                       api={api}
                       order={o}
                       driver={driver}
+                      user={user}
                       origin={origin}
                       token={token}
                       onDone={reloadOrders}
@@ -1657,37 +1658,12 @@ export default function App() {
                     <Text style={s.caption}>
                       Payment: {o.payment_status}
                     </Text>
-                    {!driver &&
-                      o.status === "delivered" &&
-                      o.payment_status === "verified" && (
-                        <>
-                          <NativePartialRefund api={api} orderId={o.id} />
-                          <NativeForm
-                            api={api}
-                            action="refund.request"
-                            title="Request refund as purchase credit"
-                            fields={[
-                              {
-                                name: "orderId",
-                                label: "",
-                                type: "hidden",
-                                value: o.id,
-                              },
-                              {
-                                name: "reason",
-                                label: "Reason (at least 10 characters)",
-                              },
-                              {
-                                name: "acceptWalletCredit",
-                                required: true,
-                                label:
-                                  "I agree to receive an approved refund as purchase credit",
-                                type: "checkbox",
-                              },
-                            ]}
-                          />
-                        </>
-                      )}
+                    <CustomerOrderRefunds
+                      key={`${user.id}:${o.id}`}
+                      api={api}
+                      user={user}
+                      order={o}
+                    />
                     {o.confirmation_code &&
                       !["delivered", "cancelled"].includes(o.status) && (
                         <View style={s.notice}>

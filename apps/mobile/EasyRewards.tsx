@@ -1,3 +1,4 @@
+import { selectedRefundLines } from "../../packages/business-rules/src/native-order-authority";
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useState, useEffect, useRef } from "react";
@@ -481,21 +482,48 @@ export function NativePartialRefund({
     [quantities, setQuantities] = useState<Record<string, string>>({}),
     [reason, setReason] = useState(""),
     [message, setMessage] = useState(""),
+    [error, setError] = useState(""),
     [key, setKey] = useState(randomUUID),
-    [busy, setBusy] = useState(false);
+    [accepted, setAccepted] = useState(false),
+    [busy, setBusy] = useState(false),
+    [loading, setLoading] = useState(true),
+    [submitted, setSubmitted] = useState(false),
+    [retry, setRetry] = useState(0);
+  const pending = useRef(false);
   useEffect(() => {
     let live = true;
+    setLoading(true);
+    setError("");
+    setLines([]);
+    setQuantities({});
+    setReason("");
+    setAccepted(false);
+    setSubmitted(false);
+    setMessage("");
+    setKey(randomUUID());
     api("refund.lines?orderId=" + encodeURIComponent(orderId))
       .then((r) => {
         if (live) setLines(r);
       })
       .catch((e) => {
-        if (live) setMessage(e.message);
+        if (live) setError(e.message);
+      })
+      .finally(() => {
+        if (live) setLoading(false);
       });
     return () => {
       live = false;
     };
-  }, [orderId]);
+  }, [orderId, retry]);
+  const selected = selectedRefundLines(lines, quantities);
+  const valid =
+    !loading &&
+    !submitted &&
+    !busy &&
+    selected !== null &&
+    accepted &&
+    reason.trim().length >= 10 &&
+    reason.trim().length <= 1000;
   return (
     <View style={[card, { backgroundColor: dark ? "#071d16" : "#fff" }]}>
       <Text accessibilityRole="header">Refund selected quantities</Text>
@@ -503,26 +531,48 @@ export function NativePartialRefund({
         If approved, refund is purchase credit. This does not record a physical
         cylinder return.
       </Text>
-      {lines.map((l) => (
-        <View key={l.source}>
-          <Text>
-            {l.source} · {l.remaining} remaining{" "}
-            {l.source.startsWith("gas:") ? "grams" : "units"}
-          </Text>
-          <TextInput
-            accessibilityLabel={"Refund quantity " + l.source}
-            keyboardType="numeric"
-            value={quantities[l.source] ?? ""}
-            onChangeText={(v) => {
-              setQuantities({ ...quantities, [l.source]: v });
-              setKey(randomUUID());
-            }}
-          />
-        </View>
-      ))}
+      {loading && <EasyGasLoader label="Loading refundable quantities" />}
+      {!loading && error && lines.length === 0 && (
+        <>
+          <Text accessibilityRole="alert">{error}</Text>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => setRetry((n) => n + 1)}
+          >
+            <Text>Retry refundable quantities</Text>
+          </Pressable>
+        </>
+      )}
+      {!loading &&
+        !error &&
+        !lines.some((line) => Number(line.remaining) > 0) && (
+          <Text>No quantities are available for a refund request.</Text>
+        )}
+      {lines
+        .filter((line) => Number(line.remaining) > 0)
+        .map((l) => (
+          <View key={l.source}>
+            <Text>
+              {l.source} · {l.remaining} remaining{" "}
+              {l.source.startsWith("gas:") ? "grams" : "units"}
+            </Text>
+            <TextInput
+              accessibilityLabel={"Refund quantity " + l.source}
+              keyboardType="numeric"
+              editable={!busy && !submitted}
+              value={quantities[l.source] ?? ""}
+              onChangeText={(v) => {
+                setQuantities({ ...quantities, [l.source]: v });
+                setKey(randomUUID());
+              }}
+            />
+          </View>
+        ))}
       <FieldCaption required={true}>Refund reason</FieldCaption>
       <TextInput
         accessibilityLabel="Refund reason, required"
+        editable={!busy && !submitted}
+        maxLength={1000}
         value={reason}
         onChangeText={(v) => {
           setReason(v);
@@ -530,30 +580,61 @@ export function NativePartialRefund({
         }}
       />
       <Pressable
+        accessibilityRole="checkbox"
+        accessibilityState={{ checked: accepted, disabled: busy || submitted }}
+        disabled={busy || submitted}
+        onPress={() => {
+          setAccepted(!accepted);
+          setKey(randomUUID());
+        }}
+      >
+        <Text>
+          {accepted ? "✓ " : ""}I agree to receive an approved refund as
+          purchase credit
+        </Text>
+      </Pressable>
+      {Object.values(quantities).some((value) => value.trim() !== "") &&
+        selected === null && (
+          <Text accessibilityRole="alert">
+            Select a positive whole quantity within the remaining amount.
+          </Text>
+        )}
+      <Pressable
         accessibilityRole="button"
-        disabled={busy || reason.trim().length < 10}
+        accessibilityState={{ disabled: !valid }}
+        disabled={!valid}
         onPress={async () => {
+          if (!valid || pending.current) return;
+          pending.current = true;
           setBusy(true);
+          setError("");
           try {
             await api("refund.request", {
               orderId,
-              reason,
-              lines: Object.entries(quantities)
-                .filter(([, q]) => Number(q) > 0)
-                .map(([source, q]) => ({ source, quantity: Number(q) })),
+              reason: reason.trim(),
+              lines: selected,
               acceptWalletCredit: true,
               idempotencyKey: key,
             });
+            setSubmitted(true);
             setMessage("Request awaiting independent finance review.");
           } catch (e: any) {
-            setMessage(e.message);
+            setError(e.message);
           } finally {
+            pending.current = false;
             setBusy(false);
           }
         }}
       >
-        <Text>Request selected refund as purchase credit</Text>
+        <Text>
+          {busy
+            ? "Submitting refund request…"
+            : "Request selected refund as purchase credit"}
+        </Text>
       </Pressable>
+      {error && lines.length > 0 && (
+        <Text accessibilityRole="alert">{error}</Text>
+      )}
       {message && <Text accessibilityRole="alert">{message}</Text>}
     </View>
   );

@@ -92,7 +92,13 @@ function safe(node: any) {
 const props = (api: any, driver = false, status = "delivered") => ({
   api,
   driver,
-  order: { id: "synthetic-order", status, tracking_version: 1 },
+  order: {
+    id: "synthetic-order",
+    customer_id: "synthetic-customer",
+    status,
+    tracking_version: 1,
+  },
+  user: { id: "synthetic-customer", role: driver ? "driver" : "customer" },
   origin: "https://demo.example.test",
   token: "synthetic-token",
   onDone() {},

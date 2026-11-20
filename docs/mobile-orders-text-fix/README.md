@@ -21,7 +21,7 @@ An initial test run used an ambiguous Pressable selector when driver controls re
 
 Scoped repair requirements and gates: **3/3 pass**. Source-pattern coverage: **8/8 files**. Live surface coverage remains **1/8**; seven sibling surfaces were not individually accepted in the simulator. Driver branches are covered by component fixtures, not a new driver delivery journey.
 
-**ORDTXT-F01 remains open:** delivered-order refund forms display “Order not found” under the existing owner session. No refund was submitted. This separate account-scoping/workflow issue needs investigation and is not accepted by this rendering repair. Production NO-GO, actual-import hold, retain-all and unrelated native/provider/operational gates remain in force.
+**Historical finding ORDTXT-F01:** delivered-order refund forms displayed “Order not found” under the existing owner session. No refund was submitted in that observation. It is now resolved in source/Expo preview by the [Orders authority follow-up](../native-order-authority/README.md), with role/ownership guards and refund exception coverage. The original observation remains historical evidence. Production NO-GO, actual-import hold, retain-all and unrelated native/provider/operational gates remain in force.
 
 See [traceability](../traceability/mobile-orders-text-fix-rtm.md).
 

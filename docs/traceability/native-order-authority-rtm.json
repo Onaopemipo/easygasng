@@ -1,0 +1,292 @@
+{
+  "phase": "Native Orders role authority and refund exception repair",
+  "productionDecision": "Production NO-GO, actual-import hold, retain-all and unrelated gates unchanged",
+  "requirements": [
+    {
+      "id": "MORD-01",
+      "requirement": "Resolve ORDTXT-F01: show customer refund actions only for eligible orders belonging to the signed-in customer",
+      "priority": "P1",
+      "scope": "Native Orders authority and refund repair; no new native binaries or broadened API permission.",
+      "uiReference": "ORDTXT-F01 owner-session refund Order not found",
+      "route": "Native Orders, OrderVisit and customer partial refund",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/CustomerOrderRefunds.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "packages/business-rules/src/native-order-authority.ts"
+      ],
+      "dataSource": "Existing orders response customer_id and authenticated user identity; refund.lines/refund.request remain customer-scoped in apps/web/lib/commerce.ts.",
+      "securityControl": "Server ownership, branch scoping, independent finance review, immutable refund source and idempotency retained.",
+      "testFiles": [
+        "tests/native-order-authority.test.ts",
+        "tests/native-order-refund-api.test.ts",
+        "tests/refund-restricted-role.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MORD-OWNERSHIP",
+        "MORD-API"
+      ],
+      "negativeTests": [
+        "MORD-OWNERSHIP",
+        "MORD-QUANTITIES",
+        "MORD-IDEMPOTENCY",
+        "MORD-LIFECYCLE",
+        "MORD-API"
+      ],
+      "evidence": [
+        "docs/native-order-authority/README.md",
+        "docs/native-order-authority/reviewed-source-changes.json",
+        "docs/native-order-authority/evidence/regressions.txt",
+        "docs/native-order-authority/evidence/api-tests.txt",
+        "docs/native-order-authority/evidence/prototype-preservation.txt",
+        "docs/native-order-authority/evidence/typecheck.txt",
+        "docs/native-order-authority/evidence/artifact-preservation.json",
+        "docs/native-order-authority/evidence/simulator-observation.json",
+        "docs/native-order-authority/evidence/documentation-tests.txt"
+      ],
+      "acceptanceGate": "MORD-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Resolved ORDTXT-F01 by requiring customer/commercial role and matching order.customer_id before mounting refund controls. Staff no longer send doomed refund.lines reads. Real dispatcher ownership denials retained; owner simulator delivered order shows no refund form or Order not found.",
+      "testResult": "PASS \u2014 18/18 selected component/regression tests, 2/2 real dispatcher/restricted refund tests, 5/5 prototype-preservation checks and mobile typecheck. Owner iOS read/visibility acceptance after full reload. Documentation/manual checks 6/6 pass.",
+      "outstandingWork": "No remaining defect in this scoped repair. Six other roles not manually exercised on-device; seven sibling screens from prior text repair remain untested on-device. Signed physical-device/provider/production gates retained."
+    },
+    {
+      "id": "MORD-02",
+      "requirement": "Separate staff read access from customer consent and invoice excess actions",
+      "priority": "P1",
+      "scope": "Native Orders authority and refund repair; no new native binaries or broadened API permission.",
+      "uiReference": "ORDTXT-F01 owner-session refund Order not found",
+      "route": "Native Orders, OrderVisit and customer partial refund",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/CustomerOrderRefunds.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "packages/business-rules/src/native-order-authority.ts"
+      ],
+      "dataSource": "Existing orders response customer_id and authenticated user identity; refund.lines/refund.request remain customer-scoped in apps/web/lib/commerce.ts.",
+      "securityControl": "Server ownership, branch scoping, independent finance review, immutable refund source and idempotency retained.",
+      "testFiles": [
+        "tests/native-order-authority.test.ts",
+        "tests/native-order-refund-api.test.ts",
+        "tests/refund-restricted-role.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MORD-VISIT",
+        "MORD-OWNERSHIP"
+      ],
+      "negativeTests": [
+        "MORD-OWNERSHIP",
+        "MORD-QUANTITIES",
+        "MORD-IDEMPOTENCY",
+        "MORD-LIFECYCLE",
+        "MORD-API"
+      ],
+      "evidence": [
+        "docs/native-order-authority/README.md",
+        "docs/native-order-authority/reviewed-source-changes.json",
+        "docs/native-order-authority/evidence/regressions.txt",
+        "docs/native-order-authority/evidence/api-tests.txt",
+        "docs/native-order-authority/evidence/prototype-preservation.txt",
+        "docs/native-order-authority/evidence/typecheck.txt",
+        "docs/native-order-authority/evidence/artifact-preservation.json",
+        "docs/native-order-authority/evidence/simulator-observation.json",
+        "docs/native-order-authority/evidence/documentation-tests.txt"
+      ],
+      "acceptanceGate": "MORD-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Customer-only doorstep consent and excess-request controls use the same ownership check. Staff keep their existing server-authorised visit/invoice reads. Owner header is Orders rather than Your Orders.",
+      "testResult": "PASS \u2014 18/18 selected component/regression tests, 2/2 real dispatcher/restricted refund tests, 5/5 prototype-preservation checks and mobile typecheck. Owner iOS read/visibility acceptance after full reload. Documentation/manual checks 6/6 pass.",
+      "outstandingWork": "No remaining defect in this scoped repair. Six other roles not manually exercised on-device; seven sibling screens from prior text repair remain untested on-device. Signed physical-device/provider/production gates retained."
+    },
+    {
+      "id": "MORD-03",
+      "requirement": "Reject invalid or unavailable partial-refund selections and preserve independent review/idempotency",
+      "priority": "P1",
+      "scope": "Native Orders authority and refund repair; no new native binaries or broadened API permission.",
+      "uiReference": "ORDTXT-F01 owner-session refund Order not found",
+      "route": "Native Orders, OrderVisit and customer partial refund",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/CustomerOrderRefunds.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "packages/business-rules/src/native-order-authority.ts"
+      ],
+      "dataSource": "Existing orders response customer_id and authenticated user identity; refund.lines/refund.request remain customer-scoped in apps/web/lib/commerce.ts.",
+      "securityControl": "Server ownership, branch scoping, independent finance review, immutable refund source and idempotency retained.",
+      "testFiles": [
+        "tests/native-order-authority.test.ts",
+        "tests/native-order-refund-api.test.ts",
+        "tests/refund-restricted-role.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "MORD-QUANTITIES",
+        "MORD-PARTIAL",
+        "MORD-IDEMPOTENCY",
+        "MORD-LIFECYCLE",
+        "ROLEACC-REFUND-RUNTIME"
+      ],
+      "negativeTests": [
+        "MORD-OWNERSHIP",
+        "MORD-QUANTITIES",
+        "MORD-IDEMPOTENCY",
+        "MORD-LIFECYCLE",
+        "MORD-API"
+      ],
+      "evidence": [
+        "docs/native-order-authority/README.md",
+        "docs/native-order-authority/reviewed-source-changes.json",
+        "docs/native-order-authority/evidence/regressions.txt",
+        "docs/native-order-authority/evidence/api-tests.txt",
+        "docs/native-order-authority/evidence/prototype-preservation.txt",
+        "docs/native-order-authority/evidence/typecheck.txt",
+        "docs/native-order-authority/evidence/artifact-preservation.json",
+        "docs/native-order-authority/evidence/simulator-observation.json",
+        "docs/native-order-authority/evidence/documentation-tests.txt"
+      ],
+      "acceptanceGate": "MORD-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Selected refund quantities require positive whole values within server remaining amounts, nonempty selection, reason and explicit wallet-credit consent. Loading/failed/empty states cannot submit; failed lookups retry, concurrent taps lock, uncertain retries reuse the operation key, successful requests stay locked, late prior-order reads are ignored.",
+      "testResult": "PASS \u2014 18/18 selected component/regression tests, 2/2 real dispatcher/restricted refund tests, 5/5 prototype-preservation checks and mobile typecheck. Owner iOS read/visibility acceptance after full reload. Documentation/manual checks 6/6 pass.",
+      "outstandingWork": "No remaining defect in this scoped repair. Six other roles not manually exercised on-device; seven sibling screens from prior text repair remain untested on-device. Signed physical-device/provider/production gates retained."
+    },
+    {
+      "id": "MORD-04",
+      "requirement": "Verify role and exception coverage, update manual/traceability and preserve native binaries",
+      "priority": "P1",
+      "scope": "Native Orders authority and refund repair; no new native binaries or broadened API permission.",
+      "uiReference": "ORDTXT-F01 owner-session refund Order not found",
+      "route": "Native Orders, OrderVisit and customer partial refund",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/CustomerOrderRefunds.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "packages/business-rules/src/native-order-authority.ts"
+      ],
+      "dataSource": "Existing orders response customer_id and authenticated user identity; refund.lines/refund.request remain customer-scoped in apps/web/lib/commerce.ts.",
+      "securityControl": "Server ownership, branch scoping, independent finance review, immutable refund source and idempotency retained.",
+      "testFiles": [
+        "tests/native-order-authority.test.ts",
+        "tests/native-order-refund-api.test.ts",
+        "tests/refund-restricted-role.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/validate-mobile-prototype.mjs"
+      ],
+      "testIds": [
+        "NATIVE-RTM-SOURCE",
+        "MEXP-ARTIFACT"
+      ],
+      "negativeTests": [
+        "MORD-OWNERSHIP",
+        "MORD-QUANTITIES",
+        "MORD-IDEMPOTENCY",
+        "MORD-LIFECYCLE",
+        "MORD-API"
+      ],
+      "evidence": [
+        "docs/native-order-authority/README.md",
+        "docs/native-order-authority/reviewed-source-changes.json",
+        "docs/native-order-authority/evidence/regressions.txt",
+        "docs/native-order-authority/evidence/api-tests.txt",
+        "docs/native-order-authority/evidence/prototype-preservation.txt",
+        "docs/native-order-authority/evidence/typecheck.txt",
+        "docs/native-order-authority/evidence/artifact-preservation.json",
+        "docs/native-order-authority/evidence/simulator-observation.json",
+        "docs/native-order-authority/evidence/documentation-tests.txt"
+      ],
+      "acceptanceGate": "MORD-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed component matrix across seven roles, local restricted API tests, original rendering regressions, source/prototype preservation and owner iOS after full source reload. No new native binary, install, backend change or hosted write.",
+      "testResult": "PASS \u2014 18/18 selected component/regression tests, 2/2 real dispatcher/restricted refund tests, 5/5 prototype-preservation checks and mobile typecheck. Owner iOS read/visibility acceptance after full reload. Documentation/manual checks 6/6 pass.",
+      "outstandingWork": "No remaining defect in this scoped repair. Six other roles not manually exercised on-device; seven sibling screens from prior text repair remain untested on-device. Signed physical-device/provider/production gates retained."
+    }
+  ],
+  "gates": [
+    {
+      "id": "MORD-G01",
+      "description": "Resolve ORDTXT-F01: show customer refund actions only for eligible orders belonging to the signed-in customer",
+      "status": "PASS",
+      "reason": "Resolved ORDTXT-F01 by requiring customer/commercial role and matching order.customer_id before mounting refund controls. Staff no longer send doomed refund.lines reads. Real dispatcher ownership denials retained; owner simulator delivered order shows no refund form or Order not found."
+    },
+    {
+      "id": "MORD-G02",
+      "description": "Separate staff read access from customer consent and invoice excess actions",
+      "status": "PASS",
+      "reason": "Customer-only doorstep consent and excess-request controls use the same ownership check. Staff keep their existing server-authorised visit/invoice reads. Owner header is Orders rather than Your Orders."
+    },
+    {
+      "id": "MORD-G03",
+      "description": "Reject invalid or unavailable partial-refund selections and preserve independent review/idempotency",
+      "status": "PASS",
+      "reason": "Selected refund quantities require positive whole values within server remaining amounts, nonempty selection, reason and explicit wallet-credit consent. Loading/failed/empty states cannot submit; failed lookups retry, concurrent taps lock, uncertain retries reuse the operation key, successful requests stay locked, late prior-order reads are ignored."
+    },
+    {
+      "id": "MORD-G04",
+      "description": "Verify role and exception coverage, update manual/traceability and preserve native binaries",
+      "status": "PASS",
+      "reason": "Executed component matrix across seven roles, local restricted API tests, original rendering regressions, source/prototype preservation and owner iOS after full source reload. No new native binary, install, backend change or hosted write."
+    }
+  ],
+  "coverage": {
+    "implementation": {
+      "implemented": 4,
+      "total": 4
+    },
+    "requirements": {
+      "verified": 4,
+      "total": 4
+    },
+    "critical": {
+      "verified": 0,
+      "total": 0
+    },
+    "routes": {
+      "verified": 2,
+      "total": 3,
+      "untested": 1,
+      "basis": "Orders and OrderVisit observed on iOS; customer partial refund component tested with actual React states/API fixtures, not on-device."
+    },
+    "roles": {
+      "componentAndApiVerified": 7,
+      "total": 7,
+      "onDeviceVerified": 1,
+      "onDeviceUntested": 6
+    },
+    "gates": {
+      "passed": 4,
+      "total": 4
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Follow-up for ORDTXT-F01. Include related customer-only consent/excess controls and invalid partial-refund selection handling; preserve all other open gates and seven sibling-screen device gaps."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "All four scoped gates pass. Closed ORDTXT-F01 in current source/Expo preview without weakening API ownership. Retain native device/role coverage gaps and all production holds."
+    }
+  ],
+  "resolvedFindings": [
+    {
+      "id": "ORDTXT-F01",
+      "status": "RESOLVED_IN_SOURCE_AND_EXPO_PREVIEW",
+      "requirements": [
+        "MORD-01",
+        "MORD-02",
+        "MORD-03"
+      ],
+      "evidence": "docs/native-order-authority/evidence/simulator-observation.json"
+    }
+  ]
+}

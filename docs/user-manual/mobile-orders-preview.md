@@ -6,6 +6,6 @@ For the Admin/business owner, open **Operations → Orders**. Orders should disp
 
 If Expo Go still displays the old error, ensure Metro is running, open the Expo development menu and choose **Reload**. This refreshes source without reinstalling the app or signing out. If Metro is stopped, start the project’s existing preview service first.
 
-The actual iOS check used the existing owner QA session. Delivered-order refund forms separately displayed **Order not found**; those refund workflows remain an open finding and are not accepted by this repair. Do not treat a successful visit read as a completed refund or delivery.
+The original iOS check used the existing owner QA session and found misplaced refund forms displaying **Order not found**. That finding is now resolved by the [native Orders/refund authority follow-up](native-order-refunds.md): staff see authorised reads; customer refund actions require the owning customer/commercial account. Do not treat a successful visit read as a completed refund or delivery.
 
 See [repair evidence and screenshot](../mobile-orders-text-fix/README.md) and [traceability](../traceability/mobile-orders-text-fix-rtm.md). Historical PDF/Word editions and production NO-GO remain unchanged.

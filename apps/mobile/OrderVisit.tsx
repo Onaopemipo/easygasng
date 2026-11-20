@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { View, Pressable, Image } from "react-native";
 import { Text } from "./typography";
 import { NativeForm } from "./Workflows";
+import { ownsCustomerOrder } from "../../packages/business-rules/src/native-order-authority";
 export default function OrderVisit({
   api,
   order,
   driver,
+  user,
   origin,
   token,
   onDone,
@@ -13,10 +15,12 @@ export default function OrderVisit({
   api: (a: string, d?: any) => Promise<any>;
   order: any;
   driver: boolean;
+  user: { id: string; role: string };
   origin: string;
   token: string | null;
   onDone: () => void;
 }) {
+  const customer = ownsCustomerOrder(user, order);
   const [photos, setPhotos] = useState<any[]>([]),
     [amendments, setAmendments] = useState<any[]>([]),
     [invoice, setInvoice] = useState<any>(null),
@@ -268,7 +272,7 @@ export default function OrderVisit({
               ))}
             </>
           )}
-          {!driver && m.state === "proposed" && (
+          {customer && m.state === "proposed" && (
             <NativeForm
               api={api}
               action="doorstep.consent"
@@ -332,7 +336,7 @@ export default function OrderVisit({
           onDone={onDone}
         />
       )}
-      {!driver && Number(invoice?.overpaidKobo) > 0 && (
+      {customer && Number(invoice?.overpaidKobo) > 0 && (
         <NativeForm
           api={api}
           action="invoice.excess.request"
