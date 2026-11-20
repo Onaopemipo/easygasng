@@ -14,6 +14,8 @@ Open **Admin → Settings**. The nine categories below replace the previous 17 d
 | Stock & Valuation | Stock valuation method | This configures valuation of existing movements; it does not alter stock counts or selling prices. Missing costs remain unavailable. |
 | Staff & Security | Existing staff role/branch assignment and locked approval safeguards | Permission changes stay protected. Approval safeguards is read-only in this release. |
 
+![Client-demo Settings navigation and the EasyRewards automatic-approval badge](../admin-settings-audit/evidence/release/stable-desktop.jpg)
+
 ## Finding a control
 
 Choose a category to browse its purpose sections. Search accepts the current name, the previous name/category or the stable setting key. For example, **Gas Pricing** finds the consolidated gas/product controls, **Delivery windows** finds **Bookable delivery windows**, and **EasyRewards policy** finds **EasyRewards programme**. Search results include the category and purpose section. Choose a category again to clear a search.
