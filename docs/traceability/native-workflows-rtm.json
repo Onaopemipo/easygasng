@@ -1799,6 +1799,10 @@
     {
       "date": "2026-11-20",
       "change": "Final native acceptance found and corrected report choice/permission mismatch and stale report filters. Lost write confirmation now requires canonical refresh before another change. Six iOS roles and CSV/XML/PDF share previews observed; no external transfer or physical fulfilment. 136 focused API/logic and 9 actual component checks pass; full regression 1042 pass/28 existing skips. All remaining device/provider/operational and 300 leaf acceptance limits retained."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "User authorised committing all remaining changes and deployment with no new build. Registered artifact/provenance audit and build-scope clarification. No new build, push-triggered CI, alias promotion, native distribution or business data mutation performed."
     }
   ],
   "executedAcceptance": {
@@ -1816,5 +1820,19 @@
     "androidEvidence": "APK build, install, launch and runtime errors only; visual role acceptance remains open",
     "finalTargetedTests": 162,
     "nativeTraceabilityChecks": 3
+  },
+  "deploymentRequest": {
+    "request": "Commit and deploy all changes but no new build",
+    "status": "PARTIAL",
+    "commitScope": "All current tracked changes including remaining order-modal preview log. Native implementation already committed as d190bde.",
+    "buildConstraint": "No new build triggered. Clarification pending: mobile-binary-only restriction versus all web/API builds.",
+    "existingDemoDeployment": "dpl_Ewd4EFdg7QEGbaAgqxAzBZ4MBiVN",
+    "applicationArtifactAvailable": false,
+    "reason": "Inspected ready cloud deployments have earlier source; no Vercel prebuilt output for the current application commit. Existing native artifacts target local fixtures/simulator.",
+    "evidence": [
+      "docs/native-workflows/evidence/no-build-release-inspection.json",
+      "docs/native-workflows/NO-BUILD-DEPLOYMENT.md"
+    ],
+    "outstandingWork": "Resolve permitted deployment/build scope and deploy matching source; then verify exact deployed identity and native/provider/device limits. No production gate is closed by source commit."
   }
 }
