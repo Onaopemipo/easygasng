@@ -29,6 +29,9 @@ jobs:
       EASYGAS_BACKGROUND_JOBS: "false"
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Release evidence tests verify files at retained historical commits.
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
