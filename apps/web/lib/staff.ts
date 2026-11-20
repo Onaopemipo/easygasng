@@ -44,13 +44,14 @@ export async function staffAction(
   if (action === "staff.lookup") {
     allow(user, ["owner", "manager"]);
     const d = z
-      .object({ email: z.email().transform((v) => v.trim().toLowerCase()) })
+      .object({ email: z.email().transform((v) => v.trim().toLowerCase()).optional(), userId: z.string().uuid().optional() })
       .strict()
+      .refine(d => Boolean(d.email) !== Boolean(d.userId), "Provide one account identifier.")
       .parse(input);
     const target = await one(
       tx,
-      "SELECT id,name,email,role,branch_id,active FROM users WHERE email=$1",
-      [d.email],
+      `SELECT id,name,email,role,branch_id,active FROM users WHERE ${d.userId ? "id" : "email"}=$1`,
+      [d.userId ?? d.email],
     );
     if (
       !target ||

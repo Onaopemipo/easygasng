@@ -1,0 +1,95 @@
+{
+  "at": "2026-11-20T03:05:21.920289+00:00",
+  "method": "Actual Next.js application, isolated synthetic PGlite database and CUA browser interactions; no mocked business responses.",
+  "checks": [
+    {
+      "id": "SMOD-DESKTOP",
+      "result": "PASS",
+      "observed": "1280\u00d7720: specific title, concise context, one scrolling body and persistent actions."
+    },
+    {
+      "id": "SMOD-PHONE",
+      "result": "PASS",
+      "observed": "390\u00d7844: single-column fields; header, tabs and footer inside viewport; no horizontal overflow."
+    },
+    {
+      "id": "SMOD-SMALL-PHONE",
+      "result": "PASS",
+      "observed": "320\u00d7568: title wraps beside close control; Cancel, Save draft and Review remain within dialog bounds after footer correction."
+    },
+    {
+      "id": "SMOD-LOOKUP",
+      "result": "PASS",
+      "observed": "Existing driver resolves to name/email/current role; branch shown as Lagos."
+    },
+    {
+      "id": "SMOD-INACTIVE",
+      "result": "PASS",
+      "observed": "Inactive account produces explicit error and cannot be selected."
+    },
+    {
+      "id": "SMOD-SELF",
+      "result": "PASS",
+      "observed": "Own account produces self-access error and cannot be selected."
+    },
+    {
+      "id": "SMOD-DIRTY",
+      "result": "PASS",
+      "observed": "Cancel opens discard guard; Keep editing retains reason; Discard closes."
+    },
+    {
+      "id": "SMOD-DRAFT",
+      "result": "PASS",
+      "observed": "Review draft followed by separate Save draft creates inactive request; API confirms role unchanged."
+    },
+    {
+      "id": "SMOD-TABS",
+      "result": "PASS",
+      "observed": "Payment Wallet field survives navigation to Fees and Review; arrow-key navigation selects/focuses correct tab."
+    },
+    {
+      "id": "SMOD-REVIEW",
+      "result": "PASS",
+      "observed": "Explicit Review stays open with a separate confirmation; API confirms final review-only nonces absent from requests."
+    },
+    {
+      "id": "SMOD-MONEY",
+      "result": "PASS",
+      "observed": "1800.29 naira displays \u20a61,800.29 and saves as exactly 180029 kobo."
+    },
+    {
+      "id": "SMOD-REAUTH",
+      "result": "PASS",
+      "observed": "Server REAUTH_REQUIRED reveals/focuses password only on review; wrong password retains edits; valid retry saves once."
+    },
+    {
+      "id": "SMOD-REQUIRED",
+      "result": "PASS",
+      "observed": "Missing reason focuses native validation and does not enter review."
+    },
+    {
+      "id": "SMOD-OFFERS",
+      "result": "PASS",
+      "observed": "Offer editing stays expanded while title changes; review from Points reveals Offers and focuses missing Offer code."
+    },
+    {
+      "id": "SMOD-SCOPE",
+      "result": "PASS",
+      "observed": "No hosted mutations in browser. All write/exception acceptance uses disposable loopback database."
+    }
+  ],
+  "corrections": [
+    "Prevented React button reconciliation from triggering form submission while entering Review; explicit confirmation now required.",
+    "Small-phone footer wraps secondary actions; all button bounds checked.",
+    "Offer disclosure state survives title edits."
+  ],
+  "screenshots": [
+    "docs/settings-modal/evidence/desktop-editor.jpg",
+    "docs/settings-modal/evidence/phone-editor.jpg"
+  ],
+  "limits": [
+    "Shared editor retains existing typed setting branches. This is bounded settings-modal acceptance, not a fresh acceptance pass over every business setting or the native app.",
+    "Existing Approval Centre outer layout is retained; its saved-request editor reuses this flow.",
+    "Production NO-GO, retained data/import holds and unrelated gates unchanged."
+  ]
+}

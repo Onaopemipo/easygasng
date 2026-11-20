@@ -1,0 +1,26 @@
+{
+  "phase": "Authorised settings-modal UI continuation",
+  "authorisation": "User requested a compact SaaS settings-change modal with tabs and removal of unnecessary details.",
+  "baselineCommit": "ca03e685fecaacf1c0069d004ff1331d189f5701",
+  "baseline": {
+    "apps/web/components/admin.tsx": "718f6f12075281e690bb9b7731c6ca4335a43e362c6d956817c10cba7f111836",
+    "apps/web/components/ui.tsx": "eb4dd9592921124a7967cd2594572f28a156214dd26806130980a4c0bf27b092",
+    "apps/web/components/payment-gateway-policy.tsx": "f468806ca551358f83ea17697d1433cd6144ca874fa93fa400fbe7c4e532e70c",
+    "apps/web/components/rewards-policy-fields.tsx": "fd56ba495eefc70d804f9c5692a9973debd255e809e0dd6957860d708d1be012",
+    "apps/web/app/globals.css": "420afb9f924ee70478d3c0c1f9074794bfc6d0551d68c9c442372f29c1d061c4",
+    "apps/web/lib/staff.ts": "7d14948e16303113651fe0e30fedfed57ac8354edc37b1346c0f193cd605327a"
+  },
+  "files": {
+    "apps/web/components/admin.tsx": "9afc104b0c2799858ef892405fe215c8b41ba2316777341baf408bd5ba75cc1a",
+    "apps/web/components/ui.tsx": "4dd242cefe18b6a0fbe3583d1dfb4fdd9e68a4608c823d53852b1bb25f1e196c",
+    "apps/web/components/payment-gateway-policy.tsx": "59c6d0e2eb4c440f906fc33b5d258ccfc7505e3314b4182e7cd1a5e8a4892b45",
+    "apps/web/components/rewards-policy-fields.tsx": "482ccd0d0ca6f4eb6c0eb2e00a119f3f84a5a517750ff66933357a95187911c6",
+    "apps/web/app/globals.css": "991f5bb28471a4a36dcfcdecb239c0c187be35c36e21642c5029790fd7edab0d",
+    "apps/web/lib/staff.ts": "2a89e860e6489c852a1ca380b6356722121bdd396d0e5e6a85d66e1b38129d64"
+  },
+  "review": "Extracted the existing typed setting fields to setting-change-form.tsx. Settings opens that form with specific title, scoped class and busy state. Approvals reuses the editor and passes the current actor ID. No order, stock, payment, quote, approval decision or activation handler in admin.tsx was changed. All prior baselines remain retained. Shared Modal keeps its discard confirmation, filters hidden focus targets, locks background scrolling and blocks closing during writes. Payment/reward fields are split into sections; stored units and values remain unchanged. Styles are scoped to the new editor. Staff lookup accepts an existing ID for draft hydration under the same role/branch restrictions.",
+  "evidence": [
+    "docs/settings-modal/AUDIT.md",
+    "docs/settings-modal/evidence/focused-tests.txt"
+  ]
+}

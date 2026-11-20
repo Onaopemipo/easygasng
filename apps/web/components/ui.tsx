@@ -1,7 +1,7 @@
 "use client";
 import { confirmAction, appDialogActive } from "./app-dialog";
 import { friendlyMessage } from "../../../packages/business-rules/src/friendly-message";
-import React, { useEffect, useRef } from "react";
+import React, { createContext, useContext, useEffect, useRef } from "react";
 import {
   Flame,
   CookingPot,
@@ -149,22 +149,28 @@ export function Notice({
     </div>
   );
 }
+const ModalCloseContext = createContext<(() => Promise<void>) | null>(null);
+export const useModalClose = () => useContext(ModalCloseContext);
 export function Modal({
   title,
   onClose,
   children,
   className,
+  busy = false,
 }: {
   title: string;
   onClose: () => void;
   children: React.ReactNode;
   className?: string;
+  busy?: boolean;
 }) {
+  const busyRef = useRef(busy);
+  busyRef.current = busy;
   const dialog = useRef<HTMLElement>(null);
   const closing = useRef(false);
   const lifecycle = useRef<AbortController|null>(null);
   async function close() {
-    if (closing.current || appDialogActive()) return;
+    if (closing.current || busyRef.current || dialog.current?.querySelector('[data-submit-pending="true"]') || appDialogActive()) return;
     closing.current = true;
     if (
       dialog.current?.querySelector('[data-unsaved="true"]') &&
@@ -176,12 +182,14 @@ export function Modal({
   useEffect(() => {
     lifecycle.current = new AbortController();
     const previous = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const targets = () =>
       Array.from(
         dialog.current?.querySelectorAll<HTMLElement>(
           "button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), a[href]",
         ) ?? [],
-      );
+      ).filter(element => element.getClientRects().length > 0 && !element.closest("[hidden], [inert]"));
     targets()[0]?.focus();
     const key = (event: KeyboardEvent) => {
       if (appDialogActive()) return;
@@ -206,6 +214,7 @@ export function Modal({
     return () => {
       lifecycle.current?.abort();
       document.removeEventListener("keydown", key);
+      document.body.style.overflow = previousOverflow;
       previous?.focus();
     };
   }, []);
@@ -224,12 +233,13 @@ export function Modal({
           <button
             className="icon-button"
             aria-label="Close dialog"
+            disabled={busy}
             onClick={close}
           >
             <X />
           </button>
         </div>
-        {children}
+        <ModalCloseContext.Provider value={close}>{children}</ModalCloseContext.Provider>
       </section>
     </div>
   );

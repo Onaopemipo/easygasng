@@ -1,0 +1,339 @@
+{
+  "phase": "Settings change modal redesign",
+  "productionDecision": "NO-GO; actual-import hold, retain-all and all unrelated native/provider/operational gates unchanged",
+  "requirements": [
+    {
+      "id": "SMOD-01",
+      "requirement": "Compact modal with fixed header/action bar and a single scroll region",
+      "priority": "P1",
+      "scope": "Web settings-change modal; shared draft/revision editor retains existing typed fields. Approval Centre outer layout, new setting features and native binaries are outside this phase. No governance policy relaxation.",
+      "uiReference": "Attached long Request a setting change / staff permission modal",
+      "route": "/admin/settings; existing approval draft editor",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/rewards-policy-fields.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/lib/staff.ts",
+        "packages/business-rules/src/setting-editor.ts"
+      ],
+      "dataSource": "Existing settings, setting.propose, approval.edit/revise, scoped staff lookup and branch APIs; server remains authoritative.",
+      "securityControl": "Current session/role/branch, recent verification, version binding, no self-promotion, independent approval/qualified activation and retained audit controls unchanged.",
+      "testFiles": [
+        "tests/settings-modal.test.ts",
+        "tests/settings-datetime.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "SMOD-CONTRACTS",
+        "SMOD-RENDER",
+        "SMOD-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/settings-modal/AUDIT.md",
+        "docs/settings-modal/evidence/focused-tests.txt",
+        "docs/settings-modal/evidence/browser-checks.json",
+        "docs/settings-modal/evidence/browser-api-confirmation.json",
+        "docs/settings-modal/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "SMOD-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused executed API/logic/render regressions and actual desktop/phone interactions confirm the bounded settings workflow.",
+      "testResult": "PASS \u2014 focused tests plus browser acceptance; hosted deployment is tracked separately in SMOD-06.",
+      "outstandingWork": "None within this bounded settings requirement; unrelated production and exhaustive business-setting acceptance remain separate."
+    },
+    {
+      "id": "SMOD-02",
+      "requirement": "Readable existing-account selection and branch context; no raw-ID entry",
+      "priority": "P1",
+      "scope": "Web settings-change modal; shared draft/revision editor retains existing typed fields. Approval Centre outer layout, new setting features and native binaries are outside this phase. No governance policy relaxation.",
+      "uiReference": "Attached long Request a setting change / staff permission modal",
+      "route": "/admin/settings; existing approval draft editor",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/rewards-policy-fields.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/lib/staff.ts",
+        "packages/business-rules/src/setting-editor.ts"
+      ],
+      "dataSource": "Existing settings, setting.propose, approval.edit/revise, scoped staff lookup and branch APIs; server remains authoritative.",
+      "securityControl": "Current session/role/branch, recent verification, version binding, no self-promotion, independent approval/qualified activation and retained audit controls unchanged.",
+      "testFiles": [
+        "tests/settings-modal.test.ts",
+        "tests/settings-datetime.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "SMOD-CONTRACTS",
+        "SMOD-RENDER",
+        "SMOD-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/settings-modal/AUDIT.md",
+        "docs/settings-modal/evidence/focused-tests.txt",
+        "docs/settings-modal/evidence/browser-checks.json",
+        "docs/settings-modal/evidence/browser-api-confirmation.json",
+        "docs/settings-modal/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "SMOD-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused executed API/logic/render regressions and actual desktop/phone interactions confirm the bounded settings workflow.",
+      "testResult": "PASS \u2014 focused tests plus browser acceptance; hosted deployment is tracked separately in SMOD-06.",
+      "outstandingWork": "None within this bounded settings requirement; unrelated production and exhaustive business-setting acceptance remain separate."
+    },
+    {
+      "id": "SMOD-03",
+      "requirement": "Focused configuration sections, optional scheduling, draft and explicit review",
+      "priority": "P1",
+      "scope": "Web settings-change modal; shared draft/revision editor retains existing typed fields. Approval Centre outer layout, new setting features and native binaries are outside this phase. No governance policy relaxation.",
+      "uiReference": "Attached long Request a setting change / staff permission modal",
+      "route": "/admin/settings; existing approval draft editor",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/rewards-policy-fields.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/lib/staff.ts",
+        "packages/business-rules/src/setting-editor.ts"
+      ],
+      "dataSource": "Existing settings, setting.propose, approval.edit/revise, scoped staff lookup and branch APIs; server remains authoritative.",
+      "securityControl": "Current session/role/branch, recent verification, version binding, no self-promotion, independent approval/qualified activation and retained audit controls unchanged.",
+      "testFiles": [
+        "tests/settings-modal.test.ts",
+        "tests/settings-datetime.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "SMOD-CONTRACTS",
+        "SMOD-RENDER",
+        "SMOD-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/settings-modal/AUDIT.md",
+        "docs/settings-modal/evidence/focused-tests.txt",
+        "docs/settings-modal/evidence/browser-checks.json",
+        "docs/settings-modal/evidence/browser-api-confirmation.json",
+        "docs/settings-modal/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "SMOD-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused executed API/logic/render regressions and actual desktop/phone interactions confirm the bounded settings workflow.",
+      "testResult": "PASS \u2014 focused tests plus browser acceptance; hosted deployment is tracked separately in SMOD-06.",
+      "outstandingWork": "None within this bounded settings requirement; unrelated production and exhaustive business-setting acceptance remain separate."
+    },
+    {
+      "id": "SMOD-04",
+      "requirement": "Preserve server approval, self-access, branch/version and activation controls",
+      "priority": "P0",
+      "scope": "Web settings-change modal; shared draft/revision editor retains existing typed fields. Approval Centre outer layout, new setting features and native binaries are outside this phase. No governance policy relaxation.",
+      "uiReference": "Attached long Request a setting change / staff permission modal",
+      "route": "/admin/settings; existing approval draft editor",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/rewards-policy-fields.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/lib/staff.ts",
+        "packages/business-rules/src/setting-editor.ts"
+      ],
+      "dataSource": "Existing settings, setting.propose, approval.edit/revise, scoped staff lookup and branch APIs; server remains authoritative.",
+      "securityControl": "Current session/role/branch, recent verification, version binding, no self-promotion, independent approval/qualified activation and retained audit controls unchanged.",
+      "testFiles": [
+        "tests/settings-modal.test.ts",
+        "tests/settings-datetime.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "SMOD-CONTRACTS",
+        "SMOD-RENDER",
+        "SMOD-SECURITY"
+      ],
+      "negativeTests": [
+        "SMOD-SECURITY"
+      ],
+      "evidence": [
+        "docs/settings-modal/AUDIT.md",
+        "docs/settings-modal/evidence/focused-tests.txt",
+        "docs/settings-modal/evidence/browser-checks.json",
+        "docs/settings-modal/evidence/browser-api-confirmation.json",
+        "docs/settings-modal/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "SMOD-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused executed API/logic/render regressions and actual desktop/phone interactions confirm the bounded settings workflow.",
+      "testResult": "PASS \u2014 focused tests plus browser acceptance; hosted deployment is tracked separately in SMOD-06.",
+      "outstandingWork": "None within this bounded settings requirement; unrelated production and exhaustive business-setting acceptance remain separate."
+    },
+    {
+      "id": "SMOD-05",
+      "requirement": "Validation, conditional verification, pending-write and unsaved-change recovery",
+      "priority": "P0",
+      "scope": "Web settings-change modal; shared draft/revision editor retains existing typed fields. Approval Centre outer layout, new setting features and native binaries are outside this phase. No governance policy relaxation.",
+      "uiReference": "Attached long Request a setting change / staff permission modal",
+      "route": "/admin/settings; existing approval draft editor",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/rewards-policy-fields.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/lib/staff.ts",
+        "packages/business-rules/src/setting-editor.ts"
+      ],
+      "dataSource": "Existing settings, setting.propose, approval.edit/revise, scoped staff lookup and branch APIs; server remains authoritative.",
+      "securityControl": "Current session/role/branch, recent verification, version binding, no self-promotion, independent approval/qualified activation and retained audit controls unchanged.",
+      "testFiles": [
+        "tests/settings-modal.test.ts",
+        "tests/settings-datetime.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "SMOD-CONTRACTS",
+        "SMOD-RENDER",
+        "SMOD-SECURITY"
+      ],
+      "negativeTests": [
+        "SMOD-SECURITY"
+      ],
+      "evidence": [
+        "docs/settings-modal/AUDIT.md",
+        "docs/settings-modal/evidence/focused-tests.txt",
+        "docs/settings-modal/evidence/browser-checks.json",
+        "docs/settings-modal/evidence/browser-api-confirmation.json",
+        "docs/settings-modal/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "SMOD-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused executed API/logic/render regressions and actual desktop/phone interactions confirm the bounded settings workflow.",
+      "testResult": "PASS \u2014 focused tests plus browser acceptance; hosted deployment is tracked separately in SMOD-06.",
+      "outstandingWork": "None within this bounded settings requirement; unrelated production and exhaustive business-setting acceptance remain separate."
+    },
+    {
+      "id": "SMOD-06",
+      "requirement": "Desktop/phone browser acceptance and verified demo rollout without mobile build",
+      "priority": "P1",
+      "scope": "Web settings-change modal; shared draft/revision editor retains existing typed fields. Approval Centre outer layout, new setting features and native binaries are outside this phase. No governance policy relaxation.",
+      "uiReference": "Attached long Request a setting change / staff permission modal",
+      "route": "/admin/settings; existing approval draft editor",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/rewards-policy-fields.tsx",
+        "apps/web/app/globals.css",
+        "apps/web/lib/staff.ts",
+        "packages/business-rules/src/setting-editor.ts"
+      ],
+      "dataSource": "Existing settings, setting.propose, approval.edit/revise, scoped staff lookup and branch APIs; server remains authoritative.",
+      "securityControl": "Current session/role/branch, recent verification, version binding, no self-promotion, independent approval/qualified activation and retained audit controls unchanged.",
+      "testFiles": [
+        "tests/settings-modal.test.ts",
+        "tests/settings-datetime.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "SMOD-CONTRACTS",
+        "SMOD-RENDER",
+        "SMOD-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/settings-modal/AUDIT.md",
+        "docs/settings-modal/evidence/focused-tests.txt",
+        "docs/settings-modal/evidence/browser-checks.json",
+        "docs/settings-modal/evidence/browser-api-confirmation.json",
+        "docs/settings-modal/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "SMOD-G06",
+      "status": "PARTIAL",
+      "reason": "Desktop/phone acceptance complete; verified demo rollout pending.",
+      "testResult": "PASS local; hosted candidate/stable checks pending.",
+      "outstandingWork": "Deploy reviewed web/API source; verify candidate, promote and verify stable read-only state and browser UI."
+    }
+  ],
+  "gates": [
+    {
+      "id": "SMOD-G01",
+      "description": "Compact modal with fixed header/action bar and a single scroll region",
+      "status": "PASS",
+      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+    },
+    {
+      "id": "SMOD-G02",
+      "description": "Readable existing-account selection and branch context; no raw-ID entry",
+      "status": "PASS",
+      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+    },
+    {
+      "id": "SMOD-G03",
+      "description": "Focused configuration sections, optional scheduling, draft and explicit review",
+      "status": "PASS",
+      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+    },
+    {
+      "id": "SMOD-G04",
+      "description": "Preserve server approval, self-access, branch/version and activation controls",
+      "status": "PASS",
+      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+    },
+    {
+      "id": "SMOD-G05",
+      "description": "Validation, conditional verification, pending-write and unsaved-change recovery",
+      "status": "PASS",
+      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+    },
+    {
+      "id": "SMOD-G06",
+      "description": "Desktop/phone browser acceptance and verified demo rollout without mobile build",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 5,
+      "total": 6
+    },
+    "implementation": {
+      "implemented": 6,
+      "total": 6
+    },
+    "critical": {
+      "verified": 2,
+      "total": 2
+    },
+    "routes": {
+      "verified": 1,
+      "total": 1
+    },
+    "gates": {
+      "passed": 5,
+      "total": 6
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "User requested audit and compact SaaS settings-change modal, with suitable tabs/modals and removal of unnecessary detail. Registered all six requirements before implementation. Existing authorisation and approval rules preserved; no new mobile build."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Implemented compact editor/review, scoped account hydration and responsive actions. Preserved all original source baselines through explicit settings continuation; fixed review auto-submit, small-phone footer clipping and offer disclosure behaviour found during acceptance. Demo rollout pending; production NO-GO unchanged."
+    }
+  ]
+}
