@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "b2d327f1a5a20a0c5b19b4ab2166422f43852ff5",
+  "runId": 44822654161,
+  "webJobId": 136587201532,
+  "webConclusion": "failure",
+  "nativeConclusion": "success",
+  "nativeExport": "skipped",
+  "failures": [
+    {
+      "test": "DRVS-PRESERVED",
+      "file": "apps/web/lib/professional-services.ts",
+      "reason": "Historical source-preservation check did not yet map this approved scoped incident-history continuation."
+    },
+    {
+      "test": "EXP-SOURCE-FIDELITY",
+      "file": "apps/web/components/readiness.tsx",
+      "reason": "Original prototype source hash must remain retained while the explicitly approved readiness UI continuation is recorded."
+    },
+    {
+      "test": "NATIVE-RTM-SOURCE",
+      "file": "apps/web/lib/readiness.ts",
+      "reason": "Native build source proof must remain historical; new web readiness correction needs an explicit reviewed continuation."
+    }
+  ],
+  "repair": "Retain original manifests and compare each incoming historical hash against the ce3d915 committed baseline, then only accept the eight named approved web source changes. No native/prototype artifact or assertion is discarded and no test skipped.",
+  "status": "SUPERSEDED_PENDING_CORRECTED_RUN",
+  "tests": 1147,
+  "passed": 1144,
+  "failed": 3,
+  "skipped": 0
+}

@@ -21,9 +21,9 @@ Reconciled 21 November 2026. **Production NO-GO remains.** All original IDs and 
 
 | ID | Status | Finding |
 | --- | --- | --- |
-| AUD-G01 | FAIL | AUD-B01/B02 reproduced; controlled privacy fulfilment absent. |
-| AUD-G02 | BLOCKED | Sellable data/approvals, hosted runtime/source/CI, off-site recovery, real safety/finance and monitoring acceptance outstanding. |
-| AUD-G03 | BLOCKED | Native moderate advisories, distribution and final browser/device acceptance remain open. |
+| AUD-G01 | PARTIAL | Previously reproduced TLS/SMTP defects have bounded repaired regression evidence. Retain-all and truthful request disposition are implemented; independent commercial policy/retention/recovery and security acceptance remain outstanding. |
+| AUD-G02 | BLOCKED | Reviewed source/CI and isolated demo hosting now verified. Commercial host/worker/off-site recovery, real stock/staff/finance/safety/provider and monitoring acceptance remain outstanding. |
+| AUD-G03 | BLOCKED | Recorded native dependency audits and representative web/simulator checks pass; signed distribution, physical lifecycle/devices, complete declared feature/accessibility and independent security acceptance remain open. |
 
 Requirement denominator: **12**; status counts: PARTIAL: 8, BLOCKED: 3, IMPLEMENTED_UNVERIFIED: 1. No exclusions. This is blocker/release requirement coverage, not whole-app completion.
 

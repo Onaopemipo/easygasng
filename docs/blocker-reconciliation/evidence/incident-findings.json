@@ -16,7 +16,7 @@
         "docs/reports/role-order-delivery-acceptance-20261119.md",
         "tests/refund-restricted-role.test.ts"
       ],
-      "applied": false
+      "applied": true
     },
     {
       "id": "a1808a3a-a5ae-4427-9393-ae3057e08d4e",
@@ -29,7 +29,7 @@
         "docs/traceability/technician-access-repair-evidence.txt",
         "tests/blocker-reconciliation.test.ts"
       ],
-      "applied": false
+      "applied": true
     },
     {
       "id": "a5710fae-994b-4087-ba04-3fc721fa762f",
@@ -42,7 +42,7 @@
         "docs/traceability/technician-access-repair-evidence.txt",
         "tests/blocker-reconciliation.test.ts"
       ],
-      "applied": false
+      "applied": true
     },
     {
       "id": "0d42b635-f114-471d-b88d-2f0cfa4f681d",
@@ -55,7 +55,7 @@
         "docs/traceability/technician-access-repair-evidence.txt",
         "tests/blocker-reconciliation.test.ts"
       ],
-      "applied": false
+      "applied": true
     },
     {
       "id": "b9f8d8f4-0c42-4167-89b3-0bf0775cf611",
@@ -68,7 +68,7 @@
         "docs/traceability/technician-access-repair-evidence.txt",
         "tests/blocker-reconciliation.test.ts"
       ],
-      "applied": false
+      "applied": true
     },
     {
       "id": "2ccc4dab-be56-413b-b6a0-0c9f273f11c1",
@@ -81,7 +81,7 @@
         "docs/traceability/technician-access-repair-evidence.txt",
         "tests/blocker-reconciliation.test.ts"
       ],
-      "applied": false
+      "applied": true
     },
     {
       "id": "fe13e764-f00a-4b05-9d11-bb9e177324e5",
@@ -94,7 +94,7 @@
         "docs/blocker-reconciliation/evidence/current-path-investigation.json",
         "docs/blocker-reconciliation/evidence/historical-runtime-logs.json"
       ],
-      "applied": false
+      "applied": true
     },
     {
       "id": "8d604630-6c4b-4985-a955-20fda5752499",
@@ -107,7 +107,7 @@
         "docs/blocker-reconciliation/evidence/current-path-investigation.json",
         "docs/blocker-reconciliation/evidence/historical-runtime-logs.json"
       ],
-      "applied": false
+      "applied": true
     },
     {
       "id": "bd58e7ed-ab20-4b09-be6e-1f29b34a44cb",
@@ -120,7 +120,37 @@
         "docs/blocker-reconciliation/evidence/current-path-investigation.json",
         "docs/blocker-reconciliation/evidence/historical-runtime-logs.json"
       ],
-      "applied": false
+      "applied": true
+    }
+  ],
+  "supplementRecords": [
+    {
+      "id": "1d458686-90aa-46d6-bb0e-3ebc44cd9074",
+      "branch_id": null,
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "technician.login:2026-11-15T13",
+      "detail": "Operation failed (error). Diagnostic reference 1d458686-90aa-46d6-bb0e-3ebc44cd9074. Review protected server logs; no credentials or request body are included.",
+      "owner_role": "owner",
+      "status": "resolved",
+      "created_at": "2026-11-15T13:56:15.170Z",
+      "assigned_reviewer_id": null
+    }
+  ],
+  "supplements": [
+    {
+      "id": "1d458686-90aa-46d6-bb0e-3ebc44cd9074",
+      "target": "technician.login:2026-11-15T13",
+      "originalStatus": "resolved",
+      "plannedDisposition": "resolved",
+      "confidence": "supplement_prior_placeholder_with_verified_evidence",
+      "finding": "Original resolved record is retained. The deployed response-history UI revealed only the placeholder note dfdfdf; it is not acceptance evidence. Append the documented 16 November restricted-session repair and fresh dedicated technician sign-in/restrict/scoped-read/finance-denial verification, preserving the original response. No wider grants or production acceptance.",
+      "evidence": [
+        "docs/traceability/technician-access-repair-evidence.txt",
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/evidence/focused-tests.txt"
+      ],
+      "applied": true
     }
   ]
 }

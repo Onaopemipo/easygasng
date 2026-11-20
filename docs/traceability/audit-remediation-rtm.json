@@ -155,13 +155,14 @@
       ],
       "evidence": [
         "docs/audit-remediation/evidence/acceptance-tests.txt",
-        "docs/audit-remediation/evidence/view-owner-readiness.txt"
+        "docs/audit-remediation/evidence/view-owner-readiness.txt",
+        "docs/blocker-reconciliation/README.md"
       ],
       "acceptanceGate": "WEB-A05-GATE",
       "status": "BLOCKED",
-      "reason": "BLOCKED: nine unresolved high/critical incidents and unverified commercial gates remain. Readiness describes actual sandbox gateway configuration truthfully; no release decision was waived.",
+      "reason": "BLOCKED for commercial production. PBR21 investigated all nine original high-severity demo operation failures: six documented repaired cases resolved; three current recovered paths retained acknowledged because original cause is unconfirmed. Real hosting/recovery, provider, native/device, policy, physical and commercial acceptance gates remain. The earlier nine-unresolved count is historical.",
       "testResult": "PASS guard checks; production acceptance BLOCKED",
-      "outstandingWork": "Business/release owners must resolve incident, provider, native/device, monitoring, restore, privacy, physical and commercial acceptance evidence through the established release process.",
+      "outstandingWork": "Complete the remaining commercial acceptance gates and follow up three retained unknown-cause historical operation failures. Owner inputs and actual engineering work are mapped in docs/blocker-reconciliation/PRODUCTION-BLOCKERS.md; no production decision waived.",
       "route": "/admin/readiness, /admin/incidents"
     },
     {
@@ -391,6 +392,10 @@
     {
       "date": "2026-11-20",
       "change": "User approved exact nine demo-only notices and fresh two-hour renewal. WEB-A01 scope is demo notices, with commercial acceptance held under WEB-A05; WEB-A04 is time-bounded evidence only. Original seven IDs retained. A05 blocked and A06 partial remain in denominators."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Reconcile WEB-A05 incident count and evidence with PBR21; six original high errors repaired/resolved, three remain acknowledged. Commercial gate stays BLOCKED, original nine audit requirements/gates and all other findings remain."
     }
   ],
   "sourceSha": "b10829aa447a7ae5bd430a73f9644e2feca854a6",

@@ -1,0 +1,346 @@
+{
+  "stage": "stable",
+  "base": "https://easygas-client-demo.vercel.app",
+  "startedAt": "2026-11-20T21:49:37.429Z",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "name": "owner existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "manager existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "finance existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "driver existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "technician existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "customer existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "commercial existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "settings, inventory, gas, orders, ledger, policies, staff and customer wallets preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "all nine original failure records and original details retained",
+      "status": "PASS"
+    },
+    {
+      "name": "readiness reflects historical CI, current schema, intentional demo worker and retained production/retention holds",
+      "status": "PASS"
+    },
+    {
+      "name": "six non-owner roles denied production readiness",
+      "status": "PASS"
+    },
+    {
+      "name": "four non-staff incident-history roles denied",
+      "status": "PASS"
+    },
+    {
+      "name": "branch staff cannot read business-wide incident history",
+      "status": "PASS"
+    },
+    {
+      "name": "all nine scoped detail histories load",
+      "status": "PASS"
+    },
+    {
+      "name": "invalid history pagination rejected",
+      "status": "PASS"
+    }
+  ],
+  "snapshot": {
+    "settings?scope=lagos": "e6c5f540b3807b22dc394c46ae4610302792f1f00b3be508da450520e12f0e93",
+    "inventory": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e",
+    "gas.stock": "3f2031e7c5347ed3dcd49416a6c7e08f3fa919529b9e31f965cdb6c9f8ed7696",
+    "orders": "47dd76f63e613e8a4c067be72d62986a7b7ec49bbe370a5ba4dca13040e1bc9e",
+    "finance.ledger": "f846cb337b33ca92570774fb3d8d9bfe25e1274fa344771b905c7f5f67ed34b2",
+    "policies": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47",
+    "staff.manage": "6ae26631ffa7efb72f937b4f5f5efdc623e32fce2bcfae58ba573f3261563f30",
+    "customer.wallet": "a3356439697c94b0661795e51f9d193dd9c37a27f8f06c9869976ba2139c6afa",
+    "commercial.wallet": "13396fe638e0648501376ee8977f62eb3775ce6c440f6721e87be2f989d0aab9"
+  },
+  "snapshotScopes": {
+    "staff": "id,role,branch_id,active; last_login is normal authentication audit activity, not authority"
+  },
+  "incidents": [
+    {
+      "id": "7e26cf15-42e3-4408-90ac-e9540a47d6ae",
+      "status": "resolved",
+      "severity": "medium",
+      "category": "delivery_failure",
+      "target": "4ded6c78-9a20-4e65-be00-9f949e8dbbc2"
+    },
+    {
+      "id": "1f74bf27-5298-4041-aaf2-2ad59f12a2f5",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "refund.request:2026-11-19T09"
+    },
+    {
+      "id": "aef57399-c4f1-4de9-9be5-140f1448e99c",
+      "status": "open",
+      "severity": "medium",
+      "category": "delivery_failure",
+      "target": "df543758-238d-47a3-97ff-46282bd854cc"
+    },
+    {
+      "id": "1d458686-90aa-46d6-bb0e-3ebc44cd9074",
+      "status": "resolved",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "technician.login:2026-11-15T13"
+    },
+    {
+      "id": "a1808a3a-a5ae-4427-9393-ae3057e08d4e",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.login:2026-11-15T13"
+    },
+    {
+      "id": "a5710fae-994b-4087-ba04-3fc721fa762f",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.restrict:2026-11-15T13"
+    },
+    {
+      "id": "0d42b635-f114-471d-b88d-2f0cfa4f681d",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.restrict:2026-11-13T18"
+    },
+    {
+      "id": "b9f8d8f4-0c42-4167-89b3-0bf0775cf611",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.login:2026-11-11T02"
+    },
+    {
+      "id": "2ccc4dab-be56-413b-b6a0-0c9f273f11c1",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "technician.login:2026-11-11T02"
+    },
+    {
+      "id": "fe13e764-f00a-4b05-9d11-bb9e177324e5",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.login:2026-11-10T14"
+    },
+    {
+      "id": "8d604630-6c4b-4985-a955-20fda5752499",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "catalogue:2026-11-09T10"
+    },
+    {
+      "id": "bd58e7ed-ab20-4b09-be6e-1f29b34a44cb",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "testimonials.public:2026-11-09T10"
+    }
+  ],
+  "readiness": {
+    "recommendation": "NO-GO",
+    "environmentScope": "client_demo",
+    "recordedRelease": {
+      "kind": "historical_verified_client_demo_baseline",
+      "applicationSource": "dc13af109f0b1b172bd0b6b1539127d6592a4021",
+      "ciSource": "d4fe9931913c856ac8cfe0bd1775094e81fbb73e",
+      "deploymentId": "dpl_AXjGjA3VPmKi8aqRpGBwZohyvw4a",
+      "ciRun": "https://github.com/Onaopemipo/easygasng/actions/runs/44802393642",
+      "ciTests": {
+        "passed": 1137,
+        "failed": 0,
+        "skipped": 0
+      },
+      "uploadedFilesVerified": 435,
+      "nativeExport": "skipped",
+      "newMobileBinaries": 0,
+      "reportPath": "docs/deployment/20261121-web-api-publication/README.md",
+      "matrixPath": "docs/traceability/web-api-publication-20261121-rtm.json",
+      "limitation": "Verified historical client-demo baseline. It does not certify later source changes or production infrastructure, physical safety, providers or signed devices."
+    },
+    "reviews": [],
+    "checkedAt": "2026-11-20T21:50:08.235Z",
+    "gates": [
+      {
+        "id": 1,
+        "name": "Reviewed release scope",
+        "status": "partial",
+        "evidence": "The owner-authorised client-demo release has a reviewed committed source baseline. Commercial launch capabilities and business acceptance still require explicit approval; demo scope is not production scope."
+      },
+      {
+        "id": 2,
+        "name": "Web build and CI",
+        "status": "partial",
+        "evidence": "Recorded client-demo baseline: 1,137 tests passed, zero failures/skips; web build/types/audits and native checks passed, mobile export skipped. CI d4fe9931913c856ac8cfe0bd1775094e81fbb73e; application source dc13af109f0b1b172bd0b6b1539127d6592a4021. This historical evidence does not certify later source changes or a commercial production deployment."
+      },
+      {
+        "id": 3,
+        "name": "Native distribution",
+        "status": "unverified",
+        "evidence": "Native source and representative simulator/API checks exist. No new mobile binaries were created by the latest demo publication; signed physical-device, lifecycle/offline, identifiers, permissions and distribution acceptance remain open."
+      },
+      {
+        "id": 4,
+        "name": "Database schema",
+        "status": "pass",
+        "evidence": "All 80 required application migration versions through 081 are checked. Current versions: 001, 002, 003, 004, 005, 006, 007, 008, 009, 010, 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 025, 027, 028, 029, 030, 031, 032, 033, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 043c, 044, 045, 046, 047, 048, 049, 050, 051, 052, 053, 054, 055, 056, 057, 058, 059, 060, 061, 062, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081"
+      },
+      {
+        "id": 5,
+        "name": "Managed database and TLS",
+        "status": "unverified",
+        "evidence": "A connection is configured; restricted identity, advisors, TLS and staging acceptance still require evidence."
+      },
+      {
+        "id": 6,
+        "name": "Production origin",
+        "status": "unverified",
+        "evidence": "A verified HTTPS origin, certificate and hosting configuration are required."
+      },
+      {
+        "id": 7,
+        "name": "Independent business authority",
+        "status": "unverified",
+        "evidence": "6 active Admin/business owner account(s), 6 active Inventory/finance account(s). One business owner is supported. Restricted actions still require distinct eligible reviewers; verify maker, reviewer and executor responsibilities for the actual staff and branches."
+      },
+      {
+        "id": 8,
+        "name": "Reviewed customer policies",
+        "status": "unverified",
+        "evidence": "9 of 9 policies published and effective. Demo-only notices do not establish approved commercial terms; legal/business review and acceptance evidence remain necessary."
+      },
+      {
+        "id": 9,
+        "name": "Physical inventory",
+        "status": "unverified",
+        "evidence": "4 published stocked lines; reconcile physical counts and serial eligibility before sale."
+      },
+      {
+        "id": 10,
+        "name": "Qualified service operation",
+        "status": "unverified",
+        "evidence": "5 active services with approved checklist; verify actual qualifications, areas, equipment and field processes."
+      },
+      {
+        "id": 11,
+        "name": "Online payments",
+        "status": "unverified",
+        "evidence": "The configured gateway is enabled for sandbox/test payments only. Live merchant ownership, provider acceptance and commercial release remain unverified."
+      },
+      {
+        "id": 12,
+        "name": "Cash and credit reconciliation",
+        "status": "unverified",
+        "evidence": "Finance must verify counted cash, liability balances and refund controls against real records."
+      },
+      {
+        "id": 13,
+        "name": "Notification providers",
+        "status": "blocked",
+        "evidence": "Transactional SMTP adapter exists behind an OFF flag. Verified sender, real recovery delivery, provider monitoring and outage acceptance remain required. In-app notifications are persisted."
+      },
+      {
+        "id": 14,
+        "name": "Authentication and security",
+        "status": "unverified",
+        "evidence": "Role, branch and ownership regressions and the recorded web/native dependency audits passed for the client-demo baseline. Independent production security assessment, abuse/load tests and a fresh audit of the final release revision remain required; historical advisory counts are not a current vulnerability finding."
+      },
+      {
+        "id": 15,
+        "name": "Multi-connection concurrency",
+        "status": "unverified",
+        "evidence": "Isolated PostgreSQL concurrency and uncertain-COMMIT tests passed. Run against the reviewed deployment revision and capacity before release."
+      },
+      {
+        "id": 16,
+        "name": "Backups and restore",
+        "status": "unverified",
+        "evidence": "Encrypted local restore tests pass; managed/off-site backups, retention, recovery objectives and production restore drill are required."
+      },
+      {
+        "id": 17,
+        "name": "Monitoring and incidents",
+        "status": "blocked",
+        "evidence": "9 unresolved high/critical incidents. External health/error alerting and on-call ownership must be configured."
+      },
+      {
+        "id": 18,
+        "name": "Workers and recovery",
+        "status": "unverified",
+        "evidence": "This isolated client demo intentionally disables background jobs and has no supervised worker. That is demo configuration, not a production worker outage. Commercial hosting still needs supervised jobs, current heartbeat and restart/failure acceptance."
+      },
+      {
+        "id": 19,
+        "name": "Privacy and retention",
+        "status": "blocked",
+        "evidence": "Owned export and deletion-review intake exist. The explicit retain-all policy keeps records and reports retained disposition; destructive erasure is not authorised. Independent commercial policy review, retention/access handling and an off-site restore drill preserving the hold remain outstanding."
+      },
+      {
+        "id": 20,
+        "name": "Acceptance and authorisation",
+        "status": "blocked",
+        "evidence": "Business, finance, qualified safety reviewers and operations must accept their scope; production release requires explicit user authorisation."
+      }
+    ]
+  },
+  "status": "PASS",
+  "sessionsRevoked": [
+    {
+      "role": "owner",
+      "status": 200
+    },
+    {
+      "role": "manager",
+      "status": 200
+    },
+    {
+      "role": "finance",
+      "status": 200
+    },
+    {
+      "role": "driver",
+      "status": 200
+    },
+    {
+      "role": "technician",
+      "status": 200
+    },
+    {
+      "role": "customer",
+      "status": 200
+    },
+    {
+      "role": "commercial",
+      "status": 200
+    }
+  ],
+  "finishedAt": "2026-11-20T21:50:32.072Z"
+}

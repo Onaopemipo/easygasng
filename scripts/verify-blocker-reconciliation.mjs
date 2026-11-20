@@ -22,11 +22,15 @@ try{
   const a=label?staff.find(x=>x[1]===label):null;const c=a?{email:a[2],password:a[3]}:accounts.find(x=>x.role===role);assert.ok(c);const r=await ok('',role==='driver'||role==='technician'?role+'.login':'login',{email:c.email,password:c.password});tokens[role]=r.token;assert.ok(tokens[role]);assert.equal(r.role,role);pass(role+' existing demo identity');
  }
  const snapshot={};for(const action of ['settings?scope=lagos','inventory','gas.stock','orders','finance.ledger','policies','staff.manage']){
-  const v=await ok('owner',action);snapshot[action]=hash(v);
+  const v=await ok('owner',action);snapshot[action]=hash(action==='staff.manage'?v.people.map(({id,role,branch_id,active})=>({id,role,branch_id,active})):v);
+  if(action==='staff.manage'){const prior=JSON.parse(await fs.readFile('docs/deployment/20261121-web-api-publication/evidence/stable-hosted.json','utf8'));assert.equal(snapshot[action],prior.snapshot.staff.sha256,'Retain prior independently recorded staff authority projection');}
  }
  for(const role of ['customer','commercial'])snapshot[role+'.wallet']=hash(await ok(role,'wallet'));
- result.snapshot=snapshot;
- if(stage==='before')await fs.writeFile('.data/blocker-reconciliation/business-before.json',JSON.stringify(snapshot,null,2)+'\n');
+ result.snapshot=snapshot;result.snapshotScopes={staff:'id,role,branch_id,active; last_login is normal authentication audit activity, not authority'};
+ if(stage==='before'){
+  const prior=JSON.parse(await fs.readFile('.data/blocker-reconciliation/business-before.json','utf8'));for(const [key,value]of Object.entries(prior))if(key!=='staff.manage')assert.equal(snapshot[key],value,'Preserve original before snapshot '+key);
+  await fs.writeFile('.data/blocker-reconciliation/business-before.json',JSON.stringify(snapshot,null,2)+'\n');
+ }
  else assert.deepEqual(snapshot,JSON.parse(await fs.readFile('.data/blocker-reconciliation/business-before.json','utf8')));
  pass('settings, inventory, gas, orders, ledger, policies, staff and customer wallets preserved');
  const incidents=await ok('owner','incidents');result.incidents=incidents.map(({id,status,severity,category,target})=>({id,status,severity,category,target}));

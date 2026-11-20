@@ -1,3 +1,4 @@
+import { reviewedBlockerSourceHash } from "../scripts/lib/reviewed-blocker-source.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -182,13 +183,13 @@ test("DRVS-PRESERVED: historical business baselines retain explicitly reviewed n
       createHash("sha256")
         .update(await readFile(file))
         .digest("hex"),
-      device.files[file] ?? authority.files[file] ?? nativeText.files[file] ?? nativeLogo.files[file] ?? settingsAcceptance.files[file] ?? adminSettingsContinuation.files[file] ?? categoryContinuation.files[file] ?? walletContinuation.files[file] ?? settingsContinuation.files[file] ?? nativeContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? notificationCorrection.files[file] ?? hash,
+      await reviewedBlockerSourceHash(file, device.files[file] ?? authority.files[file] ?? nativeText.files[file] ?? nativeLogo.files[file] ?? settingsAcceptance.files[file] ?? adminSettingsContinuation.files[file] ?? categoryContinuation.files[file] ?? walletContinuation.files[file] ?? settingsContinuation.files[file] ?? nativeContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? notificationCorrection.files[file] ?? hash),
       file,
     );
   }
   for (const [file, hash] of Object.entries(notificationCorrection.files))
-    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), device.files[file] ?? authority.files[file] ?? nativeText.files[file] ?? nativeLogo.files[file] ?? settingsAcceptance.files[file] ?? adminSettingsContinuation.files[file] ?? categoryContinuation.files[file] ?? walletContinuation.files[file] ?? settingsContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? hash, file);
+    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), await reviewedBlockerSourceHash(file, device.files[file] ?? authority.files[file] ?? nativeText.files[file] ?? nativeLogo.files[file] ?? settingsAcceptance.files[file] ?? adminSettingsContinuation.files[file] ?? categoryContinuation.files[file] ?? walletContinuation.files[file] ?? settingsContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? hash), file);
   for (const [file, hash] of Object.entries(technicianContinuation.files))
-    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), device.files[file] ?? authority.files[file] ?? nativeText.files[file] ?? nativeLogo.files[file] ?? settingsAcceptance.files[file] ?? adminSettingsContinuation.files[file] ?? categoryContinuation.files[file] ?? walletContinuation.files[file] ?? settingsContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? hash, file);
+    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), await reviewedBlockerSourceHash(file, device.files[file] ?? authority.files[file] ?? nativeText.files[file] ?? nativeLogo.files[file] ?? settingsAcceptance.files[file] ?? adminSettingsContinuation.files[file] ?? categoryContinuation.files[file] ?? walletContinuation.files[file] ?? settingsContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? hash), file);
 });
 
