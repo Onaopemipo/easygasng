@@ -18,3 +18,5 @@ Each card retains its existing active value/version, history and role-based acti
 The Finance sidebar’s **Wallet & Payments** entry remains the operational workspace for balances and payment records. **Settings → Payments & Wallet** is the configuration area.
 
 [Online payment editor guide](wallet-payments-update.md) · [Audit and source mapping](../settings-categories/AUDIT.md) · [Traceability](../traceability/settings-categories-rtm.md).
+
+Deployed previews: [desktop category view](../settings-categories/evidence/release/stable-desktop.jpg), [phone category navigation](../settings-categories/evidence/release/stable-phone.jpg), [renamed online payment editor](../settings-categories/evidence/release/stable-editor.jpg). This focused guide is current; historical PDF/Word editions have not been regenerated.

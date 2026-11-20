@@ -18,12 +18,16 @@
       "dataSource": "Existing role-filtered settings API and stable setting keys; definition audit in docs/settings-categories/evidence/definition-audit.json; wallet-funding.ts, commerce.ts, checkout-payments.ts and payments/runtime.ts define actual use.",
       "securityControl": "Retain stored category, setting key, scope, permissions, required approvers, risk, values and version; server governance/delegation remains unchanged. UI receives only permitted settings.",
       "testFiles": [
-        "tests/settings-categories.test.ts"
+        "tests/settings-categories.test.ts",
+        "tests/settings-categories-release.test.ts"
       ],
       "testIds": [
         "SCAT-MAPPING",
         "SCAT-SEARCH",
-        "SCAT-SECURITY"
+        "SCAT-SECURITY",
+        "SCAT-DEPLOY",
+        "SCAT-HOSTED",
+        "SCAT-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -32,13 +36,22 @@
         "docs/settings-categories/evidence/focused-tests.txt",
         "docs/settings-categories/evidence/local-browser.json",
         "docs/settings-categories/evidence/typecheck.txt",
-        "docs/settings-categories/evidence/web-build.txt"
+        "docs/settings-categories/evidence/web-build.txt",
+        "docs/settings-categories/evidence/release/candidate-identity.json",
+        "docs/settings-categories/evidence/release/stable-identity.json",
+        "docs/settings-categories/evidence/release/upload-verified.json",
+        "docs/settings-categories/evidence/release/candidate-hosted.json",
+        "docs/settings-categories/evidence/release/stable-hosted.json",
+        "docs/settings-categories/evidence/release/stable-browser.json",
+        "docs/settings-categories/evidence/release-tests.txt",
+        "docs/settings-categories/evidence/native-artifacts-after.json",
+        "docs/user-manual/payment-settings-organisation.md"
       ],
       "acceptanceGate": "SCAT-G01",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified; hosted release pending.",
-      "testResult": "PASS local: 41 focused tests, web typecheck/build and actual browser acceptance; hosted deployment pending.",
-      "outstandingWork": "Deploy exact source, verify stable grouping/search/handoffs, preserve native and business-state snapshots, finalise matrix."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Consolidated presentation verified on promoted demo with canonical definitions, permissions, financial values, versions and business-state baseline preserved.",
+      "testResult": "PASS: 41 focused tests; typecheck/web build; local/hosted browser acceptance; 28 candidate + 28 stable six-role hosted checks; release/RTM validation.",
+      "outstandingWork": "None within this scoped web category consolidation. Existing production NO-GO, actual-import hold, retain-all and unrelated provider/native/physical-operation gates remain. Historical PDF/Word editions not reissued; current guide addendum supplied."
     },
     {
       "id": "SCAT-02",
@@ -56,12 +69,16 @@
       "dataSource": "Existing role-filtered settings API and stable setting keys; definition audit in docs/settings-categories/evidence/definition-audit.json; wallet-funding.ts, commerce.ts, checkout-payments.ts and payments/runtime.ts define actual use.",
       "securityControl": "Retain stored category, setting key, scope, permissions, required approvers, risk, values and version; server governance/delegation remains unchanged. UI receives only permitted settings.",
       "testFiles": [
-        "tests/settings-categories.test.ts"
+        "tests/settings-categories.test.ts",
+        "tests/settings-categories-release.test.ts"
       ],
       "testIds": [
         "SCAT-MAPPING",
         "SCAT-SEARCH",
-        "SCAT-SECURITY"
+        "SCAT-SECURITY",
+        "SCAT-DEPLOY",
+        "SCAT-HOSTED",
+        "SCAT-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -70,13 +87,22 @@
         "docs/settings-categories/evidence/focused-tests.txt",
         "docs/settings-categories/evidence/local-browser.json",
         "docs/settings-categories/evidence/typecheck.txt",
-        "docs/settings-categories/evidence/web-build.txt"
+        "docs/settings-categories/evidence/web-build.txt",
+        "docs/settings-categories/evidence/release/candidate-identity.json",
+        "docs/settings-categories/evidence/release/stable-identity.json",
+        "docs/settings-categories/evidence/release/upload-verified.json",
+        "docs/settings-categories/evidence/release/candidate-hosted.json",
+        "docs/settings-categories/evidence/release/stable-hosted.json",
+        "docs/settings-categories/evidence/release/stable-browser.json",
+        "docs/settings-categories/evidence/release-tests.txt",
+        "docs/settings-categories/evidence/native-artifacts-after.json",
+        "docs/user-manual/payment-settings-organisation.md"
       ],
       "acceptanceGate": "SCAT-G02",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified; hosted release pending.",
-      "testResult": "PASS local: 41 focused tests, web typecheck/build and actual browser acceptance; hosted deployment pending.",
-      "outstandingWork": "Deploy exact source, verify stable grouping/search/handoffs, preserve native and business-state snapshots, finalise matrix."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Consolidated presentation verified on promoted demo with canonical definitions, permissions, financial values, versions and business-state baseline preserved.",
+      "testResult": "PASS: 41 focused tests; typecheck/web build; local/hosted browser acceptance; 28 candidate + 28 stable six-role hosted checks; release/RTM validation.",
+      "outstandingWork": "None within this scoped web category consolidation. Existing production NO-GO, actual-import hold, retain-all and unrelated provider/native/physical-operation gates remain. Historical PDF/Word editions not reissued; current guide addendum supplied."
     },
     {
       "id": "SCAT-03",
@@ -89,17 +115,24 @@
         "apps/web/components/admin.tsx",
         "packages/business-rules/src/settings-categories.ts",
         "apps/web/components/settings-purpose-group.tsx",
-        "apps/web/app/globals.css"
+        "apps/web/app/globals.css",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/delegation.ts"
       ],
       "dataSource": "Existing role-filtered settings API and stable setting keys; definition audit in docs/settings-categories/evidence/definition-audit.json; wallet-funding.ts, commerce.ts, checkout-payments.ts and payments/runtime.ts define actual use.",
       "securityControl": "Retain stored category, setting key, scope, permissions, required approvers, risk, values and version; server governance/delegation remains unchanged. UI receives only permitted settings.",
       "testFiles": [
-        "tests/settings-categories.test.ts"
+        "tests/settings-categories.test.ts",
+        "tests/settings-categories-release.test.ts"
       ],
       "testIds": [
         "SCAT-MAPPING",
         "SCAT-SEARCH",
-        "SCAT-SECURITY"
+        "SCAT-SECURITY",
+        "SCAT-DEPLOY",
+        "SCAT-HOSTED",
+        "SCAT-NO-MOBILE-BUILD"
       ],
       "negativeTests": [
         "SCAT-SECURITY"
@@ -110,13 +143,22 @@
         "docs/settings-categories/evidence/focused-tests.txt",
         "docs/settings-categories/evidence/local-browser.json",
         "docs/settings-categories/evidence/typecheck.txt",
-        "docs/settings-categories/evidence/web-build.txt"
+        "docs/settings-categories/evidence/web-build.txt",
+        "docs/settings-categories/evidence/release/candidate-identity.json",
+        "docs/settings-categories/evidence/release/stable-identity.json",
+        "docs/settings-categories/evidence/release/upload-verified.json",
+        "docs/settings-categories/evidence/release/candidate-hosted.json",
+        "docs/settings-categories/evidence/release/stable-hosted.json",
+        "docs/settings-categories/evidence/release/stable-browser.json",
+        "docs/settings-categories/evidence/release-tests.txt",
+        "docs/settings-categories/evidence/native-artifacts-after.json",
+        "docs/user-manual/payment-settings-organisation.md"
       ],
       "acceptanceGate": "SCAT-G03",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified; hosted release pending.",
-      "testResult": "PASS local: 41 focused tests, web typecheck/build and actual browser acceptance; hosted deployment pending.",
-      "outstandingWork": "Deploy exact source, verify stable grouping/search/handoffs, preserve native and business-state snapshots, finalise matrix."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Consolidated presentation verified on promoted demo with canonical definitions, permissions, financial values, versions and business-state baseline preserved.",
+      "testResult": "PASS: 41 focused tests; typecheck/web build; local/hosted browser acceptance; 28 candidate + 28 stable six-role hosted checks; release/RTM validation.",
+      "outstandingWork": "None within this scoped web category consolidation. Existing production NO-GO, actual-import hold, retain-all and unrelated provider/native/physical-operation gates remain. Historical PDF/Word editions not reissued; current guide addendum supplied."
     },
     {
       "id": "SCAT-04",
@@ -129,17 +171,23 @@
         "apps/web/components/admin.tsx",
         "packages/business-rules/src/settings-categories.ts",
         "apps/web/components/settings-purpose-group.tsx",
-        "apps/web/app/globals.css"
+        "apps/web/app/globals.css",
+        "scripts/verify-settings-categories-release.mjs",
+        "docs/user-manual/payment-settings-organisation.md"
       ],
       "dataSource": "Existing role-filtered settings API and stable setting keys; definition audit in docs/settings-categories/evidence/definition-audit.json; wallet-funding.ts, commerce.ts, checkout-payments.ts and payments/runtime.ts define actual use.",
       "securityControl": "Retain stored category, setting key, scope, permissions, required approvers, risk, values and version; server governance/delegation remains unchanged. UI receives only permitted settings.",
       "testFiles": [
-        "tests/settings-categories.test.ts"
+        "tests/settings-categories.test.ts",
+        "tests/settings-categories-release.test.ts"
       ],
       "testIds": [
         "SCAT-MAPPING",
         "SCAT-SEARCH",
-        "SCAT-SECURITY"
+        "SCAT-SECURITY",
+        "SCAT-DEPLOY",
+        "SCAT-HOSTED",
+        "SCAT-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -148,48 +196,69 @@
         "docs/settings-categories/evidence/focused-tests.txt",
         "docs/settings-categories/evidence/local-browser.json",
         "docs/settings-categories/evidence/typecheck.txt",
-        "docs/settings-categories/evidence/web-build.txt"
+        "docs/settings-categories/evidence/web-build.txt",
+        "docs/settings-categories/evidence/release/candidate-identity.json",
+        "docs/settings-categories/evidence/release/stable-identity.json",
+        "docs/settings-categories/evidence/release/upload-verified.json",
+        "docs/settings-categories/evidence/release/candidate-hosted.json",
+        "docs/settings-categories/evidence/release/stable-hosted.json",
+        "docs/settings-categories/evidence/release/stable-browser.json",
+        "docs/settings-categories/evidence/release-tests.txt",
+        "docs/settings-categories/evidence/native-artifacts-after.json",
+        "docs/user-manual/payment-settings-organisation.md"
       ],
       "acceptanceGate": "SCAT-G04",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified; hosted release pending.",
-      "testResult": "PASS local: 41 focused tests, web typecheck/build and actual browser acceptance; hosted deployment pending.",
-      "outstandingWork": "Deploy exact source, verify stable grouping/search/handoffs, preserve native and business-state snapshots, finalise matrix."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Consolidated presentation verified on promoted demo with canonical definitions, permissions, financial values, versions and business-state baseline preserved.",
+      "testResult": "PASS: 41 focused tests; typecheck/web build; local/hosted browser acceptance; 28 candidate + 28 stable six-role hosted checks; release/RTM validation.",
+      "outstandingWork": "None within this scoped web category consolidation. Existing production NO-GO, actual-import hold, retain-all and unrelated provider/native/physical-operation gates remain. Historical PDF/Word editions not reissued; current guide addendum supplied."
     }
   ],
   "gates": [
     {
       "id": "SCAT-G01",
       "description": "One payment settings category with purpose-based sections",
-      "status": "PARTIAL",
-      "reason": "Implementation/acceptance pending."
+      "status": "PASS",
+      "reason": "Mapped implementation, role/security, exact-source deployment, unchanged-state and actual browser evidence passed."
     },
     {
       "id": "SCAT-G02",
       "description": "Accurate labels and distinctions for card versus cash/bank wallet controls",
-      "status": "PARTIAL",
-      "reason": "Implementation/acceptance pending."
+      "status": "PASS",
+      "reason": "Mapped implementation, role/security, exact-source deployment, unchanged-state and actual browser evidence passed."
     },
     {
       "id": "SCAT-G03",
       "description": "No setting, authority, version, history or hidden-role coverage lost",
-      "status": "PARTIAL",
-      "reason": "Implementation/acceptance pending."
+      "status": "PASS",
+      "reason": "Mapped implementation, role/security, exact-source deployment, unchanged-state and actual browser evidence passed."
     },
     {
       "id": "SCAT-G04",
       "description": "Verified demo rollout, discoverability and documentation",
-      "status": "PARTIAL",
-      "reason": "Implementation/acceptance pending."
+      "status": "PASS",
+      "reason": "Mapped implementation, role/security, exact-source deployment, unchanged-state and actual browser evidence passed."
     }
   ],
   "coverage": {
-    "requirements": {
-      "verified": 0,
+    "implementation": {
+      "implemented": 4,
       "total": 4
     },
+    "requirements": {
+      "verified": 4,
+      "total": 4
+    },
+    "critical": {
+      "verified": 1,
+      "total": 1
+    },
+    "routes": {
+      "verified": 1,
+      "total": 1
+    },
     "gates": {
-      "passed": 0,
+      "passed": 4,
       "total": 4
     },
     "excluded": 0
@@ -198,6 +267,16 @@
     {
       "date": "2026-11-20",
       "change": "Registered before implementation. Consolidate the three confusing payment categories and relocate the legacy integration control for display only. Stored definition categories remain authoritative for existing security rules."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Four scoped requirements/gates verified. Three category aliases consolidated, legacy integration relocated for display, purpose labels/search/editor/history verified. Original definition categories and all authorisation/value/version data preserved. No scopes removed."
     }
-  ]
+  ],
+  "release": {
+    "sourceCommit": "8cc248dca9a5fcd1e61411f341f18a9e6c153f62",
+    "deploymentId": "dpl_FnuCqMVBEnTaLfqsQBw7YB7dfEVf",
+    "url": "https://easygas-client-demo.vercel.app/admin/settings",
+    "mobileBuilds": 0
+  }
 }
