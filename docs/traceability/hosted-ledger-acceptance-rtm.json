@@ -23,12 +23,14 @@
       "testFiles": [
         "tests/hosted-ledger.test.ts",
         "tests/hosted-ledger-evidence.test.ts",
-        "tests/catalogue-services-integration.test.ts"
+        "tests/catalogue-services-integration.test.ts",
+        "tests/hosted-ledger-cross-branch.test.ts"
       ],
       "testIds": [
         "HLED-TOOL",
         "HLED-HOSTED",
-        "HLED-SNAPSHOT"
+        "HLED-SNAPSHOT",
+        "HLED-X-HOSTED"
       ],
       "negativeTests": [
         "HLED-TOOL-NEG",
@@ -39,13 +41,18 @@
         "docs/hosted-ledger-acceptance/evidence/hosted-results.json",
         "docs/hosted-ledger-acceptance/evidence/corrected-snapshot.json",
         "docs/hosted-ledger-acceptance/evidence/acceptance-tests.txt",
-        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt"
+        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt",
+        "docs/hosted-ledger-acceptance/cross-branch/README.md",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/provisioning.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/verify-results.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/hosted-results.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/acceptance-tests.txt"
       ],
       "acceptanceGate": "HLED-G01",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Correct hosted GET returned all 10 verified payments; page sizes 1 and 500 and independent repaired snapshot have identical fingerprints; no-store and terminal cursor verified.",
-      "testResult": "PASS \u2014 5/5 targeted acceptance/evidence tests and 6/6 service-source regressions; hosted sweep 29 checks passed. Hosted foreign-branch case unavailable (0/1), explicitly separate from local pass.",
-      "outstandingWork": "None in this scoped requirement. See HLED-03 for unavailable hosted foreign-branch case. Production and unrelated holds retained."
+      "reason": "Correct hosted GET returned all 10 verified payments; page sizes 1 and 500 and independent repaired snapshot have identical fingerprints; no-store and terminal cursor verified. Follow-up: authorised foreign-branch fixture now present; 30/30 full hosted checks and 13/13 detailed cross-branch checks pass; existing records preserved.",
+      "testResult": "PASS \u2014 initial 5/5 acceptance tests retained; current 8/8 acceptance tests, 13/13 detailed hosted cross-branch checks and 30/30 repeated seven-role hosted checks. Original unavailable case now exercised with authorised synthetic demo fixture; finance remains at original 10 rows, owner sees 11.",
+      "outstandingWork": "None in this scoped ledger requirement. Labelled immutable 1-kobo synthetic fixture retained in inactive demo branch with cancelled order. Production NO-GO and unrelated gates remain unchanged."
     },
     {
       "id": "HLED-02",
@@ -68,11 +75,13 @@
       "testFiles": [
         "tests/hosted-ledger.test.ts",
         "tests/hosted-ledger-evidence.test.ts",
-        "tests/catalogue-services-integration.test.ts"
+        "tests/catalogue-services-integration.test.ts",
+        "tests/hosted-ledger-cross-branch.test.ts"
       ],
       "testIds": [
         "HLED-HOSTED",
-        "HLED-ISOLATION"
+        "HLED-ISOLATION",
+        "HLED-X-HOSTED"
       ],
       "negativeTests": [
         "HLED-TOOL-NEG",
@@ -83,19 +92,24 @@
         "docs/hosted-ledger-acceptance/evidence/hosted-results.json",
         "docs/hosted-ledger-acceptance/evidence/corrected-snapshot.json",
         "docs/hosted-ledger-acceptance/evidence/acceptance-tests.txt",
-        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt"
+        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt",
+        "docs/hosted-ledger-acceptance/cross-branch/README.md",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/provisioning.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/verify-results.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/hosted-results.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/acceptance-tests.txt"
       ],
       "acceptanceGate": "HLED-G02",
       "status": "VERIFIED_COMPLETE",
-      "reason": "All seven current roles authenticated: owner and finance 200; five other roles 403 before malformed-query validation; anonymous 401, restricted workspaces 403, invalid inputs 400 and wrong methods 405.",
-      "testResult": "PASS \u2014 5/5 targeted acceptance/evidence tests and 6/6 service-source regressions; hosted sweep 29 checks passed. Hosted foreign-branch case unavailable (0/1), explicitly separate from local pass.",
-      "outstandingWork": "None in this scoped requirement. See HLED-03 for unavailable hosted foreign-branch case. Production and unrelated holds retained."
+      "reason": "All seven current roles authenticated: owner and finance 200; five other roles 403 before malformed-query validation; anonymous 401, restricted workspaces 403, invalid inputs 400 and wrong methods 405. Follow-up: authorised foreign-branch fixture now present; 30/30 full hosted checks and 13/13 detailed cross-branch checks pass; existing records preserved.",
+      "testResult": "PASS \u2014 initial 5/5 acceptance tests retained; current 8/8 acceptance tests, 13/13 detailed hosted cross-branch checks and 30/30 repeated seven-role hosted checks. Original unavailable case now exercised with authorised synthetic demo fixture; finance remains at original 10 rows, owner sees 11.",
+      "outstandingWork": "None in this scoped ledger requirement. Labelled immutable 1-kobo synthetic fixture retained in inactive demo branch with cancelled order. Production NO-GO and unrelated gates remain unchanged."
     },
     {
       "id": "HLED-03",
-      "requirement": "Verify branch/cursor isolation and financial-source immutability without changing hosted assignments",
+      "requirement": "Verify hosted branch/cursor isolation and preserve all existing financial records using an authorised synthetic foreign-branch fixture",
       "priority": "P1",
-      "scope": "Hosted client-demo read-only ledger acceptance; local disposable fixtures for cross-branch cases unavailable on hosted data. No financial writes, role/grant changes, renewals, native builds or broadened permissions.",
+      "scope": "User-authorised minimal synthetic client-demo branch/payment fixture plus hosted role/cursor/read-only preservation checks. Existing assignments and data preserved; no production writes, permission/schema changes, operational activation, external payment, renewals or native build.",
       "uiReference": "Remaining MDEV hosted ledger check: wrong GET ledger returned 405",
       "route": "GET /api/finance.ledger?limit=&after=",
       "implementationFiles": [
@@ -105,35 +119,49 @@
         "scripts/verify-hosted-ledger.mjs",
         "scripts/lib/hosted-ledger.mjs",
         "apps/web/lib/service.ts",
-        "packages/business-rules/src/staff-privileges.ts"
+        "packages/business-rules/src/staff-privileges.ts",
+        "scripts/seed-hosted-ledger-cross-branch.sql",
+        "scripts/verify-hosted-ledger-cross-branch.mjs"
       ],
-      "dataSource": "Verified payments joined to existing orders/service bookings; authenticated role, finance branch and current staff privileges.",
-      "securityControl": "Owner global / finance assigned-branch only; other roles denied; strict query contract, scoped cursor, no-store response; read audits/auth logs expected, financial state unchanged.",
+      "dataSource": "Verified payments joined to existing orders/service bookings; authenticated role, finance branch and current staff privileges. Labelled fixture provisioned in dedicated Neon demo through existing owner SQL console; hosted verification uses original restricted application runtime.",
+      "securityControl": "Existing API owner-global / finance-assigned-branch filtering and cursor ownership check retained. Synthetic-only SQL target/identity/collision guards, atomic transaction and nine-table preservation assertions; inactive branch/customer, cancelled order, no stock/settings/provider transaction. Append-only payment and audit retained; no schema/grant changes or new QA endpoint.",
       "testFiles": [
         "tests/hosted-ledger.test.ts",
         "tests/hosted-ledger-evidence.test.ts",
-        "tests/catalogue-services-integration.test.ts"
+        "tests/catalogue-services-integration.test.ts",
+        "tests/hosted-ledger-cross-branch.test.ts"
       ],
       "testIds": [
         "HLED-ISOLATION",
-        "HLED-HOSTED"
+        "HLED-HOSTED",
+        "HLED-X-HOSTED",
+        "HLED-X-SEED",
+        "HLED-X-TARGET"
       ],
       "negativeTests": [
         "HLED-TOOL-NEG",
-        "HLED-ISOLATION"
+        "HLED-ISOLATION",
+        "HLED-X-SEED",
+        "HLED-X-TARGET",
+        "HLED-X-HOSTED"
       ],
       "evidence": [
         "docs/hosted-ledger-acceptance/README.md",
         "docs/hosted-ledger-acceptance/evidence/hosted-results.json",
         "docs/hosted-ledger-acceptance/evidence/corrected-snapshot.json",
         "docs/hosted-ledger-acceptance/evidence/acceptance-tests.txt",
-        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt"
+        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt",
+        "docs/hosted-ledger-acceptance/cross-branch/README.md",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/provisioning.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/verify-results.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/hosted-results.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/acceptance-tests.txt"
       ],
       "acceptanceGate": "HLED-G03",
-      "status": "PARTIAL",
-      "reason": "Hosted source preservation and local restricted-server branch/tied-cursor isolation passed. Hosted contains only the finance branch, so a real hosted foreign-branch cursor case remains unavailable and untested; no data/role changes were made.",
-      "testResult": "PASS \u2014 5/5 targeted acceptance/evidence tests and 6/6 service-source regressions; hosted sweep 29 checks passed. Hosted foreign-branch case unavailable (0/1), explicitly separate from local pass.",
-      "outstandingWork": "Provide an existing approved foreign-branch hosted verified payment and repeat finance cursor isolation; do not manufacture hosted financial state or change roles. Production and unrelated holds retained."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Authorised retained 1-kobo synthetic fixture is in an inactive foreign branch with inactive customer and cancelled order. Owner sees 11 payments; finance sees exactly its original 10 and cannot use the foreign cursor, spoof a branch/role/id or read the foreign order. Existing ledger, business rows and staff assignments preserved; hosted case now passed.",
+      "testResult": "PASS \u2014 initial 5/5 acceptance tests retained; current 8/8 acceptance tests, 13/13 detailed hosted cross-branch checks and 30/30 repeated seven-role hosted checks. Original unavailable case now exercised with authorised synthetic demo fixture; finance remains at original 10 rows, owner sees 11.",
+      "outstandingWork": "None in this scoped ledger requirement. Labelled immutable 1-kobo synthetic fixture retained in inactive demo branch with cancelled order. Production NO-GO and unrelated gates remain unchanged."
     },
     {
       "id": "HLED-04",
@@ -149,19 +177,23 @@
         "scripts/verify-hosted-ledger.mjs",
         "scripts/lib/hosted-ledger.mjs",
         "apps/web/lib/service.ts",
-        "packages/business-rules/src/staff-privileges.ts"
+        "packages/business-rules/src/staff-privileges.ts",
+        "scripts/seed-hosted-ledger-cross-branch.sql",
+        "scripts/verify-hosted-ledger-cross-branch.mjs"
       ],
       "dataSource": "Verified payments joined to existing orders/service bookings; authenticated role, finance branch and current staff privileges.",
       "securityControl": "Owner global / finance assigned-branch only; other roles denied; strict query contract, scoped cursor, no-store response; read audits/auth logs expected, financial state unchanged.",
       "testFiles": [
         "tests/hosted-ledger.test.ts",
         "tests/hosted-ledger-evidence.test.ts",
-        "tests/catalogue-services-integration.test.ts"
+        "tests/catalogue-services-integration.test.ts",
+        "tests/hosted-ledger-cross-branch.test.ts"
       ],
       "testIds": [
         "HLED-TOOL",
         "HLED-TOOL-NEG",
-        "HLED-SNAPSHOT"
+        "HLED-SNAPSHOT",
+        "HLED-X-HOSTED"
       ],
       "negativeTests": [
         "HLED-TOOL-NEG",
@@ -172,13 +204,18 @@
         "docs/hosted-ledger-acceptance/evidence/hosted-results.json",
         "docs/hosted-ledger-acceptance/evidence/corrected-snapshot.json",
         "docs/hosted-ledger-acceptance/evidence/acceptance-tests.txt",
-        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt"
+        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt",
+        "docs/hosted-ledger-acceptance/cross-branch/README.md",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/provisioning.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/verify-results.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/hosted-results.json",
+        "docs/hosted-ledger-acceptance/cross-branch/evidence/acceptance-tests.txt"
       ],
       "acceptanceGate": "HLED-G04",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Prior snapshot tool now uses finance.ledger with validated complete pagination, successful-response checks and finally-session cleanup. Independent hosted snapshot matches sweep; historical wrong-endpoint 405 retained.",
-      "testResult": "PASS \u2014 5/5 targeted acceptance/evidence tests and 6/6 service-source regressions; hosted sweep 29 checks passed. Hosted foreign-branch case unavailable (0/1), explicitly separate from local pass.",
-      "outstandingWork": "None in this scoped requirement. See HLED-03 for unavailable hosted foreign-branch case. Production and unrelated holds retained."
+      "reason": "Prior snapshot tool now uses finance.ledger with validated complete pagination, successful-response checks and finally-session cleanup. Independent hosted snapshot matches sweep; historical wrong-endpoint 405 retained. Follow-up: authorised foreign-branch fixture now present; 30/30 full hosted checks and 13/13 detailed cross-branch checks pass; existing records preserved.",
+      "testResult": "PASS \u2014 initial 5/5 acceptance tests retained; current 8/8 acceptance tests, 13/13 detailed hosted cross-branch checks and 30/30 repeated seven-role hosted checks. Original unavailable case now exercised with authorised synthetic demo fixture; finance remains at original 10 rows, owner sees 11.",
+      "outstandingWork": "None in this scoped ledger requirement. Labelled immutable 1-kobo synthetic fixture retained in inactive demo branch with cancelled order. Production NO-GO and unrelated gates remain unchanged."
     }
   ],
   "gates": [
@@ -196,9 +233,9 @@
     },
     {
       "id": "HLED-G03",
-      "description": "Verify branch/cursor isolation and financial-source immutability without changing hosted assignments",
-      "status": "PARTIAL",
-      "reason": "Hosted source preservation and local restricted-server branch/tied-cursor isolation passed. Hosted contains only the finance branch, so a real hosted foreign-branch cursor case remains unavailable and untested; no data/role changes were made."
+      "description": "Verify hosted branch/cursor isolation and preserve all existing financial records using an authorised synthetic foreign-branch fixture",
+      "status": "PASS",
+      "reason": "Authorised retained 1-kobo synthetic fixture is in an inactive foreign branch with inactive customer and cancelled order. Owner sees 11 payments; finance sees exactly its original 10 and cannot use the foreign cursor, spoof a branch/role/id or read the foreign order. Existing ledger, business rows and staff assignments preserved; hosted case now passed."
     },
     {
       "id": "HLED-G04",
@@ -213,8 +250,8 @@
       "total": 4
     },
     "requirements": {
-      "verified": 3,
-      "partial": 1,
+      "verified": 4,
+      "partial": 0,
       "total": 4
     },
     "roles": {
@@ -222,8 +259,8 @@
       "total": 7
     },
     "gates": {
-      "passed": 3,
-      "partial": 1,
+      "passed": 4,
+      "partial": 0,
       "total": 4
     },
     "hostedEndpointReads": {
@@ -231,21 +268,25 @@
       "total": 4
     },
     "hostedChecks": {
-      "passed": 29,
-      "unavailable": 1,
+      "passed": 30,
+      "unavailable": 0,
       "total": 30
     },
     "hostedForeignBranch": {
-      "verified": 0,
-      "untested": 1,
+      "verified": 1,
+      "untested": 0,
       "total": 1,
-      "reason": "No hosted verified-payment row outside finance QA branch"
+      "reason": "User-authorised inactive labelled synthetic foreign-branch payment verified through HTTPS owner/finance sessions"
     },
     "localCrossBranch": {
       "verified": 1,
       "total": 1
     },
-    "excluded": 0
+    "excluded": 0,
+    "detailedHostedCrossBranch": {
+      "passed": 13,
+      "total": 13
+    }
   },
   "changeLog": [
     {
@@ -255,6 +296,18 @@
     {
       "date": "2026-11-21",
       "change": "Closed original endpoint gap with 10-row complete hosted reads and seven-role authority sweep; repaired verification tooling, retained original 405 history. Local restricted-server branch/tied-cursor and booking ledger regressions passed. Expanded hosted foreign-branch case remains untested and HLED-03 partial."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "User explicitly authorises synthetic demo data to complete the hosted cross-branch ledger check. Expand prior read-only scope to one labelled, non-fulfillable fixture in an inactive isolated demo branch, using restricted demo runtime only. Preserve all existing rows, roles, assignments, immutable-payment controls and production NO-GO. HLED-03 remains PARTIAL until hosted proof is executed."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Provisioning path correction before writes: deployment secrets are not downloadable; existing Neon owner SQL console is available. SET ROLE to the runtime is denied and was rolled back; no grants changed. Execute the reviewed minimal seed under the already-authorised console owner connection, then test isolation through original restricted hosted API sessions. No QA endpoint or deployment is added."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Executed user-authorised synthetic seed through verified demo Neon console without altering grants/schema. Fixed readback private-search-path defect and tested public-search-path case. Original existing rows preserved; retained one labelled 1-kobo payment in inactive branch, inactive customer and cancelled order. Hosted owner sees 11, finance exactly original 10; foreign cursor denied at limits 1/500 and branch/role/id spoofing denied. HLED-03/G03 closed; 4/4 requirements/gates, 30/30 full hosted and 13/13 detailed checks. First-pass unavailable evidence retained as history; unrelated holds unchanged."
     }
   ]
 }

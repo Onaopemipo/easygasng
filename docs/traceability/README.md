@@ -360,3 +360,5 @@ Native Orders authority follow-up (21 November): [matrix](native-order-authority
 Sequential mobile device acceptance (21 November): [matrix](mobile-device-acceptance-rtm.md). Four ordered stages, seven roles and seven sibling screens retained.
 
 Hosted ledger follow-up (21 November): [matrix](hosted-ledger-acceptance-rtm.md). Correct endpoint, role restrictions, pagination, scoped cursors and preserved financial data.
+
+Hosted synthetic cross-branch closure (21 November): [report and evidence](../hosted-ledger-acceptance/cross-branch/README.md). HLED-03/G03 now passes; all four ledger gates verified, 30/30 full hosted checks. User-authorised inactive fixture retained; existing data and production holds preserved.

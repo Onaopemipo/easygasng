@@ -51,7 +51,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Resolved ORDTXT-F01 by requiring customer/commercial role and matching order.customer_id before mounting refund controls. Staff no longer send doomed refund.lines reads. Real dispatcher ownership denials retained; owner simulator delivered order shows no refund form or Order not found.",
       "testResult": "PASS \u2014 18/18 selected component/regression tests, 2/2 real dispatcher/restricted refund tests, 5/5 prototype-preservation checks and mobile typecheck. Owner iOS read/visibility acceptance after full reload. Documentation/manual checks 6/6 pass.",
-      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative remains unavailable/untested in HLED-03. Signed/physical-device/provider/300-feature and production gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative now passes in HLED-03 with user-authorised synthetic fixture; earlier unavailable result retained as history. Signed/physical-device/provider/300-feature and production gates remain."
     },
     {
       "id": "MORD-02",
@@ -102,7 +102,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Customer-only doorstep consent and excess-request controls use the same ownership check. Staff keep their existing server-authorised visit/invoice reads. Owner header is Orders rather than Your Orders.",
       "testResult": "PASS \u2014 18/18 selected component/regression tests, 2/2 real dispatcher/restricted refund tests, 5/5 prototype-preservation checks and mobile typecheck. Owner iOS read/visibility acceptance after full reload. Documentation/manual checks 6/6 pass.",
-      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative remains unavailable/untested in HLED-03. Signed/physical-device/provider/300-feature and production gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative now passes in HLED-03 with user-authorised synthetic fixture; earlier unavailable result retained as history. Signed/physical-device/provider/300-feature and production gates remain."
     },
     {
       "id": "MORD-03",
@@ -156,7 +156,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Selected refund quantities require positive whole values within server remaining amounts, nonempty selection, reason and explicit wallet-credit consent. Loading/failed/empty states cannot submit; failed lookups retry, concurrent taps lock, uncertain retries reuse the operation key, successful requests stay locked, late prior-order reads are ignored.",
       "testResult": "PASS \u2014 18/18 selected component/regression tests, 2/2 real dispatcher/restricted refund tests, 5/5 prototype-preservation checks and mobile typecheck. Owner iOS read/visibility acceptance after full reload. Documentation/manual checks 6/6 pass.",
-      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative remains unavailable/untested in HLED-03. Signed/physical-device/provider/300-feature and production gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative now passes in HLED-03 with user-authorised synthetic fixture; earlier unavailable result retained as history. Signed/physical-device/provider/300-feature and production gates remain."
     },
     {
       "id": "MORD-04",
@@ -207,7 +207,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Executed component matrix across seven roles, local restricted API tests, original rendering regressions, source/prototype preservation and owner iOS after full source reload. No new native binary, install, backend change or hosted write.",
       "testResult": "PASS \u2014 18/18 selected component/regression tests, 2/2 real dispatcher/restricted refund tests, 5/5 prototype-preservation checks and mobile typecheck. Owner iOS read/visibility acceptance after full reload. Documentation/manual checks 6/6 pass.",
-      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative remains unavailable/untested in HLED-03. Signed/physical-device/provider/300-feature and production gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative now passes in HLED-03 with user-authorised synthetic fixture; earlier unavailable result retained as history. Signed/physical-device/provider/300-feature and production gates remain."
     }
   ],
   "gates": [
@@ -283,6 +283,10 @@
     {
       "date": "2026-11-21",
       "change": "Link HLED-01\u201304 follow-up resolving historical wrong ledger endpoint; retain unavailable hosted foreign-branch negative and all unrelated native/production holds. No scope or stable requirement IDs removed."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "User-authorised synthetic foreign-branch follow-up closes HLED-03: hosted owner sees 11 entries, finance retains original 10 and cannot access foreign cursor/order or spoof branch/role/id. Existing records/assignments preserved; retained inactive labelled fixture. Prior unavailable observation retained as history; unrelated holds unchanged."
     }
   ],
   "resolvedFindings": [

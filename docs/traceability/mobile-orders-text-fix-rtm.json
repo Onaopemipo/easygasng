@@ -43,7 +43,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Removed explicit JSX whitespace directly under View. Before-fix component fails native text-host invariant; repaired customer and driver states pass, including loaded photos/invoice/amendments and error feedback. Simulator Orders and visit read pass after full Expo source reload.",
       "testResult": "PASS \u2014 24/24 selected regression tests, 5/5 prototype-preservation tests, 6/6 traceability/manual checks and mobile typecheck. iOS Orders entry and visit read executed after full reload; native binaries unchanged.",
-      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative remains unavailable/untested in HLED-03. Signed/physical-device/provider/300-feature and production gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative now passes in HLED-03 with user-authorised synthetic fixture; earlier unavailable result retained as history. Signed/physical-device/provider/300-feature and production gates remain."
     },
     {
       "id": "ORDTXT-02",
@@ -92,7 +92,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Nine literal spacers removed from eight source files. AST regression checks literal strings remain under Text-compatible hosts. Source continuation hashes and original prototype preservation pass. This is source-pattern acceptance, not a full live acceptance of seven sibling surfaces.",
       "testResult": "PASS \u2014 24/24 selected regression tests, 5/5 prototype-preservation tests, 6/6 traceability/manual checks and mobile typecheck. iOS Orders entry and visit read executed after full reload; native binaries unchanged.",
-      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative remains unavailable/untested in HLED-03. Signed/physical-device/provider/300-feature and production gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative now passes in HLED-03 with user-authorised synthetic fixture; earlier unavailable result retained as history. Signed/physical-device/provider/300-feature and production gates remain."
     },
     {
       "id": "ORDTXT-03",
@@ -141,7 +141,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing iPhone 17 Pro Expo Go 58 preview reloaded against repaired Metro source. Owner Operations > Orders and visit-details read visibly succeed without LogBox. Native artifacts and timestamps plus original prototype hashes unchanged; zero new native binaries.",
       "testResult": "PASS \u2014 24/24 selected regression tests, 5/5 prototype-preservation tests, 6/6 traceability/manual checks and mobile typecheck. iOS Orders entry and visit read executed after full reload; native binaries unchanged.",
-      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative remains unavailable/untested in HLED-03. Signed/physical-device/provider/300-feature and production gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; historical unsupported ledger GET resolved by correct finance.ledger follow-up HLED-01\u201304; hosted foreign-branch negative now passes in HLED-03 with user-authorised synthetic fixture; earlier unavailable result retained as history. Signed/physical-device/provider/300-feature and production gates remain."
     }
   ],
   "gates": [
@@ -218,6 +218,10 @@
     {
       "date": "2026-11-21",
       "change": "Link HLED-01\u201304 follow-up resolving historical wrong ledger endpoint; retain unavailable hosted foreign-branch negative and all unrelated native/production holds. No scope or stable requirement IDs removed."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "User-authorised synthetic foreign-branch follow-up closes HLED-03: hosted owner sees 11 entries, finance retains original 10 and cannot access foreign cursor/order or spoof branch/role/id. Existing records/assignments preserved; retained inactive labelled fixture. Prior unavailable observation retained as history; unrelated holds unchanged."
     }
   ],
   "openFindings": [

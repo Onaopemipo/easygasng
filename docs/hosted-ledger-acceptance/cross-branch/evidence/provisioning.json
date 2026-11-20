@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "dateBasis": "SQL console observations during authorised provisioning; exact hosted HTTP timestamps in verify-results.json",
+  "project": "easygas-client-demo-db",
+  "neonProjectId": "silent-sun-90759854",
+  "neonBranchId": "br-old-cloud-baisdpke",
+  "consoleDatabase": "neondb",
+  "consoleRole": "neondb_owner",
+  "authorisation": "User explicitly requested synthetic demo data for hosted cross-branch ledger test, 21 Nov 2026",
+  "preflight": {
+    "orders": 14,
+    "payments": 10,
+    "lagosFinanceAccounts": 6
+  },
+  "transaction": {
+    "begin": "PASS",
+    "insertBlock": "PASS",
+    "commit": "PASS",
+    "inserts": {
+      "branches": 1,
+      "inactiveCustomers": 1,
+      "cancelledOrders": 1,
+      "syntheticVerifiedPayments": 1,
+      "auditEvents": 1
+    },
+    "mutationSqlSha256": "c104c6d670cc3e11ee5c71f56034b67c9be02f5f339d1714c6aa7eb20c6e7cb2",
+    "preservationAssertions": [
+      "branches",
+      "users",
+      "orders",
+      "verified_payments",
+      "wallet_entries",
+      "credit_requests",
+      "inventory",
+      "gas_stock",
+      "settings"
+    ],
+    "existingRowsPreserved": true,
+    "schemaOrGrantChanges": false
+  },
+  "readback": {
+    "branch": "qa-ledger-cross-branch",
+    "branchActive": false,
+    "customerActive": false,
+    "orderStatus": "cancelled",
+    "reference": "SYNTHETIC-QA-HLED-PAY-20261121",
+    "amountKobo": 1,
+    "method": "synthetic_qa",
+    "paymentCount": 11,
+    "syntheticAudit": true
+  },
+  "retention": "Append-only labelled demo payment retained; no cleanup deletion or trigger disabling",
+  "findings": [
+    {
+      "issue": "Console cannot SET ROLE easygas_demo_runtime",
+      "resolution": "Rolled back read-only attempt; used existing authorised console owner for reviewed seed only, changed no grants. Original deployed runtime performs HTTP verification."
+    },
+    {
+      "issue": "Post-COMMIT SELECT lost the transaction-local private search path",
+      "resolution": "Insert transaction had committed; schema-qualified the read-only readback and verified retained fixture. Added local public-search-path regression."
+    }
+  ],
+  "proof": "docs/hosted-ledger-acceptance/cross-branch/evidence/synthetic-fixture.jpg",
+  "recordedAt": "2026-11-20T18:19:18.913015+00:00",
+  "screenshotCapturedAt": "2026-11-20T18:17:56.104615+00:00"
+}
