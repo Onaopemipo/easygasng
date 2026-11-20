@@ -1,0 +1,322 @@
+{
+  "phase": "21 November committed-source GitHub publication and client-demo web/API release",
+  "productionDecision": "Production NO-GO, actual-import hold, retain-all and unrelated native/device/provider/feature gates retained",
+  "requirements": [
+    {
+      "id": "PUB21-01",
+      "requirement": "Publish all 49 existing commits without rewriting shared history",
+      "priority": "P1",
+      "scope": "User-authorised GitHub push and client-demo web/API deployment; no mobile binary build/export/install/distribution; production NO-GO and all unrelated gates retained.",
+      "uiReference": "Existing client demo and committed web/API behaviour",
+      "route": "https://easygas-client-demo.vercel.app and existing role-scoped APIs",
+      "implementationFiles": [
+        ".vercelignore",
+        ".github/workflows/release-validation.yml",
+        "apps/web/package.json",
+        "scripts/verify-published-web-api.mjs"
+      ],
+      "dataSource": "Committed source/upload hashes, GitHub remote and CI, linked Vercel project/deployment, authenticated existing demo APIs and retained native artifacts.",
+      "securityControl": "Pinned existing project/alias, no force push, no secrets/native/local fixtures in web upload, candidate checked before promotion, existing runtime/role/branch/data controls retained; no mobile build commands.",
+      "testFiles": [
+        "tests/web-api-publication.test.ts"
+      ],
+      "testIds": [
+        "PUB21-GIT"
+      ],
+      "negativeTests": [
+        "PUB21-HOSTED",
+        "PUB21-NATIVE"
+      ],
+      "evidence": [
+        "docs/deployment/20261121-web-api-publication/evidence/publication-plan.json",
+        "docs/deployment/20261121-web-api-publication/README.md",
+        "docs/deployment/20261121-web-api-publication/evidence/source-publication.json",
+        "docs/deployment/20261121-web-api-publication/evidence/source-integrity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/candidate-identity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/candidate-hosted.json",
+        "docs/deployment/20261121-web-api-publication/evidence/stable-identity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/stable-hosted.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ledger-cross-branch.json",
+        "docs/deployment/20261121-web-api-publication/evidence/browser-observations.json",
+        "docs/deployment/20261121-web-api-publication/evidence/release-core-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-repair-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/release-final-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-final-jobs.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-test-summary.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-initial-failures.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-history-fix-followup.json",
+        "docs/deployment/20261121-web-api-publication/evidence/native-preservation.json",
+        "docs/deployment/20261121-web-api-publication/evidence/documentation-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-artifact.json",
+        "docs/deployment/20261121-web-api-publication/evidence/final-alias-readback.json"
+      ],
+      "acceptanceGate": "PUB21-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All 49 original commits published and retained by follow-ups. Exact 435-file committed-source Ready candidate promoted and verified at stable alias. Corrected full CI passed both jobs; native artifacts preserved; final evidence and traceability validated.",
+      "testResult": "PASS \u2014 four distinct release checks (3 core + 1 final), 1,137/1,137 full CI tests with zero failures/skips, web build/types/audit and native type/dependency/audit checks with export skipped; 37 targeted repair checks, 36 candidate + 36 stable hosted checks, 13 ledger exceptions and four browser observations. Sets overlap and are not added as feature coverage.",
+      "outstandingWork": "None in this bounded publication/demo release. Production NO-GO, actual-import hold, retain-all and all prior feature/native/signed-device/provider/physical gates remain unchanged. No new mobile binaries exported, built, installed or distributed."
+    },
+    {
+      "id": "PUB21-02",
+      "requirement": "Deploy exact committed web/API upload to the existing client-demo project and verify promotion",
+      "priority": "P1",
+      "scope": "User-authorised GitHub push and client-demo web/API deployment; no mobile binary build/export/install/distribution; production NO-GO and all unrelated gates retained.",
+      "uiReference": "Existing client demo and committed web/API behaviour",
+      "route": "https://easygas-client-demo.vercel.app and existing role-scoped APIs",
+      "implementationFiles": [
+        ".vercelignore",
+        ".github/workflows/release-validation.yml",
+        "apps/web/package.json",
+        "scripts/verify-published-web-api.mjs"
+      ],
+      "dataSource": "Committed source/upload hashes, GitHub remote and CI, linked Vercel project/deployment, authenticated existing demo APIs and retained native artifacts.",
+      "securityControl": "Pinned existing project/alias, no force push, no secrets/native/local fixtures in web upload, candidate checked before promotion, existing runtime/role/branch/data controls retained; no mobile build commands.",
+      "testFiles": [
+        "tests/web-api-publication.test.ts"
+      ],
+      "testIds": [
+        "PUB21-SOURCE"
+      ],
+      "negativeTests": [
+        "PUB21-HOSTED",
+        "PUB21-NATIVE"
+      ],
+      "evidence": [
+        "docs/deployment/20261121-web-api-publication/evidence/publication-plan.json",
+        "docs/deployment/20261121-web-api-publication/README.md",
+        "docs/deployment/20261121-web-api-publication/evidence/source-publication.json",
+        "docs/deployment/20261121-web-api-publication/evidence/source-integrity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/candidate-identity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/candidate-hosted.json",
+        "docs/deployment/20261121-web-api-publication/evidence/stable-identity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/stable-hosted.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ledger-cross-branch.json",
+        "docs/deployment/20261121-web-api-publication/evidence/browser-observations.json",
+        "docs/deployment/20261121-web-api-publication/evidence/release-core-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-repair-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/release-final-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-final-jobs.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-test-summary.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-initial-failures.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-history-fix-followup.json",
+        "docs/deployment/20261121-web-api-publication/evidence/native-preservation.json",
+        "docs/deployment/20261121-web-api-publication/evidence/documentation-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-artifact.json",
+        "docs/deployment/20261121-web-api-publication/evidence/final-alias-readback.json"
+      ],
+      "acceptanceGate": "PUB21-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All 49 original commits published and retained by follow-ups. Exact 435-file committed-source Ready candidate promoted and verified at stable alias. Corrected full CI passed both jobs; native artifacts preserved; final evidence and traceability validated.",
+      "testResult": "PASS \u2014 four distinct release checks (3 core + 1 final), 1,137/1,137 full CI tests with zero failures/skips, web build/types/audit and native type/dependency/audit checks with export skipped; 37 targeted repair checks, 36 candidate + 36 stable hosted checks, 13 ledger exceptions and four browser observations. Sets overlap and are not added as feature coverage.",
+      "outstandingWork": "None in this bounded publication/demo release. Production NO-GO, actual-import hold, retain-all and all prior feature/native/signed-device/provider/physical gates remain unchanged. No new mobile binaries exported, built, installed or distributed."
+    },
+    {
+      "id": "PUB21-03",
+      "requirement": "Verify hosted roles, web workflows and ledger isolation without changing business data or production controls",
+      "priority": "P1",
+      "scope": "User-authorised GitHub push and client-demo web/API deployment; no mobile binary build/export/install/distribution; production NO-GO and all unrelated gates retained.",
+      "uiReference": "Existing client demo and committed web/API behaviour",
+      "route": "https://easygas-client-demo.vercel.app and existing role-scoped APIs",
+      "implementationFiles": [
+        ".vercelignore",
+        ".github/workflows/release-validation.yml",
+        "apps/web/package.json",
+        "scripts/verify-published-web-api.mjs",
+        "scripts/verify-hosted-ledger-cross-branch.mjs"
+      ],
+      "dataSource": "Committed source/upload hashes, GitHub remote and CI, linked Vercel project/deployment, authenticated existing demo APIs and retained native artifacts.",
+      "securityControl": "Pinned existing project/alias, no force push, no secrets/native/local fixtures in web upload, candidate checked before promotion, existing runtime/role/branch/data controls retained; no mobile build commands.",
+      "testFiles": [
+        "tests/web-api-publication.test.ts"
+      ],
+      "testIds": [
+        "PUB21-HOSTED"
+      ],
+      "negativeTests": [
+        "PUB21-HOSTED",
+        "PUB21-NATIVE"
+      ],
+      "evidence": [
+        "docs/deployment/20261121-web-api-publication/evidence/publication-plan.json",
+        "docs/deployment/20261121-web-api-publication/README.md",
+        "docs/deployment/20261121-web-api-publication/evidence/source-publication.json",
+        "docs/deployment/20261121-web-api-publication/evidence/source-integrity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/candidate-identity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/candidate-hosted.json",
+        "docs/deployment/20261121-web-api-publication/evidence/stable-identity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/stable-hosted.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ledger-cross-branch.json",
+        "docs/deployment/20261121-web-api-publication/evidence/browser-observations.json",
+        "docs/deployment/20261121-web-api-publication/evidence/release-core-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-repair-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/release-final-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-final-jobs.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-test-summary.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-initial-failures.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-history-fix-followup.json",
+        "docs/deployment/20261121-web-api-publication/evidence/native-preservation.json",
+        "docs/deployment/20261121-web-api-publication/evidence/documentation-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-artifact.json",
+        "docs/deployment/20261121-web-api-publication/evidence/final-alias-readback.json"
+      ],
+      "acceptanceGate": "PUB21-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All 49 original commits published and retained by follow-ups. Exact 435-file committed-source Ready candidate promoted and verified at stable alias. Corrected full CI passed both jobs; native artifacts preserved; final evidence and traceability validated.",
+      "testResult": "PASS \u2014 four distinct release checks (3 core + 1 final), 1,137/1,137 full CI tests with zero failures/skips, web build/types/audit and native type/dependency/audit checks with export skipped; 37 targeted repair checks, 36 candidate + 36 stable hosted checks, 13 ledger exceptions and four browser observations. Sets overlap and are not added as feature coverage.",
+      "outstandingWork": "None in this bounded publication/demo release. Production NO-GO, actual-import hold, retain-all and all prior feature/native/signed-device/provider/physical gates remain unchanged. No new mobile binaries exported, built, installed or distributed."
+    },
+    {
+      "id": "PUB21-04",
+      "requirement": "Preserve native binaries and record release evidence, acceptance limits and traceability",
+      "priority": "P1",
+      "scope": "User-authorised GitHub push and client-demo web/API deployment; no mobile binary build/export/install/distribution; production NO-GO and all unrelated gates retained.",
+      "uiReference": "Existing client demo and committed web/API behaviour",
+      "route": "https://easygas-client-demo.vercel.app and existing role-scoped APIs",
+      "implementationFiles": [
+        ".vercelignore",
+        ".github/workflows/release-validation.yml",
+        "apps/web/package.json",
+        "scripts/verify-published-web-api.mjs",
+        "tests/helpers/reviewed-native-hash.ts",
+        "tests/native-renderer/package.json",
+        "tests/native-renderer/package-lock.json"
+      ],
+      "dataSource": "Committed source/upload hashes, GitHub remote and CI, linked Vercel project/deployment, authenticated existing demo APIs and retained native artifacts.",
+      "securityControl": "Pinned existing project/alias, no force push, no secrets/native/local fixtures in web upload, candidate checked before promotion, existing runtime/role/branch/data controls retained; no mobile build commands.",
+      "testFiles": [
+        "tests/web-api-publication.test.ts"
+      ],
+      "testIds": [
+        "PUB21-NATIVE"
+      ],
+      "negativeTests": [
+        "PUB21-HOSTED",
+        "PUB21-NATIVE"
+      ],
+      "evidence": [
+        "docs/deployment/20261121-web-api-publication/evidence/publication-plan.json",
+        "docs/deployment/20261121-web-api-publication/README.md",
+        "docs/deployment/20261121-web-api-publication/evidence/source-publication.json",
+        "docs/deployment/20261121-web-api-publication/evidence/source-integrity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/candidate-identity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/candidate-hosted.json",
+        "docs/deployment/20261121-web-api-publication/evidence/stable-identity.json",
+        "docs/deployment/20261121-web-api-publication/evidence/stable-hosted.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ledger-cross-branch.json",
+        "docs/deployment/20261121-web-api-publication/evidence/browser-observations.json",
+        "docs/deployment/20261121-web-api-publication/evidence/release-core-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-repair-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/release-final-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-final-jobs.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-test-summary.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-initial-failures.json",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-history-fix-followup.json",
+        "docs/deployment/20261121-web-api-publication/evidence/native-preservation.json",
+        "docs/deployment/20261121-web-api-publication/evidence/documentation-tests.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-artifact.json",
+        "docs/deployment/20261121-web-api-publication/evidence/final-alias-readback.json"
+      ],
+      "acceptanceGate": "PUB21-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All 49 original commits published and retained by follow-ups. Exact 435-file committed-source Ready candidate promoted and verified at stable alias. Corrected full CI passed both jobs; native artifacts preserved; final evidence and traceability validated.",
+      "testResult": "PASS \u2014 four distinct release checks (3 core + 1 final), 1,137/1,137 full CI tests with zero failures/skips, web build/types/audit and native type/dependency/audit checks with export skipped; 37 targeted repair checks, 36 candidate + 36 stable hosted checks, 13 ledger exceptions and four browser observations. Sets overlap and are not added as feature coverage.",
+      "outstandingWork": "None in this bounded publication/demo release. Production NO-GO, actual-import hold, retain-all and all prior feature/native/signed-device/provider/physical gates remain unchanged. No new mobile binaries exported, built, installed or distributed."
+    }
+  ],
+  "gates": [
+    {
+      "id": "PUB21-G01",
+      "description": "Publish all 49 existing commits without rewriting shared history",
+      "status": "PASS",
+      "reason": "All 49 original commits published and retained by follow-ups. Exact 435-file committed-source Ready candidate promoted and verified at stable alias. Corrected full CI passed both jobs; native artifacts preserved; final evidence and traceability validated."
+    },
+    {
+      "id": "PUB21-G02",
+      "description": "Deploy exact committed web/API upload to the existing client-demo project and verify promotion",
+      "status": "PASS",
+      "reason": "All 49 original commits published and retained by follow-ups. Exact 435-file committed-source Ready candidate promoted and verified at stable alias. Corrected full CI passed both jobs; native artifacts preserved; final evidence and traceability validated."
+    },
+    {
+      "id": "PUB21-G03",
+      "description": "Verify hosted roles, web workflows and ledger isolation without changing business data or production controls",
+      "status": "PASS",
+      "reason": "All 49 original commits published and retained by follow-ups. Exact 435-file committed-source Ready candidate promoted and verified at stable alias. Corrected full CI passed both jobs; native artifacts preserved; final evidence and traceability validated."
+    },
+    {
+      "id": "PUB21-G04",
+      "description": "Preserve native binaries and record release evidence, acceptance limits and traceability",
+      "status": "PASS",
+      "reason": "All 49 original commits published and retained by follow-ups. Exact 435-file committed-source Ready candidate promoted and verified at stable alias. Corrected full CI passed both jobs; native artifacts preserved; final evidence and traceability validated."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 4,
+      "partial": 0,
+      "total": 4
+    },
+    "gates": {
+      "passed": 4,
+      "partial": 0,
+      "total": 4
+    },
+    "publishedExistingCommits": {
+      "verified": 49,
+      "total": 49
+    },
+    "uploadSourceFiles": {
+      "verified": 435,
+      "total": 435
+    },
+    "candidateHostedChecks": {
+      "passed": 36,
+      "total": 36
+    },
+    "stableHostedChecks": {
+      "passed": 36,
+      "total": 36
+    },
+    "hostedLedgerExceptions": {
+      "passed": 13,
+      "total": 13
+    },
+    "browserObservations": {
+      "passed": 4,
+      "total": 4
+    },
+    "nativeArtifactsPreserved": {
+      "verified": 3,
+      "total": 3
+    },
+    "fullCi": {
+      "verified": 1,
+      "pending": 0,
+      "total": 1
+    },
+    "excluded": 0,
+    "ciTests": {
+      "passed": 1137,
+      "failed": 0,
+      "skipped": 0,
+      "total": 1137
+    }
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Register explicit request to push all 49 commits and deploy web/API to the existing client demo, permitting web cloud build but no new mobile binaries. Stage the exact committed archive, retain current Ready rollback, and preserve all prior production/feature gates."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Published all 49 commits without rewriting history; built exact-source 435-file protected candidate. Candidate 36 checks passed with unchanged business snapshots. Fixed CI shallow checkout so historical source-hash tests can run; fresh CI application files match deployed candidate byte-for-byte. Promotion/stable/native closure remains pending; no new mobile builds."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Promoted exact verified candidate after successful cloud build, 36 candidate checks and 37 targeted test-infrastructure regressions. Stable 36 checks, 13 ledger exceptions and four browser observations passed. Retained native artifacts unchanged. Full corrected CI d4fe993 pending; test-history/runtime failures retained as historical evidence, no production/feature gates waived."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Final CI d4fe993 passed both web/native jobs: 1,137 tests, zero failures/skips; build/types/audits pass, export skipped. Immutable artifact digest verified. All four release gates closed after 36 candidate/36 stable checks, 13 ledger exceptions, four browser observations and native artifact preservation. Retain all earlier failure evidence and all unrelated feature/production holds; final verification/evidence-only follow-up has identical 435 uploaded files."
+    }
+  ]
+}

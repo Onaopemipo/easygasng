@@ -362,3 +362,5 @@ Sequential mobile device acceptance (21 November): [matrix](mobile-device-accept
 Hosted ledger follow-up (21 November): [matrix](hosted-ledger-acceptance-rtm.md). Correct endpoint, role restrictions, pagination, scoped cursors and preserved financial data.
 
 Hosted synthetic cross-branch closure (21 November): [report and evidence](../hosted-ledger-acceptance/cross-branch/README.md). HLED-03/G03 now passes; all four ledger gates verified, 30/30 full hosted checks. User-authorised inactive fixture retained; existing data and production holds preserved.
+
+21 November committed-source publication: [matrix](web-api-publication-20261121-rtm.md). All 49 commits to GitHub and exact-source demo web/API rollout; no new mobile binaries; prior production/feature holds retained.

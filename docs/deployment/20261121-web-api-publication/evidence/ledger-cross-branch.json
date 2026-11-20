@@ -1,0 +1,303 @@
+{
+  "phase": "verify",
+  "origin": "https://easygas-client-demo.vercel.app",
+  "startedAt": "2026-11-20T19:29:03.387Z",
+  "fixture": {
+    "branch": "qa-ledger-cross-branch",
+    "customerId": "637fe876-4424-4d52-8c70-141078af81ec",
+    "orderId": "1e9e700b-a268-47d1-a448-ae57c688d640",
+    "paymentId": "d9c2340e-845e-4eec-84bd-b9316386f0af",
+    "reference": "SYNTHETIC-QA-HLED-PAY-20261121",
+    "amountKobo": 1
+  },
+  "checks": [
+    {
+      "id": "HLED-X-OWNER",
+      "status": "PASS",
+      "statusCode": 200,
+      "fixtureVisible": true,
+      "rows": 11
+    },
+    {
+      "id": "HLED-X-FINANCE",
+      "status": "PASS",
+      "statusCode": 200,
+      "fixtureHidden": true,
+      "exactBranchSubset": true,
+      "unchanged": true,
+      "rows": 10
+    },
+    {
+      "id": "HLED-X-CURSOR",
+      "status": "PASS",
+      "limit": 1,
+      "statusCode": 400,
+      "noRows": true
+    },
+    {
+      "id": "HLED-X-CURSOR",
+      "status": "PASS",
+      "limit": 500,
+      "statusCode": 400,
+      "noRows": true
+    },
+    {
+      "id": "HLED-X-NONDISCLOSURE",
+      "status": "PASS",
+      "unknownAndForeignIndistinguishable": true,
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-X-SPOOF",
+      "status": "PASS",
+      "parameter": "branchId",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-X-SPOOF",
+      "status": "PASS",
+      "parameter": "branch_id",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-X-SPOOF",
+      "status": "PASS",
+      "parameter": "role",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-X-SPOOF",
+      "status": "PASS",
+      "parameter": "id",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-X-OWNER-CURSOR",
+      "status": "PASS",
+      "statusCode": 200
+    },
+    {
+      "id": "HLED-X-ORDER",
+      "status": "PASS",
+      "statusCode": 200,
+      "empty": true
+    },
+    {
+      "id": "HLED-X-INERT",
+      "status": "PASS",
+      "branchInactive": true,
+      "orderCancelled": true,
+      "driverUnassigned": true
+    },
+    {
+      "id": "HLED-X-PRESERVATION",
+      "status": "PASS"
+    }
+  ],
+  "sessionsRevoked": [
+    {
+      "role": "owner",
+      "status": 200
+    },
+    {
+      "role": "finance",
+      "status": 200
+    }
+  ],
+  "financialWrites": 0,
+  "identities": [
+    {
+      "id": "cc86d5fd-68af-4072-a64f-ae7e3dc039da",
+      "role": "owner",
+      "branch": "lagos"
+    },
+    {
+      "id": "47fb5900-862a-4e70-915d-689b88c22f00",
+      "role": "finance",
+      "branch": "lagos"
+    }
+  ],
+  "owner": {
+    "count": 11,
+    "sha256": "fd79d8dd04293b1612d486b0e81b99d717c4ab336b74c741920251de0c5ec5b7",
+    "pages": [
+      {
+        "page": 1,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 2,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 3,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 4,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 5,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 6,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 7,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 8,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 9,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 10,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 11,
+        "status": 200,
+        "rows": 1,
+        "hasMore": false,
+        "noStore": true
+      }
+    ]
+  },
+  "finance": {
+    "count": 10,
+    "sha256": "4401ddd2415ebced4c3bb3fae7790cde349e12f79a25d7ae2dae63380f29874d",
+    "pages": [
+      {
+        "page": 1,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 2,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 3,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 4,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 5,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 6,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 7,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 8,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 9,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 10,
+        "status": 200,
+        "rows": 1,
+        "hasMore": false,
+        "noStore": true
+      }
+    ],
+    "branch": "lagos"
+  },
+  "preservation": {
+    "existingLedgerCount": 10,
+    "existingLedgerUnchanged": true,
+    "existingBusinessUnchanged": true,
+    "identitiesAndBranchesUnchanged": true,
+    "business": {
+      "orders": {
+        "count": 14,
+        "sha256": "70c8d6f6d0eaf817255e48750da963effe4842d5e7b091009089288a6190a852"
+      },
+      "credits": {
+        "count": 3,
+        "sha256": "f42e75a2ee9c9a751410535013685f2ae4254831f68799bea37835e76b1401cc"
+      },
+      "inventory": {
+        "count": 12,
+        "sha256": "1f77d14322b673f050e344de318408d6d6ff4cd62a464c95320aaccae92f5084"
+      }
+    },
+    "exactlyOneSyntheticPayment": true
+  },
+  "status": "PASS",
+  "finishedAt": "2026-11-20T19:29:58.784Z"
+}

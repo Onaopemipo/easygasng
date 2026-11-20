@@ -1,0 +1,106 @@
+{
+  "stage": "before",
+  "base": "https://easygas-client-demo.vercel.app",
+  "sourceCommit": "dc13af109f0b1b172bd0b6b1539127d6592a4021",
+  "deploymentId": "dpl_9iRB6FomxHHXqwNvjChTsnFgty4z",
+  "startedAt": "2026-11-20T19:12:44.179Z",
+  "checks": [
+    {
+      "name": "Client-demo identity, synthetic notice and no-index metadata",
+      "result": "PASS"
+    },
+    {
+      "name": "Anonymous staff lookup denied",
+      "result": "PASS"
+    },
+    {
+      "name": "owner existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "Settings, approval requests, staff roles and operational state snapshot",
+      "result": "PASS",
+      "definitions": {
+        "count": 77,
+        "sha256": "e6c80036b8cb8053c21e7f76aafa9ffb33f919466dd5340f8cdc2c322aa74d71"
+      },
+      "settings": {
+        "count": 77,
+        "sha256": "48f96baa1d4705fd8c3abf3913cfa703fe59867173e5cb0ed802187fd6978dcb"
+      },
+      "requests": {
+        "count": 42,
+        "sha256": "4ce7dc7622d806f7aabaed03d4a132e04148a54aa374365ff7d91c3cb518ad74"
+      },
+      "staff": {
+        "sha256": "6ae26631ffa7efb72f937b4f5f5efdc623e32fce2bcfae58ba573f3261563f30"
+      },
+      "orders": {
+        "count": 15,
+        "sha256": "aece751d40b13db1413c45a23d8d2ed2c809698258fadfdaf9568985f2cf0d69"
+      },
+      "inventory": {
+        "count": 12,
+        "sha256": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e"
+      },
+      "ledger": {
+        "count": 11,
+        "sha256": "fd79d8dd04293b1612d486b0e81b99d717c4ab336b74c741920251de0c5ec5b7"
+      },
+      "policies": {
+        "sha256": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47"
+      },
+      "readiness": {
+        "recommendation": "NO-GO",
+        "gatesSha256": "95858d63bc6c91df39ae80ce41cefcffb09b06411c4334080ecada36103a5653"
+      }
+    }
+  ],
+  "financialWrites": 0,
+  "businessMutations": 0,
+  "method": "Existing labelled QA sessions; read-only business operations. Protected candidate uses authenticated Vercel CLI without disabling deployment protection; temporary own sessions revoked.",
+  "snapshot": {
+    "definitions": {
+      "count": 77,
+      "sha256": "e6c80036b8cb8053c21e7f76aafa9ffb33f919466dd5340f8cdc2c322aa74d71"
+    },
+    "settings": {
+      "count": 77,
+      "sha256": "48f96baa1d4705fd8c3abf3913cfa703fe59867173e5cb0ed802187fd6978dcb"
+    },
+    "requests": {
+      "count": 42,
+      "sha256": "4ce7dc7622d806f7aabaed03d4a132e04148a54aa374365ff7d91c3cb518ad74"
+    },
+    "staff": {
+      "sha256": "6ae26631ffa7efb72f937b4f5f5efdc623e32fce2bcfae58ba573f3261563f30"
+    },
+    "orders": {
+      "count": 15,
+      "sha256": "aece751d40b13db1413c45a23d8d2ed2c809698258fadfdaf9568985f2cf0d69"
+    },
+    "inventory": {
+      "count": 12,
+      "sha256": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e"
+    },
+    "ledger": {
+      "count": 11,
+      "sha256": "fd79d8dd04293b1612d486b0e81b99d717c4ab336b74c741920251de0c5ec5b7"
+    },
+    "policies": {
+      "sha256": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47"
+    },
+    "readiness": {
+      "recommendation": "NO-GO",
+      "gatesSha256": "95858d63bc6c91df39ae80ce41cefcffb09b06411c4334080ecada36103a5653"
+    }
+  },
+  "status": "PASS",
+  "sessionsRevoked": [
+    {
+      "role": "owner",
+      "status": 200
+    }
+  ],
+  "finishedAt": "2026-11-20T19:13:07.429Z"
+}

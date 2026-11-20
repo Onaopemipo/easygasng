@@ -243,6 +243,10 @@
     {
       "date": "2026-11-17",
       "change": "VDEMO-04/G4 records persistent fulfilment on the dedicated demo project, deployment with no runtime overrides and preserved sandbox mode."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "All 49 pending commits published; exact-source web/API client-demo rollout verified with 1,137 passing CI tests, seven roles, 36 candidate/36 stable checks, 13 ledger exceptions and four browser observations. See PUB21 matrix for all four bounded release gates. No new mobile binaries/export/install or change to existing product/production holds."
     }
   ],
   "redeployment20261109": {
@@ -340,5 +344,33 @@
     "paystack": "test/available verified",
     "evidence": "docs/deployment/20261119-technician-alerts-release.md",
     "gaps": "Original production/native/physical/provider, audio/background and named handover/import gates retained."
+  },
+  "webApiPublication20261121": {
+    "sourceCommit": "dc13af109f0b1b172bd0b6b1539127d6592a4021",
+    "ciCommit": "d4fe9931913c856ac8cfe0bd1775094e81fbb73e",
+    "deploymentId": "dpl_AXjGjA3VPmKi8aqRpGBwZohyvw4a",
+    "stableUrl": "https://easygas-client-demo.vercel.app",
+    "status": "VERIFIED_COMPLETE",
+    "matrix": "docs/traceability/web-api-publication-20261121-rtm.json",
+    "evidence": "docs/deployment/20261121-web-api-publication/README.md",
+    "originalCommitsPublished": 49,
+    "uploadedFilesVerified": 435,
+    "ciTests": {
+      "total": 1137,
+      "pass": 1137,
+      "fail": 0,
+      "skip": 0
+    },
+    "hostedChecks": {
+      "candidate": 36,
+      "stable": 36,
+      "ledgerExceptions": 13,
+      "browserObservations": 4,
+      "roles": 7
+    },
+    "newMobileBinaryBuilds": 0,
+    "mobileExports": 0,
+    "mobileInstalls": 0,
+    "preserved": "Production NO-GO, actual-import hold, retain-all and original native/device/provider/physical/300-feature gates remain unchanged."
   }
 }

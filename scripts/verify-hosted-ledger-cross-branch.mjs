@@ -1,13 +1,15 @@
 /** Uses existing demo identities and read APIs only; seed is a separately reviewed SQL operation. */
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
+import path from "node:path";
 import { createHash } from "node:crypto";
 import { readVerifiedLedger, ledgerFingerprint } from "./lib/hosted-ledger.mjs";
 const origin = "https://easygas-client-demo.vercel.app";
 const phase = process.argv[2];
 assert.ok(["baseline", "verify"].includes(phase));
 const root = "docs/hosted-ledger-acceptance/cross-branch/evidence";
-await fs.mkdir(root, { recursive: true });
+const reportPath = process.argv[3] ?? root + "/" + phase + "-results.json";
+await fs.mkdir(path.dirname(reportPath), { recursive: true });
 const fixture = {
   branch: "qa-ledger-cross-branch",
   customerId: "637fe876-4424-4d52-8c70-141078af81ec",
@@ -281,10 +283,7 @@ try {
     result.failure = "Session cleanup not confirmed";
   }
   result.finishedAt = new Date().toISOString();
-  await fs.writeFile(
-    root + "/" + phase + "-results.json",
-    JSON.stringify(result, null, 2) + "\n",
-  );
+  await fs.writeFile(reportPath, JSON.stringify(result, null, 2) + "\n");
   console.log(
     JSON.stringify({
       status: result.status,
