@@ -9,3 +9,7 @@ Existing iOS/Android artifacts remain recorded in `evidence/build-manifest.json`
 At the initial inspection, no build, source push that would trigger build CI, cloud deployment, alias promotion or mobile distribution had been performed. The clarified web/API rollout is now being prepared; mobile build/export/distribution remains prohibited. The current demo remains available. No business records, environment flags or release controls were changed. Production NO-GO, actual-import hold, retain-all and all external/provider/physical/device gates remain.
 
 [Read-only artifact inspection](evidence/no-build-release-inspection.json) · [Current matrix](../traceability/native-workflows-rtm.md).
+
+## Clarification and completion
+
+The user authorised a web/API build while prohibiting new mobile binaries. The web/API release is now deployed and verified; this supersedes the initial deployment-pending status. [Final release, evidence and rollback](WEB-API-RELEASE.md). Existing native binaries and the private prototype remain unchanged.

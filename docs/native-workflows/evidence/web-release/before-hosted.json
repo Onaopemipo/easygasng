@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-20T02:07:23.093Z",
+  "base": "https://easygas-client-demo.vercel.app",
+  "stage": "before",
+  "method": "Actual native-bearer HTTPS requests using existing dedicated demo accounts; no database connection, seed, business mutation or valid evidence-review submission.",
+  "checks": [
+    {
+      "name": "Public homepage, synthetic-data notice and no-index metadata",
+      "result": "PASS"
+    },
+    {
+      "name": "Robots excludes public indexing",
+      "result": "PASS"
+    },
+    {
+      "name": "Anonymous session denied",
+      "result": "PASS"
+    },
+    {
+      "name": "owner existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "Read-only business snapshot and production NO-GO",
+      "result": "PASS",
+      "orders": {
+        "count": 13,
+        "sha256": "087fc06cfd18ed8ba374a4019dbfeeca3782b25f1bb0c18263688638a818f94e"
+      },
+      "inventory": {
+        "count": 12,
+        "sha256": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e"
+      },
+      "ledger": {
+        "sha256": "8ddd8077333382cabb6823d9b4abc00a17a559829ae325d05342aba4c6b03f82"
+      },
+      "policies": {
+        "sha256": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47"
+      },
+      "readiness": {
+        "recommendation": "NO-GO",
+        "gatesSha256": "95858d63bc6c91df39ae80ce41cefcffb09b06411c4334080ecada36103a5653"
+      }
+    }
+  ],
+  "snapshot": {
+    "orders": {
+      "count": 13,
+      "sha256": "087fc06cfd18ed8ba374a4019dbfeeca3782b25f1bb0c18263688638a818f94e"
+    },
+    "inventory": {
+      "count": 12,
+      "sha256": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e"
+    },
+    "ledger": {
+      "sha256": "8ddd8077333382cabb6823d9b4abc00a17a559829ae325d05342aba4c6b03f82"
+    },
+    "policies": {
+      "sha256": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47"
+    },
+    "readiness": {
+      "recommendation": "NO-GO",
+      "gatesSha256": "95858d63bc6c91df39ae80ce41cefcffb09b06411c4334080ecada36103a5653"
+    }
+  }
+}

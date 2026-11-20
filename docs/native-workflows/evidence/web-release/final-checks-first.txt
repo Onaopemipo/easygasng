@@ -1,0 +1,49 @@
+✔ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (695.92925ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (1.554375ms)
+✖ NATIVE-WEB-SOURCE: exact committed cloud upload excludes native, private and prototype artifacts (3337.803875ms)
+✔ NATIVE-WEB-HOSTED: six-role hosted verification preserves canonical records and validates the new owner-only handler (3.809667ms)
+✔ NATIVE-WEB-RELEASE: stable alias points at verified Ready candidate and all existing mobile binaries remain byte-identical (1.229417ms)
+✔ NATIVE-RTM-DENOMINATORS: original 36 families, 300 stable features and 14 external blocks stay in scope (23.833583ms)
+✔ NATIVE-RTM-EVIDENCE: six installed iOS personas and real component checks remain distinct from device/provider certification (10.010625ms)
+✔ NATIVE-RTM-SOURCE: final source matches build record and explicit native continuation preserves original prototype manifest/bundle (9.686541ms)
+✔ VDEMO-SEC01: Source bundle excludes local environment and data files (2.870708ms)
+✔ VDEMO-SEC02: hosted demo bootstrap fails before connecting without explicit dedicated-resource confirmation (174.487ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3508.592208
+
+✖ failing tests:
+
+test at tests/native-web-release.test.ts:1:430
+✖ NATIVE-WEB-SOURCE: exact committed cloud upload excludes native, private and prototype artifacts (3337.803875ms)
+  Error: spawnSync git ENOBUFS
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-web-release.test.ts:22:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -55,
+    code: 'ENOBUFS',
+    syscall: 'spawnSync git',
+    path: 'git',
+    spawnargs: [ 'show', '405fb5da501fc7828946ab4de425de2a7a7d088c:apps/web/public/assets/brand-reference.png' ],
+    error: Error: spawnSync git ENOBUFS
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-web-release.test.ts:22:17)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    status: null,
+    signal: 'SIGTERM',
+    output: [ null, <Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 06 00 00 00 04 00 08 06 00 00 00 27 71 92 42 00 00 00 01 73 52 47 42 00 ae ce 1c e9 00 00 00 44 ... 1081294 more bytes>, <Buffer > ],
+    pid: 41579,
+    stdout: <Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 06 00 00 00 04 00 08 06 00 00 00 27 71 92 42 00 00 00 01 73 52 47 42 00 ae ce 1c e9 00 00 00 44 ... 1081294 more bytes>,
+    stderr: <Buffer >
+  }

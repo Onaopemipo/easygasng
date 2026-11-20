@@ -1,0 +1,22 @@
+PASS Public homepage, synthetic-data notice and no-index metadata
+PASS Robots excludes public indexing
+PASS Anonymous session denied
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: owner login 401
+
+401 !== 200
+
+    at file:///Users/philipog/Documents/ChatGPT/Easygas%20Smart%20Solution/.data/native-web-release/verify.mjs:14:227
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 401,
+  expected: 200,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-20T02:14:19.450Z",
+  "base": "https://easygas-client-demo-3txj0mfys-onaopemipos-projects.vercel.app",
+  "stage": "candidate",
+  "method": "Actual native-bearer HTTPS requests using existing dedicated demo accounts; no database connection, seed, business mutation or valid evidence-review submission.",
+  "checks": [
+    {
+      "name": "Public homepage, synthetic-data notice and no-index metadata",
+      "result": "PASS"
+    },
+    {
+      "name": "Robots excludes public indexing",
+      "result": "PASS"
+    },
+    {
+      "name": "Anonymous session denied",
+      "result": "PASS"
+    },
+    {
+      "name": "owner existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "manager existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "finance existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "driver existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "technician existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "customer existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "Read-only business snapshot and production NO-GO",
+      "result": "PASS",
+      "orders": {
+        "count": 13,
+        "sha256": "087fc06cfd18ed8ba374a4019dbfeeca3782b25f1bb0c18263688638a818f94e"
+      },
+      "inventory": {
+        "count": 12,
+        "sha256": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e"
+      },
+      "ledger": {
+        "sha256": "8ddd8077333382cabb6823d9b4abc00a17a559829ae325d05342aba4c6b03f82"
+      },
+      "policies": {
+        "sha256": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47"
+      },
+      "readiness": {
+        "recommendation": "NO-GO",
+        "gatesSha256": "95858d63bc6c91df39ae80ce41cefcffb09b06411c4334080ecada36103a5653"
+      }
+    },
+    {
+      "name": "Orders, inventory, ledger, published policies and release gates unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "manager denied owner readiness read/write",
+      "result": "PASS"
+    },
+    {
+      "name": "finance denied owner readiness read/write",
+      "result": "PASS"
+    },
+    {
+      "name": "driver denied owner readiness read/write",
+      "result": "PASS"
+    },
+    {
+      "name": "technician denied owner readiness read/write",
+      "result": "PASS"
+    },
+    {
+      "name": "customer denied owner readiness read/write",
+      "result": "PASS"
+    },
+    {
+      "name": "Readiness review authentication and mutation-method boundaries",
+      "result": "PASS"
+    },
+    {
+      "name": "Readiness review requires recent verification",
+      "result": "PASS"
+    },
+    {
+      "name": "New deployed readiness handler validates gate without creating a review",
+      "result": "PASS"
+    },
+    {
+      "name": "Malformed review rejected by strict schema",
+      "result": "PASS"
+    },
+    {
+      "name": "Post-verification state unchanged; NO-GO retained",
+      "result": "PASS"
+    }
+  ],
+  "snapshot": {
+    "orders": {
+      "count": 13,
+      "sha256": "087fc06cfd18ed8ba374a4019dbfeeca3782b25f1bb0c18263688638a818f94e"
+    },
+    "inventory": {
+      "count": 12,
+      "sha256": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e"
+    },
+    "ledger": {
+      "sha256": "8ddd8077333382cabb6823d9b4abc00a17a559829ae325d05342aba4c6b03f82"
+    },
+    "policies": {
+      "sha256": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47"
+    },
+    "readiness": {
+      "recommendation": "NO-GO",
+      "gatesSha256": "95858d63bc6c91df39ae80ce41cefcffb09b06411c4334080ecada36103a5653"
+    }
+  },
+  "transport": "Authenticated Vercel CLI access to the protected candidate; existing Deployment Protection remains enabled."
+}

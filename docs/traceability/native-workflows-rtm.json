@@ -1807,6 +1807,10 @@
     {
       "date": "2026-11-20",
       "change": "User clarified no new build means no new iOS/Android binaries; client-demo web/API build authorised. Deployment scope now includes web/API compilation and verified promotion, preserving existing native artifacts, production NO-GO/import/retain-all and external device/provider gates."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Authorised web/API-only release completed: source 405fb5da501fc7828946ab4de425de2a7a7d088c to Ready dpl_6T2z5s4xnjmpeWMBfwTgMoMZUhaw at the stable client demo. Candidate and stable 21-check six-role acceptance passed; 13-order/inventory/ledger/policy/gate snapshots unchanged, no valid review submitted. Three native artifacts retain exact bytes and modification times. Bounded deployment request closed; original native/provider/physical/300-feature/14-external-block denominators and production NO-GO/import/retain-all unchanged."
     }
   ],
   "executedAcceptance": {
@@ -1827,16 +1831,43 @@
   },
   "deploymentRequest": {
     "request": "Commit and deploy all changes but no new build",
-    "status": "PARTIAL",
+    "status": "VERIFIED_COMPLETE",
     "commitScope": "All current tracked changes including remaining order-modal preview log. Native implementation already committed as d190bde.",
-    "buildConstraint": "User clarified: no new mobile binaries; web/API build and client-demo deployment are authorised.",
+    "buildConstraint": "User clarified no new mobile binaries; web/API cloud build authorised and completed. No mobile build, export, install or distribution occurred.",
     "existingDemoDeployment": "dpl_Ewd4EFdg7QEGbaAgqxAzBZ4MBiVN",
-    "applicationArtifactAvailable": false,
-    "reason": "Preparing an exact committed-source web/API deployment to the existing dedicated client-demo project. Native artifacts, runtime flags and all operational holds remain unchanged.",
+    "applicationArtifactAvailable": true,
+    "reason": "Exact committed-source web/API candidate passed 21 hosted checks, was promoted, and passed 21 stable checks across six roles. Canonical business snapshots and all native artifact hashes/modification times remain unchanged.",
     "evidence": [
-      "docs/native-workflows/evidence/no-build-release-inspection.json",
-      "docs/native-workflows/NO-BUILD-DEPLOYMENT.md"
+      "docs/native-workflows/WEB-API-RELEASE.md",
+      "docs/native-workflows/evidence/web-release/source-integrity.json",
+      "docs/native-workflows/evidence/web-release/candidate-identity.json",
+      "docs/native-workflows/evidence/web-release/stable-identity.json",
+      "docs/native-workflows/evidence/web-release/candidate-hosted.json",
+      "docs/native-workflows/evidence/web-release/stable-hosted.json",
+      "docs/native-workflows/evidence/web-release/native-artifacts-unchanged.json",
+      "docs/native-workflows/evidence/web-release/final-checks.txt"
     ],
-    "outstandingWork": "Complete cloud web/API build, verify deployment identity and hosted access/read-only exception checks, promote the candidate and record stable verification. Native distribution remains out of this deployment."
+    "outstandingWork": "None for this bounded client-demo web/API rollout. Existing native signed-device/provider/physical/per-feature acceptance remains open in NATIVE-G01/G02/G03/G06 and all 300-feature/14-external-block denominators.",
+    "sourceCommit": "405fb5da501fc7828946ab4de425de2a7a7d088c",
+    "deploymentId": "dpl_6T2z5s4xnjmpeWMBfwTgMoMZUhaw",
+    "stableAlias": "https://easygas-client-demo.vercel.app",
+    "previousDeployment": "dpl_Ewd4EFdg7QEGbaAgqxAzBZ4MBiVN",
+    "testFiles": [
+      "scripts/verify-native-web-release.mjs",
+      "tests/native-web-release.test.ts"
+    ],
+    "testIds": [
+      "NATIVE-WEB-SOURCE",
+      "NATIVE-WEB-HOSTED",
+      "NATIVE-WEB-RELEASE"
+    ],
+    "securityControl": "Exact linked demo project and committed upload bytes; no private/native/prototype upload; current role/session/recent-verification and strict schema; protected candidate authenticated through Vercel CLI without disabling protection; existing NO-GO/import/retain-all preserved.",
+    "verificationCounts": {
+      "candidateHostedChecks": 21,
+      "stableHostedChecks": 21,
+      "releaseSourceSecurityMatrixTests": 10,
+      "newMobileBuilds": 0,
+      "nativeArtifactsPreserved": 3
+    }
   }
 }

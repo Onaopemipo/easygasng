@@ -86,3 +86,7 @@ For an incremental local Android build after changes under the shared `packages/
 Final verification: 162/162 targeted tests after the last contract/picker corrections; 9/9 rendered native/API tests; 3/3 native traceability checks. The earlier full regression finished with 1,042 pass, zero failures and 28 existing skips. These sets overlap and must not be added together as independent feature coverage. Both local native builds passed; exact source/artifact hashes are retained.
 
 Stored text logs preserve test/build output with terminal line endings and trailing whitespace normalized for repository review.
+
+## Client-demo web/API rollout
+
+The user clarified that web/API builds are permitted while new mobile binaries are prohibited. Source `405fb5da501fc7828946ab4de425de2a7a7d088c` is deployed and verified at [the client demo](https://easygas-client-demo.vercel.app). The new readiness evidence endpoint is now available under its existing owner/recent-verification/schema controls. The native screens remain committed source and previously tested local artifacts; this web rollout does not distribute them to installed phones. [Release report and rollback](WEB-API-RELEASE.md). All original device/provider/physical and individual feature acceptance limits remain.
