@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
-import {settingsCategories,settingsGroups,settingsDisplay,settingsDisplayCategory,settingMatches} from '../packages/business-rules/src/settings-categories';
+import {settingsCategories,settingsGroups,settingsDisplay,settingsDisplayCategory,settingMatches,settingsApprovalBadge} from '../packages/business-rules/src/settings-categories';
 import {adminSettingsCategoryOrder} from '../packages/business-rules/src/admin-settings-purpose';
 import {createDatabase,migrate,one} from '../apps/web/lib/db';import {dispatch} from '../apps/web/lib/service';import {hashPassword,id,issueSession} from '../apps/web/lib/auth';
 const defs=JSON.parse(await readFile('docs/admin-settings-audit/evidence/definition-audit.json','utf8')).definitions;
@@ -19,6 +19,10 @@ test('ASSET-LABELS: current policies, legacy fields and independent operational 
  for(const key of ['loyalty.enabled','loyalty.spend_per_point','loyalty.credit_per_point','delivery.zones','price.refill-6','price.refill-12','price.refill-25','price.refill-50']){const d=by(key);const g=settingsGroups([d],settingsDisplayCategory(d),'')[0];assert.equal(g.advanced,true,key);assert.match(display(key).label,/legacy/i);assert.equal(settingsGroups([d],'unused',d.label)[0].settings[0],d);}
  assert.equal(settingsGroups([by('publish.refill-6')],'Gas & Products','')[0].advanced,false);
  assert.match(display('document.identity').description,/Existing issued documents/);assert.match(display('website.content').description,/public contacts/);assert.match(display('security.policy').label,/read-only/);
+ assert.equal(settingsApprovalBadge({...by('loyalty.policy'),owner_auto_approval:true},'owner').label,'Automatic approval');
+ assert.equal(settingsApprovalBadge({...by('payment.gateway'),owner_auto_approval:false},'owner').label,'2 approvals required');
+ assert.equal(settingsApprovalBadge({...by('security.policy'),propose_roles:[]},'owner').label,'Read only');
+ assert.equal(settingsApprovalBadge({...by('document.identity'),propose_roles:['owner'],owner_auto_approval:false},'finance').label,'View only');
  assert.equal(settingsDisplayCategory(by('legal.privacy')),'Policies & Terms');assert.equal(settingsDisplayCategory(by('security.policy')),'Staff & Security');
  const colliding=[{key:'x',category:'New A',label:'Same',description:'x'},{key:'y',category:'New B',label:'Same',description:'y'}];assert.equal(settingsGroups(colliding,'unused','Same').length,2);
 });

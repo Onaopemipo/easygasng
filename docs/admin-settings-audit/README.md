@@ -1,0 +1,17 @@
+# Full Admin Settings consolidation release
+
+The remaining Admin Settings audit is complete for the current client-demo context. The previous 17 displayed categories are consolidated into nine: Business & Website, Policies & Terms, Gas & Products, Delivery & Dispatch, Services & Safety, Payments & Wallet, Rewards & Retention, Stock & Valuation and Staff & Security.
+
+All 77 Admin-visible settings are retained: 71 remaining controls plus the six previously consolidated payment controls. Nine legacy/advanced controls remain discoverable in collapsed sections. Current and historical gas/rewards rules, customer delivery fees and internal dispatch estimates, published terms and locked approval safeguards are clearly distinguished. There are no duplicate canonical setting keys. No setting values were merged or deleted.
+
+[Complete audit and 77-setting mapping](AUDIT.md), [current user guide](../user-manual/admin-settings-navigation.md), [matrix](../traceability/admin-settings-audit-rtm.md). The guide supersedes old category names in historical screenshots and PDF/Word editions; those editions have not been regenerated.
+
+Source `a6a537796651b68693d509f37411a175ac16bd0f` is deployed as Ready `dpl_CsDKeCyX93oVTZq2gouzkV2cpfS2`, promoted to the existing client demo. All 432 uploaded web/shared files were verified byte-for-byte against the source commit. No mobile artifacts were uploaded or built.
+
+Verification includes 44 focused tests, web typecheck/build, all nine real local categories, owner/manager UI checks, renamed typed editor/history links, legacy searches, locked read-only safeguards and phone layout. The actual hosted UI retains all 77 labels in the expected categories, with search/editor/history and 390px layout checked. An old browser session returned to sign-in; the existing labelled QA account successfully signed in again and the remaining checks completed. No setting was edited or submitted on the hosted demo.
+
+Candidate and stable each passed 31 hosted checks using six existing labelled roles. Complete mapped inventories are Admin 77 controls in nine categories, Manager 59 in seven, and Finance 59 in eight. Each role retains precisely its API-permitted keys and canonical metadata. Definitions, values/versions, approval requests, staff roles, orders, stock, ledger, published policies and production readiness match the fresh baseline. The current UI context is Lagos; mapping preserves scope and supports dynamic locations/future definitions without dropping controls. Local tests include cross-branch rejection, forged metadata, stale versions, invalid windows, self access, read-only policy and restricted-role denials.
+
+Stored categories remain unchanged because existing approval/delegation controls reference them. The new taxonomy is presentation-only. Original source baselines and historical prototype artifacts remain retained, with an explicit reviewed continuation. The preceding payment grouping and contracts remain verified.
+
+Initial a6a5377 acceptance evidence is retained in evidence/release/initial-a6a5377. Final badge correction is pending repeat deployment acceptance. Production NO-GO, actual-import hold, retain-all and unrelated provider/native/physical-operation acceptance gates retain their previous status. Original native artifacts retain their hashes, sizes and modification times; no iOS/Android build/export/install was performed.

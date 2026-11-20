@@ -1,4 +1,4 @@
-import { settingsCategories, settingsGroups, settingsDisplay } from "../packages/business-rules/src/settings-categories.ts";
+import { settingsCategories, settingsGroups, settingsDisplay, settingsApprovalBadge } from "../packages/business-rules/src/settings-categories.ts";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import path from "node:path";
@@ -243,7 +243,8 @@ try {
     assert.deepEqual(rows.map(d=>d.key).sort(),expected.map(d=>d.key).sort(),role+' complete keyset');
     for(const d of rows){const old=audited.find(x=>x.key===d.key);assert.deepEqual(authority(d),authority(old),d.key+' canonical authority');const display=settingsDisplay(d);const {label,description,...source}=d;const {label:dl,description:dd,...presented}=display;assert.deepEqual(presented,source,d.key+' presentation metadata');}
     const grouped=settingsCategories(rows).flatMap(c=>settingsGroups(rows,c,'').flatMap(g=>g.settings));assert.equal(grouped.length,rows.length);assert.equal(new Set(grouped.map(d=>d.key)).size,rows.length);
-    record(role+' entire settings inventory mapped once with unchanged canonical authority',{settings:rows.length,categories:settingsCategories(rows)});
+    const badges={};for(const d of rows){const badge=settingsApprovalBadge(d,role).label;const expected=!d.propose_roles.includes(role)?(d.propose_roles.length?'View only':'Read only'):d.owner_auto_approval?'Automatic approval':d.risk===1?'Routine change':d.risk===4?'2 approvals required':'Approval required';assert.equal(badge,expected,d.key+' approval wording');badges[badge]=(badges[badge]||0)+1;}
+    record(role+' entire settings inventory mapped once with unchanged canonical authority',{settings:rows.length,categories:settingsCategories(rows),badges});
   }
   const target=actors.manager.id;
   for(const role of ['finance','driver','technician','customer']){assert.equal((await call(role,'staff.lookup?userId='+target)).status,403);record(role+' denied staff lookup');}

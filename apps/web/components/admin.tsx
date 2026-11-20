@@ -8,7 +8,7 @@ import { privilegeById } from "../../../packages/business-rules/src/staff-privil
 import { NotificationsTray } from "./notifications-tray";
 import SettingForm from "./setting-change-form";
 import SettingsPurposeGroup from "./settings-purpose-group";
-import { settingsCategoryDescriptions, settingsCategories, settingsDisplayCategory, settingsDisplay, settingsGroups } from "../../../packages/business-rules/src/settings-categories";
+import { settingsApprovalBadge, settingsCategoryDescriptions, settingsCategories, settingsDisplayCategory, settingsDisplay, settingsGroups } from "../../../packages/business-rules/src/settings-categories";
 import { appAlert } from "./app-dialog";
 import { FormInput } from "./password-input";
 import SettingSummary, { readableSetting } from "./setting-summary";
@@ -899,16 +899,8 @@ function Settings({
                         <h3>{settingsDisplay(d).label}</h3>
                         <p>{settingsDisplay(d).description}</p>
                       </div>
-                      <span className={`risk risk-${d.risk}`}>
-                        {
-                          [
-                            "",
-                            "Routine",
-                            "Manager approval",
-                            "Owner approval",
-                            "Dual approval",
-                          ][d.risk]
-                        }
+                      <span className={`risk risk-${d.risk}`} title={settingsApprovalBadge(d, user.role).detail}>
+                        {settingsApprovalBadge(d, user.role).label}
                       </span>
                     </div>
                     <div className="setting-value-row">

@@ -1,3 +1,4 @@
+import { settingApprovalCopy } from "./setting-editor";
 import {
   adminSettingsCategoryOrder,
   adminSettingsSectionOrder,
@@ -158,4 +159,23 @@ export function settingsGroups<T extends Setting>(
       a.title.localeCompare(b.title)
     );
   });
+}
+
+/** Request availability and approval wording use server metadata, never display categories. */
+export function settingsApprovalBadge(
+  d: {
+    propose_roles: string[];
+    owner_auto_approval?: boolean;
+    risk: number;
+    value_type?: string;
+  },
+  role: string,
+) {
+  if (!d.propose_roles.includes(role))
+    return {
+      label: d.propose_roles.length ? "View only" : "Read only",
+      detail:
+        "This setting is available for viewing and history. Existing approval rights are enforced separately.",
+    };
+  return settingApprovalCopy(d);
 }

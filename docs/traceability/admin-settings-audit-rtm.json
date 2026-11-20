@@ -15,15 +15,19 @@
         "apps/web/components/admin.tsx",
         "apps/web/components/settings-purpose-group.tsx"
       ],
-      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "dataSource": "Existing role-filtered settings API (service.ts), stored setting_definitions/settings/setting_versions/change_requests; per-key runtime consumers recorded in docs/admin-settings-audit/AUDIT.md and purpose-mapping.json. Full canonical metadata and current values/versions remain server-authoritative.",
       "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
       "testFiles": [
-        "tests/admin-settings-purpose.test.ts"
+        "tests/admin-settings-purpose.test.ts",
+        "tests/admin-settings-release.test.ts"
       ],
       "testIds": [
         "ASSET-COVERAGE",
         "ASSET-LABELS",
-        "ASSET-SECURITY"
+        "ASSET-SECURITY",
+        "ASSET-DEPLOY",
+        "ASSET-HOSTED",
+        "ASSET-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -33,13 +37,23 @@
         "docs/admin-settings-audit/evidence/focused-tests.txt",
         "docs/admin-settings-audit/evidence/local-browser.json",
         "docs/admin-settings-audit/evidence/typecheck.txt",
-        "docs/admin-settings-audit/evidence/web-build.txt"
+        "docs/admin-settings-audit/evidence/web-build.txt",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/upload-verified.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-browser.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/screenshots.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/release-tests.txt",
+        "docs/admin-settings-audit/evidence/native-artifacts-after.json",
+        "docs/user-manual/admin-settings-navigation.md"
       ],
       "acceptanceGate": "ASSET-G01",
       "status": "PARTIAL",
-      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
-      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
-      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+      "reason": "Taxonomy passed initial release; final approval-badge wording correction and repeated release acceptance pending.",
+      "testResult": "PASS initial taxonomy acceptance and 44 corrected-source focused checks; final corrected badge rollout pending.",
+      "outstandingWork": "Verify corrected badge against owner/manager/finance server metadata and final deployed source."
     },
     {
       "id": "ASSET-02",
@@ -54,15 +68,19 @@
         "apps/web/components/admin.tsx",
         "apps/web/components/settings-purpose-group.tsx"
       ],
-      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "dataSource": "Existing role-filtered settings API (service.ts), stored setting_definitions/settings/setting_versions/change_requests; per-key runtime consumers recorded in docs/admin-settings-audit/AUDIT.md and purpose-mapping.json. Full canonical metadata and current values/versions remain server-authoritative.",
       "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
       "testFiles": [
-        "tests/admin-settings-purpose.test.ts"
+        "tests/admin-settings-purpose.test.ts",
+        "tests/admin-settings-release.test.ts"
       ],
       "testIds": [
         "ASSET-COVERAGE",
         "ASSET-LABELS",
-        "ASSET-SECURITY"
+        "ASSET-SECURITY",
+        "ASSET-DEPLOY",
+        "ASSET-HOSTED",
+        "ASSET-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -72,13 +90,23 @@
         "docs/admin-settings-audit/evidence/focused-tests.txt",
         "docs/admin-settings-audit/evidence/local-browser.json",
         "docs/admin-settings-audit/evidence/typecheck.txt",
-        "docs/admin-settings-audit/evidence/web-build.txt"
+        "docs/admin-settings-audit/evidence/web-build.txt",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/upload-verified.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-browser.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/screenshots.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/release-tests.txt",
+        "docs/admin-settings-audit/evidence/native-artifacts-after.json",
+        "docs/user-manual/admin-settings-navigation.md"
       ],
       "acceptanceGate": "ASSET-G02",
       "status": "PARTIAL",
-      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
-      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
-      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+      "reason": "Taxonomy passed initial release; final approval-badge wording correction and repeated release acceptance pending.",
+      "testResult": "PASS initial taxonomy acceptance and 44 corrected-source focused checks; final corrected badge rollout pending.",
+      "outstandingWork": "Verify corrected badge against owner/manager/finance server metadata and final deployed source."
     },
     {
       "id": "ASSET-03",
@@ -93,15 +121,19 @@
         "apps/web/components/admin.tsx",
         "apps/web/components/settings-purpose-group.tsx"
       ],
-      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "dataSource": "Existing role-filtered settings API (service.ts), stored setting_definitions/settings/setting_versions/change_requests; per-key runtime consumers recorded in docs/admin-settings-audit/AUDIT.md and purpose-mapping.json. Full canonical metadata and current values/versions remain server-authoritative.",
       "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
       "testFiles": [
-        "tests/admin-settings-purpose.test.ts"
+        "tests/admin-settings-purpose.test.ts",
+        "tests/admin-settings-release.test.ts"
       ],
       "testIds": [
         "ASSET-COVERAGE",
         "ASSET-LABELS",
-        "ASSET-SECURITY"
+        "ASSET-SECURITY",
+        "ASSET-DEPLOY",
+        "ASSET-HOSTED",
+        "ASSET-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -111,13 +143,23 @@
         "docs/admin-settings-audit/evidence/focused-tests.txt",
         "docs/admin-settings-audit/evidence/local-browser.json",
         "docs/admin-settings-audit/evidence/typecheck.txt",
-        "docs/admin-settings-audit/evidence/web-build.txt"
+        "docs/admin-settings-audit/evidence/web-build.txt",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/upload-verified.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-browser.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/screenshots.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/release-tests.txt",
+        "docs/admin-settings-audit/evidence/native-artifacts-after.json",
+        "docs/user-manual/admin-settings-navigation.md"
       ],
       "acceptanceGate": "ASSET-G03",
       "status": "PARTIAL",
-      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
-      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
-      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+      "reason": "Taxonomy passed initial release; final approval-badge wording correction and repeated release acceptance pending.",
+      "testResult": "PASS initial taxonomy acceptance and 44 corrected-source focused checks; final corrected badge rollout pending.",
+      "outstandingWork": "Verify corrected badge against owner/manager/finance server metadata and final deployed source."
     },
     {
       "id": "ASSET-04",
@@ -130,17 +172,25 @@
         "packages/business-rules/src/settings-categories.ts",
         "packages/business-rules/src/admin-settings-purpose.ts",
         "apps/web/components/admin.tsx",
-        "apps/web/components/settings-purpose-group.tsx"
+        "apps/web/components/settings-purpose-group.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/delegation.ts",
+        "apps/web/lib/rewards.ts"
       ],
-      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "dataSource": "Existing role-filtered settings API (service.ts), stored setting_definitions/settings/setting_versions/change_requests; per-key runtime consumers recorded in docs/admin-settings-audit/AUDIT.md and purpose-mapping.json. Full canonical metadata and current values/versions remain server-authoritative.",
       "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
       "testFiles": [
-        "tests/admin-settings-purpose.test.ts"
+        "tests/admin-settings-purpose.test.ts",
+        "tests/admin-settings-release.test.ts"
       ],
       "testIds": [
         "ASSET-COVERAGE",
         "ASSET-LABELS",
-        "ASSET-SECURITY"
+        "ASSET-SECURITY",
+        "ASSET-DEPLOY",
+        "ASSET-HOSTED",
+        "ASSET-NO-MOBILE-BUILD"
       ],
       "negativeTests": [
         "ASSET-SECURITY"
@@ -152,13 +202,23 @@
         "docs/admin-settings-audit/evidence/focused-tests.txt",
         "docs/admin-settings-audit/evidence/local-browser.json",
         "docs/admin-settings-audit/evidence/typecheck.txt",
-        "docs/admin-settings-audit/evidence/web-build.txt"
+        "docs/admin-settings-audit/evidence/web-build.txt",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/upload-verified.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-browser.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/screenshots.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/release-tests.txt",
+        "docs/admin-settings-audit/evidence/native-artifacts-after.json",
+        "docs/user-manual/admin-settings-navigation.md"
       ],
       "acceptanceGate": "ASSET-G04",
       "status": "PARTIAL",
-      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
-      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
-      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+      "reason": "Taxonomy passed initial release; final approval-badge wording correction and repeated release acceptance pending.",
+      "testResult": "PASS initial taxonomy acceptance and 44 corrected-source focused checks; final corrected badge rollout pending.",
+      "outstandingWork": "Verify corrected badge against owner/manager/finance server metadata and final deployed source."
     },
     {
       "id": "ASSET-05",
@@ -173,15 +233,19 @@
         "apps/web/components/admin.tsx",
         "apps/web/components/settings-purpose-group.tsx"
       ],
-      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "dataSource": "Existing role-filtered settings API (service.ts), stored setting_definitions/settings/setting_versions/change_requests; per-key runtime consumers recorded in docs/admin-settings-audit/AUDIT.md and purpose-mapping.json. Full canonical metadata and current values/versions remain server-authoritative.",
       "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
       "testFiles": [
-        "tests/admin-settings-purpose.test.ts"
+        "tests/admin-settings-purpose.test.ts",
+        "tests/admin-settings-release.test.ts"
       ],
       "testIds": [
         "ASSET-COVERAGE",
         "ASSET-LABELS",
-        "ASSET-SECURITY"
+        "ASSET-SECURITY",
+        "ASSET-DEPLOY",
+        "ASSET-HOSTED",
+        "ASSET-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -191,13 +255,23 @@
         "docs/admin-settings-audit/evidence/focused-tests.txt",
         "docs/admin-settings-audit/evidence/local-browser.json",
         "docs/admin-settings-audit/evidence/typecheck.txt",
-        "docs/admin-settings-audit/evidence/web-build.txt"
+        "docs/admin-settings-audit/evidence/web-build.txt",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/upload-verified.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-browser.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/screenshots.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/release-tests.txt",
+        "docs/admin-settings-audit/evidence/native-artifacts-after.json",
+        "docs/user-manual/admin-settings-navigation.md"
       ],
       "acceptanceGate": "ASSET-G05",
       "status": "PARTIAL",
-      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
-      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
-      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+      "reason": "Taxonomy passed initial release; final approval-badge wording correction and repeated release acceptance pending.",
+      "testResult": "PASS initial taxonomy acceptance and 44 corrected-source focused checks; final corrected badge rollout pending.",
+      "outstandingWork": "Verify corrected badge against owner/manager/finance server metadata and final deployed source."
     },
     {
       "id": "ASSET-06",
@@ -210,17 +284,23 @@
         "packages/business-rules/src/settings-categories.ts",
         "packages/business-rules/src/admin-settings-purpose.ts",
         "apps/web/components/admin.tsx",
-        "apps/web/components/settings-purpose-group.tsx"
+        "apps/web/components/settings-purpose-group.tsx",
+        "scripts/verify-admin-settings-release.mjs",
+        "docs/user-manual/admin-settings-navigation.md"
       ],
-      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "dataSource": "Existing role-filtered settings API (service.ts), stored setting_definitions/settings/setting_versions/change_requests; per-key runtime consumers recorded in docs/admin-settings-audit/AUDIT.md and purpose-mapping.json. Full canonical metadata and current values/versions remain server-authoritative.",
       "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
       "testFiles": [
-        "tests/admin-settings-purpose.test.ts"
+        "tests/admin-settings-purpose.test.ts",
+        "tests/admin-settings-release.test.ts"
       ],
       "testIds": [
         "ASSET-COVERAGE",
         "ASSET-LABELS",
-        "ASSET-SECURITY"
+        "ASSET-SECURITY",
+        "ASSET-DEPLOY",
+        "ASSET-HOSTED",
+        "ASSET-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -230,13 +310,23 @@
         "docs/admin-settings-audit/evidence/focused-tests.txt",
         "docs/admin-settings-audit/evidence/local-browser.json",
         "docs/admin-settings-audit/evidence/typecheck.txt",
-        "docs/admin-settings-audit/evidence/web-build.txt"
+        "docs/admin-settings-audit/evidence/web-build.txt",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-identity.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/upload-verified.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/candidate-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-hosted.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/stable-browser.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/screenshots.json",
+        "docs/admin-settings-audit/evidence/release/initial-a6a5377/release-tests.txt",
+        "docs/admin-settings-audit/evidence/native-artifacts-after.json",
+        "docs/user-manual/admin-settings-navigation.md"
       ],
       "acceptanceGate": "ASSET-G06",
       "status": "PARTIAL",
-      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
-      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
-      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+      "reason": "Taxonomy passed initial release; final approval-badge wording correction and repeated release acceptance pending.",
+      "testResult": "PASS initial taxonomy acceptance and 44 corrected-source focused checks; final corrected badge rollout pending.",
+      "outstandingWork": "Verify corrected badge against owner/manager/finance server metadata and final deployed source."
     }
   ],
   "gates": [
@@ -244,47 +334,82 @@
       "id": "ASSET-G01",
       "description": "Audit every remaining setting against its authoritative runtime purpose",
       "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "reason": "Final corrected-source acceptance pending."
     },
     {
       "id": "ASSET-G02",
       "description": "Consolidate category aliases without losing any setting or existing payment grouping",
       "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "reason": "Final corrected-source acceptance pending."
     },
     {
       "id": "ASSET-G03",
       "description": "Clarify current versus legacy controls and independent business purposes",
       "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "reason": "Final corrected-source acceptance pending."
     },
     {
       "id": "ASSET-G04",
       "description": "Preserve role, scope, approval, identity, financial and safety authority",
       "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "reason": "Final corrected-source acceptance pending."
     },
     {
       "id": "ASSET-G05",
       "description": "Verify search, responsive browsing and canonical editor/history handoffs",
       "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "reason": "Final corrected-source acceptance pending."
     },
     {
       "id": "ASSET-G06",
       "description": "Deploy reviewed source and update current manual and traceability",
       "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "reason": "Final corrected-source acceptance pending."
     }
   ],
   "coverage": {
+    "implementation": {
+      "implemented": 6,
+      "total": 6
+    },
     "requirements": {
       "verified": 0,
       "total": 6
     },
+    "critical": {
+      "verified": 0,
+      "total": 1
+    },
+    "routes": {
+      "verified": 0,
+      "total": 1
+    },
     "gates": {
       "passed": 0,
       "total": 6
+    },
+    "settingInventory": {
+      "audited": 77,
+      "retained": 77,
+      "remainingScope": 71,
+      "existingPaymentScope": 6,
+      "categoriesBefore": 17,
+      "categoriesAfter": 9,
+      "legacyAdvancedControlsRetained": 9
+    },
+    "permittedRoleInventories": {
+      "owner": {
+        "verified": 77,
+        "total": 77
+      },
+      "manager": {
+        "verified": 59,
+        "total": 59
+      },
+      "finance": {
+        "verified": 59,
+        "total": 59
+      }
     },
     "excluded": 0
   },
@@ -292,6 +417,25 @@
     {
       "date": "2026-11-20",
       "change": "Registered before implementation. Audit all 77 live viewable settings (71 remaining controls plus six already consolidated payment controls), consolidate presentation by purpose and preserve stored security categories and every setting."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Expanded the preceding payment-only display taxonomy to all remaining Admin Settings categories. The existing SCAT payment contracts and six settings remain; the SCAT unknown Delivery fallback test now expects the authorised Delivery & Dispatch display category. No requirement or setting removed."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Six scoped requirements/gates verified. All 77 live controls mapped and rendered once; nine legacy/advanced controls retained. Candidate/stable each passed 31 checks; original canonical metadata/business/native snapshots retained. Current manual and deployed screenshots supplied. Production decisions unchanged."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Final review found static risk-tier badges could contradict server owner-auto-approval metadata. Reopened release acceptance to correct the card badge using the existing editor approval helper; read-only/view-only states clarified. Initial a6a5377 evidence retained separately; no business state change."
     }
-  ]
+  ],
+  "release": {
+    "sourceCommit": "a6a537796651b68693d509f37411a175ac16bd0f",
+    "deploymentId": "dpl_CsDKeCyX93oVTZq2gouzkV2cpfS2",
+    "url": "https://easygas-client-demo.vercel.app/admin/settings",
+    "branchContext": "lagos; canonical scope retained; dynamic/future locations and settings covered by generic mapping and tests",
+    "mobileBuilds": 0
+  }
 }
