@@ -77,7 +77,7 @@ export default function OrderVisit({
               ? "Finance review required"
               : "NGN " + Number(invoice.amountDueKobo) / 100}
           </Text>
-          <Text>Online payments remain unconnected.</Text>
+          <Text>Payment is confirmed by the recorded ledger. Check the order payment controls for available methods.</Text>
         </View>
       )}
       {amendments.map((m) => (

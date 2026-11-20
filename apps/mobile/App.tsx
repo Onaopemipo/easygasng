@@ -1,3 +1,7 @@
+import {NativeEntryScreen,NativePublicPolicies,NativeServiceInfo} from './NativeEntry';
+import {nativeEntryLink,type NativeEntry} from '../../packages/business-rules/src/native-entry-links';
+import NativeBusinessWorkspace from './NativeBusinessWorkspace';
+import {nativeInternalDestination} from '../../packages/business-rules/src/native-workspaces';
 import { useCheckoutPayments, CheckoutWalletBalance } from "./CheckoutPayments";
 import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress, type CheckoutDetailsOffer } from "../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
@@ -83,6 +87,7 @@ type Item = { productId: string; quantity: number };
 export default function App() {
   const { dark, colors, preference, setPreference } = useTheme();
   const scrollRef = useRef<React.ComponentRef<typeof ScrollView>>(null);
+  const [entryLink,setEntryLink]=useState<NativeEntry|null>(null);
   const [intro, setIntro] = useState({ revision: 0, preview: false });
   const technicianShell = Constants.expoConfig?.extra?.technicianOnly === true;
   const driverShell = Constants.expoConfig?.extra?.driverOnly === true;
@@ -161,6 +166,8 @@ export default function App() {
   useEffect(() => {
     if (!hydrated) return;
     const handle = (url: string) => {
+      const entry=nativeEntryLink(url,origin);
+      if(entry){if(user){setError('Sign out before opening an account-entry link. Your current workspace has been preserved.');return;}setEntryLink(entry);setScreen('entry-link');return;}
       const dest = customerMobileLink(url);
       if (!dest) return;
       if (user && !["customer", "commercial"].includes(user.role)) {
@@ -228,6 +235,8 @@ export default function App() {
     setScreen(destination);
   }
   function clearPrivateState() {
+    setEntryLink(null);
+    setNativeScope({});
     setOwnerScope({ branchId: "", period: "month" });
     navHistory.current = ["home"];
     trackingOperations.current.clear();
@@ -245,9 +254,17 @@ export default function App() {
     setKey(null);
     setPassword("");
   }
+  const [nativeScope,setNativeScope]=useState<Record<string,string>>({});
+  function openNativeWorkspace(path:string){
+    const destination=nativeInternalDestination(path);
+    if(!destination){setError("This link has no native destination. Return to the workspace directory.");return;}
+    if('orderId' in destination)setOrderFilter(destination.orderId||null);
+    setNativeScope(('scope' in destination?destination.scope:undefined)||{});
+    setScreen(destination.screen);
+  }
   function ownerWorkspace(mode: "home" | "operations" | "finance" | "reports") {
     return <OwnerWorkspace key={user?.id + mode} api={api} mode={mode} scope={ownerScope} onScope={setOwnerScope}
-      navigate={setScreen} openWeb={path => { void Linking.openURL(origin + path).catch(() => setError("Could not open this workspace in your browser.")); }} />;
+      navigate={setScreen} openWorkspace={openNativeWorkspace} />;
   }
 
   async function api(action: string, data?: any, session = token) {
@@ -896,6 +913,12 @@ export default function App() {
               </Text>
               {button("Retry catalogue", refreshCatalogue, true, loading)}
             </View>
+          ) : screen==='entry-link'&&!user ? (
+            <NativeEntryScreen api={(a,d)=>api(a,d,null)} entry={entryLink} origin={origin} onEntry={setEntryLink} onClose={()=>{setEntryLink(null);setScreen('login')}} onPolicies={()=>setScreen('public-policies')} onSession={async result=>{const me=await api('me',undefined,result.token);if(me.user.id!==result.customerId||!['customer','commercial'].includes(me.user.role)){await api('logout',{},result.token);throw Error('The completed account does not match this invitation.');}await SecureStore.setItemAsync('easygas.session',result.token);clearPrivateState();setToken(result.token);setUser(me.user);setOrderFilter(result.orderId);setScreen('orders');}}/>
+          ) : screen==='public-info' ? (
+            <NativeServiceInfo api={(a,d)=>api(a,d,null)} onBack={()=>setScreen(user?'more':'login')} onPolicies={()=>setScreen('public-policies')}/>
+          ) : screen==='public-policies' ? (
+            <NativePublicPolicies api={(a,d)=>api(a,d,null)} onBack={()=>setScreen(user?'more':entryLink?'entry-link':'login')}/>
           ) : screen === "gas-order" ? (
             <GasOrder
               key={user?.id ?? "guest"}
@@ -927,6 +950,8 @@ export default function App() {
                 setScreen("bookings");
               }}
             />
+          ) : user && ["owner","manager","finance"].includes(user.role) && (screen === "native-workspaces" || screen.startsWith("workspace:")) ? (
+            <NativeBusinessWorkspace key={user.id+screen} api={api} user={user} moduleKey={screen.startsWith("workspace:")?screen.slice(10):undefined} scope={nativeScope} navigate={setScreen}/>
           ) : screen === "services" || screen === "bookings" ? (
             <Services
               key={screen + ":" + (user?.id ?? "guest")}
@@ -938,6 +963,7 @@ export default function App() {
               }}
               api={api}
               user={user}
+              onHelp={()=>navigateCustomer("conversations")}
               bookingsOnly={screen === "bookings"}
               token={token}
               apiUrl={origin}
@@ -1096,6 +1122,9 @@ export default function App() {
                 setPasswordChangeRequired(false);
                 setScreen("recovery");
               }, true)}
+              {button('Open an account link',()=>{setEntryLink(null);setScreen('entry-link')},true)}
+              {button('Policies & terms',()=>setScreen('public-policies'),true)}
+              {button('About & delivery',()=>setScreen('public-info'),true)}
             </>
           ) : screen === "payment" ? (
             <NativePaymentReturn api={api} intentId={orderFilter} />
@@ -1180,7 +1209,7 @@ export default function App() {
                 <FinanceOverview key={user.id} api={api} />
                 {button("Audit History", () => setScreen("owner-audit"))}
                 {button("Inventory workspace", () => {
-                  void Linking.openURL(origin + "/admin/inventory").catch(() => setError("Could not open Inventory in your browser."));
+                  openNativeWorkspace("/admin/inventory");
                 })}
               </>}
               {user?.role === "manager" && button("Find a customer", () => setScreen("sales-customers"), true)}
@@ -1188,6 +1217,7 @@ export default function App() {
                 button("Retail POS", () => setScreen("retail-pos"))}
               {user && ["owner", "manager", "finance"].includes(user.role) &&
                 button("Technicians & Availability", () => setScreen("technicians-management"))}
+              {user&&["owner","manager","finance"].includes(user.role)&&button("Workspaces",()=>setScreen("native-workspaces"))}
               {button("Account", () => setScreen("more"), true)}
             </>
           ) : screen === "products" ? (
@@ -1389,7 +1419,7 @@ export default function App() {
 
               <Text style={s.greeting}>ORDER → REVIEW → CONFIRM</Text>
               <Text style={s.body}>
-                Online payments are unconnected. Only enabled payment methods
+                Payment availability follows the current server configuration. Only enabled methods
                 are shown below.
               </Text>
               <Text style={s.title}>Where are we delivering?</Text>
@@ -1934,8 +1964,7 @@ export default function App() {
               </View>
               <View style={s.notice}>
                 <Text style={s.noticeText}>
-                  External top-ups remain unconnected. See Credit &amp;
-                  redemption for verified credits.
+                  Check Wallet &amp; Credit for available funding methods and verified credits.
                 </Text>
               </View>
               {wallet?.entries.map((e: any) => (
@@ -1956,13 +1985,13 @@ export default function App() {
               navigate={navigateCustomer}
               logout={logout}
             />
-          ) : user?.role === "owner" && screen === "owner-notifications" ? (
+          ) : user && ["owner","manager","finance"].includes(user.role) && screen === "owner-notifications" ? (
             <CustomerNotifications key={user.id + screen} api={api}
               onBack={() => setScreen("more")}
               openOrderLink={(path) => {
-                void Linking.openURL(origin + path).catch(() => setError("Could not open this order."));
+                openNativeWorkspace(path);
               }} />
-          ) : user?.role === "owner" && screen === "owner-profile" ? (
+          ) : user && ["owner","manager","finance"].includes(user.role) && screen === "owner-profile" ? (
             <OwnerSupportWorkspace key={user.id + screen} user={user} screen={screen} api={api} navigate={setScreen} signOut={logout} />
           ) : user && (user.role === "owner" || (user.role === "finance" && screen === "owner-audit")) && isOwnerGovernanceScreen(screen) ? (
             <OwnerGovernanceWorkspace key={user.id + screen} user={user} screen={screen} api={api} navigate={setScreen} />
@@ -1992,14 +2021,17 @@ export default function App() {
               <Text style={s.greeting}>MY ACCOUNT</Text>
               <Text style={s.title}>{user?.name ?? "Your EasyGas"}</Text>
               <Text style={s.body}>{user?.email}</Text>
+              {user&&["owner","manager","finance"].includes(user.role)&&button("Workspaces",()=>setScreen("native-workspaces"))}
               {user?.role === "owner" && button("Financial Summary", () => setScreen("owner-finance"))}
               {user?.role === "owner" && button("Management & Governance", () => setScreen("owner-governance"))}
-              {user?.role === "owner" && button("Profile & Security", () => setScreen("owner-profile"))}
-              {user?.role === "owner" && button("Notifications", () => setScreen("owner-notifications"))}
+              {user && ["owner","manager","finance"].includes(user.role) && button("Profile & Security", () => setScreen("owner-profile"))}
+              {user && ["owner","manager","finance"].includes(user.role) && button("Notifications", () => setScreen("owner-notifications"))}
               {canOpenRetailPos(user?.role) && button("Retail POS", () => setScreen("retail-pos"))}
               {user && ["owner", "manager", "finance"].includes(user.role) && button("Technicians & Availability", () => setScreen("technicians-management"))}
               {[
                 ["Appearance", "appearance"],
+                ["Policies & terms", "public-policies"],
+                ["About & delivery", "public-info"],
                 ["Browse Products", "products"],
                 ["Shopping Cart", "cart"],
                 ["Book a Service", "services"],
@@ -2015,7 +2047,7 @@ export default function App() {
                 ["Refill plans", "plans"],
                 ["Recurring orders", "recurring"],
                 ["Credit & redemption", "credit"],
-              ].filter(([, dest]) => customerView || dest === "appearance").map(([text, dest]) => (
+              ].filter(([, dest]) => customerView || ["appearance","public-policies","public-info"].includes(dest)).map(([text, dest]) => (
                 <Pressable
                   style={s.menuItem}
                   key={dest}

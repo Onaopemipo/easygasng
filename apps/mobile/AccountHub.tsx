@@ -24,6 +24,8 @@ const rows = [
   ["Credit & Redemption", "credit", "card-outline"],
   ["Appearance", "appearance", "contrast-outline"],
   ["Help & Support", "conversations", "help-circle-outline"],
+  ["Policies & terms", "public-policies", "document-text-outline"],
+  ["About & delivery", "public-info", "information-circle-outline"],
 ];
 export default function AccountHub({
   user,

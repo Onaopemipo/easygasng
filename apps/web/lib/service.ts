@@ -52,7 +52,7 @@ import { businessReporting } from "./business-reporting";
 import { approvalWorkflowAction } from "./approval-workflow";
 import { gasDeliveryAction, gasCatalogue, gasQuote } from "./gas-delivery";
 import { staffAction } from "./staff";
-import { readiness } from "./readiness";
+import { readiness, reviewReadiness } from "./readiness";
 import { bundleAction } from "./bundles";
 import { followupAction } from "./service-followups";
 import { policyAction } from "./policies";
@@ -638,6 +638,7 @@ export async function dispatch(
           );
       }
       if (action === "production.readiness") return readiness(tx, user);
+      if (action === "readiness.review") return reviewReadiness(tx, user, input);
       const inventoryResult = await inventoryBusiness(tx, action, user, input);
       if (inventoryResult !== undefined) return inventoryResult;
       const businessResult = await businessReporting(tx, action, user, input);

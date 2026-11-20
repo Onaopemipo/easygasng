@@ -8,11 +8,22 @@ import {
 } from "./CustomerUI";
 import * as SecureStore from "expo-secure-store";
 import React, { useState, useEffect, useRef } from "react";
-import { AppState, Image, Switch, StyleSheet, type ImageURISource } from "react-native";
+import {
+  AppState,
+  Image,
+  Switch,
+  StyleSheet,
+  type ImageURISource,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SUPPORT_REFRESH_MS } from "../../packages/business-rules/src/support-refresh";
 import { View, Pressable } from "./surfaces";
-import { FieldCaption, fieldAccessibilityLabel, Text, TextInput } from "./typography";
+import {
+  FieldCaption,
+  fieldAccessibilityLabel,
+  Text,
+  TextInput,
+} from "./typography";
 import { ContextSheet } from "./ContextSheet";
 import { randomUUID } from "expo-crypto";
 type API = (action: string, data?: any) => Promise<any>;
@@ -21,7 +32,14 @@ type Field = {
   label: string;
   value?: any;
   required?: boolean;
-  type?: "email" | "number" | "password" | "checkbox" | "text" | "hidden" | "textarea";
+  type?:
+    | "email"
+    | "number"
+    | "password"
+    | "checkbox"
+    | "text"
+    | "hidden"
+    | "textarea";
   options?: { value: string; label: string }[];
 };
 export function NativeForm({
@@ -37,6 +55,9 @@ export function NativeForm({
   reviewKey,
   disabled = false,
   onValuesChange,
+  preserveBlankNumbers = false,
+  submitLabel,
+  reviewLabel,
 }: {
   api: API;
   action: string;
@@ -50,6 +71,9 @@ export function NativeForm({
   reviewKey?: string;
   disabled?: boolean;
   onValuesChange?: (values: Record<string, any>) => void;
+  preserveBlankNumbers?: boolean;
+  submitLabel?: string;
+  reviewLabel?: string;
 }) {
   const [values, setValues] = useState<Record<string, any>>(() =>
       Object.fromEntries(
@@ -62,7 +86,11 @@ export function NativeForm({
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
   const [reviewed, setReviewed] = useState<Record<string, any> | null>(null);
-  useEffect(() => { onValuesChange?.(values); }, [values]);
+  const [openOption, setOpenOption] = useState<string | null>(null);
+  const [optionQuery, setOptionQuery] = useState("");
+  useEffect(() => {
+    onValuesChange?.(values);
+  }, [values]);
   const submitting = useRef(false);
   const currentReviewKey = useRef(reviewKey);
   currentReviewKey.current = reviewKey;
@@ -132,49 +160,130 @@ export function NativeForm({
             const required = f.required ?? f.type !== "checkbox";
             return (
               <View key={f.name}>
-                <FieldCaption style={s.label} required={required}>{f.label}</FieldCaption>
+                <FieldCaption style={s.label} required={required}>
+                  {f.label}
+                </FieldCaption>
                 {f.options ? (
-                  <View>
-                    {f.options.map((o) => (
-                      <Pressable
-                        key={o.value}
-                        style={[
-                          s.button,
-                          {
-                            backgroundColor:
-                              values[f.name] === o.value ? "#087a36" : "#edf6e9",
-                          },
-                        ]}
-                        onPress={() =>
-                          setValues({ ...values, [f.name]: o.value })
-                        }
-                      >
-                        <Text
-                          style={{
-                            color:
-                              values[f.name] === o.value ? "white" : "#07592e",
-                          }}
-                        >
-                          {o.label}
-                        </Text>
-                      </Pressable>
-                    ))}
+                  <View style={{ gap: 8 }}>
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={
+                        f.label +
+                        ": " +
+                        (f.options.find((o) => o.value === values[f.name])
+                          ?.label || "Choose")
+                      }
+                      accessibilityState={{ expanded: openOption === f.name }}
+                      style={[s.input, { minHeight: 44 }]}
+                      onPress={() => {
+                        setOpenOption(openOption === f.name ? null : f.name);
+                        setOptionQuery("");
+                      }}
+                    >
+                      <Text>
+                        {f.options.find((o) => o.value === values[f.name])
+                          ?.label || "Choose…"}
+                      </Text>
+                    </Pressable>
+                    {openOption === f.name && (
+                      <View style={{ gap: 6 }}>
+                        {f.options.length > 8 && (
+                          <TextInput
+                            accessibilityLabel={
+                              "Search " + f.label + " choices"
+                            }
+                            placeholder="Search choices…"
+                            style={s.input}
+                            value={optionQuery}
+                            onChangeText={setOptionQuery}
+                          />
+                        )}
+                        {f.options
+                          .filter(
+                            (o) =>
+                              !optionQuery ||
+                              o.label
+                                .toLowerCase()
+                                .includes(optionQuery.toLowerCase()),
+                          )
+                          .slice(0, 30)
+                          .map((o) => (
+                            <Pressable
+                              key={o.value}
+                              accessibilityRole="radio"
+                              accessibilityLabel={o.label}
+                              accessibilityState={{
+                                checked: values[f.name] === o.value,
+                              }}
+                              style={[
+                                s.button,
+                                {
+                                  backgroundColor:
+                                    values[f.name] === o.value
+                                      ? "#087a36"
+                                      : "#edf6e9",
+                                  minHeight: 44,
+                                },
+                              ]}
+                              onPress={() => {
+                                setValues({ ...values, [f.name]: o.value });
+                                setOpenOption(null);
+                                setOptionQuery("");
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  color:
+                                    values[f.name] === o.value
+                                      ? "white"
+                                      : "#07592e",
+                                }}
+                              >
+                                {o.label}
+                              </Text>
+                            </Pressable>
+                          ))}
+                        {f.options.filter(
+                          (o) =>
+                            !optionQuery ||
+                            o.label
+                              .toLowerCase()
+                              .includes(optionQuery.toLowerCase()),
+                        ).length > 30 && (
+                          <Text>
+                            Showing 30 choices. Search to narrow the list.
+                          </Text>
+                        )}
+                      </View>
+                    )}
                   </View>
                 ) : f.type === "checkbox" ? (
                   <Switch
-                    accessibilityLabel={fieldAccessibilityLabel(f.label, required)}
+                    accessibilityLabel={fieldAccessibilityLabel(
+                      f.label,
+                      required,
+                    )}
                     disabled={!draftReady}
                     value={Boolean(values[f.name])}
                     onValueChange={(v) => setValues({ ...values, [f.name]: v })}
                   />
                 ) : (
                   <TextInput
-                    accessibilityLabel={fieldAccessibilityLabel(f.label, required)}
+                    accessibilityLabel={fieldAccessibilityLabel(
+                      f.label,
+                      required,
+                    )}
                     style={s.input}
                     multiline={f.type === "textarea"}
                     editable={draftReady}
                     secureTextEntry={f.type === "password"}
-                    keyboardType={f.type === "email" ? "email-address" : f.type === "number" ? "numeric" : "default"}
+                    keyboardType={
+                      f.type === "email"
+                        ? "email-address"
+                        : f.type === "number"
+                          ? "numeric"
+                          : "default"
+                    }
                     autoCapitalize="none"
                     value={String(values[f.name] ?? "")}
                     onChangeText={(v) => setValues({ ...values, [f.name]: v })}
@@ -227,7 +336,11 @@ export function NativeForm({
           try {
             const data = { ...values };
             for (const f of fields)
-              if (f.type === "number") data[f.name] = Number(data[f.name]);
+              if (
+                f.type === "number" &&
+                !(preserveBlankNumbers && data[f.name] === "")
+              )
+                data[f.name] = Number(data[f.name]);
             for (const key of Object.keys(data))
               if (key.startsWith("address.")) {
                 data.address ??= {};
@@ -285,9 +398,9 @@ export function NativeForm({
               : "Saving…"
             : review
               ? reviewed
-                ? "Confirm booking request"
-                : "Review booking"
-              : "Continue"}
+                ? (submitLabel ?? "Confirm booking request")
+                : (reviewLabel ?? "Review booking")
+              : (submitLabel ?? "Continue")}
         </Text>
       </Pressable>
     </View>
@@ -341,7 +454,17 @@ export default function Workflows({
       active = false;
     };
   }, [screen, version]);
-  if (error) return <View><Text accessibilityRole="alert" style={s.body}>{friendlyMessage(error)}</Text><Pressable accessibilityRole="button" style={s.button} onPress={reload}><Text style={s.buttonText}>Retry</Text></Pressable></View>;
+  if (error)
+    return (
+      <View>
+        <Text accessibilityRole="alert" style={s.body}>
+          {friendlyMessage(error)}
+        </Text>
+        <Pressable accessibilityRole="button" style={s.button} onPress={reload}>
+          <Text style={s.buttonText}>Retry</Text>
+        </Pressable>
+      </View>
+    );
   if (!data) return <EasyGasLoader color="#087a36" />;
   if (screen === "notifications")
     return (
@@ -390,7 +513,7 @@ export default function Workflows({
           fields={[{ name: "email", label: "Account email", type: "email" }]}
         />
         <Text style={s.body}>
-          Open the link in your email to set a new password, then return to EasyGas to sign in.
+          Open your reset link in EasyGas, or choose “Open an account link” on Sign In and paste the link from your email.
         </Text>
       </>
     );
@@ -517,9 +640,17 @@ export default function Workflows({
                 label: l.name,
               })),
             },
-            { name: "building", required: false, label: "Building / house number" },
+            {
+              name: "building",
+              required: false,
+              label: "Building / house number",
+            },
             { name: "landmark", required: false, label: "Estate / landmark" },
-            { name: "directions", required: false, label: "Additional directions" },
+            {
+              name: "directions",
+              required: false,
+              label: "Additional directions",
+            },
             {
               name: "isDefault",
               label: "Default delivery address",
@@ -823,7 +954,7 @@ export default function Workflows({
         </Text>
       ))}
       <Text style={s.body}>
-        External payments, transfers and withdrawals remain unconnected.
+        Available funding methods and refund progress are shown in Wallet & Credit. Financial changes require server confirmation.
       </Text>
     </>
   );
@@ -831,33 +962,65 @@ export default function Workflows({
 function useMobileSupport(api: API, action: string | null, revision: number) {
   const latestApi = useRef(api);
   latestApi.current = api;
-  const [snapshot, setSnapshot] = useState<{ action: string; data?: any; error?: string }>();
+  const [snapshot, setSnapshot] = useState<{
+    action: string;
+    data?: any;
+    error?: string;
+  }>();
   useEffect(() => {
     if (!action) return;
     let active = true;
     let busy = false;
     let timer: ReturnType<typeof setTimeout>;
     async function load() {
-      if (!active || busy || (AppState.currentState && AppState.currentState !== "active")) return;
+      if (
+        !active ||
+        busy ||
+        (AppState.currentState && AppState.currentState !== "active")
+      )
+        return;
       clearTimeout(timer);
       busy = true;
       try {
         const data = await latestApi.current(action!);
         if (active) setSnapshot({ action: action!, data });
       } catch (e) {
-        if (active) setSnapshot(prior => ({ action: action!, data: prior?.action === action && ![401,403,404].includes((e as {status?: number}).status ?? 0) ? prior?.data : undefined, error: (e as Error).message }));
+        if (active)
+          setSnapshot((prior) => ({
+            action: action!,
+            data:
+              prior?.action === action &&
+              ![401, 403, 404].includes((e as { status?: number }).status ?? 0)
+                ? prior?.data
+                : undefined,
+            error: (e as Error).message,
+          }));
       } finally {
         busy = false;
         if (active) timer = setTimeout(load, SUPPORT_REFRESH_MS);
       }
     }
-    const listener = AppState.addEventListener("change", state => { if (state === "active") void load(); });
+    const listener = AppState.addEventListener("change", (state) => {
+      if (state === "active") void load();
+    });
     void load();
-    return () => { active = false; clearTimeout(timer); listener.remove(); };
+    return () => {
+      active = false;
+      clearTimeout(timer);
+      listener.remove();
+    };
   }, [action, revision]);
-  return snapshot?.action === action ? snapshot : { data: undefined, error: undefined };
+  return snapshot?.action === action
+    ? snapshot
+    : { data: undefined, error: undefined };
 }
-export function MobileSupportInbox({ api, imageSource }: { api: API; imageSource: (id: string) => ImageURISource }) {
+export function MobileSupportInbox({
+  api,
+  imageSource,
+}: {
+  api: API;
+  imageSource: (id: string) => ImageURISource;
+}) {
   const [selected, setSelected] = useState<string | null>(null);
   const [sheet, setSheet] = useState<"new" | "reply" | "image" | null>(null);
   const [feedback, setFeedback] = useState("");
@@ -867,54 +1030,227 @@ export function MobileSupportInbox({ api, imageSource }: { api: API; imageSource
   const [query, setQuery] = useState("");
   const [revision, setRevision] = useState(0);
   const [operationId, setOperationId] = useState("");
-  const list = useMobileSupport(api, selected ? null : `support.list?view=paged&page=${page}&search=${encodeURIComponent(query)}`, revision);
-  const detail = useMobileSupport(api, selected ? `support.detail?id=${selected}&page=${messagePage}` : null, revision);
+  const list = useMobileSupport(
+    api,
+    selected
+      ? null
+      : `support.list?view=paged&page=${page}&search=${encodeURIComponent(query)}`,
+    revision,
+  );
+  const detail = useMobileSupport(
+    api,
+    selected ? `support.detail?id=${selected}&page=${messagePage}` : null,
+    revision,
+  );
   const ticket = detail.data;
   const current = selected ? detail : list;
-  const reload = () => setRevision(v => v + 1);
-  const open = (id: string) => { setMessagePage("latest"); setSelected(id); };
-  const action = (label: string, onPress: () => void, disabled = false) =>
-    <Pressable accessibilityRole="button" accessibilityState={{disabled}} disabled={disabled} style={[s.button, { minHeight: 44, opacity: disabled ? .55 : 1 }]} onPress={onPress}><Text style={s.buttonText}>{label}</Text></Pressable>;
-  const pagination = (current: number, pages: number, change: (p: number) => void) => pages > 1 && <View>
-    <Text>Page {current} of {pages}</Text>
-    {action("Previous page", () => change(current - 1), current === 1)}
-    {action("Next page", () => change(current + 1), current === pages)}
-  </View>;
-  return <>
-    <Text accessibilityRole="header" style={s.title}>{ticket?.subject ?? "Support conversations"}</Text>
-    {feedback ? <Text accessibilityLiveRegion="polite">{feedback}</Text> : null}
-    {current.error ? <><Text accessibilityRole="alert">{current.data ? "Updates paused. Showing the last successful refresh." : current.error}</Text>{action("Retry", reload)}</> : null}
-    {current.data && <Text>Auto-refreshes every 15 seconds</Text>}
-    {selected && action("Back to requests", () => setSelected(null))}
-    {selected ? ticket ? <>
-      <Text>{ticket.status.replaceAll("_", " ")}</Text>
-      <Text style={s.body}>{ticket.message}</Text>
-      {ticket.messages.map((m: any) => <View key={m.id} style={s.message}><Text>{m.author}</Text><Text style={s.body}>{m.body}</Text></View>)}
-      {pagination(ticket.messagePage, ticket.messagePages, p => setMessagePage(p === ticket.messagePages ? "latest" : p))}
-      {ticket.attachments.map((attachment: any) => <View key={attachment.id} style={s.card}>
-        <Image source={imageSource(attachment.id)} accessibilityLabel={attachment.alt} resizeMode="contain" style={{width: "100%", height: 160}} /><Text>{attachment.alt}</Text>
-      </View>)}
-      {ticket.status !== "closed" && <>{action("Reply", () => { setOperationId(randomUUID()); setSheet("reply"); })}{action("Attach image", () => setSheet("image"))}</>}
-    </> : !detail.error && <EasyGasLoader /> : <>
-      <TextInput accessibilityLabel="Search support requests" placeholder="Search by subject or request ID" maxLength={100} value={search} onChangeText={setSearch} style={s.input} />
-      {action("Search", () => { setQuery(search); setPage(1); })}
-      {action("New request", () => setSheet("new"))}
-      {!list.data && !list.error && <EasyGasLoader />}
-      {list.data?.rows.length === 0 && <CustomerCard><CustomerTitle>{query ? "No matching requests" : "No support requests yet"}</CustomerTitle><CustomerCopy>{query ? "Try another subject or request ID." : "Your conversations will appear here."}</CustomerCopy></CustomerCard>}
-      {list.data?.rows.map((row: any) => <Pressable key={row.id} accessibilityRole="button" style={s.card} onPress={() => open(row.id)}>
-        <Text style={s.heading}>{row.subject}</Text><Text>{row.status.replaceAll("_", " ")}</Text>
-      </Pressable>)}
-      {list.data && pagination(list.data.page, list.data.pages, setPage)}
-    </>}
-    {sheet && (sheet === "new" || ticket) && <ContextSheet title={sheet === "new" ? "New support request" : sheet === "image" ? "Attach image" : "Reply to request"} onClose={() => setSheet(null)}>
-      {sheet === "image" ? <MobileSupportAttachment api={api} requestId={ticket.id} done={() => { setFeedback("Image attached."); setSheet(null); reload(); }} /> : <NativeForm api={api} action={sheet === "new" ? "support.create" : "support.reply"} title={sheet === "new" ? "Request details" : "Message"}
-        fields={sheet === "new" ? [{ name: "subject", label: "Subject" }, { name: "message", label: "How can we help?", type: "textarea" }] :
-          [{ name: "id", label: "", type: "hidden", value: ticket.id }, { name: "operationId", label: "", type: "hidden", value: operationId }, { name: "body", label: "Message", type: "textarea" }]}
-        onDone={result => { if (sheet === "new" && result?.id) open(result.id); else setMessagePage("latest"); setFeedback(sheet === "new" ? "Request created." : "Reply sent."); setSheet(null); reload(); }} />}
-    </ContextSheet>}
-  </>;
+  const reload = () => setRevision((v) => v + 1);
+  const open = (id: string) => {
+    setMessagePage("latest");
+    setSelected(id);
+  };
+  const action = (label: string, onPress: () => void, disabled = false) => (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      style={[s.button, { minHeight: 44, opacity: disabled ? 0.55 : 1 }]}
+      onPress={onPress}
+    >
+      <Text style={s.buttonText}>{label}</Text>
+    </Pressable>
+  );
+  const pagination = (
+    current: number,
+    pages: number,
+    change: (p: number) => void,
+  ) =>
+    pages > 1 && (
+      <View>
+        <Text>
+          Page {current} of {pages}
+        </Text>
+        {action("Previous page", () => change(current - 1), current === 1)}
+        {action("Next page", () => change(current + 1), current === pages)}
+      </View>
+    );
+  return (
+    <>
+      <Text accessibilityRole="header" style={s.title}>
+        {ticket?.subject ?? "Support conversations"}
+      </Text>
+      {feedback ? (
+        <Text accessibilityLiveRegion="polite">{feedback}</Text>
+      ) : null}
+      {current.error ? (
+        <>
+          <Text accessibilityRole="alert">
+            {current.data
+              ? "Updates paused. Showing the last successful refresh."
+              : current.error}
+          </Text>
+          {action("Retry", reload)}
+        </>
+      ) : null}
+      {current.data && <Text>Auto-refreshes every 15 seconds</Text>}
+      {selected && action("Back to requests", () => setSelected(null))}
+      {selected ? (
+        ticket ? (
+          <>
+            <Text>{ticket.status.replaceAll("_", " ")}</Text>
+            <Text style={s.body}>{ticket.message}</Text>
+            {ticket.messages.map((m: any) => (
+              <View key={m.id} style={s.message}>
+                <Text>{m.author}</Text>
+                <Text style={s.body}>{m.body}</Text>
+              </View>
+            ))}
+            {pagination(ticket.messagePage, ticket.messagePages, (p) =>
+              setMessagePage(p === ticket.messagePages ? "latest" : p),
+            )}
+            {ticket.attachments.map((attachment: any) => (
+              <View key={attachment.id} style={s.card}>
+                <Image
+                  source={imageSource(attachment.id)}
+                  accessibilityLabel={attachment.alt}
+                  resizeMode="contain"
+                  style={{ width: "100%", height: 160 }}
+                />
+                <Text>{attachment.alt}</Text>
+              </View>
+            ))}
+            {ticket.status !== "closed" && (
+              <>
+                {action("Reply", () => {
+                  setOperationId(randomUUID());
+                  setSheet("reply");
+                })}
+                {action("Attach image", () => setSheet("image"))}
+              </>
+            )}
+          </>
+        ) : (
+          !detail.error && <EasyGasLoader />
+        )
+      ) : (
+        <>
+          <TextInput
+            accessibilityLabel="Search support requests"
+            placeholder="Search by subject or request ID"
+            maxLength={100}
+            value={search}
+            onChangeText={setSearch}
+            style={s.input}
+          />
+          {action("Search", () => {
+            setQuery(search);
+            setPage(1);
+          })}
+          {action("New request", () => setSheet("new"))}
+          {!list.data && !list.error && <EasyGasLoader />}
+          {list.data?.rows.length === 0 && (
+            <CustomerCard>
+              <CustomerTitle>
+                {query ? "No matching requests" : "No support requests yet"}
+              </CustomerTitle>
+              <CustomerCopy>
+                {query
+                  ? "Try another subject or request ID."
+                  : "Your conversations will appear here."}
+              </CustomerCopy>
+            </CustomerCard>
+          )}
+          {list.data?.rows.map((row: any) => (
+            <Pressable
+              key={row.id}
+              accessibilityRole="button"
+              style={s.card}
+              onPress={() => open(row.id)}
+            >
+              <Text style={s.heading}>{row.subject}</Text>
+              <Text>{row.status.replaceAll("_", " ")}</Text>
+            </Pressable>
+          ))}
+          {list.data && pagination(list.data.page, list.data.pages, setPage)}
+        </>
+      )}
+      {sheet && (sheet === "new" || ticket) && (
+        <ContextSheet
+          title={
+            sheet === "new"
+              ? "New support request"
+              : sheet === "image"
+                ? "Attach image"
+                : "Reply to request"
+          }
+          onClose={() => setSheet(null)}
+        >
+          {sheet === "image" ? (
+            <MobileSupportAttachment
+              api={api}
+              requestId={ticket.id}
+              done={() => {
+                setFeedback("Image attached.");
+                setSheet(null);
+                reload();
+              }}
+            />
+          ) : (
+            <NativeForm
+              api={api}
+              action={sheet === "new" ? "support.create" : "support.reply"}
+              title={sheet === "new" ? "Request details" : "Message"}
+              fields={
+                sheet === "new"
+                  ? [
+                      { name: "subject", label: "Subject" },
+                      {
+                        name: "message",
+                        label: "How can we help?",
+                        type: "textarea",
+                      },
+                    ]
+                  : [
+                      {
+                        name: "id",
+                        label: "",
+                        type: "hidden",
+                        value: ticket.id,
+                      },
+                      {
+                        name: "operationId",
+                        label: "",
+                        type: "hidden",
+                        value: operationId,
+                      },
+                      { name: "body", label: "Message", type: "textarea" },
+                    ]
+              }
+              onDone={(result) => {
+                if (sheet === "new" && result?.id) open(result.id);
+                else setMessagePage("latest");
+                setFeedback(
+                  sheet === "new" ? "Request created." : "Reply sent.",
+                );
+                setSheet(null);
+                reload();
+              }}
+            />
+          )}
+        </ContextSheet>
+      )}
+    </>
+  );
 }
-function MobileSupportAttachment({ api, requestId, done }: { api: API; requestId: string; done: () => void }) {
+function MobileSupportAttachment({
+  api,
+  requestId,
+  done,
+}: {
+  api: API;
+  requestId: string;
+  done: () => void;
+}) {
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset>();
   const [alt, setAlt] = useState("");
   const [error, setError] = useState("");
@@ -922,12 +1258,23 @@ function MobileSupportAttachment({ api, requestId, done }: { api: API; requestId
   async function choose() {
     setError("");
     try {
-      const selected = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ["images"], allowsMultipleSelection: false });
+      const selected = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ["images"],
+        allowsMultipleSelection: false,
+      });
       if (selected.canceled) return;
       const image = selected.assets[0];
-      if ((image.fileSize ?? 0) > 3 * 1024 * 1024 || !["image/png", "image/jpeg", "image/webp"].includes(image.mimeType ?? "image/jpeg")) throw new Error("Choose a PNG, JPEG or WebP image under 3 MB.");
+      if (
+        (image.fileSize ?? 0) > 3 * 1024 * 1024 ||
+        !["image/png", "image/jpeg", "image/webp"].includes(
+          image.mimeType ?? "image/jpeg",
+        )
+      )
+        throw new Error("Choose a PNG, JPEG or WebP image under 3 MB.");
       setFile(image);
-    } catch (e) { setError((e as Error).message); }
+    } catch (e) {
+      setError((e as Error).message);
+    }
   }
   async function upload() {
     if (!file || busy) return;
@@ -937,20 +1284,63 @@ function MobileSupportAttachment({ api, requestId, done }: { api: API; requestId
       const form = new FormData();
       form.append("requestId", requestId);
       form.append("alt", alt.trim());
-      form.append("image", file.file ?? ({ uri: file.uri, name: file.fileName ?? "support-image.jpg", type: file.mimeType ?? "image/jpeg" } as any));
+      form.append(
+        "image",
+        file.file ??
+          ({
+            uri: file.uri,
+            name: file.fileName ?? "support-image.jpg",
+            type: file.mimeType ?? "image/jpeg",
+          } as any),
+      );
       await api("media", form);
       done();
-    } catch (e) { setError((e as Error).message); }
-    finally { setBusy(false); }
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
   }
-  return <View>
-    <Text>PNG, JPEG or WebP, up to 3 MB.</Text>
-    <Pressable accessibilityRole="button" disabled={busy} style={s.button} onPress={() => void choose()}><Text style={s.buttonText}>{file ? "Choose a different image" : "Choose image"}</Text></Pressable>
-    {file && <Image source={{uri: file.uri}} accessibilityLabel="Selected image preview" resizeMode="contain" style={{width: "100%", height: 160}} />}
-    <TextInput accessibilityLabel="Image description" placeholder="Describe the image" maxLength={250} value={alt} onChangeText={setAlt} style={s.input} />
-    {error ? <Text accessibilityRole="alert">{error}</Text> : null}
-    <Pressable accessibilityRole="button" disabled={!file || alt.trim().length < 3 || busy} style={s.button} onPress={() => void upload()}><Text style={s.buttonText}>{busy ? "Uploading…" : "Attach image"}</Text></Pressable>
-  </View>;
+  return (
+    <View>
+      <Text>PNG, JPEG or WebP, up to 3 MB.</Text>
+      <Pressable
+        accessibilityRole="button"
+        disabled={busy}
+        style={s.button}
+        onPress={() => void choose()}
+      >
+        <Text style={s.buttonText}>
+          {file ? "Choose a different image" : "Choose image"}
+        </Text>
+      </Pressable>
+      {file && (
+        <Image
+          source={{ uri: file.uri }}
+          accessibilityLabel="Selected image preview"
+          resizeMode="contain"
+          style={{ width: "100%", height: 160 }}
+        />
+      )}
+      <TextInput
+        accessibilityLabel="Image description"
+        placeholder="Describe the image"
+        maxLength={250}
+        value={alt}
+        onChangeText={setAlt}
+        style={s.input}
+      />
+      {error ? <Text accessibilityRole="alert">{error}</Text> : null}
+      <Pressable
+        accessibilityRole="button"
+        disabled={!file || alt.trim().length < 3 || busy}
+        style={s.button}
+        onPress={() => void upload()}
+      >
+        <Text style={s.buttonText}>{busy ? "Uploading…" : "Attach image"}</Text>
+      </Pressable>
+    </View>
+  );
 }
 
 const s = StyleSheet.create({

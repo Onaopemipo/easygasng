@@ -151,6 +151,8 @@ test("DRVS-PRESERVED: historical business baselines retain explicitly reviewed n
   const lpgContinuation=JSON.parse(await readFile("docs/driver-lpg-workflow/reviewed-source-changes.json","utf8"));
   assert.deepEqual(Object.keys(lpgContinuation.files).sort(),["apps/web/components/admin.tsx","apps/web/lib/operations.ts","apps/web/lib/order-tracking.ts"]);
   const auditContinuations = JSON.parse(await readFile("docs/audit-remediation/reviewed-prior-continuations.json", "utf8"));
+  const nativeContinuation=JSON.parse(await readFile("docs/native-workflows/reviewed-source-changes.json","utf8"));
+  assert.equal(nativeContinuation.baseline["apps/mobile/App.tsx"],rows["apps/mobile/App.tsx"]);
   for (const [file, hash] of Object.entries(rows)) {
     if (notificationCorrection.files[file])
       assert.equal(notificationCorrection.baseline[file], hash, file);
@@ -161,7 +163,7 @@ test("DRVS-PRESERVED: historical business baselines retain explicitly reviewed n
       createHash("sha256")
         .update(await readFile(file))
         .digest("hex"),
-      auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? notificationCorrection.files[file] ?? hash,
+      nativeContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? notificationCorrection.files[file] ?? hash,
       file,
     );
   }

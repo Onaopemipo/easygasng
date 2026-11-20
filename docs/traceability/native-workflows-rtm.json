@@ -1,0 +1,1820 @@
+{
+  "phase": "Native workflow port and API acceptance",
+  "productionDecision": "NO-GO; actual-import hold and retain-all unchanged",
+  "requirements": [
+    {
+      "id": "FEATURE-01",
+      "requirement": "Discover and compare",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/",
+      "implementationFiles": [
+        "apps/mobile/CustomerHome.tsx",
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/NativeEntry.tsx"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-AUTHORITY"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-02",
+      "requirement": "Order and checkout",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/gas-order",
+      "implementationFiles": [
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/CombinedCheckout.tsx",
+        "apps/mobile/CheckoutPayments.tsx"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-AUTHORITY"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-03",
+      "requirement": "Shopping cart",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/cart",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/CombinedCheckout.tsx"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-AUTHORITY"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-04",
+      "requirement": "My orders",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/orders",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "apps/mobile/Invoices.tsx"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-AUTHORITY"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-05",
+      "requirement": "Account and privacy",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/account-settings",
+      "implementationFiles": [
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/AccountHub.tsx",
+        "apps/mobile/OwnerSupportWorkspace.tsx"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-AUTHORITY"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-06",
+      "requirement": "Purchase credit and wallet",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/wallet",
+      "implementationFiles": [
+        "apps/mobile/CustomerWallet.tsx",
+        "apps/mobile/HostedPayment.tsx"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-AUTHORITY"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-07",
+      "requirement": "Customer service visits",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/bookings",
+      "implementationFiles": [
+        "apps/mobile/Services.tsx"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-AUTHORITY"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-08",
+      "requirement": "Rewards and refill planning",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/rewards",
+      "implementationFiles": [
+        "apps/mobile/CookingGasProfiles.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-AUTHORITY"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-09",
+      "requirement": "Customer support",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/support",
+      "implementationFiles": [
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/CustomerNotifications.tsx"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-AUTHORITY"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-10",
+      "requirement": "Business dashboard",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin",
+      "implementationFiles": [
+        "apps/mobile/OwnerWorkspace.tsx",
+        "apps/mobile/OwnerOverview.tsx",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-11",
+      "requirement": "Order management",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/orders",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/OrderVisit.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-12",
+      "requirement": "Retail point of sale",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/pos",
+      "implementationFiles": [
+        "apps/mobile/RetailPos.tsx",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-13",
+      "requirement": "Customer management",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/customers",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/SalesCustomerLookup.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-14",
+      "requirement": "Support desk",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/support",
+      "implementationFiles": [
+        "apps/mobile/Workflows.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-15",
+      "requirement": "Catalogue and bundles",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/products",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/NativeCataloguePreview.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts",
+        "packages/business-rules/src/native-catalogue-preview.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES",
+        "NATIVE-IMPORT-PREVIEW"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator. CSV metadata preview is local and read-only; actual historical import remains on hold."
+    },
+    {
+      "id": "FEATURE-16",
+      "requirement": "Inventory management",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/inventory",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-17",
+      "requirement": "Cylinder records",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/cylinders",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/Cylinders.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-18",
+      "requirement": "Dispatch and driver management",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/deliveries",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/FleetLocations.tsx",
+        "apps/mobile/BulkLPG.tsx",
+        "apps/mobile/VehicleManifest.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G03",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-19",
+      "requirement": "Driver workspace",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/deliveries",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverOperations.tsx",
+        "apps/mobile/DriverTripTracking.tsx",
+        "apps/mobile/DriverProof.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G03",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-20",
+      "requirement": "Professional services",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/services",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/Services.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G03",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-21",
+      "requirement": "Technician workspace",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/bookings",
+      "implementationFiles": [
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/mobile/Services.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G03",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-22",
+      "requirement": "Staff and qualifications",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/technicians",
+      "implementationFiles": [
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G03",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-23",
+      "requirement": "Quotations",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/quotations",
+      "implementationFiles": [
+        "apps/mobile/Services.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G03",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-24",
+      "requirement": "Finance workspace",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/finance",
+      "implementationFiles": [
+        "apps/mobile/FinanceOverview.tsx",
+        "apps/mobile/OwnerWorkspace.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-25",
+      "requirement": "Financial reconciliation",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/reconciliation",
+      "implementationFiles": [
+        "apps/mobile/Invoices.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-26",
+      "requirement": "Credits and refunds",
+      "priority": "P0",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/credits",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/EasyRewards.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-27",
+      "requirement": "Reports and analytics",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/reports",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts",
+        "packages/business-rules/src/native-report-scope.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES",
+        "NATIVE-REPORT-FILTERS"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-28",
+      "requirement": "Campaigns",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/campaigns",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-29",
+      "requirement": "Recommendations",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/recommendations",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-30",
+      "requirement": "Testimonials",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/testimonials",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-31",
+      "requirement": "Approvals and settings",
+      "priority": "P0",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/approvals",
+      "implementationFiles": [
+        "apps/mobile/OwnerGovernanceWorkspace.tsx",
+        "apps/mobile/OwnerApprovals.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-32",
+      "requirement": "Operations centre",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/operations",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-33",
+      "requirement": "Governance and incidents",
+      "priority": "P0",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/incidents",
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts",
+        "apps/web/lib/readiness.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-34",
+      "requirement": "Policies and legal information",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/admin/policies",
+      "implementationFiles": [
+        "apps/mobile/NativeEntry.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing public catalogue and published effective policy documents; authenticated content/policy governance APIs with current owner permissions.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    },
+    {
+      "id": "FEATURE-35",
+      "requirement": "Identity and entry links",
+      "priority": "P0",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/login",
+      "implementationFiles": [
+        "apps/mobile/NativeEntry.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Workflows.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts",
+        "packages/business-rules/src/native-entry-links.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/phone-activation.ts"
+      ],
+      "dataSource": "Existing public single-use account verify/reset/invitation/phone OTP APIs; server-owned token digests, expiry and identity; authenticated me before native session storage.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-ENTRY-LINK",
+        "NATIVE-ENTRY-HTTP"
+      ],
+      "negativeTests": [
+        "NATIVE-ENTRY-LINK",
+        "NATIVE-ENTRY-HTTP"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator. Real mailbox/SMS/WhatsApp delivery and claimed universal/app links require external configuration and device acceptance."
+    },
+    {
+      "id": "FEATURE-36",
+      "requirement": "Global navigation and appearance",
+      "priority": "P1",
+      "scope": "Native app port and existing authenticated API integration; original feature IDs retained. Real provider/physical/device release acceptance remains separate.",
+      "uiReference": "User approved remaining prototype workflows and web handoffs ported to native, all roles/exceptions tested.",
+      "route": "/account",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/ContextSheet.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/CustomerNotifications.tsx",
+        "packages/business-rules/src/native-workspaces.ts",
+        "packages/business-rules/src/native-workflow-contracts.json",
+        "packages/business-rules/src/native-workspace-session.ts"
+      ],
+      "dataSource": "Existing authenticated /api/[action] dispatcher, persistent database, current role/branch/privilege and governed records.",
+      "securityControl": "Current bearer session; server authorisation; independent financial/safety review, revision/idempotency and retain-all/NO-GO/import controls unchanged.",
+      "testFiles": [
+        "tests/native-workflows.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/native-entry.test.ts",
+        "scripts/test-native-workspaces.mjs",
+        "tests/native-workflow-traceability.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-CONTRACTS",
+        "NATIVE-HANDOFFS",
+        "NATIVE-AUTHORITY",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "NATIVE-AUTHORITY",
+        "NATIVE-REPLAY"
+      ],
+      "evidence": [
+        "docs/native-workflows/evidence/native-tests.txt",
+        "docs/native-workflows/evidence/component-test.txt",
+        "docs/native-workflows/evidence/regression-final.txt",
+        "docs/native-workflows/evidence/simulator-observations.json",
+        "docs/native-workflows/evidence/build-manifest.json",
+        "docs/native-workflows/evidence/final-targeted.txt",
+        "docs/native-workflows/evidence/matrix-validation.txt"
+      ],
+      "acceptanceGate": "NATIVE-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation/API mapping is present; bounded real HTTP, rendered-component and existing-domain regression evidence executed. This family is not certified by route existence or prior prototype tests.",
+      "testResult": "PASS \u2014 bounded native/API checks; full per-feature installed-device/provider/physical acceptance remains incomplete.",
+      "outstandingWork": "Complete individual native acceptance for all leaf scenarios in this family, physical-device/platform/accessibility/offline drills and applicable external provider/operational gates. Retain blocked items in the denominator."
+    }
+  ],
+  "gates": [
+    {
+      "id": "NATIVE-G01",
+      "description": "Customer/account/identity native API flows",
+      "status": "PARTIAL",
+      "reason": "Native account-entry port and API security checks executed; provider delivery and exhaustive customer device acceptance remain."
+    },
+    {
+      "id": "NATIVE-G02",
+      "description": "Business workspaces and internal handoffs use native screens and real API contracts",
+      "status": "PARTIAL",
+      "reason": "25 native workspaces and 97 action forms; all permitted tabs load over real HTTP. Representative writes have canonical readback. Every leaf interaction is not individually device-accepted."
+    },
+    {
+      "id": "NATIVE-G03",
+      "description": "Driver and technician native journeys and exception guards",
+      "status": "PARTIAL",
+      "reason": "Existing driver/technician APIs passed broad regression; simulator assignment acknowledgement and pickup guard tested. Physical fulfilment, locked/background/replay and all exceptions need device acceptance."
+    },
+    {
+      "id": "NATIVE-G04",
+      "description": "Bounded six-role security and write-recovery exception acceptance",
+      "status": "PASS",
+      "reason": "Bounded six-role API/renderer boundary tests and stale, expired, duplicate, cross-branch, self-review, offline/unknown-outcome negatives executed; no production/concurrency certification implied."
+    },
+    {
+      "id": "NATIVE-G05",
+      "description": "Native types/builds, rendered-component API checks and bounded simulator acceptance",
+      "status": "PASS",
+      "reason": "Native/web types, iOS simulator build, Android APK/bundle and 9 rendered native/API checks pass, including role-filtered report schedules and all 97 forms. Six iOS roles observed; report/share-sheet and invalid-link checks recorded on the installed acceptance build. Final schedule/role-enum delta rebuilt and component/API-tested; Android visual/device/provider acceptance is not claimed."
+    },
+    {
+      "id": "NATIVE-G06",
+      "description": "Signed installed iOS/Android and real device/provider/physical acceptance",
+      "status": "BLOCKED",
+      "reason": "No signed physical-device/store release, live provider acceptance, physical gas/meter/cylinder certification or independent PostgreSQL concurrency acceptance completed. Existing production NO-GO remains."
+    }
+  ],
+  "featureDenominator": 300,
+  "coverage": {
+    "requirements": {
+      "verified": 0,
+      "total": 36,
+      "partial": 36
+    },
+    "gates": {
+      "passed": 2,
+      "partial": 3,
+      "blocked": 1,
+      "total": 6
+    },
+    "excluded": 0,
+    "features": {
+      "individuallyVerified": 0,
+      "total": 300,
+      "externalBlocksRetained": 14,
+      "excluded": 0
+    },
+    "criticalRequirements": {
+      "verified": 0,
+      "total": 4,
+      "negativeTested": 4
+    },
+    "routes": {
+      "nativeWorkspaceModules": 25,
+      "note": "Navigation/route representation is not acceptance."
+    }
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "Native continuation registered before implementation; retains original FEATURE-01\u201336 and300 leaf IDs. MACC closed prototype gates remain historical and do not count as native execution. No deployment or signed build authorised by inference; local native build/test is in scope. Production NO-GO/import/retain-all unchanged."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Ported native workspaces, secure account-entry/public policy/info screens, metadata CSV preview, filters and exports. Preserved original prototype source hashes through an explicit reviewed native continuation; private prototype artifact was not rebuilt or redeployed. All 36 families/300 leaf IDs and 14 external blocks remain in scope. No provider, production release, retain-all or actual-import decision was relaxed."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Final native acceptance found and corrected report choice/permission mismatch and stale report filters. Lost write confirmation now requires canonical refresh before another change. Six iOS roles and CSV/XML/PDF share previews observed; no external transfer or physical fulfilment. 136 focused API/logic and 9 actual component checks pass; full regression 1042 pass/28 existing skips. All remaining device/provider/operational and 300 leaf acceptance limits retained."
+    }
+  ],
+  "executedAcceptance": {
+    "nativeHttpAndLogicTests": 136,
+    "renderedComponentTests": 9,
+    "registeredActionFormsRendered": 97,
+    "roleReportPermissionChecks": 69,
+    "fullRegression": {
+      "pass": 1042,
+      "fail": 0,
+      "skipped": 28,
+      "note": "Existing PostgreSQL/provider/device skips retained. Final targeted tests rerun after report-picker/readback-guard changes."
+    },
+    "iosRolesObserved": 6,
+    "androidEvidence": "APK build, install, launch and runtime errors only; visual role acceptance remains open",
+    "finalTargetedTests": 162,
+    "nativeTraceabilityChecks": 3
+  }
+}

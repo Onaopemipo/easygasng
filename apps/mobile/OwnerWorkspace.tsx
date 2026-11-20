@@ -47,13 +47,13 @@ function RevenueTrend({ rows }: { rows: { date: string; amountKobo: number }[] }
   </Card>;
 }
 
-export function OwnerWorkspace({ api, mode, scope, onScope, navigate, openWeb }: {
+export function OwnerWorkspace({ api, mode, scope, onScope, navigate, openWorkspace }: {
   api: API;
   mode: "home" | "operations" | "finance" | "reports";
   scope: OwnerScope;
   onScope: (scope: OwnerScope) => void;
   navigate: (screen: string) => void;
-  openWeb: (path: string) => void;
+  openWorkspace: (path: string) => void;
 }) {
   const { colors } = useTheme();
   const [sheet, setSheet] = useState<"branch" | "period" | null>(null);
@@ -183,7 +183,7 @@ export function OwnerWorkspace({ api, mode, scope, onScope, navigate, openWeb }:
     {data && mode === "operations" && <Card>
       <Copy>Orders and bookings follow the selected period. Deliveries, incidents and inventory exceptions show current conditions.</Copy>
       {modules.filter(([, , route]) => dashboard.allowed?.includes(route)).map(([label, value, route, icon]) =>
-        <Pressable accessibilityRole="link" accessibilityLabel={`${label}, ${value ?? "Unavailable"}`} key={label} onPress={() => openWeb("/admin/" + route)}
+        <Pressable accessibilityRole="button" accessibilityLabel={`${label}, ${value ?? "Unavailable"}`} key={label} onPress={() => openWorkspace("/admin/" + route)}
           style={{ minHeight: 48, flexDirection: "row", alignItems: "center", gap: 10, borderBottomWidth: 1, borderColor: colors.border }}>
           <Ionicons name={icon} size={20} color={colors.primary} />
           <Text style={{ color: colors.text, flex: 1 }}>{label}</Text>
@@ -208,7 +208,7 @@ export function OwnerWorkspace({ api, mode, scope, onScope, navigate, openWeb }:
         <Title>Payments</Title>
         <Button label="Load transactions" disabled={reportBusy} onPress={() => void paymentReport(false)} />
         <Button label="Export payments CSV" disabled={reportBusy} onPress={() => void paymentReport(true)} />
-        <Button label="Open reconciliation on web" onPress={() => openWeb("/admin/reconciliation?" + query)} />
+        <Button label="Open reconciliation" onPress={() => openWorkspace("/admin/reconciliation?" + query)} />
         {reportError && <Copy>{reportError}</Copy>}
         {payments?.key === key && (payments.rows.length === 0 ? <Copy>No payment records in this scope.</Copy> : <>
           <Copy>Transaction {paymentIndex + 1} of {payments.rows.length}</Copy>
@@ -219,9 +219,9 @@ export function OwnerWorkspace({ api, mode, scope, onScope, navigate, openWeb }:
           {paymentIndex + 1 < payments.rows.length && <Button label="Next transaction" onPress={() => setPaymentIndex(value => value + 1)} />}
         </>)}
       </Card>}
-      {dashboard.allowed?.includes("reports") && <Button label="Financial reports and export" onPress={() => openWeb("/admin/reports?" + query)} />}
+      {dashboard.allowed?.includes("reports") && <Button label="Financial reports and export" onPress={() => openWorkspace("/admin/reports?" + query)} />}
     </>}
     {data && mode === "reports" && dashboard.allowed?.includes("reports") &&
-      <Button label="Open reports and exports" onPress={() => openWeb("/admin/reports?" + query)} />}
+      <Button label="Reports and exports" onPress={() => openWorkspace("/admin/reports?" + query)} />}
   </View>;
 }

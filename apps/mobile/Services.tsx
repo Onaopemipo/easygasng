@@ -59,6 +59,7 @@ export default function Services({
   backRef,
   onSignIn,
   initialServiceId,
+  onHelp,
 }: {
   api: API;
   user: any;
@@ -70,6 +71,7 @@ export default function Services({
   backRef?: React.RefObject<(() => boolean) | null>;
   onSignIn?: (serviceId: string) => void;
   initialServiceId?: string;
+  onHelp?: () => void;
 }) {
   const [bundles, setBundles] = useState<any[]>([]),
     [bundle, setBundle] = useState<any>(null),
@@ -230,6 +232,7 @@ export default function Services({
                     service={currentService}
                     api={api}
                     apiUrl={apiUrl}
+                    onHelp={onHelp}
                     reloadService={reload}
                     done={() => {
                       clearSelection();
@@ -472,11 +475,13 @@ function Booking({
   bundleId,
   bundleVersion,
   bundleTotalKobo,
+  onHelp,
 }: {
   followupId?: string;
   bundleId?: string;
   bundleVersion?: number;
   bundleTotalKobo?: number;
+  onHelp?: () => void;
   service: any;
   api: API;
   apiUrl: string;
@@ -701,9 +706,7 @@ function Booking({
               label="Contact EasyGas"
               secondary
               onPress={() => {
-                void Linking.openURL(apiUrl + "/contact").catch(() =>
-                  setError("Couldn’t open EasyGas contact information."),
-                );
+                if(onHelp)onHelp();else setError("Open Help & support in your account to contact EasyGas.");
               }}
             />
           </>

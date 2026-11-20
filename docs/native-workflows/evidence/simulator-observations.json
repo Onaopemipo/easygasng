@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-20T01:43:38.077986+00:00",
+  "environment": {
+    "api": "Disposable loopback 127.0.0.1:3106; memory-only PGlite fixture",
+    "ios": "EasyGas First Sign-In QA; iOS 26.5 simulator; com.easygasng.customer.local",
+    "android": "EasyGas_Driver_QA emulator; release APK installed and launched with adb; no Android visual role acceptance claimed"
+  },
+  "roles": [
+    {
+      "role": "owner",
+      "observed": [
+        "Secure sign-in, native purchasing source selection and review",
+        "Created Native iOS supplier acceptance; canonical active supplier readback",
+        "Final native report handoff, relevant filters and delivery report",
+        "CSV, Excel XML and PDF OS share sheets opened and cancelled; no external delivery"
+      ],
+      "screenshots": [
+        "ios-owner-purchasing",
+        "ios-owner-write-confirmed",
+        "ios-native-report-result",
+        "ios-csv-share-sheet",
+        "ios-excel-share-sheet",
+        "ios-pdf-share-sheet"
+      ]
+    },
+    {
+      "role": "finance",
+      "observed": [
+        "Scoped customer search and selection",
+        "Reviewed \u20a680.25 credit; inline recent-verification challenge preserved draft",
+        "Confirmed pending request; canonical 8025 kobo readback, no wallet posting"
+      ],
+      "screenshots": [
+        "ios-finance-credits",
+        "ios-finance-reauth-draft-retained",
+        "ios-finance-write-confirmed"
+      ]
+    },
+    {
+      "role": "manager",
+      "observed": [
+        "Branch dashboard and restricted workspace directory",
+        "Native customer campaigns read; no owner staff/access module"
+      ],
+      "screenshots": [
+        "ios-manager-campaigns"
+      ]
+    },
+    {
+      "role": "technician",
+      "observed": [
+        "Owned assignment review and acknowledgement with synthetic reason",
+        "Canonical assigned booking version 5 and acknowledged assignment event"
+      ],
+      "screenshots": [
+        "ios-technician-assignment-confirmed"
+      ]
+    },
+    {
+      "role": "driver",
+      "observed": [
+        "Delivery-only session and assigned delivery acknowledgement",
+        "Canonical dispatch response acknowledged; order remains assigned, no pickup",
+        "Inspected pickup disabled without required reason; no physical fulfilment or GPS permission"
+      ],
+      "screenshots": [
+        "ios-driver-acknowledged-pickup-guard"
+      ]
+    },
+    {
+      "role": "customer",
+      "observed": [
+        "Owned order and service request match assigned driver/technician records",
+        "Native policies empty state and current delivery-information reader",
+        "Invalid synthetic verification link rejected without session; no password or terms changed"
+      ],
+      "screenshots": [
+        "ios-customer-owned-order",
+        "ios-customer-owned-booking",
+        "ios-public-policies",
+        "ios-public-delivery-info",
+        "ios-expired-account-link"
+      ]
+    }
+  ],
+  "sourceOfTruth": "Actual installed React Native application, authenticated existing dispatcher/API, and simulator-api-readback.json. React host-renderer and historical prototype checks are separate evidence.",
+  "finalBuildSmoke": [
+    "Owner native report scope/results and CSV/XML/PDF sharing observed on the installed report/readback-fix acceptance build. A subsequent report-schedule/staff-role enum picker correction is rebuilt and covered by actual component/API tests.",
+    "Final app signed out after verification; no fixture password saved to OS password manager",
+    "Final Android APK installed and launched; no AndroidRuntime or ReactNativeJS error recorded"
+  ],
+  "limits": [
+    "Representative installed iOS flows across all six roles, not individual acceptance of all 300 features",
+    "No real-provider delivery, physical gas operation, physical-device/store release, GPS grant or external file transfer",
+    "Fixture qualifications expired after the bounded two-hour window; no renewal or safety-control bypass applied",
+    "Locked/background/airplane-mode, accessibility and independent PostgreSQL concurrency remain outstanding"
+  ],
+  "reportAndSharesIosBundleSha256": "21eae7b8bccb8140074f3b0392bcc84d59b0176af7b94d2533342ded373373b8"
+}

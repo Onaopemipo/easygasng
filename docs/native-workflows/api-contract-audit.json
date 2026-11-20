@@ -1,0 +1,7410 @@
+{
+  "account.recover": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "format": "email",
+        "max": 200
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 44
+  },
+  "invitation.accept": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "token",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "password",
+        "type": "json",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 131
+  },
+  "account.checkout-details": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "save",
+        "type": "object",
+        "required": false,
+        "fields": [
+          {
+            "name": "phone",
+            "type": "checkbox",
+            "required": true
+          },
+          {
+            "name": "address",
+            "type": "checkbox",
+            "required": true
+          },
+          {
+            "name": "version",
+            "type": "text",
+            "required": true,
+            "format": "string",
+            "length": 64
+          }
+        ]
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 270
+  },
+  "account.export": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 344
+  },
+  "account.update": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 496
+  },
+  "account.password": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "currentPassword",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 128
+      },
+      {
+        "name": "newPassword",
+        "type": "json",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 505
+  },
+  "account.session.revoke": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 550
+  },
+  "address.save": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "isDefault",
+        "type": "checkbox",
+        "required": false
+      },
+      {
+        "name": "locationId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "building",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "landmark",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 250
+      },
+      {
+        "name": "directions",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 500
+      },
+      {
+        "name": "recipient",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "label",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 40
+      },
+      {
+        "name": "street",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 250
+      },
+      {
+        "name": "zone",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100,
+        "value": ""
+      },
+      {
+        "name": "phone",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 562
+  },
+  "address.default": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 638
+  },
+  "address.archive": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 656
+  },
+  "preferences.save": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "marketing",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "refillReminders",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "serviceReminders",
+        "type": "checkbox",
+        "required": false
+      },
+      {
+        "name": "quietStart",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 23
+      },
+      {
+        "name": "quietEnd",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 23
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 664
+  },
+  "privacy.request": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "kind",
+        "type": "select",
+        "required": true,
+        "options": [
+          "deletion",
+          "export"
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 689
+  },
+  "notifications.read": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 750
+  },
+  "staff.invite": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "format": "email",
+        "max": 200
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 100
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "access",
+        "type": "json",
+        "required": false
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 758
+  },
+  "staff.invitation.revoke": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 825
+  },
+  "staff.invitation.resend": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 825
+  },
+  "staff.suspend": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "userId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      },
+      {
+        "name": "expectedRole",
+        "type": "text",
+        "required": false,
+        "value": "driver"
+      }
+    ],
+    "source": "apps/web/lib/accounts.ts",
+    "line": 891
+  },
+  "customers.lookup": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "query",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/assisted-ordering.ts",
+    "line": 22
+  },
+  "customers.provisional": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 120
+      },
+      {
+        "name": "phone",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 40
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/assisted-ordering.ts",
+    "line": 54
+  },
+  "order.assisted.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "customerId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 500
+      },
+      {
+        "name": "checkout",
+        "type": "json",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/assisted-ordering.ts",
+    "line": 122
+  },
+  "bulk.meter.recalibrate": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "meterId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "expectedCalibrationExpiresAt",
+        "type": "text",
+        "required": true,
+        "format": "datetime"
+      },
+      {
+        "name": "expectedCalibrationReference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 300
+      },
+      {
+        "name": "calibrationReference",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 10,
+        "max": 300
+      },
+      {
+        "name": "calibrationExpiresAt",
+        "type": "text",
+        "required": false,
+        "format": "datetime"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 500
+      }
+    ],
+    "source": "apps/web/lib/bulk-lpg.ts",
+    "line": 114
+  },
+  "bulk.meter.retire": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "meterId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "expectedCalibrationExpiresAt",
+        "type": "text",
+        "required": true,
+        "format": "datetime"
+      },
+      {
+        "name": "expectedCalibrationReference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 300
+      },
+      {
+        "name": "calibrationReference",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 10,
+        "max": 300
+      },
+      {
+        "name": "calibrationExpiresAt",
+        "type": "text",
+        "required": false,
+        "format": "datetime"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 500
+      }
+    ],
+    "source": "apps/web/lib/bulk-lpg.ts",
+    "line": 114
+  },
+  "bulk.meter.register": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "vehicleId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "serial",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      },
+      {
+        "name": "calibrationReference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 300
+      },
+      {
+        "name": "calibrationExpiresAt",
+        "type": "text",
+        "required": true,
+        "format": "datetime"
+      }
+    ],
+    "source": "apps/web/lib/bulk-lpg.ts",
+    "line": 218
+  },
+  "bulk.load.issue": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "tripId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "meterId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "grams",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 1000000000
+      },
+      {
+        "name": "meterReadingGrams",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 1000000000
+      },
+      {
+        "name": "orderIds",
+        "type": "array",
+        "required": false,
+        "item": {
+          "type": "text",
+          "required": true,
+          "format": "uuid"
+        },
+        "max": 100,
+        "value": []
+      },
+      {
+        "name": "recovery",
+        "type": "object",
+        "required": false,
+        "fields": [
+          {
+            "name": "orderId",
+            "type": "text",
+            "required": true,
+            "format": "uuid"
+          },
+          {
+            "name": "version",
+            "type": "number",
+            "required": true,
+            "integer": true,
+            "min": 5e-324
+          },
+          {
+            "name": "attemptId",
+            "type": "text",
+            "required": true,
+            "format": "uuid"
+          },
+          {
+            "name": "observedAt",
+            "type": "text",
+            "required": true,
+            "format": "datetime"
+          },
+          {
+            "name": "notDispensed",
+            "type": "checkbox",
+            "required": true,
+            "value": true
+          }
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 500
+      }
+    ],
+    "source": "apps/web/lib/bulk-lpg.ts",
+    "line": 260
+  },
+  "bulk.load.recover": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "tripId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "meterId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "grams",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 1000000000
+      },
+      {
+        "name": "meterReadingGrams",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 1000000000
+      },
+      {
+        "name": "orderIds",
+        "type": "array",
+        "required": false,
+        "item": {
+          "type": "text",
+          "required": true,
+          "format": "uuid"
+        },
+        "max": 100,
+        "value": []
+      },
+      {
+        "name": "recovery",
+        "type": "object",
+        "required": false,
+        "fields": [
+          {
+            "name": "orderId",
+            "type": "text",
+            "required": true,
+            "format": "uuid"
+          },
+          {
+            "name": "version",
+            "type": "number",
+            "required": true,
+            "integer": true,
+            "min": 5e-324
+          },
+          {
+            "name": "attemptId",
+            "type": "text",
+            "required": true,
+            "format": "uuid"
+          },
+          {
+            "name": "observedAt",
+            "type": "text",
+            "required": true,
+            "format": "datetime"
+          },
+          {
+            "name": "notDispensed",
+            "type": "checkbox",
+            "required": true,
+            "value": true
+          }
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 500
+      }
+    ],
+    "source": "apps/web/lib/bulk-lpg.ts",
+    "line": 260
+  },
+  "bundle.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/bundles.ts",
+    "line": 123
+  },
+  "bundle.propose": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324
+      },
+      {
+        "name": "config",
+        "type": "object",
+        "required": true,
+        "fields": [
+          {
+            "name": "active",
+            "type": "checkbox",
+            "required": true
+          },
+          {
+            "name": "products",
+            "type": "array",
+            "required": true,
+            "item": {
+              "type": "object",
+              "required": true,
+              "fields": [
+                {
+                  "name": "productId",
+                  "type": "text",
+                  "required": true,
+                  "format": "string",
+                  "min": 1,
+                  "max": 100
+                },
+                {
+                  "name": "quantity",
+                  "type": "number",
+                  "required": true,
+                  "integer": true,
+                  "min": 1,
+                  "max": 20
+                }
+              ]
+            },
+            "min": 1,
+            "max": 10
+          },
+          {
+            "name": "serviceId",
+            "type": "text",
+            "required": true,
+            "format": "string",
+            "min": 1,
+            "max": 100
+          },
+          {
+            "name": "serviceDiscountPercent",
+            "type": "number",
+            "required": true,
+            "integer": true,
+            "min": 0,
+            "max": 30
+          },
+          {
+            "name": "description",
+            "type": "text",
+            "required": true,
+            "format": "string",
+            "min": 10,
+            "max": 1000
+          }
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/bundles.ts",
+    "line": 148
+  },
+  "dashboard": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 634
+  },
+  "business.snapshot": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "from",
+        "type": "text",
+        "required": false,
+        "format": "date"
+      },
+      {
+        "name": "to",
+        "type": "text",
+        "required": false,
+        "format": "date"
+      },
+      {
+        "name": "locationId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "category",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "customerCategory",
+        "type": "select",
+        "required": false,
+        "options": [
+          "customer",
+          "commercial"
+        ]
+      },
+      {
+        "name": "orderStatus",
+        "type": "select",
+        "required": false,
+        "options": [
+          "placed",
+          "accepted",
+          "preparing",
+          "assigned",
+          "out_for_delivery",
+          "delivered",
+          "failed",
+          "cancelled"
+        ]
+      },
+      {
+        "name": "paymentStatus",
+        "type": "select",
+        "required": false,
+        "options": [
+          "unpaid",
+          "collected",
+          "verified",
+          "refunded"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 649
+  },
+  "inventory": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 653
+  },
+  "business.report": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "from",
+        "type": "text",
+        "required": false,
+        "format": "date"
+      },
+      {
+        "name": "to",
+        "type": "text",
+        "required": false,
+        "format": "date"
+      },
+      {
+        "name": "locationId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "category",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "customerCategory",
+        "type": "select",
+        "required": false,
+        "options": [
+          "customer",
+          "commercial"
+        ]
+      },
+      {
+        "name": "orderStatus",
+        "type": "select",
+        "required": false,
+        "options": [
+          "placed",
+          "accepted",
+          "preparing",
+          "assigned",
+          "out_for_delivery",
+          "delivered",
+          "failed",
+          "cancelled"
+        ]
+      },
+      {
+        "name": "paymentStatus",
+        "type": "select",
+        "required": false,
+        "options": [
+          "unpaid",
+          "collected",
+          "verified",
+          "refunded"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 663
+  },
+  "business.export": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "from",
+        "type": "text",
+        "required": false,
+        "format": "date"
+      },
+      {
+        "name": "to",
+        "type": "text",
+        "required": false,
+        "format": "date"
+      },
+      {
+        "name": "locationId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "category",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "customerCategory",
+        "type": "select",
+        "required": false,
+        "options": [
+          "customer",
+          "commercial"
+        ]
+      },
+      {
+        "name": "orderStatus",
+        "type": "select",
+        "required": false,
+        "options": [
+          "placed",
+          "accepted",
+          "preparing",
+          "assigned",
+          "out_for_delivery",
+          "delivered",
+          "failed",
+          "cancelled"
+        ]
+      },
+      {
+        "name": "paymentStatus",
+        "type": "select",
+        "required": false,
+        "options": [
+          "unpaid",
+          "collected",
+          "verified",
+          "refunded"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 663
+  },
+  "report.delivery": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 930
+  },
+  "business.incident.assign": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reviewerId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 954
+  },
+  "expense.category": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "label",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      },
+      {
+        "name": "active",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 1021
+  },
+  "report.schedule": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "report",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "frequency",
+        "type": "select",
+        "required": true,
+        "options": [
+          "daily",
+          "weekly",
+          "monthly"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 1046
+  },
+  "report.schedule.cancel": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/business-reporting.ts",
+    "line": 1076
+  },
+  "compatibility": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "productId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 11
+  },
+  "compatibility.manage": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "productId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 11
+  },
+  "compatibility.propose": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "productId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "equipmentBrand",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "equipmentModel",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "connectionSpec",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 500
+      },
+      {
+        "name": "pressureSpec",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 500
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "options": [
+          "unknown",
+          "professional_confirmation",
+          "verified_compatible",
+          "incompatible"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 41
+  },
+  "compatibility.review": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "approve",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 78
+  },
+  "category.save": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 80
+      },
+      {
+        "name": "active",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 139
+  },
+  "product.metadata": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "sku",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 100
+      },
+      {
+        "name": "parentId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100,
+        "nullable": true
+      },
+      {
+        "name": "archived",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "brand",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "model",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "specifications",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 2000
+      },
+      {
+        "name": "warranty",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 2000
+      },
+      {
+        "name": "installationRequired",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "compatibility",
+        "type": "select",
+        "required": true,
+        "options": [
+          "unknown",
+          "professional_confirmation",
+          "verified",
+          "incompatible"
+        ]
+      },
+      {
+        "name": "compatibilityEvidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 152
+  },
+  "media.update": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "position",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 100
+      },
+      {
+        "name": "archived",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "alt",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 250
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 215
+  },
+  "recommendations": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "zone",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 241
+  },
+  "recommendation.event": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "ruleId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "kind",
+        "type": "select",
+        "required": true,
+        "options": [
+          "displayed",
+          "selected"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 270
+  },
+  "recommendation.propose": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "serviceId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "relation",
+        "type": "select",
+        "required": true,
+        "options": [
+          "assessment",
+          "unknown",
+          "incompatible"
+        ]
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 308
+  },
+  "recommendation.approve": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "active",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/catalogue.ts",
+    "line": 336
+  },
+  "credits": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "view",
+        "type": "text",
+        "required": true,
+        "value": "workspace"
+      },
+      {
+        "name": "tab",
+        "type": "select",
+        "required": false,
+        "options": [
+          "all",
+          "credits",
+          "refunds",
+          "pending",
+          "completed"
+        ],
+        "value": "all"
+      },
+      {
+        "name": "q",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100,
+        "value": ""
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 1000000,
+        "value": 1
+      },
+      {
+        "name": "pageSize",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 20,
+        "value": 20
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 33
+  },
+  "credit.customers": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "q",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 79
+  },
+  "credit.request": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "customerId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "amountKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 100000000
+      },
+      {
+        "name": "receiptReference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 91
+  },
+  "refund.lines": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 149
+  },
+  "refund.request": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "lines",
+        "type": "json",
+        "required": false
+      },
+      {
+        "name": "idempotencyKey",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      },
+      {
+        "name": "acceptWalletCredit",
+        "type": "checkbox",
+        "required": true,
+        "value": true
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 178
+  },
+  "credit.decide": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "decision",
+        "type": "select",
+        "required": true,
+        "options": [
+          "approved",
+          "rejected"
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 248
+  },
+  "pos.open": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "openingKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 100000000
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 488
+  },
+  "pos.sale": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "shiftId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "items",
+        "type": "array",
+        "required": true,
+        "item": {
+          "type": "object",
+          "required": true,
+          "fields": [
+            {
+              "name": "productId",
+              "type": "text",
+              "required": true,
+              "format": "string",
+              "max": 100
+            },
+            {
+              "name": "quantity",
+              "type": "number",
+              "required": true,
+              "integer": true,
+              "min": 1,
+              "max": 100
+            }
+          ]
+        },
+        "min": 1,
+        "max": 30
+      },
+      {
+        "name": "tenderedKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 1000000000
+      },
+      {
+        "name": "idempotencyKey",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 517
+  },
+  "pos.close": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "shiftId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "countedKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 1000000000
+      },
+      {
+        "name": "note",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 642
+  },
+  "pos.verify": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "shiftId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/commerce.ts",
+    "line": 683
+  },
+  "customers.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 120
+      },
+      {
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "format": "email",
+        "max": 200
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/customer-management.ts",
+    "line": 17
+  },
+  "customers.update": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 120
+      }
+    ],
+    "source": "apps/web/lib/customer-management.ts",
+    "line": 66
+  },
+  "customers.detail": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/customer-management.ts",
+    "line": 94
+  },
+  "delegation.request": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "delegateId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "key",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "scope",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "maximumValue",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 10000,
+        "nullable": true
+      },
+      {
+        "name": "startsAt",
+        "type": "text",
+        "required": true,
+        "format": "datetime"
+      },
+      {
+        "name": "expiresAt",
+        "type": "text",
+        "required": true,
+        "format": "datetime"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/delegation.ts",
+    "line": 62
+  },
+  "delegation.decide": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "decision",
+        "type": "select",
+        "required": true,
+        "options": [
+          "approved",
+          "rejected"
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/delegation.ts",
+    "line": 147
+  },
+  "delegation.revoke": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/delegation.ts",
+    "line": 214
+  },
+  "dispatch.candidates": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/dispatch-centre.ts",
+    "line": 66
+  },
+  "fleet.vehicle.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "label",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      },
+      {
+        "name": "capacityGrams",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 10000000
+      },
+      {
+        "name": "lpgSuitable",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "estimatedLitresPer100km",
+        "type": "number",
+        "required": false,
+        "min": 5e-324,
+        "max": 100
+      },
+      {
+        "name": "physicalCapacityGrams",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 5e-324,
+        "max": 10000000
+      }
+    ],
+    "source": "apps/web/lib/driver-operations.ts",
+    "line": 65
+  },
+  "trip.start": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "vehicleId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "startOdometer",
+        "type": "number",
+        "required": true,
+        "min": 0,
+        "max": 10000000
+      },
+      {
+        "name": "locationConsent",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/driver-operations.ts",
+    "line": 107
+  },
+  "dispatch.assign": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "driverId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 500
+      },
+      {
+        "name": "routeEstimateId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/driver-operations.ts",
+    "line": 265
+  },
+  "dispatch.reassign": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "driverId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 500
+      },
+      {
+        "name": "routeEstimateId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/driver-operations.ts",
+    "line": 265
+  },
+  "dispatch.respond": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0
+      },
+      {
+        "name": "decision",
+        "type": "select",
+        "required": true,
+        "options": [
+          "acknowledged",
+          "rejected"
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 500
+      }
+    ],
+    "source": "apps/web/lib/driver-operations.ts",
+    "line": 374
+  },
+  "driver.restrict": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/driver-workspace.ts",
+    "line": 96
+  },
+  "driver.location": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/driver-workspace.ts",
+    "line": 114
+  },
+  "driver.heartbeat": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/driver-workspace.ts",
+    "line": 131
+  },
+  "driver.snapshot": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/driver-workspace.ts",
+    "line": 138
+  },
+  "driver.availability": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "available",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/driver-workspace.ts",
+    "line": 192
+  },
+  "driver.complete": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0
+      },
+      {
+        "name": "code",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "handover",
+        "type": "checkbox",
+        "required": true,
+        "value": true
+      }
+    ],
+    "source": "apps/web/lib/driver-workspace.ts",
+    "line": 196
+  },
+  "finance.ledger": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "after",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 500,
+        "value": 100
+      }
+    ],
+    "source": "apps/web/lib/financial-reports.ts",
+    "line": 18
+  },
+  "delivery.location.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "config",
+        "type": "json",
+        "required": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/gas-delivery.ts",
+    "line": 73
+  },
+  "gas.cylinders": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "lineId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/gas-delivery.ts",
+    "line": 115
+  },
+  "gas.stock.receive": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "grams",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 100000000000
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/gas-delivery.ts",
+    "line": 140
+  },
+  "delivery.coverage.confirm": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/gas-delivery.ts",
+    "line": 179
+  },
+  "gas.cylinder.intake": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "lineId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "serial",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 4,
+        "max": 80
+      },
+      {
+        "name": "sizeKg",
+        "type": "number",
+        "required": true,
+        "min": 5e-324,
+        "max": 1000
+      },
+      {
+        "name": "testDue",
+        "type": "text",
+        "required": true,
+        "format": "date"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/gas-delivery.ts",
+    "line": 214
+  },
+  "gas.inspection.record": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "lineId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "cylinderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "allowableKg",
+        "type": "number",
+        "required": true,
+        "min": 5e-324,
+        "max": 1000
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/gas-delivery.ts",
+    "line": 264
+  },
+  "gas.report": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "from",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "to",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "locationId",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "status",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "paymentStatus",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "capacityKg",
+        "type": "number",
+        "required": false,
+        "min": 5e-324
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "minimumKg",
+        "type": "number",
+        "required": false,
+        "min": 0
+      },
+      {
+        "name": "maximumKg",
+        "type": "number",
+        "required": false,
+        "min": 5e-324
+      },
+      {
+        "name": "customerCategory",
+        "type": "select",
+        "required": false,
+        "options": [
+          "customer",
+          "commercial"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/gas-delivery.ts",
+    "line": 346
+  },
+  "inventory.stocktake.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "category",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "includeGas",
+        "type": "checkbox",
+        "required": false,
+        "value": true
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 600
+  },
+  "inventory.stocktake.sheet": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 667
+  },
+  "inventory.stocktake.submit": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "counts",
+        "type": "array",
+        "required": true,
+        "item": {
+          "type": "object",
+          "required": true,
+          "fields": [
+            {
+              "name": "productId",
+              "type": "text",
+              "required": false,
+              "format": "string",
+              "min": 1,
+              "max": 100
+            },
+            {
+              "name": "gas",
+              "type": "checkbox",
+              "required": false,
+              "value": false
+            },
+            {
+              "name": "counted",
+              "type": "number",
+              "required": true,
+              "min": 0
+            },
+            {
+              "name": "reason",
+              "type": "text",
+              "required": true,
+              "format": "string",
+              "min": 5,
+              "max": 1000
+            },
+            {
+              "name": "evidence",
+              "type": "text",
+              "required": true,
+              "format": "string",
+              "min": 5,
+              "max": 1000
+            }
+          ]
+        },
+        "min": 1,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 687
+  },
+  "inventory.receipt": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "gas",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": true,
+        "min": 5e-324
+      },
+      {
+        "name": "unitCostKobo",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 0,
+        "max": 1000000000
+      },
+      {
+        "name": "supplierId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "purchaseId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "receivedDate",
+        "type": "text",
+        "required": true,
+        "format": "date"
+      },
+      {
+        "name": "receivingPassed",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 810
+  },
+  "inventory.adjust": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "gas",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "holdId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "draft",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 831
+  },
+  "inventory.stocktake": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "gas",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "holdId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "draft",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 831
+  },
+  "inventory.quarantine": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "gas",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "holdId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "draft",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 831
+  },
+  "inventory.threshold": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "gas",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "holdId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "draft",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 831
+  },
+  "inventory.release": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "gas",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "holdId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "draft",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 831
+  },
+  "inventory.return": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "gas",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": true,
+        "min": 5e-324
+      },
+      {
+        "name": "kind",
+        "type": "select",
+        "required": true,
+        "options": [
+          "customer",
+          "supplier",
+          "cancelled_order",
+          "technician",
+          "cylinder"
+        ]
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1041
+  },
+  "inventory.disposition": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "holdId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": true,
+        "min": 5e-324
+      },
+      {
+        "name": "disposition",
+        "type": "select",
+        "required": true,
+        "options": [
+          "supplier_return",
+          "write_off"
+        ]
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1121
+  },
+  "supplier.update": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      },
+      {
+        "name": "contact",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 250
+      },
+      {
+        "name": "active",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1161
+  },
+  "purchase.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "supplierId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "gas",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": true,
+        "min": 5e-324
+      },
+      {
+        "name": "unitCostKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 10000000000
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 1000,
+        "value": "Purchase request for independent approval"
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1186
+  },
+  "purchase.update": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "options": [
+          "approved",
+          "received",
+          "cancelled"
+        ]
+      },
+      {
+        "name": "invoiceReference",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1267
+  },
+  "transfer.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "sourceBranch",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "destinationBranch",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "gas",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": true,
+        "min": 5e-324
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 1000,
+        "value": "Interbranch stock transfer for review"
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1321
+  },
+  "transfer.dispatch": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": false,
+        "min": 0
+      },
+      {
+        "name": "damaged",
+        "type": "number",
+        "required": false,
+        "min": 0,
+        "value": 0
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 1000,
+        "value": "Documented interbranch receiving confirmation"
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1406
+  },
+  "transfer.receive": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": false,
+        "min": 0
+      },
+      {
+        "name": "damaged",
+        "type": "number",
+        "required": false,
+        "min": 0,
+        "value": 0
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 1000,
+        "value": "Documented interbranch receiving confirmation"
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1406
+  },
+  "transfer.cancel": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": false,
+        "min": 0
+      },
+      {
+        "name": "damaged",
+        "type": "number",
+        "required": false,
+        "min": 0,
+        "value": 0
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 5,
+        "max": 1000,
+        "value": "Documented interbranch receiving confirmation"
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1406
+  },
+  "expense.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "categoryId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "amountKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 10000000000
+      },
+      {
+        "name": "date",
+        "type": "text",
+        "required": true,
+        "format": "date"
+      },
+      {
+        "name": "payee",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 150
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "method",
+        "type": "select",
+        "required": true,
+        "options": [
+          "cash",
+          "bank_record",
+          "other"
+        ]
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "draft",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1628
+  },
+  "expense.record": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1730
+  },
+  "expense.pay": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1730
+  },
+  "expense.reverse": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/inventory-business.ts",
+    "line": 1730
+  },
+  "order.additions": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/order-additions.ts",
+    "line": 184
+  },
+  "phone.invite": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "channel",
+        "type": "select",
+        "required": false,
+        "options": [
+          "sms",
+          "whatsapp"
+        ],
+        "value": "sms"
+      }
+    ],
+    "source": "apps/web/lib/phone-activation.ts",
+    "line": 38
+  },
+  "phone.revoke": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "channel",
+        "type": "select",
+        "required": false,
+        "options": [
+          "sms",
+          "whatsapp"
+        ],
+        "value": "sms"
+      }
+    ],
+    "source": "apps/web/lib/phone-activation.ts",
+    "line": 38
+  },
+  "technician.restrict": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 405
+  },
+  "technician.snapshot": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "available",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 416
+  },
+  "technician.availability": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "available",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 416
+  },
+  "services.catalogue": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branch",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100,
+        "value": "lagos"
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 464
+  },
+  "services.slots": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "serviceId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100,
+        "value": "lagos"
+      },
+      {
+        "name": "view",
+        "type": "text",
+        "required": false,
+        "value": "detail"
+      },
+      {
+        "name": "zone",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 2,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 476
+  },
+  "services.propose": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "serviceId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324
+      },
+      {
+        "name": "config",
+        "type": "json",
+        "required": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 589
+  },
+  "services.checklist.propose": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "serviceId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324
+      },
+      {
+        "name": "checks",
+        "type": "json",
+        "required": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 608
+  },
+  "technician.qualify": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "userId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "code",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      },
+      {
+        "name": "expiresAt",
+        "type": "text",
+        "required": true,
+        "format": "datetime"
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 627
+  },
+  "services.slot.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "serviceId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "technicianId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "startsAt",
+        "type": "text",
+        "required": true,
+        "format": "datetime"
+      },
+      {
+        "name": "endsAt",
+        "type": "text",
+        "required": true,
+        "format": "datetime"
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 692
+  },
+  "services.slot.block": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "blocked",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 784
+  },
+  "incidents": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "view",
+        "type": "text",
+        "required": true,
+        "value": "workspace"
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": false,
+        "options": [
+          "all",
+          "open",
+          "acknowledged",
+          "resolved"
+        ],
+        "value": "all"
+      },
+      {
+        "name": "severity",
+        "type": "select",
+        "required": false,
+        "options": [
+          "all",
+          "critical",
+          "high",
+          "medium",
+          "low"
+        ],
+        "value": "all"
+      },
+      {
+        "name": "q",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 120,
+        "value": ""
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 1000000,
+        "value": 1
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 822
+  },
+  "incident.update": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "options": [
+          "acknowledged",
+          "resolved"
+        ]
+      },
+      {
+        "name": "note",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 899
+  },
+  "technician.revoke": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 955
+  },
+  "booking.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "serviceId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100,
+        "value": "lagos"
+      },
+      {
+        "name": "serviceVersion",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324
+      },
+      {
+        "name": "slotId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "preferredStart",
+        "type": "text",
+        "required": false,
+        "format": "datetime"
+      },
+      {
+        "name": "address",
+        "type": "object",
+        "required": true,
+        "fields": [
+          {
+            "name": "street",
+            "type": "text",
+            "required": true,
+            "format": "string",
+            "min": 8,
+            "max": 250
+          },
+          {
+            "name": "zone",
+            "type": "text",
+            "required": true,
+            "format": "string",
+            "min": 2,
+            "max": 100
+          },
+          {
+            "name": "phone",
+            "type": "text",
+            "required": true,
+            "format": "string"
+          }
+        ]
+      },
+      {
+        "name": "equipment",
+        "type": "object",
+        "required": true,
+        "fields": [
+          {
+            "name": "brand",
+            "type": "text",
+            "required": true,
+            "format": "string",
+            "max": 100
+          },
+          {
+            "name": "type",
+            "type": "text",
+            "required": true,
+            "format": "string",
+            "min": 2,
+            "max": 100
+          },
+          {
+            "name": "burners",
+            "type": "number",
+            "required": true,
+            "integer": true,
+            "min": 0,
+            "max": 20
+          },
+          {
+            "name": "newEquipment",
+            "type": "checkbox",
+            "required": true
+          },
+          {
+            "name": "supplyPresent",
+            "type": "checkbox",
+            "required": true
+          },
+          {
+            "name": "concerns",
+            "type": "text",
+            "required": true,
+            "format": "string",
+            "min": 5,
+            "max": 2000
+          }
+        ]
+      },
+      {
+        "name": "notes",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 2000,
+        "value": ""
+      },
+      {
+        "name": "idempotencyKey",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "recommendationId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "followupId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 980
+  },
+  "bookings": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1141
+  },
+  "booking.dispute": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1269
+  },
+  "booking.assignment.respond": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true
+      },
+      {
+        "name": "decision",
+        "type": "select",
+        "required": true,
+        "options": [
+          "acknowledged",
+          "declined"
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1284
+  },
+  "booking.assessment.save": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1338
+  },
+  "booking.work.start": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1358
+  },
+  "booking.quote.request_review": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "quoteId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1418
+  },
+  "booking.transition": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "options": [
+          "confirmed",
+          "assigned",
+          "en_route",
+          "in_progress",
+          "failed"
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1448
+  },
+  "booking.reschedule": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "slotId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "preferredStart",
+        "type": "text",
+        "required": false,
+        "format": "datetime"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1506
+  },
+  "booking.cancel.request_review": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1581
+  },
+  "booking.cancel.execute_review": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1581
+  },
+  "booking.cancel": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": false,
+        "integer": true
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1675
+  },
+  "booking.quote": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "validUntil",
+        "type": "text",
+        "required": false,
+        "format": "datetime"
+      },
+      {
+        "name": "labourKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 100000000
+      },
+      {
+        "name": "lines",
+        "type": "array",
+        "required": true,
+        "item": {
+          "type": "object",
+          "required": true,
+          "fields": [
+            {
+              "name": "productId",
+              "type": "text",
+              "required": true,
+              "format": "string",
+              "min": 1,
+              "max": 100
+            },
+            {
+              "name": "quantity",
+              "type": "number",
+              "required": true,
+              "integer": true,
+              "min": 1,
+              "max": 100
+            }
+          ]
+        },
+        "max": 20
+      },
+      {
+        "name": "notes",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1702
+  },
+  "booking.quote.decide": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "quoteId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "approved",
+        "type": "checkbox",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1799
+  },
+  "service.material.issue": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "materialId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "unitCostKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 100000000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1860
+  },
+  "service.material.usage": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "materialId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "used",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0
+      },
+      {
+        "name": "damaged",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1897
+  },
+  "service.material.return": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "materialId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "returned",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1930
+  },
+  "booking.report": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "outcome",
+        "type": "select",
+        "required": true,
+        "options": [
+          "success",
+          "recommendations",
+          "further_assessment",
+          "unsafe",
+          "unable"
+        ]
+      },
+      {
+        "name": "responses",
+        "type": "array",
+        "required": true,
+        "item": {
+          "type": "object",
+          "required": true,
+          "fields": [
+            {
+              "name": "id",
+              "type": "text",
+              "required": true,
+              "format": "string",
+              "min": 1,
+              "max": 100
+            },
+            {
+              "name": "passed",
+              "type": "checkbox",
+              "required": true
+            },
+            {
+              "name": "notes",
+              "type": "text",
+              "required": true,
+              "format": "string",
+              "max": 1000
+            }
+          ]
+        },
+        "max": 40
+      },
+      {
+        "name": "findings",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      },
+      {
+        "name": "workPerformed",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      },
+      {
+        "name": "recommendations",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 1979
+  },
+  "booking.acknowledge": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "accepted",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "notes",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 2168
+  },
+  "booking.wallet.pay": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "amountKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 100000000
+      },
+      {
+        "name": "idempotencyKey",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 2224
+  },
+  "booking.cash.record": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "amountKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 100000000
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 2304
+  },
+  "booking.cash.verify": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "collectionId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 2353
+  },
+  "booking.refund.request": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "acceptWalletCredit",
+        "type": "checkbox",
+        "required": true,
+        "value": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      },
+      {
+        "name": "refundScope",
+        "type": "select",
+        "required": false,
+        "options": [
+          "service",
+          "excess"
+        ],
+        "value": "service"
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 2384
+  },
+  "booking.feedback": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "rating",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 1,
+        "max": 5
+      },
+      {
+        "name": "body",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/professional-services.ts",
+    "line": 2432
+  },
+  "refill.profile.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "productId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "label",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 80
+      },
+      {
+        "name": "householdSize",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 1,
+        "max": 1000
+      },
+      {
+        "name": "cookingDays",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 1,
+        "max": 7
+      }
+    ],
+    "source": "apps/web/lib/refills.ts",
+    "line": 87
+  },
+  "refill.feedback": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "profileId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "state",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "expectedFeedbackId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100,
+        "nullable": true
+      }
+    ],
+    "source": "apps/web/lib/refills.ts",
+    "line": 125
+  },
+  "jobs.run": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/refills.ts",
+    "line": 181
+  },
+  "rewards.offers": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/reward-offers.ts",
+    "line": 112
+  },
+  "rewards.smart-offers": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/reward-offers.ts",
+    "line": 112
+  },
+  "rewards.retry": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/reward-offers.ts",
+    "line": 117
+  },
+  "rewards.referral": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/rewards-referrals.ts",
+    "line": 49
+  },
+  "rewards.checkout-outcome": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "idempotencyKey",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/rewards.ts",
+    "line": 254
+  },
+  "rewards.summary": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/rewards.ts",
+    "line": 273
+  },
+  "rewards.report": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/rewards.ts",
+    "line": 335
+  },
+  "rewards.redeem": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "points",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 1000000
+      },
+      {
+        "name": "idempotencyKey",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/rewards.ts",
+    "line": 430
+  },
+  "schedule.authorise": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "scheduleId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "address",
+        "type": "json",
+        "required": true
+      },
+      {
+        "name": "window",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 1,
+        "max": 20
+      },
+      {
+        "name": "maximumTotalKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 100000000
+      },
+      {
+        "name": "consent",
+        "type": "checkbox",
+        "required": true,
+        "value": true
+      }
+    ],
+    "source": "apps/web/lib/scheduling.ts",
+    "line": 27
+  },
+  "schedule.revoke": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/scheduling.ts",
+    "line": 116
+  },
+  "schedule.reschedule": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "nextDate",
+        "type": "text",
+        "required": true,
+        "format": "date"
+      }
+    ],
+    "source": "apps/web/lib/scheduling.ts",
+    "line": 125
+  },
+  "campaign.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 100
+      },
+      {
+        "name": "title",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "body",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      },
+      {
+        "name": "segment",
+        "type": "select",
+        "required": true,
+        "options": [
+          "all",
+          "inactive",
+          "repeat"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/scheduling.ts",
+    "line": 162
+  },
+  "campaign.decide": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "decision",
+        "type": "select",
+        "required": true,
+        "options": [
+          "approved",
+          "cancelled"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/scheduling.ts",
+    "line": 191
+  },
+  "service.followup.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "dueDate",
+        "type": "text",
+        "required": true,
+        "format": "date"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/service-followups.ts",
+    "line": 26
+  },
+  "service.followup.dismiss": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/service-followups.ts",
+    "line": 69
+  },
+  "booking.settlement.propose": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324
+      },
+      {
+        "name": "amountKobo",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 0,
+        "max": 100000000
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/service-settlements.ts",
+    "line": 12
+  },
+  "gas.quote": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "locationId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "items",
+        "type": "array",
+        "required": false,
+        "item": {
+          "type": "object",
+          "required": true,
+          "fields": [
+            {
+              "name": "productId",
+              "type": "text",
+              "required": true,
+              "format": "string",
+              "max": 100
+            },
+            {
+              "name": "quantity",
+              "type": "number",
+              "required": true,
+              "integer": true,
+              "min": 1,
+              "max": 20
+            }
+          ]
+        },
+        "max": 30
+      },
+      {
+        "name": "lines",
+        "type": "array",
+        "required": true,
+        "item": {
+          "type": "object",
+          "required": true,
+          "fields": [
+            {
+              "name": "capacityKg",
+              "type": "number",
+              "required": true,
+              "min": 5e-324
+            },
+            {
+              "name": "kg",
+              "type": "number",
+              "required": true,
+              "min": 5e-324
+            }
+          ]
+        },
+        "min": 1,
+        "max": 20
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 175
+  },
+  "gas.catalogue": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 207
+  },
+  "catalogue": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "view",
+        "type": "select",
+        "required": false,
+        "options": [
+          "homepage"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 214
+  },
+  "register": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "format": "email",
+        "max": 200
+      },
+      {
+        "name": "password",
+        "type": "json",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 254
+  },
+  "login": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "format": "email",
+        "max": 200
+      },
+      {
+        "name": "password",
+        "type": "json",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 254
+  },
+  "phone.login": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "format": "email",
+        "max": 200
+      },
+      {
+        "name": "password",
+        "type": "json",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 254
+  },
+  "driver.login": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "format": "email",
+        "max": 200
+      },
+      {
+        "name": "password",
+        "type": "json",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 254
+  },
+  "technician.login": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "format": "email",
+        "max": 200
+      },
+      {
+        "name": "password",
+        "type": "json",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 254
+  },
+  "booking.recover": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "key",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 550
+  },
+  "products.manage": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 699
+  },
+  "reauth": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "password",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 128
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 753
+  },
+  "cash.reconcile": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 992
+  },
+  "schedule.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "productId",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "intervalDays",
+        "type": "json",
+        "required": true
+      },
+      {
+        "name": "nextDate",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1039
+  },
+  "schedule.update": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "options": [
+          "active",
+          "paused",
+          "cancelled"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1071
+  },
+  "support.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "customerRef",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "subject",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "message",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1087
+  },
+  "settings": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "scope",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1130
+  },
+  "setting.propose": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "key",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "scope",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "value",
+        "type": "json",
+        "required": true
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 1000
+      },
+      {
+        "name": "effectiveAt",
+        "type": "text",
+        "required": false,
+        "format": "datetime"
+      },
+      {
+        "name": "rollbackOf",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "draft",
+        "type": "checkbox",
+        "required": false
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1154
+  },
+  "setting.history": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "key",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "scope",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1172
+  },
+  "setting.rollback": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "versionId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1185
+  },
+  "approvals": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "view",
+        "type": "text",
+        "required": true,
+        "value": "paged"
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 10000,
+        "value": 1
+      },
+      {
+        "name": "pageSize",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "value": 10
+      },
+      {
+        "name": "q",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100,
+        "value": ""
+      },
+      {
+        "name": "filter",
+        "type": "select",
+        "required": false,
+        "options": [
+          "all",
+          "pending",
+          "high",
+          "active",
+          "rejected",
+          "scheduled",
+          "draft",
+          "changes_requested",
+          "approved",
+          "partially_approved",
+          "applying",
+          "failed",
+          "cancelled",
+          "expired",
+          "superseded",
+          "rolled_back"
+        ],
+        "value": "all"
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1218
+  },
+  "approval.decide": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "decision",
+        "type": "select",
+        "required": true,
+        "options": [
+          "approve",
+          "reject",
+          "request_changes"
+        ]
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1381
+  },
+  "approval.activate": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1394
+  },
+  "emergency.disable": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "key",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "scope",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1409
+  },
+  "inventory.receive": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "productId",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 1,
+        "max": 100000
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 500
+      },
+      {
+        "name": "reference",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 100
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1429
+  },
+  "cylinder.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "serial",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 4,
+        "max": 80
+      },
+      {
+        "name": "sizeKg",
+        "type": "number",
+        "required": true,
+        "min": 5e-324,
+        "max": 100
+      },
+      {
+        "name": "ownership",
+        "type": "select",
+        "required": true,
+        "options": [
+          "company",
+          "supplier"
+        ]
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "options": [
+          "filled",
+          "empty",
+          "damaged",
+          "quarantined",
+          "inspection_due"
+        ]
+      },
+      {
+        "name": "testDue",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/service.ts",
+    "line": 1472
+  },
+  "finance": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/service.ts",
+    "line": 1522
+  },
+  "finance.export": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/service.ts",
+    "line": 1522
+  },
+  "staff.privileges": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "userId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/staff-privileges.ts",
+    "line": 62
+  },
+  "staff.lookup": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "email",
+        "type": "text",
+        "required": true,
+        "format": "email"
+      }
+    ],
+    "source": "apps/web/lib/staff.ts",
+    "line": 44
+  },
+  "staff.driver.availability": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "userId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "available",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/staff.ts",
+    "line": 64
+  },
+  "staff.edit": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "userId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      },
+      {
+        "name": "expectedRole",
+        "type": "text",
+        "required": false,
+        "value": "driver"
+      }
+    ],
+    "source": "apps/web/lib/staff.ts",
+    "line": 74
+  },
+  "staff.reinstate": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "userId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      },
+      {
+        "name": "expectedRole",
+        "type": "text",
+        "required": false,
+        "value": "driver"
+      }
+    ],
+    "source": "apps/web/lib/staff.ts",
+    "line": 121
+  },
+  "staff.access.request": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "userId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "role",
+        "type": "select",
+        "required": true
+      },
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/staff.ts",
+    "line": 155
+  },
+  "support.sla.scan": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/support-desk.ts",
+    "line": 62
+  },
+  "support.sla.policy": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branch",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/support-desk.ts",
+    "line": 66
+  },
+  "support.sla.save": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branch",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "policy",
+        "type": "json",
+        "required": true
+      }
+    ],
+    "source": "apps/web/lib/support-desk.ts",
+    "line": 84
+  },
+  "support.detail": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "page",
+        "type": "json",
+        "required": false,
+        "value": 1
+      }
+    ],
+    "source": "apps/web/lib/support-desk.ts",
+    "line": 107
+  },
+  "support.sla.enroll": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324
+      }
+    ],
+    "source": "apps/web/lib/support-desk.ts",
+    "line": 173
+  },
+  "testimonials.public": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/testimonials.ts",
+    "line": 120
+  },
+  "testimonials.mine": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/testimonials.ts",
+    "line": 131
+  },
+  "testimonials.manage": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "q",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 200
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": false,
+        "options": [
+          "DRAFT",
+          "PENDING_REVIEW",
+          "APPROVED",
+          "PUBLISHED",
+          "REJECTED",
+          "CHANGES_REQUESTED",
+          "HIDDEN",
+          "WITHDRAWN"
+        ]
+      },
+      {
+        "name": "rating",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 5
+      },
+      {
+        "name": "since",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "sort",
+        "type": "select",
+        "required": false,
+        "options": [
+          "newest",
+          "oldest",
+          "rating"
+        ],
+        "value": "newest"
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 0,
+        "max": 100000,
+        "value": 0
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 100,
+        "value": 10
+      }
+    ],
+    "source": "apps/web/lib/testimonials.ts",
+    "line": 165
+  },
+  "testimonials.export": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "q",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 200
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": false,
+        "options": [
+          "DRAFT",
+          "PENDING_REVIEW",
+          "APPROVED",
+          "PUBLISHED",
+          "REJECTED",
+          "CHANGES_REQUESTED",
+          "HIDDEN",
+          "WITHDRAWN"
+        ]
+      },
+      {
+        "name": "rating",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 5
+      },
+      {
+        "name": "since",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "sort",
+        "type": "select",
+        "required": false,
+        "options": [
+          "newest",
+          "oldest",
+          "rating"
+        ],
+        "value": "newest"
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 0,
+        "max": 100000,
+        "value": 0
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 100,
+        "value": 10
+      }
+    ],
+    "source": "apps/web/lib/testimonials.ts",
+    "line": 165
+  },
+  "testimonials.analytics": {
+    "type": "object",
+    "required": true,
+    "fields": [],
+    "source": "apps/web/lib/testimonials.ts",
+    "line": 232
+  },
+  "testimonial.detail": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      }
+    ],
+    "source": "apps/web/lib/testimonials.ts",
+    "line": 262
+  },
+  "testimonial.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "orderId",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "bookingId",
+        "type": "text",
+        "required": false,
+        "format": "string"
+      },
+      {
+        "name": "content",
+        "type": "object",
+        "required": true,
+        "fields": [
+          {
+            "name": "rating",
+            "type": "number",
+            "required": true,
+            "integer": true,
+            "min": 1,
+            "max": 5
+          },
+          {
+            "name": "body",
+            "type": "text",
+            "required": true,
+            "format": "string"
+          },
+          {
+            "name": "nameStyle",
+            "type": "select",
+            "required": true,
+            "options": [
+              "first",
+              "initials",
+              "custom"
+            ]
+          },
+          {
+            "name": "displayName",
+            "type": "text",
+            "required": true,
+            "format": "string"
+          },
+          {
+            "name": "consent",
+            "type": "checkbox",
+            "required": true
+          }
+        ]
+      }
+    ],
+    "source": "apps/web/lib/testimonials.ts",
+    "line": 287
+  },
+  "mail.reconcile": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 20,
+        "max": 1000
+      },
+      {
+        "name": "workerStopped",
+        "type": "checkbox",
+        "required": true,
+        "value": true
+      },
+      {
+        "name": "providerOutcome",
+        "type": "select",
+        "required": true,
+        "options": [
+          "accepted",
+          "not_accepted",
+          "unknown"
+        ]
+      }
+    ],
+    "source": "apps/web/lib/transactional-mail.ts",
+    "line": 206
+  },
+  "manifest.issue": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "tripId",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "productId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "quantity",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 10000
+      },
+      {
+        "name": "unitWeightGrams",
+        "type": "number",
+        "required": true,
+        "integer": true,
+        "min": 5e-324,
+        "max": 1000000
+      },
+      {
+        "name": "serialIds",
+        "type": "array",
+        "required": false,
+        "item": {
+          "type": "text",
+          "required": true,
+          "format": "uuid"
+        },
+        "max": 10000,
+        "value": []
+      },
+      {
+        "name": "evidence",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 1000
+      }
+    ],
+    "source": "apps/web/lib/vehicle-products.ts",
+    "line": 114
+  },
+  "support.list": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "view",
+        "type": "select",
+        "required": false,
+        "options": [
+          "inbox",
+          "paged"
+        ]
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 1,
+        "max": 1000000,
+        "value": 1
+      },
+      {
+        "name": "search",
+        "type": "text",
+        "required": false,
+        "format": "string",
+        "max": 100,
+        "value": ""
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": false,
+        "options": [
+          "all",
+          "open",
+          "in_progress",
+          "resolved",
+          "closed"
+        ],
+        "value": "all"
+      },
+      {
+        "name": "days",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 0,
+        "max": 3650,
+        "value": 0
+      },
+      {
+        "name": "sla",
+        "type": "select",
+        "required": false,
+        "options": [
+          "all",
+          "overdue"
+        ],
+        "value": "all"
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 36
+  },
+  "support.reply": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "body",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      },
+      {
+        "name": "internal",
+        "type": "checkbox",
+        "required": false,
+        "value": false
+      },
+      {
+        "name": "operationId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 89
+  },
+  "support.update": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "status",
+        "type": "select",
+        "required": true,
+        "options": [
+          "open",
+          "in_progress",
+          "resolved",
+          "closed"
+        ]
+      },
+      {
+        "name": "assigneeId",
+        "type": "text",
+        "required": false,
+        "format": "uuid"
+      },
+      {
+        "name": "version",
+        "type": "number",
+        "required": false,
+        "integer": true,
+        "min": 5e-324
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 135
+  },
+  "product.save": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      },
+      {
+        "name": "category",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 80
+      },
+      {
+        "name": "sizeKg",
+        "type": "number",
+        "required": true,
+        "min": 5e-324,
+        "max": 100,
+        "nullable": true
+      },
+      {
+        "name": "asset",
+        "type": "select",
+        "required": true,
+        "options": [
+          "cylinder",
+          "burner",
+          "hose",
+          "regulator",
+          "kit"
+        ]
+      },
+      {
+        "name": "safety",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 176
+  },
+  "product.import": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      },
+      {
+        "name": "category",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 2,
+        "max": 80
+      },
+      {
+        "name": "sizeKg",
+        "type": "number",
+        "required": true,
+        "min": 5e-324,
+        "max": 100,
+        "nullable": true
+      },
+      {
+        "name": "asset",
+        "type": "select",
+        "required": true,
+        "options": [
+          "cylinder",
+          "burner",
+          "hose",
+          "regulator",
+          "kit"
+        ]
+      },
+      {
+        "name": "safety",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 176
+  },
+  "supplier.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "branchId",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 1,
+        "max": 100
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      },
+      {
+        "name": "contact",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 5,
+        "max": 250
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 300
+  },
+  "cylinder.inspect": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "passed",
+        "type": "checkbox",
+        "required": true
+      },
+      {
+        "name": "notes",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      },
+      {
+        "name": "nextDue",
+        "type": "text",
+        "required": true,
+        "format": "date"
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 435
+  },
+  "cylinder.custody": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "customerId",
+        "type": "text",
+        "required": true,
+        "format": "uuid",
+        "nullable": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 485
+  },
+  "cylinder.fill": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "uuid"
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 10,
+        "max": 2000
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 545
+  },
+  "branch.create": {
+    "type": "object",
+    "required": true,
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "required": true,
+        "format": "string"
+      },
+      {
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "format": "string",
+        "min": 3,
+        "max": 100
+      }
+    ],
+    "source": "apps/web/lib/workspace.ts",
+    "line": 569
+  }
+}

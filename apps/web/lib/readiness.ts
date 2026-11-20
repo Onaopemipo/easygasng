@@ -1,6 +1,8 @@
+import { z } from "zod";
+import { audit } from "./governance";
 import { one, type SQL } from "./db";
 import { requiredSchemaVersions, operationalHealth } from "./release-checks";
-import { allow, type Actor } from "./auth";
+import { allow, recentVerification, id, AppError, type Actor } from "./auth";
 export async function readiness(tx: SQL, user: Actor) {
   allow(user, ["owner"]);
   const count = async (q: string) => Number((await one(tx, q))!.n);
@@ -37,6 +39,11 @@ export async function readiness(tx: SQL, user: Actor) {
   ) => ({ id, name, status, evidence });
   return {
     recommendation: "NO-GO",
+    reviews: (
+      await tx.query(
+        "SELECT id,target,detail,created_at FROM audit_events WHERE action='readiness.reviewed' ORDER BY created_at DESC,id DESC LIMIT 100",
+      )
+    ).rows,
     checkedAt: new Date().toISOString(),
     gates: [
       gate(
@@ -176,5 +183,35 @@ export async function readiness(tx: SQL, user: Actor) {
         "Business, finance, qualified safety reviewers and operations must accept their scope; production release requires explicit user authorisation.",
       ),
     ],
+  };
+}
+
+/** Evidence intake never changes a gate or the production recommendation. */
+export async function reviewReadiness(tx: SQL, user: Actor, input: unknown) {
+  allow(user, ["owner"]);
+  recentVerification(user);
+  const d = z
+    .object({
+      gateId: z.number().int().positive(),
+      evidence: z.string().trim().min(20).max(2000),
+      reason: z.string().trim().min(10).max(1000),
+    })
+    .strict()
+    .parse(input);
+  const state = await readiness(tx, user),
+    gate = state.gates.find((g) => g.id === d.gateId);
+  if (!gate) throw new AppError(404, "Release gate not found.");
+  const reference = id();
+  await audit(tx, user, "readiness.reviewed", String(gate.id), "success", {
+    reference,
+    gate: gate.name,
+    status: gate.status,
+    evidence: d.evidence,
+    reason: d.reason,
+    productionDecision: "NO-GO",
+  });
+  return {
+    reference,
+    message: "Evidence review recorded. Production release remains NO-GO.",
   };
 }
