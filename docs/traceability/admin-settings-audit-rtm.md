@@ -22,3 +22,5 @@ Final review found risk-tier badges could incorrectly show Dual approval for an 
 [Machine-readable matrix](admin-settings-audit-rtm.json) · [Audit and exact mapping](../admin-settings-audit/AUDIT.md) · [Release report/evidence](../admin-settings-audit/README.md) · [Current user guide and screenshots](../user-manual/admin-settings-navigation.md).
 
 No outstanding work in this bounded navigation/label phase. Historical PDF/Word editions are not regenerated; the current guide supersedes old category names. Production NO-GO, actual-import hold, retain-all and unrelated provider/native/physical-operation gates remain unchanged.
+
+Follow-on [full role acceptance](admin-settings-acceptance-rtm.md) found and repaired structured service/checklist/legal editors and history restoration presentation (ASSET-03/05). Corrected release and current exceptions are recorded there; original source/release evidence remains retained.

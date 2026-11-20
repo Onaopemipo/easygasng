@@ -1,3 +1,24 @@
 # Consolidated Admin Settings acceptance
 
-Acceptance in progress. Mutating acceptance uses disposable local synthetic data; hosted demo uses existing labelled accounts and read-only verification.
+Accepted for the bounded Settings web phase on the existing [client demo](https://easygas-client-demo.vercel.app/admin/settings). Source `f0eaf1bfcba2431b618384f137a7a16b8e1b709d`, Ready deployment `dpl_9iRB6FomxHHXqwNvjChTsnFgty4z`, promoted to the stable alias. All 434 uploaded web/shared files match the committed source. The fresh browser's script deployment ID matches this deployment.
+
+Three reproducible findings were fixed: structured service/checklist/legal settings fell back to `[object Object]`; view-only history exposed a restoration action; restoration errors/statuses and in-flight actions were misleading. See [findings](DEFECTS.md). No approval policy, server authority, canonical key/category/value or scope was weakened. Current 77 live controls and all nine display categories remain retained.
+
+## Executed acceptance
+
+- **Seven canonical roles locally:** Admin, Inventory, Service Manager, Driver, Technician, household customer and commercial customer. Every local definition was checked for history and proposal authority. Local counts are 76/58/58 visible controls for Admin/Inventory/Service Manager; the four other roles have no Settings workspace. Driver retains 29 separately permitted history reads under existing metadata. Former role aliases retain their existing consolidation.
+- **Every editable local definition:** 70 editors across 21 types render, and 70 malformed proposals are rejected. Across role/definition combinations, 144 valid inactive drafts, 221 permitted history reads and 699 expected denials were exercised. No current value/version changed during that exhaustive permission test.
+- **Lifecycle and exceptions:** draft/submission, independent approval, returned revisions, rejection, current approval roles, identity, scheduling, expiry, stale versions, revoked approvers/sessions, inactive accounts, branch forgery, self-promotion, immutable restoration, failed activation and retries. Qualified safety review and sandbox/live-payment boundaries remain enforced.
+- **Actual local UI across all seven roles:** Admin service/checklist/policy drafts; Inventory view-only history; Service Manager invalid hours then correction; Driver/Technician/customer/commercial direct-route isolation. Four actual browser draft types stayed inactive. API readback confirms exact ₦1,200.29/₦100.01 values and 21 November Lagos midnight = `2026-11-20T23:00:00.000Z`.
+- **Hosted candidate and stable:** each passed 31 checks using six existing labelled demo accounts, complete 77/59/59 role inventories, canonical authority/badges, scoped lookup, malformed/forged requests and method denials. Before/after definitions, setting values/versions, approval requests, staff roles, orders, inventory, ledger, public policies and readiness snapshots match.
+- **Fresh stable UI:** all nine categories, 77 labels/badges, all three repaired editor types, legacy searches, empty search, locked safeguards/history and 390px modal layout. Hosted UI checks only opened/closed controls; no live settings were edited, drafts submitted or restoration requested.
+
+68 focused regressions plus 16 further approval-exception tests passed (84 total), as did web build, sequential typecheck and four release-evidence tests. Full matrix validation is recorded in `evidence/traceability-tests.txt`. Initial failure/discovery logs remain separate from passing evidence. Their incorrect Finance/Manager visibility assumptions and the standalone JSX harness were corrected without narrowing actual permissions. The first policy date readback was repeated after the input event/date-display repair; the final API readback confirms the exact instant.
+
+Immediately after promotion the first live page retained the earlier service editor. A normal reload loaded the current deployment bundle; all category/editor checks were then repeated and passed. Refresh an already-open tab after deployment if it still shows old controls.
+
+## Limits and preserved decisions
+
+Hosted authentication uses the six existing provided identities. Commercial sign-in is tested locally, not claimed live, because no Commercial demo credential was supplied. Local scope has 76 controls; live has 77 because of an existing labelled sandbox coverage area. Scope and unknown/future setting preservation remain unchanged. No source routes or controls were removed from denominators.
+
+All seven scoped requirements and gates are verified in the [matrix](../traceability/admin-settings-acceptance-rtm.md). This is not whole-product production approval. Existing production NO-GO, actual-import hold, retain-all and unrelated provider/native/physical-operation gates remain. Original native artifacts retain their hashes, sizes and modification times; no mobile build/export/install. Historical PDF/Word manuals are not regenerated; use the [current Settings guide](../user-manual/admin-settings-acceptance.md) and linked [navigation guide](../user-manual/admin-settings-navigation.md).

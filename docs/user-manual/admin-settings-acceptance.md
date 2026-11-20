@@ -42,3 +42,11 @@ Wait for the request to finish. The button is disabled while pending. An error s
 All seven canonical roles are covered in isolated API and browser acceptance. Hosted verification uses the six existing labelled demo identities; there is no supplied Commercial demo credential, so Commercial sign-in is demonstrated locally rather than claimed as live acceptance. Historical PDF/Word manuals have not been regenerated. Production NO-GO, import hold, retain-all and unrelated provider/native/physical-operation gates remain unchanged.
 
 [Acceptance matrix](../traceability/admin-settings-acceptance-rtm.md) · [Findings and repairs](../admin-settings-acceptance/DEFECTS.md).
+
+Editor previews from acceptance: [service pricing on desktop](../admin-settings-acceptance/evidence/local-service-editor.jpg), [phone editor](../admin-settings-acceptance/evidence/local-service-phone.jpg), [Inventory read-only history](../admin-settings-acceptance/evidence/local-view-only-history.jpg) and [inline restoration error](../admin-settings-acceptance/evidence/local-restoration-error.jpg). The previews use disposable synthetic data.
+
+If an already-open demo tab still shows the old editor after deployment, refresh it once. The final acceptance confirmed the new bundle on the stable demo.
+
+![Deployed EasyGas service pricing editor](../admin-settings-acceptance/evidence/release/stable-service-editor.jpg)
+
+Live previews: [policy publication editor](../admin-settings-acceptance/evidence/release/stable-policy-editor.jpg) · [phone service editor](../admin-settings-acceptance/evidence/release/stable-service-phone.jpg).

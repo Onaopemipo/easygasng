@@ -1,0 +1,278 @@
+{
+  "at": "2026-11-20T06:05:37.442Z",
+  "stage": "candidate",
+  "base": "https://easygas-client-demo-c35k4omke-onaopemipos-projects.vercel.app",
+  "sourceCommit": "f0eaf1bfcba2431b618384f137a7a16b8e1b709d",
+  "deploymentId": "dpl_9iRB6FomxHHXqwNvjChTsnFgty4z",
+  "method": "Read-only HTTPS using existing labelled demo accounts. Candidate uses authenticated Vercel CLI without weakening protection. No proposal, role change, activation, seed or database connection.",
+  "checks": [
+    {
+      "name": "Client-demo identity, synthetic notice and no-index metadata",
+      "result": "PASS"
+    },
+    {
+      "name": "Anonymous staff lookup denied",
+      "result": "PASS"
+    },
+    {
+      "name": "driver existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "owner existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "technician existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "manager existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "customer existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "finance existing sign-in and own identity",
+      "result": "PASS"
+    },
+    {
+      "name": "Settings, approval requests, staff roles and operational state snapshot",
+      "result": "PASS",
+      "definitions": {
+        "count": 77,
+        "sha256": "e6c80036b8cb8053c21e7f76aafa9ffb33f919466dd5340f8cdc2c322aa74d71"
+      },
+      "settings": {
+        "count": 77,
+        "sha256": "48f96baa1d4705fd8c3abf3913cfa703fe59867173e5cb0ed802187fd6978dcb"
+      },
+      "requests": {
+        "count": 42,
+        "sha256": "4ce7dc7622d806f7aabaed03d4a132e04148a54aa374365ff7d91c3cb518ad74"
+      },
+      "staff": {
+        "sha256": "6ae26631ffa7efb72f937b4f5f5efdc623e32fce2bcfae58ba573f3261563f30"
+      },
+      "orders": {
+        "count": 13,
+        "sha256": "087fc06cfd18ed8ba374a4019dbfeeca3782b25f1bb0c18263688638a818f94e"
+      },
+      "inventory": {
+        "count": 12,
+        "sha256": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e"
+      },
+      "ledger": {
+        "sha256": "8ddd8077333382cabb6823d9b4abc00a17a559829ae325d05342aba4c6b03f82"
+      },
+      "policies": {
+        "sha256": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47"
+      },
+      "readiness": {
+        "recommendation": "NO-GO",
+        "gatesSha256": "95858d63bc6c91df39ae80ce41cefcffb09b06411c4334080ecada36103a5653"
+      }
+    },
+    {
+      "name": "Pre-check business configuration, requests, staff and NO-GO gates unchanged",
+      "result": "PASS"
+    },
+    {
+      "name": "owner existing account resolves by email and saved-request ID",
+      "result": "PASS"
+    },
+    {
+      "name": "manager existing account resolves by email and saved-request ID",
+      "result": "PASS"
+    },
+    {
+      "name": "owner gateway policy readable with protected approvals and sandbox boundary",
+      "result": "PASS",
+      "version": 3,
+      "feeVersion": 1
+    },
+    {
+      "name": "finance gateway policy readable with protected approvals and sandbox boundary",
+      "result": "PASS",
+      "version": 3,
+      "feeVersion": 1
+    },
+    {
+      "name": "driver denied governed settings",
+      "result": "PASS"
+    },
+    {
+      "name": "technician denied governed settings",
+      "result": "PASS"
+    },
+    {
+      "name": "customer denied governed settings",
+      "result": "PASS"
+    },
+    {
+      "name": "owner payment-setting visibility and canonical definitions preserved",
+      "result": "PASS",
+      "keys": [
+        "payment.cod",
+        "payment.gateway",
+        "payment.integration",
+        "payment.settlement",
+        "wallet.enabled",
+        "wallet.maximum"
+      ]
+    },
+    {
+      "name": "manager payment-setting visibility and canonical definitions preserved",
+      "result": "PASS",
+      "keys": [
+        "payment.cod",
+        "wallet.enabled"
+      ]
+    },
+    {
+      "name": "finance payment-setting visibility and canonical definitions preserved",
+      "result": "PASS",
+      "keys": [
+        "payment.cod",
+        "payment.gateway",
+        "payment.integration",
+        "payment.settlement",
+        "wallet.enabled",
+        "wallet.maximum"
+      ]
+    },
+    {
+      "name": "owner entire settings inventory mapped once with unchanged canonical authority",
+      "result": "PASS",
+      "settings": 77,
+      "categories": [
+        "Business & Website",
+        "Policies & Terms",
+        "Gas & Products",
+        "Delivery & Dispatch",
+        "Services & Safety",
+        "Payments & Wallet",
+        "Rewards & Retention",
+        "Stock & Valuation",
+        "Staff & Security"
+      ],
+      "badges": {
+        "Automatic approval": 63,
+        "Read only": 6,
+        "Approval required": 2,
+        "2 approvals required": 6
+      }
+    },
+    {
+      "name": "manager entire settings inventory mapped once with unchanged canonical authority",
+      "result": "PASS",
+      "settings": 59,
+      "categories": [
+        "Business & Website",
+        "Gas & Products",
+        "Delivery & Dispatch",
+        "Services & Safety",
+        "Payments & Wallet",
+        "Rewards & Retention",
+        "Staff & Security"
+      ],
+      "badges": {
+        "Approval required": 43,
+        "Read only": 5,
+        "Routine change": 1,
+        "View only": 4,
+        "2 approvals required": 6
+      }
+    },
+    {
+      "name": "finance entire settings inventory mapped once with unchanged canonical authority",
+      "result": "PASS",
+      "settings": 59,
+      "categories": [
+        "Business & Website",
+        "Gas & Products",
+        "Delivery & Dispatch",
+        "Services & Safety",
+        "Payments & Wallet",
+        "Rewards & Retention",
+        "Stock & Valuation",
+        "Staff & Security"
+      ],
+      "badges": {
+        "View only": 29,
+        "Read only": 5,
+        "Approval required": 19,
+        "2 approvals required": 6
+      }
+    },
+    {
+      "name": "finance denied staff lookup",
+      "result": "PASS"
+    },
+    {
+      "name": "driver denied staff lookup",
+      "result": "PASS"
+    },
+    {
+      "name": "technician denied staff lookup",
+      "result": "PASS"
+    },
+    {
+      "name": "customer denied staff lookup",
+      "result": "PASS"
+    },
+    {
+      "name": "Missing, malformed, ambiguous and forged lookup inputs rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "Unknown existing-account ID returns no record",
+      "result": "PASS"
+    },
+    {
+      "name": "Setting mutation rejected over GET",
+      "result": "PASS"
+    },
+    {
+      "name": "Post-check settings, approvals, staff, orders, inventory, ledger, policies and NO-GO gates unchanged",
+      "result": "PASS"
+    }
+  ],
+  "snapshot": {
+    "definitions": {
+      "count": 77,
+      "sha256": "e6c80036b8cb8053c21e7f76aafa9ffb33f919466dd5340f8cdc2c322aa74d71"
+    },
+    "settings": {
+      "count": 77,
+      "sha256": "48f96baa1d4705fd8c3abf3913cfa703fe59867173e5cb0ed802187fd6978dcb"
+    },
+    "requests": {
+      "count": 42,
+      "sha256": "4ce7dc7622d806f7aabaed03d4a132e04148a54aa374365ff7d91c3cb518ad74"
+    },
+    "staff": {
+      "sha256": "6ae26631ffa7efb72f937b4f5f5efdc623e32fce2bcfae58ba573f3261563f30"
+    },
+    "orders": {
+      "count": 13,
+      "sha256": "087fc06cfd18ed8ba374a4019dbfeeca3782b25f1bb0c18263688638a818f94e"
+    },
+    "inventory": {
+      "count": 12,
+      "sha256": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e"
+    },
+    "ledger": {
+      "sha256": "8ddd8077333382cabb6823d9b4abc00a17a559829ae325d05342aba4c6b03f82"
+    },
+    "policies": {
+      "sha256": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47"
+    },
+    "readiness": {
+      "recommendation": "NO-GO",
+      "gatesSha256": "95858d63bc6c91df39ae80ce41cefcffb09b06411c4334080ecada36103a5653"
+    }
+  }
+}

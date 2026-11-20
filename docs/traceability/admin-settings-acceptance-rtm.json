@@ -10,19 +10,21 @@
       "uiReference": "User-requested full role-based acceptance and exceptions",
       "route": "/admin/settings",
       "implementationFiles": [
-        "apps/web/components/admin.tsx",
-        "apps/web/components/setting-change-form.tsx",
+        "packages/business-rules/src/staff-roles.ts",
         "packages/business-rules/src/settings-categories.ts",
         "apps/web/lib/service.ts",
-        "apps/web/lib/governance.ts"
+        "apps/web/components/admin.tsx"
       ],
       "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
       "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
       "testFiles": [
         "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-acceptance-release.test.ts",
         "tests/admin-settings-purpose.test.ts",
         "tests/owner-auto-approval.test.ts",
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/shared-approval-gas.test.ts"
       ],
       "testIds": [
         "ASACC-ROLES",
@@ -30,23 +32,43 @@
         "ASACC-LIFECYCLE",
         "ASACC-EXCEPTIONS",
         "ASACC-HISTORY",
-        "ASACC-CONTENT"
+        "ASACC-CONTENT",
+        "ASACC-DEPLOY",
+        "ASACC-HOSTED",
+        "ASACC-NO-MOBILE-BUILD",
+        "ASACC-EVIDENCE"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/admin-settings-acceptance/README.md",
         "docs/admin-settings-acceptance/DEFECTS.md",
         "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/approval-exceptions.txt",
         "docs/admin-settings-acceptance/evidence/role-coverage.json",
         "docs/admin-settings-acceptance/evidence/editor-coverage.json",
         "docs/admin-settings-acceptance/evidence/local-browser.json",
-        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.txt",
+        "docs/admin-settings-acceptance/evidence/web-build.txt",
+        "docs/admin-settings-acceptance/evidence/typecheck.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-candidate.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-stable.txt",
+        "docs/admin-settings-acceptance/evidence/native-artifacts-after.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/upload-verified.json",
+        "docs/admin-settings-acceptance/evidence/release/before-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-browser.json",
+        "docs/admin-settings-acceptance/evidence/release/screenshots.json",
+        "docs/admin-settings-acceptance/evidence/release/release-tests.txt"
       ],
       "acceptanceGate": "ASACC-G01",
-      "status": "PARTIAL",
-      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
-      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
-      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All seven canonical local roles tested against every definition for history/proposal authority; role-filtered UI/search uses unchanged canonical metadata. All seven actual local sign-ins/routes exercised; six provided demo identities verified live.",
+      "testResult": "PASS: 68 focused +16 approval-exception tests; web build and sequential typecheck;31 candidate/31 stable hosted checks; seven-role local browser and fresh live UI; four release checks.",
+      "outstandingWork": "None in this bounded Settings phase. Commercial hosted sign-in is not claimed (no supplied credential); all seven roles tested locally. Historical PDF/Word editions not regenerated. Existing production NO-GO and unrelated provider/native/physical-operation acceptance work remain."
     },
     {
       "id": "ASACC-02",
@@ -56,19 +78,23 @@
       "uiReference": "User-requested full role-based acceptance and exceptions",
       "route": "/admin/settings",
       "implementationFiles": [
-        "apps/web/components/admin.tsx",
         "apps/web/components/setting-change-form.tsx",
-        "packages/business-rules/src/settings-categories.ts",
-        "apps/web/lib/service.ts",
-        "apps/web/lib/governance.ts"
+        "apps/web/components/setting-content-fields.tsx",
+        "packages/business-rules/src/setting-editor.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/service-schema.ts",
+        "apps/web/lib/policies.ts"
       ],
       "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
       "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
       "testFiles": [
         "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-acceptance-release.test.ts",
         "tests/admin-settings-purpose.test.ts",
         "tests/owner-auto-approval.test.ts",
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/shared-approval-gas.test.ts"
       ],
       "testIds": [
         "ASACC-ROLES",
@@ -76,23 +102,43 @@
         "ASACC-LIFECYCLE",
         "ASACC-EXCEPTIONS",
         "ASACC-HISTORY",
-        "ASACC-CONTENT"
+        "ASACC-CONTENT",
+        "ASACC-DEPLOY",
+        "ASACC-HOSTED",
+        "ASACC-NO-MOBILE-BUILD",
+        "ASACC-EVIDENCE"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/admin-settings-acceptance/README.md",
         "docs/admin-settings-acceptance/DEFECTS.md",
         "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/approval-exceptions.txt",
         "docs/admin-settings-acceptance/evidence/role-coverage.json",
         "docs/admin-settings-acceptance/evidence/editor-coverage.json",
         "docs/admin-settings-acceptance/evidence/local-browser.json",
-        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.txt",
+        "docs/admin-settings-acceptance/evidence/web-build.txt",
+        "docs/admin-settings-acceptance/evidence/typecheck.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-candidate.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-stable.txt",
+        "docs/admin-settings-acceptance/evidence/native-artifacts-after.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/upload-verified.json",
+        "docs/admin-settings-acceptance/evidence/release/before-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-browser.json",
+        "docs/admin-settings-acceptance/evidence/release/screenshots.json",
+        "docs/admin-settings-acceptance/evidence/release/release-tests.txt"
       ],
       "acceptanceGate": "ASACC-G02",
-      "status": "PARTIAL",
-      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
-      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
-      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "70 editable local controls/21 types render and accept valid inactive drafts; every malformed proposal rejected. Typed service/checklist/legal editors repaired, exact service money and Lagos policy-date readback verified.",
+      "testResult": "PASS: 68 focused +16 approval-exception tests; web build and sequential typecheck;31 candidate/31 stable hosted checks; seven-role local browser and fresh live UI; four release checks.",
+      "outstandingWork": "None in this bounded Settings phase. Commercial hosted sign-in is not claimed (no supplied credential); all seven roles tested locally. Historical PDF/Word editions not regenerated. Existing production NO-GO and unrelated provider/native/physical-operation acceptance work remain."
     },
     {
       "id": "ASACC-03",
@@ -103,18 +149,20 @@
       "route": "/admin/settings",
       "implementationFiles": [
         "apps/web/components/admin.tsx",
-        "apps/web/components/setting-change-form.tsx",
-        "packages/business-rules/src/settings-categories.ts",
-        "apps/web/lib/service.ts",
+        "apps/web/components/setting-version-history.tsx",
+        "packages/business-rules/src/setting-editor.ts",
         "apps/web/lib/governance.ts"
       ],
       "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
       "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
       "testFiles": [
         "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-acceptance-release.test.ts",
         "tests/admin-settings-purpose.test.ts",
         "tests/owner-auto-approval.test.ts",
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/shared-approval-gas.test.ts"
       ],
       "testIds": [
         "ASACC-ROLES",
@@ -122,23 +170,43 @@
         "ASACC-LIFECYCLE",
         "ASACC-EXCEPTIONS",
         "ASACC-HISTORY",
-        "ASACC-CONTENT"
+        "ASACC-CONTENT",
+        "ASACC-DEPLOY",
+        "ASACC-HOSTED",
+        "ASACC-NO-MOBILE-BUILD",
+        "ASACC-EVIDENCE"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/admin-settings-acceptance/README.md",
         "docs/admin-settings-acceptance/DEFECTS.md",
         "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/approval-exceptions.txt",
         "docs/admin-settings-acceptance/evidence/role-coverage.json",
         "docs/admin-settings-acceptance/evidence/editor-coverage.json",
         "docs/admin-settings-acceptance/evidence/local-browser.json",
-        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.txt",
+        "docs/admin-settings-acceptance/evidence/web-build.txt",
+        "docs/admin-settings-acceptance/evidence/typecheck.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-candidate.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-stable.txt",
+        "docs/admin-settings-acceptance/evidence/native-artifacts-after.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/upload-verified.json",
+        "docs/admin-settings-acceptance/evidence/release/before-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-browser.json",
+        "docs/admin-settings-acceptance/evidence/release/screenshots.json",
+        "docs/admin-settings-acceptance/evidence/release/release-tests.txt"
       ],
       "acceptanceGate": "ASACC-G03",
-      "status": "PARTIAL",
-      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
-      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
-      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Draft/submission, independent approval, returns/revisions, rejection, expiry, scheduling, immutable restoration and failed/retried activation pass. Restoration feedback reflects actual server outcome and in-flight actions are disabled.",
+      "testResult": "PASS: 68 focused +16 approval-exception tests; web build and sequential typecheck;31 candidate/31 stable hosted checks; seven-role local browser and fresh live UI; four release checks.",
+      "outstandingWork": "None in this bounded Settings phase. Commercial hosted sign-in is not claimed (no supplied credential); all seven roles tested locally. Historical PDF/Word editions not regenerated. Existing production NO-GO and unrelated provider/native/physical-operation acceptance work remain."
     },
     {
       "id": "ASACC-04",
@@ -148,19 +216,22 @@
       "uiReference": "User-requested full role-based acceptance and exceptions",
       "route": "/admin/settings",
       "implementationFiles": [
-        "apps/web/components/admin.tsx",
-        "apps/web/components/setting-change-form.tsx",
-        "packages/business-rules/src/settings-categories.ts",
         "apps/web/lib/service.ts",
-        "apps/web/lib/governance.ts"
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/staff-privileges.ts",
+        "apps/web/components/setting-version-history.tsx"
       ],
       "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
       "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
       "testFiles": [
         "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-acceptance-release.test.ts",
         "tests/admin-settings-purpose.test.ts",
         "tests/owner-auto-approval.test.ts",
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/shared-approval-gas.test.ts"
       ],
       "testIds": [
         "ASACC-ROLES",
@@ -168,25 +239,48 @@
         "ASACC-LIFECYCLE",
         "ASACC-EXCEPTIONS",
         "ASACC-HISTORY",
-        "ASACC-CONTENT"
+        "ASACC-CONTENT",
+        "ASACC-DEPLOY",
+        "ASACC-HOSTED",
+        "ASACC-NO-MOBILE-BUILD",
+        "ASACC-EVIDENCE"
       ],
       "negativeTests": [
-        "ASACC-EXCEPTIONS"
+        "ASACC-EXCEPTIONS",
+        "ASACC-CONTENT",
+        "WPAY-SECURITY",
+        "OWNER-AUTO04"
       ],
       "evidence": [
         "docs/admin-settings-acceptance/README.md",
         "docs/admin-settings-acceptance/DEFECTS.md",
         "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/approval-exceptions.txt",
         "docs/admin-settings-acceptance/evidence/role-coverage.json",
         "docs/admin-settings-acceptance/evidence/editor-coverage.json",
         "docs/admin-settings-acceptance/evidence/local-browser.json",
-        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.txt",
+        "docs/admin-settings-acceptance/evidence/web-build.txt",
+        "docs/admin-settings-acceptance/evidence/typecheck.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-candidate.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-stable.txt",
+        "docs/admin-settings-acceptance/evidence/native-artifacts-after.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/upload-verified.json",
+        "docs/admin-settings-acceptance/evidence/release/before-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-browser.json",
+        "docs/admin-settings-acceptance/evidence/release/screenshots.json",
+        "docs/admin-settings-acceptance/evidence/release/release-tests.txt"
       ],
       "acceptanceGate": "ASACC-G04",
-      "status": "PARTIAL",
-      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
-      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
-      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Cross-branch, forged fields, stale versions, expired/revoked sessions, inactive accounts, self access, read-only restoration, unqualified safety and live-payment exceptions pass. Hosted authority/business snapshots unchanged.",
+      "testResult": "PASS: 68 focused +16 approval-exception tests; web build and sequential typecheck;31 candidate/31 stable hosted checks; seven-role local browser and fresh live UI; four release checks.",
+      "outstandingWork": "None in this bounded Settings phase. Commercial hosted sign-in is not claimed (no supplied credential); all seven roles tested locally. Historical PDF/Word editions not regenerated. Existing production NO-GO and unrelated provider/native/physical-operation acceptance work remain."
     },
     {
       "id": "ASACC-05",
@@ -198,17 +292,21 @@
       "implementationFiles": [
         "apps/web/components/admin.tsx",
         "apps/web/components/setting-change-form.tsx",
-        "packages/business-rules/src/settings-categories.ts",
-        "apps/web/lib/service.ts",
-        "apps/web/lib/governance.ts"
+        "apps/web/components/setting-content-fields.tsx",
+        "apps/web/components/setting-version-history.tsx",
+        "scripts/preview-settings-acceptance.mjs",
+        "scripts/verify-settings-acceptance-fixture.mjs"
       ],
       "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
       "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
       "testFiles": [
         "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-acceptance-release.test.ts",
         "tests/admin-settings-purpose.test.ts",
         "tests/owner-auto-approval.test.ts",
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/shared-approval-gas.test.ts"
       ],
       "testIds": [
         "ASACC-ROLES",
@@ -216,23 +314,43 @@
         "ASACC-LIFECYCLE",
         "ASACC-EXCEPTIONS",
         "ASACC-HISTORY",
-        "ASACC-CONTENT"
+        "ASACC-CONTENT",
+        "ASACC-DEPLOY",
+        "ASACC-HOSTED",
+        "ASACC-NO-MOBILE-BUILD",
+        "ASACC-EVIDENCE"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/admin-settings-acceptance/README.md",
         "docs/admin-settings-acceptance/DEFECTS.md",
         "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/approval-exceptions.txt",
         "docs/admin-settings-acceptance/evidence/role-coverage.json",
         "docs/admin-settings-acceptance/evidence/editor-coverage.json",
         "docs/admin-settings-acceptance/evidence/local-browser.json",
-        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.txt",
+        "docs/admin-settings-acceptance/evidence/web-build.txt",
+        "docs/admin-settings-acceptance/evidence/typecheck.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-candidate.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-stable.txt",
+        "docs/admin-settings-acceptance/evidence/native-artifacts-after.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/upload-verified.json",
+        "docs/admin-settings-acceptance/evidence/release/before-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-browser.json",
+        "docs/admin-settings-acceptance/evidence/release/screenshots.json",
+        "docs/admin-settings-acceptance/evidence/release/release-tests.txt"
       ],
       "acceptanceGate": "ASACC-G05",
-      "status": "PARTIAL",
-      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
-      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
-      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual local UI across seven roles plus fresh hosted Admin UI: permitted editors/actions, view-only history, invalid hours correction, denied routes, all nine categories/77 labels/badges, legacy/empty searches and 390px modal layout pass.",
+      "testResult": "PASS: 68 focused +16 approval-exception tests; web build and sequential typecheck;31 candidate/31 stable hosted checks; seven-role local browser and fresh live UI; four release checks.",
+      "outstandingWork": "None in this bounded Settings phase. Commercial hosted sign-in is not claimed (no supplied credential); all seven roles tested locally. Historical PDF/Word editions not regenerated. Existing production NO-GO and unrelated provider/native/physical-operation acceptance work remain."
     },
     {
       "id": "ASACC-06",
@@ -242,19 +360,21 @@
       "uiReference": "User-requested full role-based acceptance and exceptions",
       "route": "/admin/settings",
       "implementationFiles": [
-        "apps/web/components/admin.tsx",
-        "apps/web/components/setting-change-form.tsx",
-        "packages/business-rules/src/settings-categories.ts",
-        "apps/web/lib/service.ts",
-        "apps/web/lib/governance.ts"
+        "scripts/verify-admin-settings-acceptance.mjs",
+        "tests/admin-settings-acceptance-release.test.ts",
+        "apps/web/components/setting-content-fields.tsx",
+        "apps/web/components/setting-version-history.tsx"
       ],
       "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
       "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
       "testFiles": [
         "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-acceptance-release.test.ts",
         "tests/admin-settings-purpose.test.ts",
         "tests/owner-auto-approval.test.ts",
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/shared-approval-gas.test.ts"
       ],
       "testIds": [
         "ASACC-ROLES",
@@ -262,23 +382,43 @@
         "ASACC-LIFECYCLE",
         "ASACC-EXCEPTIONS",
         "ASACC-HISTORY",
-        "ASACC-CONTENT"
+        "ASACC-CONTENT",
+        "ASACC-DEPLOY",
+        "ASACC-HOSTED",
+        "ASACC-NO-MOBILE-BUILD",
+        "ASACC-EVIDENCE"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/admin-settings-acceptance/README.md",
         "docs/admin-settings-acceptance/DEFECTS.md",
         "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/approval-exceptions.txt",
         "docs/admin-settings-acceptance/evidence/role-coverage.json",
         "docs/admin-settings-acceptance/evidence/editor-coverage.json",
         "docs/admin-settings-acceptance/evidence/local-browser.json",
-        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.txt",
+        "docs/admin-settings-acceptance/evidence/web-build.txt",
+        "docs/admin-settings-acceptance/evidence/typecheck.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-candidate.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-stable.txt",
+        "docs/admin-settings-acceptance/evidence/native-artifacts-after.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/upload-verified.json",
+        "docs/admin-settings-acceptance/evidence/release/before-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-browser.json",
+        "docs/admin-settings-acceptance/evidence/release/screenshots.json",
+        "docs/admin-settings-acceptance/evidence/release/release-tests.txt"
       ],
       "acceptanceGate": "ASACC-G06",
-      "status": "PARTIAL",
-      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
-      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
-      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Corrected source deployed Ready and promoted; all434 upload bytes verified. Candidate/stable each31 checks with six labelled roles; fresh browser bundle matches deployment. Original four native artifacts unchanged.",
+      "testResult": "PASS: 68 focused +16 approval-exception tests; web build and sequential typecheck;31 candidate/31 stable hosted checks; seven-role local browser and fresh live UI; four release checks.",
+      "outstandingWork": "None in this bounded Settings phase. Commercial hosted sign-in is not claimed (no supplied credential); all seven roles tested locally. Historical PDF/Word editions not regenerated. Existing production NO-GO and unrelated provider/native/physical-operation acceptance work remain."
     },
     {
       "id": "ASACC-07",
@@ -288,19 +428,22 @@
       "uiReference": "User-requested full role-based acceptance and exceptions",
       "route": "/admin/settings",
       "implementationFiles": [
-        "apps/web/components/admin.tsx",
-        "apps/web/components/setting-change-form.tsx",
-        "packages/business-rules/src/settings-categories.ts",
-        "apps/web/lib/service.ts",
-        "apps/web/lib/governance.ts"
+        "docs/user-manual/admin-settings-acceptance.md",
+        "docs/user-manual/admin-settings-navigation.md",
+        "docs/user-manual/README.md",
+        "docs/admin-settings-acceptance/DEFECTS.md",
+        "docs/admin-settings-acceptance/README.md"
       ],
       "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
       "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
       "testFiles": [
         "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-acceptance-release.test.ts",
         "tests/admin-settings-purpose.test.ts",
         "tests/owner-auto-approval.test.ts",
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/shared-approval-gas.test.ts"
       ],
       "testIds": [
         "ASACC-ROLES",
@@ -308,67 +451,87 @@
         "ASACC-LIFECYCLE",
         "ASACC-EXCEPTIONS",
         "ASACC-HISTORY",
-        "ASACC-CONTENT"
+        "ASACC-CONTENT",
+        "ASACC-DEPLOY",
+        "ASACC-HOSTED",
+        "ASACC-NO-MOBILE-BUILD",
+        "ASACC-EVIDENCE"
       ],
       "negativeTests": [],
       "evidence": [
         "docs/admin-settings-acceptance/README.md",
         "docs/admin-settings-acceptance/DEFECTS.md",
         "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/approval-exceptions.txt",
         "docs/admin-settings-acceptance/evidence/role-coverage.json",
         "docs/admin-settings-acceptance/evidence/editor-coverage.json",
         "docs/admin-settings-acceptance/evidence/local-browser.json",
-        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.txt",
+        "docs/admin-settings-acceptance/evidence/web-build.txt",
+        "docs/admin-settings-acceptance/evidence/typecheck.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-candidate.txt",
+        "docs/admin-settings-acceptance/evidence/hosted-stable.txt",
+        "docs/admin-settings-acceptance/evidence/native-artifacts-after.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-identity.json",
+        "docs/admin-settings-acceptance/evidence/release/upload-verified.json",
+        "docs/admin-settings-acceptance/evidence/release/before-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/candidate-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-hosted.json",
+        "docs/admin-settings-acceptance/evidence/release/stable-browser.json",
+        "docs/admin-settings-acceptance/evidence/release/screenshots.json",
+        "docs/admin-settings-acceptance/evidence/release/release-tests.txt"
       ],
       "acceptanceGate": "ASACC-G07",
-      "status": "PARTIAL",
-      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
-      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
-      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Current role/editor/restoration manual, screenshots, defect record, JSON/Markdown matrices and preserved original source baselines supplied. Historical editions and unrelated production gaps explicitly retained.",
+      "testResult": "PASS: 68 focused +16 approval-exception tests; web build and sequential typecheck;31 candidate/31 stable hosted checks; seven-role local browser and fresh live UI; four release checks.",
+      "outstandingWork": "None in this bounded Settings phase. Commercial hosted sign-in is not claimed (no supplied credential); all seven roles tested locally. Historical PDF/Word editions not regenerated. Existing production NO-GO and unrelated provider/native/physical-operation acceptance work remain."
     }
   ],
   "gates": [
     {
       "id": "ASACC-G01",
       "description": "All canonical roles and restricted account states retain exact setting visibility, search and action authority",
-      "status": "PARTIAL",
-      "reason": "Acceptance pending"
+      "status": "PASS",
+      "reason": "All seven canonical local roles tested against every definition for history/proposal authority; role-filtered UI/search uses unchanged canonical metadata. All seven actual local sign-ins/routes exercised; six provided demo identities verified live."
     },
     {
       "id": "ASACC-G02",
       "description": "Every visible setting and editor type keeps canonical handoffs, valid draft and rejected invalid-value behavior",
-      "status": "PARTIAL",
-      "reason": "Acceptance pending"
+      "status": "PASS",
+      "reason": "70 editable local controls/21 types render and accept valid inactive drafts; every malformed proposal rejected. Typed service/checklist/legal editors repaired, exact service money and Lagos policy-date readback verified."
     },
     {
       "id": "ASACC-G03",
       "description": "Draft, submission, independent review, activation, scheduling and restoration lifecycle behave correctly",
-      "status": "PARTIAL",
-      "reason": "Acceptance pending"
+      "status": "PASS",
+      "reason": "Draft/submission, independent approval, returns/revisions, rejection, expiry, scheduling, immutable restoration and failed/retried activation pass. Restoration feedback reflects actual server outcome and in-flight actions are disabled."
     },
     {
       "id": "ASACC-G04",
       "description": "Exception cases preserve scope, session, version, identity, immutable history and safety/payment boundaries",
-      "status": "PARTIAL",
-      "reason": "Acceptance pending"
+      "status": "PASS",
+      "reason": "Cross-branch, forged fields, stale versions, expired/revoked sessions, inactive accounts, self access, read-only restoration, unqualified safety and live-payment exceptions pass. Hosted authority/business snapshots unchanged."
     },
     {
       "id": "ASACC-G05",
       "description": "Interactive owner, Service Manager and Inventory workflows and denied-role routes work on desktop and phone",
-      "status": "PARTIAL",
-      "reason": "Acceptance pending"
+      "status": "PASS",
+      "reason": "Actual local UI across seven roles plus fresh hosted Admin UI: permitted editors/actions, view-only history, invalid hours correction, denied routes, all nine categories/77 labels/badges, legacy/empty searches and 390px modal layout pass."
     },
     {
       "id": "ASACC-G06",
       "description": "Client demo acceptance preserves hosted business data and deploys any reviewed fixes",
-      "status": "PARTIAL",
-      "reason": "Acceptance pending"
+      "status": "PASS",
+      "reason": "Corrected source deployed Ready and promoted; all434 upload bytes verified. Candidate/stable each31 checks with six labelled roles; fresh browser bundle matches deployment. Original four native artifacts unchanged."
     },
     {
       "id": "ASACC-G07",
       "description": "User manual, defects, evidence and requirement coverage are updated without changing prior production decisions",
-      "status": "PARTIAL",
-      "reason": "Acceptance pending"
+      "status": "PASS",
+      "reason": "Current role/editor/restoration manual, screenshots, defect record, JSON/Markdown matrices and preserved original source baselines supplied. Historical editions and unrelated production gaps explicitly retained."
     }
   ],
   "coverage": {
@@ -377,22 +540,41 @@
       "total": 7
     },
     "requirements": {
-      "verified": 0,
+      "verified": 7,
       "total": 7
     },
     "critical": {
-      "verified": 0,
+      "verified": 1,
       "total": 1
     },
     "routes": {
-      "verified": 0,
+      "verified": 1,
       "total": 1
     },
     "gates": {
-      "passed": 0,
+      "passed": 7,
       "total": 7
     },
-    "excluded": 0
+    "excluded": 0,
+    "roles": {
+      "local": {
+        "verified": 7,
+        "total": 7
+      },
+      "providedHostedIdentities": {
+        "verified": 6,
+        "total": 6
+      },
+      "commercialHosted": "No supplied identity; local sign-in/route/API denial verified; no live sign-in claim"
+    },
+    "settings": {
+      "localDefinitions": 76,
+      "liveDefinitions": 77,
+      "editableLocalDefinitionsTested": 70,
+      "editableTypes": 21,
+      "categories": 9,
+      "retainedLiveSettings": 77
+    }
   },
   "changeLog": [
     {
@@ -402,6 +584,17 @@
     {
       "date": "2026-11-20",
       "change": "Found/fixed ASACC-D01\u201303: structured editor fallback, view-only restoration and restoration feedback. All seven roles exercised locally; 70 editable definitions/21 types, malformed proposals and four actual browser drafts verified; no draft activated. Finance and manager history visibility expectations corrected to canonical view metadata rather than narrowing permissions."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Accepted corrected source f0eaf1bfcba2431b618384f137a7a16b8e1b709d / dpl_9iRB6FomxHHXqwNvjChTsnFgty4z.84 regressions, four release checks,31 candidate/31 stable checks and seven local role UI checks pass. Fresh-page current-bundle verification repeated after initial stale page; hosted snapshots unchanged. All seven scoped rows/gates retained and verified; no exclusions or unrelated production decision changes."
     }
-  ]
+  ],
+  "release": {
+    "sourceCommit": "f0eaf1bfcba2431b618384f137a7a16b8e1b709d",
+    "deploymentId": "dpl_9iRB6FomxHHXqwNvjChTsnFgty4z",
+    "url": "https://easygas-client-demo.vercel.app/admin/settings",
+    "uploadedFiles": 434,
+    "mobileBuilds": 0
+  }
 }
