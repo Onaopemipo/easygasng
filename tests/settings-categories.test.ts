@@ -9,7 +9,8 @@ test('SCAT-MAPPING: six existing controls consolidate once into four accurate se
  assert.deepEqual(groups.flatMap(g=>g.settings).map(d=>d.key).sort(),audit.map((d:any)=>d.key).sort());assert.deepEqual(audit,original);
  for(const d of audit){const display=settingsDisplay({...d,value:{example:150},version:3,scope:'lagos'});assert.equal(display.key,d.key);assert.equal(display.category,d.category);assert.equal(display.version,3);assert.equal(display.value.example,150);assert.deepEqual(display.propose_roles,d.propose_roles);assert.deepEqual(display.approve_roles,d.approve_roles);}
  assert.equal(settingsDisplay(audit.find((d:any)=>d.key==='wallet.maximum')).label,'Cash & bank-transfer wallet limit');assert.match(settingsDisplay(audit.find((d:any)=>d.key==='wallet.maximum')).description,/Card top-up limits are separate/);
- const other={key:'other',category:'Delivery',label:'Other',description:'Kept'};assert.equal(settingsDisplay(other),other);assert.equal(settingsDisplayCategory(other),'Delivery');assert.equal(settingsGroups([...audit,other],'Delivery','')[0].settings[0],other);
+ const other={key:'other',category:'Delivery',label:'Other',description:'Kept'};assert.equal(settingsDisplay(other),other);// The user-authorised full Settings continuation now consolidates Delivery; the unknown control must still survive.
+ assert.equal(settingsDisplayCategory(other),'Delivery & Dispatch');assert.equal(settingsGroups([...audit,other],'Delivery & Dispatch','')[0].settings[0],other);
  const future={key:'payment.future',category:'Wallet',label:'Future control',description:'Kept'};assert.equal(settingsGroups([future],'Payments & Wallet','')[0].title,'Other payment controls');
 });
 test('SCAT-SEARCH: previous names, purpose names and keys stay discoverable; matching advanced controls expand',()=>{

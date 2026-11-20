@@ -1,0 +1,297 @@
+{
+  "phase": "Remaining Admin Settings audit and consolidation",
+  "productionDecision": "Production NO-GO, actual-import hold, retain-all and unrelated provider/native/operational gates preserved",
+  "requirements": [
+    {
+      "id": "ASSET-01",
+      "requirement": "Audit every remaining setting against its authoritative runtime purpose",
+      "priority": "P1",
+      "scope": "Admin Settings web taxonomy, display labels/descriptions, legacy disclosures and existing editor/history handoffs. No setting deletion, database migration, value activation, authority change, real messages/payments or mobile build.",
+      "uiReference": "User-requested audit of remaining Admin Settings categories; preceding payment category consolidation retained",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "packages/business-rules/src/settings-categories.ts",
+        "packages/business-rules/src/admin-settings-purpose.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/settings-purpose-group.tsx"
+      ],
+      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
+      "testFiles": [
+        "tests/admin-settings-purpose.test.ts"
+      ],
+      "testIds": [
+        "ASSET-COVERAGE",
+        "ASSET-LABELS",
+        "ASSET-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-audit/evidence/definition-audit.json",
+        "docs/admin-settings-audit/AUDIT.md",
+        "docs/admin-settings-audit/evidence/purpose-mapping.json",
+        "docs/admin-settings-audit/evidence/focused-tests.txt",
+        "docs/admin-settings-audit/evidence/local-browser.json",
+        "docs/admin-settings-audit/evidence/typecheck.txt",
+        "docs/admin-settings-audit/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "ASSET-G01",
+      "status": "PARTIAL",
+      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
+      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
+      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+    },
+    {
+      "id": "ASSET-02",
+      "requirement": "Consolidate category aliases without losing any setting or existing payment grouping",
+      "priority": "P1",
+      "scope": "Admin Settings web taxonomy, display labels/descriptions, legacy disclosures and existing editor/history handoffs. No setting deletion, database migration, value activation, authority change, real messages/payments or mobile build.",
+      "uiReference": "User-requested audit of remaining Admin Settings categories; preceding payment category consolidation retained",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "packages/business-rules/src/settings-categories.ts",
+        "packages/business-rules/src/admin-settings-purpose.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/settings-purpose-group.tsx"
+      ],
+      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
+      "testFiles": [
+        "tests/admin-settings-purpose.test.ts"
+      ],
+      "testIds": [
+        "ASSET-COVERAGE",
+        "ASSET-LABELS",
+        "ASSET-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-audit/evidence/definition-audit.json",
+        "docs/admin-settings-audit/AUDIT.md",
+        "docs/admin-settings-audit/evidence/purpose-mapping.json",
+        "docs/admin-settings-audit/evidence/focused-tests.txt",
+        "docs/admin-settings-audit/evidence/local-browser.json",
+        "docs/admin-settings-audit/evidence/typecheck.txt",
+        "docs/admin-settings-audit/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "ASSET-G02",
+      "status": "PARTIAL",
+      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
+      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
+      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+    },
+    {
+      "id": "ASSET-03",
+      "requirement": "Clarify current versus legacy controls and independent business purposes",
+      "priority": "P1",
+      "scope": "Admin Settings web taxonomy, display labels/descriptions, legacy disclosures and existing editor/history handoffs. No setting deletion, database migration, value activation, authority change, real messages/payments or mobile build.",
+      "uiReference": "User-requested audit of remaining Admin Settings categories; preceding payment category consolidation retained",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "packages/business-rules/src/settings-categories.ts",
+        "packages/business-rules/src/admin-settings-purpose.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/settings-purpose-group.tsx"
+      ],
+      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
+      "testFiles": [
+        "tests/admin-settings-purpose.test.ts"
+      ],
+      "testIds": [
+        "ASSET-COVERAGE",
+        "ASSET-LABELS",
+        "ASSET-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-audit/evidence/definition-audit.json",
+        "docs/admin-settings-audit/AUDIT.md",
+        "docs/admin-settings-audit/evidence/purpose-mapping.json",
+        "docs/admin-settings-audit/evidence/focused-tests.txt",
+        "docs/admin-settings-audit/evidence/local-browser.json",
+        "docs/admin-settings-audit/evidence/typecheck.txt",
+        "docs/admin-settings-audit/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "ASSET-G03",
+      "status": "PARTIAL",
+      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
+      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
+      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+    },
+    {
+      "id": "ASSET-04",
+      "requirement": "Preserve role, scope, approval, identity, financial and safety authority",
+      "priority": "P0",
+      "scope": "Admin Settings web taxonomy, display labels/descriptions, legacy disclosures and existing editor/history handoffs. No setting deletion, database migration, value activation, authority change, real messages/payments or mobile build.",
+      "uiReference": "User-requested audit of remaining Admin Settings categories; preceding payment category consolidation retained",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "packages/business-rules/src/settings-categories.ts",
+        "packages/business-rules/src/admin-settings-purpose.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/settings-purpose-group.tsx"
+      ],
+      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
+      "testFiles": [
+        "tests/admin-settings-purpose.test.ts"
+      ],
+      "testIds": [
+        "ASSET-COVERAGE",
+        "ASSET-LABELS",
+        "ASSET-SECURITY"
+      ],
+      "negativeTests": [
+        "ASSET-SECURITY"
+      ],
+      "evidence": [
+        "docs/admin-settings-audit/evidence/definition-audit.json",
+        "docs/admin-settings-audit/AUDIT.md",
+        "docs/admin-settings-audit/evidence/purpose-mapping.json",
+        "docs/admin-settings-audit/evidence/focused-tests.txt",
+        "docs/admin-settings-audit/evidence/local-browser.json",
+        "docs/admin-settings-audit/evidence/typecheck.txt",
+        "docs/admin-settings-audit/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "ASSET-G04",
+      "status": "PARTIAL",
+      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
+      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
+      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+    },
+    {
+      "id": "ASSET-05",
+      "requirement": "Verify search, responsive browsing and canonical editor/history handoffs",
+      "priority": "P1",
+      "scope": "Admin Settings web taxonomy, display labels/descriptions, legacy disclosures and existing editor/history handoffs. No setting deletion, database migration, value activation, authority change, real messages/payments or mobile build.",
+      "uiReference": "User-requested audit of remaining Admin Settings categories; preceding payment category consolidation retained",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "packages/business-rules/src/settings-categories.ts",
+        "packages/business-rules/src/admin-settings-purpose.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/settings-purpose-group.tsx"
+      ],
+      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
+      "testFiles": [
+        "tests/admin-settings-purpose.test.ts"
+      ],
+      "testIds": [
+        "ASSET-COVERAGE",
+        "ASSET-LABELS",
+        "ASSET-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-audit/evidence/definition-audit.json",
+        "docs/admin-settings-audit/AUDIT.md",
+        "docs/admin-settings-audit/evidence/purpose-mapping.json",
+        "docs/admin-settings-audit/evidence/focused-tests.txt",
+        "docs/admin-settings-audit/evidence/local-browser.json",
+        "docs/admin-settings-audit/evidence/typecheck.txt",
+        "docs/admin-settings-audit/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "ASSET-G05",
+      "status": "PARTIAL",
+      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
+      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
+      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+    },
+    {
+      "id": "ASSET-06",
+      "requirement": "Deploy reviewed source and update current manual and traceability",
+      "priority": "P1",
+      "scope": "Admin Settings web taxonomy, display labels/descriptions, legacy disclosures and existing editor/history handoffs. No setting deletion, database migration, value activation, authority change, real messages/payments or mobile build.",
+      "uiReference": "User-requested audit of remaining Admin Settings categories; preceding payment category consolidation retained",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "packages/business-rules/src/settings-categories.ts",
+        "packages/business-rules/src/admin-settings-purpose.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/settings-purpose-group.tsx"
+      ],
+      "dataSource": "All live role-filtered settings definitions audited in docs/admin-settings-audit/evidence/definition-audit.json. Runtime consumers and canonical policy keys determine actual purpose; stored definitions and values stay authoritative.",
+      "securityControl": "No server category rewrites; canonical keys/scopes/versions, full permission metadata, immutable financial histories, qualification and approval/activation controls retained. Only API-permitted rows reach UI.",
+      "testFiles": [
+        "tests/admin-settings-purpose.test.ts"
+      ],
+      "testIds": [
+        "ASSET-COVERAGE",
+        "ASSET-LABELS",
+        "ASSET-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-audit/evidence/definition-audit.json",
+        "docs/admin-settings-audit/AUDIT.md",
+        "docs/admin-settings-audit/evidence/purpose-mapping.json",
+        "docs/admin-settings-audit/evidence/focused-tests.txt",
+        "docs/admin-settings-audit/evidence/local-browser.json",
+        "docs/admin-settings-audit/evidence/typecheck.txt",
+        "docs/admin-settings-audit/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "ASSET-G06",
+      "status": "PARTIAL",
+      "reason": "Purpose taxonomy implemented; all 77 audited controls mapped once, with protected metadata preserved. Hosted release acceptance pending.",
+      "testResult": "PASS local: 44 focused tests, web typecheck/build and actual owner/manager browser acceptance. Hosted release pending.",
+      "outstandingWork": "Complete exact-source candidate/stable rollout, owner/manager/finance inventory and state checks, hosted desktop/phone acceptance and final matrix."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ASSET-G01",
+      "description": "Audit every remaining setting against its authoritative runtime purpose",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "ASSET-G02",
+      "description": "Consolidate category aliases without losing any setting or existing payment grouping",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "ASSET-G03",
+      "description": "Clarify current versus legacy controls and independent business purposes",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "ASSET-G04",
+      "description": "Preserve role, scope, approval, identity, financial and safety authority",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "ASSET-G05",
+      "description": "Verify search, responsive browsing and canonical editor/history handoffs",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "ASSET-G06",
+      "description": "Deploy reviewed source and update current manual and traceability",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 0,
+      "total": 6
+    },
+    "gates": {
+      "passed": 0,
+      "total": 6
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "Registered before implementation. Audit all 77 live viewable settings (71 remaining controls plus six already consolidated payment controls), consolidate presentation by purpose and preserve stored security categories and every setting."
+    }
+  ]
+}

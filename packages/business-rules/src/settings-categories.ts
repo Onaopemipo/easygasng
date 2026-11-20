@@ -1,3 +1,12 @@
+import {
+  adminSettingsCategoryOrder,
+  adminSettingsSectionOrder,
+  remainingCategory,
+  remainingAliases,
+  remainingSettingPurpose,
+  settingsCategoryDescriptions,
+} from "./admin-settings-purpose";
+export { settingsCategoryDescriptions };
 /** Presentation only. Never use these names for governance/authorisation. */
 type Setting = {
   key: string;
@@ -48,27 +57,28 @@ const purposes: Record<
       "Legacy protective switch; it does not enable Paystack. Use Online payments & fees for the Paystack sandbox. Existing protective-disable controls remain available.",
   },
 };
-const sections = [
-  "Online payments",
-  "Customer wallet",
-  "Cash & settlement",
-  "Other payment controls",
-  "Advanced controls",
-];
+const sections = adminSettingsSectionOrder;
 export function settingsDisplayCategory(d: Setting): string {
   return purposes[d.key] || aliases.includes(d.category)
     ? paymentSettingsCategory
-    : d.category;
+    : (remainingSettingPurpose(d)?.category ?? remainingCategory(d.category));
 }
 export function settingsDisplay<T extends Setting>(d: T): T {
-  const purpose = purposes[d.key];
-  return purpose
+  const purpose = purposes[d.key] ?? remainingSettingPurpose(d);
+  return purpose &&
+    (purpose.label !== d.label || purpose.description !== d.description)
     ? { ...d, label: purpose.label, description: purpose.description }
     : d;
 }
 export function settingsCategories(data: Setting[]): string[] {
-  return [...new Set(data.map(settingsDisplayCategory))].sort((a, b) =>
-    a.localeCompare(b),
+  return [...new Set(data.map(settingsDisplayCategory))].sort(
+    (a, b) =>
+      (adminSettingsCategoryOrder.indexOf(a) < 0
+        ? 100
+        : adminSettingsCategoryOrder.indexOf(a)) -
+        (adminSettingsCategoryOrder.indexOf(b) < 0
+          ? 100
+          : adminSettingsCategoryOrder.indexOf(b)) || a.localeCompare(b),
   );
 }
 export function settingMatches(d: Setting, query: string): boolean {
@@ -82,7 +92,9 @@ export function settingMatches(d: Setting, query: string): boolean {
     display.label,
     display.description,
     settingsDisplayCategory(d),
-    ...(settingsDisplayCategory(d) === paymentSettingsCategory ? aliases : []),
+    ...(settingsDisplayCategory(d) === paymentSettingsCategory
+      ? aliases
+      : remainingAliases(settingsDisplayCategory(d))),
   ];
   return terms.join(" ").toLowerCase().includes(query.trim().toLowerCase());
 }
@@ -96,17 +108,35 @@ export function settingsGroups<T extends Setting>(
       (query.trim() || settingsDisplayCategory(d) === category) &&
       settingMatches(d, query),
   );
-  const groups: { title: string; advanced: boolean; settings: T[] }[] = [];
+  const groups: {
+    id: string;
+    category: string;
+    title: string;
+    advanced: boolean;
+    settings: T[];
+  }[] = [];
   for (const d of matches) {
+    const displayCategory = settingsDisplayCategory(d);
+    const purpose = purposes[d.key]
+      ? {
+          ...purposes[d.key],
+          advanced: purposes[d.key].section === "Advanced controls",
+        }
+      : remainingSettingPurpose(d);
     const title =
-      settingsDisplayCategory(d) === paymentSettingsCategory
-        ? (purposes[d.key]?.section ?? "Other payment controls")
-        : query.trim()
-          ? settingsDisplayCategory(d)
-          : "";
-    let group = groups.find((g) => g.title === title);
+      displayCategory === paymentSettingsCategory
+        ? (purpose?.section ?? "Other payment controls")
+        : (purpose?.section ?? (query.trim() ? displayCategory : ""));
+    const groupId = `${displayCategory}:${title}`;
+    let group = groups.find((g) => g.id === groupId);
     if (!group) {
-      group = { title, advanced: title === "Advanced controls", settings: [] };
+      group = {
+        id: groupId,
+        category: displayCategory,
+        title,
+        advanced: purpose?.advanced ?? false,
+        settings: [],
+      };
       groups.push(group);
     }
     group.settings.push(d);
@@ -121,7 +151,11 @@ export function settingsGroups<T extends Setting>(
         : settingsDisplay(a).label.localeCompare(settingsDisplay(b).label);
     });
   return groups.sort((a, b) => {
-    const ai = sections.indexOf(a.title), bi = sections.indexOf(b.title);
-    return (ai < 0 ? 100 : ai) - (bi < 0 ? 100 : bi) || a.title.localeCompare(b.title);
+    const ai = sections.indexOf(a.title),
+      bi = sections.indexOf(b.title);
+    return (
+      (ai < 0 ? 100 : ai) - (bi < 0 ? 100 : bi) ||
+      a.title.localeCompare(b.title)
+    );
   });
 }

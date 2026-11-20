@@ -34,3 +34,5 @@ Settings editor continuation (20 November): [updated task instructions and deskt
 Wallet & Payments refinement (20 November): [current payment configuration guide](wallet-payments-update.md), including direct naira/percentage entry, compact payment methods, optional advanced rules, wallet limits and readable review. Linked screenshots show the deployed web editor. The existing PDF/Word edition remains historical.
 
 Payment category consolidation (20 November): [Payments & Wallet organisation guide](payment-settings-organisation.md) maps the six renamed controls and distinguishes card top-up limits from cash/bank-transfer wallet limits. The three previous Settings categories now share one purpose-based category; existing permissions and financial rules are retained.
+
+Current full Admin Settings navigation (20 November): [nine-category guide and configuration tasks](admin-settings-navigation.md). This supersedes earlier category labels in the historical manual, while retaining all 77 settings, the payment consolidation, search aliases, authority and current values. See the complete audit/mapping and traceability linked from that guide.

@@ -20,3 +20,5 @@ The approval badge is authoritative UI guidance from the server. Eligible sole-A
 This is a focused addendum. The existing PDF/Word edition remains historical; it has not been regenerated for this settings update. Production NO-GO and unrelated acceptance gates remain unchanged.
 
 Payment-field refinement: see the [Wallet & Payments guide](wallet-payments-update.md) for naira/percentage entry, advanced fee rules, the illustrative quote and validation behaviour.
+
+Current category names and configuration locations are listed in the [full Admin Settings navigation guide](admin-settings-navigation.md). The existing typed editor/review flow remains unchanged under the clearer titles.

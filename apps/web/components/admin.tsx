@@ -8,7 +8,7 @@ import { privilegeById } from "../../../packages/business-rules/src/staff-privil
 import { NotificationsTray } from "./notifications-tray";
 import SettingForm from "./setting-change-form";
 import SettingsPurposeGroup from "./settings-purpose-group";
-import { paymentSettingsCategory, settingsCategories, settingsDisplayCategory, settingsDisplay, settingsGroups } from "../../../packages/business-rules/src/settings-categories";
+import { settingsCategoryDescriptions, settingsCategories, settingsDisplayCategory, settingsDisplay, settingsGroups } from "../../../packages/business-rules/src/settings-categories";
 import { appAlert } from "./app-dialog";
 import { FormInput } from "./password-input";
 import SettingSummary, { readableSetting } from "./setting-summary";
@@ -883,7 +883,7 @@ function Settings({
                   {user.branchId ?? "Lagos"}
                 </span>
               </div>
-              {current === paymentSettingsCategory && !query.trim() && <p className="settings-purpose-intro">Manage online checkout, customer wallet access, cash payments and settlement details. Each control keeps its existing approval requirements.</p>}
+              {!query.trim() && settingsCategoryDescriptions[current] && <p className="settings-purpose-intro">{settingsCategoryDescriptions[current]}</p>}
               {query.trim() && !settingsGroups(data, current, query).length && (
                   <p className="settings-empty" role="status">
                     No settings match “{query}”. Try another word or choose a
@@ -891,7 +891,7 @@ function Settings({
                   </p>
                 )}
               {settingsGroups(data, current, query).map((group) => (
-                <SettingsPurposeGroup key={group.title} title={group.title} advanced={group.advanced} searching={!!query.trim()}>
+                <SettingsPurposeGroup key={group.id} title={query.trim() && group.title !== group.category ? `${group.category} · ${group.title}` : group.title} advanced={group.advanced} searching={!!query.trim()}>
                 {group.settings.map((d: any) => (
                   <article className="setting-card" key={d.key}>
                     <div className="setting-top">

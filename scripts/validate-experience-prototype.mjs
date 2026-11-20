@@ -6,11 +6,13 @@ const check=async(id,fn,detail={})=>await test(id+': source and artifact validat
 const settingsContinuation=await read('docs/settings-modal/reviewed-source-changes.json');
 const walletContinuation=await read('docs/wallet-payments/reviewed-source-changes.json');
 const categoryContinuation=await read('docs/settings-categories/reviewed-source-changes.json');
+const adminSettingsContinuation=await read('docs/admin-settings-audit/reviewed-source-changes.json');
 await check('EXP-SOURCE-FIDELITY',async()=>{for(const source of manifest.sources){
  if(settingsContinuation.files[source.path])assert.equal(settingsContinuation.baseline[source.path],source.sha256,source.path+' original prototype baseline');
  if(walletContinuation.files[source.path])assert.equal(walletContinuation.baseline[source.path],settingsContinuation.files[source.path],source.path+' settings continuation baseline');
  if(categoryContinuation.files[source.path])assert.equal(categoryContinuation.baseline[source.path],walletContinuation.files[source.path]??settingsContinuation.files[source.path],source.path+' payment continuation baseline');
- assert.equal(createHash('sha256').update(await fs.readFile(source.path)).digest('hex'),categoryContinuation.files[source.path]??walletContinuation.files[source.path]??settingsContinuation.files[source.path]??source.sha256,source.path);
+ if(adminSettingsContinuation.files[source.path])assert.equal(adminSettingsContinuation.baseline[source.path],categoryContinuation.files[source.path],source.path+' category consolidation baseline');
+ assert.equal(createHash('sha256').update(await fs.readFile(source.path)).digest('hex'),adminSettingsContinuation.files[source.path]??categoryContinuation.files[source.path]??walletContinuation.files[source.path]??settingsContinuation.files[source.path]??source.sha256,source.path);
 }},{sources:manifest.sources.length,originalManifestRetained:true,reviewedContinuation:'docs/settings-modal/reviewed-source-changes.json'});
 await check('EXP-STATIC-ROUTES',async()=>{const html=await fs.readFile(base+'/dist/index.html','utf8');for(const {route}of routes)assert.equal(await fs.readFile(path.join(base,'dist',route,'index.html'),'utf8'),html,route)},{count:routes.length});
 await check('EXP-FEATURE-COVERAGE',async()=>{assert.equal(features.length,36);assert.equal(features.reduce((n,f)=>n+f.items.length,0),300);const coverage=await read('docs/prototype/feature-coverage.json');for(const f of coverage){assert.ok(f.implementationFiles.some(p=>p.startsWith('apps/web/components/')),f.name);for(const file of f.implementationFiles)await fs.access(file);if(f.route.startsWith('/admin'))assert.ok(fixture[f.role].navigation.data.allowed.includes(f.route.split('/')[2]||'dashboard'),f.name)}},{families:features.length,namedFeatures:300});
