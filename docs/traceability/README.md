@@ -330,3 +330,5 @@ Native continuation web/API rollout (20 November 2026): [release](../native-work
 Settings modal redesign (20 November 2026): [matrix](settings-modal-rtm.md), [audit](../settings-modal/AUDIT.md). Six requirements/gates registered before implementation. Compact editor/review flow, readable account selection, conditional verification and responsive acceptance; server governance and all prior holds remain.
 
 Settings modal rollout verified: source `3aa98df`, Ready `dpl_84mTYGPNbPFoQYtoFjrU5ZSZxmbz`; six bounded requirements/gates verified. Candidate/stable each passed 20 hosted checks, three-size published UI verified, and business/native artifacts unchanged. [Release report](../settings-modal/README.md), [manual addendum](../user-manual/settings-change-update.md). Production NO-GO and all unrelated coverage remain.
+
+Wallet & Payments refinement (20 November): [matrix](wallet-payments-rtm.md), [audit](../wallet-payments/AUDIT.md). Six requirements registered before refining payment fields, readable units, advanced options and review. Existing payment controls and unrelated production/native gates are preserved.

@@ -9466,3 +9466,160 @@ body:has(.client-demo-notice) .settings-change-dialog { --sc-demo-space: 64px; p
 @media (max-width: 360px) {
  body:has(.client-demo-notice) .settings-change-dialog { --sc-demo-space: 112px; padding-bottom: 124px; }
 }
+
+
+/* Payment policy: human units, compact sections and optional advanced rules. */
+.settings-change-dialog .wp-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.settings-change-dialog .wp-section label {
+  min-width: 0;
+}
+.settings-change-dialog .wp-section small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+.settings-change-dialog .wp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.settings-change-dialog .wp-note {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-left: 3px solid var(--green);
+  padding: 10px 14px;
+  background: var(--soft);
+  font-size: 13px;
+}
+.settings-change-dialog .wp-note span,
+.settings-change-dialog .wp-intro {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+.settings-change-dialog .wp-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.settings-change-dialog .wp-toggle strong {
+  font-size: 14px;
+}
+.settings-change-dialog .wp-toggle input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--green);
+}
+.settings-change-dialog .wp-label {
+  font-weight: 650;
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+.settings-change-dialog .wp-method {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 11px 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.settings-change-dialog .wp-method:has(input:checked) {
+  border-color: var(--green);
+  background: var(--soft);
+}
+.settings-change-dialog .wp-method input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--green);
+}
+.settings-change-dialog .wp-input {
+  position: relative;
+  display: block;
+}
+.settings-change-dialog .wp-input > span {
+  position: absolute;
+  inset: 0 auto 0 13px;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+.settings-change-dialog .wp-input input {
+  padding-left: 34px;
+  width: 100%;
+}
+.settings-change-dialog .wp-advanced {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.settings-change-dialog .wp-advanced summary {
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.settings-change-dialog .wp-advanced[open] summary {
+  margin-bottom: 14px;
+}
+.settings-change-dialog .wp-example {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--soft);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.settings-change-dialog .wp-example > span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.settings-change-dialog .wp-example strong {
+  font-size: 15px;
+}
+.settings-change-dialog .wp-example small {
+  margin: 0;
+}
+.settings-change-dialog .wp-empty {
+  padding: 16px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  font-size: 14px;
+}
+.settings-change-dialog .wp-empty p {
+  color: var(--muted);
+  font-size: 13px;
+}
+.settings-change-dialog .wp-empty .button {
+  margin: 0;
+}
+@media (max-width: 440px) {
+  .settings-change-dialog .wp-grid {
+    grid-template-columns: 1fr;
+  }
+  .settings-change-dialog .wp-methods .wp-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .settings-change-dialog .wp-method {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+}

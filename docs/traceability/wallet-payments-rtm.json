@@ -1,0 +1,293 @@
+{
+  "phase": "Wallet & Payments settings refinement",
+  "productionDecision": "NO-GO; actual-import hold, retain-all and all unrelated native/provider/operational gates unchanged",
+  "requirements": [
+    {
+      "id": "WPAY-01",
+      "requirement": "Focused payment sections with concise text and one fixed action bar",
+      "priority": "P1",
+      "scope": "Payment Gateway & Fees editor and shared payment review within web Settings. Preserve all DTO values, approvals, sandbox restrictions and unrelated work.",
+      "uiReference": "Four attached long Wallet & Payments / Payment Gateway & Fees modal screenshots",
+      "route": "/admin/settings \u2192 Wallet & Payments \u2192 Payment Gateway & Fees",
+      "implementationFiles": [
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/payment-editor.ts"
+      ],
+      "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
+      "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
+      "testFiles": [
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "WPAY-UNITS",
+        "WPAY-RENDER",
+        "WPAY-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/wallet-payments/AUDIT.md",
+        "docs/wallet-payments/evidence/focused-tests.txt",
+        "docs/wallet-payments/evidence/local-browser.json",
+        "docs/wallet-payments/evidence/local-draft.json",
+        "docs/wallet-payments/evidence/typecheck.txt",
+        "docs/wallet-payments/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "WPAY-G01",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
+      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
+      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+    },
+    {
+      "id": "WPAY-02",
+      "requirement": "Naira and percentage editing with exact conversion and readable review",
+      "priority": "P0",
+      "scope": "Payment Gateway & Fees editor and shared payment review within web Settings. Preserve all DTO values, approvals, sandbox restrictions and unrelated work.",
+      "uiReference": "Four attached long Wallet & Payments / Payment Gateway & Fees modal screenshots",
+      "route": "/admin/settings \u2192 Wallet & Payments \u2192 Payment Gateway & Fees",
+      "implementationFiles": [
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/payment-editor.ts"
+      ],
+      "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
+      "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
+      "testFiles": [
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "WPAY-UNITS",
+        "WPAY-RENDER",
+        "WPAY-SECURITY"
+      ],
+      "negativeTests": [
+        "WPAY-SECURITY"
+      ],
+      "evidence": [
+        "docs/wallet-payments/AUDIT.md",
+        "docs/wallet-payments/evidence/focused-tests.txt",
+        "docs/wallet-payments/evidence/local-browser.json",
+        "docs/wallet-payments/evidence/local-draft.json",
+        "docs/wallet-payments/evidence/typecheck.txt",
+        "docs/wallet-payments/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "WPAY-G02",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
+      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
+      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+    },
+    {
+      "id": "WPAY-03",
+      "requirement": "Progressive advanced options without hidden invalid fields or lost tab edits",
+      "priority": "P1",
+      "scope": "Payment Gateway & Fees editor and shared payment review within web Settings. Preserve all DTO values, approvals, sandbox restrictions and unrelated work.",
+      "uiReference": "Four attached long Wallet & Payments / Payment Gateway & Fees modal screenshots",
+      "route": "/admin/settings \u2192 Wallet & Payments \u2192 Payment Gateway & Fees",
+      "implementationFiles": [
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/payment-editor.ts"
+      ],
+      "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
+      "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
+      "testFiles": [
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "WPAY-UNITS",
+        "WPAY-RENDER",
+        "WPAY-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/wallet-payments/AUDIT.md",
+        "docs/wallet-payments/evidence/focused-tests.txt",
+        "docs/wallet-payments/evidence/local-browser.json",
+        "docs/wallet-payments/evidence/local-draft.json",
+        "docs/wallet-payments/evidence/typecheck.txt",
+        "docs/wallet-payments/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "WPAY-G03",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
+      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
+      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+    },
+    {
+      "id": "WPAY-04",
+      "requirement": "Preserved payment authorisation, sandbox, approval and quote integrity",
+      "priority": "P0",
+      "scope": "Payment Gateway & Fees editor and shared payment review within web Settings. Preserve all DTO values, approvals, sandbox restrictions and unrelated work.",
+      "uiReference": "Four attached long Wallet & Payments / Payment Gateway & Fees modal screenshots",
+      "route": "/admin/settings \u2192 Wallet & Payments \u2192 Payment Gateway & Fees",
+      "implementationFiles": [
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/payment-editor.ts"
+      ],
+      "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
+      "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
+      "testFiles": [
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "WPAY-UNITS",
+        "WPAY-RENDER",
+        "WPAY-SECURITY"
+      ],
+      "negativeTests": [
+        "WPAY-SECURITY"
+      ],
+      "evidence": [
+        "docs/wallet-payments/AUDIT.md",
+        "docs/wallet-payments/evidence/focused-tests.txt",
+        "docs/wallet-payments/evidence/local-browser.json",
+        "docs/wallet-payments/evidence/local-draft.json",
+        "docs/wallet-payments/evidence/typecheck.txt",
+        "docs/wallet-payments/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "WPAY-G04",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
+      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
+      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+    },
+    {
+      "id": "WPAY-05",
+      "requirement": "Responsive, keyboard and validation acceptance for payment configuration",
+      "priority": "P1",
+      "scope": "Payment Gateway & Fees editor and shared payment review within web Settings. Preserve all DTO values, approvals, sandbox restrictions and unrelated work.",
+      "uiReference": "Four attached long Wallet & Payments / Payment Gateway & Fees modal screenshots",
+      "route": "/admin/settings \u2192 Wallet & Payments \u2192 Payment Gateway & Fees",
+      "implementationFiles": [
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/payment-editor.ts"
+      ],
+      "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
+      "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
+      "testFiles": [
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "WPAY-UNITS",
+        "WPAY-RENDER",
+        "WPAY-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/wallet-payments/AUDIT.md",
+        "docs/wallet-payments/evidence/focused-tests.txt",
+        "docs/wallet-payments/evidence/local-browser.json",
+        "docs/wallet-payments/evidence/local-draft.json",
+        "docs/wallet-payments/evidence/typecheck.txt",
+        "docs/wallet-payments/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "WPAY-G05",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
+      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
+      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+    },
+    {
+      "id": "WPAY-06",
+      "requirement": "Verified demo rollout, guide and traceability; no mobile binary build",
+      "priority": "P1",
+      "scope": "Payment Gateway & Fees editor and shared payment review within web Settings. Preserve all DTO values, approvals, sandbox restrictions and unrelated work.",
+      "uiReference": "Four attached long Wallet & Payments / Payment Gateway & Fees modal screenshots",
+      "route": "/admin/settings \u2192 Wallet & Payments \u2192 Payment Gateway & Fees",
+      "implementationFiles": [
+        "apps/web/components/payment-gateway-policy.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/app/globals.css",
+        "packages/business-rules/src/payment-editor.ts"
+      ],
+      "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
+      "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
+      "testFiles": [
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "WPAY-UNITS",
+        "WPAY-RENDER",
+        "WPAY-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/wallet-payments/AUDIT.md",
+        "docs/wallet-payments/evidence/focused-tests.txt",
+        "docs/wallet-payments/evidence/local-browser.json",
+        "docs/wallet-payments/evidence/local-draft.json",
+        "docs/wallet-payments/evidence/typecheck.txt",
+        "docs/wallet-payments/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "WPAY-G06",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
+      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
+      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+    }
+  ],
+  "gates": [
+    {
+      "id": "WPAY-G01",
+      "description": "Focused payment sections with concise text and one fixed action bar",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "WPAY-G02",
+      "description": "Naira and percentage editing with exact conversion and readable review",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "WPAY-G03",
+      "description": "Progressive advanced options without hidden invalid fields or lost tab edits",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "WPAY-G04",
+      "description": "Preserved payment authorisation, sandbox, approval and quote integrity",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "WPAY-G05",
+      "description": "Responsive, keyboard and validation acceptance for payment configuration",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    },
+    {
+      "id": "WPAY-G06",
+      "description": "Verified demo rollout, guide and traceability; no mobile binary build",
+      "status": "PARTIAL",
+      "reason": "Implementation and acceptance pending."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 0,
+      "total": 6
+    },
+    "gates": {
+      "passed": 0,
+      "total": 6
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "Registered user-requested Wallet & Payments audit/redesign before implementation. Existing compact shell retained; payment content, units, progressive options and review refined. No financial policy activation, live payments or mobile build authorised by this phase."
+    }
+  ]
+}

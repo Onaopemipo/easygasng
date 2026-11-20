@@ -29,6 +29,10 @@ import {
   settingChangeRows,
 } from "../../../packages/business-rules/src/setting-editor";
 import PaymentGatewayPolicy from "./payment-gateway-policy";
+import {
+  paymentFieldLabel,
+  paymentReviewValue,
+} from "../../../packages/business-rules/src/payment-editor";
 import { RewardsPolicyFields } from "./rewards-policy-fields";
 type Props = {
   setting: any;
@@ -135,6 +139,18 @@ export default function SettingForm({
   function beginReview(draft = false) {
     if (pending.current) return;
     setError("");
+    if (s.value_type === "payment_gateway" && value.enabled && !value.fee) {
+      setError("Configure a verified fee schedule before enabling checkout.");
+      setTab("fees");
+      requestAnimationFrame(() =>
+        form.current
+          ?.querySelector<HTMLButtonElement>(
+            '[data-value-section="fees"] button',
+          )
+          ?.focus(),
+      );
+      return;
+    }
     const invalid = Array.from(
       form.current?.querySelectorAll<
         HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -620,11 +636,7 @@ export default function SettingForm({
           </p>
         </div>
       ) : s.value_type === "payment_gateway" ? (
-        <PaymentGatewayPolicy
-          value={value}
-          setValue={changeValue}
-          ownerAutoApproval={s.owner_auto_approval}
-        />
+        <PaymentGatewayPolicy value={value} setValue={changeValue} />
       ) : s.value_type === "dispatch_routing" ? (
         <div className="stack">
           <label>
@@ -934,7 +946,6 @@ export default function SettingForm({
             <PaymentGatewayPolicy
               value={value}
               setValue={changeValue}
-              ownerAutoApproval={s.owner_auto_approval}
               section={t.id as any}
             />
           ),
@@ -970,13 +981,15 @@ export default function SettingForm({
         review.body.value,
       )
     : [];
-  const readable = (v: any) =>
-    s.value_type === "money" && typeof v === "number"
-      ? new Intl.NumberFormat("en-NG", {
-          style: "currency",
-          currency: "NGN",
-        }).format(v / 100)
-      : readableSetting(v);
+  const readable = (v: any, path: string) =>
+    s.value_type === "payment_gateway"
+      ? paymentReviewValue(path, v)
+      : s.value_type === "money" && typeof v === "number"
+        ? new Intl.NumberFormat("en-NG", {
+            style: "currency",
+            currency: "NGN",
+          }).format(v / 100)
+        : readableSetting(v);
   return (
     <form
       ref={form}
@@ -1119,10 +1132,14 @@ export default function SettingForm({
                 <div className="sc-change-list">
                   {rows.slice(0, 12).map((r, i) => (
                     <div key={i}>
-                      <strong>{settingLabel(r.path)}</strong>
-                      <span>{readable(r.before)}</span>
+                      <strong>
+                        {s.value_type === "payment_gateway"
+                          ? paymentFieldLabel(r.path)
+                          : settingLabel(r.path)}
+                      </strong>
+                      <span>{readable(r.before, r.path)}</span>
                       <ArrowRight size={14} />
-                      <span>{readable(r.after)}</span>
+                      <span>{readable(r.after, r.path)}</span>
                     </div>
                   ))}
                   {!rows.length && <p>The configured value is unchanged.</p>}
