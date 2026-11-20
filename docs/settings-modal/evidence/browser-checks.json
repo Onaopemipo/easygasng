@@ -76,12 +76,18 @@
       "id": "SMOD-SCOPE",
       "result": "PASS",
       "observed": "No hosted mutations in browser. All write/exception acceptance uses disposable loopback database."
+    },
+    {
+      "id": "SMOD-BANNER",
+      "result": "PASS",
+      "observed": "With the actual client-demo notice enabled locally, footer ends above the notice with at least 12px clearance at 1280x720,390x844 and320x568; all footer buttons remain inside the dialog."
     }
   ],
   "corrections": [
     "Prevented React button reconciliation from triggering form submission while entering Review; explicit confirmation now required.",
     "Small-phone footer wraps secondary actions; all button bounds checked.",
-    "Offer disclosure state survives title edits."
+    "Offer disclosure state survives title edits.",
+    "Reserved the fixed demo-notice area after discovering post-promotion overlap. First hosted API results remain historical, not final UI acceptance."
   ],
   "screenshots": [
     "docs/settings-modal/evidence/desktop-editor.jpg",
@@ -90,6 +96,7 @@
   "limits": [
     "Shared editor retains existing typed setting branches. This is bounded settings-modal acceptance, not a fresh acceptance pass over every business setting or the native app.",
     "Existing Approval Centre outer layout is retained; its saved-request editor reuses this flow.",
-    "Production NO-GO, retained data/import holds and unrelated gates unchanged."
+    "Production NO-GO, retained data/import holds and unrelated gates unchanged.",
+    "Final banner-aware stable UI verification is recorded separately in release/stable-browser.json."
   ]
 }

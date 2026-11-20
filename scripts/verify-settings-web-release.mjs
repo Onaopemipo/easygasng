@@ -156,12 +156,10 @@ const hash = (v) =>
     .update(JSON.stringify(canonical(v)))
     .digest("hex");
 async function snapshot() {
-  const settings = await ok("owner", "settings?scope=lagos"), requests = await ok("owner", "approvals"), people = await ok("owner", "staff.manage");
-  const orders = await ok("owner", "orders"),
-    inventory = await ok("owner", "inventory"),
-    ledger = await ok("owner", "finance.ledger"),
-    policies = await ok("", "policies"),
-    readiness = await ok("owner", "production.readiness");
+  const [settings, requests, people, orders, inventory, ledger, policies, readiness] = await Promise.all([
+    ok("owner", "settings?scope=lagos"), ok("owner", "approvals"), ok("owner", "staff.manage"), ok("owner", "orders"),
+    ok("owner", "inventory"), ok("owner", "finance.ledger"), ok("", "policies"), ok("owner", "production.readiness"),
+  ]);
   assert.equal(readiness.recommendation, "NO-GO");
   const projected = orders
     .map((o) =>
@@ -198,9 +196,10 @@ try {
  const home=await transport('/'); assert.equal(home.status,200); const html=await home.text();assert.match(html,/Client demo/);assert.match(html,/noindex/);record('Client-demo identity, synthetic notice and no-index metadata');
  assert.equal((await call('', 'staff.lookup?userId=00000000-0000-4000-8000-000000000000')).status,401);record('Anonymous staff lookup denied');
  const actors={};
- for(const role of stage==='before'?['owner']:roles){
+ const logins=await Promise.allSettled((stage==='before'?['owner']:roles).map(async role=>{
   const account=credentials.find(a=>a.role===role);const login=await call('', 'login',{email:account.email,password:account.password});assert.equal(login.status,200,role+' login');assert.equal(login.body.role,role);tokens[role]=login.body.token;assert.ok(tokens[role]);const me=await ok(role,'me');assert.equal(me.user.email,account.email);actors[role]=me.user;record(role+' existing sign-in and own identity');
- }
+ }));
+ for(const result of logins)if(result.status==='rejected')throw result.reason;
  const snap=await snapshot();record('Settings, approval requests, staff roles and operational state snapshot',snap);
  if(stage==='before')await fs.writeFile(dir+'before-snapshot.json',JSON.stringify(snap,null,2)+'\n',{mode:0o600});
  else {

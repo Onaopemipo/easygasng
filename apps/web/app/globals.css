@@ -9374,7 +9374,7 @@ body label > input[type="checkbox"] {
 .approval-centre .status { text-transform: none; }
 
 /* Settings editor: one scrolling body with persistent context and actions. */
-.settings-change-dialog .modal { width: min(760px, 100%); max-height: min(840px, calc(100dvh - 40px)); padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.settings-change-dialog .modal { width: min(760px, 100%); max-height: min(840px, calc(100dvh - 40px - var(--sc-demo-space, 0px))); padding: 0; overflow: hidden; display: flex; flex-direction: column; }
 .settings-change-dialog .modal > .section-heading { margin: 0; padding: 20px 24px 14px; flex: 0 0 auto; gap: 16px; }
 .settings-change-dialog .section-heading h2 { font-size: 21px; line-height: 1.3; margin: 0; }
 .sc-form { display: flex; flex-direction: column; min-height: 0; overflow: hidden; gap: 0; }
@@ -9436,7 +9436,7 @@ body label > input[type="checkbox"] {
 .sc-form :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 @media (max-width: 600px) {
  .settings-change-dialog { padding: 12px; }
- .settings-change-dialog .modal { max-height: calc(100dvh - 24px); border-radius: 16px; }
+ .settings-change-dialog .modal { max-height: calc(100dvh - 24px - var(--sc-demo-space, 0px)); border-radius: 16px; }
  .settings-change-dialog .modal > .section-heading { padding: 16px 18px 12px; }
  .settings-change-dialog .section-heading h2 { font-size: 18px; }
  .sc-context { padding: 0 18px 12px; font-size: 11px; }
@@ -9457,3 +9457,12 @@ body label > input[type="checkbox"] {
  .sc-footer > div:has(.sc-draft) > .button:last-child { grid-column: 1 / -1; }
 }
 .sc-footer .button, .sc-account-search .button { margin-top: 0; }
+
+/* Keep the always-visible demo notice clear of the settings actions. */
+body:has(.client-demo-notice) .settings-change-dialog { --sc-demo-space: 64px; padding-bottom: 84px; }
+@media (max-width: 600px) {
+ body:has(.client-demo-notice) .settings-change-dialog { --sc-demo-space: 96px; padding-bottom: 108px; }
+}
+@media (max-width: 360px) {
+ body:has(.client-demo-notice) .settings-change-dialog { --sc-demo-space: 112px; padding-bottom: 124px; }
+}

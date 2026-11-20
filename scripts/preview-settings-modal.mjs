@@ -13,7 +13,7 @@ const password='Synthetic-settings-only-123!';
 await db.query("INSERT INTO branches(id,name) VALUES('qa-other','Synthetic other branch')");
 for(const [name,role,branch,active] of [['owner','owner','lagos',true],['manager','manager','lagos',true],['driver','driver','lagos',true],['other','driver','qa-other',true],['inactive','driver','lagos',false]])await db.query('INSERT INTO users(id,name,email,password_hash,role,branch_id,active,verified) VALUES($1,$2,$3,$4,$5,$6,$7,true)',[id(),'Synthetic '+name,name+'@settings.example.test',hashPassword(password),role,branch,active]);
 await db.close();await unlink(join(dir,"db.lock"));
-process.env.EASYGAS_SETTINGS_PREVIEW='true';process.env.EASYGAS_DATA_DIR=join(dir,'db');process.env.EASYGAS_OWNER_AUTO_APPROVAL='true';
+process.env.EASYGAS_CLIENT_DEMO='true';process.env.EASYGAS_SETTINGS_PREVIEW='true';process.env.EASYGAS_DATA_DIR=join(dir,'db');process.env.EASYGAS_OWNER_AUTO_APPROVAL='true';
 const app=next({dev:true,hostname:'127.0.0.1',port:3120,dir:'apps/web',conf:{distDir:'.next-settings-modal',serverExternalPackages:['@electric-sql/pglite','pg']}});
 await app.prepare();if(process.env.DATABASE_URL)throw Error('Local fixture only');
 await writeFile('.data/settings-modal-qa.json',JSON.stringify({dir,email:'owner@settings.example.test',password}),{mode:0o600});

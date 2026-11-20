@@ -15,10 +15,10 @@
     "apps/web/components/ui.tsx": "4dd242cefe18b6a0fbe3583d1dfb4fdd9e68a4608c823d53852b1bb25f1e196c",
     "apps/web/components/payment-gateway-policy.tsx": "59c6d0e2eb4c440f906fc33b5d258ccfc7505e3314b4182e7cd1a5e8a4892b45",
     "apps/web/components/rewards-policy-fields.tsx": "482ccd0d0ca6f4eb6c0eb2e00a119f3f84a5a517750ff66933357a95187911c6",
-    "apps/web/app/globals.css": "991f5bb28471a4a36dcfcdecb239c0c187be35c36e21642c5029790fd7edab0d",
+    "apps/web/app/globals.css": "d03daccbc7d3c9c0915713219dd71ee5b5360e7196538379b0b2566c6e9c8418",
     "apps/web/lib/staff.ts": "2a89e860e6489c852a1ca380b6356722121bdd396d0e5e6a85d66e1b38129d64"
   },
-  "review": "Extracted the existing typed setting fields to setting-change-form.tsx. Settings opens that form with specific title, scoped class and busy state. Approvals reuses the editor and passes the current actor ID. No order, stock, payment, quote, approval decision or activation handler in admin.tsx was changed. All prior baselines remain retained. Shared Modal keeps its discard confirmation, filters hidden focus targets, locks background scrolling and blocks closing during writes. Payment/reward fields are split into sections; stored units and values remain unchanged. Styles are scoped to the new editor. Staff lookup accepts an existing ID for draft hydration under the same role/branch restrictions.",
+  "review": "Extracted the existing typed setting fields to setting-change-form.tsx. Settings opens that form with specific title, scoped class and busy state. Approvals reuses the editor and passes the current actor ID. No order, stock, payment, quote, approval decision or activation handler in admin.tsx was changed. All prior baselines remain retained. Shared Modal keeps its discard confirmation, filters hidden focus targets, locks background scrolling and blocks closing during writes. Payment/reward fields are split into sections; stored units and values remain unchanged. Styles are scoped to the new editor. Staff lookup accepts an existing ID for draft hydration under the same role/branch restrictions. Hosted follow-up reserves the fixed demo notice in the settings viewport. Notice visibility and pointer behaviour are unchanged.",
   "evidence": [
     "docs/settings-modal/AUDIT.md",
     "docs/settings-modal/evidence/focused-tests.txt"

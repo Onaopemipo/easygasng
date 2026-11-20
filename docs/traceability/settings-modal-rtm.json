@@ -260,7 +260,7 @@
       ],
       "acceptanceGate": "SMOD-G06",
       "status": "PARTIAL",
-      "reason": "Desktop/phone acceptance complete; verified demo rollout pending.",
+      "reason": "First rollout found a demo-banner/footer overlap; corrected locally, final hosted verification pending.",
       "testResult": "PASS local; hosted candidate/stable checks pending.",
       "outstandingWork": "Deploy reviewed web/API source; verify candidate, promote and verify stable read-only state and browser UI."
     }
@@ -300,7 +300,7 @@
       "id": "SMOD-G06",
       "description": "Desktop/phone browser acceptance and verified demo rollout without mobile build",
       "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "reason": "First rollout found a demo-banner/footer overlap; corrected locally, final hosted verification pending."
     }
   ],
   "coverage": {
@@ -334,6 +334,10 @@
     {
       "date": "2026-11-20",
       "change": "Implemented compact editor/review, scoped account hydration and responsive actions. Preserved all original source baselines through explicit settings continuation; fixed review auto-submit, small-phone footer clipping and offer disclosure behaviour found during acceptance. Demo rollout pending; production NO-GO unchanged."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "First candidate 5d7ca4b passed 20 hosted API checks and was promoted. Browser verification found the demo-only fixed notice overlaps the action footer; SMOD-G06 remains open. Added scoped viewport reservation and verified non-overlap locally at desktop and two phone sizes; deploying follow-up."
     }
   ]
 }
