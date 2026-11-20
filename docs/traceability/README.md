@@ -358,3 +358,5 @@ Native Orders text-host repair: [matrix](mobile-orders-text-fix-rtm.md). User-re
 Native Orders authority follow-up (21 November): [matrix](native-order-authority-rtm.md), resolving ORDTXT-F01 with role and refund exception coverage.
 
 Sequential mobile device acceptance (21 November): [matrix](mobile-device-acceptance-rtm.md). Four ordered stages, seven roles and seven sibling screens retained.
+
+Hosted ledger follow-up (21 November): [matrix](hosted-ledger-acceptance-rtm.md). Correct endpoint, role restrictions, pagination, scoped cursors and preserved financial data.

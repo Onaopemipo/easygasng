@@ -1,0 +1,481 @@
+{
+  "startedAt": "2026-11-20T17:29:19.408Z",
+  "origin": "https://easygas-client-demo.vercel.app",
+  "endpoint": "GET /api/finance.ledger",
+  "mode": "Hosted business reads only; temporary authentication/logout sessions and normal read audit records",
+  "roles": [
+    {
+      "role": "owner",
+      "branch": "lagos",
+      "status": "AUTHENTICATED"
+    },
+    {
+      "role": "finance",
+      "branch": "lagos",
+      "status": "AUTHENTICATED"
+    },
+    {
+      "role": "manager",
+      "branch": "lagos",
+      "status": "AUTHENTICATED"
+    },
+    {
+      "role": "driver",
+      "branch": "lagos",
+      "status": "AUTHENTICATED"
+    },
+    {
+      "role": "technician",
+      "branch": "lagos",
+      "status": "AUTHENTICATED"
+    },
+    {
+      "role": "customer",
+      "branch": "lagos",
+      "status": "AUTHENTICATED"
+    },
+    {
+      "role": "commercial",
+      "branch": "lagos",
+      "status": "AUTHENTICATED"
+    }
+  ],
+  "checks": [
+    {
+      "id": "HLED-ANONYMOUS",
+      "status": "PASS",
+      "statusCode": 401
+    },
+    {
+      "id": "HLED-OWNER",
+      "status": "PASS",
+      "statusCode": 200,
+      "count": 10,
+      "pages": 10
+    },
+    {
+      "id": "HLED-PAGINATION",
+      "status": "PASS",
+      "smallPageSize": 1,
+      "largePageSize": 500,
+      "rows": 10,
+      "stableFingerprint": true
+    },
+    {
+      "id": "HLED-FINANCE",
+      "status": "PASS",
+      "statusCode": 200,
+      "branch": "lagos",
+      "count": 10,
+      "exactOwnerBranchSubset": true
+    },
+    {
+      "id": "HLED-ROLE-DENIED",
+      "status": "PASS",
+      "role": "manager",
+      "statusCode": 403,
+      "validAndMalformedDenied": true
+    },
+    {
+      "id": "HLED-ROLE-DENIED",
+      "status": "PASS",
+      "role": "driver",
+      "statusCode": 403,
+      "validAndMalformedDenied": true
+    },
+    {
+      "id": "HLED-ROLE-DENIED",
+      "status": "PASS",
+      "role": "technician",
+      "statusCode": 403,
+      "validAndMalformedDenied": true
+    },
+    {
+      "id": "HLED-ROLE-DENIED",
+      "status": "PASS",
+      "role": "customer",
+      "statusCode": 403,
+      "validAndMalformedDenied": true
+    },
+    {
+      "id": "HLED-ROLE-DENIED",
+      "status": "PASS",
+      "role": "commercial",
+      "statusCode": 403,
+      "validAndMalformedDenied": true
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "owner",
+      "case": "zero-limit",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "owner",
+      "case": "oversize-limit",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "owner",
+      "case": "invalid-limit",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "owner",
+      "case": "malformed-cursor",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "owner",
+      "case": "unknown-cursor",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "owner",
+      "case": "branch-spoof",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "owner",
+      "case": "role-spoof",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "finance",
+      "case": "zero-limit",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "finance",
+      "case": "oversize-limit",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "finance",
+      "case": "invalid-limit",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "finance",
+      "case": "malformed-cursor",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "finance",
+      "case": "unknown-cursor",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "finance",
+      "case": "branch-spoof",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-INPUT-DENIED",
+      "status": "PASS",
+      "role": "finance",
+      "case": "role-spoof",
+      "statusCode": 400
+    },
+    {
+      "id": "HLED-READ-METHOD",
+      "status": "PASS",
+      "statusCode": 405
+    },
+    {
+      "id": "HLED-OLD-ALIAS",
+      "status": "PASS",
+      "statusCode": 405,
+      "reason": "Old verification URL remains unsupported; no permissive alias introduced"
+    },
+    {
+      "id": "HLED-WORKSPACE-DENIED",
+      "status": "PASS",
+      "role": "driver",
+      "statusCode": 403
+    },
+    {
+      "id": "HLED-WORKSPACE-DENIED",
+      "status": "PASS",
+      "role": "technician",
+      "statusCode": 403
+    },
+    {
+      "id": "HLED-TERMINAL-CURSOR",
+      "status": "PASS",
+      "statusCode": 200,
+      "empty": true
+    },
+    {
+      "id": "HLED-PRESERVATION",
+      "status": "PASS",
+      "ledgerAndBusinessUnchanged": true
+    }
+  ],
+  "pages": {
+    "owner": [
+      {
+        "page": 1,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 2,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 3,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 4,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 5,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 6,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 7,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 8,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 9,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 10,
+        "status": 200,
+        "rows": 1,
+        "hasMore": false,
+        "noStore": true
+      }
+    ],
+    "finance": [
+      {
+        "page": 1,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 2,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 3,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 4,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 5,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 6,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 7,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 8,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 9,
+        "status": 200,
+        "rows": 1,
+        "hasMore": true,
+        "noStore": true
+      },
+      {
+        "page": 10,
+        "status": 200,
+        "rows": 1,
+        "hasMore": false,
+        "noStore": true
+      }
+    ]
+  },
+  "preservation": {
+    "before": {
+      "orders": {
+        "status": 200,
+        "count": 14,
+        "sha256": "b1a4082774a57bd486a37400dd2018a3666d26b1c23a8b11c6a011e86e6c3a66"
+      },
+      "credits": {
+        "status": 200,
+        "count": 3,
+        "sha256": "b50e1cf705eec2c366e12d0b8487352aca444cd9bf34c54d12751e813f0dfc7c"
+      },
+      "inventory": {
+        "status": 200,
+        "count": 12,
+        "sha256": "1f77d14322b673f050e344de318408d6d6ff4cd62a464c95320aaccae92f5084"
+      }
+    },
+    "ledgerUnchanged": true,
+    "after": {
+      "orders": {
+        "status": 200,
+        "count": 14,
+        "sha256": "b1a4082774a57bd486a37400dd2018a3666d26b1c23a8b11c6a011e86e6c3a66"
+      },
+      "credits": {
+        "status": 200,
+        "count": 3,
+        "sha256": "b50e1cf705eec2c366e12d0b8487352aca444cd9bf34c54d12751e813f0dfc7c"
+      },
+      "inventory": {
+        "status": 200,
+        "count": 12,
+        "sha256": "1f77d14322b673f050e344de318408d6d6ff4cd62a464c95320aaccae92f5084"
+      }
+    },
+    "businessUnchanged": true
+  },
+  "hostedCrossBranch": {
+    "status": "UNTESTED_NO_FOREIGN_BRANCH_DATA",
+    "reason": "Hosted ledger contains no row outside finance QA branch; local real-dispatcher branch isolation test is required, no hosted role/data changes made"
+  },
+  "owner": {
+    "count": 10,
+    "sha256": "4401ddd2415ebced4c3bb3fae7790cde349e12f79a25d7ae2dae63380f29874d",
+    "branches": [
+      "lagos"
+    ]
+  },
+  "finance": {
+    "branch": "lagos",
+    "count": 10,
+    "sha256": "4401ddd2415ebced4c3bb3fae7790cde349e12f79a25d7ae2dae63380f29874d"
+  },
+  "financialWrites": 0,
+  "status": "PASS_HOSTED_WITH_EXPLICIT_BRANCH_DATA_LIMIT",
+  "sessionsRevoked": [
+    {
+      "role": "owner",
+      "status": 200
+    },
+    {
+      "role": "finance",
+      "status": 200
+    },
+    {
+      "role": "manager",
+      "status": 200
+    },
+    {
+      "role": "driver",
+      "status": 200
+    },
+    {
+      "role": "technician",
+      "status": 200
+    },
+    {
+      "role": "customer",
+      "status": 200
+    },
+    {
+      "role": "commercial",
+      "status": 200
+    },
+    {
+      "role": "driver-workspace",
+      "status": 200
+    },
+    {
+      "role": "technician-workspace",
+      "status": 200
+    }
+  ],
+  "finishedAt": "2026-11-20T17:30:49.909Z"
+}

@@ -1,0 +1,260 @@
+{
+  "phase": "Hosted ledger endpoint and role acceptance",
+  "productionDecision": "Production NO-GO, actual-import hold, retain-all and unrelated legacy-route/native/provider/physical-device gates retained",
+  "requirements": [
+    {
+      "id": "HLED-01",
+      "requirement": "Verify correct hosted ledger endpoint, response and complete stable pagination",
+      "priority": "P1",
+      "scope": "Hosted client-demo read-only ledger acceptance; local disposable fixtures for cross-branch cases unavailable on hosted data. No financial writes, role/grant changes, renewals, native builds or broadened permissions.",
+      "uiReference": "Remaining MDEV hosted ledger check: wrong GET ledger returned 405",
+      "route": "GET /api/finance.ledger?limit=&after=",
+      "implementationFiles": [
+        "apps/web/lib/financial-reports.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "scripts/verify-mobile-device-hosted.mjs",
+        "scripts/verify-hosted-ledger.mjs",
+        "scripts/lib/hosted-ledger.mjs",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Verified payments joined to existing orders/service bookings; authenticated role, finance branch and current staff privileges.",
+      "securityControl": "Owner global / finance assigned-branch only; other roles denied; strict query contract, scoped cursor, no-store response; read audits/auth logs expected, financial state unchanged.",
+      "testFiles": [
+        "tests/hosted-ledger.test.ts",
+        "tests/hosted-ledger-evidence.test.ts",
+        "tests/catalogue-services-integration.test.ts"
+      ],
+      "testIds": [
+        "HLED-TOOL",
+        "HLED-HOSTED",
+        "HLED-SNAPSHOT"
+      ],
+      "negativeTests": [
+        "HLED-TOOL-NEG",
+        "HLED-ISOLATION"
+      ],
+      "evidence": [
+        "docs/hosted-ledger-acceptance/README.md",
+        "docs/hosted-ledger-acceptance/evidence/hosted-results.json",
+        "docs/hosted-ledger-acceptance/evidence/corrected-snapshot.json",
+        "docs/hosted-ledger-acceptance/evidence/acceptance-tests.txt",
+        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt"
+      ],
+      "acceptanceGate": "HLED-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Correct hosted GET returned all 10 verified payments; page sizes 1 and 500 and independent repaired snapshot have identical fingerprints; no-store and terminal cursor verified.",
+      "testResult": "PASS \u2014 5/5 targeted acceptance/evidence tests and 6/6 service-source regressions; hosted sweep 29 checks passed. Hosted foreign-branch case unavailable (0/1), explicitly separate from local pass.",
+      "outstandingWork": "None in this scoped requirement. See HLED-03 for unavailable hosted foreign-branch case. Production and unrelated holds retained."
+    },
+    {
+      "id": "HLED-02",
+      "requirement": "Verify anonymous and seven-role ledger access, method and input restrictions",
+      "priority": "P1",
+      "scope": "Hosted client-demo read-only ledger acceptance; local disposable fixtures for cross-branch cases unavailable on hosted data. No financial writes, role/grant changes, renewals, native builds or broadened permissions.",
+      "uiReference": "Remaining MDEV hosted ledger check: wrong GET ledger returned 405",
+      "route": "GET /api/finance.ledger?limit=&after=",
+      "implementationFiles": [
+        "apps/web/lib/financial-reports.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "scripts/verify-mobile-device-hosted.mjs",
+        "scripts/verify-hosted-ledger.mjs",
+        "scripts/lib/hosted-ledger.mjs",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Verified payments joined to existing orders/service bookings; authenticated role, finance branch and current staff privileges.",
+      "securityControl": "Owner global / finance assigned-branch only; other roles denied; strict query contract, scoped cursor, no-store response; read audits/auth logs expected, financial state unchanged.",
+      "testFiles": [
+        "tests/hosted-ledger.test.ts",
+        "tests/hosted-ledger-evidence.test.ts",
+        "tests/catalogue-services-integration.test.ts"
+      ],
+      "testIds": [
+        "HLED-HOSTED",
+        "HLED-ISOLATION"
+      ],
+      "negativeTests": [
+        "HLED-TOOL-NEG",
+        "HLED-ISOLATION"
+      ],
+      "evidence": [
+        "docs/hosted-ledger-acceptance/README.md",
+        "docs/hosted-ledger-acceptance/evidence/hosted-results.json",
+        "docs/hosted-ledger-acceptance/evidence/corrected-snapshot.json",
+        "docs/hosted-ledger-acceptance/evidence/acceptance-tests.txt",
+        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt"
+      ],
+      "acceptanceGate": "HLED-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All seven current roles authenticated: owner and finance 200; five other roles 403 before malformed-query validation; anonymous 401, restricted workspaces 403, invalid inputs 400 and wrong methods 405.",
+      "testResult": "PASS \u2014 5/5 targeted acceptance/evidence tests and 6/6 service-source regressions; hosted sweep 29 checks passed. Hosted foreign-branch case unavailable (0/1), explicitly separate from local pass.",
+      "outstandingWork": "None in this scoped requirement. See HLED-03 for unavailable hosted foreign-branch case. Production and unrelated holds retained."
+    },
+    {
+      "id": "HLED-03",
+      "requirement": "Verify branch/cursor isolation and financial-source immutability without changing hosted assignments",
+      "priority": "P1",
+      "scope": "Hosted client-demo read-only ledger acceptance; local disposable fixtures for cross-branch cases unavailable on hosted data. No financial writes, role/grant changes, renewals, native builds or broadened permissions.",
+      "uiReference": "Remaining MDEV hosted ledger check: wrong GET ledger returned 405",
+      "route": "GET /api/finance.ledger?limit=&after=",
+      "implementationFiles": [
+        "apps/web/lib/financial-reports.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "scripts/verify-mobile-device-hosted.mjs",
+        "scripts/verify-hosted-ledger.mjs",
+        "scripts/lib/hosted-ledger.mjs",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Verified payments joined to existing orders/service bookings; authenticated role, finance branch and current staff privileges.",
+      "securityControl": "Owner global / finance assigned-branch only; other roles denied; strict query contract, scoped cursor, no-store response; read audits/auth logs expected, financial state unchanged.",
+      "testFiles": [
+        "tests/hosted-ledger.test.ts",
+        "tests/hosted-ledger-evidence.test.ts",
+        "tests/catalogue-services-integration.test.ts"
+      ],
+      "testIds": [
+        "HLED-ISOLATION",
+        "HLED-HOSTED"
+      ],
+      "negativeTests": [
+        "HLED-TOOL-NEG",
+        "HLED-ISOLATION"
+      ],
+      "evidence": [
+        "docs/hosted-ledger-acceptance/README.md",
+        "docs/hosted-ledger-acceptance/evidence/hosted-results.json",
+        "docs/hosted-ledger-acceptance/evidence/corrected-snapshot.json",
+        "docs/hosted-ledger-acceptance/evidence/acceptance-tests.txt",
+        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt"
+      ],
+      "acceptanceGate": "HLED-G03",
+      "status": "PARTIAL",
+      "reason": "Hosted source preservation and local restricted-server branch/tied-cursor isolation passed. Hosted contains only the finance branch, so a real hosted foreign-branch cursor case remains unavailable and untested; no data/role changes were made.",
+      "testResult": "PASS \u2014 5/5 targeted acceptance/evidence tests and 6/6 service-source regressions; hosted sweep 29 checks passed. Hosted foreign-branch case unavailable (0/1), explicitly separate from local pass.",
+      "outstandingWork": "Provide an existing approved foreign-branch hosted verified payment and repeat finance cursor isolation; do not manufacture hosted financial state or change roles. Production and unrelated holds retained."
+    },
+    {
+      "id": "HLED-04",
+      "requirement": "Correct verification tooling and close the prior ledger acceptance gap with traceable evidence",
+      "priority": "P1",
+      "scope": "Hosted client-demo read-only ledger acceptance; local disposable fixtures for cross-branch cases unavailable on hosted data. No financial writes, role/grant changes, renewals, native builds or broadened permissions.",
+      "uiReference": "Remaining MDEV hosted ledger check: wrong GET ledger returned 405",
+      "route": "GET /api/finance.ledger?limit=&after=",
+      "implementationFiles": [
+        "apps/web/lib/financial-reports.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "scripts/verify-mobile-device-hosted.mjs",
+        "scripts/verify-hosted-ledger.mjs",
+        "scripts/lib/hosted-ledger.mjs",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Verified payments joined to existing orders/service bookings; authenticated role, finance branch and current staff privileges.",
+      "securityControl": "Owner global / finance assigned-branch only; other roles denied; strict query contract, scoped cursor, no-store response; read audits/auth logs expected, financial state unchanged.",
+      "testFiles": [
+        "tests/hosted-ledger.test.ts",
+        "tests/hosted-ledger-evidence.test.ts",
+        "tests/catalogue-services-integration.test.ts"
+      ],
+      "testIds": [
+        "HLED-TOOL",
+        "HLED-TOOL-NEG",
+        "HLED-SNAPSHOT"
+      ],
+      "negativeTests": [
+        "HLED-TOOL-NEG",
+        "HLED-ISOLATION"
+      ],
+      "evidence": [
+        "docs/hosted-ledger-acceptance/README.md",
+        "docs/hosted-ledger-acceptance/evidence/hosted-results.json",
+        "docs/hosted-ledger-acceptance/evidence/corrected-snapshot.json",
+        "docs/hosted-ledger-acceptance/evidence/acceptance-tests.txt",
+        "docs/hosted-ledger-acceptance/evidence/service-source-tests.txt"
+      ],
+      "acceptanceGate": "HLED-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Prior snapshot tool now uses finance.ledger with validated complete pagination, successful-response checks and finally-session cleanup. Independent hosted snapshot matches sweep; historical wrong-endpoint 405 retained.",
+      "testResult": "PASS \u2014 5/5 targeted acceptance/evidence tests and 6/6 service-source regressions; hosted sweep 29 checks passed. Hosted foreign-branch case unavailable (0/1), explicitly separate from local pass.",
+      "outstandingWork": "None in this scoped requirement. See HLED-03 for unavailable hosted foreign-branch case. Production and unrelated holds retained."
+    }
+  ],
+  "gates": [
+    {
+      "id": "HLED-G01",
+      "description": "Verify correct hosted ledger endpoint, response and complete stable pagination",
+      "status": "PASS",
+      "reason": "Correct hosted GET returned all 10 verified payments; page sizes 1 and 500 and independent repaired snapshot have identical fingerprints; no-store and terminal cursor verified."
+    },
+    {
+      "id": "HLED-G02",
+      "description": "Verify anonymous and seven-role ledger access, method and input restrictions",
+      "status": "PASS",
+      "reason": "All seven current roles authenticated: owner and finance 200; five other roles 403 before malformed-query validation; anonymous 401, restricted workspaces 403, invalid inputs 400 and wrong methods 405."
+    },
+    {
+      "id": "HLED-G03",
+      "description": "Verify branch/cursor isolation and financial-source immutability without changing hosted assignments",
+      "status": "PARTIAL",
+      "reason": "Hosted source preservation and local restricted-server branch/tied-cursor isolation passed. Hosted contains only the finance branch, so a real hosted foreign-branch cursor case remains unavailable and untested; no data/role changes were made."
+    },
+    {
+      "id": "HLED-G04",
+      "description": "Correct verification tooling and close the prior ledger acceptance gap with traceable evidence",
+      "status": "PASS",
+      "reason": "Prior snapshot tool now uses finance.ledger with validated complete pagination, successful-response checks and finally-session cleanup. Independent hosted snapshot matches sweep; historical wrong-endpoint 405 retained."
+    }
+  ],
+  "coverage": {
+    "implementation": {
+      "implemented": 4,
+      "total": 4
+    },
+    "requirements": {
+      "verified": 3,
+      "partial": 1,
+      "total": 4
+    },
+    "roles": {
+      "verified": 7,
+      "total": 7
+    },
+    "gates": {
+      "passed": 3,
+      "partial": 1,
+      "total": 4
+    },
+    "hostedEndpointReads": {
+      "verified": 4,
+      "total": 4
+    },
+    "hostedChecks": {
+      "passed": 29,
+      "unavailable": 1,
+      "total": 30
+    },
+    "hostedForeignBranch": {
+      "verified": 0,
+      "untested": 1,
+      "total": 1,
+      "reason": "No hosted verified-payment row outside finance QA branch"
+    },
+    "localCrossBranch": {
+      "verified": 1,
+      "total": 1
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Register exact finance.ledger GET contract and role/validation/branch acceptance. Preserve old 405 observation as history; do not alter roles or financial records to create hosted test cases."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Closed original endpoint gap with 10-row complete hosted reads and seven-role authority sweep; repaired verification tooling, retained original 405 history. Local restricted-server branch/tied-cursor and booking ledger regressions passed. Expanded hosted foreign-branch case remains untested and HLED-03 partial."
+    }
+  ]
+}
