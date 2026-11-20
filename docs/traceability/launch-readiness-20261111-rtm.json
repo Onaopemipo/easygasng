@@ -43,11 +43,12 @@
         "docs/releases/20261111-readiness/regression.txt",
         "outputs/easygas-qa/evidence/compose-current-rerun.txt",
         "outputs/easygas-qa/evidence/production-focused-regression.txt",
-        "outputs/easygas-qa/evidence/demo-readiness-hosted.txt"
+        "outputs/easygas-qa/evidence/demo-readiness-hosted.txt",
+        "docs/blocker-reconciliation/README.md"
       ],
       "acceptanceGate": "LAUNCH-1111-G-HOST",
       "ownerInput": "Confirm the Namecheap VPS is provisioned, provide the staging hostname and approved access, and identify the backup destination and recovery targets.",
-      "latestAcceptanceEvidence": "Commit 6a7522c passed isolated Compose with hostname TLS, restricted PostgreSQL role, migrations and a healthy worker. Fresh tests restored encrypted data locally and rejected overwrite, tampering and wrong keys. The hosted demo readiness probe now reports its database and schema status separately from the commercial worker check."
+      "latestAcceptanceEvidence": "PUB21 subsequently published all 49 commits and verified exact-source demo deployment; 1,137 full hosted CI tests pass with native export skipped. Seven-role demo checks and 13 cross-branch ledger exceptions pass. Commercial host/recovery and complete signed-device/provider/operational acceptance remain open."
     },
     {
       "priority": "P1",
@@ -62,7 +63,7 @@
       "negativeTests": [],
       "id": "LAUNCH-1111-PAY",
       "requirement": "Live payment acceptance",
-      "relatedRequirements": "PAY-R01–17 / wallet top-up matrix",
+      "relatedRequirements": "PAY-R01\u201317 / wallet top-up matrix",
       "route": "Paystack checkout, webhook, wallet and reconciliation",
       "dataSource": "Existing sandbox policy, transaction intents and immutable ledger",
       "securityControl": "Live keys and live runtime rejected; test and real money stay separated",
@@ -101,7 +102,7 @@
       "negativeTests": [],
       "id": "LAUNCH-1111-OPS",
       "requirement": "Operational acceptance",
-      "relatedRequirements": "E2E-01–04 / E2E-06",
+      "relatedRequirements": "E2E-01\u201304 / E2E-06",
       "route": "Orders, dispatch, bookings and finance workspaces",
       "dataSource": "Existing orders, bookings, custody and ledger records",
       "securityControl": "Assignment, qualification, branch and finance approval controls preserved",
@@ -246,11 +247,12 @@
         "outputs/easygas-qa/evidence/native-quote-api.jsonl",
         "outputs/easygas-qa/evidence/demo-readiness-diagnosis.json",
         "outputs/easygas-qa/evidence/demo-readiness-tests.txt",
-        "outputs/easygas-qa/evidence/demo-readiness-hosted.txt"
+        "outputs/easygas-qa/evidence/demo-readiness-hosted.txt",
+        "docs/blocker-reconciliation/README.md"
       ],
       "acceptanceGate": "LAUNCH-1111-G-RELEASE",
       "ownerInput": "Confirm the release candidate and provide approved Apple and Android signing access, physical test devices and the independent release reviewer.",
-      "latestAcceptanceEvidence": "Hosted web and native CI passed on 6a7522c. The hosted native export was skipped. Local exports and simulator quotes passed. The demo readiness fix returned 200 with demo scope. Five targeted tests passed."
+      "latestAcceptanceEvidence": "PUB21 subsequently published all 49 commits and verified exact-source demo deployment; 1,137 full hosted CI tests pass with native export skipped. Seven-role demo checks and 13 cross-branch ledger exceptions pass. Commercial host/recovery and complete signed-device/provider/operational acceptance remain open."
     }
   ],
   "gates": [
@@ -291,5 +293,11 @@
     "The existing synthetic demo was used for interactive Settings verification only; no business setting was submitted.",
     "13 November 2026: refreshed evidence for all six gates. Verified hosted CI on 6a7522c and repeated the audited workbook preview with the original cutoff and snapshot. All six gates remain pending. Production NO-GO and import hold continue.",
     "13 November 2026: repaired the synthetic demo readiness probe. The demo returns HTTP 200 with demo scope. All six commercial launch gates remain pending."
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Link verified later demo/Git/CI/native representative acceptance without closing any of the six commercial launch gates. Latest owner inputs and incident reconciliation recorded under PBR21."
+    }
   ]
 }

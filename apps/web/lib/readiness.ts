@@ -1,7 +1,12 @@
 import { z } from "zod";
 import { audit } from "./governance";
 import { one, type SQL } from "./db";
-import { requiredSchemaVersions, operationalHealth } from "./release-checks";
+import {
+  requiredSchemaVersions,
+  operationalHealth,
+  isHostedClientDemo,
+} from "./release-checks";
+import recordedRelease from "./readiness-release-evidence.json";
 import { allow, recentVerification, id, AppError, type Actor } from "./auth";
 export async function readiness(tx: SQL, user: Actor) {
   allow(user, ["owner"]);
@@ -39,6 +44,11 @@ export async function readiness(tx: SQL, user: Actor) {
   ) => ({ id, name, status, evidence });
   return {
     recommendation: "NO-GO",
+    environmentScope:
+      process.env.EASYGAS_CLIENT_DEMO === "true"
+        ? "client_demo"
+        : "production_candidate",
+    recordedRelease,
     reviews: (
       await tx.query(
         "SELECT id,target,detail,created_at FROM audit_events WHERE action='readiness.reviewed' ORDER BY created_at DESC,id DESC LIMIT 100",
@@ -49,20 +59,20 @@ export async function readiness(tx: SQL, user: Actor) {
       gate(
         1,
         "Reviewed release scope",
-        "unverified",
-        "Owner-approved release scope and reviewed source baseline are required.",
+        "partial",
+        "The owner-authorised client-demo release has a reviewed committed source baseline. Commercial launch capabilities and business acceptance still require explicit approval; demo scope is not production scope.",
       ),
       gate(
         2,
         "Web build and CI",
-        "unverified",
-        "Run the documented build against the reviewed release revision; source code alone does not prove this deployment.",
+        "partial",
+        `Recorded client-demo baseline: ${recordedRelease.ciTests.passed.toLocaleString("en-US")} tests passed, zero failures/skips; web build/types/audits and native checks passed, mobile export skipped. CI ${recordedRelease.ciSource}; application source ${recordedRelease.applicationSource}. This historical evidence does not certify later source changes or a commercial production deployment.`,
       ),
       gate(
         3,
         "Native distribution",
         "unverified",
-        "Hermes exports are available; signed device builds, identifiers, permissions and store approval require verification.",
+        "Native source and representative simulator/API checks exist. No new mobile binaries were created by the latest demo publication; signed physical-device, lifecycle/offline, identifiers, permissions and distribution acceptance remain open.",
       ),
       gate(
         4,
@@ -70,7 +80,7 @@ export async function readiness(tx: SQL, user: Actor) {
         requiredSchemaVersions.every((v) => schema.includes(v))
           ? "pass"
           : "blocked",
-        "All application migrations and runtime policies through 056 required. Current versions: " +
+        `All ${requiredSchemaVersions.length} required application migration versions through ${requiredSchemaVersions.at(-1)} are checked. Current versions: ` +
           schema.join(", "),
       ),
       gate(
@@ -101,7 +111,7 @@ export async function readiness(tx: SQL, user: Actor) {
         "Reviewed customer policies",
         policies === 9 ? "unverified" : "blocked",
         policies +
-          " of 9 policies published and effective; legal/business review and acceptance evidence remain necessary.",
+          " of 9 policies published and effective. Demo-only notices do not establish approved commercial terms; legal/business review and acceptance evidence remain necessary.",
       ),
       gate(
         9,
@@ -141,7 +151,7 @@ export async function readiness(tx: SQL, user: Actor) {
         14,
         "Authentication and security",
         "unverified",
-        "Local tests cover sessions, ownership and role/branch controls. Independent assessment, abuse/load testing and native toolchain advisories remain.",
+        "Role, branch and ownership regressions and the recorded web/native dependency audits passed for the client-demo baseline. Independent production security assessment, abuse/load tests and a fresh audit of the final release revision remain required; historical advisory counts are not a current vulnerability finding.",
       ),
       gate(
         15,
@@ -166,15 +176,17 @@ export async function readiness(tx: SQL, user: Actor) {
         18,
         "Workers and recovery",
         "unverified",
-        (await operationalHealth(tx))
-          ? "Worker heartbeat is current. Supervision and restart/failure drill still require deployment acceptance."
-          : "Worker heartbeat missing/stale or schema incomplete. Configure and supervise the worker before serving traffic.",
+        isHostedClientDemo(process.env)
+          ? "This isolated client demo intentionally disables background jobs and has no supervised worker. That is demo configuration, not a production worker outage. Commercial hosting still needs supervised jobs, current heartbeat and restart/failure acceptance."
+          : (await operationalHealth(tx))
+            ? "Worker heartbeat is current. Supervision and restart/failure drill still require deployment acceptance."
+            : "Worker heartbeat missing/stale or schema incomplete. Configure and supervise the worker before serving traffic.",
       ),
       gate(
         19,
         "Privacy and retention",
         "blocked",
-        "Owned export and request intake exist. Verified erasure/retention and incident fulfilment processes remain incomplete.",
+        "Owned export and deletion-review intake exist. The explicit retain-all policy keeps records and reports retained disposition; destructive erasure is not authorised. Independent commercial policy review, retention/access handling and an off-site restore drill preserving the hold remain outstanding.",
       ),
       gate(
         20,

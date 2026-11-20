@@ -1,0 +1,273 @@
+{
+  "origin": "https://easygas-client-demo.vercel.app",
+  "checkedAt": "2026-11-20T21:37:16.544Z",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "name": "owner dedicated/shared sign-in",
+      "status": "PASS"
+    },
+    {
+      "name": "driver dedicated/shared sign-in",
+      "status": "PASS"
+    },
+    {
+      "name": "driver repeated own-session restriction, scoped reads and finance/readiness denials",
+      "status": "PASS"
+    },
+    {
+      "name": "driver rejected by other workspace",
+      "status": "PASS"
+    },
+    {
+      "name": "technician dedicated/shared sign-in",
+      "status": "PASS"
+    },
+    {
+      "name": "technician repeated own-session restriction, scoped reads and finance/readiness denials",
+      "status": "PASS"
+    },
+    {
+      "name": "technician rejected by other workspace",
+      "status": "PASS"
+    },
+    {
+      "name": "public catalogue recovered",
+      "status": "PASS",
+      "responseKind": "object"
+    },
+    {
+      "name": "public testimonials.public recovered",
+      "status": "PASS",
+      "responseKind": "array"
+    },
+    {
+      "name": "all nine original incidents retained and independently searched in audit history",
+      "status": "PASS"
+    }
+  ],
+  "incidentAudits": [
+    {
+      "id": "1f74bf27-5298-4041-aaf2-2ad59f12a2f5",
+      "target": "refund.request:2026-11-19T09",
+      "retained": true,
+      "auditCount": 0,
+      "events": []
+    },
+    {
+      "id": "a1808a3a-a5ae-4427-9393-ae3057e08d4e",
+      "target": "driver.login:2026-11-15T13",
+      "retained": true,
+      "auditCount": 0,
+      "events": []
+    },
+    {
+      "id": "a5710fae-994b-4087-ba04-3fc721fa762f",
+      "target": "driver.restrict:2026-11-15T13",
+      "retained": true,
+      "auditCount": 0,
+      "events": []
+    },
+    {
+      "id": "0d42b635-f114-471d-b88d-2f0cfa4f681d",
+      "target": "driver.restrict:2026-11-13T18",
+      "retained": true,
+      "auditCount": 0,
+      "events": []
+    },
+    {
+      "id": "b9f8d8f4-0c42-4167-89b3-0bf0775cf611",
+      "target": "driver.login:2026-11-11T02",
+      "retained": true,
+      "auditCount": 0,
+      "events": []
+    },
+    {
+      "id": "2ccc4dab-be56-413b-b6a0-0c9f273f11c1",
+      "target": "technician.login:2026-11-11T02",
+      "retained": true,
+      "auditCount": 0,
+      "events": []
+    },
+    {
+      "id": "fe13e764-f00a-4b05-9d11-bb9e177324e5",
+      "target": "driver.login:2026-11-10T14",
+      "retained": true,
+      "auditCount": 0,
+      "events": []
+    },
+    {
+      "id": "8d604630-6c4b-4985-a955-20fda5752499",
+      "target": "catalogue:2026-11-09T10",
+      "retained": true,
+      "auditCount": 0,
+      "events": []
+    },
+    {
+      "id": "bd58e7ed-ab20-4b09-be6e-1f29b34a44cb",
+      "target": "testimonials.public:2026-11-09T10",
+      "retained": true,
+      "auditCount": 0,
+      "events": []
+    }
+  ],
+  "refundRequestAudit": {
+    "total": 2,
+    "events": [
+      {
+        "id": "dc27b0d0-4b10-4e8b-944f-d6ce65497cea",
+        "action": "refund.requested",
+        "target": "3cac2de4-2851-4c41-ab17-3103b9b59619",
+        "createdAt": "2026-11-19T09:58:01.296Z"
+      },
+      {
+        "id": "4f3d0993-4d56-4ffc-9bc1-1bb1cb722585",
+        "action": "refund.requested",
+        "target": "e5ceb901-de75-40e3-a1c8-dde912e5fa62",
+        "createdAt": "2026-11-19T09:57:21.937Z"
+      }
+    ]
+  },
+  "readiness": {
+    "recommendation": "NO-GO",
+    "reviews": [],
+    "checkedAt": "2026-11-20T21:37:44.642Z",
+    "gates": [
+      {
+        "id": 1,
+        "name": "Reviewed release scope",
+        "status": "unverified",
+        "evidence": "Owner-approved release scope and reviewed source baseline are required."
+      },
+      {
+        "id": 2,
+        "name": "Web build and CI",
+        "status": "unverified",
+        "evidence": "Run the documented build against the reviewed release revision; source code alone does not prove this deployment."
+      },
+      {
+        "id": 3,
+        "name": "Native distribution",
+        "status": "unverified",
+        "evidence": "Hermes exports are available; signed device builds, identifiers, permissions and store approval require verification."
+      },
+      {
+        "id": 4,
+        "name": "Database schema",
+        "status": "pass",
+        "evidence": "All application migrations and runtime policies through 056 required. Current versions: 001, 002, 003, 004, 005, 006, 007, 008, 009, 010, 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 025, 027, 028, 029, 030, 031, 032, 033, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 043c, 044, 045, 046, 047, 048, 049, 050, 051, 052, 053, 054, 055, 056, 057, 058, 059, 060, 061, 062, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081"
+      },
+      {
+        "id": 5,
+        "name": "Managed database and TLS",
+        "status": "unverified",
+        "evidence": "A connection is configured; restricted identity, advisors, TLS and staging acceptance still require evidence."
+      },
+      {
+        "id": 6,
+        "name": "Production origin",
+        "status": "unverified",
+        "evidence": "A verified HTTPS origin, certificate and hosting configuration are required."
+      },
+      {
+        "id": 7,
+        "name": "Independent business authority",
+        "status": "unverified",
+        "evidence": "6 active Admin/business owner account(s), 6 active Inventory/finance account(s). One business owner is supported. Restricted actions still require distinct eligible reviewers; verify maker, reviewer and executor responsibilities for the actual staff and branches."
+      },
+      {
+        "id": 8,
+        "name": "Reviewed customer policies",
+        "status": "unverified",
+        "evidence": "9 of 9 policies published and effective; legal/business review and acceptance evidence remain necessary."
+      },
+      {
+        "id": 9,
+        "name": "Physical inventory",
+        "status": "unverified",
+        "evidence": "4 published stocked lines; reconcile physical counts and serial eligibility before sale."
+      },
+      {
+        "id": 10,
+        "name": "Qualified service operation",
+        "status": "unverified",
+        "evidence": "5 active services with approved checklist; verify actual qualifications, areas, equipment and field processes."
+      },
+      {
+        "id": 11,
+        "name": "Online payments",
+        "status": "unverified",
+        "evidence": "The configured gateway is enabled for sandbox/test payments only. Live merchant ownership, provider acceptance and commercial release remain unverified."
+      },
+      {
+        "id": 12,
+        "name": "Cash and credit reconciliation",
+        "status": "unverified",
+        "evidence": "Finance must verify counted cash, liability balances and refund controls against real records."
+      },
+      {
+        "id": 13,
+        "name": "Notification providers",
+        "status": "blocked",
+        "evidence": "Transactional SMTP adapter exists behind an OFF flag. Verified sender, real recovery delivery, provider monitoring and outage acceptance remain required. In-app notifications are persisted."
+      },
+      {
+        "id": 14,
+        "name": "Authentication and security",
+        "status": "unverified",
+        "evidence": "Local tests cover sessions, ownership and role/branch controls. Independent assessment, abuse/load testing and native toolchain advisories remain."
+      },
+      {
+        "id": 15,
+        "name": "Multi-connection concurrency",
+        "status": "unverified",
+        "evidence": "Isolated PostgreSQL concurrency and uncertain-COMMIT tests passed. Run against the reviewed deployment revision and capacity before release."
+      },
+      {
+        "id": 16,
+        "name": "Backups and restore",
+        "status": "unverified",
+        "evidence": "Encrypted local restore tests pass; managed/off-site backups, retention, recovery objectives and production restore drill are required."
+      },
+      {
+        "id": 17,
+        "name": "Monitoring and incidents",
+        "status": "blocked",
+        "evidence": "9 unresolved high/critical incidents. External health/error alerting and on-call ownership must be configured."
+      },
+      {
+        "id": 18,
+        "name": "Workers and recovery",
+        "status": "unverified",
+        "evidence": "Worker heartbeat missing/stale or schema incomplete. Configure and supervise the worker before serving traffic."
+      },
+      {
+        "id": 19,
+        "name": "Privacy and retention",
+        "status": "blocked",
+        "evidence": "Owned export and request intake exist. Verified erasure/retention and incident fulfilment processes remain incomplete."
+      },
+      {
+        "id": 20,
+        "name": "Acceptance and authorisation",
+        "status": "blocked",
+        "evidence": "Business, finance, qualified safety reviewers and operations must accept their scope; production release requires explicit user authorisation."
+      }
+    ]
+  },
+  "status": "PASS",
+  "sessionsRevoked": [
+    {
+      "role": "owner",
+      "status": 200
+    },
+    {
+      "role": "driver",
+      "status": 200
+    },
+    {
+      "role": "technician",
+      "status": 200
+    }
+  ]
+}

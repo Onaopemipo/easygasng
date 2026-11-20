@@ -1,0 +1,313 @@
+{
+  "phase": "Production blocker reconciliation \u2014 21 November 2026",
+  "productionDecision": "NO-GO; actual-import hold, retain-all and native/provider/physical/business acceptance gates preserved",
+  "requirements": [
+    {
+      "id": "PBR21-01",
+      "requirement": "Investigate all nine unresolved high/critical demo incidents against canonical source records",
+      "priority": "P0",
+      "scope": "Bounded blocker reconciliation and existing client demo correction; commercial release remains NO-GO.",
+      "uiReference": "Admin Production readiness and Incidents",
+      "route": [
+        "/admin/readiness",
+        "/admin/incidents",
+        "GET /api/production.readiness",
+        "GET /api/incidents"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/readiness.tsx",
+        "apps/web/lib/observability.ts",
+        "apps/web/lib/readiness-release-evidence.json"
+      ],
+      "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
+      "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
+      "testFiles": [
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "testIds": [
+        "PBR21-INCIDENTS"
+      ],
+      "negativeTests": [
+        "PBR21-SECURITY"
+      ],
+      "evidence": [
+        "docs/blocker-reconciliation/evidence/focused-tests.txt",
+        "docs/blocker-reconciliation/evidence/incidents-before.json",
+        "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/README.md"
+      ],
+      "acceptanceGate": "PBR21-G01",
+      "status": "PARTIAL",
+      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
+      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
+      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+    },
+    {
+      "id": "PBR21-02",
+      "requirement": "Replace stale readiness statements with scoped, source-bound release evidence and current operational facts",
+      "priority": "P1",
+      "scope": "Bounded blocker reconciliation and existing client demo correction; commercial release remains NO-GO.",
+      "uiReference": "Admin Production readiness and Incidents",
+      "route": [
+        "/admin/readiness",
+        "/admin/incidents",
+        "GET /api/production.readiness",
+        "GET /api/incidents"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/readiness.tsx",
+        "apps/web/lib/observability.ts",
+        "apps/web/lib/readiness-release-evidence.json"
+      ],
+      "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
+      "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
+      "testFiles": [
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "testIds": [
+        "PBR21-READINESS"
+      ],
+      "negativeTests": [
+        "PBR21-SECURITY"
+      ],
+      "evidence": [
+        "docs/blocker-reconciliation/evidence/focused-tests.txt",
+        "docs/blocker-reconciliation/evidence/incidents-before.json",
+        "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/README.md"
+      ],
+      "acceptanceGate": "PBR21-G02",
+      "status": "PARTIAL",
+      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
+      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
+      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+    },
+    {
+      "id": "PBR21-03",
+      "requirement": "Fix reproduced incident/readiness issues while preserving financial, safety and release controls",
+      "priority": "P0",
+      "scope": "Bounded blocker reconciliation and existing client demo correction; commercial release remains NO-GO.",
+      "uiReference": "Admin Production readiness and Incidents",
+      "route": [
+        "/admin/readiness",
+        "/admin/incidents",
+        "GET /api/production.readiness",
+        "GET /api/incidents"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/readiness.tsx",
+        "apps/web/lib/observability.ts",
+        "apps/web/lib/readiness-release-evidence.json"
+      ],
+      "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
+      "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
+      "testFiles": [
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "testIds": [
+        "PBR21-FIXES"
+      ],
+      "negativeTests": [
+        "PBR21-SECURITY"
+      ],
+      "evidence": [
+        "docs/blocker-reconciliation/evidence/focused-tests.txt",
+        "docs/blocker-reconciliation/evidence/incidents-before.json",
+        "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/README.md"
+      ],
+      "acceptanceGate": "PBR21-G03",
+      "status": "PARTIAL",
+      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
+      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
+      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+    },
+    {
+      "id": "PBR21-04",
+      "requirement": "Verify role restrictions, negative cases and unchanged business/retention controls",
+      "priority": "P0",
+      "scope": "Bounded blocker reconciliation and existing client demo correction; commercial release remains NO-GO.",
+      "uiReference": "Admin Production readiness and Incidents",
+      "route": [
+        "/admin/readiness",
+        "/admin/incidents",
+        "GET /api/production.readiness",
+        "GET /api/incidents"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/readiness.tsx",
+        "apps/web/lib/observability.ts",
+        "apps/web/lib/readiness-release-evidence.json"
+      ],
+      "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
+      "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
+      "testFiles": [
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "testIds": [
+        "PBR21-SECURITY"
+      ],
+      "negativeTests": [
+        "PBR21-SECURITY"
+      ],
+      "evidence": [
+        "docs/blocker-reconciliation/evidence/focused-tests.txt",
+        "docs/blocker-reconciliation/evidence/incidents-before.json",
+        "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/README.md"
+      ],
+      "acceptanceGate": "PBR21-G04",
+      "status": "PARTIAL",
+      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
+      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
+      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+    },
+    {
+      "id": "PBR21-05",
+      "requirement": "Reconcile stable production blocker IDs, outstanding work and explicit owner inputs",
+      "priority": "P1",
+      "scope": "Bounded blocker reconciliation and existing client demo correction; commercial release remains NO-GO.",
+      "uiReference": "Admin Production readiness and Incidents",
+      "route": [
+        "/admin/readiness",
+        "/admin/incidents",
+        "GET /api/production.readiness",
+        "GET /api/incidents"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/readiness.tsx",
+        "apps/web/lib/observability.ts",
+        "apps/web/lib/readiness-release-evidence.json"
+      ],
+      "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
+      "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
+      "testFiles": [
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "testIds": [
+        "PBR21-MATRIX"
+      ],
+      "negativeTests": [
+        "PBR21-SECURITY"
+      ],
+      "evidence": [
+        "docs/blocker-reconciliation/evidence/focused-tests.txt",
+        "docs/blocker-reconciliation/evidence/incidents-before.json",
+        "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/README.md"
+      ],
+      "acceptanceGate": "PBR21-G05",
+      "status": "PARTIAL",
+      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
+      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
+      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+    },
+    {
+      "id": "PBR21-06",
+      "requirement": "Publish and verify bounded client-demo web/API corrections without new mobile binaries",
+      "priority": "P1",
+      "scope": "Bounded blocker reconciliation and existing client demo correction; commercial release remains NO-GO.",
+      "uiReference": "Admin Production readiness and Incidents",
+      "route": [
+        "/admin/readiness",
+        "/admin/incidents",
+        "GET /api/production.readiness",
+        "GET /api/incidents"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/readiness.tsx",
+        "apps/web/lib/observability.ts",
+        "apps/web/lib/readiness-release-evidence.json"
+      ],
+      "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
+      "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
+      "testFiles": [
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "testIds": [
+        "PBR21-RELEASE"
+      ],
+      "negativeTests": [
+        "PBR21-SECURITY"
+      ],
+      "evidence": [
+        "docs/blocker-reconciliation/evidence/focused-tests.txt",
+        "docs/blocker-reconciliation/evidence/incidents-before.json",
+        "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/README.md"
+      ],
+      "acceptanceGate": "PBR21-G06",
+      "status": "PARTIAL",
+      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
+      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
+      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+    }
+  ],
+  "gates": [
+    {
+      "id": "PBR21-G01",
+      "description": "Investigate all nine unresolved high/critical demo incidents against canonical source records",
+      "status": "PENDING"
+    },
+    {
+      "id": "PBR21-G02",
+      "description": "Replace stale readiness statements with scoped, source-bound release evidence and current operational facts",
+      "status": "PENDING"
+    },
+    {
+      "id": "PBR21-G03",
+      "description": "Fix reproduced incident/readiness issues while preserving financial, safety and release controls",
+      "status": "PENDING"
+    },
+    {
+      "id": "PBR21-G04",
+      "description": "Verify role restrictions, negative cases and unchanged business/retention controls",
+      "status": "PENDING"
+    },
+    {
+      "id": "PBR21-G05",
+      "description": "Reconcile stable production blocker IDs, outstanding work and explicit owner inputs",
+      "status": "PENDING"
+    },
+    {
+      "id": "PBR21-G06",
+      "description": "Publish and verify bounded client-demo web/API corrections without new mobile binaries",
+      "status": "PENDING"
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 0,
+      "total": 6
+    },
+    "incidents": {
+      "investigated": 9,
+      "total": 9
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Registered user-authorised reconciliation and issue repair. Inspect retained incidents before any disposition; no mass closure, renewal, financial mutation, production cutover or mobile build. Update demo web/API only if needed to make readiness accurate."
+    }
+  ]
+}

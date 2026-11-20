@@ -1595,14 +1595,23 @@ export async function dispatch(
       throw new AppError(404, "This operation is not available.");
     });
   } catch (error) {
-    if (!(error instanceof AppError) && !(error instanceof z.ZodError))
-      await recordFailure(
+    if (!(error instanceof AppError) && !(error instanceof z.ZodError)) {
+      const reference = await recordFailure(
         db,
         "operation_failure",
         action + ":" + new Date().toISOString().slice(0, 13),
         error instanceof Error ? error.name : "unknown",
         (user as Actor | null)?.branch_id ?? null,
       );
+      const code = (error as { code?: unknown } | null)?.code;
+      console.error("EasyGas incident diagnostic", {
+        reference,
+        action,
+        ...(typeof code === "string" && /^[A-Z0-9]{5}$/.test(code)
+          ? { sqlState: code }
+          : {}),
+      });
+    }
     if (error instanceof AppError && error.code === "REAUTH_INVALID" && user) {
       await db.query(
         "INSERT INTO auth_attempts(key,attempts,reset_at) VALUES ($1,1,now()+interval '15 minutes') ON CONFLICT(key) DO UPDATE SET attempts=CASE WHEN auth_attempts.reset_at<now() THEN 1 ELSE auth_attempts.attempts+1 END,reset_at=CASE WHEN auth_attempts.reset_at<now() THEN now()+interval '15 minutes' ELSE auth_attempts.reset_at END",

@@ -364,3 +364,5 @@ Hosted ledger follow-up (21 November): [matrix](hosted-ledger-acceptance-rtm.md)
 Hosted synthetic cross-branch closure (21 November): [report and evidence](../hosted-ledger-acceptance/cross-branch/README.md). HLED-03/G03 now passes; all four ledger gates verified, 30/30 full hosted checks. User-authorised inactive fixture retained; existing data and production holds preserved.
 
 21 November committed-source publication: [matrix](web-api-publication-20261121-rtm.md). All 49 commits to GitHub and exact-source demo web/API rollout; no new mobile binaries; prior production/feature holds retained.
+
+Production blocker reconciliation (21 November): [matrix](blocker-reconciliation-20261121-rtm.md). Nine incidents, stale readiness evidence and existing production blocker IDs retained; no production release or mobile binary authorisation inferred.

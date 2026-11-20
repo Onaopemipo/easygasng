@@ -388,7 +388,9 @@ export default function OperationalIncidents({ refresh }: { refresh: number }) {
                           {incident.branch_name ?? "Business-wide"}
                         </td>
                         <td role="cell">
-                          <span className="incidents-cell-label">Reported (WAT)</span>
+                          <span className="incidents-cell-label">
+                            Reported (WAT)
+                          </span>
                           <time dateTime={incident.created_at}>
                             {date.format(new Date(incident.created_at))}
                           </time>
@@ -467,6 +469,27 @@ export default function OperationalIncidents({ refresh }: { refresh: number }) {
 }
 
 function IncidentDetails({ incident }: { incident: Incident }) {
+  const [history, setHistory] = useState<any>(null),
+    [error, setError] = useState(""),
+    [page, setPage] = useState(1),
+    [retry, setRetry] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    setHistory(null);
+    setError("");
+    api(
+      `incidents?${new URLSearchParams({ view: "detail", id: incident.id, page: String(page) })}`,
+      undefined,
+      { signal: controller.signal },
+    )
+      .then((value) => {
+        if (!controller.signal.aborted) setHistory(value);
+      })
+      .catch((failure) => {
+        if (!controller.signal.aborted) setError(failure.message);
+      });
+    return () => controller.abort();
+  }, [incident.id, page, retry]);
   return (
     <section className="incident-details">
       <h3>{titleFor(incident.category)}</h3>
@@ -496,6 +519,70 @@ function IncidentDetails({ incident }: { incident: Incident }) {
           </dd>
         </div>
       </dl>
+      <h3>Response history</h3>
+      {error ? (
+        <>
+          <Notice type="error" message={error} />
+          <button
+            type="button"
+            className="button secondary"
+            onClick={() => setRetry((n) => n + 1)}
+          >
+            Retry history
+          </button>
+        </>
+      ) : !history ? (
+        <Loading />
+      ) : (
+        <>
+          <p>
+            Source: {history.incident.target} · Responsible role:{" "}
+            {history.incident.owner_role}
+          </p>
+          {!history.total ? (
+            <p>No response has been recorded.</p>
+          ) : (
+            <ol>
+              {history.events.map((event: any) => (
+                <li key={event.id}>
+                  <strong>
+                    {event.status} · {event.actor}
+                  </strong>
+                  <p>{event.note}</p>
+                  <time dateTime={event.created_at}>
+                    {date.format(new Date(event.created_at))} WAT
+                  </time>
+                </li>
+              ))}
+            </ol>
+          )}
+          {history.total > history.pageSize && (
+            <nav aria-label="Response history pages">
+              <button
+                type="button"
+                className="button secondary"
+                disabled={history.page === 1}
+                onClick={() => setPage(history.page - 1)}
+              >
+                Previous
+              </button>
+              <span>
+                {" "}
+                Page {history.page} of{" "}
+                {Math.ceil(history.total / history.pageSize)}{" "}
+              </span>
+              <button
+                type="button"
+                className="button secondary"
+                disabled={history.page * history.pageSize >= history.total}
+                onClick={() => setPage(history.page + 1)}
+              >
+                Next
+              </button>
+            </nav>
+          )}
+        </>
+      )}
     </section>
   );
 }

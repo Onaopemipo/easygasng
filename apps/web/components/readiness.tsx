@@ -1,5 +1,5 @@
 "use client";
-import {ProductHeading} from "./product-workspace";
+import { ProductHeading } from "./product-workspace";
 import React, { useEffect, useState } from "react";
 import { api, Loading, Notice } from "./ui";
 export default function Readiness() {
@@ -29,15 +29,43 @@ export default function Readiness() {
   if (!data) return <Loading />;
   return (
     <section className="product-workspace readiness-workspace">
-      <ProductHeading eyebrow="LAUNCH READINESS" title={`Production readiness · ${data.recommendation}`} description="Review launch gates, their supporting evidence and outstanding work." />
+      <ProductHeading
+        eyebrow="LAUNCH READINESS"
+        title={`Production readiness · ${data.recommendation}`}
+        description="Review launch gates, their supporting evidence and outstanding work."
+      />
       <p>
         Automated checks and remaining evidence requirements. These checks do
         not authorise deployment or certify safety, compliance or financial
         operations.
       </p>
       <p>Checked {new Date(data.checkedAt).toLocaleString()}</p>
+      {data.recordedRelease && (
+        <aside
+          className="surface readiness-gate"
+          aria-label="Recorded release evidence"
+        >
+          <h2>Verified client-demo baseline</h2>
+          <p>
+            {data.recordedRelease.ciTests.passed.toLocaleString()} tests passed;
+            no new mobile binaries.{" "}
+            <a
+              href={data.recordedRelease.ciRun}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View CI evidence
+            </a>
+            . {data.recordedRelease.limitation}
+          </p>
+        </aside>
+      )}
       {data.gates.map((g: any) => (
-        <article className="surface readiness-gate" key={g.id} data-status={g.status}>
+        <article
+          className="surface readiness-gate"
+          key={g.id}
+          data-status={g.status}
+        >
           <h2>
             {g.id}. {g.name} · {g.status}
           </h2>

@@ -43,11 +43,12 @@ test("PUB21-GIT: all 49 original commits are published without history rewriting
   ]);
 });
 test("PUB21-SOURCE: Ready candidate contains only exact committed web/shared files and stable alias selects that candidate", async () => {
-  const [s, c, live] = await Promise.all(
+  const [s, c, live, eq] = await Promise.all(
     [
       "source-integrity.json",
       "candidate-identity.json",
       "stable-identity.json",
+      "ci-source-equivalence.json",
     ].map(json),
   );
   assert.equal(s.fileCount, 435);
@@ -87,10 +88,14 @@ test("PUB21-SOURCE: Ready candidate contains only exact committed web/shared fil
     );
     assert.equal(
       createHash("sha256")
-        .update(await readFile(f.path))
+        .update(
+          execFileSync("git", ["show", eq.ciCommit + ":" + f.path], {
+            maxBuffer: 32 * 1024 * 1024,
+          }),
+        )
         .digest("hex"),
       f.sha256,
-      "current application source " + f.path,
+      "historical CI application source " + f.path,
     );
   }
 });

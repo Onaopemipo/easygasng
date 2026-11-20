@@ -1,3 +1,5 @@
+> Current 21 November reconciliation: [production blockers and owner inputs](../blocker-reconciliation/README.md). GitHub/CI/demo rollout and targeted repairs are verified; old missing-code, unborn-Git, unavailable-Docker and advisory counts below are historical. Commercial NO-GO, actual-import hold and retain-all remain.
+
 > Current 2 November web + signed-native continuation: [release report](../reports/production-release-20261102.md) and [traceability](../traceability/production-release-rtm.md). Preserve historical findings below as audit history; do not treat resolved local PostgreSQL/partial financial refund/SMTP adapter gaps as current missing code. Actual provider, privacy, distribution/device and production acceptance remain open. NO-GO is unchanged.
 
 # Production blockers and launch gates

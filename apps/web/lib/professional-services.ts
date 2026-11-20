@@ -821,6 +821,42 @@ export async function professionalServiceAction(
   }
   if (action === "incidents") {
     allow(user, ["owner", "manager", "finance"]);
+    if ((input as { view?: unknown } | undefined)?.view === "detail") {
+      const d = z
+        .object({
+          view: z.literal("detail"),
+          id: uuid,
+          page: z.coerce.number().int().min(1).max(1_000_000).default(1),
+        })
+        .strict()
+        .parse(input);
+      const incident = await one(
+        tx,
+        `SELECT i.*,b.name AS branch_name FROM operational_incidents i
+         LEFT JOIN branches b ON b.id=i.branch_id
+         WHERE i.id=$1 AND ($2::boolean OR i.branch_id=$3)`,
+        [d.id, user.role === "owner", user.branch_id],
+      );
+      if (!incident) throw new AppError(404, "Incident not found.");
+      const total = Number(
+        (await one(
+          tx,
+          "SELECT count(*)::int n FROM incident_events WHERE incident_id=$1",
+          [incident.id],
+        ))!.n,
+      );
+      const pageSize = 20,
+        page = Math.min(d.page, Math.max(1, Math.ceil(total / pageSize)));
+      const events = (
+        await tx.query(
+          `SELECT e.id,e.status,e.note,e.created_at,u.name AS actor
+         FROM incident_events e JOIN users u ON u.id=e.actor_id
+         WHERE e.incident_id=$1 ORDER BY e.created_at DESC,e.id DESC LIMIT $2 OFFSET $3`,
+          [incident.id, pageSize, (page - 1) * pageSize],
+        )
+      ).rows;
+      return { incident, events, total, page, pageSize };
+    }
     if ((input as { view?: unknown } | undefined)?.view === "workspace") {
       const filters = z
         .object({

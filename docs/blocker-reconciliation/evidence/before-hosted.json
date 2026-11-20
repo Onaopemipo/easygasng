@@ -1,0 +1,173 @@
+{
+  "stage": "before",
+  "base": "https://easygas-client-demo.vercel.app",
+  "startedAt": "2026-11-20T21:41:07.236Z",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "name": "owner existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "manager existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "finance existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "driver existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "technician existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "customer existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "commercial existing demo identity",
+      "status": "PASS"
+    },
+    {
+      "name": "settings, inventory, gas, orders, ledger, policies, staff and customer wallets preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "all nine original failure records and original details retained",
+      "status": "PASS"
+    }
+  ],
+  "snapshot": {
+    "settings?scope=lagos": "e6c5f540b3807b22dc394c46ae4610302792f1f00b3be508da450520e12f0e93",
+    "inventory": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e",
+    "gas.stock": "3f2031e7c5347ed3dcd49416a6c7e08f3fa919529b9e31f965cdb6c9f8ed7696",
+    "orders": "47dd76f63e613e8a4c067be72d62986a7b7ec49bbe370a5ba4dca13040e1bc9e",
+    "finance.ledger": "f846cb337b33ca92570774fb3d8d9bfe25e1274fa344771b905c7f5f67ed34b2",
+    "policies": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47",
+    "staff.manage": "8be5a5e20bd88fd3a0710e53709f3d88c4e12c4cbdb6e9d32d7e355eb5ec4a90",
+    "customer.wallet": "a3356439697c94b0661795e51f9d193dd9c37a27f8f06c9869976ba2139c6afa",
+    "commercial.wallet": "13396fe638e0648501376ee8977f62eb3775ce6c440f6721e87be2f989d0aab9"
+  },
+  "incidents": [
+    {
+      "id": "7e26cf15-42e3-4408-90ac-e9540a47d6ae",
+      "status": "resolved",
+      "severity": "medium",
+      "category": "delivery_failure",
+      "target": "4ded6c78-9a20-4e65-be00-9f949e8dbbc2"
+    },
+    {
+      "id": "1f74bf27-5298-4041-aaf2-2ad59f12a2f5",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "refund.request:2026-11-19T09"
+    },
+    {
+      "id": "aef57399-c4f1-4de9-9be5-140f1448e99c",
+      "status": "open",
+      "severity": "medium",
+      "category": "delivery_failure",
+      "target": "df543758-238d-47a3-97ff-46282bd854cc"
+    },
+    {
+      "id": "1d458686-90aa-46d6-bb0e-3ebc44cd9074",
+      "status": "resolved",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "technician.login:2026-11-15T13"
+    },
+    {
+      "id": "a1808a3a-a5ae-4427-9393-ae3057e08d4e",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.login:2026-11-15T13"
+    },
+    {
+      "id": "a5710fae-994b-4087-ba04-3fc721fa762f",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.restrict:2026-11-15T13"
+    },
+    {
+      "id": "0d42b635-f114-471d-b88d-2f0cfa4f681d",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.restrict:2026-11-13T18"
+    },
+    {
+      "id": "b9f8d8f4-0c42-4167-89b3-0bf0775cf611",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.login:2026-11-11T02"
+    },
+    {
+      "id": "2ccc4dab-be56-413b-b6a0-0c9f273f11c1",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "technician.login:2026-11-11T02"
+    },
+    {
+      "id": "fe13e764-f00a-4b05-9d11-bb9e177324e5",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "driver.login:2026-11-10T14"
+    },
+    {
+      "id": "8d604630-6c4b-4985-a955-20fda5752499",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "catalogue:2026-11-09T10"
+    },
+    {
+      "id": "bd58e7ed-ab20-4b09-be6e-1f29b34a44cb",
+      "status": "open",
+      "severity": "high",
+      "category": "operation_failure",
+      "target": "testimonials.public:2026-11-09T10"
+    }
+  ],
+  "status": "PASS",
+  "sessionsRevoked": [
+    {
+      "role": "owner",
+      "status": 200
+    },
+    {
+      "role": "manager",
+      "status": 200
+    },
+    {
+      "role": "finance",
+      "status": 200
+    },
+    {
+      "role": "driver",
+      "status": 200
+    },
+    {
+      "role": "technician",
+      "status": 200
+    },
+    {
+      "role": "customer",
+      "status": 200
+    },
+    {
+      "role": "commercial",
+      "status": 200
+    }
+  ],
+  "finishedAt": "2026-11-20T21:41:42.511Z"
+}

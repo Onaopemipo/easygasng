@@ -1,0 +1,126 @@
+{
+  "total": 9,
+  "investigated": 9,
+  "plannedResolved": 6,
+  "plannedAcknowledged": 3,
+  "originalRowsRetained": true,
+  "findings": [
+    {
+      "id": "1f74bf27-5298-4041-aaf2-2ad59f12a2f5",
+      "target": "refund.request:2026-11-19T09",
+      "originalStatus": "open",
+      "plannedDisposition": "resolved",
+      "confidence": "documented_reproduction_and_exact_repair",
+      "finding": "19 November restricted-runtime refund source UPDATE failed; 2e3affb inserts immutable allocation/fingerprint/key atomically. Original hosted successful refund acceptance and fresh restricted-role regression pass. No new hosted refund submitted.",
+      "evidence": [
+        "docs/reports/role-order-delivery-acceptance-20261119.md",
+        "tests/refund-restricted-role.test.ts"
+      ],
+      "applied": false
+    },
+    {
+      "id": "a1808a3a-a5ae-4427-9393-ae3057e08d4e",
+      "target": "driver.login:2026-11-15T13",
+      "originalStatus": "open",
+      "plannedDisposition": "resolved",
+      "confidence": "historical_action_deployment_and_documented_repair",
+      "finding": "Returned historical HTTP500 logs match the affected field action/deployment. The documented 16 November restricted-session repair creates scope flags in INSERT and avoids forbidden/redundant UPDATE; no wider grants. Fresh dedicated login, repeat restriction, scoped reads, wrong-workspace and finance denials pass.",
+      "evidence": [
+        "docs/traceability/technician-access-repair-evidence.txt",
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "applied": false
+    },
+    {
+      "id": "a5710fae-994b-4087-ba04-3fc721fa762f",
+      "target": "driver.restrict:2026-11-15T13",
+      "originalStatus": "open",
+      "plannedDisposition": "resolved",
+      "confidence": "historical_action_deployment_and_documented_repair",
+      "finding": "Returned historical HTTP500 logs match the affected field action/deployment. The documented 16 November restricted-session repair creates scope flags in INSERT and avoids forbidden/redundant UPDATE; no wider grants. Fresh dedicated login, repeat restriction, scoped reads, wrong-workspace and finance denials pass.",
+      "evidence": [
+        "docs/traceability/technician-access-repair-evidence.txt",
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "applied": false
+    },
+    {
+      "id": "0d42b635-f114-471d-b88d-2f0cfa4f681d",
+      "target": "driver.restrict:2026-11-13T18",
+      "originalStatus": "open",
+      "plannedDisposition": "resolved",
+      "confidence": "historical_action_deployment_and_documented_repair",
+      "finding": "Returned historical HTTP500 logs match the affected field action/deployment. The documented 16 November restricted-session repair creates scope flags in INSERT and avoids forbidden/redundant UPDATE; no wider grants. Fresh dedicated login, repeat restriction, scoped reads, wrong-workspace and finance denials pass.",
+      "evidence": [
+        "docs/traceability/technician-access-repair-evidence.txt",
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "applied": false
+    },
+    {
+      "id": "b9f8d8f4-0c42-4167-89b3-0bf0775cf611",
+      "target": "driver.login:2026-11-11T02",
+      "originalStatus": "open",
+      "plannedDisposition": "resolved",
+      "confidence": "historical_action_deployment_and_documented_repair",
+      "finding": "Returned historical HTTP500 logs match the affected field action/deployment. The documented 16 November restricted-session repair creates scope flags in INSERT and avoids forbidden/redundant UPDATE; no wider grants. Fresh dedicated login, repeat restriction, scoped reads, wrong-workspace and finance denials pass.",
+      "evidence": [
+        "docs/traceability/technician-access-repair-evidence.txt",
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "applied": false
+    },
+    {
+      "id": "2ccc4dab-be56-413b-b6a0-0c9f273f11c1",
+      "target": "technician.login:2026-11-11T02",
+      "originalStatus": "open",
+      "plannedDisposition": "resolved",
+      "confidence": "historical_action_deployment_and_documented_repair",
+      "finding": "Returned historical HTTP500 logs match the affected field action/deployment. The documented 16 November restricted-session repair creates scope flags in INSERT and avoids forbidden/redundant UPDATE; no wider grants. Fresh dedicated login, repeat restriction, scoped reads, wrong-workspace and finance denials pass.",
+      "evidence": [
+        "docs/traceability/technician-access-repair-evidence.txt",
+        "tests/blocker-reconciliation.test.ts"
+      ],
+      "applied": false
+    },
+    {
+      "id": "fe13e764-f00a-4b05-9d11-bb9e177324e5",
+      "target": "driver.login:2026-11-10T14",
+      "originalStatus": "open",
+      "plannedDisposition": "acknowledged",
+      "confidence": "current_path_recovered_original_cause_unconfirmed",
+      "finding": "Current hosted path succeeds and no failure reproduced. Original Nov9/10 runtime record/stack was not returned by the historical log query. A generic operation-failure record cannot establish its original root cause; retain acknowledged for investigation, not resolved or deleted.",
+      "evidence": [
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/evidence/historical-runtime-logs.json"
+      ],
+      "applied": false
+    },
+    {
+      "id": "8d604630-6c4b-4985-a955-20fda5752499",
+      "target": "catalogue:2026-11-09T10",
+      "originalStatus": "open",
+      "plannedDisposition": "acknowledged",
+      "confidence": "current_path_recovered_original_cause_unconfirmed",
+      "finding": "Current hosted path succeeds and no failure reproduced. Original Nov9/10 runtime record/stack was not returned by the historical log query. A generic operation-failure record cannot establish its original root cause; retain acknowledged for investigation, not resolved or deleted.",
+      "evidence": [
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/evidence/historical-runtime-logs.json"
+      ],
+      "applied": false
+    },
+    {
+      "id": "bd58e7ed-ab20-4b09-be6e-1f29b34a44cb",
+      "target": "testimonials.public:2026-11-09T10",
+      "originalStatus": "open",
+      "plannedDisposition": "acknowledged",
+      "confidence": "current_path_recovered_original_cause_unconfirmed",
+      "finding": "Current hosted path succeeds and no failure reproduced. Original Nov9/10 runtime record/stack was not returned by the historical log query. A generic operation-failure record cannot establish its original root cause; retain acknowledged for investigation, not resolved or deleted.",
+      "evidence": [
+        "docs/blocker-reconciliation/evidence/current-path-investigation.json",
+        "docs/blocker-reconciliation/evidence/historical-runtime-logs.json"
+      ],
+      "applied": false
+    }
+  ]
+}

@@ -134,9 +134,9 @@
       "dataSource": "Local public API:12 products with0 availability, ordering/COD/wallet false, gas policy null,0 visible services",
       "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
       "status": "BLOCKED",
-      "reason": "Local public API:12 products with0 availability, ordering/COD/wallet false, gas policy null,0 visible services. Owner: Business/stock/finance/services",
-      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
-      "outstandingWork": "Real approved quantity/price/capacity/location policy, counted/inspected stock, qualified service schedules, tender and stocked end-to-end acceptance.",
+      "reason": "The demo now has stocked published lines and active services; older empty-local-catalogue findings are historical. Synthetic quantities and QA qualifications do not establish sellable real stock or safe operations.",
+      "testResult": "PARTIAL \u2014 later verified demo/CI evidence supersedes specific historical findings; full production acceptance remains outstanding.",
+      "outstandingWork": "Business/stock/finance/safety must approve real counts, serial eligibility, prices, delivery capacity, qualification/calibration and service availability.",
       "implementationFiles": [
         "apps/web/lib/gas-delivery.ts",
         "apps/web/lib/service.ts",
@@ -148,7 +148,8 @@
       "testIds": [],
       "evidence": [
         "docs/audits/production-20261102/public-runtime.json",
-        "docs/audits/production-20261102/regression.txt"
+        "docs/audits/production-20261102/regression.txt",
+        "docs/blocker-reconciliation/README.md"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -164,10 +165,10 @@
       "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
       "dataSource": "Actual configured local environment; no accepted deployed HTTPS/TLS runtime",
       "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
-      "status": "BLOCKED",
-      "reason": "Actual configured local environment; no accepted deployed HTTPS/TLS runtime. Owner: Platform/owner",
-      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
-      "outstandingWork": "Authorise hosting change, provision reviewed environment/secrets/certificate and validate migration/runtime separation.",
+      "status": "PARTIAL",
+      "reason": "Dedicated restricted client-demo web/API hosting is deployed and verified. No commercial production runtime has been provisioned and accepted by this phase.",
+      "testResult": "PARTIAL \u2014 later verified demo/CI evidence supersedes specific historical findings; full production acceptance remains outstanding.",
+      "outstandingWork": "Confirm production hosting/domain and provide approved platform access; qualify secrets, runtime/migration separation, TLS, workers, monitoring and recovery.",
       "implementationFiles": [
         "deploy/compose.yml",
         "deploy/Dockerfile",
@@ -179,7 +180,8 @@
       ],
       "testIds": [],
       "evidence": [
-        "docs/audits/production-20261102/preflight.txt"
+        "docs/audits/production-20261102/preflight.txt",
+        "docs/blocker-reconciliation/README.md"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -225,10 +227,10 @@
       "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
       "dataSource": "Fresh npm audit:12 moderate affected-package entries, no high/critical",
       "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
-      "status": "BLOCKED",
-      "reason": "Fresh npm audit:12 moderate affected-package entries, no high/critical. Owner: Mobile/security",
-      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
-      "outstandingWork": "Compatible upstream fixes or explicit independent risk disposition; re-audit/export/build without incompatible forced downgrade.",
+      "status": "PARTIAL",
+      "reason": "The recorded latest baseline native production-dependency audit and type/dependency CI checks pass. Historical moderate-advisory counts are not current vulnerability evidence. Signed final-release/toolchain and physical-device acceptance remain separate.",
+      "testResult": "PARTIAL \u2014 later verified demo/CI evidence supersedes specific historical findings; full production acceptance remains outstanding.",
+      "outstandingWork": "Repeat dependency/security assessment on the chosen signed production revision; close native signing/device gates under AUD-B06/B11 and NATIVE-G06.",
       "implementationFiles": [
         "apps/mobile/package.json",
         "apps/mobile/package-lock.json",
@@ -239,7 +241,8 @@
       ],
       "testIds": [],
       "evidence": [
-        "docs/audits/production-20261102/native-dependencies.json"
+        "docs/audits/production-20261102/native-dependencies.json",
+        "docs/blocker-reconciliation/README.md"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -255,10 +258,10 @@
       "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
       "dataSource": "Git unborn HEAD/untracked source; local build is not hosted CI/artifact provenance",
       "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
-      "status": "BLOCKED",
-      "reason": "Git unborn HEAD/untracked source; local build is not hosted CI/artifact provenance. Owner: Release/owner",
-      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
-      "outstandingWork": "Reviewed versioned source, executed CI evidence and known-good compatible rollback artifact.",
+      "status": "PARTIAL",
+      "reason": "Git is established and all 49 previously unpublished commits, CI repairs and evidence are pushed. Recorded CI d4fe993 passed 1,137 tests with build/types/audits; exact-source demo deployment and known-good rollback are verified. Original unborn-HEAD/no-CI finding is superseded.",
+      "testResult": "PARTIAL \u2014 later verified demo/CI evidence supersedes specific historical findings; full production acceptance remains outstanding.",
+      "outstandingWork": "Review final commercial release scope/revision and production rollback compatibility; obtain independent final release acceptance. Demo evidence does not certify production.",
       "implementationFiles": [
         ".github/workflows/release-validation.yml",
         "scripts/release-check.ts"
@@ -269,7 +272,8 @@
       "testIds": [],
       "evidence": [
         "docs/audits/production-20261102/preflight.txt",
-        "docs/audits/production-20261102/build.txt"
+        "docs/audits/production-20261102/build.txt",
+        "docs/blocker-reconciliation/README.md"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -316,9 +320,9 @@
       "dataSource": "Persisted governance/ledger/custody code and synthetic tests do not provide real owner/qualified acceptance",
       "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
       "status": "BLOCKED",
-      "reason": "Persisted governance/ledger/custody code and synthetic tests do not provide real owner/qualified acceptance. Owner: Business/finance/safety/operations",
-      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
-      "outstandingWork": "Real policy texts, staff/independent authority, stock/inspection/qualification and finance reconciliation/fallback signoffs.",
+      "reason": "Synthetic hosted order, refund and cross-branch ledger journeys now pass. Real commercial terms, actual staff authority, cash/stock reconciliation and qualified physical safety acceptance are still absent. One business owner is supported.",
+      "testResult": "PARTIAL \u2014 later verified demo/CI evidence supersedes specific historical findings; full production acceptance remains outstanding.",
+      "outstandingWork": "Approve commercial policy/economics and identify real maker/reviewer/executor responsibilities without fake owners or shared credentials; complete genuine finance/operations/safety sign-offs.",
       "implementationFiles": [
         "apps/web/lib/readiness.ts",
         "apps/web/lib/policies.ts",
@@ -330,7 +334,8 @@
       "testIds": [],
       "evidence": [
         "docs/audits/production-20261102/regression.txt",
-        "docs/audits/production-20261102/public-runtime.json"
+        "docs/audits/production-20261102/public-runtime.json",
+        "docs/blocker-reconciliation/README.md"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -346,10 +351,10 @@
       "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
       "dataSource": "Code/compiler/regressions; no final comprehensive UI/a11y or signed-device acceptance",
       "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Code/compiler/regressions; no final comprehensive UI/a11y or signed-device acceptance. Owner: QA/mobile/operations",
-      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
-      "outstandingWork": "Execute responsive/themes/a11y/account-switch/offline/lifecycle/retry/revocation and stocked web/native journeys.",
+      "status": "PARTIAL",
+      "reason": "Recent demo web desktop/phone and scoped native renderer/simulator/exception checks are verified. Full 300-feature signed physical-device and production browser/accessibility acceptance is not established.",
+      "testResult": "PARTIAL \u2014 later verified demo/CI evidence supersedes specific historical findings; full production acceptance remains outstanding.",
+      "outstandingWork": "Authorise signed test builds when ready, provide Apple/Android distribution identities/devices, and complete physical lifecycle/offline/permissions and full declared launch journeys.",
       "implementationFiles": [
         "apps/web/components/site.tsx",
         "apps/web/components/admin.tsx",
@@ -363,7 +368,8 @@
       "evidence": [
         "docs/audits/production-20261102/build.txt",
         "docs/audits/production-20261102/web-types.txt",
-        "docs/audits/production-20261102/native-types.txt"
+        "docs/audits/production-20261102/native-types.txt",
+        "docs/blocker-reconciliation/README.md"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -379,10 +385,10 @@
       "route": "/admin/readiness; relevant customer/staff routes; native release and operator infrastructure",
       "dataSource": "Local worker SIGTERM/health tests; Docker/nginx/hosted CI/external alerts/target load not accepted",
       "securityControl": "Independent authority, ownership/branch restrictions, immutable finances/custody, TLS, explicit OFF switches and controlled recovery; defects separately recorded",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Local worker SIGTERM/health tests; Docker/nginx/hosted CI/external alerts/target load not accepted. Owner: Platform/security/operations",
-      "testResult": "BLOCKED or NOT_TESTED release acceptance \u2014 current local evidence does not close this requirement.",
-      "outstandingWork": "Real runtime/TLS/SSE/load/abuse/outage/alert/security testing; named on-call, redacted actionable diagnostics and manual recovery rehearsal.",
+      "status": "PARTIAL",
+      "reason": "Current demo source/build/CI and bounded role/branch acceptance passed. The demo intentionally has no supervised background worker; nine retained historical failure records are investigated in the PBR21 phase.",
+      "testResult": "PARTIAL \u2014 later verified demo/CI evidence supersedes specific historical findings; full production acceptance remains outstanding.",
+      "outstandingWork": "Production worker supervision, external alerts/on-call, load/abuse/security/outage and restart/recovery drills remain required. Retained incident dispositions require evidence, not mass deletion.",
       "implementationFiles": [
         "deploy/Dockerfile",
         "deploy/compose.yml",
@@ -396,7 +402,8 @@
       "testIds": [],
       "evidence": [
         "docs/audits/production-20261102/regression.txt",
-        "docs/audits/production-20261102/preflight.txt"
+        "docs/audits/production-20261102/preflight.txt",
+        "docs/blocker-reconciliation/README.md"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -422,6 +429,12 @@
       "requirement": "Signed native and final UI/device/security acceptance",
       "status": "BLOCKED",
       "reason": "Native moderate advisories, distribution and final browser/device acceptance remain open."
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Reconciled stale empty-demo, unborn-Git/no-CI, historical advisory and unperformed-browser statements against PUB21, HLED and MDEV evidence. All 12 original blocker IDs and gates retained; no commercial readiness waiver. Incident reconciliation documented separately."
     }
   ]
 }

@@ -259,9 +259,9 @@
       "dataSource": "Expo SDK58 supported patch dependency set and explicit HTTPS/identifier ownership guards",
       "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
       "status": "PARTIAL",
-      "reason": "Both platform exports, native prebuild and Xcode simulator Release compilation passed. Null-catalogue startup crash fixed; standard simulator-local ad-hoc build completed onboarding and handled/retried missing API configuration without crashing.",
+      "reason": "Native exports/builds and representative simulator/API acceptance exist. Latest recorded native CI type/dependency/audit checks pass with no new export. Earlier moderate-advisory counts are historical.",
       "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
-      "outstandingWork": "8 moderate upstream native build-tool advisories remain (0 high/critical); no compatible patch in installed major ranges. No forced downgrade/major override. Signed iOS/Android physical-device, store entry and distribution acceptance remain.",
+      "outstandingWork": "Fresh audit of chosen production revision and signed iOS/Android physical-device/lifecycle/offline/distribution acceptance. No new mobile binaries authorised in this phase.",
       "implementationFiles": [
         "apps/mobile/app.config.js",
         "apps/mobile/app.json",
@@ -286,7 +286,9 @@
         "docs/audits/production-completion-evidence/native-prebuild.txt",
         "docs/audits/production-completion-evidence/native-dependency-audit.json",
         "docs/audits/production-completion-evidence/native-ios-simulator-build-final.txt",
-        "docs/audits/production-completion-evidence/ios-simulator-guard.png"
+        "docs/audits/production-completion-evidence/ios-simulator-guard.png",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-test-summary.json",
+        "docs/blocker-reconciliation/README.md"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -302,10 +304,10 @@
       "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
       "dataSource": "Protected runtime env file, reviewed release image, loopback binding and TLS reverse proxy",
       "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Compose configuration parses; Docker daemon unavailable, nginx absent. Image build/runtime, TLS and deployment tests remain NOT_TESTED.",
+      "status": "PARTIAL",
+      "reason": "Local Docker/Compose isolation, TLS and worker/restore rehearsal subsequently passed under LAUNCH-1111. Older Docker-unavailable statement is superseded; the client demo is a separate verified web/API deployment.",
       "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
-      "outstandingWork": "Namecheap compose overlay validates without printing secrets. VPS not yet provisioned; Docker daemon unavailable locally. Real image/runtime/nginx/certificates/monitoring/load/restore acceptance remains.",
+      "outstandingWork": "Accept the selected commercial host/image/proxy/TLS/runtime and off-site restore/rollback/load/monitoring against the final production revision.",
       "implementationFiles": [
         "deploy/Dockerfile",
         "deploy/compose.yml",
@@ -321,7 +323,8 @@
       "testIds": [],
       "evidence": [
         "docs/testing/production-compose-config-20261102.txt",
-        "docs/audits/production-completion-evidence/compose-config.txt"
+        "docs/audits/production-completion-evidence/compose-config.txt",
+        "docs/releases/20261111-readiness/launch-gates.md"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -337,10 +340,10 @@
       "route": "/admin/readiness; /admin/operations; /api/status; native builds; operator CLI",
       "dataSource": "Reviewed Git revision and GitHub Actions with disposable PostgreSQL16 service and artifact upload",
       "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Workflow is not executed on hosted CI; repository HEAD is unborn. Native moderate-advisory gate intentionally blocks until resolved/accepted; no green CI claim.",
+      "status": "PARTIAL",
+      "reason": "Published source, full hosted CI and exact-source client-demo build/deployment are verified in PUB21. Mobile export skipped under the no-new-binaries instruction; final production source/container and signed-device acceptance remain separate.",
       "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
-      "outstandingWork": "Workflow is not executed on hosted CI; repository HEAD remains unborn. Native 8-moderate-advisory gate intentionally blocks until resolved/accepted; no green CI claim.",
+      "outstandingWork": "Qualify the final production revision/runtime and explicitly authorised signed mobile release; keep PR-G02/03/04 open.",
       "implementationFiles": [
         ".github/workflows/release-validation.yml"
       ],
@@ -349,7 +352,9 @@
       ],
       "testIds": [],
       "evidence": [
-        "docs/testing/production-release-build-20261102.txt"
+        "docs/testing/production-release-build-20261102.txt",
+        "docs/deployment/20261121-web-api-publication/evidence/ci-test-summary.json",
+        "docs/blocker-reconciliation/README.md"
       ],
       "negativeTests": [
         "unapproved example economics and self approval cannot issue or redeem"
@@ -473,9 +478,9 @@
       "dataSource": "Reviewed build revision, final browser evidence and signed physical iOS/Android devices",
       "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
       "status": "BLOCKED",
-      "reason": "Local public web guards and native simulator onboarding/catalogue-unavailable retry exercised. No actual signed physical-device or authenticated full-lifecycle acceptance claim.",
+      "reason": "Latest bounded hosted web role/branch/responsive and native simulator/component exception checks pass. Full signed physical-device, comprehensive accessibility and declared commercial journeys remain open.",
       "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
-      "outstandingWork": "Execute UI/a11y, lifecycle/offline/token/session, dispatch/safety/payment/refund tests. Earlier browser refusal is preserved; no alternate-origin workaround or actual signed build/device certification claimed.",
+      "outstandingWork": "Complete final commercial browser/accessibility and signed physical-device lifecycle/offline/token/session/field/provider acceptance, retaining full native feature denominators.",
       "implementationFiles": [
         "docs/reports/production-release-20261102.md",
         "apps/mobile/eas.json"
@@ -497,26 +502,32 @@
     {
       "id": "PR-G01",
       "requirement": "Bounded automated release controls",
-      "status": "FAIL",
-      "reason": "AUD-01\u201304 local regression protections pass; bounded controls do not close actual deployed TLS, provider and independent release qualification."
+      "status": "PARTIAL",
+      "reason": "Earlier TLS and SMTP reproduction defects were repaired; bounded demo regression/build/CI pass. Actual production TLS/provider and independent release qualification remain open."
     },
     {
       "id": "PR-G02",
       "requirement": "UI, container and hosted CI acceptance",
-      "status": "NOT_TESTED",
-      "reason": "Build/configuration evidence exists; no final UI, container daemon, nginx runtime or hosted CI execution."
+      "status": "PARTIAL",
+      "reason": "Hosted demo CI, build/types and responsive browser evidence passed. Older no-hosted-CI/no-UI claim is superseded; production container/proxy/load/recovery acceptance remains open."
     },
     {
       "id": "PR-G03",
       "requirement": "Native dependency and signed release acceptance",
       "status": "BLOCKED",
-      "reason": "Both platform bundles pass, but 8 moderate native build-tool advisories and signed physical-device/distribution acceptance remain."
+      "reason": "Latest recorded native dependency/type/audit CI passes; signed physical-device and distribution acceptance remains blocked. Earlier advisory counts are historical."
     },
     {
       "id": "PR-G04",
       "requirement": "Business, privacy, infrastructure and independent release authority",
       "status": "BLOCKED",
       "reason": "Actual hosting/provider/retention/recovery/signing/safety and authorisation inputs outstanding."
+    }
+  ],
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Reconciled PR-R10 and PR-G01/02/03 against executed later CI/demo/UI evidence; preserved all 14 requirement IDs, four gates and commercial NO-GO."
     }
   ]
 }
