@@ -58,4 +58,4 @@ Executed: 136 focused native/API/logic checks, 9 component/API checks (97 regist
 
 Final source checks: [162 targeted passes](../native-workflows/evidence/final-targeted.txt), [9 component/API passes](../native-workflows/evidence/component-test.txt), [3 native traceability passes](../native-workflows/evidence/matrix-validation.txt). Counts overlap with the broad regression and do not constitute 300 individually completed device acceptances.
 
-Deployment follow-up: source commit is complete; deployment with “no new build” is pending build-scope clarification. [Artifact inspection and current deployment](../native-workflows/NO-BUILD-DEPLOYMENT.md). No new build or release acceptance is claimed.
+Deployment follow-up: source commit is complete. User clarified “no new mobile binaries; allow web/API build”; the authorised web/API rollout is in progress. [Artifact inspection and current deployment](../native-workflows/NO-BUILD-DEPLOYMENT.md). No new build or release acceptance is claimed.
