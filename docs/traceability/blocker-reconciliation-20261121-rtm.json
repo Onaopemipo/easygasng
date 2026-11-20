@@ -15,19 +15,19 @@
         "GET /api/incidents"
       ],
       "implementationFiles": [
-        "apps/web/lib/readiness.ts",
-        "apps/web/lib/professional-services.ts",
-        "apps/web/components/readiness.tsx",
-        "apps/web/lib/observability.ts",
-        "apps/web/lib/readiness-release-evidence.json"
+        "scripts/investigate-demo-incidents.mjs",
+        "scripts/reconcile-demo-incidents.mjs",
+        "docs/blocker-reconciliation/INCIDENT-REVIEW.md"
       ],
       "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
       "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
       "testFiles": [
-        "tests/blocker-reconciliation.test.ts"
+        "tests/blocker-reconciliation.test.ts",
+        "tests/blocker-reconciliation-closure.test.ts"
       ],
       "testIds": [
-        "PBR21-INCIDENTS"
+        "PBR21-INCIDENTS",
+        "PBR21-DISPOSITIONS"
       ],
       "negativeTests": [
         "PBR21-SECURITY"
@@ -37,13 +37,27 @@
         "docs/blocker-reconciliation/evidence/incidents-before.json",
         "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
         "docs/blocker-reconciliation/evidence/current-path-investigation.json",
-        "docs/blocker-reconciliation/README.md"
+        "docs/blocker-reconciliation/README.md",
+        "docs/blocker-reconciliation/evidence/continuation-tests.txt",
+        "docs/blocker-reconciliation/evidence/incident-dispositions.json",
+        "docs/blocker-reconciliation/evidence/initial-ci-failures.json",
+        "docs/blocker-reconciliation/reviewed-source-changes.json",
+        "docs/blocker-reconciliation/evidence/closure-core-tests.txt",
+        "docs/blocker-reconciliation/evidence/candidate-hosted.json",
+        "docs/blocker-reconciliation/evidence/stable-hosted.json",
+        "docs/blocker-reconciliation/evidence/final-hosted.json",
+        "docs/blocker-reconciliation/evidence/browser-observations.json",
+        "docs/blocker-reconciliation/PRODUCTION-BLOCKERS.md",
+        "docs/blocker-reconciliation/evidence/closure-artifacts-tests.txt",
+        "docs/blocker-reconciliation/evidence/ci-test-summary.json",
+        "docs/blocker-reconciliation/evidence/ci-final-jobs.json",
+        "docs/blocker-reconciliation/evidence/ci-artifact.json"
       ],
       "acceptanceGate": "PBR21-G01",
-      "status": "PARTIAL",
-      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
-      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
-      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All 9 original high-severity operation failures investigated against returned logs, documented repairs, fresh restricted-role tests and current hosted paths. Six resolved with retained evidence; three acknowledged with original cause unconfirmed. One already-resolved placeholder response supplemented, preserving its original note. All 12 records retained.",
+      "outstandingWork": "None for bounded reconciliation; three historical unknown-cause cases remain acknowledged and all original commercial/provider/native/safety/host/privacy/import gates remain outstanding as mapped in the consolidated register.",
+      "testResult": "PASS \u2014 full CI 1,148/1,148, zero failures/skips; build/types/audits, native export skipped. 14 focused +30 overlapping continuation checks, 3 distinct closure checks, 15 candidate/15 stable/17 final hosted checks and 6 actual browser observations. No counts added as whole-feature coverage."
     },
     {
       "id": "PBR21-02",
@@ -59,10 +73,8 @@
       ],
       "implementationFiles": [
         "apps/web/lib/readiness.ts",
-        "apps/web/lib/professional-services.ts",
-        "apps/web/components/readiness.tsx",
-        "apps/web/lib/observability.ts",
-        "apps/web/lib/readiness-release-evidence.json"
+        "apps/web/lib/readiness-release-evidence.json",
+        "apps/web/components/readiness.tsx"
       ],
       "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
       "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
@@ -80,13 +92,27 @@
         "docs/blocker-reconciliation/evidence/incidents-before.json",
         "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
         "docs/blocker-reconciliation/evidence/current-path-investigation.json",
-        "docs/blocker-reconciliation/README.md"
+        "docs/blocker-reconciliation/README.md",
+        "docs/blocker-reconciliation/evidence/continuation-tests.txt",
+        "docs/blocker-reconciliation/evidence/incident-dispositions.json",
+        "docs/blocker-reconciliation/evidence/initial-ci-failures.json",
+        "docs/blocker-reconciliation/reviewed-source-changes.json",
+        "docs/blocker-reconciliation/evidence/closure-core-tests.txt",
+        "docs/blocker-reconciliation/evidence/candidate-hosted.json",
+        "docs/blocker-reconciliation/evidence/stable-hosted.json",
+        "docs/blocker-reconciliation/evidence/final-hosted.json",
+        "docs/blocker-reconciliation/evidence/browser-observations.json",
+        "docs/blocker-reconciliation/PRODUCTION-BLOCKERS.md",
+        "docs/blocker-reconciliation/evidence/closure-artifacts-tests.txt",
+        "docs/blocker-reconciliation/evidence/ci-test-summary.json",
+        "docs/blocker-reconciliation/evidence/ci-final-jobs.json",
+        "docs/blocker-reconciliation/evidence/ci-artifact.json"
       ],
       "acceptanceGate": "PBR21-G02",
-      "status": "PARTIAL",
-      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
-      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
-      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Readiness shows explicitly historical source-bound CI evidence, current migration081, intentional demo worker disablement, truthful retention and dependency-audit scope. Hosted owner view and six non-owner denials verified; recommendation remains NO-GO.",
+      "outstandingWork": "None for bounded reconciliation; three historical unknown-cause cases remain acknowledged and all original commercial/provider/native/safety/host/privacy/import gates remain outstanding as mapped in the consolidated register.",
+      "testResult": "PASS \u2014 full CI 1,148/1,148, zero failures/skips; build/types/audits, native export skipped. 14 focused +30 overlapping continuation checks, 3 distinct closure checks, 15 candidate/15 stable/17 final hosted checks and 6 actual browser observations. No counts added as whole-feature coverage."
     },
     {
       "id": "PBR21-03",
@@ -101,11 +127,11 @@
         "GET /api/incidents"
       ],
       "implementationFiles": [
-        "apps/web/lib/readiness.ts",
-        "apps/web/lib/professional-services.ts",
-        "apps/web/components/readiness.tsx",
         "apps/web/lib/observability.ts",
-        "apps/web/lib/readiness-release-evidence.json"
+        "apps/web/lib/service.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/operational-incidents.tsx",
+        "apps/web/components/operational-incidents.css"
       ],
       "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
       "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
@@ -123,13 +149,27 @@
         "docs/blocker-reconciliation/evidence/incidents-before.json",
         "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
         "docs/blocker-reconciliation/evidence/current-path-investigation.json",
-        "docs/blocker-reconciliation/README.md"
+        "docs/blocker-reconciliation/README.md",
+        "docs/blocker-reconciliation/evidence/continuation-tests.txt",
+        "docs/blocker-reconciliation/evidence/incident-dispositions.json",
+        "docs/blocker-reconciliation/evidence/initial-ci-failures.json",
+        "docs/blocker-reconciliation/reviewed-source-changes.json",
+        "docs/blocker-reconciliation/evidence/closure-core-tests.txt",
+        "docs/blocker-reconciliation/evidence/candidate-hosted.json",
+        "docs/blocker-reconciliation/evidence/stable-hosted.json",
+        "docs/blocker-reconciliation/evidence/final-hosted.json",
+        "docs/blocker-reconciliation/evidence/browser-observations.json",
+        "docs/blocker-reconciliation/PRODUCTION-BLOCKERS.md",
+        "docs/blocker-reconciliation/evidence/closure-artifacts-tests.txt",
+        "docs/blocker-reconciliation/evidence/ci-test-summary.json",
+        "docs/blocker-reconciliation/evidence/ci-final-jobs.json",
+        "docs/blocker-reconciliation/evidence/ci-artifact.json"
       ],
       "acceptanceGate": "PBR21-G03",
-      "status": "PARTIAL",
-      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
-      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
-      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Stable diagnostic IDs, safe SQLSTATE correlation, recurrence reopening, immutable audit evidence, scoped/paged response history and dialog demo-notice clearance implemented. 14 focused and 30 overlapping continuation tests pass; 390/320px hosted geometry and desktop history checked.",
+      "outstandingWork": "None for bounded reconciliation; three historical unknown-cause cases remain acknowledged and all original commercial/provider/native/safety/host/privacy/import gates remain outstanding as mapped in the consolidated register.",
+      "testResult": "PASS \u2014 full CI 1,148/1,148, zero failures/skips; build/types/audits, native export skipped. 14 focused +30 overlapping continuation checks, 3 distinct closure checks, 15 candidate/15 stable/17 final hosted checks and 6 actual browser observations. No counts added as whole-feature coverage."
     },
     {
       "id": "PBR21-04",
@@ -146,17 +186,17 @@
       "implementationFiles": [
         "apps/web/lib/readiness.ts",
         "apps/web/lib/professional-services.ts",
-        "apps/web/components/readiness.tsx",
-        "apps/web/lib/observability.ts",
-        "apps/web/lib/readiness-release-evidence.json"
+        "scripts/verify-blocker-reconciliation.mjs"
       ],
       "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
       "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
       "testFiles": [
-        "tests/blocker-reconciliation.test.ts"
+        "tests/blocker-reconciliation.test.ts",
+        "tests/blocker-reconciliation-closure.test.ts"
       ],
       "testIds": [
-        "PBR21-SECURITY"
+        "PBR21-SECURITY",
+        "PBR21-CLOSURE"
       ],
       "negativeTests": [
         "PBR21-SECURITY"
@@ -166,13 +206,27 @@
         "docs/blocker-reconciliation/evidence/incidents-before.json",
         "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
         "docs/blocker-reconciliation/evidence/current-path-investigation.json",
-        "docs/blocker-reconciliation/README.md"
+        "docs/blocker-reconciliation/README.md",
+        "docs/blocker-reconciliation/evidence/continuation-tests.txt",
+        "docs/blocker-reconciliation/evidence/incident-dispositions.json",
+        "docs/blocker-reconciliation/evidence/initial-ci-failures.json",
+        "docs/blocker-reconciliation/reviewed-source-changes.json",
+        "docs/blocker-reconciliation/evidence/closure-core-tests.txt",
+        "docs/blocker-reconciliation/evidence/candidate-hosted.json",
+        "docs/blocker-reconciliation/evidence/stable-hosted.json",
+        "docs/blocker-reconciliation/evidence/final-hosted.json",
+        "docs/blocker-reconciliation/evidence/browser-observations.json",
+        "docs/blocker-reconciliation/PRODUCTION-BLOCKERS.md",
+        "docs/blocker-reconciliation/evidence/closure-artifacts-tests.txt",
+        "docs/blocker-reconciliation/evidence/ci-test-summary.json",
+        "docs/blocker-reconciliation/evidence/ci-final-jobs.json",
+        "docs/blocker-reconciliation/evidence/ci-artifact.json"
       ],
       "acceptanceGate": "PBR21-G04",
-      "status": "PARTIAL",
-      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
-      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
-      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "15 candidate, 15 stable and 17 final read-only checks pass with unchanged business fingerprints, all own sessions revoked, original records retained, role/global-incident denials verified and no new mobile artifacts.",
+      "outstandingWork": "None for bounded reconciliation; three historical unknown-cause cases remain acknowledged and all original commercial/provider/native/safety/host/privacy/import gates remain outstanding as mapped in the consolidated register.",
+      "testResult": "PASS \u2014 full CI 1,148/1,148, zero failures/skips; build/types/audits, native export skipped. 14 focused +30 overlapping continuation checks, 3 distinct closure checks, 15 candidate/15 stable/17 final hosted checks and 6 actual browser observations. No counts added as whole-feature coverage."
     },
     {
       "id": "PBR21-05",
@@ -187,11 +241,11 @@
         "GET /api/incidents"
       ],
       "implementationFiles": [
-        "apps/web/lib/readiness.ts",
-        "apps/web/lib/professional-services.ts",
-        "apps/web/components/readiness.tsx",
-        "apps/web/lib/observability.ts",
-        "apps/web/lib/readiness-release-evidence.json"
+        "docs/blocker-reconciliation/PRODUCTION-BLOCKERS.md",
+        "docs/traceability/whole-app-production-audit-rtm.json",
+        "docs/traceability/production-release-rtm.json",
+        "docs/traceability/production-end-to-end-rtm.json",
+        "docs/traceability/audit-remediation-rtm.json"
       ],
       "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
       "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
@@ -209,13 +263,28 @@
         "docs/blocker-reconciliation/evidence/incidents-before.json",
         "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
         "docs/blocker-reconciliation/evidence/current-path-investigation.json",
-        "docs/blocker-reconciliation/README.md"
+        "docs/blocker-reconciliation/README.md",
+        "docs/blocker-reconciliation/evidence/continuation-tests.txt",
+        "docs/blocker-reconciliation/evidence/incident-dispositions.json",
+        "docs/blocker-reconciliation/evidence/initial-ci-failures.json",
+        "docs/blocker-reconciliation/reviewed-source-changes.json",
+        "docs/blocker-reconciliation/evidence/closure-core-tests.txt",
+        "docs/blocker-reconciliation/evidence/candidate-hosted.json",
+        "docs/blocker-reconciliation/evidence/stable-hosted.json",
+        "docs/blocker-reconciliation/evidence/final-hosted.json",
+        "docs/blocker-reconciliation/evidence/browser-observations.json",
+        "docs/blocker-reconciliation/PRODUCTION-BLOCKERS.md",
+        "docs/blocker-reconciliation/evidence/closure-artifacts-tests.txt",
+        "docs/blocker-reconciliation/evidence/ci-test-summary.json",
+        "docs/blocker-reconciliation/evidence/ci-final-jobs.json",
+        "docs/blocker-reconciliation/evidence/ci-artifact.json",
+        "docs/blocker-reconciliation/evidence/documentation-final.txt"
       ],
       "acceptanceGate": "PBR21-G05",
-      "status": "PARTIAL",
-      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
-      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
-      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Original AUD/PR/E2E/LAUNCH/WEB-A IDs retained and stale reasons corrected using executed later evidence. Remaining commercial owner inputs and unfinished engineering are mapped separately; production NO-GO/import/retain-all and 300 native features preserved.",
+      "outstandingWork": "None for bounded reconciliation; three historical unknown-cause cases remain acknowledged and all original commercial/provider/native/safety/host/privacy/import gates remain outstanding as mapped in the consolidated register.",
+      "testResult": "PASS \u2014 full CI 1,148/1,148, zero failures/skips; build/types/audits, native export skipped. 14 focused +30 overlapping continuation checks, 3 distinct closure checks, 15 candidate/15 stable/17 final hosted checks and 6 actual browser observations. No counts added as whole-feature coverage."
     },
     {
       "id": "PBR21-06",
@@ -230,19 +299,20 @@
         "GET /api/incidents"
       ],
       "implementationFiles": [
-        "apps/web/lib/readiness.ts",
-        "apps/web/lib/professional-services.ts",
-        "apps/web/components/readiness.tsx",
-        "apps/web/lib/observability.ts",
-        "apps/web/lib/readiness-release-evidence.json"
+        "scripts/verify-blocker-reconciliation.mjs",
+        "scripts/lib/reviewed-blocker-source.mjs",
+        "docs/blocker-reconciliation/reviewed-source-changes.json"
       ],
       "dataSource": "Authenticated canonical incident register, linked source records/history, immutable GitHub CI/deployment evidence, existing stable requirement matrices.",
       "securityControl": "Owner-only readiness; branch-scoped incidents; existing qualified/recent/independent review and append-only audit/financial controls. No inference of production GO from test data or demo deployment.",
       "testFiles": [
-        "tests/blocker-reconciliation.test.ts"
+        "tests/blocker-reconciliation.test.ts",
+        "tests/blocker-reconciliation-closure.test.ts"
       ],
       "testIds": [
-        "PBR21-RELEASE"
+        "PBR21-RELEASE",
+        "PBR21-SOURCE-CONTINUATION",
+        "PBR21-ARTIFACTS"
       ],
       "negativeTests": [
         "PBR21-SECURITY"
@@ -252,57 +322,134 @@
         "docs/blocker-reconciliation/evidence/incidents-before.json",
         "docs/blocker-reconciliation/evidence/historical-runtime-logs.json",
         "docs/blocker-reconciliation/evidence/current-path-investigation.json",
-        "docs/blocker-reconciliation/README.md"
+        "docs/blocker-reconciliation/README.md",
+        "docs/blocker-reconciliation/evidence/continuation-tests.txt",
+        "docs/blocker-reconciliation/evidence/incident-dispositions.json",
+        "docs/blocker-reconciliation/evidence/initial-ci-failures.json",
+        "docs/blocker-reconciliation/reviewed-source-changes.json",
+        "docs/blocker-reconciliation/evidence/closure-core-tests.txt",
+        "docs/blocker-reconciliation/evidence/candidate-hosted.json",
+        "docs/blocker-reconciliation/evidence/stable-hosted.json",
+        "docs/blocker-reconciliation/evidence/final-hosted.json",
+        "docs/blocker-reconciliation/evidence/browser-observations.json",
+        "docs/blocker-reconciliation/PRODUCTION-BLOCKERS.md",
+        "docs/blocker-reconciliation/evidence/closure-artifacts-tests.txt",
+        "docs/blocker-reconciliation/evidence/ci-test-summary.json",
+        "docs/blocker-reconciliation/evidence/ci-final-jobs.json",
+        "docs/blocker-reconciliation/evidence/ci-artifact.json"
       ],
       "acceptanceGate": "PBR21-G06",
-      "status": "PARTIAL",
-      "reason": "Original nine incidents and returned historical logs inspected. Existing field/refund repairs rechecked; new readiness/history/diagnostic fixes pass focused tests. Final hosted closure pending.",
-      "outstandingWork": "Investigation, fixes, executed checks and evidence reconciliation pending.",
-      "testResult": "PASS \u2014 14 focused checks, zero failures/skips; hosted rollout and final disposition evidence pending."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All 436 committed upload bytes verified; exact-source Ready candidate promoted and hosted/UI checked. Corrected CI 1c29681 passed 1,148 tests and all build/type/audit jobs with native export skipped. Final artifact checks, native preservation, evidence and matrices verified.",
+      "outstandingWork": "None in bounded reconciliation/demo rollout. Commercial production, real provider/physical/device acceptance and original holds remain; three unknown-cause historical cases remain acknowledged.",
+      "testResult": "PASS \u2014 full CI 1,148/1,148, zero failures/skips; build/types/audits, native export skipped. 14 focused +30 overlapping continuation checks, 3 distinct closure checks, 15 candidate/15 stable/17 final hosted checks and 6 actual browser observations. No counts added as whole-feature coverage."
     }
   ],
   "gates": [
     {
       "id": "PBR21-G01",
       "description": "Investigate all nine unresolved high/critical demo incidents against canonical source records",
-      "status": "PENDING"
+      "status": "PASS",
+      "reason": "All 9 original high-severity operation failures investigated against returned logs, documented repairs, fresh restricted-role tests and current hosted paths. Six resolved with retained evidence; three acknowledged with original cause unconfirmed. One already-resolved placeholder response supplemented, preserving its original note. All 12 records retained."
     },
     {
       "id": "PBR21-G02",
       "description": "Replace stale readiness statements with scoped, source-bound release evidence and current operational facts",
-      "status": "PENDING"
+      "status": "PASS",
+      "reason": "Readiness shows explicitly historical source-bound CI evidence, current migration081, intentional demo worker disablement, truthful retention and dependency-audit scope. Hosted owner view and six non-owner denials verified; recommendation remains NO-GO."
     },
     {
       "id": "PBR21-G03",
       "description": "Fix reproduced incident/readiness issues while preserving financial, safety and release controls",
-      "status": "PENDING"
+      "status": "PASS",
+      "reason": "Stable diagnostic IDs, safe SQLSTATE correlation, recurrence reopening, immutable audit evidence, scoped/paged response history and dialog demo-notice clearance implemented. 14 focused and 30 overlapping continuation tests pass; 390/320px hosted geometry and desktop history checked."
     },
     {
       "id": "PBR21-G04",
       "description": "Verify role restrictions, negative cases and unchanged business/retention controls",
-      "status": "PENDING"
+      "status": "PASS",
+      "reason": "15 candidate, 15 stable and 17 final read-only checks pass with unchanged business fingerprints, all own sessions revoked, original records retained, role/global-incident denials verified and no new mobile artifacts."
     },
     {
       "id": "PBR21-G05",
       "description": "Reconcile stable production blocker IDs, outstanding work and explicit owner inputs",
-      "status": "PENDING"
+      "status": "PASS",
+      "reason": "Original AUD/PR/E2E/LAUNCH/WEB-A IDs retained and stale reasons corrected using executed later evidence. Remaining commercial owner inputs and unfinished engineering are mapped separately; production NO-GO/import/retain-all and 300 native features preserved."
     },
     {
       "id": "PBR21-G06",
       "description": "Publish and verify bounded client-demo web/API corrections without new mobile binaries",
-      "status": "PENDING"
+      "status": "PASS",
+      "reason": "All 436 committed upload bytes verified; exact-source Ready candidate promoted and hosted/UI checked. Corrected CI 1c29681 passed 1,148 tests and all build/type/audit jobs with native export skipped. Final artifact checks, native preservation, evidence and matrices verified."
     }
   ],
   "coverage": {
     "requirements": {
-      "verified": 0,
+      "verified": 6,
+      "partial": 0,
       "total": 6
     },
     "incidents": {
       "investigated": 9,
+      "resolved": 6,
+      "acknowledgedUnknownCause": 3,
       "total": 9
     },
-    "excluded": 0
+    "excluded": 0,
+    "additionalResolutionEvidenceSupplements": 1,
+    "retainedWholeRegister": {
+      "total": 12,
+      "resolved": 8,
+      "acknowledgedHigh": 3,
+      "openMedium": 1
+    },
+    "focusedChecks": {
+      "passed": 14,
+      "total": 14
+    },
+    "continuationChecks": {
+      "passed": 30,
+      "total": 30
+    },
+    "gates": {
+      "passed": 6,
+      "partial": 0,
+      "total": 6
+    },
+    "critical": {
+      "verified": 3,
+      "total": 3
+    },
+    "candidateChecks": {
+      "passed": 15,
+      "total": 15
+    },
+    "stableChecks": {
+      "passed": 15,
+      "total": 15
+    },
+    "finalChecks": {
+      "passed": 17,
+      "total": 17
+    },
+    "browserObservations": {
+      "passed": 6,
+      "total": 6
+    },
+    "nativeArtifacts": {
+      "preserved": 3,
+      "total": 3
+    },
+    "fullCI": {
+      "passed": 1148,
+      "failed": 0,
+      "skipped": 0,
+      "total": 1148
+    },
+    "closureChecks": {
+      "passed": 3,
+      "total": 3
+    }
   },
   "changeLog": [
     {
@@ -311,7 +458,11 @@
     },
     {
       "date": "2026-11-21",
-      "change": "Actual hosted audit reviewed9 original high incidents:6 resolved with substantive evidence,3 acknowledged with original root cause unconfirmed. Added evidence supplement to one previously resolved placeholder response; all12 records retained. Initial full CI1144/1147 found3 unmapped historical source guards, repaired through explicit committed baseline continuation. Phone screenshot found incident-dialog demo notice overlap; scoped CSS clearance added, final CI/rollout pending. No financial/stock/qualification writes or mobile build."
+      "change": "Actual hosted audit reviewed 9 original high incidents: 6 resolved with substantive evidence, 3 acknowledged with original root cause unconfirmed. Added evidence supplement to one previously resolved placeholder response; all 12 records retained. Initial full CI 1144/1147 found 3 unmapped historical source guards, repaired through explicit committed baseline continuation. Phone screenshot found incident-dialog demo notice overlap; scoped CSS clearance added, final CI/rollout pending. No financial/stock/qualification writes or mobile build."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Final 1c29681 CI passed 1,148 tests, zero failures/skips, web build/types/audits and native checks with export skipped. Final Ready dpl_EPFsgJFKDE2457trgZd7SoVvAUEg promoted and 15 candidate / 15 stable / 17 final / 6 browser checks pass, including notice clearance at 390/320px. Original 12 incidents retained, 6of9high resolved and3acknowledged; no financial/stock/policy/qualification/native artifacts changed. All six bounded reconciliation gates closed; commercial NO-GO/import/retain-all/native/provider/physical gates retained."
     }
   ]
 }

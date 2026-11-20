@@ -1,81 +1,81 @@
 Vercel CLI 59.18.0 (Node.js 24.21.0)
-Fetching deployment "dpl_G4JtL6cZKbuRnnRMdX91PQNa6ct6" in onaopemipos-projects
-2026-11-20T21:42:56.047Z  Running build in Washington, D.C., USA (East) – iad1
-2026-11-20T21:42:56.048Z  Build machine configuration: 4 cores, 8 GB (Standard Build Machine)
-2026-11-20T21:42:56.058Z  Retrieving list of deployment files...
-2026-11-20T21:42:56.456Z  Downloading 436 deployment files...
-2026-11-20T21:42:56.969Z  Restored build cache from previous deployment (AXjGjA3VPmKi8aqRpGBwZohyvw4a)
-2026-11-20T21:42:58.292Z  Running "vercel build"
-2026-11-20T21:42:58.300Z  Vercel CLI 66.2.0
-2026-11-20T21:42:58.515Z  Running "install" command: `cd ../.. && npm ci --include=dev`...
-2026-11-20T21:42:59.037Z  npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
-2026-11-20T21:43:05.277Z  
-2026-11-20T21:43:05.277Z  added 61 packages, and audited 63 packages in 7s
-2026-11-20T21:43:05.277Z  
-2026-11-20T21:43:05.277Z  10 packages are looking for funding
-2026-11-20T21:43:05.277Z  run `npm fund` for details
-2026-11-20T21:43:05.278Z  
-2026-11-20T21:43:05.278Z  found 0 vulnerabilities
-2026-11-20T21:43:05.278Z  npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
-2026-11-20T21:43:05.279Z  npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
-2026-11-20T21:43:05.279Z  npm warn install-scripts
-2026-11-20T21:43:05.279Z  npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
-2026-11-20T21:43:05.309Z  Detected Next.js version: 16.4.6
-2026-11-20T21:43:05.319Z  Running "npm run build"
-2026-11-20T21:43:05.408Z  npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
-2026-11-20T21:43:05.420Z  
-2026-11-20T21:43:05.420Z  > @easygas/web@0.1.0 build
-2026-11-20T21:43:05.420Z  > next build --webpack
-2026-11-20T21:43:05.420Z  
-2026-11-20T21:43:05.746Z  ▲ Next.js 16.4.6 (webpack)
-2026-11-20T21:43:05.815Z  Applying modifyConfig from Vercel
-2026-11-20T21:43:05.818Z  ✓ Running next.config.ts took 72ms
-2026-11-20T21:43:05.835Z  
-2026-11-20T21:43:05.866Z  Creating an optimized production build ...
-2026-11-20T21:43:14.896Z  ✓ Compiled successfully in 6.8s
-2026-11-20T21:43:14.898Z  Running TypeScript ...
-2026-11-20T21:43:20.532Z  Finished TypeScript in 5.6s ...
-2026-11-20T21:43:20.534Z  Collecting page data using 3 workers ...
-2026-11-20T21:43:21.387Z  Generating static pages using 3 workers (0/11) ...
-2026-11-20T21:43:22.406Z  Generating static pages using 3 workers (2/11)
-2026-11-20T21:43:22.406Z  Generating static pages using 3 workers (5/11)
-2026-11-20T21:43:22.406Z  Generating static pages using 3 workers (8/11)
-2026-11-20T21:43:22.406Z  ✓ Generating static pages using 3 workers (11/11) in 1019ms
-2026-11-20T21:43:22.923Z  Finalizing page optimization ...
-2026-11-20T21:43:22.923Z  Collecting build traces ...
-2026-11-20T21:43:30.285Z  Running onBuildComplete from Vercel
-2026-11-20T21:43:30.342Z  
-2026-11-20T21:43:30.344Z  Route (app)
-2026-11-20T21:43:30.344Z  ┌ ƒ /
-2026-11-20T21:43:30.344Z  ├ ƒ /_not-found
-2026-11-20T21:43:30.344Z  ├ ƒ /[...slug]
-2026-11-20T21:43:30.344Z  ├ ƒ /activate
-2026-11-20T21:43:30.344Z  ├ ƒ /admin/[[...section]]
-2026-11-20T21:43:30.344Z  ├ ƒ /api/[action]
-2026-11-20T21:43:30.344Z  ├ ƒ /api/business-live
-2026-11-20T21:43:30.344Z  ├ ƒ /api/invoices/[orderId]
-2026-11-20T21:43:30.344Z  ├ ƒ /api/media
-2026-11-20T21:43:30.344Z  ├ ƒ /api/media/[id]
-2026-11-20T21:43:30.344Z  ├ ƒ /api/messaging/meta
-2026-11-20T21:43:30.345Z  ├ ƒ /api/payments/paystack/[operation]
-2026-11-20T21:43:30.345Z  ├ ƒ /api/receipts
-2026-11-20T21:43:30.345Z  ├ ƒ /api/status
-2026-11-20T21:43:30.345Z  ├ ƒ /api/tracking/stream
-2026-11-20T21:43:30.345Z  ├ ○ /icon.png
-2026-11-20T21:43:30.345Z  ├ ƒ /payment-request
-2026-11-20T21:43:30.345Z  ├ ƒ /payment-return
-2026-11-20T21:43:30.345Z  ├ ○ /robots.txt
-2026-11-20T21:43:30.345Z  └ ○ /sitemap.xml
-2026-11-20T21:43:30.345Z  
-2026-11-20T21:43:30.345Z  
-2026-11-20T21:43:30.345Z  ○  (Static)   prerendered as static content
-2026-11-20T21:43:30.345Z  ƒ  (Dynamic)  server-rendered on demand
-2026-11-20T21:43:30.345Z  
-2026-11-20T21:43:30.465Z  Build Completed in /vercel/output [32s]
-2026-11-20T21:43:30.486Z  Deploying outputs...
-2026-11-20T21:43:35.640Z  Deployment completed
-2026-11-20T21:43:35.643Z  Creating build cache...
-2026-11-20T21:43:41.777Z  Created build cache: 6s
-2026-11-20T21:43:41.777Z  Uploading build cache [162.55 MB]
-2026-11-20T21:43:44.908Z  Build cache uploaded: 3.131s
+Fetching deployment "dpl_EPFsgJFKDE2457trgZd7SoVvAUEg" in onaopemipos-projects
+2026-11-20T22:27:30.494Z  Running build in Washington, D.C., USA (East) – iad1
+2026-11-20T22:27:30.494Z  Build machine configuration: 4 cores, 8 GB (Standard Build Machine)
+2026-11-20T22:27:30.505Z  Retrieving list of deployment files...
+2026-11-20T22:27:30.873Z  Downloading 436 deployment files...
+2026-11-20T22:27:31.504Z  Restored build cache from previous deployment (G4JtL6cZKbuRnnRMdX91PQNa6ct6)
+2026-11-20T22:27:32.424Z  Running "vercel build"
+2026-11-20T22:27:32.430Z  Vercel CLI 66.2.0
+2026-11-20T22:27:32.664Z  Running "install" command: `cd ../.. && npm ci --include=dev`...
+2026-11-20T22:27:33.176Z  npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+2026-11-20T22:27:39.416Z  
+2026-11-20T22:27:39.417Z  added 61 packages, and audited 63 packages in 7s
+2026-11-20T22:27:39.417Z  
+2026-11-20T22:27:39.417Z  10 packages are looking for funding
+2026-11-20T22:27:39.417Z  run `npm fund` for details
+2026-11-20T22:27:39.417Z  
+2026-11-20T22:27:39.417Z  found 0 vulnerabilities
+2026-11-20T22:27:39.418Z  npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-11-20T22:27:39.418Z  npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+2026-11-20T22:27:39.418Z  npm warn install-scripts
+2026-11-20T22:27:39.418Z  npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+2026-11-20T22:27:39.450Z  Detected Next.js version: 16.4.6
+2026-11-20T22:27:39.459Z  Running "npm run build"
+2026-11-20T22:27:39.551Z  npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+2026-11-20T22:27:39.564Z  
+2026-11-20T22:27:39.564Z  > @easygas/web@0.1.0 build
+2026-11-20T22:27:39.564Z  > next build --webpack
+2026-11-20T22:27:39.564Z  
+2026-11-20T22:27:39.880Z  ▲ Next.js 16.4.6 (webpack)
+2026-11-20T22:27:39.947Z  Applying modifyConfig from Vercel
+2026-11-20T22:27:39.950Z  ✓ Running next.config.ts took 70ms
+2026-11-20T22:27:39.966Z  
+2026-11-20T22:27:39.995Z  Creating an optimized production build ...
+2026-11-20T22:27:47.004Z  ✓ Compiled successfully in 4.9s
+2026-11-20T22:27:47.006Z  Running TypeScript ...
+2026-11-20T22:27:48.798Z  Finished TypeScript in 1792ms ...
+2026-11-20T22:27:48.800Z  Collecting page data using 3 workers ...
+2026-11-20T22:27:49.615Z  Generating static pages using 3 workers (0/11) ...
+2026-11-20T22:27:49.694Z  Generating static pages using 3 workers (2/11)
+2026-11-20T22:27:50.681Z  Generating static pages using 3 workers (5/11)
+2026-11-20T22:27:50.681Z  Generating static pages using 3 workers (8/11)
+2026-11-20T22:27:50.681Z  ✓ Generating static pages using 3 workers (11/11) in 1066ms
+2026-11-20T22:27:51.274Z  Finalizing page optimization ...
+2026-11-20T22:27:51.274Z  Collecting build traces ...
+2026-11-20T22:27:58.922Z  Running onBuildComplete from Vercel
+2026-11-20T22:27:58.976Z  
+2026-11-20T22:27:58.978Z  Route (app)
+2026-11-20T22:27:58.978Z  ┌ ƒ /
+2026-11-20T22:27:58.978Z  ├ ƒ /_not-found
+2026-11-20T22:27:58.978Z  ├ ƒ /[...slug]
+2026-11-20T22:27:58.978Z  ├ ƒ /activate
+2026-11-20T22:27:58.978Z  ├ ƒ /admin/[[...section]]
+2026-11-20T22:27:58.978Z  ├ ƒ /api/[action]
+2026-11-20T22:27:58.978Z  ├ ƒ /api/business-live
+2026-11-20T22:27:58.978Z  ├ ƒ /api/invoices/[orderId]
+2026-11-20T22:27:58.978Z  ├ ƒ /api/media
+2026-11-20T22:27:58.978Z  ├ ƒ /api/media/[id]
+2026-11-20T22:27:58.978Z  ├ ƒ /api/messaging/meta
+2026-11-20T22:27:58.978Z  ├ ƒ /api/payments/paystack/[operation]
+2026-11-20T22:27:58.978Z  ├ ƒ /api/receipts
+2026-11-20T22:27:58.978Z  ├ ƒ /api/status
+2026-11-20T22:27:58.979Z  ├ ƒ /api/tracking/stream
+2026-11-20T22:27:58.979Z  ├ ○ /icon.png
+2026-11-20T22:27:58.979Z  ├ ƒ /payment-request
+2026-11-20T22:27:58.979Z  ├ ƒ /payment-return
+2026-11-20T22:27:58.979Z  ├ ○ /robots.txt
+2026-11-20T22:27:58.979Z  └ ○ /sitemap.xml
+2026-11-20T22:27:58.979Z  
+2026-11-20T22:27:58.979Z  
+2026-11-20T22:27:58.979Z  ○  (Static)   prerendered as static content
+2026-11-20T22:27:58.979Z  ƒ  (Dynamic)  server-rendered on demand
+2026-11-20T22:27:58.979Z  
+2026-11-20T22:27:59.075Z  Build Completed in /vercel/output [26s]
+2026-11-20T22:27:59.093Z  Deploying outputs...
+2026-11-20T22:28:04.097Z  Deployment completed
+2026-11-20T22:28:04.100Z  Creating build cache...
+2026-11-20T22:28:10.135Z  Created build cache: 6s
+2026-11-20T22:28:10.135Z  Uploading build cache [162.09 MB]
+2026-11-20T22:28:13.577Z  Build cache uploaded: 3.442s
 status	● Ready

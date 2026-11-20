@@ -14,7 +14,7 @@ Production web + signed-native continuation: [matrix](production-release-rtm.md)
 
 Local API compatibility recovery: [matrix](local-runtime-repair-rtm.md) and [report](../reports/local-runtime-repair-20261102.md). Repairs the known early recorded rewards043 schema before044; preserves all existing histories and production NO-GO.
 
-Current whole-app production blocker audit: [closure matrix](whole-app-production-audit-rtm.md) and [audit](../audits/production-20261102/report.md). Two reproduced defects explicitly downgrade PR-R01 and PR-R05; all prior IDs and outstanding requirements remain. The 12 audit blocker-closure rows are not a fabricated whole-app completion percentage.
+Whole-app production blocker register: [reconciled closure matrix](whole-app-production-audit-rtm.md), [current21 November reconciliation](../blocker-reconciliation/README.md) and [historical audit](../audits/production-20261102/report.md). Earlier TLS/SMTP defects have repaired bounded evidence; GitHub/CI/demo/browser progress is now recorded. Commercial hosting/recovery, real operations/providers/privacy and signed-device acceptance remain open. All12 original blocker IDs/gates remain; this is not a whole-app completion percentage.
 
 Mobile UI design: [matrix](mobile-ui-design-rtm.md) and [screen specifications](../design/mobile-ui/SCREEN_SPECIFICATION.md). 99 prototype screen designs; native implementation and production NO-GO remain separate.
 
@@ -365,4 +365,4 @@ Hosted synthetic cross-branch closure (21 November): [report and evidence](../ho
 
 21 November committed-source publication: [matrix](web-api-publication-20261121-rtm.md). All 49 commits to GitHub and exact-source demo web/API rollout; no new mobile binaries; prior production/feature holds retained.
 
-Production blocker reconciliation (21 November): [matrix](blocker-reconciliation-20261121-rtm.md). Nine incidents, stale readiness evidence and existing production blocker IDs retained; no production release or mobile binary authorisation inferred.
+Production blocker reconciliation verified (21 November): [matrix](blocker-reconciliation-20261121-rtm.md), [report/owner inputs](../blocker-reconciliation/README.md) and [consolidated register](../blocker-reconciliation/PRODUCTION-BLOCKERS.md). Six bounded requirements/gates pass;9high incidents investigated,6resolved/3acknowledged unknown cause, all12records retained. Exact-source demo fixes and1,148-test CI verified; no new mobile binaries or commercial release approval. Original production IDs, import/retain-all and native/provider/physical holds retained.

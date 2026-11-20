@@ -247,6 +247,14 @@
     {
       "date": "2026-11-21",
       "change": "All 49 pending commits published; exact-source web/API client-demo rollout verified with 1,137 passing CI tests, seven roles, 36 candidate/36 stable checks, 13 ledger exceptions and four browser observations. See PUB21 matrix for all four bounded release gates. No new mobile binaries/export/install or change to existing product/production holds."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Production-blocker reconciliation deployed and hosted/visual verified:9 original high failures investigated,6 resolved with documented repair evidence,3 unknown-cause cases acknowledged; all12 records retained. Readiness history/CI/worker/retention statements corrected; incident history/diagnostics/notice clearance repaired. Corrected full CI pending; original commercial/import/retain-all/native gates preserved."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Final exact-source blocker reconciliation CI passed1,148 tests, web build/types/audits and native checks with export skipped. Final hosted/visual notice-clearance and source artifact checks close bounded rollout; commercial and unrelated gates remain."
     }
   ],
   "redeployment20261109": {
@@ -372,5 +380,33 @@
     "mobileExports": 0,
     "mobileInstalls": 0,
     "preserved": "Production NO-GO, actual-import hold, retain-all and original native/device/provider/physical/300-feature gates remain unchanged."
+  },
+  "blockerReconciliation20261121": {
+    "sourceCommit": "1c296819d9351faf153bfbf5423713312d7b3a49",
+    "deploymentId": "dpl_EPFsgJFKDE2457trgZd7SoVvAUEg",
+    "status": "VERIFIED_COMPLETE",
+    "matrix": "docs/traceability/blocker-reconciliation-20261121-rtm.json",
+    "report": "docs/blocker-reconciliation/README.md",
+    "incidents": {
+      "originalHighInvestigated": 9,
+      "resolved": 6,
+      "acknowledgedUnknownCause": 3,
+      "additionalEvidenceSupplement": 1,
+      "allOriginalRecordsRetained": 12
+    },
+    "productionDecision": "NO-GO",
+    "newMobileBuilds": 0,
+    "ciRunId": 44829055405,
+    "ciTests": {
+      "passed": 1148,
+      "failed": 0,
+      "skipped": 0
+    },
+    "hostedChecks": {
+      "candidate": 15,
+      "stable": 15,
+      "final": 17,
+      "browser": 6
+    }
   }
 }

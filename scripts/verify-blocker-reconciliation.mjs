@@ -35,6 +35,7 @@ try{
  pass('settings, inventory, gas, orders, ledger, policies, staff and customer wallets preserved');
  const incidents=await ok('owner','incidents');result.incidents=incidents.map(({id,status,severity,category,target})=>({id,status,severity,category,target}));
  const original=JSON.parse(await fs.readFile(dir+'incidents-before.json','utf8')).incidents;
+ const reviewed=JSON.parse(await fs.readFile(dir+'incident-findings.json','utf8'));
  assert.ok(original.every(o=>incidents.some(i=>i.id===o.id&&i.detail===o.detail&&i.target===o.target)));
  pass('all nine original failure records and original details retained');
  if(stage!=='before'){
@@ -42,8 +43,9 @@ try{
   for(const role of ['manager','finance','driver','technician','customer','commercial'])assert.equal((await call(role,'production.readiness')).status,403);pass('six non-owner roles denied production readiness');
   for(const role of ['driver','technician','customer','commercial'])assert.equal((await call(role,'incidents?view=detail&id='+original[0].id)).status,403);pass('four non-staff incident-history roles denied');
   for(const role of ['manager','finance']){const global=original.find(i=>i.branch_id===null);assert.equal((await call(role,'incidents?view=detail&id='+global.id)).status,404);}pass('branch staff cannot read business-wide incident history');
-  for(const i of original){const detail=await ok('owner','incidents?view=detail&id='+i.id);assert.equal(detail.incident.id,i.id);assert.equal(detail.incident.target,i.target);assert.equal(detail.incident.detail,i.detail);}pass('all nine scoped detail histories load');
+  for(const i of original){const detail=await ok('owner','incidents?view=detail&id='+i.id);assert.equal(detail.incident.id,i.id);assert.equal(detail.incident.target,i.target);assert.equal(detail.incident.detail,i.detail);if(stage==='final'){const finding=reviewed.findings.find(f=>f.id===i.id);assert.equal(detail.incident.status,finding.plannedDisposition);assert.ok(detail.events.some(e=>e.note.startsWith('PBR21 / synthetic client demo only / '+finding.confidence)));}}pass('all nine scoped detail histories load');
   assert.equal((await call('owner','incidents?view=detail&id='+original[0].id+'&page=0')).status,400);pass('invalid history pagination rejected');
+  if(stage==='final'){assert.equal(original.filter(i=>incidents.find(r=>r.id===i.id).status==='resolved').length,6);assert.equal(original.filter(i=>incidents.find(r=>r.id===i.id).status==='acknowledged').length,3);pass('reviewed six resolved and three acknowledged dispositions retain exact evidence');const other=JSON.parse(await fs.readFile(dir+'other-retained-incidents.json','utf8')).outsideNineHighCriticalScope;for(const row of other){const now=incidents.find(i=>i.id===row.id);assert.equal(now.status,row.status);assert.equal(now.detail,row.detail);}assert.equal(incidents.length,12);pass('all12 records and separate medium delivery incident retained');}
  }
  result.status='PASS';
 }catch(error){result.status='FAIL';result.failure=error.message;process.exitCode=1;}finally{

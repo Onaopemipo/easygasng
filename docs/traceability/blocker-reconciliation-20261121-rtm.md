@@ -1,3 +1,22 @@
-# Production blocker reconciliation
+# Production blocker reconciliation — 21 November 2026
 
-Investigation in progress. [Machine-readable matrix](blocker-reconciliation-20261121-rtm.json). Six requirements and all nine incidents retained. Production NO-GO, actual-import hold and retain-all unchanged.
+[Machine-readable matrix](blocker-reconciliation-20261121-rtm.json) · [Report and owner inputs](../blocker-reconciliation/README.md) · [Consolidated production register](../blocker-reconciliation/PRODUCTION-BLOCKERS.md)
+
+**6/6 bounded reconciliation requirements and gates verified; commercial production remains NO-GO.** All original production requirement IDs/gates, actual-import hold, retain-all, 36 native families/300 features and 14 external blocks remain. No whole-app completion percentage is inferred.
+
+| Requirement | Gate | Result and actual evidence |
+| --- | --- | --- |
+| PBR21-01 — Investigate all nine unresolved high/critical demo incidents against canonical source records | PBR21-G01 · PASS | All 9 original high-severity operation failures investigated against returned logs, documented repairs, fresh restricted-role tests and current hosted paths. Six resolved with retained evidence; three acknowledged with original cause unconfirmed. One already-resolved placeholder response supplemented, preserving its original note. All 12 records retained. |
+| PBR21-02 — Replace stale readiness statements with scoped, source-bound release evidence and current operational facts | PBR21-G02 · PASS | Readiness shows explicitly historical source-bound CI evidence, current migration081, intentional demo worker disablement, truthful retention and dependency-audit scope. Hosted owner view and six non-owner denials verified; recommendation remains NO-GO. |
+| PBR21-03 — Fix reproduced incident/readiness issues while preserving financial, safety and release controls | PBR21-G03 · PASS | Stable diagnostic IDs, safe SQLSTATE correlation, recurrence reopening, immutable audit evidence, scoped/paged response history and dialog demo-notice clearance implemented. 14 focused and 30 overlapping continuation tests pass; 390/320px hosted geometry and desktop history checked. |
+| PBR21-04 — Verify role restrictions, negative cases and unchanged business/retention controls | PBR21-G04 · PASS | 15 candidate, 15 stable and 17 final read-only checks pass with unchanged business fingerprints, all own sessions revoked, original records retained, role/global-incident denials verified and no new mobile artifacts. |
+| PBR21-05 — Reconcile stable production blocker IDs, outstanding work and explicit owner inputs | PBR21-G05 · PASS | Original AUD/PR/E2E/LAUNCH/WEB-A IDs retained and stale reasons corrected using executed later evidence. Remaining commercial owner inputs and unfinished engineering are mapped separately; production NO-GO/import/retain-all and 300 native features preserved. |
+| PBR21-06 — Publish and verify bounded client-demo web/API corrections without new mobile binaries | PBR21-G06 · PASS | All 436 committed upload bytes verified; exact-source Ready candidate promoted and hosted/UI checked. Corrected CI 1c29681 passed 1,148 tests and all build/type/audit jobs with native export skipped. Final artifact checks, native preservation, evidence and matrices verified. |
+
+Nine original high-severity incidents: 9/9 investigated, 6 resolved with documented repaired-path evidence, 3 acknowledged because the original cause is unconfirmed. One already-resolved placeholder response received substantive evidence without removing the old note. The entire 12-record register is retained: 8 resolved, 3 acknowledged high, 1 open medium. Unknown, blocked and untested work stays in coverage.
+
+CI on exact deployed source `1c296819d9351faf153bfbf5423713312d7b3a49`: 1,148 tests pass, zero failures/skips; web build/types/audits and native type/dependency/audit pass; native export skipped. All 436 committed upload files match. Hosted checks pass: 15 candidate, 15 stable and 17 final across seven roles. Six actual browser observations and three distinct local closure checks pass. The 14 focused and 30 continuation checks overlap the full CI count. Documentation/matrix checks: 6/6.
+
+Final Ready deployment: `dpl_EPFsgJFKDE2457trgZd7SoVvAUEg`. No new mobile binaries/export/install/distribution, hosted financial/stock/policy/qualification changes, import or production cutover. Ten audited incident responses are the authorised administrative changes; normal authentication/read audit records are expected.
+
+All remaining owner inputs and engineering acceptance are mapped in the consolidated register; one real business owner is supported. Three unknown-cause historical cases and one separate medium delivery incident remain active.
