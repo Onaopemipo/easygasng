@@ -1,3 +1,4 @@
+import BrandLogo from "./BrandLogo";
 import {NativeEntryScreen,NativePublicPolicies,NativeServiceInfo} from './NativeEntry';
 import {nativeEntryLink,type NativeEntry} from '../../packages/business-rules/src/native-entry-links';
 import NativeBusinessWorkspace from './NativeBusinessWorkspace';
@@ -856,9 +857,7 @@ export default function App() {
                 style={{ width: 151, height: 50 }}
                 accessibilityLabel="EasyGas Energy Solutions"
               >
-                <Image
-                  source={require("./assets/easygas-logo-hd.png")}
-                  resizeMode="contain"
+                <BrandLogo
                   style={{ width: 151, height: 50 }}
                 />
               </View>
@@ -1050,14 +1049,10 @@ export default function App() {
                   marginBottom: 25,
                 }}
               >
-                <Image
-                  source={require("./assets/easygas-logo-hd.png")}
-                  resizeMode="contain"
+                <BrandLogo
                   style={{
                     width: 245,
                     height: 82,
-                    backgroundColor: "#fff",
-                    borderRadius: 18,
                   }}
                 />
               </View>

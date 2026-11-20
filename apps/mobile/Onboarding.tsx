@@ -1,3 +1,4 @@
+import BrandLogo from "./BrandLogo";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
@@ -28,7 +29,6 @@ import {
 
 const cooking = require("./assets/cooking-hero.webp");
 const delivery = require("./assets/introduction-delivery.webp");
-const brand = require("./assets/introduction-logo.webp");
 const benefitIcons = [
   "shield-checkmark-outline",
   "star-outline",
@@ -252,11 +252,9 @@ export default function Onboarding({
   const copy = (
     <View style={[s.copy, index === 0 && s.center]} {...gesture.panHandlers}>
       {index === 0 && (
-        <Image
-          source={brand}
+        <BrandLogo tone="inverse"
           accessible={false}
           style={s.brand}
-          resizeMode="contain"
         />
       )}
       {index > 0 && (
@@ -493,7 +491,7 @@ const s = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  brand: { width: 157, height: 50, borderRadius: 11, backgroundColor: "#fff" },
+  brand: { width: 157, height: 50 },
   title: {
     color: "#fff",
     fontSize: 33,

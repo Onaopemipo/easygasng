@@ -1,3 +1,4 @@
+import BrandLogo from "./BrandLogo";
 import {
   useRemote,
   Feedback,
@@ -38,16 +39,12 @@ export default function CustomerHome({
   ];
   return (
     <View style={{ gap: 12 }}>
-      <Image
-        source={require("./assets/easygas-logo-hd.png")}
-        resizeMode="contain"
+      <BrandLogo
         accessibilityLabel="EasyGas Energy Solutions"
         style={{
           width: 180,
           height: 55,
           alignSelf: "center",
-          backgroundColor: colors.surface,
-          borderRadius: 12,
         }}
       />
       <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>

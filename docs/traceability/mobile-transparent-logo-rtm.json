@@ -1,0 +1,218 @@
+{
+  "phase": "Native transparent logo consistency",
+  "productionDecision": "Production NO-GO, actual-import hold, retain-all and unrelated device/provider gates retained",
+  "requirements": [
+    {
+      "id": "MLOGO-01",
+      "requirement": "Reuse the existing transparent EasyGas wordmark across all native logo placements",
+      "priority": "P1",
+      "scope": "Native mobile logo presentation only; existing transparent image unchanged, shared theme-aware rendering and all nine logo placements. No mobile binary build/export/install; installed-app verification deferred until a permitted build.",
+      "uiReference": "User requests transparent logo across the mobile app instead of white backgrounds",
+      "route": "Native mobile introduction, headers, home, sign-in/recovery and driver session restoration",
+      "implementationFiles": [
+        "apps/mobile/BrandLogo.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Onboarding.tsx",
+        "apps/mobile/CustomerHome.tsx",
+        "apps/mobile/DriverSignIn.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx"
+      ],
+      "dataSource": "Existing apps/mobile/assets/easygas-logo-hd.png and native theme palettes; no API/business-data changes.",
+      "securityControl": "Presentation-only; sessions, role/branch authority, backend operations, assets and prior production NO-GO retained.",
+      "testFiles": [
+        "tests/native-workflow-traceability.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/customer-introduction.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-RTM-SOURCE",
+        "DRVS-PRESERVED"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-transparent-logo/README.md",
+        "docs/mobile-transparent-logo/source-before.json",
+        "docs/mobile-transparent-logo/reviewed-source-changes.json",
+        "docs/mobile-transparent-logo/evidence/source-and-artifact-checks.json",
+        "docs/mobile-transparent-logo/evidence/source-and-artifact-checks.txt",
+        "docs/mobile-transparent-logo/evidence/regression-tests.txt",
+        "docs/mobile-transparent-logo/evidence/prototype-preservation.txt",
+        "docs/mobile-transparent-logo/evidence/typecheck.txt",
+        "docs/mobile-transparent-logo/evidence/preview-build.txt",
+        "docs/mobile-transparent-logo/evidence/render-observations.json",
+        "docs/mobile-transparent-logo/evidence/light-dark-preview.jpg",
+        "docs/mobile-transparent-logo/evidence/phone-preview.jpg"
+      ],
+      "acceptanceGate": "MLOGO-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Existing approved 2172\u00d7724 wordmark reused byte-for-byte; alpha transparency verified (no opaque white pixels), one shared source and all nine native placements inventoried.",
+      "testResult": "PASS: mobile typecheck;20 existing regressions; five original prototype checks; transparent asset/source inventory; actual shared component rendering at desktop/390px; original native artifact hashes/sizes/exact timestamps retained.",
+      "outstandingWork": "No outstanding work in bounded source/component presentation scope. New appearance is not installed or published in the historical private prototype. Installed full-screen verification requires a future permitted mobile build; existing device/production gates remain unchanged."
+    },
+    {
+      "id": "MLOGO-02",
+      "requirement": "Remove logo backplates and maintain light/dark contrast and accessible names",
+      "priority": "P1",
+      "scope": "Native mobile logo presentation only; existing transparent image unchanged, shared theme-aware rendering and all nine logo placements. No mobile binary build/export/install; installed-app verification deferred until a permitted build.",
+      "uiReference": "User requests transparent logo across the mobile app instead of white backgrounds",
+      "route": "Native mobile introduction, headers, home, sign-in/recovery and driver session restoration",
+      "implementationFiles": [
+        "apps/mobile/BrandLogo.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/Onboarding.tsx",
+        "apps/mobile/CustomerHome.tsx",
+        "apps/mobile/DriverSignIn.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx"
+      ],
+      "dataSource": "Existing apps/mobile/assets/easygas-logo-hd.png and native theme palettes; no API/business-data changes.",
+      "securityControl": "Presentation-only; sessions, role/branch authority, backend operations, assets and prior production NO-GO retained.",
+      "testFiles": [
+        "tests/native-workflow-traceability.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/customer-introduction.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-RTM-SOURCE",
+        "DRVS-PRESERVED"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-transparent-logo/README.md",
+        "docs/mobile-transparent-logo/source-before.json",
+        "docs/mobile-transparent-logo/reviewed-source-changes.json",
+        "docs/mobile-transparent-logo/evidence/source-and-artifact-checks.json",
+        "docs/mobile-transparent-logo/evidence/source-and-artifact-checks.txt",
+        "docs/mobile-transparent-logo/evidence/regression-tests.txt",
+        "docs/mobile-transparent-logo/evidence/prototype-preservation.txt",
+        "docs/mobile-transparent-logo/evidence/typecheck.txt",
+        "docs/mobile-transparent-logo/evidence/preview-build.txt",
+        "docs/mobile-transparent-logo/evidence/render-observations.json",
+        "docs/mobile-transparent-logo/evidence/light-dark-preview.jpg",
+        "docs/mobile-transparent-logo/evidence/phone-preview.jpg"
+      ],
+      "acceptanceGate": "MLOGO-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Logo-only white/pale tiles removed. Brand colours on light surfaces and white inverse wordmark on dark/fixed-green surfaces render with transparent containers and accessible names; original logo sizing/decorative intent retained.",
+      "testResult": "PASS: mobile typecheck;20 existing regressions; five original prototype checks; transparent asset/source inventory; actual shared component rendering at desktop/390px; original native artifact hashes/sizes/exact timestamps retained.",
+      "outstandingWork": "No outstanding work in bounded source/component presentation scope. New appearance is not installed or published in the historical private prototype. Installed full-screen verification requires a future permitted mobile build; existing device/production gates remain unchanged."
+    },
+    {
+      "id": "MLOGO-03",
+      "requirement": "Verify source adoption/rendering and preserve native artifacts without new binaries",
+      "priority": "P1",
+      "scope": "Native mobile logo presentation only; existing transparent image unchanged, shared theme-aware rendering and all nine logo placements. No mobile binary build/export/install; installed-app verification deferred until a permitted build.",
+      "uiReference": "User requests transparent logo across the mobile app instead of white backgrounds",
+      "route": "Native mobile introduction, headers, home, sign-in/recovery and driver session restoration",
+      "implementationFiles": [
+        "apps/mobile/BrandLogo.tsx",
+        "scripts/validate-mobile-prototype.mjs",
+        "tests/native-workflow-traceability.test.ts",
+        "tests/driver-saas-redesign.test.ts"
+      ],
+      "dataSource": "Existing apps/mobile/assets/easygas-logo-hd.png and native theme palettes; no API/business-data changes.",
+      "securityControl": "Presentation-only; sessions, role/branch authority, backend operations, assets and prior production NO-GO retained.",
+      "testFiles": [
+        "tests/native-workflow-traceability.test.ts",
+        "tests/driver-saas-redesign.test.ts",
+        "tests/customer-introduction.test.ts",
+        "tests/driver-workspace.test.ts",
+        "tests/technician-four-screen.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-RTM-SOURCE",
+        "DRVS-PRESERVED"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/mobile-transparent-logo/README.md",
+        "docs/mobile-transparent-logo/source-before.json",
+        "docs/mobile-transparent-logo/reviewed-source-changes.json",
+        "docs/mobile-transparent-logo/evidence/source-and-artifact-checks.json",
+        "docs/mobile-transparent-logo/evidence/source-and-artifact-checks.txt",
+        "docs/mobile-transparent-logo/evidence/regression-tests.txt",
+        "docs/mobile-transparent-logo/evidence/prototype-preservation.txt",
+        "docs/mobile-transparent-logo/evidence/typecheck.txt",
+        "docs/mobile-transparent-logo/evidence/preview-build.txt",
+        "docs/mobile-transparent-logo/evidence/render-observations.json",
+        "docs/mobile-transparent-logo/evidence/light-dark-preview.jpg",
+        "docs/mobile-transparent-logo/evidence/phone-preview.jpg"
+      ],
+      "acceptanceGate": "MLOGO-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Mobile typecheck,20 existing regressions and five historical prototype checks passed. Actual shared component inspected on light/dark/green surfaces and390px preview. Four native artifacts and historical prototype manifest/bundle unchanged; no binary build/export/install.",
+      "testResult": "PASS: mobile typecheck;20 existing regressions; five original prototype checks; transparent asset/source inventory; actual shared component rendering at desktop/390px; original native artifact hashes/sizes/exact timestamps retained.",
+      "outstandingWork": "No outstanding work in bounded source/component presentation scope. New appearance is not installed or published in the historical private prototype. Installed full-screen verification requires a future permitted mobile build; existing device/production gates remain unchanged."
+    }
+  ],
+  "gates": [
+    {
+      "id": "MLOGO-G01",
+      "description": "Reuse the existing transparent EasyGas wordmark across all native logo placements",
+      "status": "PASS",
+      "reason": "Existing approved 2172\u00d7724 wordmark reused byte-for-byte; alpha transparency verified (no opaque white pixels), one shared source and all nine native placements inventoried."
+    },
+    {
+      "id": "MLOGO-G02",
+      "description": "Remove logo backplates and maintain light/dark contrast and accessible names",
+      "status": "PASS",
+      "reason": "Logo-only white/pale tiles removed. Brand colours on light surfaces and white inverse wordmark on dark/fixed-green surfaces render with transparent containers and accessible names; original logo sizing/decorative intent retained."
+    },
+    {
+      "id": "MLOGO-G03",
+      "description": "Verify source adoption/rendering and preserve native artifacts without new binaries",
+      "status": "PASS",
+      "reason": "Mobile typecheck,20 existing regressions and five historical prototype checks passed. Actual shared component inspected on light/dark/green surfaces and390px preview. Four native artifacts and historical prototype manifest/bundle unchanged; no binary build/export/install."
+    }
+  ],
+  "coverage": {
+    "implementation": {
+      "implemented": 3,
+      "total": 3
+    },
+    "requirements": {
+      "verified": 3,
+      "total": 3
+    },
+    "critical": {
+      "verified": 0,
+      "total": 0
+    },
+    "routes": {
+      "verified": 0,
+      "total": 9,
+      "reason": "Nine native placements are wired and source-inspected; installed full-screen appearance is unverified because no mobile binary was built."
+    },
+    "gates": {
+      "passed": 3,
+      "total": 3
+    },
+    "excluded": 0,
+    "sourcePlacements": {
+      "verified": 9,
+      "total": 9
+    },
+    "componentSurfaces": {
+      "verified": 3,
+      "total": 3
+    },
+    "nativeBinaryBuilds": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "Registered bounded native presentation phase. Existing transparent logo reused; white backing is caused by UI styles. Preserve nine placements and explicit no-new-mobile-binaries request."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "All nine source placements now use BrandLogo. Reused original alpha image unchanged; removed logo-only backing styles and used inverse white tint for dark contexts.20 regressions, five historical prototype checks and component renders passed. Original artifacts preserved; nine installed full-screen appearances remain unverified, separately reported, without a new binary."
+    }
+  ]
+}

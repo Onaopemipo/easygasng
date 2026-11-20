@@ -1,3 +1,4 @@
+import BrandLogo from "./BrandLogo";
 import {
   DriverPanel,
   DriverHeading,
@@ -24,7 +25,6 @@ import {
   View,
   ScrollView,
   Pressable,
-  Image,
   Switch,
   StatusBar,
   Linking,
@@ -667,20 +667,10 @@ export default function DriverWorkspace({
               gap: 8,
             }}
           >
-            <View
-              style={{
-                backgroundColor: "#fff",
-                borderRadius: 10,
-                paddingHorizontal: 6,
-              }}
-            >
-              <Image
-                accessibilityLabel="EasyGas"
-                source={require("./assets/easygas-logo-hd.png")}
-                resizeMode="contain"
-                style={{ width: 92, height: 36 }}
-              />
-            </View>
+            <BrandLogo tone="inverse"
+              accessibilityLabel="EasyGas"
+              style={{ width: 92, height: 36 }}
+            />
             <Text preserveColor style={{ color: "#fff", fontWeight: "700" }}>
               Driver
             </Text>
@@ -860,9 +850,7 @@ export default function DriverWorkspace({
           </Card>
         ) : !snapshot ? (
           <Card>
-            <Image
-              source={require("./assets/easygas-logo-hd.png")}
-              resizeMode="contain"
+            <BrandLogo
               style={{ width: 220, height: 80, alignSelf: "center" }}
             />
             <Title>Driver App</Title>

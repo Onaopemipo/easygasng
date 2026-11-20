@@ -1,3 +1,4 @@
+import BrandLogo from "./BrandLogo";
 import {
   technicianDate,
   technicianGreeting,
@@ -8,7 +9,6 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Pressable,
-  Image,
   Switch,
   StyleSheet,
   useWindowDimensions,
@@ -42,15 +42,11 @@ export function TechnicianBrandHeader({
         { borderColor: colors.border, backgroundColor: colors.surface },
       ]}
     >
-      <Image
-        source={require("./assets/easygas-logo-hd.png")}
+      <BrandLogo
         accessibilityLabel="EasyGas Energy Solutions"
-        resizeMode="contain"
         style={{
           width: width < 360 ? 90 : 112,
           height: 46,
-          backgroundColor: dark ? "#f0faee" : "transparent",
-          borderRadius: 6,
         }}
       />
       <View

@@ -346,3 +346,7 @@ Remaining Admin Settings consolidation accepted (20 November 2026): [matrix](adm
 Consolidated Settings role-based acceptance continuation: [matrix](admin-settings-acceptance-rtm.md). Seven requirements registered; previous audit and production decisions retained.
 
 Consolidated Settings role acceptance accepted (20 November 2026): [matrix](admin-settings-acceptance-rtm.md), [report](../admin-settings-acceptance/README.md) and [manual](../user-manual/admin-settings-acceptance.md). Seven scoped requirements/gates verified;84 regressions, four release checks,31 candidate/31 stable checks. Seven local roles and six supplied demo identities covered; Commercial live sign-in not claimed. Source `f0eaf1bfcba2431b618384f137a7a16b8e1b709d` / `dpl_9iRB6FomxHHXqwNvjChTsnFgty4z` Ready and promoted; no mobile build or production decision change.
+
+Native transparent logo consistency: [matrix](mobile-transparent-logo-rtm.md). Shared transparent branding across native entry/header/home surfaces; no new mobile binaries and prior production decisions retained.
+
+Transparent native logo source update verified: [matrix](mobile-transparent-logo-rtm.md), [report/preview](../mobile-transparent-logo/README.md). All nine placements share transparent BrandLogo;20 regressions, five original-prototype checks and local component renders pass. No new mobile binaries; installed appearance remains0/9 unverified until a permitted build, with all prior production gates retained.

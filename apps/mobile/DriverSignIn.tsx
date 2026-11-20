@@ -1,5 +1,6 @@
+import BrandLogo from "./BrandLogo";
 import React from "react";
-import { View, Image, ScrollView, StatusBar } from "react-native";
+import { View, ScrollView, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FieldCaption, Text, TextInput } from "./typography";
 import { useTheme } from "./theme";
@@ -53,16 +54,12 @@ export default function DriverSignIn({
           alignSelf: "center",
         }}
       >
-        <Image
-          source={require("./assets/easygas-logo-hd.png")}
-          resizeMode="contain"
+        <BrandLogo
           accessibilityLabel="EasyGas Energy Solutions Driver App"
           style={{
             width: 250,
             height: 100,
             alignSelf: "center",
-            backgroundColor: colors.surface,
-            borderRadius: 18,
           }}
         />
         <Title>{recover ? "Driver Account Recovery" : "Driver Sign In"}</Title>

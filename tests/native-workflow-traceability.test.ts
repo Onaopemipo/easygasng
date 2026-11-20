@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile,access} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
 const json=async(p:string)=>JSON.parse(await readFile(p,'utf8'));
 test('NATIVE-RTM-DENOMINATORS: original 36 families, 300 stable features and 14 external blocks stay in scope',async()=>{
  const matrix=await json('docs/traceability/native-workflows-rtm.json'),leaves=await json('docs/native-workflows/feature-acceptance.json'),prior=await json('docs/mobile-acceptance/feature-acceptance.json');
@@ -17,10 +18,13 @@ test('NATIVE-RTM-EVIDENCE: six installed iOS personas and real component checks 
  assert.equal(component.checks.filter((c:any)=>c.id.startsWith('NATIVE-COMPONENT-')&&c.result==='PASS').length,9);assert.equal(component.checks.find((c:any)=>c.id==='NATIVE-PORT-FORM-COUNT').forms,97);
  const readback=await json('docs/native-workflows/evidence/simulator-api-readback.json');assert.equal(readback.credit.amountKobo,8025);assert.equal(readback.credit.status,'pending');assert.equal(readback.technician.assignment,'acknowledged');assert.equal(readback.driver.assignment[0].decision,'acknowledged');assert.equal(readback.driver.attempt.pickedUpAt,null);
 });
-test('NATIVE-RTM-SOURCE: final source matches build record and explicit native continuation preserves original prototype manifest/bundle',async()=>{
+test('NATIVE-RTM-SOURCE: native build record and later logo continuation retain original artifact proofs',async()=>{
  const sha=(b:Buffer)=>createHash('sha256').update(b).digest('hex'),build=await json('docs/native-workflows/evidence/build-manifest.json'),review=await json('docs/native-workflows/reviewed-source-changes.json');
- for(const[path,hash]of Object.entries(build.sourceSha256))assert.equal(sha(await readFile(path)),hash,path);
- for(const[path,hash]of Object.entries(review.files))assert.equal(sha(await readFile(path)),hash,path);
+ const logo=await json('docs/mobile-transparent-logo/reviewed-source-changes.json');
+ for(const [path,hash] of Object.entries(logo.baseline)){assert.equal(sha(execFileSync('git',['show',logo.baseCommit+':'+path])),hash,path+' pre-logo commit baseline');assert.equal(sha(await readFile(path)),logo.files[path],path+' transparent-logo continuation');}
+ for(const[path,hash]of Object.entries(build.sourceSha256)){if(logo.files[path])assert.equal(logo.baseline[path],hash,path+' original build retained');assert.equal(sha(await readFile(path)),logo.files[path]??hash,path);}
+ for(const[path,hash]of Object.entries(review.files)){if(logo.files[path])assert.equal(logo.baseline[path],hash,path+' original review retained');assert.equal(sha(await readFile(path)),logo.files[path]??hash,path);}
+ for(const[path,hash]of Object.entries(logo.addedFiles))assert.equal(sha(await readFile(path)),hash,path);
  assert.equal(sha(await readFile('prototypes/easygas-mobile/source-manifest.json')),review.prototypeManifestSha256);assert.equal(sha(await readFile('prototypes/easygas-mobile/dist/app.js')),review.prototypeBundleSha256);
  assert.match(build.distribution,/not a client-demo cloud or signed physical-device/);
 });
