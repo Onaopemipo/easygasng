@@ -32,3 +32,5 @@ Use the bundled Codex Python runtime with python-docx, Pillow, ReportLab and pyp
 Settings editor continuation (20 November): [updated task instructions and desktop/phone previews](settings-change-update.md). The focused editor/review flow replaces the long settings-change modal. This addendum preserves the existing manual and does not reissue its historical PDF/Word edition.
 
 Wallet & Payments refinement (20 November): [current payment configuration guide](wallet-payments-update.md), including direct naira/percentage entry, compact payment methods, optional advanced rules, wallet limits and readable review. Linked screenshots show the deployed web editor. The existing PDF/Word edition remains historical.
+
+Payment category consolidation (20 November): [Payments & Wallet organisation guide](payment-settings-organisation.md) maps the six renamed controls and distinguishes card top-up limits from cash/bank-transfer wallet limits. The three previous Settings categories now share one purpose-based category; existing permissions and financial rules are retained.

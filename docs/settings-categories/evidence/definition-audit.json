@@ -1,0 +1,137 @@
+{
+  "at": "2026-11-20T04:02:49.387Z",
+  "base": "https://easygas-client-demo.vercel.app",
+  "definitions": [
+    {
+      "key": "payment.integration",
+      "label": "Payment integration enabled",
+      "category": "Integrations",
+      "description": "Protective disable is immediate. Enabling requires a verified provider adapter.",
+      "value_type": "boolean",
+      "view_roles": [
+        "owner",
+        "finance"
+      ],
+      "propose_roles": [
+        "owner",
+        "finance"
+      ],
+      "approve_roles": [
+        "owner",
+        "finance"
+      ],
+      "risk": 4,
+      "additional_verification": true,
+      "owner_auto_approval": false
+    },
+    {
+      "key": "wallet.maximum",
+      "label": "Maximum purchase credit funding",
+      "category": "Payments & Wallet",
+      "description": "Funding remains unavailable until a verified payment integration is connected.",
+      "value_type": "money",
+      "view_roles": [
+        "owner",
+        "finance"
+      ],
+      "propose_roles": [
+        "owner",
+        "finance"
+      ],
+      "approve_roles": [
+        "owner"
+      ],
+      "risk": 3,
+      "additional_verification": false,
+      "owner_auto_approval": true
+    },
+    {
+      "key": "payment.cod",
+      "label": "Payment on delivery",
+      "category": "Payments & Wallet",
+      "description": "Permit unverified cash-on-delivery orders; payments stay unpaid.",
+      "value_type": "boolean",
+      "view_roles": [
+        "owner",
+        "finance",
+        "manager"
+      ],
+      "propose_roles": [
+        "owner",
+        "finance"
+      ],
+      "approve_roles": [
+        "owner"
+      ],
+      "risk": 3,
+      "additional_verification": false,
+      "owner_auto_approval": true
+    },
+    {
+      "key": "payment.settlement",
+      "label": "Settlement account",
+      "category": "Payments & Wallet",
+      "description": "Bank metadata only. Two independent approvers and recent password verification are required.",
+      "value_type": "bank",
+      "view_roles": [
+        "owner",
+        "finance"
+      ],
+      "propose_roles": [
+        "owner",
+        "finance"
+      ],
+      "approve_roles": [
+        "owner",
+        "finance"
+      ],
+      "risk": 4,
+      "additional_verification": true,
+      "owner_auto_approval": false
+    },
+    {
+      "key": "wallet.enabled",
+      "label": "Purchase credit spending enabled",
+      "category": "Wallet",
+      "description": "Allow spending verified wallet credits. External top-ups remain disconnected.",
+      "value_type": "boolean",
+      "view_roles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "propose_roles": [
+        "owner",
+        "finance"
+      ],
+      "approve_roles": [
+        "owner"
+      ],
+      "risk": 3,
+      "additional_verification": false,
+      "owner_auto_approval": true
+    },
+    {
+      "key": "payment.gateway",
+      "label": "Payment Gateway & Fees",
+      "category": "Wallet & Payments",
+      "description": "Sandbox only. Independently approved fee versions and funding controls; secrets remain server-side. Live activation is unsupported.",
+      "value_type": "payment_gateway",
+      "view_roles": [
+        "owner",
+        "finance"
+      ],
+      "propose_roles": [
+        "owner",
+        "finance"
+      ],
+      "approve_roles": [
+        "owner",
+        "finance"
+      ],
+      "risk": 4,
+      "additional_verification": true,
+      "owner_auto_approval": false
+    }
+  ]
+}

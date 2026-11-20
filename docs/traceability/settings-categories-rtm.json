@@ -1,0 +1,203 @@
+{
+  "phase": "Payment settings category consolidation",
+  "productionDecision": "NO-GO; actual-import hold, retain-all and unrelated gates unchanged",
+  "requirements": [
+    {
+      "id": "SCAT-01",
+      "requirement": "One payment settings category with purpose-based sections",
+      "priority": "P1",
+      "scope": "Admin Settings category navigation, setting display names, search, grouping and existing edit/history handoffs only. No financial policy or authorisation change.",
+      "uiReference": "User-reported Payments & Wallet, Wallet & Payments and Wallet categories",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/components/settings-purpose-group.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing role-filtered settings API and stable setting keys; definition audit in docs/settings-categories/evidence/definition-audit.json; wallet-funding.ts, commerce.ts, checkout-payments.ts and payments/runtime.ts define actual use.",
+      "securityControl": "Retain stored category, setting key, scope, permissions, required approvers, risk, values and version; server governance/delegation remains unchanged. UI receives only permitted settings.",
+      "testFiles": [
+        "tests/settings-categories.test.ts"
+      ],
+      "testIds": [
+        "SCAT-MAPPING",
+        "SCAT-SEARCH",
+        "SCAT-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/settings-categories/evidence/definition-audit.json",
+        "docs/settings-categories/AUDIT.md",
+        "docs/settings-categories/evidence/focused-tests.txt",
+        "docs/settings-categories/evidence/local-browser.json",
+        "docs/settings-categories/evidence/typecheck.txt",
+        "docs/settings-categories/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "SCAT-G01",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified; hosted release pending.",
+      "testResult": "PASS local: 41 focused tests, web typecheck/build and actual browser acceptance; hosted deployment pending.",
+      "outstandingWork": "Deploy exact source, verify stable grouping/search/handoffs, preserve native and business-state snapshots, finalise matrix."
+    },
+    {
+      "id": "SCAT-02",
+      "requirement": "Accurate labels and distinctions for card versus cash/bank wallet controls",
+      "priority": "P1",
+      "scope": "Admin Settings category navigation, setting display names, search, grouping and existing edit/history handoffs only. No financial policy or authorisation change.",
+      "uiReference": "User-reported Payments & Wallet, Wallet & Payments and Wallet categories",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/components/settings-purpose-group.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing role-filtered settings API and stable setting keys; definition audit in docs/settings-categories/evidence/definition-audit.json; wallet-funding.ts, commerce.ts, checkout-payments.ts and payments/runtime.ts define actual use.",
+      "securityControl": "Retain stored category, setting key, scope, permissions, required approvers, risk, values and version; server governance/delegation remains unchanged. UI receives only permitted settings.",
+      "testFiles": [
+        "tests/settings-categories.test.ts"
+      ],
+      "testIds": [
+        "SCAT-MAPPING",
+        "SCAT-SEARCH",
+        "SCAT-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/settings-categories/evidence/definition-audit.json",
+        "docs/settings-categories/AUDIT.md",
+        "docs/settings-categories/evidence/focused-tests.txt",
+        "docs/settings-categories/evidence/local-browser.json",
+        "docs/settings-categories/evidence/typecheck.txt",
+        "docs/settings-categories/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "SCAT-G02",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified; hosted release pending.",
+      "testResult": "PASS local: 41 focused tests, web typecheck/build and actual browser acceptance; hosted deployment pending.",
+      "outstandingWork": "Deploy exact source, verify stable grouping/search/handoffs, preserve native and business-state snapshots, finalise matrix."
+    },
+    {
+      "id": "SCAT-03",
+      "requirement": "No setting, authority, version, history or hidden-role coverage lost",
+      "priority": "P0",
+      "scope": "Admin Settings category navigation, setting display names, search, grouping and existing edit/history handoffs only. No financial policy or authorisation change.",
+      "uiReference": "User-reported Payments & Wallet, Wallet & Payments and Wallet categories",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/components/settings-purpose-group.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing role-filtered settings API and stable setting keys; definition audit in docs/settings-categories/evidence/definition-audit.json; wallet-funding.ts, commerce.ts, checkout-payments.ts and payments/runtime.ts define actual use.",
+      "securityControl": "Retain stored category, setting key, scope, permissions, required approvers, risk, values and version; server governance/delegation remains unchanged. UI receives only permitted settings.",
+      "testFiles": [
+        "tests/settings-categories.test.ts"
+      ],
+      "testIds": [
+        "SCAT-MAPPING",
+        "SCAT-SEARCH",
+        "SCAT-SECURITY"
+      ],
+      "negativeTests": [
+        "SCAT-SECURITY"
+      ],
+      "evidence": [
+        "docs/settings-categories/evidence/definition-audit.json",
+        "docs/settings-categories/AUDIT.md",
+        "docs/settings-categories/evidence/focused-tests.txt",
+        "docs/settings-categories/evidence/local-browser.json",
+        "docs/settings-categories/evidence/typecheck.txt",
+        "docs/settings-categories/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "SCAT-G03",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified; hosted release pending.",
+      "testResult": "PASS local: 41 focused tests, web typecheck/build and actual browser acceptance; hosted deployment pending.",
+      "outstandingWork": "Deploy exact source, verify stable grouping/search/handoffs, preserve native and business-state snapshots, finalise matrix."
+    },
+    {
+      "id": "SCAT-04",
+      "requirement": "Verified demo rollout, discoverability and documentation",
+      "priority": "P1",
+      "scope": "Admin Settings category navigation, setting display names, search, grouping and existing edit/history handoffs only. No financial policy or authorisation change.",
+      "uiReference": "User-reported Payments & Wallet, Wallet & Payments and Wallet categories",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/components/settings-purpose-group.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing role-filtered settings API and stable setting keys; definition audit in docs/settings-categories/evidence/definition-audit.json; wallet-funding.ts, commerce.ts, checkout-payments.ts and payments/runtime.ts define actual use.",
+      "securityControl": "Retain stored category, setting key, scope, permissions, required approvers, risk, values and version; server governance/delegation remains unchanged. UI receives only permitted settings.",
+      "testFiles": [
+        "tests/settings-categories.test.ts"
+      ],
+      "testIds": [
+        "SCAT-MAPPING",
+        "SCAT-SEARCH",
+        "SCAT-SECURITY"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/settings-categories/evidence/definition-audit.json",
+        "docs/settings-categories/AUDIT.md",
+        "docs/settings-categories/evidence/focused-tests.txt",
+        "docs/settings-categories/evidence/local-browser.json",
+        "docs/settings-categories/evidence/typecheck.txt",
+        "docs/settings-categories/evidence/web-build.txt"
+      ],
+      "acceptanceGate": "SCAT-G04",
+      "status": "PARTIAL",
+      "reason": "Implemented and locally verified; hosted release pending.",
+      "testResult": "PASS local: 41 focused tests, web typecheck/build and actual browser acceptance; hosted deployment pending.",
+      "outstandingWork": "Deploy exact source, verify stable grouping/search/handoffs, preserve native and business-state snapshots, finalise matrix."
+    }
+  ],
+  "gates": [
+    {
+      "id": "SCAT-G01",
+      "description": "One payment settings category with purpose-based sections",
+      "status": "PARTIAL",
+      "reason": "Implementation/acceptance pending."
+    },
+    {
+      "id": "SCAT-G02",
+      "description": "Accurate labels and distinctions for card versus cash/bank wallet controls",
+      "status": "PARTIAL",
+      "reason": "Implementation/acceptance pending."
+    },
+    {
+      "id": "SCAT-G03",
+      "description": "No setting, authority, version, history or hidden-role coverage lost",
+      "status": "PARTIAL",
+      "reason": "Implementation/acceptance pending."
+    },
+    {
+      "id": "SCAT-G04",
+      "description": "Verified demo rollout, discoverability and documentation",
+      "status": "PARTIAL",
+      "reason": "Implementation/acceptance pending."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 0,
+      "total": 4
+    },
+    "gates": {
+      "passed": 0,
+      "total": 4
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "Registered before implementation. Consolidate the three confusing payment categories and relocate the legacy integration control for display only. Stored definition categories remain authoritative for existing security rules."
+    }
+  ]
+}

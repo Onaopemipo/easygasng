@@ -7,6 +7,8 @@ import DriversWorkspace from "./drivers-workspace";
 import { privilegeById } from "../../../packages/business-rules/src/staff-privileges";
 import { NotificationsTray } from "./notifications-tray";
 import SettingForm from "./setting-change-form";
+import SettingsPurposeGroup from "./settings-purpose-group";
+import { paymentSettingsCategory, settingsCategories, settingsDisplayCategory, settingsDisplay, settingsGroups } from "../../../packages/business-rules/src/settings-categories";
 import { appAlert } from "./app-dialog";
 import { FormInput } from "./password-input";
 import SettingSummary, { readableSetting } from "./setting-summary";
@@ -801,9 +803,7 @@ function Settings({
     [history, setHistory] = useState<any>(null),
     [message, setMessage] = useState(""),
     [actionError, setActionError] = useState("");
-  const categories = data
-    ? [...new Set<string>(data.map((d: any) => d.category))]
-    : [];
+  const categories = settingsCategories(data ?? []);
   const current = categories.includes(category) ? category : categories[0];
   return (
     <>
@@ -883,31 +883,21 @@ function Settings({
                   {user.branchId ?? "Lagos"}
                 </span>
               </div>
-              {query.trim() &&
-                !data.some((d: any) =>
-                  `${d.category} ${d.label} ${d.description}`
-                    .toLowerCase()
-                    .includes(query.toLowerCase()),
-                ) && (
+              {current === paymentSettingsCategory && !query.trim() && <p className="settings-purpose-intro">Manage online checkout, customer wallet access, cash payments and settlement details. Each control keeps its existing approval requirements.</p>}
+              {query.trim() && !settingsGroups(data, current, query).length && (
                   <p className="settings-empty" role="status">
                     No settings match “{query}”. Try another word or choose a
                     category.
                   </p>
                 )}
-              {data
-                .filter(
-                  (d: any) =>
-                    (!query.trim() ? d.category === current : true) &&
-                    `${d.category} ${d.label} ${d.description}`
-                      .toLowerCase()
-                      .includes(query.toLowerCase()),
-                )
-                .map((d: any) => (
+              {settingsGroups(data, current, query).map((group) => (
+                <SettingsPurposeGroup key={group.title} title={group.title} advanced={group.advanced} searching={!!query.trim()}>
+                {group.settings.map((d: any) => (
                   <article className="setting-card" key={d.key}>
                     <div className="setting-top">
                       <div>
-                        <h3>{d.label}</h3>
-                        <p>{d.key === "payment.integration" ? "Legacy integration control. Paystack card payments are configured separately under Payment Gateway & Fees; this value does not show Paystack availability." : d.description}</p>
+                        <h3>{settingsDisplay(d).label}</h3>
+                        <p>{settingsDisplay(d).description}</p>
                       </div>
                       <span className={`risk risk-${d.risk}`}>
                         {
@@ -929,12 +919,12 @@ function Settings({
                       <div className="setting-actions">
                         <button
                           className="icon-button"
-                          aria-label={`View ${d.label} history`}
+                          aria-label={`View ${settingsDisplay(d).label} history`}
                           onClick={async () => {
                             setActionError("");
                             try {
                               setHistory({
-                                setting: d,
+                                setting: settingsDisplay(d),
                                 versions: await api(
                                   `setting.history?key=${encodeURIComponent(d.key)}&scope=${d.scope}`,
                                 ),
@@ -953,14 +943,14 @@ function Settings({
                               if (d.key === "payment.integration" && d.value !== true) {
                                 const gateway = data.find((setting: any) => setting.key === "payment.gateway");
                                 if (gateway?.propose_roles.includes(user.role)) {
-                                  setCategory(gateway.category);
+                                  setCategory(settingsDisplayCategory(gateway));
                                   setQuery("");
-                                  setEditing(gateway);
-                                } else setActionError("Ask an authorised owner or finance administrator to configure Payment Gateway & Fees.");
-                              } else setEditing(d);
+                                  setEditing(settingsDisplay(gateway));
+                                } else setActionError("Ask an authorised owner or finance administrator to configure Online payments & fees.");
+                              } else setEditing(settingsDisplay(d));
                             }}
                           >
-                            {d.key === "payment.integration" && d.value !== true ? "Configure Paystack" : d.risk === 1 ? "Edit Setting" : "Propose Change"}
+                            {d.key === "payment.integration" && d.value !== true ? "Open online payment settings" : d.risk === 1 ? "Edit Setting" : "Propose Change"}
                             <ArrowRight size={14} />
                           </button>
                         )}
@@ -979,6 +969,8 @@ function Settings({
                     </div>
                   </article>
                 ))}
+                </SettingsPurposeGroup>
+              ))}
             </>
           )}
         </section>

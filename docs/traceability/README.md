@@ -334,3 +334,5 @@ Settings modal rollout verified: source `3aa98df`, Ready `dpl_84mTYGPNbPFoQYtoFj
 Wallet & Payments refinement (20 November): [matrix](wallet-payments-rtm.md), [audit](../wallet-payments/AUDIT.md). Six requirements registered before refining payment fields, readable units, advanced options and review. Existing payment controls and unrelated production/native gates are preserved.
 
 Wallet & Payments rollout verified: source `e6996fc`, Ready `dpl_7vUspXs9hxLDy8vwp89Yo3Y19d8m`; six scoped requirements/gates verified. 45 focused tests, web typecheck/build, 25 checks on each candidate/stable endpoint, real local draft readback and three-size hosted UI acceptance passed. [Current guide](../user-manual/wallet-payments-update.md), [release and limits](../wallet-payments/IMPLEMENTATION.md). Original native artifacts and business state unchanged; production NO-GO and unrelated gates preserved.
+
+Payment settings category consolidation: [matrix](settings-categories-rtm.md). Four scoped requirements registered before consolidating confusing category labels. Existing keys, stored definition categories, permissions, values and production decisions are retained.

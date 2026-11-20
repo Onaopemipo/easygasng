@@ -22,3 +22,5 @@ To test the interface without changing business configuration, edit values, swit
 [Deployed desktop](../wallet-payments/evidence/release/stable-desktop.jpg) · [Phone](../wallet-payments/evidence/release/stable-phone-390.jpg) · [Traceability](../traceability/wallet-payments-rtm.md).
 
 This is the current focused manual addendum; the historical PDF/Word editions have not been regenerated.
+
+Navigation update: this editor is now **Settings → Payments & Wallet → Online payments → Online payments & fees**. Old names remain searchable. See the [category organisation guide](payment-settings-organisation.md) for the other wallet, cash and settlement controls.

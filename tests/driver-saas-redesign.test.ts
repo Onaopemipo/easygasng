@@ -160,6 +160,9 @@ test("DRVS-PRESERVED: historical business baselines retain explicitly reviewed n
   const walletContinuation=JSON.parse(await readFile("docs/wallet-payments/reviewed-source-changes.json","utf8"));
   assert.deepEqual(Object.keys(walletContinuation.files).sort(), ["apps/web/app/globals.css", "apps/web/components/payment-gateway-policy.tsx"]);
   for(const [file,hash] of Object.entries(walletContinuation.baseline))assert.equal(hash,settingsContinuation.files[file],file);
+  const categoryContinuation=JSON.parse(await readFile("docs/settings-categories/reviewed-source-changes.json","utf8"));
+  assert.deepEqual(Object.keys(categoryContinuation.files).sort(),["apps/web/app/globals.css","apps/web/components/admin.tsx"]);
+  for(const [file,hash] of Object.entries(categoryContinuation.baseline))assert.equal(hash,walletContinuation.files[file] ?? settingsContinuation.files[file],file);
   for (const [file, hash] of Object.entries(rows)) {
     if (notificationCorrection.files[file])
       assert.equal(notificationCorrection.baseline[file], hash, file);
@@ -170,13 +173,13 @@ test("DRVS-PRESERVED: historical business baselines retain explicitly reviewed n
       createHash("sha256")
         .update(await readFile(file))
         .digest("hex"),
-      walletContinuation.files[file] ?? settingsContinuation.files[file] ?? nativeContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? notificationCorrection.files[file] ?? hash,
+      categoryContinuation.files[file] ?? walletContinuation.files[file] ?? settingsContinuation.files[file] ?? nativeContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? notificationCorrection.files[file] ?? hash,
       file,
     );
   }
   for (const [file, hash] of Object.entries(notificationCorrection.files))
-    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), walletContinuation.files[file] ?? settingsContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? hash, file);
+    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), categoryContinuation.files[file] ?? walletContinuation.files[file] ?? settingsContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? technicianContinuation.files[file] ?? hash, file);
   for (const [file, hash] of Object.entries(technicianContinuation.files))
-    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), walletContinuation.files[file] ?? settingsContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? hash, file);
+    assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), categoryContinuation.files[file] ?? walletContinuation.files[file] ?? settingsContinuation.files[file] ?? auditContinuations.files[file] ?? lpgContinuation.files[file] ?? serviceContinuation.files[file] ?? hash, file);
 });
 
