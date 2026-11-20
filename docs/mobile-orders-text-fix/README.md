@@ -19,7 +19,7 @@ An initial test run used an ambiguous Pressable selector when driver controls re
 
 ## Limits and outstanding finding
 
-Scoped repair requirements and gates: **3/3 pass**. Source-pattern coverage: **8/8 files**. Live surface coverage remains **1/8**; seven sibling surfaces were not individually accepted in the simulator. Driver branches are covered by component fixtures, not a new driver delivery journey.
+Historical scoped repair requirements and gates: **3/3 pass**, with source-pattern coverage **8/8 files** and original live coverage 1/8. The [subsequent sequential device pass](../mobile-device-acceptance/README.md) now renders all seven sibling components natively and exercises driver guards. Six sibling components use current navigation; legacy DriverOperations uses a labelled native harness, so its inactive route remains in the current-navigation denominator. No physical delivery is certified.
 
 **Historical finding ORDTXT-F01:** delivered-order refund forms displayed “Order not found” under the existing owner session. No refund was submitted in that observation. It is now resolved in source/Expo preview by the [Orders authority follow-up](../native-order-authority/README.md), with role/ownership guards and refund exception coverage. The original observation remains historical evidence. Production NO-GO, actual-import hold, retain-all and unrelated native/provider/operational gates remain in force.
 

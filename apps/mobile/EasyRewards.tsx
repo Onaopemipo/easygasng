@@ -2,7 +2,7 @@ import { selectedRefundLines } from "../../packages/business-rules/src/native-or
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasLoader } from "./EasyGasLoader";
 import React, { useState, useEffect, useRef } from "react";
-import { AppState, Share, StyleSheet, useColorScheme } from "react-native";
+import { AppState, Share, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { gasMoney } from "../../packages/business-rules/src/gas-pricing";
 import { lagosDay } from "../../packages/business-rules/src/customer-mobile";
@@ -22,7 +22,7 @@ import { useTheme } from "./theme";
 import { View, Pressable } from "./surfaces";
 import { FieldCaption, Text as BaseText, TextInput as BaseInput } from "./typography";
 function Text(props: React.ComponentProps<typeof BaseText>) {
-  const dark = useColorScheme() === "dark";
+  const { dark } = useTheme();
   return (
     <BaseText
       {...props}
@@ -477,7 +477,7 @@ export function NativePartialRefund({
   api: API;
   orderId: string;
 }) {
-  const dark = useColorScheme() === "dark";
+  const { colors } = useTheme();
   const [lines, setLines] = useState<any[]>([]),
     [quantities, setQuantities] = useState<Record<string, string>>({}),
     [reason, setReason] = useState(""),
@@ -525,7 +525,7 @@ export function NativePartialRefund({
     reason.trim().length >= 10 &&
     reason.trim().length <= 1000;
   return (
-    <View style={[card, { backgroundColor: dark ? "#071d16" : "#fff" }]}>
+    <View style={[card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
       <Text accessibilityRole="header">Refund selected quantities</Text>
       <Text>
         If approved, refund is purchase credit. This does not record a physical
@@ -649,7 +649,7 @@ export function NativeSmartOffers({
 }) {
   const [offers, setOffers] = useState<any[]>([]),
     [error, setError] = useState("");
-  const dark = useColorScheme() === "dark";
+  const { dark } = useTheme();
   useEffect(() => {
     let live = true;
     api("rewards.smart-offers")
@@ -707,7 +707,7 @@ export function NativeRewardSelector({
     [error, setError] = useState(""),
     [points, setPoints] = useState(String(initialValue.rewardPoints ?? "")),
     [offer, setOffer] = useState(initialValue.rewardOfferId ?? "");
-  const dark = useColorScheme() === "dark";
+  const { dark } = useTheme();
   useEffect(() => {
     let live = true;
     api("rewards.summary")

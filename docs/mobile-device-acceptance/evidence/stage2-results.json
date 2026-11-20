@@ -1,0 +1,26 @@
+{
+  "stage": 2,
+  "status": "PASS_FUNCTIONAL_WITH_DISPLAY_DEFECTS",
+  "finishedAt": "2026-11-20T16:52:28.966594+00:00",
+  "rolesObserved": [
+    "finance",
+    "owner",
+    "manager",
+    "driver",
+    "technician"
+  ],
+  "finance": "Customer refund approved after incorrect-password denial and successful reauth; exact purchase credit posted once",
+  "owner": "Commercial refund rejected after reauth; no wallet movement",
+  "restrictedRoles": "Manager has no Credits & refunds workspace; dedicated driver and technician shells expose no financial review",
+  "apiExceptions": "Five role read/write denials, self-review 403, approval replay no duplicate posting",
+  "displayDefects": [
+    {
+      "id": "MDEV-F02",
+      "issue": "Amount kobo label paired with naira-formatted value in native record detail"
+    },
+    {
+      "id": "MDEV-F03",
+      "issue": "Verification-required warning remains after successful password verification until confirmation"
+    }
+  ]
+}

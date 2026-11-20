@@ -1,0 +1,146 @@
+{
+  "id": "605fc29d-84f3-4bff-b9a3-eeac7ee967f2",
+  "reference": "EG-2026-E7BD0ED9",
+  "mode": "Disposable synthetic fixture; no physical fulfilment",
+  "snapshot": {
+    "id": "605fc29d-84f3-4bff-b9a3-eeac7ee967f2",
+    "reference": "EG-2026-E7BD0ED9",
+    "customer_id": "51594ccb-b7a0-4608-8f10-60622ac10b08",
+    "branch_id": "lagos",
+    "status": "assigned",
+    "payment_status": "unpaid",
+    "payment_method": "cash_on_delivery",
+    "subtotal_kobo": 350000,
+    "delivery_kobo": 500000,
+    "total_kobo": 850000,
+    "address": {
+      "name": "Synthetic driver regression",
+      "zone": "Lekki",
+      "phone": "08012345678",
+      "street": "12 Synthetic Driver Regression Street",
+      "locationId": "lekki"
+    },
+    "delivery_date": "2026-11-23",
+    "delivery_window": "14:00–18:00",
+    "instructions": "",
+    "driver_id": "1e50ab09-b229-41ef-8ef6-aa2dbe019e10",
+    "idempotency_key": "1849a3a0-1636-4f34-8588-4173248c2646",
+    "request_hash": "cd397b3be5a77379bc196c9faf416ffd5c57ddd3afb2e206b97841d6025798d9",
+    "created_at": "2026-11-20T17:04:03.310Z",
+    "delivered_at": null,
+    "location_id": "lekki",
+    "location_snapshot": {
+      "id": "lekki",
+      "city": "Lagos",
+      "name": "Lekki",
+      "state": "Lagos",
+      "version": 1
+    },
+    "pricing_snapshot": {
+      "feeKobo": 500000
+    },
+    "operational_review": null,
+    "tracking_version": 5,
+    "reward_discount_kobo": 0,
+    "order_source": "WEB",
+    "assisted_by": null,
+    "assisted_reason": null,
+    "customer_name": "Native QA customer",
+    "customer_provisional": false,
+    "gas_lines": [],
+    "attempt": {
+      "id": "9f99e217-65c3-4785-b037-bd4dc86c93a1",
+      "state": "picked_up",
+      "driver_id": "1e50ab09-b229-41ef-8ef6-aa2dbe019e10",
+      "assignment_version": 4,
+      "picked_up_at": "2026-11-20T17:04:03.389Z",
+      "arrived_at": null,
+      "completed_at": null
+    },
+    "driver": {
+      "name": "Native QA driver"
+    },
+    "last_update": "2026-11-20T17:04:03.389Z",
+    "gps": {
+      "enabled": false,
+      "status": "unavailable",
+      "eta": null
+    },
+    "manifest": {
+      "items": [
+        {
+          "product_id": "hose",
+          "quantity": 1
+        }
+      ],
+      "serials": [],
+      "gas": []
+    },
+    "delivery_evidence": [
+      {
+        "kind": "pickup",
+        "detail": {
+          "reason": "Synthetic fixture pickup only; no physical fulfilment",
+          "manifest": {
+            "gas": [],
+            "items": [
+              {
+                "quantity": 1,
+                "product_id": "hose"
+              }
+            ],
+            "serials": []
+          }
+        },
+        "created_at": "2026-11-20T17:04:03.389Z"
+      }
+    ],
+    "items": [
+      {
+        "order_id": "605fc29d-84f3-4bff-b9a3-eeac7ee967f2",
+        "product_id": "hose",
+        "name": "Gas Hose",
+        "quantity": 1,
+        "unit_price_kobo": 350000,
+        "gas_grams_per_unit": null
+      }
+    ],
+    "events": [
+      {
+        "status": "placed",
+        "note": "Order placed; payment remains unverified.",
+        "created_at": "2026-11-20T17:04:03.310Z",
+        "version": 1,
+        "previous_status": null
+      },
+      {
+        "status": "accepted",
+        "note": "Synthetic native evidence regression only",
+        "created_at": "2026-11-20T17:04:03.329Z",
+        "version": 2,
+        "previous_status": "placed"
+      },
+      {
+        "status": "preparing",
+        "note": "Synthetic native evidence regression only",
+        "created_at": "2026-11-20T17:04:03.341Z",
+        "version": 3,
+        "previous_status": "accepted"
+      },
+      {
+        "status": "assigned",
+        "note": "Synthetic native evidence regression only",
+        "created_at": "2026-11-20T17:04:03.353Z",
+        "version": 4,
+        "previous_status": "preparing"
+      },
+      {
+        "status": "assigned",
+        "note": "delivery.pickup: Synthetic fixture pickup only; no physical fulfilment",
+        "created_at": "2026-11-20T17:04:03.389Z",
+        "version": 5,
+        "previous_status": "assigned"
+      }
+    ]
+  }
+}

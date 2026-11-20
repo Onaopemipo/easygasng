@@ -50,6 +50,11 @@ const title = (r: any) =>
 const words = (s: string) =>
   s.replace(/[_.]/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2");
 const privateKey = /password|secret|token|credential|private.?key|api.?key/i;
+export function nativeRecordLabel(key: string) {
+  return /(_kobo|Kobo)$/.test(key)
+    ? fieldLabel(key.replace(/(_kobo|Kobo)$/, "")) + " (₦)"
+    : fieldLabel(key);
+}
 export function NativeRecord({
   value,
   depth = 0,
@@ -90,7 +95,7 @@ export function NativeRecord({
         .map(([key, v]) => (
           <View key={key} style={{ gap: 3 }}>
             <Text style={{ fontSize: 13, fontWeight: "700" }}>
-              {fieldLabel(key)}
+              {nativeRecordLabel(key)}
             </Text>
             {/(_kobo|Kobo)$/.test(key) && v != null ? (
               <Copy>
@@ -226,6 +231,7 @@ export function NativeContractForm({
     [customerMessage, setCustomerMessage] = useState(""),
     [searchBusy, setSearchBusy] = useState(false),
     [verifyNeeded, setVerifyNeeded] = useState(false),
+    [verificationEpoch, setVerificationEpoch] = useState(0),
     [boundRecord, setBoundRecord] = useState<any>(record);
   const mounted = useRef(true),
     contract = nativeContracts[action],
@@ -273,8 +279,11 @@ export function NativeContractForm({
       }
       if (live) {
         const target = nativeActionRecordSources[action];
+        const selectedCredit = action === "credit.decide" && record?.id;
         next.id = target
-          ? rawRows(await apiRef.current(target[0]), target[1])
+          ? rawRows(await apiRef.current(selectedCredit
+              ? target[0] + "&q=" + encodeURIComponent(record.id)
+              : target[0]), target[1])
           : action.endsWith(".create") ||
               [
                 "product.save",
@@ -284,6 +293,12 @@ export function NativeContractForm({
               ].includes(action)
             ? []
             : rows;
+        if (selectedCredit) {
+          const current = next.id.find((row: any) => row.id === record.id);
+          if (!current)
+            throw new Error("Selected credit or refund is no longer available. Refresh the workspace.");
+          setBoundRecord(current);
+        }
         if (action === "compatibility.review") {
           if (!record?.id) next.id = [];
           else
@@ -552,7 +567,7 @@ export function NativeContractForm({
           fields={[
             { name: "password", label: "Current password", type: "password" },
           ]}
-          onDone={() => setVerifyNeeded(false)}
+          onDone={() => { setVerifyNeeded(false); setVerificationEpoch((n) => n + 1); }}
         />
       )}
       <Copy>
@@ -602,6 +617,7 @@ export function NativeContractForm({
       })}
       <NativeForm
         key={action + revision}
+        feedbackResetKey={verificationEpoch}
         api={submit}
         action={action}
         title={nativeActionLabels[action] || words(action)}

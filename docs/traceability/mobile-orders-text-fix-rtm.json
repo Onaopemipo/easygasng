@@ -43,7 +43,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Removed explicit JSX whitespace directly under View. Before-fix component fails native text-host invariant; repaired customer and driver states pass, including loaded photos/invoice/amendments and error feedback. Simulator Orders and visit read pass after full Expo source reload.",
       "testResult": "PASS \u2014 24/24 selected regression tests, 5/5 prototype-preservation tests, 6/6 traceability/manual checks and mobile typecheck. iOS Orders entry and visit read executed after full reload; native binaries unchanged.",
-      "outstandingWork": "No remaining work for scoped text-host repair. ORDTXT-F01 resolved by MORD-01\u201304 in source and Expo preview; prior seven sibling on-device gaps and unrelated production/native/provider gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; hosted ledger GET unsupported. Signed/physical-device/provider/300-feature and production gates remain."
     },
     {
       "id": "ORDTXT-02",
@@ -92,7 +92,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Nine literal spacers removed from eight source files. AST regression checks literal strings remain under Text-compatible hosts. Source continuation hashes and original prototype preservation pass. This is source-pattern acceptance, not a full live acceptance of seven sibling surfaces.",
       "testResult": "PASS \u2014 24/24 selected regression tests, 5/5 prototype-preservation tests, 6/6 traceability/manual checks and mobile typecheck. iOS Orders entry and visit read executed after full reload; native binaries unchanged.",
-      "outstandingWork": "No remaining work for scoped text-host repair. ORDTXT-F01 resolved by MORD-01\u201304 in source and Expo preview; prior seven sibling on-device gaps and unrelated production/native/provider gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; hosted ledger GET unsupported. Signed/physical-device/provider/300-feature and production gates remain."
     },
     {
       "id": "ORDTXT-03",
@@ -141,7 +141,7 @@
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing iPhone 17 Pro Expo Go 58 preview reloaded against repaired Metro source. Owner Operations > Orders and visit-details read visibly succeed without LogBox. Native artifacts and timestamps plus original prototype hashes unchanged; zero new native binaries.",
       "testResult": "PASS \u2014 24/24 selected regression tests, 5/5 prototype-preservation tests, 6/6 traceability/manual checks and mobile typecheck. iOS Orders entry and visit read executed after full reload; native binaries unchanged.",
-      "outstandingWork": "No remaining work for scoped text-host repair. ORDTXT-F01 resolved by MORD-01\u201304 in source and Expo preview; prior seven sibling on-device gaps and unrelated production/native/provider gates remain."
+      "outstandingWork": "Scoped repair complete. See MDEV-01\u201304 for seven-role native follow-up and all sibling component observations. Legacy DriverOperations inactive navigation path retained; hosted ledger GET unsupported. Signed/physical-device/provider/300-feature and production gates remain."
     }
   ],
   "gates": [
@@ -178,10 +178,10 @@
       "total": 0
     },
     "routes": {
-      "verified": 1,
+      "verified": 7,
       "total": 8,
-      "untested": 7,
-      "basis": "One Orders/OrderVisit surface exercised on iOS; seven sibling surfaces source-guarded but not manually accepted."
+      "untested": 1,
+      "basis": "Orders plus six sibling components via current app navigation. Legacy DriverOperations route inactive; component itself rendered in native harness."
     },
     "gates": {
       "passed": 3,
@@ -191,6 +191,11 @@
     "sourcePattern": {
       "verified": 8,
       "total": 8
+    },
+    "nativeRendered": {
+      "verified": 8,
+      "total": 8,
+      "legacyHarness": 1
     }
   },
   "changeLog": [
@@ -205,6 +210,10 @@
     {
       "date": "2026-11-21",
       "change": "Follow-up MORD-01\u201304 resolves ORDTXT-F01 with customer role/order ownership guards, partial refund exception tests and owner simulator readback. Historical observation retained; seven sibling on-device gaps unchanged."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "MDEV-01\u201304 provides current on-device follow-up: seven roles and seven sibling components, including one labelled legacy native harness. Current navigation denominator retains legacy inactive path. All seven acceptance defects resolved; production/provider/signed-device gates unchanged."
     }
   ],
   "openFindings": [

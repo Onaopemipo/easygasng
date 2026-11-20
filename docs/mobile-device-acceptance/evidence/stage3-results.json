@@ -1,0 +1,56 @@
+{
+  "stage": 3,
+  "finishedAt": "2026-11-20T17:00:30.934383+00:00",
+  "status": "PASS_RENDER_AND_FUNCTIONAL_GUARDS_WITH_DISPLAY_FINDINGS",
+  "nativeComponents": [
+    {
+      "file": "CustomerNotifications.tsx",
+      "mode": "current app",
+      "evidence": "customer-notifications",
+      "checks": "Populated list, mark read, page 2"
+    },
+    {
+      "file": "DriverOperations.tsx",
+      "mode": "native component harness; bypassed by current driver routing",
+      "evidence": "legacy-driver-operations-native",
+      "checks": "Canonical fleet/empty queue, absent fields rejected; no trip/GPS created"
+    },
+    {
+      "file": "DriverProof.tsx",
+      "mode": "current app",
+      "evidence": "driver-proof-camera-unavailable",
+      "checks": "Missing consent guard; unavailable camera error; completion disabled"
+    },
+    {
+      "file": "DriverWorkspace.tsx",
+      "mode": "current app",
+      "evidence": "driver-assignment-guards",
+      "checks": "Assignment reason guard, fixture acknowledgement/pickup/arrival, proof page"
+    },
+    {
+      "file": "NativeBusinessWorkspace.tsx",
+      "mode": "current app",
+      "evidence": "business-workspace-pagination",
+      "checks": "503/read retry and 25 records across pagination branch"
+    },
+    {
+      "file": "Services.tsx",
+      "mode": "current app plus labelled native material props harness",
+      "evidence": "service-material-states-native",
+      "checks": "Evidence consent guard, actual issued/usage-recorded material render branches, no stock write"
+    },
+    {
+      "file": "TechnicianScreens.tsx",
+      "mode": "current app",
+      "evidence": "technician-jobs-loaded",
+      "checks": "503/Retry Jobs, actual assigned job"
+    }
+  ],
+  "coverage": {
+    "nativeRendered": 7,
+    "total": 7,
+    "normalNavigation": 6,
+    "legacyHarness": 1
+  },
+  "limits": "Representative branch acceptance only; no physical proof, no location grants, no stock acceptance. Legacy component lacks current navigation path."
+}

@@ -1,0 +1,385 @@
+{
+  "phase": "Sequential on-device mobile acceptance follow-up",
+  "productionDecision": "Production NO-GO, actual-import hold, retain-all and unrelated signed-device/provider/operational gates retained",
+  "requirements": [
+    {
+      "id": "MDEV-01",
+      "requirement": "Step 1: on-device customer and commercial refund success and exception acceptance",
+      "priority": "P1",
+      "scope": "Sequential current-source Expo Go role/refund/sibling screen acceptance; synthetic disposable transactions, hosted read checks distinct, no new native binary.",
+      "uiReference": "User authorised four next-step acceptance stages sequentially",
+      "route": "Native Orders/refunds, Credits & refunds, CustomerNotifications, DriverOperations, DriverProof, DriverWorkspace, NativeBusinessWorkspace, Services, TechnicianScreens",
+      "implementationFiles": [
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/CustomerNotifications.tsx",
+        "apps/mobile/DriverOperations.tsx",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "scripts/mobile-device-acceptance-server.ts",
+        "scripts/mobile-device-screen-harness.mjs",
+        "apps/mobile/App.tsx",
+        "apps/mobile/CustomerOrderRefunds.tsx",
+        "packages/business-rules/src/native-order-authority.ts"
+      ],
+      "dataSource": "Existing authenticated API dispatcher and server ownership/review rules; disposable loopback SQL fixtures for mutating/forced failures; hosted client-demo observations recorded separately.",
+      "securityControl": "No hosted balance/stock mutations, no broadened server privileges, no production safety renewals, no new native binary; branch/ownership/idempotency/independent review retained.",
+      "testFiles": [
+        "tests/mobile-device-remediation.test.ts",
+        "tests/native-order-authority.test.ts",
+        "tests/mobile-orders-text.test.ts",
+        "tests/native-order-refund-api.test.ts",
+        "tests/refund-restricted-role.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/verify-mobile-device-api.mjs",
+        "tests/mobile-device-evidence.test.ts"
+      ],
+      "testIds": [
+        "MORD-OWNERSHIP",
+        "MORD-PARTIAL",
+        "MORD-IDEMPOTENCY",
+        "MORD-API"
+      ],
+      "negativeTests": [
+        "MORD-OWNERSHIP",
+        "MORD-QUANTITIES",
+        "MORD-IDEMPOTENCY",
+        "MORD-API",
+        "MDEV-REQUIRED",
+        "MDEV-PAGED-REVIEW"
+      ],
+      "evidence": [
+        "docs/mobile-device-acceptance/README.md",
+        "docs/mobile-device-acceptance/findings.json",
+        "docs/mobile-device-acceptance/reviewed-source-changes.json",
+        "docs/mobile-device-acceptance/evidence/regression-tests.txt",
+        "docs/mobile-device-acceptance/evidence/typecheck.txt",
+        "docs/mobile-device-acceptance/evidence/prototype-preservation.txt",
+        "docs/mobile-device-acceptance/evidence/device-observations.json",
+        "docs/mobile-device-acceptance/evidence/stage1-results.json",
+        "docs/mobile-device-acceptance/evidence/stage2-results.json",
+        "docs/mobile-device-acceptance/evidence/stage2-api-checks.json",
+        "docs/mobile-device-acceptance/evidence/stage3-results.json",
+        "docs/mobile-device-acceptance/evidence/stage4-results.json",
+        "docs/mobile-device-acceptance/evidence/artifact-preservation.json",
+        "docs/mobile-device-acceptance/evidence/hosted-restoration.json",
+        "docs/mobile-device-acceptance/evidence/device-evidence-tests.txt",
+        "docs/mobile-device-acceptance/evidence/documentation-tests.txt",
+        "docs/mobile-device-acceptance/evidence/cleanup.json"
+      ],
+      "acceptanceGate": "MDEV-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Customer and commercial actual iOS submissions, consent/invalid input guards, failed lookup, pre-write error and uncertain post-write retry passed against disposable dispatcher. Exactly two requests stayed pending and wallets unchanged before review. Theme finding later repaired/rechecked.",
+      "testResult": "PASS \u2014 scoped sequential native acceptance, seven role observations, seven component render/guard observations and all seven remediation rechecks. 32/32 regressions, mobile typecheck and five prototype-preservation tests pass. Device-evidence test 1/1 and documentation checks 6/6 pass.",
+      "outstandingWork": "No remaining defect in these scoped four stages. Legacy DriverOperations has no current navigation route; component harness only. GET ledger returned 405 and was not certified. Existing 300-feature, physical-device, provider, signed-native, production NO-GO, actual-import and retain-all holds remain."
+    },
+    {
+      "id": "MDEV-02",
+      "requirement": "Step 2: on-device owner/finance review and other staff access acceptance",
+      "priority": "P1",
+      "scope": "Sequential current-source Expo Go role/refund/sibling screen acceptance; synthetic disposable transactions, hosted read checks distinct, no new native binary.",
+      "uiReference": "User authorised four next-step acceptance stages sequentially",
+      "route": "Native Orders/refunds, Credits & refunds, CustomerNotifications, DriverOperations, DriverProof, DriverWorkspace, NativeBusinessWorkspace, Services, TechnicianScreens",
+      "implementationFiles": [
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/CustomerNotifications.tsx",
+        "apps/mobile/DriverOperations.tsx",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "scripts/mobile-device-acceptance-server.ts",
+        "scripts/mobile-device-screen-harness.mjs",
+        "apps/mobile/App.tsx",
+        "apps/mobile/CustomerOrderRefunds.tsx",
+        "packages/business-rules/src/native-order-authority.ts"
+      ],
+      "dataSource": "Existing authenticated API dispatcher and server ownership/review rules; disposable loopback SQL fixtures for mutating/forced failures; hosted client-demo observations recorded separately.",
+      "securityControl": "No hosted balance/stock mutations, no broadened server privileges, no production safety renewals, no new native binary; branch/ownership/idempotency/independent review retained.",
+      "testFiles": [
+        "tests/mobile-device-remediation.test.ts",
+        "tests/native-order-authority.test.ts",
+        "tests/mobile-orders-text.test.ts",
+        "tests/native-order-refund-api.test.ts",
+        "tests/refund-restricted-role.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/verify-mobile-device-api.mjs",
+        "tests/mobile-device-evidence.test.ts"
+      ],
+      "testIds": [
+        "ROLEACC-REFUND-RUNTIME",
+        "MORD-API",
+        "MDEV-FEEDBACK",
+        "MDEV-PAGED-REVIEW"
+      ],
+      "negativeTests": [
+        "MORD-OWNERSHIP",
+        "MORD-QUANTITIES",
+        "MORD-IDEMPOTENCY",
+        "MORD-API",
+        "MDEV-REQUIRED",
+        "MDEV-PAGED-REVIEW"
+      ],
+      "evidence": [
+        "docs/mobile-device-acceptance/README.md",
+        "docs/mobile-device-acceptance/findings.json",
+        "docs/mobile-device-acceptance/reviewed-source-changes.json",
+        "docs/mobile-device-acceptance/evidence/regression-tests.txt",
+        "docs/mobile-device-acceptance/evidence/typecheck.txt",
+        "docs/mobile-device-acceptance/evidence/prototype-preservation.txt",
+        "docs/mobile-device-acceptance/evidence/device-observations.json",
+        "docs/mobile-device-acceptance/evidence/stage1-results.json",
+        "docs/mobile-device-acceptance/evidence/stage2-results.json",
+        "docs/mobile-device-acceptance/evidence/stage2-api-checks.json",
+        "docs/mobile-device-acceptance/evidence/stage3-results.json",
+        "docs/mobile-device-acceptance/evidence/stage4-results.json",
+        "docs/mobile-device-acceptance/evidence/artifact-preservation.json",
+        "docs/mobile-device-acceptance/evidence/hosted-restoration.json",
+        "docs/mobile-device-acceptance/evidence/device-evidence-tests.txt",
+        "docs/mobile-device-acceptance/evidence/documentation-tests.txt",
+        "docs/mobile-device-acceptance/evidence/cleanup.json"
+      ],
+      "acceptanceGate": "MDEV-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual finance approval and owner rejection with recent-password check passed. Incorrect password denied, draft retained, exact single credit/no rejection credit read back. Manager/driver/technician UI restrictions and five non-review role API denials passed; self-review denied and decision replay posted no duplicate credit.",
+      "testResult": "PASS \u2014 scoped sequential native acceptance, seven role observations, seven component render/guard observations and all seven remediation rechecks. 32/32 regressions, mobile typecheck and five prototype-preservation tests pass. Device-evidence test 1/1 and documentation checks 6/6 pass.",
+      "outstandingWork": "No remaining defect in these scoped four stages. Legacy DriverOperations has no current navigation route; component harness only. GET ledger returned 405 and was not certified. Existing 300-feature, physical-device, provider, signed-native, production NO-GO, actual-import and retain-all holds remain."
+    },
+    {
+      "id": "MDEV-03",
+      "requirement": "Step 3: on-device acceptance of the seven sibling screens from ORDTXT-02",
+      "priority": "P1",
+      "scope": "Sequential current-source Expo Go role/refund/sibling screen acceptance; synthetic disposable transactions, hosted read checks distinct, no new native binary.",
+      "uiReference": "User authorised four next-step acceptance stages sequentially",
+      "route": "Native Orders/refunds, Credits & refunds, CustomerNotifications, DriverOperations, DriverProof, DriverWorkspace, NativeBusinessWorkspace, Services, TechnicianScreens",
+      "implementationFiles": [
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/CustomerNotifications.tsx",
+        "apps/mobile/DriverOperations.tsx",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "scripts/mobile-device-acceptance-server.ts",
+        "scripts/mobile-device-screen-harness.mjs",
+        "apps/mobile/App.tsx",
+        "apps/mobile/CustomerOrderRefunds.tsx",
+        "packages/business-rules/src/native-order-authority.ts"
+      ],
+      "dataSource": "Existing authenticated API dispatcher and server ownership/review rules; disposable loopback SQL fixtures for mutating/forced failures; hosted client-demo observations recorded separately.",
+      "securityControl": "No hosted balance/stock mutations, no broadened server privileges, no production safety renewals, no new native binary; branch/ownership/idempotency/independent review retained.",
+      "testFiles": [
+        "tests/mobile-device-remediation.test.ts",
+        "tests/native-order-authority.test.ts",
+        "tests/mobile-orders-text.test.ts",
+        "tests/native-order-refund-api.test.ts",
+        "tests/refund-restricted-role.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/verify-mobile-device-api.mjs",
+        "tests/mobile-device-evidence.test.ts"
+      ],
+      "testIds": [
+        "ORDTXT-GUARD",
+        "MDEV-REQUIRED",
+        "NATIVE-RTM-SOURCE"
+      ],
+      "negativeTests": [
+        "MORD-OWNERSHIP",
+        "MORD-QUANTITIES",
+        "MORD-IDEMPOTENCY",
+        "MORD-API",
+        "MDEV-REQUIRED",
+        "MDEV-PAGED-REVIEW"
+      ],
+      "evidence": [
+        "docs/mobile-device-acceptance/README.md",
+        "docs/mobile-device-acceptance/findings.json",
+        "docs/mobile-device-acceptance/reviewed-source-changes.json",
+        "docs/mobile-device-acceptance/evidence/regression-tests.txt",
+        "docs/mobile-device-acceptance/evidence/typecheck.txt",
+        "docs/mobile-device-acceptance/evidence/prototype-preservation.txt",
+        "docs/mobile-device-acceptance/evidence/device-observations.json",
+        "docs/mobile-device-acceptance/evidence/stage1-results.json",
+        "docs/mobile-device-acceptance/evidence/stage2-results.json",
+        "docs/mobile-device-acceptance/evidence/stage2-api-checks.json",
+        "docs/mobile-device-acceptance/evidence/stage3-results.json",
+        "docs/mobile-device-acceptance/evidence/stage4-results.json",
+        "docs/mobile-device-acceptance/evidence/artifact-preservation.json",
+        "docs/mobile-device-acceptance/evidence/hosted-restoration.json",
+        "docs/mobile-device-acceptance/evidence/device-evidence-tests.txt",
+        "docs/mobile-device-acceptance/evidence/documentation-tests.txt",
+        "docs/mobile-device-acceptance/evidence/cleanup.json"
+      ],
+      "acceptanceGate": "MDEV-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All seven sibling components rendered on iOS with functional exceptions. Six reached through normal app navigation; bypassed legacy DriverOperations through a labelled native component harness. Services issued/usage-recorded props separately exercised actual former whitespace branches without any stock write.",
+      "testResult": "PASS \u2014 scoped sequential native acceptance, seven role observations, seven component render/guard observations and all seven remediation rechecks. 32/32 regressions, mobile typecheck and five prototype-preservation tests pass. Device-evidence test 1/1 and documentation checks 6/6 pass.",
+      "outstandingWork": "No remaining defect in these scoped four stages. Legacy DriverOperations has no current navigation route; component harness only. GET ledger returned 405 and was not certified. Existing 300-feature, physical-device, provider, signed-native, production NO-GO, actual-import and retain-all holds remain."
+    },
+    {
+      "id": "MDEV-04",
+      "requirement": "Step 4: fix discovered defects, rerun affected checks and update manual/traceability without new binaries",
+      "priority": "P1",
+      "scope": "Sequential current-source Expo Go role/refund/sibling screen acceptance; synthetic disposable transactions, hosted read checks distinct, no new native binary.",
+      "uiReference": "User authorised four next-step acceptance stages sequentially",
+      "route": "Native Orders/refunds, Credits & refunds, CustomerNotifications, DriverOperations, DriverProof, DriverWorkspace, NativeBusinessWorkspace, Services, TechnicianScreens",
+      "implementationFiles": [
+        "apps/mobile/EasyRewards.tsx",
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/CustomerNotifications.tsx",
+        "apps/mobile/DriverOperations.tsx",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/Services.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "scripts/mobile-device-acceptance-server.ts",
+        "scripts/mobile-device-screen-harness.mjs",
+        "apps/mobile/App.tsx",
+        "apps/mobile/CustomerOrderRefunds.tsx",
+        "packages/business-rules/src/native-order-authority.ts"
+      ],
+      "dataSource": "Existing authenticated API dispatcher and server ownership/review rules; disposable loopback SQL fixtures for mutating/forced failures; hosted client-demo observations recorded separately.",
+      "securityControl": "No hosted balance/stock mutations, no broadened server privileges, no production safety renewals, no new native binary; branch/ownership/idempotency/independent review retained.",
+      "testFiles": [
+        "tests/mobile-device-remediation.test.ts",
+        "tests/native-order-authority.test.ts",
+        "tests/mobile-orders-text.test.ts",
+        "tests/native-order-refund-api.test.ts",
+        "tests/refund-restricted-role.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "scripts/verify-mobile-device-api.mjs",
+        "tests/mobile-device-evidence.test.ts"
+      ],
+      "testIds": [
+        "MDEV-THEME",
+        "MDEV-MONEY",
+        "MDEV-REQUIRED",
+        "MDEV-FEEDBACK",
+        "MDEV-PAGED-REVIEW",
+        "MDEV-DEVICE-EVIDENCE"
+      ],
+      "negativeTests": [
+        "MORD-OWNERSHIP",
+        "MORD-QUANTITIES",
+        "MORD-IDEMPOTENCY",
+        "MORD-API",
+        "MDEV-REQUIRED",
+        "MDEV-PAGED-REVIEW"
+      ],
+      "evidence": [
+        "docs/mobile-device-acceptance/README.md",
+        "docs/mobile-device-acceptance/findings.json",
+        "docs/mobile-device-acceptance/reviewed-source-changes.json",
+        "docs/mobile-device-acceptance/evidence/regression-tests.txt",
+        "docs/mobile-device-acceptance/evidence/typecheck.txt",
+        "docs/mobile-device-acceptance/evidence/prototype-preservation.txt",
+        "docs/mobile-device-acceptance/evidence/device-observations.json",
+        "docs/mobile-device-acceptance/evidence/stage1-results.json",
+        "docs/mobile-device-acceptance/evidence/stage2-results.json",
+        "docs/mobile-device-acceptance/evidence/stage2-api-checks.json",
+        "docs/mobile-device-acceptance/evidence/stage3-results.json",
+        "docs/mobile-device-acceptance/evidence/stage4-results.json",
+        "docs/mobile-device-acceptance/evidence/artifact-preservation.json",
+        "docs/mobile-device-acceptance/evidence/hosted-restoration.json",
+        "docs/mobile-device-acceptance/evidence/device-evidence-tests.txt",
+        "docs/mobile-device-acceptance/evidence/documentation-tests.txt",
+        "docs/mobile-device-acceptance/evidence/cleanup.json"
+      ],
+      "acceptanceGate": "MDEV-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Seven discovered defects repaired and rechecked natively. Current tests 32/32, mobile typecheck and prototype/source/artifact preservation pass. Original hosted owner preview restored, order/invoice read works; three hosted business reads unchanged, unsupported ledger GET remains unverified.",
+      "testResult": "PASS \u2014 scoped sequential native acceptance, seven role observations, seven component render/guard observations and all seven remediation rechecks. 32/32 regressions, mobile typecheck and five prototype-preservation tests pass. Device-evidence test 1/1 and documentation checks 6/6 pass.",
+      "outstandingWork": "No remaining defect in these scoped four stages. Legacy DriverOperations has no current navigation route; component harness only. GET ledger returned 405 and was not certified. Existing 300-feature, physical-device, provider, signed-native, production NO-GO, actual-import and retain-all holds remain."
+    }
+  ],
+  "gates": [
+    {
+      "id": "MDEV-G01",
+      "description": "Step 1: on-device customer and commercial refund success and exception acceptance",
+      "status": "PASS",
+      "reason": "Customer and commercial actual iOS submissions, consent/invalid input guards, failed lookup, pre-write error and uncertain post-write retry passed against disposable dispatcher. Exactly two requests stayed pending and wallets unchanged before review. Theme finding later repaired/rechecked."
+    },
+    {
+      "id": "MDEV-G02",
+      "description": "Step 2: on-device owner/finance review and other staff access acceptance",
+      "status": "PASS",
+      "reason": "Actual finance approval and owner rejection with recent-password check passed. Incorrect password denied, draft retained, exact single credit/no rejection credit read back. Manager/driver/technician UI restrictions and five non-review role API denials passed; self-review denied and decision replay posted no duplicate credit."
+    },
+    {
+      "id": "MDEV-G03",
+      "description": "Step 3: on-device acceptance of the seven sibling screens from ORDTXT-02",
+      "status": "PASS",
+      "reason": "All seven sibling components rendered on iOS with functional exceptions. Six reached through normal app navigation; bypassed legacy DriverOperations through a labelled native component harness. Services issued/usage-recorded props separately exercised actual former whitespace branches without any stock write."
+    },
+    {
+      "id": "MDEV-G04",
+      "description": "Step 4: fix discovered defects, rerun affected checks and update manual/traceability without new binaries",
+      "status": "PASS",
+      "reason": "Seven discovered defects repaired and rechecked natively. Current tests 32/32, mobile typecheck and prototype/source/artifact preservation pass. Original hosted owner preview restored, order/invoice read works; three hosted business reads unchanged, unsupported ledger GET remains unverified."
+    }
+  ],
+  "coverage": {
+    "implementation": {
+      "implemented": 4,
+      "total": 4
+    },
+    "requirements": {
+      "verified": 4,
+      "total": 4
+    },
+    "critical": {
+      "verified": 0,
+      "total": 0
+    },
+    "roles": {
+      "onDeviceVerified": 7,
+      "total": 7,
+      "basis": "Representative authority/refund/navigation scope only"
+    },
+    "siblingScreens": {
+      "nativeRendered": 7,
+      "total": 7,
+      "normalNavigation": 6,
+      "legacyHarness": 1
+    },
+    "routes": {
+      "verified": 6,
+      "total": 7,
+      "untestedOrInactive": 1,
+      "reason": "Legacy DriverOperations bypassed by current routing; kept in denominator. Actual native component rendered in harness."
+    },
+    "hostedChecks": {
+      "verified": 3,
+      "total": 4,
+      "unsupported": 1,
+      "reason": "GET ledger 405 retained, not ledger acceptance"
+    },
+    "findings": {
+      "resolved": 7,
+      "total": 7
+    },
+    "gates": {
+      "passed": 4,
+      "total": 4
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Register four user-authorised stages sequentially. Transactions and forced errors use disposable loopback fixture; retain distinction from hosted demo and signed-device release. Restore hosted preview after acceptance."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Completed stages sequentially with actual iOS Expo Go and disposable dispatcher. Fixed seven findings including older-record first-page lookup defect found during remediation. Hosted financial writes zero; restored original owner hosted preview. Retained legacy route gap, unsupported hosted ledger check and unrelated release gates."
+    }
+  ]
+}

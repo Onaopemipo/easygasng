@@ -356,3 +356,5 @@ Transparent logo simulator follow-up: [native preview evidence](../mobile-transp
 Native Orders text-host repair: [matrix](mobile-orders-text-fix-rtm.md). User-reported Orders/OrderVisit crash and identical sibling spacer defects; existing data/security/native-build constraints retained.
 
 Native Orders authority follow-up (21 November): [matrix](native-order-authority-rtm.md), resolving ORDTXT-F01 with role and refund exception coverage.
+
+Sequential mobile device acceptance (21 November): [matrix](mobile-device-acceptance-rtm.md). Four ordered stages, seven roles and seven sibling screens retained.

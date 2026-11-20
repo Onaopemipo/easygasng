@@ -126,6 +126,7 @@ export default function DriverWorkspace({
     [orders, setOrders] = useState<any[]>([]),
     [snapshot, setSnapshot] = useState<any>(null),
     [notes, setNotes] = useState(""),
+    [failureNotes, setFailureNotes] = useState(""),
     [reason, setReason] = useState<(typeof deliveryFailureReasons)[number]>(
       deliveryFailureReasons[0],
     ),
@@ -352,6 +353,7 @@ export default function DriverWorkspace({
     setSelected(o.id);
     setPhase("detail");
     setNotes("");
+    setFailureNotes("");
     setCode("");
     setHandover(false);
     setError("");
@@ -1017,7 +1019,7 @@ export default function DriverWorkspace({
                             borderRadius: 12,
                           }}
                         />
-                        {!response && !order.assignment_response_open && (
+                        {!response && !order.assignment_response_open && order.attempt?.state === "assigned" && (
                           <Copy>
                             Ask dispatch to renew this assignment before
                             responding.
@@ -1151,8 +1153,8 @@ export default function DriverWorkspace({
                       <TextInput
                         accessibilityLabel="Failure evidence and dispatch notes, required"
                         placeholder="Observed problem and next step"
-                        value={notes}
-                        onChangeText={setNotes}
+                        value={failureNotes}
+                        onChangeText={setFailureNotes}
                         style={{
                           padding: 12,
                           color: colors.text,
@@ -1161,14 +1163,14 @@ export default function DriverWorkspace({
                       />
                       <Button
                         label="Report Failure to Dispatch"
-                        disabled={busy || notes.trim().length < 5}
+                        disabled={busy || failureNotes.trim().length < 5}
                         onPress={() =>
                           run("order.transition", {
                             id: order.id,
                             version: order.tracking_version,
                             status: "delivery_failed",
                             failureReason: reason,
-                            note: notes.trim(),
+                            note: failureNotes.trim(),
                           })
                         }
                       />

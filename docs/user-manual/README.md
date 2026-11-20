@@ -40,3 +40,5 @@ Current full Admin Settings navigation (20 November): [nine-category guide and c
 Current consolidated Settings acceptance: [roles, typed editors, history and exception tests](admin-settings-acceptance.md). Supplements the nine-category navigation guide; historical PDF/Word editions retained.
 
 Native mobile Orders repair (21 November): [preview instructions and acceptance limits](mobile-orders-preview.md). Includes reloading the existing Expo Go source preview. The owner-session refund finding is now resolved by the [Orders and refunds authority addendum](native-order-refunds.md). Historical manual artifacts retained.
+
+Current sequential mobile acceptance (21 November): [role testing and corrected behaviour](mobile-device-acceptance.md). Covers customer/commercial refunds, independent staff review, seven native component observations, seven repairs, theme and evidence-state corrections, exact older-record selection and hosted-preview restoration. No new native binary or launch waiver.

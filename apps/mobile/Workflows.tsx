@@ -58,6 +58,7 @@ export function NativeForm({
   preserveBlankNumbers = false,
   submitLabel,
   reviewLabel,
+  feedbackResetKey,
 }: {
   api: API;
   action: string;
@@ -74,6 +75,7 @@ export function NativeForm({
   preserveBlankNumbers?: boolean;
   submitLabel?: string;
   reviewLabel?: string;
+  feedbackResetKey?: number;
 }) {
   const [values, setValues] = useState<Record<string, any>>(() =>
       Object.fromEntries(
@@ -85,6 +87,7 @@ export function NativeForm({
     ),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
+  useEffect(() => { setMessage(""); }, [feedbackResetKey]);
   const [reviewed, setReviewed] = useState<Record<string, any> | null>(null);
   const [openOption, setOpenOption] = useState<string | null>(null);
   const [optionQuery, setOptionQuery] = useState("");
@@ -335,6 +338,16 @@ export function NativeForm({
           setMessage("");
           try {
             const data = { ...values };
+            for (const f of fields.filter((field) => field.type !== "hidden")) {
+              const required = f.required ?? f.type !== "checkbox";
+              const value = data[f.name];
+              const empty = value === undefined || value === null ||
+                (typeof value === "string" && value.trim() === "");
+              if (required && (empty || (f.type === "checkbox" && value !== true)))
+                throw new Error((f.options ? "Choose " : f.type === "checkbox" ? "Confirm " : "Enter ") + f.label + ".");
+              if (!empty && f.type === "number" && !Number.isFinite(Number(value)))
+                throw new Error("Enter a valid number for " + f.label + ".");
+            }
             for (const f of fields)
               if (
                 f.type === "number" &&

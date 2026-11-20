@@ -1,0 +1,430 @@
+[
+  {
+    "name": "customer-lookup-failure",
+    "stage": 1,
+    "role": "customer",
+    "checks": [
+      "Synthetic lookup 503 visible",
+      "Retry available",
+      "Selected refund button disabled"
+    ],
+    "screenshot": "screens/customer-lookup-failure.jpg",
+    "state": "screens/customer-lookup-failure.txt"
+  },
+  {
+    "name": "customer-invalid-quantity",
+    "stage": 1,
+    "role": "customer",
+    "checks": [
+      "Quantity 4 exceeds remaining 3",
+      "Validation visible",
+      "Submit disabled",
+      "MDEV-F01: card appearance mismatches app theme; reason caption low contrast"
+    ],
+    "screenshot": "screens/customer-invalid-quantity.jpg",
+    "state": "screens/customer-invalid-quantity.txt"
+  },
+  {
+    "name": "customer-consent-required",
+    "stage": 1,
+    "role": "customer",
+    "checks": [
+      "Valid quantity and reason still disabled before explicit consent"
+    ],
+    "screenshot": "screens/customer-consent-required.jpg",
+    "state": "screens/customer-consent-required.txt"
+  },
+  {
+    "name": "customer-uncertain-submit",
+    "stage": 1,
+    "role": "customer",
+    "checks": [
+      "Real fixture request created then synthetic response lost",
+      "No success claimed",
+      "Same form retained for retry"
+    ],
+    "screenshot": "screens/customer-uncertain-submit.jpg",
+    "state": "screens/customer-uncertain-submit.txt"
+  },
+  {
+    "name": "customer-refund-pending",
+    "stage": 1,
+    "role": "customer",
+    "checks": [
+      "Retry succeeds",
+      "Awaiting independent finance review",
+      "Successful submit disabled"
+    ],
+    "screenshot": "screens/customer-refund-pending.jpg",
+    "state": "screens/customer-refund-pending.txt"
+  },
+  {
+    "name": "commercial-invalid-quantity",
+    "stage": 1,
+    "role": "commercial",
+    "checks": [
+      "Own delivered order only",
+      "Excess quantity rejected",
+      "Consent initially unchecked"
+    ],
+    "screenshot": "screens/commercial-invalid-quantity.jpg",
+    "state": "screens/commercial-invalid-quantity.txt"
+  },
+  {
+    "name": "commercial-submit-failure",
+    "stage": 1,
+    "role": "commercial",
+    "checks": [
+      "Synthetic pre-dispatch 503 visible",
+      "No success claimed",
+      "Draft retained"
+    ],
+    "screenshot": "screens/commercial-submit-failure.jpg",
+    "state": "screens/commercial-submit-failure.txt"
+  },
+  {
+    "name": "commercial-refund-pending",
+    "stage": 1,
+    "role": "commercial",
+    "checks": [
+      "Retry succeeds",
+      "Pending independent finance review",
+      "Success locks submit"
+    ],
+    "screenshot": "screens/commercial-refund-pending.jpg",
+    "state": "screens/commercial-refund-pending.txt"
+  },
+  {
+    "name": "commercial-refund-pending",
+    "stage": 1,
+    "role": "commercial",
+    "checks": [
+      "Retry confirmed pending after activating visible button",
+      "Independent review message observed",
+      "Successful submit disabled"
+    ],
+    "screenshot": "screens/commercial-refund-pending.jpg",
+    "state": "screens/commercial-refund-pending.txt"
+  },
+  {
+    "name": "finance-reauth-required",
+    "stage": 2,
+    "role": "finance",
+    "checks": [
+      "Sensitive refund decision requires recent verification",
+      "Decision and reason retained"
+    ],
+    "screenshot": "screens/finance-reauth-required.jpg",
+    "state": "screens/finance-reauth-required.txt"
+  },
+  {
+    "name": "finance-refund-confirmed",
+    "stage": 2,
+    "role": "finance",
+    "checks": [
+      "Customer refund approved after password verification",
+      "Server confirmed before success UI",
+      "List refreshed"
+    ],
+    "screenshot": "screens/finance-refund-confirmed.jpg",
+    "state": "screens/finance-refund-confirmed.txt"
+  },
+  {
+    "name": "owner-commercial-rejected",
+    "stage": 2,
+    "role": "owner",
+    "checks": [
+      "Owner rejection follows recent verification",
+      "Server confirmed and list refreshed"
+    ],
+    "screenshot": "screens/owner-commercial-rejected.jpg",
+    "state": "screens/owner-commercial-rejected.txt"
+  },
+  {
+    "name": "manager-review-access-denied",
+    "stage": 2,
+    "role": "manager",
+    "checks": [
+      "Manager workspace directory excludes Credits & refunds",
+      "No customer refund forms or review action"
+    ],
+    "screenshot": "screens/manager-review-access-denied.jpg",
+    "state": "screens/manager-review-access-denied.txt"
+  },
+  {
+    "name": "driver-review-access-denied",
+    "stage": 2,
+    "role": "driver",
+    "checks": [
+      "Dedicated driver navigation only",
+      "No financial review or customer refund affordance"
+    ],
+    "screenshot": "screens/driver-review-access-denied.jpg",
+    "state": "screens/driver-review-access-denied.txt"
+  },
+  {
+    "name": "technician-review-access-denied",
+    "stage": 2,
+    "role": "technician",
+    "checks": [
+      "Dedicated technician navigation",
+      "No Credits & refunds or customer refund action"
+    ],
+    "screenshot": "screens/technician-review-access-denied.jpg",
+    "state": "screens/technician-review-access-denied.txt"
+  },
+  {
+    "name": "technician-jobs-failure",
+    "stage": 3,
+    "role": "technician",
+    "checks": [
+      "TechnicianScreens Jobs mounts without text-host error",
+      "Forced lookup failure visible",
+      "Retry Jobs available"
+    ],
+    "screenshot": "screens/technician-jobs-failure.jpg",
+    "state": "screens/technician-jobs-failure.txt"
+  },
+  {
+    "name": "technician-jobs-loaded",
+    "stage": 3,
+    "role": "technician",
+    "checks": [
+      "Retry resolves assigned job",
+      "No raw native text error"
+    ],
+    "screenshot": "screens/technician-jobs-loaded.jpg",
+    "state": "screens/technician-jobs-loaded.txt"
+  },
+  {
+    "name": "service-appointment-guard",
+    "stage": 3,
+    "role": "technician",
+    "checks": [
+      "Services Appointment mounts from Parts & Materials",
+      "Assigned assessment stage retains work/payment restrictions",
+      "Photo selection without consent/description rejected before permission"
+    ],
+    "screenshot": "screens/service-appointment-guard.jpg",
+    "state": "screens/service-appointment-guard.txt"
+  },
+  {
+    "name": "driver-assignment-guards",
+    "stage": 3,
+    "role": "driver",
+    "checks": [
+      "DriverWorkspace selected order mounts without raw-text error",
+      "Acknowledgement and pickup disabled without reason",
+      "No customer refund controls"
+    ],
+    "screenshot": "screens/driver-assignment-guards.jpg",
+    "state": "screens/driver-assignment-guards.txt"
+  },
+  {
+    "name": "driver-proof-consent-guard",
+    "stage": 3,
+    "role": "driver",
+    "checks": [
+      "DriverProof mounts without text-host error",
+      "Capture rejects missing consent/description before camera permission",
+      "Completion stays disabled for unpaid/unproven delivery"
+    ],
+    "screenshot": "screens/driver-proof-consent-guard.jpg",
+    "state": "screens/driver-proof-consent-guard.txt"
+  },
+  {
+    "name": "driver-proof-camera-unavailable",
+    "stage": 3,
+    "role": "driver",
+    "checks": [
+      "Unavailable camera build reports honest error",
+      "No permission granted or physical proof created",
+      "Delivery not completed"
+    ],
+    "screenshot": "screens/driver-proof-camera-unavailable.jpg",
+    "state": "screens/driver-proof-camera-unavailable.txt"
+  },
+  {
+    "name": "customer-notifications",
+    "stage": 3,
+    "role": "customer",
+    "checks": [
+      "CustomerNotifications populated list renders",
+      "Mark-as-read updates unread count",
+      "Refund notification reflects approved credit",
+      "No raw text-host error"
+    ],
+    "screenshot": "screens/customer-notifications.jpg",
+    "state": "screens/customer-notifications.txt"
+  },
+  {
+    "name": "business-workspace-failure",
+    "stage": 3,
+    "role": "owner",
+    "checks": [
+      "NativeBusinessWorkspace load failure visible",
+      "No phantom records/success",
+      "Refresh available"
+    ],
+    "screenshot": "screens/business-workspace-failure.jpg",
+    "state": "screens/business-workspace-failure.txt"
+  },
+  {
+    "name": "business-workspace-pagination",
+    "stage": 3,
+    "role": "owner",
+    "checks": [
+      "25 canonical records across two pages",
+      "Former whitespace branch rendered on device",
+      "Next page reaches page 2; Previous available",
+      "No raw native text error"
+    ],
+    "screenshot": "screens/business-workspace-pagination.jpg",
+    "state": "screens/business-workspace-pagination.txt"
+  },
+  {
+    "name": "legacy-driver-operations-native",
+    "stage": 3,
+    "role": "driver",
+    "checks": [
+      "Real DriverOperations rendered in labelled Expo native harness",
+      "Canonical fleet lookup and empty queue",
+      "Missing vehicle/odometer rejected before trip start",
+      "Location consent remains off; no permission or GPS record"
+    ],
+    "screenshot": "screens/legacy-driver-operations-native.jpg",
+    "state": "screens/legacy-driver-operations-native.txt"
+  },
+  {
+    "name": "service-material-states-native",
+    "stage": 3,
+    "role": "technician",
+    "checks": [
+      "Actual Services Appointment with labelled synthetic issued and usage-recorded material props",
+      "Former whitespace branches rendered natively without LogBox",
+      "No material write submitted; fixture presentation is not stock acceptance"
+    ],
+    "screenshot": "screens/service-material-states-native.jpg",
+    "state": "screens/service-material-states-native.txt"
+  },
+  {
+    "name": "legacy-required-field-error",
+    "stage": 3,
+    "role": "driver",
+    "checks": [
+      "Blank legacy trip selection rejected by real API as Invalid UUID",
+      "No trip, GPS consent or location permission created",
+      "MDEV-F06: raw validation copy should identify missing field"
+    ],
+    "screenshot": "screens/legacy-required-field-error.jpg",
+    "state": "screens/legacy-required-field-error.txt"
+  },
+  {
+    "name": "refund-theme-light-fixed",
+    "stage": 4,
+    "role": "customer",
+    "checks": [
+      "App light preference honoured despite dark system",
+      "Refund card and required caption share readable light palette",
+      "Remaining quantity now 2 after one approved unit"
+    ],
+    "screenshot": "screens/refund-theme-light-fixed.jpg",
+    "state": "screens/refund-theme-light-fixed.txt"
+  },
+  {
+    "name": "refund-theme-light-caption-fixed",
+    "stage": 4,
+    "role": "customer",
+    "checks": [
+      "Refund reason caption is readable on the light refund card",
+      "Selected refund controls remain guarded"
+    ],
+    "screenshot": "screens/refund-theme-light-caption-fixed.jpg",
+    "state": "screens/refund-theme-light-caption-fixed.txt"
+  },
+  {
+    "name": "refund-theme-dark-fixed",
+    "stage": 4,
+    "role": "customer",
+    "checks": [
+      "Explicit Dark preference applied",
+      "Refund surface, text, caption and inputs remain readable",
+      "No dependency on system-only appearance"
+    ],
+    "screenshot": "screens/refund-theme-dark-fixed.jpg",
+    "state": "screens/refund-theme-dark-fixed.txt"
+  },
+  {
+    "name": "native-money-label-fixed",
+    "stage": 4,
+    "role": "owner",
+    "checks": [
+      "Amount (₦) pairs with ₦1.00 for source 100 kobo",
+      "No amount kobo/naira mismatch"
+    ],
+    "screenshot": "screens/native-money-label-fixed.jpg",
+    "state": "screens/native-money-label-fixed.txt"
+  },
+  {
+    "name": "older-record-bound-and-required-fixed",
+    "stage": 4,
+    "role": "owner",
+    "checks": [
+      "Older selected record remains bound beyond first 20 rows",
+      "Scoped exact-ID refresh used",
+      "Missing decision is identified before API"
+    ],
+    "screenshot": "screens/older-record-bound-and-required-fixed.jpg",
+    "state": "screens/older-record-bound-and-required-fixed.txt"
+  },
+  {
+    "name": "verification-feedback-fixed",
+    "stage": 4,
+    "role": "owner",
+    "checks": [
+      "Password challenge passed",
+      "Obsolete verification warning cleared",
+      "Decision, selected record and reason retained",
+      "No automatic resubmission"
+    ],
+    "screenshot": "screens/verification-feedback-fixed.jpg",
+    "state": "screens/verification-feedback-fixed.txt"
+  },
+  {
+    "name": "driver-picked-up-warning-fixed",
+    "stage": 4,
+    "role": "driver",
+    "checks": [
+      "Synthetic picked-up assignment opens",
+      "No false renew-before-responding warning",
+      "Pickup remains guarded and no completion recorded"
+    ],
+    "screenshot": "screens/driver-picked-up-warning-fixed.jpg",
+    "state": "screens/driver-picked-up-warning-fixed.txt"
+  },
+  {
+    "name": "driver-failure-evidence-fixed",
+    "stage": 4,
+    "role": "driver",
+    "checks": [
+      "Assignment note does not populate failure evidence",
+      "New failure field empty",
+      "Report Failure disabled until fresh evidence",
+      "No failure/delivery completion submitted"
+    ],
+    "screenshot": "screens/driver-failure-evidence-fixed.jpg",
+    "state": "screens/driver-failure-evidence-fixed.txt"
+  },
+  {
+    "name": "legacy-required-field-fixed",
+    "stage": 4,
+    "role": "driver",
+    "checks": [
+      "Blank vehicle now shows Choose Vehicle before API",
+      "No Invalid UUID",
+      "No trip or permission created"
+    ],
+    "screenshot": "screens/legacy-required-field-fixed.jpg",
+    "state": "screens/legacy-required-field-fixed.txt"
+  }
+]
