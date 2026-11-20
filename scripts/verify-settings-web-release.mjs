@@ -69,6 +69,8 @@ async function transport(route, opts = {}) {
       "output = " + JSON.stringify(output),
       'write-out = "%{http_code}"',
       "request = " + JSON.stringify(opts.method || "GET"),
+      "connect-timeout = 10",
+      "max-time = 30",
     ];
     for (const [key, value] of Object.entries(opts.headers || {}))
       lines.push("header = " + JSON.stringify(key + ": " + value));
@@ -78,7 +80,10 @@ async function transport(route, opts = {}) {
       lines.push("data-binary = " + JSON.stringify("@" + body));
     }
     await fs.writeFile(config, lines.join("\n") + "\n", { mode: 0o600 });
-    const r = await exec(
+    let r;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        r = await exec(
       "vercel",
       [
         "curl",
@@ -93,6 +98,13 @@ async function transport(route, opts = {}) {
       ],
       { cwd: state.sourceDirectory, timeout: 60000, maxBuffer: 200000 },
     );
+        break;
+      } catch (error) {
+        if (attempt || (opts.method && opts.method !== "GET")) throw error;
+        console.log("RETRY read-only CLI transport after connection failure");
+      }
+    }
+    assert.ok(r, "CLI transport completed");
     const match = r.stdout.trim().match(/(\d{3})$/);
     if (!match)
       throw Error("Protected CLI response did not include an HTTP status");
@@ -214,5 +226,5 @@ try {
   assert.equal((await call('owner','setting.propose',undefined,'GET')).status,405);record('Setting mutation rejected over GET');
   const final=await snapshot();assert.deepEqual(final,before);record('Post-check settings, approvals, staff, orders, inventory, ledger, policies and NO-GO gates unchanged');
  }
- await fs.mkdir('docs/settings-modal/evidence/release',{recursive:true});await fs.writeFile('docs/settings-modal/evidence/release/'+stage+'-hosted.json',JSON.stringify({at:new Date().toISOString(),stage,base,method:'Read-only HTTPS using existing labelled demo accounts. Candidate uses authenticated Vercel CLI without weakening protection. No proposal, role change, activation, seed or database connection.',checks,snapshot:snap},null,2)+'\n');
+ await fs.mkdir('docs/settings-modal/evidence/release',{recursive:true});await fs.writeFile('docs/settings-modal/evidence/release/'+stage+'-hosted.json',JSON.stringify({at:new Date().toISOString(),stage,base,sourceCommit:identity.sourceCommit,deploymentId:identity.id,method:'Read-only HTTPS using existing labelled demo accounts. Candidate uses authenticated Vercel CLI without weakening protection. No proposal, role change, activation, seed or database connection.',checks,snapshot:snap},null,2)+'\n');
 } finally {for(const role of Object.keys(tokens))await call(role,'logout',{}).catch(()=>{});}

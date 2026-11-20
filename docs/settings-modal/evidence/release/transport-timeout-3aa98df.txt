@@ -1,0 +1,34 @@
+PASS Client-demo identity, synthetic notice and no-index metadata
+PASS Anonymous staff lookup denied
+PASS technician existing sign-in and own identity
+PASS finance existing sign-in and own identity
+PASS owner existing sign-in and own identity
+PASS customer existing sign-in and own identity
+PASS driver existing sign-in and own identity
+PASS manager existing sign-in and own identity
+PASS Settings, approval requests, staff roles and operational state snapshot
+PASS Pre-check business configuration, requests, staff and NO-GO gates unchanged
+PASS owner existing account resolves by email and saved-request ID
+PASS manager existing account resolves by email and saved-request ID
+node:internal/errors:986
+  const err = new Error(message);
+              ^
+
+Error: Command failed: vercel curl /api/staff.lookup?userId=2745f203-3d02-40f9-8f22-c632bcda6881 --deployment https://easygas-client-demo-1xgbepwuj-onaopemipos-projects.vercel.app --scope onaopemipos-projects -- --config /var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-protected-request-dmA6DC/curl.cfg
+Vercel CLI 59.18.0 (Node.js 24.21.0) | curl is in beta — https://vercel.com/feedback
+
+    at genericNodeError (node:internal/errors:986:15)
+    at wrappedFn (node:internal/errors:540:14)
+    at ChildProcess.exithandler (node:child_process:417:12)
+    at ChildProcess.emit (node:events:514:28)
+    at maybeClose (node:internal/child_process:1141:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:306:5) {
+  code: null,
+  killed: true,
+  signal: 'SIGTERM',
+  cmd: 'vercel curl /api/staff.lookup?userId=2745f203-3d02-40f9-8f22-c632bcda6881 --deployment https://easygas-client-demo-1xgbepwuj-onaopemipos-projects.vercel.app --scope onaopemipos-projects -- --config /var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-protected-request-dmA6DC/curl.cfg',
+  stdout: '',
+  stderr: 'Vercel CLI 59.18.0 (Node.js 24.21.0) | curl is in beta — https://vercel.com/feedback\n'
+}
+
+Node.js v24.21.0

@@ -1,0 +1,65 @@
+{
+  "at": "2026-11-20T03:32:40.693532+00:00",
+  "base": "https://easygas-client-demo.vercel.app/admin/settings",
+  "deploymentId": "dpl_84mTYGPNbPFoQYtoFjrU5ZSZxmbz",
+  "sourceCommit": "3aa98df5a422eb67cb5de61eec209f3a117f731d",
+  "method": "Actual CUA browser against stable client demo, existing dedicated owner session. Navigation, tab changes and local required-field validation only; no hosted proposal, draft save, access change, verification, activation or financial submission.",
+  "checks": [
+    {
+      "id": "SMOD-LIVE-MODAL",
+      "result": "PASS",
+      "observed": "Specific Staff permission change title; Details/Review; readable email lookup; schedule collapsed; fixed actions; password absent until required."
+    },
+    {
+      "id": "SMOD-LIVE-VALIDATION",
+      "result": "PASS",
+      "observed": "Empty Review change focuses missing Reason and remains in editing; no request submitted."
+    },
+    {
+      "id": "SMOD-LIVE-PAYMENT",
+      "result": "PASS",
+      "observed": "Checkout/Fees/Wallet/Review present; Wallet shows existing sandbox values without editing or submission."
+    },
+    {
+      "id": "SMOD-LIVE-REWARDS",
+      "result": "PASS",
+      "observed": "Points/Services/Offers/Review present; Services shows existing eligibility controls without editing or submission."
+    },
+    {
+      "id": "SMOD-LIVE-RESPONSIVE",
+      "result": "PASS",
+      "observed": "Desktop1280x720 and phones390x844,320x568 keep actions clear of actual fixed demo notice; phone buttons stay within modal."
+    }
+  ],
+  "bounds": [
+    {
+      "width": 1280,
+      "height": 720,
+      "footerBottom": 636,
+      "noticeTop": 674,
+      "clear": true,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "footerBottom": 736,
+      "noticeTop": 774,
+      "clear": true,
+      "buttonsInside": true
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "footerBottom": 444,
+      "noticeTop": 498,
+      "clear": true,
+      "buttonsInside": true
+    }
+  ],
+  "screenshots": [
+    "docs/settings-modal/evidence/release/stable-desktop.jpg",
+    "docs/settings-modal/evidence/release/stable-phone-390.jpg",
+    "docs/settings-modal/evidence/release/stable-phone-320.jpg"
+  ]
+}

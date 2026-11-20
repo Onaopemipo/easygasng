@@ -37,7 +37,10 @@
         "docs/settings-modal/evidence/focused-tests.txt",
         "docs/settings-modal/evidence/browser-checks.json",
         "docs/settings-modal/evidence/browser-api-confirmation.json",
-        "docs/settings-modal/reviewed-source-changes.json"
+        "docs/settings-modal/reviewed-source-changes.json",
+        "docs/settings-modal/evidence/release/stable-browser.json",
+        "docs/settings-modal/evidence/release/candidate-hosted.json",
+        "docs/settings-modal/evidence/release/stable-hosted.json"
       ],
       "acceptanceGate": "SMOD-G01",
       "status": "VERIFIED_COMPLETE",
@@ -80,7 +83,10 @@
         "docs/settings-modal/evidence/focused-tests.txt",
         "docs/settings-modal/evidence/browser-checks.json",
         "docs/settings-modal/evidence/browser-api-confirmation.json",
-        "docs/settings-modal/reviewed-source-changes.json"
+        "docs/settings-modal/reviewed-source-changes.json",
+        "docs/settings-modal/evidence/release/stable-browser.json",
+        "docs/settings-modal/evidence/release/candidate-hosted.json",
+        "docs/settings-modal/evidence/release/stable-hosted.json"
       ],
       "acceptanceGate": "SMOD-G02",
       "status": "VERIFIED_COMPLETE",
@@ -123,7 +129,10 @@
         "docs/settings-modal/evidence/focused-tests.txt",
         "docs/settings-modal/evidence/browser-checks.json",
         "docs/settings-modal/evidence/browser-api-confirmation.json",
-        "docs/settings-modal/reviewed-source-changes.json"
+        "docs/settings-modal/reviewed-source-changes.json",
+        "docs/settings-modal/evidence/release/stable-browser.json",
+        "docs/settings-modal/evidence/release/candidate-hosted.json",
+        "docs/settings-modal/evidence/release/stable-hosted.json"
       ],
       "acceptanceGate": "SMOD-G03",
       "status": "VERIFIED_COMPLETE",
@@ -168,7 +177,10 @@
         "docs/settings-modal/evidence/focused-tests.txt",
         "docs/settings-modal/evidence/browser-checks.json",
         "docs/settings-modal/evidence/browser-api-confirmation.json",
-        "docs/settings-modal/reviewed-source-changes.json"
+        "docs/settings-modal/reviewed-source-changes.json",
+        "docs/settings-modal/evidence/release/stable-browser.json",
+        "docs/settings-modal/evidence/release/candidate-hosted.json",
+        "docs/settings-modal/evidence/release/stable-hosted.json"
       ],
       "acceptanceGate": "SMOD-G04",
       "status": "VERIFIED_COMPLETE",
@@ -213,7 +225,10 @@
         "docs/settings-modal/evidence/focused-tests.txt",
         "docs/settings-modal/evidence/browser-checks.json",
         "docs/settings-modal/evidence/browser-api-confirmation.json",
-        "docs/settings-modal/reviewed-source-changes.json"
+        "docs/settings-modal/reviewed-source-changes.json",
+        "docs/settings-modal/evidence/release/stable-browser.json",
+        "docs/settings-modal/evidence/release/candidate-hosted.json",
+        "docs/settings-modal/evidence/release/stable-hosted.json"
       ],
       "acceptanceGate": "SMOD-G05",
       "status": "VERIFIED_COMPLETE",
@@ -243,12 +258,16 @@
       "testFiles": [
         "tests/settings-modal.test.ts",
         "tests/settings-datetime.test.ts",
-        "tests/owner-auto-approval.test.ts"
+        "tests/owner-auto-approval.test.ts",
+        "tests/settings-release.test.ts"
       ],
       "testIds": [
         "SMOD-CONTRACTS",
         "SMOD-RENDER",
-        "SMOD-SECURITY"
+        "SMOD-SECURITY",
+        "SMOD-DEPLOY",
+        "SMOD-HOSTED",
+        "SMOD-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -256,13 +275,21 @@
         "docs/settings-modal/evidence/focused-tests.txt",
         "docs/settings-modal/evidence/browser-checks.json",
         "docs/settings-modal/evidence/browser-api-confirmation.json",
-        "docs/settings-modal/reviewed-source-changes.json"
+        "docs/settings-modal/reviewed-source-changes.json",
+        "docs/settings-modal/evidence/release/stable-browser.json",
+        "docs/settings-modal/evidence/release/candidate-hosted.json",
+        "docs/settings-modal/evidence/release/stable-hosted.json",
+        "docs/settings-modal/evidence/release-tests.txt",
+        "docs/settings-modal/evidence/release/candidate-identity.json",
+        "docs/settings-modal/evidence/release/upload-verified.json",
+        "docs/settings-modal/evidence/native-artifacts-after.json",
+        "docs/settings-modal/evidence/release/stable-identity.json"
       ],
       "acceptanceGate": "SMOD-G06",
-      "status": "PARTIAL",
-      "reason": "First rollout found a demo-banner/footer overlap; corrected locally, final hosted verification pending.",
-      "testResult": "PASS local; hosted candidate/stable checks pending.",
-      "outstandingWork": "Deploy reviewed web/API source; verify candidate, promote and verify stable read-only state and browser UI."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Ready source 3aa98df deployed to verified client-demo project; candidate and stable each passed 20 hosted checks; actual stable desktop and phone UI/bounds passed, including demo-notice clearance.",
+      "testResult": "PASS \u2014 20 candidate + 20 stable hosted checks, actual three-size browser acceptance and release integrity checks.",
+      "outstandingWork": "None within this bounded web/API settings rollout. Full native/device, provider, production and exhaustive business-feature acceptance remain separate."
     }
   ],
   "gates": [
@@ -270,42 +297,42 @@
       "id": "SMOD-G01",
       "description": "Compact modal with fixed header/action bar and a single scroll region",
       "status": "PASS",
-      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+      "reason": "Bounded local API/regression and actual responsive acceptance passed; final Ready demo source and role/read-only state verification passed."
     },
     {
       "id": "SMOD-G02",
       "description": "Readable existing-account selection and branch context; no raw-ID entry",
       "status": "PASS",
-      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+      "reason": "Bounded local API/regression and actual responsive acceptance passed; final Ready demo source and role/read-only state verification passed."
     },
     {
       "id": "SMOD-G03",
       "description": "Focused configuration sections, optional scheduling, draft and explicit review",
       "status": "PASS",
-      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+      "reason": "Bounded local API/regression and actual responsive acceptance passed; final Ready demo source and role/read-only state verification passed."
     },
     {
       "id": "SMOD-G04",
       "description": "Preserve server approval, self-access, branch/version and activation controls",
       "status": "PASS",
-      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+      "reason": "Bounded local API/regression and actual responsive acceptance passed; final Ready demo source and role/read-only state verification passed."
     },
     {
       "id": "SMOD-G05",
       "description": "Validation, conditional verification, pending-write and unsaved-change recovery",
       "status": "PASS",
-      "reason": "Local API, focused regression and actual responsive browser acceptance complete."
+      "reason": "Bounded local API/regression and actual responsive acceptance passed; final Ready demo source and role/read-only state verification passed."
     },
     {
       "id": "SMOD-G06",
       "description": "Desktop/phone browser acceptance and verified demo rollout without mobile build",
-      "status": "PARTIAL",
-      "reason": "First rollout found a demo-banner/footer overlap; corrected locally, final hosted verification pending."
+      "status": "PASS",
+      "reason": "Bounded local API/regression and actual responsive acceptance passed; final Ready demo source and role/read-only state verification passed."
     }
   ],
   "coverage": {
     "requirements": {
-      "verified": 5,
+      "verified": 6,
       "total": 6
     },
     "implementation": {
@@ -321,7 +348,7 @@
       "total": 1
     },
     "gates": {
-      "passed": 5,
+      "passed": 6,
       "total": 6
     },
     "excluded": 0
@@ -338,6 +365,10 @@
     {
       "date": "2026-11-20",
       "change": "First candidate 5d7ca4b passed 20 hosted API checks and was promoted. Browser verification found the demo-only fixed notice overlaps the action footer; SMOD-G06 remains open. Added scoped viewport reservation and verified non-overlap locally at desktop and two phone sizes; deploying follow-up."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Final banner-aware source 3aa98df on Ready dpl_84mTYGPNbPFoQYtoFjrU5ZSZxmbz promoted to stable demo. One read-only Vercel CLI transport timeout retained as evidence; rerun passed all20 checks, then stable passed all20. Actual stable browser passed desktop and two phone sizes with footer above notice. No hosted business mutations; all four native artifacts retained bytes and timestamps. User-manual addendum published in repository; original manual files and production NO-GO preserved."
     }
   ]
 }
