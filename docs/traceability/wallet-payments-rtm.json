@@ -18,12 +18,16 @@
       "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
       "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
       "testFiles": [
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/wallet-payments-release.test.ts"
       ],
       "testIds": [
         "WPAY-UNITS",
         "WPAY-RENDER",
-        "WPAY-SECURITY"
+        "WPAY-SECURITY",
+        "WPAY-DEPLOY",
+        "WPAY-HOSTED",
+        "WPAY-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -32,13 +36,22 @@
         "docs/wallet-payments/evidence/local-browser.json",
         "docs/wallet-payments/evidence/local-draft.json",
         "docs/wallet-payments/evidence/typecheck.txt",
-        "docs/wallet-payments/evidence/web-build.txt"
+        "docs/wallet-payments/evidence/web-build.txt",
+        "docs/wallet-payments/evidence/release/candidate-identity.json",
+        "docs/wallet-payments/evidence/release/stable-identity.json",
+        "docs/wallet-payments/evidence/release/upload-verified.json",
+        "docs/wallet-payments/evidence/release/candidate-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-browser.json",
+        "docs/wallet-payments/evidence/release-tests.txt",
+        "docs/wallet-payments/evidence/native-artifacts-after.json",
+        "docs/user-manual/wallet-payments-update.md"
       ],
       "acceptanceGate": "WPAY-G01",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
-      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
-      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused UI refinement implemented, tested locally and verified on the promoted client demo. Hosted business configuration and all unrelated decisions preserved.",
+      "testResult": "PASS: 45 focused checks; web typecheck/build; real local draft readback; 25 candidate and 25 stable authenticated checks; desktop/390px/320px browser acceptance; release and traceability tests.",
+      "outstandingWork": "None for this scoped web UI refinement. Existing production NO-GO, provider/native/physical-operation gates, actual-import hold and retain-all instruction remain outside this phase and unchanged. Historical PDF/Word manual not reissued; current guide addendum supplied."
     },
     {
       "id": "WPAY-02",
@@ -51,17 +64,25 @@
         "apps/web/components/payment-gateway-policy.tsx",
         "apps/web/components/setting-change-form.tsx",
         "apps/web/app/globals.css",
-        "packages/business-rules/src/payment-editor.ts"
+        "packages/business-rules/src/payment-editor.ts",
+        "packages/business-rules/src/payment-fees.ts",
+        "apps/web/lib/payments/policy.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/service.ts"
       ],
       "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
       "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
       "testFiles": [
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/wallet-payments-release.test.ts"
       ],
       "testIds": [
         "WPAY-UNITS",
         "WPAY-RENDER",
-        "WPAY-SECURITY"
+        "WPAY-SECURITY",
+        "WPAY-DEPLOY",
+        "WPAY-HOSTED",
+        "WPAY-NO-MOBILE-BUILD"
       ],
       "negativeTests": [
         "WPAY-SECURITY"
@@ -72,13 +93,22 @@
         "docs/wallet-payments/evidence/local-browser.json",
         "docs/wallet-payments/evidence/local-draft.json",
         "docs/wallet-payments/evidence/typecheck.txt",
-        "docs/wallet-payments/evidence/web-build.txt"
+        "docs/wallet-payments/evidence/web-build.txt",
+        "docs/wallet-payments/evidence/release/candidate-identity.json",
+        "docs/wallet-payments/evidence/release/stable-identity.json",
+        "docs/wallet-payments/evidence/release/upload-verified.json",
+        "docs/wallet-payments/evidence/release/candidate-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-browser.json",
+        "docs/wallet-payments/evidence/release-tests.txt",
+        "docs/wallet-payments/evidence/native-artifacts-after.json",
+        "docs/user-manual/wallet-payments-update.md"
       ],
       "acceptanceGate": "WPAY-G02",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
-      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
-      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused UI refinement implemented, tested locally and verified on the promoted client demo. Hosted business configuration and all unrelated decisions preserved.",
+      "testResult": "PASS: 45 focused checks; web typecheck/build; real local draft readback; 25 candidate and 25 stable authenticated checks; desktop/390px/320px browser acceptance; release and traceability tests.",
+      "outstandingWork": "None for this scoped web UI refinement. Existing production NO-GO, provider/native/physical-operation gates, actual-import hold and retain-all instruction remain outside this phase and unchanged. Historical PDF/Word manual not reissued; current guide addendum supplied."
     },
     {
       "id": "WPAY-03",
@@ -96,12 +126,16 @@
       "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
       "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
       "testFiles": [
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/wallet-payments-release.test.ts"
       ],
       "testIds": [
         "WPAY-UNITS",
         "WPAY-RENDER",
-        "WPAY-SECURITY"
+        "WPAY-SECURITY",
+        "WPAY-DEPLOY",
+        "WPAY-HOSTED",
+        "WPAY-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -110,13 +144,22 @@
         "docs/wallet-payments/evidence/local-browser.json",
         "docs/wallet-payments/evidence/local-draft.json",
         "docs/wallet-payments/evidence/typecheck.txt",
-        "docs/wallet-payments/evidence/web-build.txt"
+        "docs/wallet-payments/evidence/web-build.txt",
+        "docs/wallet-payments/evidence/release/candidate-identity.json",
+        "docs/wallet-payments/evidence/release/stable-identity.json",
+        "docs/wallet-payments/evidence/release/upload-verified.json",
+        "docs/wallet-payments/evidence/release/candidate-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-browser.json",
+        "docs/wallet-payments/evidence/release-tests.txt",
+        "docs/wallet-payments/evidence/native-artifacts-after.json",
+        "docs/user-manual/wallet-payments-update.md"
       ],
       "acceptanceGate": "WPAY-G03",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
-      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
-      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused UI refinement implemented, tested locally and verified on the promoted client demo. Hosted business configuration and all unrelated decisions preserved.",
+      "testResult": "PASS: 45 focused checks; web typecheck/build; real local draft readback; 25 candidate and 25 stable authenticated checks; desktop/390px/320px browser acceptance; release and traceability tests.",
+      "outstandingWork": "None for this scoped web UI refinement. Existing production NO-GO, provider/native/physical-operation gates, actual-import hold and retain-all instruction remain outside this phase and unchanged. Historical PDF/Word manual not reissued; current guide addendum supplied."
     },
     {
       "id": "WPAY-04",
@@ -129,17 +172,25 @@
         "apps/web/components/payment-gateway-policy.tsx",
         "apps/web/components/setting-change-form.tsx",
         "apps/web/app/globals.css",
-        "packages/business-rules/src/payment-editor.ts"
+        "packages/business-rules/src/payment-editor.ts",
+        "packages/business-rules/src/payment-fees.ts",
+        "apps/web/lib/payments/policy.ts",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/service.ts"
       ],
       "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
       "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
       "testFiles": [
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/wallet-payments-release.test.ts"
       ],
       "testIds": [
         "WPAY-UNITS",
         "WPAY-RENDER",
-        "WPAY-SECURITY"
+        "WPAY-SECURITY",
+        "WPAY-DEPLOY",
+        "WPAY-HOSTED",
+        "WPAY-NO-MOBILE-BUILD"
       ],
       "negativeTests": [
         "WPAY-SECURITY"
@@ -150,13 +201,22 @@
         "docs/wallet-payments/evidence/local-browser.json",
         "docs/wallet-payments/evidence/local-draft.json",
         "docs/wallet-payments/evidence/typecheck.txt",
-        "docs/wallet-payments/evidence/web-build.txt"
+        "docs/wallet-payments/evidence/web-build.txt",
+        "docs/wallet-payments/evidence/release/candidate-identity.json",
+        "docs/wallet-payments/evidence/release/stable-identity.json",
+        "docs/wallet-payments/evidence/release/upload-verified.json",
+        "docs/wallet-payments/evidence/release/candidate-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-browser.json",
+        "docs/wallet-payments/evidence/release-tests.txt",
+        "docs/wallet-payments/evidence/native-artifacts-after.json",
+        "docs/user-manual/wallet-payments-update.md"
       ],
       "acceptanceGate": "WPAY-G04",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
-      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
-      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused UI refinement implemented, tested locally and verified on the promoted client demo. Hosted business configuration and all unrelated decisions preserved.",
+      "testResult": "PASS: 45 focused checks; web typecheck/build; real local draft readback; 25 candidate and 25 stable authenticated checks; desktop/390px/320px browser acceptance; release and traceability tests.",
+      "outstandingWork": "None for this scoped web UI refinement. Existing production NO-GO, provider/native/physical-operation gates, actual-import hold and retain-all instruction remain outside this phase and unchanged. Historical PDF/Word manual not reissued; current guide addendum supplied."
     },
     {
       "id": "WPAY-05",
@@ -174,12 +234,16 @@
       "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
       "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
       "testFiles": [
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/wallet-payments-release.test.ts"
       ],
       "testIds": [
         "WPAY-UNITS",
         "WPAY-RENDER",
-        "WPAY-SECURITY"
+        "WPAY-SECURITY",
+        "WPAY-DEPLOY",
+        "WPAY-HOSTED",
+        "WPAY-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -188,13 +252,22 @@
         "docs/wallet-payments/evidence/local-browser.json",
         "docs/wallet-payments/evidence/local-draft.json",
         "docs/wallet-payments/evidence/typecheck.txt",
-        "docs/wallet-payments/evidence/web-build.txt"
+        "docs/wallet-payments/evidence/web-build.txt",
+        "docs/wallet-payments/evidence/release/candidate-identity.json",
+        "docs/wallet-payments/evidence/release/stable-identity.json",
+        "docs/wallet-payments/evidence/release/upload-verified.json",
+        "docs/wallet-payments/evidence/release/candidate-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-browser.json",
+        "docs/wallet-payments/evidence/release-tests.txt",
+        "docs/wallet-payments/evidence/native-artifacts-after.json",
+        "docs/user-manual/wallet-payments-update.md"
       ],
       "acceptanceGate": "WPAY-G05",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
-      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
-      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused UI refinement implemented, tested locally and verified on the promoted client demo. Hosted business configuration and all unrelated decisions preserved.",
+      "testResult": "PASS: 45 focused checks; web typecheck/build; real local draft readback; 25 candidate and 25 stable authenticated checks; desktop/390px/320px browser acceptance; release and traceability tests.",
+      "outstandingWork": "None for this scoped web UI refinement. Existing production NO-GO, provider/native/physical-operation gates, actual-import hold and retain-all instruction remain outside this phase and unchanged. Historical PDF/Word manual not reissued; current guide addendum supplied."
     },
     {
       "id": "WPAY-06",
@@ -207,17 +280,23 @@
         "apps/web/components/payment-gateway-policy.tsx",
         "apps/web/components/setting-change-form.tsx",
         "apps/web/app/globals.css",
-        "packages/business-rules/src/payment-editor.ts"
+        "packages/business-rules/src/payment-editor.ts",
+        "scripts/verify-wallet-payments-release.mjs",
+        "docs/user-manual/wallet-payments-update.md"
       ],
       "dataSource": "Existing payment.gateway setting and definition metadata, setting.propose/approval.edit/revise; shared paymentFeePolicy and quotePaymentFee; server remains authoritative.",
       "securityControl": "Current actor/branch, strict gateway schema, independent approval and activation, recent verification, stale-version and live-payment restrictions unchanged.",
       "testFiles": [
-        "tests/wallet-payments-editor.test.ts"
+        "tests/wallet-payments-editor.test.ts",
+        "tests/wallet-payments-release.test.ts"
       ],
       "testIds": [
         "WPAY-UNITS",
         "WPAY-RENDER",
-        "WPAY-SECURITY"
+        "WPAY-SECURITY",
+        "WPAY-DEPLOY",
+        "WPAY-HOSTED",
+        "WPAY-NO-MOBILE-BUILD"
       ],
       "negativeTests": [],
       "evidence": [
@@ -226,60 +305,81 @@
         "docs/wallet-payments/evidence/local-browser.json",
         "docs/wallet-payments/evidence/local-draft.json",
         "docs/wallet-payments/evidence/typecheck.txt",
-        "docs/wallet-payments/evidence/web-build.txt"
+        "docs/wallet-payments/evidence/web-build.txt",
+        "docs/wallet-payments/evidence/release/candidate-identity.json",
+        "docs/wallet-payments/evidence/release/stable-identity.json",
+        "docs/wallet-payments/evidence/release/upload-verified.json",
+        "docs/wallet-payments/evidence/release/candidate-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-hosted.json",
+        "docs/wallet-payments/evidence/release/stable-browser.json",
+        "docs/wallet-payments/evidence/release-tests.txt",
+        "docs/wallet-payments/evidence/native-artifacts-after.json",
+        "docs/user-manual/wallet-payments-update.md"
       ],
       "acceptanceGate": "WPAY-G06",
-      "status": "PARTIAL",
-      "reason": "Implemented and locally verified. Protected server policy and all unrelated production decisions preserved; hosted release acceptance pending.",
-      "testResult": "PASS local: 45 focused tests; web typecheck/build; isolated real-browser acceptance. Hosted rollout pending.",
-      "outstandingWork": "Deploy reviewed web source, perform candidate/stable read-only checks and final browser verification; record final release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Focused UI refinement implemented, tested locally and verified on the promoted client demo. Hosted business configuration and all unrelated decisions preserved.",
+      "testResult": "PASS: 45 focused checks; web typecheck/build; real local draft readback; 25 candidate and 25 stable authenticated checks; desktop/390px/320px browser acceptance; release and traceability tests.",
+      "outstandingWork": "None for this scoped web UI refinement. Existing production NO-GO, provider/native/physical-operation gates, actual-import hold and retain-all instruction remain outside this phase and unchanged. Historical PDF/Word manual not reissued; current guide addendum supplied."
     }
   ],
   "gates": [
     {
       "id": "WPAY-G01",
       "description": "Focused payment sections with concise text and one fixed action bar",
-      "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "status": "PASS",
+      "reason": "Executed focused tests, real browser and exact-source hosted release evidence passed; see mapped requirement."
     },
     {
       "id": "WPAY-G02",
       "description": "Naira and percentage editing with exact conversion and readable review",
-      "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "status": "PASS",
+      "reason": "Executed focused tests, real browser and exact-source hosted release evidence passed; see mapped requirement."
     },
     {
       "id": "WPAY-G03",
       "description": "Progressive advanced options without hidden invalid fields or lost tab edits",
-      "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "status": "PASS",
+      "reason": "Executed focused tests, real browser and exact-source hosted release evidence passed; see mapped requirement."
     },
     {
       "id": "WPAY-G04",
       "description": "Preserved payment authorisation, sandbox, approval and quote integrity",
-      "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "status": "PASS",
+      "reason": "Executed focused tests, real browser and exact-source hosted release evidence passed; see mapped requirement."
     },
     {
       "id": "WPAY-G05",
       "description": "Responsive, keyboard and validation acceptance for payment configuration",
-      "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "status": "PASS",
+      "reason": "Executed focused tests, real browser and exact-source hosted release evidence passed; see mapped requirement."
     },
     {
       "id": "WPAY-G06",
       "description": "Verified demo rollout, guide and traceability; no mobile binary build",
-      "status": "PARTIAL",
-      "reason": "Implementation and acceptance pending."
+      "status": "PASS",
+      "reason": "Executed focused tests, real browser and exact-source hosted release evidence passed; see mapped requirement."
     }
   ],
   "coverage": {
-    "requirements": {
-      "verified": 0,
+    "implementation": {
+      "implemented": 6,
       "total": 6
     },
+    "requirements": {
+      "verified": 6,
+      "total": 6
+    },
+    "critical": {
+      "verified": 2,
+      "total": 2
+    },
+    "routes": {
+      "verified": 1,
+      "total": 1
+    },
     "gates": {
-      "passed": 0,
+      "passed": 6,
       "total": 6
     },
     "excluded": 0
@@ -288,6 +388,16 @@
     {
       "date": "2026-11-20",
       "change": "Registered user-requested Wallet & Payments audit/redesign before implementation. Existing compact shell retained; payment content, units, progressive options and review refined. No financial policy activation, live payments or mobile build authorised by this phase."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Completed scoped web payment-editor refinement and verified promoted demo. Exact source and safe upload checked. UI preview edits discarded on hosted demo; saved draft acceptance used disposable local synthetic DB. No scope removed and no production decision changed."
     }
-  ]
+  ],
+  "release": {
+    "sourceCommit": "e6996fc5e70db9dbd3febd37f1ae9f29158b307d",
+    "deploymentId": "dpl_7vUspXs9hxLDy8vwp89Yo3Y19d8m",
+    "url": "https://easygas-client-demo.vercel.app/admin/settings",
+    "mobileBuilds": 0
+  }
 }

@@ -30,3 +30,5 @@ Use the bundled Codex Python runtime with python-docx, Pillow, ReportLab and pyp
 `node --import tsx --test tests/user-manual.test.ts` checks original route/evidence retention, historical findings, final artifacts and matrix scope. The separate remediation tests check current deployment, approved publication, expiry and preservation evidence. Review packets and scripts do not grant permission for future publication or renewal.
 
 Settings editor continuation (20 November): [updated task instructions and desktop/phone previews](settings-change-update.md). The focused editor/review flow replaces the long settings-change modal. This addendum preserves the existing manual and does not reissue its historical PDF/Word edition.
+
+Wallet & Payments refinement (20 November): [current payment configuration guide](wallet-payments-update.md), including direct naira/percentage entry, compact payment methods, optional advanced rules, wallet limits and readable review. Linked screenshots show the deployed web editor. The existing PDF/Word edition remains historical.
