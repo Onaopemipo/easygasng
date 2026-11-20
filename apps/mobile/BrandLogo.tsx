@@ -23,8 +23,11 @@ export default function BrandLogo({
 }: BrandLogoProps) {
   const { dark } = useTheme();
   const inverse = tone === "inverse" || (tone === "auto" && dark);
+  // iOS can retain template rendering after clearing a tint. A new image view
+  // restores the original artwork when switching back to the brand variant.
   return (
     <Image
+      key={inverse ? "inverse" : "brand"}
       source={transparentLogo}
       resizeMode="contain"
       accessible={accessible}
@@ -36,8 +39,8 @@ export default function BrandLogo({
         style,
         {
           backgroundColor: "transparent",
-          tintColor: inverse ? "#ffffff" : undefined,
         },
+        inverse ? { tintColor: "#ffffff" } : {},
       ]}
     />
   );

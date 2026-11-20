@@ -45,13 +45,19 @@
         "docs/mobile-transparent-logo/evidence/preview-build.txt",
         "docs/mobile-transparent-logo/evidence/render-observations.json",
         "docs/mobile-transparent-logo/evidence/light-dark-preview.jpg",
-        "docs/mobile-transparent-logo/evidence/phone-preview.jpg"
+        "docs/mobile-transparent-logo/evidence/phone-preview.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator/observations.json",
+        "docs/mobile-transparent-logo/evidence/simulator/sign-in-dark.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator/home-light.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator/home-dark.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator-regression-tests.txt",
+        "docs/mobile-transparent-logo/evidence/simulator-typecheck.txt"
       ],
       "acceptanceGate": "MLOGO-G01",
       "status": "VERIFIED_COMPLETE",
       "reason": "Existing approved 2172\u00d7724 wordmark reused byte-for-byte; alpha transparency verified (no opaque white pixels), one shared source and all nine native placements inventoried.",
-      "testResult": "PASS: mobile typecheck;20 existing regressions; five original prototype checks; transparent asset/source inventory; actual shared component rendering at desktop/390px; original native artifact hashes/sizes/exact timestamps retained.",
-      "outstandingWork": "No outstanding work in bounded source/component presentation scope. New appearance is not installed or published in the historical private prototype. Installed full-screen verification requires a future permitted mobile build; existing device/production gates remain unchanged."
+      "testResult": "PASS: mobile typecheck;20 existing regressions; five original prototype checks; transparent asset/source inventory; actual shared component rendering at desktop/390px; original native artifact hashes/sizes/exact timestamps retained. Follow-up PASS:22 regression/traceability checks, mobile typecheck and actual Expo Go light/dark/light preview after iOS tint fix.",
+      "outstandingWork": "Seven other placements not individually previewed in Expo Go. No new native/release binary installed; signed/physical-device and existing production gates unchanged. Metro preview left running on iPhone 17 Pro."
     },
     {
       "id": "MLOGO-02",
@@ -96,13 +102,19 @@
         "docs/mobile-transparent-logo/evidence/preview-build.txt",
         "docs/mobile-transparent-logo/evidence/render-observations.json",
         "docs/mobile-transparent-logo/evidence/light-dark-preview.jpg",
-        "docs/mobile-transparent-logo/evidence/phone-preview.jpg"
+        "docs/mobile-transparent-logo/evidence/phone-preview.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator/observations.json",
+        "docs/mobile-transparent-logo/evidence/simulator/sign-in-dark.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator/home-light.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator/home-dark.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator-regression-tests.txt",
+        "docs/mobile-transparent-logo/evidence/simulator-typecheck.txt"
       ],
       "acceptanceGate": "MLOGO-G02",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Logo-only white/pale tiles removed. Brand colours on light surfaces and white inverse wordmark on dark/fixed-green surfaces render with transparent containers and accessible names; original logo sizing/decorative intent retained.",
-      "testResult": "PASS: mobile typecheck;20 existing regressions; five original prototype checks; transparent asset/source inventory; actual shared component rendering at desktop/390px; original native artifact hashes/sizes/exact timestamps retained.",
-      "outstandingWork": "No outstanding work in bounded source/component presentation scope. New appearance is not installed or published in the historical private prototype. Installed full-screen verification requires a future permitted mobile build; existing device/production gates remain unchanged."
+      "reason": "Logo-only white/pale tiles removed. Brand colours on light surfaces and white inverse wordmark on dark/fixed-green surfaces render with transparent containers and accessible names; original logo sizing/decorative intent retained. Native preview found and fixed iOS retained template tint after returning to light; light/dark/light now preserves original colours.",
+      "testResult": "PASS: mobile typecheck;20 existing regressions; five original prototype checks; transparent asset/source inventory; actual shared component rendering at desktop/390px; original native artifact hashes/sizes/exact timestamps retained. Follow-up PASS:22 regression/traceability checks, mobile typecheck and actual Expo Go light/dark/light preview after iOS tint fix.",
+      "outstandingWork": "Seven other placements not individually previewed in Expo Go. No new native/release binary installed; signed/physical-device and existing production gates unchanged. Metro preview left running on iPhone 17 Pro."
     },
     {
       "id": "MLOGO-03",
@@ -143,13 +155,19 @@
         "docs/mobile-transparent-logo/evidence/preview-build.txt",
         "docs/mobile-transparent-logo/evidence/render-observations.json",
         "docs/mobile-transparent-logo/evidence/light-dark-preview.jpg",
-        "docs/mobile-transparent-logo/evidence/phone-preview.jpg"
+        "docs/mobile-transparent-logo/evidence/phone-preview.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator/observations.json",
+        "docs/mobile-transparent-logo/evidence/simulator/sign-in-dark.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator/home-light.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator/home-dark.jpg",
+        "docs/mobile-transparent-logo/evidence/simulator-regression-tests.txt",
+        "docs/mobile-transparent-logo/evidence/simulator-typecheck.txt"
       ],
       "acceptanceGate": "MLOGO-G03",
       "status": "VERIFIED_COMPLETE",
       "reason": "Mobile typecheck,20 existing regressions and five historical prototype checks passed. Actual shared component inspected on light/dark/green surfaces and390px preview. Four native artifacts and historical prototype manifest/bundle unchanged; no binary build/export/install.",
-      "testResult": "PASS: mobile typecheck;20 existing regressions; five original prototype checks; transparent asset/source inventory; actual shared component rendering at desktop/390px; original native artifact hashes/sizes/exact timestamps retained.",
-      "outstandingWork": "No outstanding work in bounded source/component presentation scope. New appearance is not installed or published in the historical private prototype. Installed full-screen verification requires a future permitted mobile build; existing device/production gates remain unchanged."
+      "testResult": "PASS: mobile typecheck;20 existing regressions; five original prototype checks; transparent asset/source inventory; actual shared component rendering at desktop/390px; original native artifact hashes/sizes/exact timestamps retained. Follow-up PASS:22 regression/traceability checks, mobile typecheck and actual Expo Go light/dark/light preview after iOS tint fix.",
+      "outstandingWork": "Seven other placements not individually previewed in Expo Go. No new native/release binary installed; signed/physical-device and existing production gates unchanged. Metro preview left running on iPhone 17 Pro."
     }
   ],
   "gates": [
@@ -203,7 +221,12 @@
       "verified": 3,
       "total": 3
     },
-    "nativeBinaryBuilds": 0
+    "nativeBinaryBuilds": 0,
+    "nativeDevelopmentPreview": {
+      "verified": 2,
+      "total": 9,
+      "method": "Existing Expo Go simulator, current Metro source. Common dark sign-in and customer home light/dark observed; seven other placements not individually visited."
+    }
   },
   "changeLog": [
     {
@@ -213,6 +236,10 @@
     {
       "date": "2026-11-20",
       "change": "All nine source placements now use BrandLogo. Reused original alpha image unchanged; removed logo-only backing styles and used inverse white tint for dark contexts.20 regressions, five historical prototype checks and component renders passed. Original artifacts preserved; nine installed full-screen appearances remain unverified, separately reported, without a new binary."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "User requested simulator preview. Used already-installed Expo Go58 on iPhone17Pro with Metro at exp://127.0.0.1:8081 and existing HTTPS demo API. No native build/export/install. Initial native light mode showed blue tint after dark; remounting the image per variant fixed it. Captured sign-in dark and home light/dark; left home light open. Native development preview2/9; release/physical-device acceptance unchanged."
     }
   ]
 }

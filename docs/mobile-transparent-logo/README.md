@@ -23,3 +23,13 @@ Mobile typecheck and 20 existing regression checks passed. Five historical mobil
 The source inventory records all nine placements. Original native bundles/APK/export metadata retain their hashes, sizes and exact original nanosecond timestamps. The historical private prototype manifest/bundle remain unchanged.
 
 This updates the native source; no new mobile binary, native bundle/export or installed build was produced, following the existing no-new-mobile-binaries instruction. The browser preview is component verification rather than screenshots of a newly installed app. Installed full-screen appearance remains unverified for all nine placements until a future permitted build. It is retained separately in [traceability](../traceability/mobile-transparent-logo-rtm.md), alongside unchanged production NO-GO and unrelated device/provider gates.
+
+## Simulator preview follow-up
+
+The user requested a native simulator preview. The current app is now running in the already-installed Expo Go58 on iPhone17Pro (iOS26.5), served by Metro at `exp://127.0.0.1:8081` using the existing HTTPS client-demo API. No native binary build/export/install was needed. No sign-in, order, payment, message or other business mutation was submitted.
+
+The native preview caught an iOS-specific issue that the React Native Web preview did not show: clearing a template tint left the light logo blue. `BrandLogo` now mounts a separate image view for brand/inverse variants and applies a tint only to inverse. Native light→dark→light switching then retained the original green/orange in light and white in dark. The initial blue-tint screenshot is retained as discovery evidence; the final `home-light.jpg` shows the corrected colours.
+
+Common sign-in in dark mode and customer home in both modes were observed (two of nine source placements); the seven other placements were not individually visited. This is Expo Go development-preview evidence, not new release-build or physical-device certification. Original native binaries and the historical private prototype remain unchanged. The simulator and Metro are left running on the guest customer home in light appearance.
+
+![Current native simulator preview](evidence/simulator/home-light.jpg)

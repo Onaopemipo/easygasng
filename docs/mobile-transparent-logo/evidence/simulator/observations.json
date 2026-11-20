@@ -1,0 +1,41 @@
+{
+  "device": "iPhone 17 Pro",
+  "deviceId": "EAECACA9-D6A3-4512-83C9-25CAE9A2AE95",
+  "runtime": "Existing Expo Go 58 simulator installation",
+  "previewUrl": "exp://127.0.0.1:8081",
+  "api": "https://easygas-client-demo.vercel.app",
+  "method": "Current native source served by local Metro; no native build, export or install.",
+  "observedScreens": [
+    "Common sign-in in dark appearance",
+    "Customer home in dark appearance",
+    "Customer home in light appearance"
+  ],
+  "verifiedSourcePlacements": [
+    "apps/mobile/App.tsx:common sign-in",
+    "apps/mobile/CustomerHome.tsx"
+  ],
+  "finding": "iOS retained template tint after clearing it, making the light wordmark blue. The image now remounts per brand/inverse variant and tint is applied only to inverse.",
+  "checks": [
+    {
+      "name": "Native logo is transparent without white backplate",
+      "result": "PASS"
+    },
+    {
+      "name": "Dark home uses white inverse logo",
+      "result": "PASS"
+    },
+    {
+      "name": "Light home retains original green/orange artwork",
+      "result": "PASS"
+    },
+    {
+      "name": "Light to dark to light round-trip retains original colours",
+      "result": "PASS"
+    },
+    {
+      "name": "Preview left open on customer home in light appearance",
+      "result": "PASS"
+    }
+  ],
+  "outstanding": "Dedicated Driver/Technician/owner and other logo placements not individually visited; release binaries and physical-device certification remain unchanged."
+}

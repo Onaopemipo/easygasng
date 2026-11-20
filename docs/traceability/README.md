@@ -350,3 +350,5 @@ Consolidated Settings role acceptance accepted (20 November 2026): [matrix](admi
 Native transparent logo consistency: [matrix](mobile-transparent-logo-rtm.md). Shared transparent branding across native entry/header/home surfaces; no new mobile binaries and prior production decisions retained.
 
 Transparent native logo source update verified: [matrix](mobile-transparent-logo-rtm.md), [report/preview](../mobile-transparent-logo/README.md). All nine placements share transparent BrandLogo;20 regressions, five original-prototype checks and local component renders pass. No new mobile binaries; installed appearance remains0/9 unverified until a permitted build, with all prior production gates retained.
+
+Transparent logo simulator follow-up: [native preview evidence](../mobile-transparent-logo/evidence/simulator/observations.json). Existing Expo Go/Metro displays current source on iPhone17Pro; retained iOS tint fixed and light/dark/light checked. No new native binary; two of nine development-preview placements observed, with release/device gates unchanged.

@@ -20,12 +20,26 @@
     "apps/mobile/TechnicianScreens.tsx": "8716da1df1a1d1dbd6903700f646b08f4c59d1e3c7af59683e6a25f9161c34d4"
   },
   "addedFiles": {
-    "apps/mobile/BrandLogo.tsx": "48b7392dde1257ff88e679e5f2fb5212cddc619db9472e82b5096deab7ca1053"
+    "apps/mobile/BrandLogo.tsx": "48daa84d709c0ee9735ada040c26d7524fcad53095e71b0e7743707eb7115dca"
   },
   "asset": "apps/mobile/assets/easygas-logo-hd.png",
   "assetSha256": "75a7740a4adf72a24578e4571fa74f26189ac64dac34468617eaf176a3d58d51",
-  "review": "Only logo imports/rendering and logo-only backplate styles changed. Existing transparent source artwork reused byte-for-byte. Default theme-aware logo is original brand colours on light and monochrome white on dark; fixed dark onboarding/driver header explicitly inverse. Existing layout sizes, accessible labels, navigation and API/session logic retained. No mobile binary or published prototype rebuilt.",
+  "review": "Only logo imports/rendering and logo-only backplate styles changed. Existing transparent source artwork reused byte-for-byte. Default theme-aware logo is original brand colours on light and monochrome white on dark; fixed dark onboarding/driver header explicitly inverse. Existing layout sizes, accessible labels, navigation and API/session logic retained. No mobile binary or published prototype rebuilt. Follow-up simulator preview found retained iOS template tint after switching to light. The shared image remounts when variant changes and applies tint only to inverse. Existing Expo Go preview uses Metro without a new native binary.",
   "evidence": [
-    "docs/mobile-transparent-logo/evidence/typecheck.txt"
+    "docs/mobile-transparent-logo/evidence/typecheck.txt",
+    "docs/mobile-transparent-logo/evidence/simulator/observations.json"
+  ],
+  "addedFileRevisions": [
+    {
+      "sourceCommit": "a1ad3b2f61dee5e85f1d27b44a4a0a1795c8b0e2",
+      "path": "apps/mobile/BrandLogo.tsx",
+      "sha256": "48b7392dde1257ff88e679e5f2fb5212cddc619db9472e82b5096deab7ca1053",
+      "reason": "Initial transparent component; native dark-to-light tint issue discovered during follow-up preview."
+    },
+    {
+      "path": "apps/mobile/BrandLogo.tsx",
+      "sha256": "48daa84d709c0ee9735ada040c26d7524fcad53095e71b0e7743707eb7115dca",
+      "reason": "Explicit brand/inverse image keys reset iOS template rendering; tint applied only for inverse. Native theme round-trip verified."
+    }
   ]
 }
