@@ -1,0 +1,59 @@
+✔ ASACC-ROLES: all seven canonical roles, every definition, history/proposal permissions and legacy aliases are authoritative (2633.37975ms)
+✖ ASACC-EDITORS: every existing definition renders with typed valid data; malformed values are rejected by real proposals (948.303875ms)
+✔ ASACC-LIFECYCLE: manager draft, independent approval, owner versioned restoration, scheduling and stale conflict preserve history (938.318375ms)
+✖ ASACC-EXCEPTIONS: anonymous, inactive/expired/revoked sessions, branch forgery, stale/invalid values, history leaks and readonly restoration are denied (845.976083ms)
+✖ ASACC-HISTORY: view-only/locked histories expose no restoration; busy, failure and server result states remain explicit (0.482292ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 2
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6156.108291
+
+✖ failing tests:
+
+test at tests/admin-settings-acceptance.test.ts:1:3475
+✖ ASACC-EDITORS: every existing definition renders with typed valid data; malformed values are rejected by real proposals (948.303875ms)
+  AssertionError [ERR_ASSERTION]: service.cooker-servicing
+      at <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-settings-acceptance.test.ts:29:260)
+      at async enabled (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-settings-acceptance.test.ts:9:152)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '<form class="sc-form" noValidate="" data-unsaved="false" data-submit-pending="false" aria-busy="false"><div class="sc-context"><span>lagos <span aria-hidden="true">·</span> Current version 1</span><span class="sc-policy"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>Approval required</span></div><div role="tablist" aria-label="Setting change steps" class="sc-tabs"><button id="_R_0_-details" type="button" role="tab" aria-selected="true" aria-controls="_R_0_-panel-details" tabindex="0">Details</button><button id="_R_0_-review" type="button" role="tab" aria-selected="false" aria-controls="_R_0_-panel-review" tabindex="-1">Review</button></div><div class="sc-body"><section role="tabpanel" id="_R_0_-panel-details" aria-labelledby="_R_0_-details" data-value-section="details"><fieldset class="sc-fields"> <label><span class="field-caption">Proposed value<span class="field-required" aria-hidden="true"> *</span><span class="field-required-announcement"> (required)</span></span><input type="text" required="" value="[object Object]"/></label></fieldset></section><div class="sc-common"><label><span class="field-caption">Reason for change<span class="field-required" aria-hidden="true"> *</span><span class="field-required-announcement"> (required)</span></span><textarea data-common-field="true" required="" minLength="5" maxLength="1000" rows="2" placeholder="Briefly explain why this change is needed."></textarea></label><details class="sc-schedule"><summary><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path><path d="M16 18h.01"></path></svg> Schedule for later <span>Optional</span></summary><label><span class="field-caption">Effective date · Lagos time<span class="field-optional"> (optional)</span></span><input type="date" data-common-field="true" value=""/></label><p>The change takes effect at the start of this day in Lagos, after approvals and activation checks pass.</p></details></div></div><footer class="sc-footer"><span class="sc-footer-note" role="status">Changes are reviewed before submission</span><div><button class="button secondary" type="button">Cancel</button><button class="button secondary sc-draft" type="button">Save draft</button><button type="button" class="button">Review change<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button></div></footer></form>',
+    expected: /\[object Object\]/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/admin-settings-acceptance.test.ts:1:6517
+✖ ASACC-EXCEPTIONS: anonymous, inactive/expired/revoked sessions, branch forgery, stale/invalid values, history leaks and readonly restoration are denied (845.976083ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-settings-acceptance.test.ts:49:2)
+      at async enabled (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-settings-acceptance.test.ts:9:152)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/admin-settings-acceptance.test.ts:1:9022
+✖ ASACC-HISTORY: view-only/locked histories expose no restoration; busy, failure and server result states remain explicit (0.482292ms)
+  ReferenceError: React is not defined
+      at SettingVersionHistory (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/apps/web/components/setting-version-history.tsx:9:2)
+      at Object.react_stack_bottom_frame (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:9808:18)
+      at renderWithHooks (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:5062:19)
+      at renderElement (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:5497:23)
+      at retryNode (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:6417:31)
+      at performWork (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:7435:17)
+      at startWork (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:8270:7)
+      at renderToStringImpl (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:8380:7)
+      at process.env.NODE_ENV.exports.renderToStaticMarkup (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/react-dom/cjs/react-dom-server-legacy.node.development.js:9861:14)
+      at render (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/admin-settings-acceptance.test.ts:59:50)

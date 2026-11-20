@@ -44,3 +44,5 @@ To test navigation safely, browse/search, open the editor and history, then clos
 Published previews: [desktop category view](../admin-settings-audit/evidence/release/stable-desktop.jpg), [legacy-field explanation](../admin-settings-audit/evidence/release/stable-legacy.jpg), [phone navigation](../admin-settings-audit/evidence/release/stable-phone.jpg).
 
 Approval badges now describe the current actor's request path using server metadata: **Automatic approval**, **Routine change**, **Approval required** or **2 approvals required**. **View only** means your role cannot request a change from that card; **Read only** marks a locked definition. Approval rights in the Approval Centre remain separate. Automatic approval still requires applicable identity, scheduling and activation/safety checks.
+
+For the role-by-role permissions table, repaired service/checklist/policy editors, history restoration and exception testing, use [Settings acceptance and testing guide](admin-settings-acceptance.md).

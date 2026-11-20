@@ -1,0 +1,9 @@
+# Acceptance findings
+
+| ID | Reproduction and impact | Repair | Verification |
+| --- | --- | --- | --- |
+| ASACC-D01 | Settings → service offering, safety checklist or policy terms opens a generic text field containing `[object Object]`; existing structured values cannot be edited correctly. | Typed service tabs (Service / Pricing / Requirements), checklist add/remove fields and policy Content / Publication tabs. Existing structured API payloads and final review/draft path retained. Exact service naira conversion and Lagos policy dates. | Every editable definition renders; all 21 editable types; real malformed proposals, content safety/publication negatives and actual browser drafts. |
+| ASACC-D02 | A view-only user can open a populated setting history and see restoration despite lacking proposal authority. API correctly rejects it. | History displays restoration only for proposal roles and explains view-only access. | Every role/history/proposal combination; Inventory identity-history browser proof. |
+| ASACC-D03 | Restoration errors appear behind the open modal; failed/superseded results can receive a generic success-style request message. In-flight restoration is not guarded. | Inline error inside history, disabled in-flight actions, busy close guard and explicit active/pending/partial/scheduled/error feedback. | Rendered permission/busy/error cases, server-result assertions and real restoration lifecycle. |
+
+Initial discovery logs are retained separately. The test harness initially used an incorrect Finance history denial expectation (some rewards history is authorised); the assertion now targets owner-only legal policy history, retaining canonical view rights. Existing JSX modules need the standalone renderer's React harness; this is not a browser defect. Historical source baselines and production NO-GO are retained.

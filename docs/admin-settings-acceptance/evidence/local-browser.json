@@ -1,0 +1,153 @@
+{
+  "base": "http://127.0.0.1:3120",
+  "roles": [
+    "owner",
+    "manager",
+    "finance",
+    "driver",
+    "technician",
+    "customer",
+    "commercial"
+  ],
+  "observations": [
+    {
+      "check": "service draft saved",
+      "dialogs": 0,
+      "text": true
+    },
+    {
+      "check": "checklist draft saved",
+      "dialogs": 0,
+      "text": true
+    },
+    {
+      "check": "policy review uses typed content and UTC instant for Lagos date",
+      "text": "Cancellation policyLagos · Current version 1Automatic approvalContentPublicationReviewPolicy title * (required)Reviewed policy text (optional)Synthetic QA only. This isolated acceptance policy is a draft for testing the typed editor. It does not apply to real orders, payments, deliveries, customers or services.Publish this policy (optional)Policy effective date · Lagos time (optional)Publishing requires reviewed text of at least 100 characters and an effective date. This date controls public visibility; scheduling this setting change is separate.Review draftContentNot configuredSynthetic QA only. This isolated acceptance policy is a draft for testing the typed editor. It does not apply to real orders, payments, deliveries, customers or services.Full proposed configurationTitleCancellation PolicyContentSynthetic QA only. This isolated acceptance policy is a draft for testing the typed editor. It does not apply to real orders, payments, deliveries, customers or services.PublishedDisabledEffective AtNot configuredReasonSynthetic QA only policy draftWhenInactive draftThis saves an inactive draft. It will not apply or enter the approval queue.Draft stays inactiveBackSave draft"
+    },
+    {
+      "check": "policy draft saved",
+      "dialogs": 0,
+      "saved": true
+    },
+    {
+      "cards": [
+        {
+          "actions": [
+            ""
+          ],
+          "badge": "View only",
+          "label": "Invoice & receipt business details"
+        }
+      ],
+      "check": "Inventory view-only identity"
+    },
+    {
+      "check": "Inventory version history is view-only",
+      "restorationButtons": 0,
+      "text": "Invoice & receipt business details — historyYou can view this history. Your role cannot request restoration of this setting.Version 2Not configured  Email: Not configured · Phone: +2347000000000 · Tax Id: Not configured · Address: Synthetic demo address · Website: Not configured · Legal Name: Synthetic QA only · Registration Number: Not configured · Verification Reference: Synthetic QA only20/11/2026, 15:47:21"
+    },
+    {
+      "categories": [
+        "Business & Website",
+        "Gas & Products",
+        "Delivery & Dispatch",
+        "Services & Safety",
+        "Payments & Wallet",
+        "Rewards & Retention",
+        "Staff & Security"
+      ],
+      "check": "Service Manager categories"
+    },
+    {
+      "check": "Invalid manager hours rejected without closing editor",
+      "dialog": "Branch opening hoursLagos · Current version 1Routine changeDetailsReview Proposed value * (required)Review draftValue08:00–18:0018:00–09:00ReasonSynthetic QA only invalid manager hoursWhenInactive draftThis saves an inactive draft. It will not apply or enter the approval queue.Use 24-hour windows such as 09:00–18:00, with the end after the start.Draft stays inactiveBackSave draft"
+    },
+    {
+      "check": "Corrected manager draft saved inactive",
+      "dialogs": 0,
+      "saved": true
+    },
+    {
+      "cards": 1,
+      "check": "Manager rewards programme search returns one canonically viewable setting",
+      "note": "Initial owner-only visibility expectation was incorrect; manager may view this definition but cannot propose it. Real service tests verify both permissions separately."
+    },
+    {
+      "check": "Driver direct Settings route denied",
+      "cards": 0,
+      "text": true,
+      "url": "http://127.0.0.1:3120/admin/settings"
+    },
+    {
+      "check": "Technician direct Settings route denied",
+      "cards": 0,
+      "text": true,
+      "url": "http://127.0.0.1:3120/admin/settings"
+    },
+    {
+      "check": "Customer direct Settings route denied",
+      "cards": 0,
+      "text": true,
+      "url": "http://127.0.0.1:3120/account"
+    },
+    {
+      "check": "Commercial direct Settings route denied",
+      "cards": 0,
+      "text": true,
+      "url": "http://127.0.0.1:3120/account"
+    },
+    {
+      "check": "Policy date round trip",
+      "review": true
+    },
+    {
+      "check": "Rejected restoration stays inside open history",
+      "dialog": "Invoice & receipt business details — history",
+      "enabled": true,
+      "error": "Some information is missing or has the wrong format. Review the form and try again."
+    },
+    {
+      "check": "Typed service pricing editor",
+      "rawObject": false,
+      "tabs": [
+        "Service",
+        "Pricing",
+        "Requirements",
+        "Review"
+      ]
+    }
+  ],
+  "phone": {
+    "dialogScrollWidth": 366,
+    "dialogWidth": 366,
+    "overflow": false,
+    "scrollWidth": 390,
+    "width": 390
+  },
+  "checks": [
+    {
+      "name": "Actual Admin service, checklist and policy drafts remain inactive; canonical amounts/date checked separately",
+      "result": "PASS"
+    },
+    {
+      "name": "Inventory history has no restoration action",
+      "result": "PASS"
+    },
+    {
+      "name": "Service Manager routine draft rejects invalid windows and accepts correction",
+      "result": "PASS"
+    },
+    {
+      "name": "Driver, Technician, Customer and Commercial direct Settings access unavailable",
+      "result": "PASS"
+    },
+    {
+      "name": "Restoration errors remain inside history; fields and retry action retained",
+      "result": "PASS"
+    },
+    {
+      "name": "Tabbed service editor fits 390px viewport without overflow",
+      "result": "PASS"
+    }
+  ]
+}

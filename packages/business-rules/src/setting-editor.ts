@@ -1,6 +1,17 @@
 import { effectiveDateInLagos } from "./effective-date";
 export type SettingEditorTab = { id: string; label: string };
 export function settingEditorTabs(type: string): SettingEditorTab[] {
+  if (type === "service")
+    return [
+      { id: "details", label: "Service" },
+      { id: "pricing", label: "Pricing" },
+      { id: "requirements", label: "Requirements" },
+    ];
+  if (type === "legal")
+    return [
+      { id: "content", label: "Content" },
+      { id: "publication", label: "Publication" },
+    ];
   if (type === "payment_gateway")
     return [
       { id: "checkout", label: "Checkout" },
@@ -121,4 +132,35 @@ export function settingChangeRows(
       ),
     );
   return [{ path: prefix || "Value", before, after }];
+}
+
+/** Report the server restoration result without implying a failed request was applied. */
+export function settingRestorationResult(result: any): {
+  error: string;
+  message: string;
+} {
+  if (["failed", "superseded"].includes(result?.status))
+    return {
+      error:
+        result.failure_reason ||
+        "Restoration was not applied. Refresh the current setting and review the request in the Approval Centre.",
+      message: "",
+    };
+  const messages: Record<string, string> = {
+    active:
+      "Previous value restored. A new version and audit history were recorded.",
+    scheduled:
+      "Restoration approved and scheduled. The current value remains active until activation checks pass.",
+    pending_approval:
+      "Restoration requested. The current value remains active while approval is pending.",
+    partially_approved:
+      "Restoration needs further independent review. The current value remains active.",
+  };
+  return messages[result?.status]
+    ? { error: "", message: messages[result.status] }
+    : {
+        error:
+          "Restoration has not been confirmed. Review its status in the Approval Centre before retrying.",
+        message: "",
+      };
 }

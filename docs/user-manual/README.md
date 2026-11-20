@@ -36,3 +36,5 @@ Wallet & Payments refinement (20 November): [current payment configuration guide
 Payment category consolidation (20 November): [Payments & Wallet organisation guide](payment-settings-organisation.md) maps the six renamed controls and distinguishes card top-up limits from cash/bank-transfer wallet limits. The three previous Settings categories now share one purpose-based category; existing permissions and financial rules are retained.
 
 Current full Admin Settings navigation (20 November): [nine-category guide and configuration tasks](admin-settings-navigation.md). This supersedes earlier category labels in the historical manual, while retaining all 77 settings, the payment consolidation, search aliases, authority and current values. See the complete audit/mapping and traceability linked from that guide.
+
+Current consolidated Settings acceptance: [roles, typed editors, history and exception tests](admin-settings-acceptance.md). Supplements the nine-category navigation guide; historical PDF/Word editions retained.

@@ -28,6 +28,7 @@ import {
   settingApprovalCopy,
   settingChangeRows,
 } from "../../../packages/business-rules/src/setting-editor";
+import SettingContentFields from "./setting-content-fields";
 import PaymentGatewayPolicy from "./payment-gateway-policy";
 import {
   paymentFieldLabel,
@@ -262,7 +263,9 @@ export default function SettingForm({
   const valueFields = (
     <>
       {" "}
-      {s.value_type === "boolean" ? (
+      {["service","checklist","legal"].includes(s.value_type) ? (
+        <SettingContentFields type={s.value_type} value={value} onChange={changeValue} section={tabs[0].id} />
+      ) : s.value_type === "boolean" ? (
         <label>
           <FieldCaption required={true}>Proposed value</FieldCaption>
           <select
@@ -974,7 +977,9 @@ export default function SettingForm({
               ),
             },
           ]
-        : [{ ...tabs[0], node: valueFields }];
+        : ["service", "legal"].includes(s.value_type)
+          ? tabs.map(t=>({...t,node:<SettingContentFields type={s.value_type} value={value} onChange={changeValue} section={t.id}/> }))
+          : [{ ...tabs[0], node: valueFields }];
   const rows = review
     ? settingChangeRows(
         s.value_type === "money" ? s.value : s.value,
@@ -982,7 +987,7 @@ export default function SettingForm({
       )
     : [];
   const readable = (v: any, path: string) =>
-    s.value_type === "payment_gateway"
+    (s.value_type === "payment_gateway" || (s.value_type === "service" && ["priceKobo", "calloutKobo"].includes(path)))
       ? paymentReviewValue(path, v)
       : s.value_type === "money" && typeof v === "number"
         ? new Intl.NumberFormat("en-NG", {
@@ -1133,7 +1138,7 @@ export default function SettingForm({
                   {rows.slice(0, 12).map((r, i) => (
                     <div key={i}>
                       <strong>
-                        {s.value_type === "payment_gateway"
+                        {s.value_type === "service" && r.path === "priceKobo" ? "Service price" : s.value_type === "service" && r.path === "calloutKobo" ? "Call-out fee" : s.value_type === "payment_gateway"
                           ? paymentFieldLabel(r.path)
                           : settingLabel(r.path)}
                       </strong>

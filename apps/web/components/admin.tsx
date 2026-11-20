@@ -8,6 +8,8 @@ import { privilegeById } from "../../../packages/business-rules/src/staff-privil
 import { NotificationsTray } from "./notifications-tray";
 import SettingForm from "./setting-change-form";
 import SettingsPurposeGroup from "./settings-purpose-group";
+import SettingVersionHistory from "./setting-version-history";
+import { settingRestorationResult } from "../../../packages/business-rules/src/setting-editor";
 import { settingsApprovalBadge, settingsCategoryDescriptions, settingsCategories, settingsDisplayCategory, settingsDisplay, settingsGroups } from "../../../packages/business-rules/src/settings-categories";
 import { appAlert } from "./app-dialog";
 import { FormInput } from "./password-input";
@@ -801,6 +803,8 @@ function Settings({
     [editing, setEditing] = useState<any>(null),
     [settingBusy, setSettingBusy] = useState(false),
     [history, setHistory] = useState<any>(null),
+    [historyBusy, setHistoryBusy] = useState(false),
+    [historyError, setHistoryError] = useState(""),
     [message, setMessage] = useState(""),
     [actionError, setActionError] = useState("");
   const categories = settingsCategories(data ?? []);
@@ -914,6 +918,7 @@ function Settings({
                           aria-label={`View ${settingsDisplay(d).label} history`}
                           onClick={async () => {
                             setActionError("");
+                            setHistoryError("");
                             try {
                               setHistory({
                                 setting: settingsDisplay(d),
@@ -1009,45 +1014,25 @@ function Settings({
       {history && (
         <Modal
           title={`${history.setting.label} — history`}
+          busy={historyBusy}
           onClose={() => setHistory(null)}
         >
-          {history.versions.length ? (
-            history.versions.map((v: any) => (
-              <div className="version-row" key={v.id}>
-                <strong>Version {v.version}</strong>
-                <p>
-                  {formatValue(v.previous_value, history.setting.value_type)}{" "}
-                  <ArrowRight size={14} />{" "}
-                  {formatValue(v.value, history.setting.value_type)}
-                </p>
-                <small>{new Date(v.created_at).toLocaleString()}</small>
-                <button
-                  className="text-link"
-                  onClick={async () => {
-                    try {
-                      await api("setting.rollback", {
-                        versionId: v.id,
-                        reason: `Restore the value preceding version ${v.version}.`,
-                      });
-                      setHistory(null);
-                      setMessage(
-                        "Rollback requested through the same approval policy.",
-                      );
-                      onChange();
-                    } catch (e: any) {
-                      setActionError(e.message);
-                    }
-                  }}
-                >
-                  Request restoration of previous value <History size={14} />
-                </button>
-              </div>
-            ))
-          ) : (
-            <Empty icon={History} title="No changes yet.">
-              The original configuration is still active.
-            </Empty>
-          )}
+          <SettingVersionHistory setting={history.setting} versions={history.versions} role={user.role} busy={historyBusy} error={historyError} onRestore={async (v) => {
+            if (historyBusy) return;
+            setHistoryBusy(true);
+            setHistoryError("");
+            setMessage("");
+            try {
+              const result = settingRestorationResult(await api("setting.rollback", {
+                versionId: v.id,
+                reason: `Restore the value preceding version ${v.version}.`,
+              }));
+              if (result.error) setHistoryError(result.error);
+              else { setHistory(null); setMessage(result.message); }
+              onChange();
+            } catch (e: any) { setHistoryError(e.message); }
+            finally { setHistoryBusy(false); }
+          }} />
         </Modal>
       )}
     </>

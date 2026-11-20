@@ -1,0 +1,14 @@
+{
+  "phase": "Authorised role-based Admin Settings acceptance fixes",
+  "baselineCommit": "654ef19",
+  "baseline": {
+    "apps/web/components/admin.tsx": "06e71a195743e4c3b477e4f3045b1cc71af946946f51eed5c681f156e1a9a4cc"
+  },
+  "files": {
+    "apps/web/components/admin.tsx": "ed793da9060a76361ae995c120687ab726e44a99949949ce46faf4b8b16452e6"
+  },
+  "review": "Settings history now hides restoration for view-only/locked roles, disables in-flight actions and reports errors inside the dialog. Server restoration statuses are respected. Existing approval authority, categories, unrelated work and original source baselines retained. New typed service/checklist/legal editors use existing schemas and shared final review/draft path.",
+  "evidence": [
+    "docs/admin-settings-acceptance/evidence/acceptance-tests.txt"
+  ]
+}

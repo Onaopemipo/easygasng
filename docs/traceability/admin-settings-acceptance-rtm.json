@@ -1,0 +1,407 @@
+{
+  "phase": "Consolidated Admin Settings full role-based acceptance",
+  "productionDecision": "NO-GO; actual-import hold, retain-all and unrelated acceptance gates preserved",
+  "requirements": [
+    {
+      "id": "ASACC-01",
+      "requirement": "All canonical roles and restricted account states retain exact setting visibility, search and action authority",
+      "priority": "P1",
+      "scope": "Consolidated Admin Settings acceptance, seven canonical account roles locally; existing six labelled hosted identities. Isolated synthetic mutations only; hosted checks read-only. No new mobile binaries, production activation, real payments/messages or live qualification renewal.",
+      "uiReference": "User-requested full role-based acceptance and exceptions",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts"
+      ],
+      "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
+      "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-purpose.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "ASACC-ROLES",
+        "ASACC-EDITORS",
+        "ASACC-LIFECYCLE",
+        "ASACC-EXCEPTIONS",
+        "ASACC-HISTORY",
+        "ASACC-CONTENT"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-acceptance/README.md",
+        "docs/admin-settings-acceptance/DEFECTS.md",
+        "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/role-coverage.json",
+        "docs/admin-settings-acceptance/evidence/editor-coverage.json",
+        "docs/admin-settings-acceptance/evidence/local-browser.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+      ],
+      "acceptanceGate": "ASACC-G01",
+      "status": "PARTIAL",
+      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
+      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
+      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+    },
+    {
+      "id": "ASACC-02",
+      "requirement": "Every visible setting and editor type keeps canonical handoffs, valid draft and rejected invalid-value behavior",
+      "priority": "P1",
+      "scope": "Consolidated Admin Settings acceptance, seven canonical account roles locally; existing six labelled hosted identities. Isolated synthetic mutations only; hosted checks read-only. No new mobile binaries, production activation, real payments/messages or live qualification renewal.",
+      "uiReference": "User-requested full role-based acceptance and exceptions",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts"
+      ],
+      "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
+      "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-purpose.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "ASACC-ROLES",
+        "ASACC-EDITORS",
+        "ASACC-LIFECYCLE",
+        "ASACC-EXCEPTIONS",
+        "ASACC-HISTORY",
+        "ASACC-CONTENT"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-acceptance/README.md",
+        "docs/admin-settings-acceptance/DEFECTS.md",
+        "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/role-coverage.json",
+        "docs/admin-settings-acceptance/evidence/editor-coverage.json",
+        "docs/admin-settings-acceptance/evidence/local-browser.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+      ],
+      "acceptanceGate": "ASACC-G02",
+      "status": "PARTIAL",
+      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
+      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
+      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+    },
+    {
+      "id": "ASACC-03",
+      "requirement": "Draft, submission, independent review, activation, scheduling and restoration lifecycle behave correctly",
+      "priority": "P1",
+      "scope": "Consolidated Admin Settings acceptance, seven canonical account roles locally; existing six labelled hosted identities. Isolated synthetic mutations only; hosted checks read-only. No new mobile binaries, production activation, real payments/messages or live qualification renewal.",
+      "uiReference": "User-requested full role-based acceptance and exceptions",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts"
+      ],
+      "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
+      "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-purpose.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "ASACC-ROLES",
+        "ASACC-EDITORS",
+        "ASACC-LIFECYCLE",
+        "ASACC-EXCEPTIONS",
+        "ASACC-HISTORY",
+        "ASACC-CONTENT"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-acceptance/README.md",
+        "docs/admin-settings-acceptance/DEFECTS.md",
+        "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/role-coverage.json",
+        "docs/admin-settings-acceptance/evidence/editor-coverage.json",
+        "docs/admin-settings-acceptance/evidence/local-browser.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+      ],
+      "acceptanceGate": "ASACC-G03",
+      "status": "PARTIAL",
+      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
+      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
+      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+    },
+    {
+      "id": "ASACC-04",
+      "requirement": "Exception cases preserve scope, session, version, identity, immutable history and safety/payment boundaries",
+      "priority": "P0",
+      "scope": "Consolidated Admin Settings acceptance, seven canonical account roles locally; existing six labelled hosted identities. Isolated synthetic mutations only; hosted checks read-only. No new mobile binaries, production activation, real payments/messages or live qualification renewal.",
+      "uiReference": "User-requested full role-based acceptance and exceptions",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts"
+      ],
+      "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
+      "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-purpose.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "ASACC-ROLES",
+        "ASACC-EDITORS",
+        "ASACC-LIFECYCLE",
+        "ASACC-EXCEPTIONS",
+        "ASACC-HISTORY",
+        "ASACC-CONTENT"
+      ],
+      "negativeTests": [
+        "ASACC-EXCEPTIONS"
+      ],
+      "evidence": [
+        "docs/admin-settings-acceptance/README.md",
+        "docs/admin-settings-acceptance/DEFECTS.md",
+        "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/role-coverage.json",
+        "docs/admin-settings-acceptance/evidence/editor-coverage.json",
+        "docs/admin-settings-acceptance/evidence/local-browser.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+      ],
+      "acceptanceGate": "ASACC-G04",
+      "status": "PARTIAL",
+      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
+      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
+      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+    },
+    {
+      "id": "ASACC-05",
+      "requirement": "Interactive owner, Service Manager and Inventory workflows and denied-role routes work on desktop and phone",
+      "priority": "P1",
+      "scope": "Consolidated Admin Settings acceptance, seven canonical account roles locally; existing six labelled hosted identities. Isolated synthetic mutations only; hosted checks read-only. No new mobile binaries, production activation, real payments/messages or live qualification renewal.",
+      "uiReference": "User-requested full role-based acceptance and exceptions",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts"
+      ],
+      "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
+      "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-purpose.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "ASACC-ROLES",
+        "ASACC-EDITORS",
+        "ASACC-LIFECYCLE",
+        "ASACC-EXCEPTIONS",
+        "ASACC-HISTORY",
+        "ASACC-CONTENT"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-acceptance/README.md",
+        "docs/admin-settings-acceptance/DEFECTS.md",
+        "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/role-coverage.json",
+        "docs/admin-settings-acceptance/evidence/editor-coverage.json",
+        "docs/admin-settings-acceptance/evidence/local-browser.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+      ],
+      "acceptanceGate": "ASACC-G05",
+      "status": "PARTIAL",
+      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
+      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
+      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+    },
+    {
+      "id": "ASACC-06",
+      "requirement": "Client demo acceptance preserves hosted business data and deploys any reviewed fixes",
+      "priority": "P1",
+      "scope": "Consolidated Admin Settings acceptance, seven canonical account roles locally; existing six labelled hosted identities. Isolated synthetic mutations only; hosted checks read-only. No new mobile binaries, production activation, real payments/messages or live qualification renewal.",
+      "uiReference": "User-requested full role-based acceptance and exceptions",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts"
+      ],
+      "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
+      "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-purpose.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "ASACC-ROLES",
+        "ASACC-EDITORS",
+        "ASACC-LIFECYCLE",
+        "ASACC-EXCEPTIONS",
+        "ASACC-HISTORY",
+        "ASACC-CONTENT"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-acceptance/README.md",
+        "docs/admin-settings-acceptance/DEFECTS.md",
+        "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/role-coverage.json",
+        "docs/admin-settings-acceptance/evidence/editor-coverage.json",
+        "docs/admin-settings-acceptance/evidence/local-browser.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+      ],
+      "acceptanceGate": "ASACC-G06",
+      "status": "PARTIAL",
+      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
+      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
+      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+    },
+    {
+      "id": "ASACC-07",
+      "requirement": "User manual, defects, evidence and requirement coverage are updated without changing prior production decisions",
+      "priority": "P1",
+      "scope": "Consolidated Admin Settings acceptance, seven canonical account roles locally; existing six labelled hosted identities. Isolated synthetic mutations only; hosted checks read-only. No new mobile binaries, production activation, real payments/messages or live qualification renewal.",
+      "uiReference": "User-requested full role-based acceptance and exceptions",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/setting-change-form.tsx",
+        "packages/business-rules/src/settings-categories.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/governance.ts"
+      ],
+      "dataSource": "Existing role-filtered settings, canonical definitions, setting_versions/change_requests/audit records and server role/branch/session authority.",
+      "securityControl": "Server permissions, scope/version/identity checks, independent safety/payment approval and existing production NO-GO preserved.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/admin-settings-purpose.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/wallet-payments-editor.test.ts"
+      ],
+      "testIds": [
+        "ASACC-ROLES",
+        "ASACC-EDITORS",
+        "ASACC-LIFECYCLE",
+        "ASACC-EXCEPTIONS",
+        "ASACC-HISTORY",
+        "ASACC-CONTENT"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/admin-settings-acceptance/README.md",
+        "docs/admin-settings-acceptance/DEFECTS.md",
+        "docs/admin-settings-acceptance/evidence/focused-tests.txt",
+        "docs/admin-settings-acceptance/evidence/role-coverage.json",
+        "docs/admin-settings-acceptance/evidence/editor-coverage.json",
+        "docs/admin-settings-acceptance/evidence/local-browser.json",
+        "docs/admin-settings-acceptance/evidence/local-browser-drafts.json"
+      ],
+      "acceptanceGate": "ASACC-G07",
+      "status": "PARTIAL",
+      "reason": "Local acceptance executed; three reproducible editor/history issues fixed. Final corrected-source build/deploy/hosted acceptance pending.",
+      "testResult": "PASS local role, editor, exception and lifecycle checks. Live rollout acceptance pending.",
+      "outstandingWork": "Complete corrected-source deployment, hosted checks, release evidence and final documentation validation."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ASACC-G01",
+      "description": "All canonical roles and restricted account states retain exact setting visibility, search and action authority",
+      "status": "PARTIAL",
+      "reason": "Acceptance pending"
+    },
+    {
+      "id": "ASACC-G02",
+      "description": "Every visible setting and editor type keeps canonical handoffs, valid draft and rejected invalid-value behavior",
+      "status": "PARTIAL",
+      "reason": "Acceptance pending"
+    },
+    {
+      "id": "ASACC-G03",
+      "description": "Draft, submission, independent review, activation, scheduling and restoration lifecycle behave correctly",
+      "status": "PARTIAL",
+      "reason": "Acceptance pending"
+    },
+    {
+      "id": "ASACC-G04",
+      "description": "Exception cases preserve scope, session, version, identity, immutable history and safety/payment boundaries",
+      "status": "PARTIAL",
+      "reason": "Acceptance pending"
+    },
+    {
+      "id": "ASACC-G05",
+      "description": "Interactive owner, Service Manager and Inventory workflows and denied-role routes work on desktop and phone",
+      "status": "PARTIAL",
+      "reason": "Acceptance pending"
+    },
+    {
+      "id": "ASACC-G06",
+      "description": "Client demo acceptance preserves hosted business data and deploys any reviewed fixes",
+      "status": "PARTIAL",
+      "reason": "Acceptance pending"
+    },
+    {
+      "id": "ASACC-G07",
+      "description": "User manual, defects, evidence and requirement coverage are updated without changing prior production decisions",
+      "status": "PARTIAL",
+      "reason": "Acceptance pending"
+    }
+  ],
+  "coverage": {
+    "implementation": {
+      "implemented": 7,
+      "total": 7
+    },
+    "requirements": {
+      "verified": 0,
+      "total": 7
+    },
+    "critical": {
+      "verified": 0,
+      "total": 1
+    },
+    "routes": {
+      "verified": 0,
+      "total": 1
+    },
+    "gates": {
+      "passed": 0,
+      "total": 7
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-20",
+      "change": "Registered new acceptance continuation. Preserve ASSET-01\u201306 previous release evidence; retain all seven new rows in denominator. Seven canonical roles locally includes commercial; no commercial hosted credential is currently provided."
+    },
+    {
+      "date": "2026-11-20",
+      "change": "Found/fixed ASACC-D01\u201303: structured editor fallback, view-only restoration and restoration feedback. All seven roles exercised locally; 70 editable definitions/21 types, malformed proposals and four actual browser drafts verified; no draft activated. Finance and manager history visibility expectations corrected to canonical view metadata rather than narrowing permissions."
+    }
+  ]
+}
