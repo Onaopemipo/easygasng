@@ -74,6 +74,7 @@ A financial refund does not return physical stock. Use the appropriate inventory
 
 | Message or situation | Resolution |
 | --- | --- |
+| Verify your password again before this sensitive action | Enter **Current password** in the same form and choose its verification/submit action. Vehicle and operation entries remain while you correct or repeat verification. |
 | No active suitable vehicle trip / unavailable driver | Resolve the specific readiness card, start the driver's own eligible trip and set duty availability; refresh dispatch. |
 | Already active trip / vehicle already on a trip | Review the existing trip; reconcile before ending, or choose another eligible vehicle. |
 | Order changed / stale version | Refresh the order, review its current state and retry once with current information. |

@@ -1,0 +1,121 @@
+{
+  "scope": "All19direct OperationForm instances plus delegated stock manifest forms use shared inline REAUTH_REQUIRED recovery. Vehicle registration is proactively verified. Direct driver fuel purchase does not have a server recentVerification requirement; no unrelated credential/permission flow changed.",
+  "source": "apps/web/components/operations-completion.tsx",
+  "directForms": 19,
+  "forms": [
+    {
+      "line": 205,
+      "action": "fleet.vehicle.create",
+      "title": "Register vehicle",
+      "upfrontVerification": true
+    },
+    {
+      "line": 244,
+      "action": "trip.start",
+      "title": "Start duty trip",
+      "upfrontVerification": false
+    },
+    {
+      "line": 425,
+      "action": "trip.end",
+      "title": "End trip",
+      "upfrontVerification": false
+    },
+    {
+      "line": 478,
+      "action": "bulk.meter.register",
+      "title": "Register calibrated mass meter",
+      "upfrontVerification": false
+    },
+    {
+      "line": 519,
+      "action": "{`bulk.meter.${operation}`}",
+      "title": "{\n                    operation === \"retire\"\n                      ? \"Retire unsafe meter\"\n                      : \"Record renewed calibration\"\n                  }",
+      "upfrontVerification": false
+    },
+    {
+      "line": 610,
+      "action": "bulk.collection.record",
+      "title": "{`Record actual cash collected \u00b7 ${allocation.reference}`}",
+      "upfrontVerification": false
+    },
+    {
+      "line": 634,
+      "action": "bulk.load.acknowledge",
+      "title": "Acknowledge measured load",
+      "upfrontVerification": false
+    },
+    {
+      "line": 659,
+      "action": "bulk.dispense",
+      "title": "Record authorised metered dispensing",
+      "upfrontVerification": false
+    },
+    {
+      "line": 688,
+      "action": "bulk.return.declare",
+      "title": "Declare measured LPG return",
+      "upfrontVerification": false
+    },
+    {
+      "line": 705,
+      "action": "bulk.return.receive",
+      "title": "Independently receive LPG return",
+      "upfrontVerification": false
+    },
+    {
+      "line": 722,
+      "action": "bulk.recovery.request",
+      "title": "Submit measured discrepancy recovery for independent approval",
+      "upfrontVerification": false
+    },
+    {
+      "line": 811,
+      "action": "dispatch.destination.confirm",
+      "title": "Confirm destination pin",
+      "upfrontVerification": false
+    },
+    {
+      "line": 848,
+      "action": "dispatch.route.estimate",
+      "title": "Calculate road plan",
+      "upfrontVerification": false
+    },
+    {
+      "line": 876,
+      "action": "{\n                o.status === \"assigned\"\n                  ? \"dispatch.reassign\"\n                  : \"dispatch.assign\"\n              }",
+      "title": "Assign eligible driver",
+      "upfrontVerification": false
+    },
+    {
+      "line": 984,
+      "action": "crm.followup.create",
+      "title": "Schedule follow-up",
+      "upfrontVerification": false
+    },
+    {
+      "line": 1000,
+      "action": "crm.winback.cancel",
+      "title": "Cancel unsent win-back messages",
+      "upfrontVerification": false
+    },
+    {
+      "line": 1011,
+      "action": "crm.winback.queue",
+      "title": "Queue consented win-back",
+      "upfrontVerification": false
+    },
+    {
+      "line": 1076,
+      "action": "crm.followup.outcome",
+      "title": "Record follow-up outcome",
+      "upfrontVerification": false
+    },
+    {
+      "line": 1177,
+      "action": "channels.consent",
+      "title": "{`Update ${channel} ${purpose} consent`}",
+      "upfrontVerification": false
+    }
+  ]
+}

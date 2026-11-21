@@ -8,6 +8,8 @@ The customised manual covers Customer, the sole Admin/business owner, Service Ma
 
 The [21 November role guide](order-to-delivery.md) adds the exercised trip, assignment, metered gas, COD reconciliation, return/retry, refund and invoice-correction workflows with current demo screenshots. See its [fresh acceptance matrix](../traceability/role-order-acceptance-20261121-rtm.md) for executed coverage and release status. The original Word/PDF editions and their audit evidence remain historical artifacts.
 
+The [vehicle registration password guide](driver-assignment.md#verify-your-password-when-registering-a-vehicle) covers the 22 November verification fix, including retained entries and the single verification action.
+
 ## Deliverables
 
 - [User manual PDF](../../output/pdf/EasyGas-User-Manual.pdf) - 33 pages.

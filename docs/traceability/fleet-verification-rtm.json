@@ -14,27 +14,38 @@
       "implementationFiles": [
         "apps/web/components/operations-completion.tsx",
         "apps/web/lib/driver-operations.ts",
-        "apps/web/lib/auth.ts"
+        "apps/web/lib/auth.ts",
+        "apps/web/components/password-input.tsx",
+        "scripts/lib/reviewed-fleet-verification-source.mjs",
+        "docs/user-manual/driver-assignment.md"
       ],
       "dataSource": "Normal reauth and fleet.vehicle.create APIs, canonical owner/branch/session and vehicle records.",
       "securityControl": "Five-minute recent verification, server role/branch checks and stable operationKey retained; password sent only to reauth, never mutation.",
       "testFiles": [
         "tests/fleet-verification-components.test.ts",
-        "tests/fleet-verification-security.test.ts"
+        "tests/fleet-verification-security.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-fleet-password-demo.mjs",
+        "scripts/verify-fleet-release.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "FVERIFY-INITIAL"
+      ],
       "negativeTests": [
-        "FVERIFY-AUTH",
-        "FVERIFY-RECOVER"
+        "FVERIFY-AUTH"
       ],
       "evidence": [
-        "docs/fleet-verification/evidence/regression.txt"
+        "docs/fleet-verification/evidence/regression.txt",
+        "docs/fleet-verification/evidence/browser-verification.json",
+        "docs/fleet-verification/evidence/desktop-verification.jpg",
+        "docs/fleet-verification/evidence/verification-controls.jpg"
       ],
       "acceptanceGate": "FVERIFY-G01",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Inline initial/recovery verification implemented. Local component and backend negative checks pass; cloud and actual browser checks pending.",
-      "testResult": "PASS for current local checks; hosted acceptance pending.",
-      "outstandingWork": "Implement, test, deploy, verify actual UI and update manual."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Owner registration displays a required masked Current password field up front and one Verify and register vehicle action. Actual desktop and390px phone form verified, including keyboard access and successful normal registration.",
+      "testResult": "PASS \u2014 bounded fleet/shared-form recovery only.",
+      "outstandingWork": "None in this scope. Separate production NO-GO and native/provider/physical/import/retain-all gates unchanged."
     },
     {
       "id": "FVERIFY-02",
@@ -48,27 +59,42 @@
       "implementationFiles": [
         "apps/web/components/operations-completion.tsx",
         "apps/web/lib/driver-operations.ts",
-        "apps/web/lib/auth.ts"
+        "apps/web/lib/auth.ts",
+        "apps/web/components/password-input.tsx",
+        "scripts/lib/reviewed-fleet-verification-source.mjs",
+        "docs/user-manual/driver-assignment.md"
       ],
       "dataSource": "Normal reauth and fleet.vehicle.create APIs, canonical owner/branch/session and vehicle records.",
       "securityControl": "Five-minute recent verification, server role/branch checks and stable operationKey retained; password sent only to reauth, never mutation.",
       "testFiles": [
         "tests/fleet-verification-components.test.ts",
-        "tests/fleet-verification-security.test.ts"
+        "tests/fleet-verification-security.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-fleet-password-demo.mjs",
+        "scripts/verify-fleet-release.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "FVERIFY-RECOVER",
+        "FVERIFY-EXPIRY",
+        "FVERIFY-SINGLE"
+      ],
       "negativeTests": [
-        "FVERIFY-AUTH",
-        "FVERIFY-RECOVER"
+        "FVERIFY-RECOVER",
+        "FVERIFY-EXPIRY",
+        "FVERIFY-SINGLE"
       ],
       "evidence": [
-        "docs/fleet-verification/evidence/regression.txt"
+        "docs/fleet-verification/evidence/regression.txt",
+        "docs/fleet-verification/evidence/wrong-password-retained.json",
+        "docs/fleet-verification/evidence/browser-verification.json",
+        "docs/fleet-verification/evidence/form-audit.json"
       ],
       "acceptanceGate": "FVERIFY-G02",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Inline initial/recovery verification implemented. Local component and backend negative checks pass; cloud and actual browser checks pending.",
-      "testResult": "PASS for current local checks; hosted acceptance pending.",
-      "outstandingWork": "Implement, test, deploy, verify actual UI and update manual."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual shared component tests exercise expired verification, incorrect password, mounted draft fields, original operation key, mapped payload and repeated submits. Hosted incorrect-password test preserved vehicle entries and cleared only password; normal retry saved one QA record.19direct forms and delegated manifest forms use the shared recovery; no claim that every separate operational workflow was retested.",
+      "testResult": "PASS \u2014 bounded fleet/shared-form recovery only.",
+      "outstandingWork": "None in this scope. Separate production NO-GO and native/provider/physical/import/retain-all gates unchanged."
     },
     {
       "id": "FVERIFY-03",
@@ -82,27 +108,41 @@
       "implementationFiles": [
         "apps/web/components/operations-completion.tsx",
         "apps/web/lib/driver-operations.ts",
-        "apps/web/lib/auth.ts"
+        "apps/web/lib/auth.ts",
+        "apps/web/components/password-input.tsx",
+        "scripts/lib/reviewed-fleet-verification-source.mjs",
+        "docs/user-manual/driver-assignment.md"
       ],
       "dataSource": "Normal reauth and fleet.vehicle.create APIs, canonical owner/branch/session and vehicle records.",
       "securityControl": "Five-minute recent verification, server role/branch checks and stable operationKey retained; password sent only to reauth, never mutation.",
       "testFiles": [
         "tests/fleet-verification-components.test.ts",
-        "tests/fleet-verification-security.test.ts"
+        "tests/fleet-verification-security.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-fleet-password-demo.mjs",
+        "scripts/verify-fleet-release.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "FVERIFY-AUTH",
+        "FVERIFY-SOURCE"
+      ],
       "negativeTests": [
         "FVERIFY-AUTH",
-        "FVERIFY-RECOVER"
+        "FVERIFY-SOURCE"
       ],
       "evidence": [
-        "docs/fleet-verification/evidence/regression.txt"
+        "docs/fleet-verification/evidence/regression.txt",
+        "docs/fleet-verification/evidence/preflight.json",
+        "docs/fleet-verification/evidence/hosted-final.json",
+        "docs/fleet-verification/evidence/candidate-release.json",
+        "docs/fleet-verification/evidence/stable-release.json"
       ],
       "acceptanceGate": "FVERIFY-G03",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Inline initial/recovery verification implemented. Local component and backend negative checks pass; cloud and actual browser checks pending.",
-      "testResult": "PASS for current local checks; hosted acceptance pending.",
-      "outstandingWork": "Implement, test, deploy, verify actual UI and update manual."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Server code/flags unchanged: unverified and expired owner, verified nonowner, invalid active branch and idempotency controls tested. Hosted unverified owner/dispatcher/restricted driver403 and anonymous401 remain. One labelled QA vehicle created with suitability false;22original orders, inventory, ledger, existing vehicles and trips unchanged.",
+      "testResult": "PASS \u2014 bounded fleet/shared-form recovery only.",
+      "outstandingWork": "None in this scope. Separate production NO-GO and native/provider/physical/import/retain-all gates unchanged."
     },
     {
       "id": "FVERIFY-04",
@@ -116,63 +156,101 @@
       "implementationFiles": [
         "apps/web/components/operations-completion.tsx",
         "apps/web/lib/driver-operations.ts",
-        "apps/web/lib/auth.ts"
+        "apps/web/lib/auth.ts",
+        "apps/web/components/password-input.tsx",
+        "scripts/lib/reviewed-fleet-verification-source.mjs",
+        "docs/user-manual/driver-assignment.md"
       ],
       "dataSource": "Normal reauth and fleet.vehicle.create APIs, canonical owner/branch/session and vehicle records.",
       "securityControl": "Five-minute recent verification, server role/branch checks and stable operationKey retained; password sent only to reauth, never mutation.",
       "testFiles": [
         "tests/fleet-verification-components.test.ts",
-        "tests/fleet-verification-security.test.ts"
+        "tests/fleet-verification-security.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-fleet-password-demo.mjs",
+        "scripts/verify-fleet-release.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "UM-MATRIX",
+        "RTM-01\u201307"
+      ],
       "negativeTests": [
-        "FVERIFY-AUTH",
-        "FVERIFY-RECOVER"
+        "FVERIFY-SOURCE",
+        "FVERIFY-AUTH"
       ],
       "evidence": [
-        "docs/fleet-verification/evidence/regression.txt"
+        "docs/fleet-verification/evidence/regression.txt",
+        "docs/fleet-verification/evidence/source-integrity.json",
+        "docs/fleet-verification/evidence/candidate-identity.json",
+        "docs/fleet-verification/evidence/stable-identity.json",
+        "docs/fleet-verification/evidence/ci-validation.json",
+        "docs/fleet-verification/evidence/native-preservation.json",
+        "docs/fleet-verification/evidence/browser-cleanup.json",
+        "docs/fleet-verification/evidence/session-cleanup.json",
+        "docs/fleet-verification/evidence/documentation-initial.txt"
       ],
       "acceptanceGate": "FVERIFY-G04",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Inline initial/recovery verification implemented. Local component and backend negative checks pass; cloud and actual browser checks pending.",
-      "testResult": "PASS for current local checks; hosted acceptance pending.",
-      "outstandingWork": "Implement, test, deploy, verify actual UI and update manual."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Final exact439-file source deployed to existing client demo;3candidate/3stable grouped checks, actual desktop/phone UI and full sourceCI passed. Current illustrated manual/traceability updated. Own browser and3API sessions signed out/revoked401; native artifacts unchanged; historical production/native/provider/physical/import/retain-all holds preserved.",
+      "testResult": "PASS \u2014 bounded fleet/shared-form recovery only.",
+      "outstandingWork": "None in this scope. Separate production NO-GO and native/provider/physical/import/retain-all gates unchanged."
     }
   ],
   "gates": [
     {
       "id": "FVERIFY-G01",
       "description": "Vehicle registration offers current-password verification before submitting",
-      "status": "OPEN",
-      "reason": "Verification pending."
+      "status": "PASS",
+      "reason": "Owner registration displays a required masked Current password field up front and one Verify and register vehicle action. Actual desktop and390px phone form verified, including keyboard access and successful normal registration."
     },
     {
       "id": "FVERIFY-G02",
       "description": "Other OperationForm sensitive rejections provide inline recovery without losing fields or replay key",
-      "status": "OPEN",
-      "reason": "Verification pending."
+      "status": "PASS",
+      "reason": "Actual shared component tests exercise expired verification, incorrect password, mounted draft fields, original operation key, mapped payload and repeated submits. Hosted incorrect-password test preserved vehicle entries and cleared only password; normal retry saved one QA record.19direct forms and delegated manifest forms use the shared recovery; no claim that every separate operational workflow was retested."
     },
     {
       "id": "FVERIFY-G03",
       "description": "Owner, branch, recent-verification and idempotency controls remain enforced",
-      "status": "OPEN",
-      "reason": "Verification pending."
+      "status": "PASS",
+      "reason": "Server code/flags unchanged: unverified and expired owner, verified nonowner, invalid active branch and idempotency controls tested. Hosted unverified owner/dispatcher/restricted driver403 and anonymous401 remain. One labelled QA vehicle created with suitability false;22original orders, inventory, ledger, existing vehicles and trips unchanged."
     },
     {
       "id": "FVERIFY-G04",
       "description": "Deploy exact source, verify desktop/phone and update current manual and evidence",
-      "status": "OPEN",
-      "reason": "Verification pending."
+      "status": "PASS",
+      "reason": "Final exact439-file source deployed to existing client demo;3candidate/3stable grouped checks, actual desktop/phone UI and full sourceCI passed. Current illustrated manual/traceability updated. Own browser and3API sessions signed out/revoked401; native artifacts unchanged; historical production/native/provider/physical/import/retain-all holds preserved."
     }
   ],
   "coverage": {
     "requirements": {
-      "verified": 0,
+      "verified": 4,
+      "total": 4
+    },
+    "implementation": {
+      "implemented": 4,
+      "total": 4
+    },
+    "verification": {
+      "verified": 4,
+      "total": 4
+    },
+    "critical": {
+      "verified": 4,
       "total": 4
     },
     "gates": {
-      "passed": 0,
+      "passed": 4,
       "total": 4
+    },
+    "routes": {
+      "verified": 1,
+      "total": 1
+    },
+    "responsiveRoutes": {
+      "verified": 1,
+      "total": 1
     },
     "excluded": 0
   },
@@ -180,6 +258,22 @@
     {
       "date": "2026-11-22",
       "change": "Registered screenshot-reported vehicle registration dead end. Fix UI verification and shared operation-form recovery; server verification and permissions remain. Synthetic own QA vehicle only; no user-supplied vehicle registration or safety certification."
+    },
+    {
+      "date": "2026-11-22",
+      "change": "Closed4bounded gates after actual desktop/phone initial field, wrong-password retention and one synthetic verified save;12focused/source/documentation checks and fullCI passed. Server verification, owner/branch and replay guards retained. Initial renderer harness needed a window shim before the three confirmed red UI assertions; logs retained. Three native API sessions revoked and own browser signed out. No user-supplied vehicle or existing operational record changed."
     }
-  ]
+  ],
+  "release": {
+    "sourceCommit": "dd5bbc7f1da55423eba746448cf4fca815772d67",
+    "deploymentId": "dpl_4itAxT5TKq2UPro9Z8FeYAVEu3hJ",
+    "projectId": "prj_cFSaJuN9r4x93RLov1LLVO3cdVA2",
+    "rollbackDeployment": "dpl_Gci51BMxmVPk4mPU8gK9DQhgxsiZ",
+    "fileCount": 439,
+    "url": "https://easygas-client-demo.vercel.app",
+    "ciRun": 44913198139,
+    "newMobileBuilds": 0,
+    "newMobileExports": 0,
+    "newMobileInstalls": 0
+  }
 }

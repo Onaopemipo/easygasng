@@ -1,0 +1,153 @@
+{
+  "status": "PASS",
+  "sourceCommit": "dd5bbc7f1da55423eba746448cf4fca815772d67",
+  "runId": 44913198139,
+  "totals": [
+    "2026-11-21T14:37:06.3459539Z # tests 1168",
+    "2026-11-21T14:37:06.3460745Z # pass 1168",
+    "2026-11-21T14:37:06.3461170Z # fail 0",
+    "2026-11-21T14:37:06.3461964Z # skipped 0"
+  ],
+  "nativeTotals": [
+    "2026-11-21T14:18:28.1934689Z # tests 3",
+    "2026-11-21T14:18:28.1935394Z # pass 3",
+    "2026-11-21T14:18:28.1935916Z # fail 0",
+    "2026-11-21T14:18:28.1936511Z # skipped 0"
+  ],
+  "jobs": [
+    {
+      "id": 136873173610,
+      "name": "native",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run test:dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npx expo export --platform all --output-dir ../../artifacts/native",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run npm audit --omit=dev --audit-level=moderate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 136873173772,
+      "name": "web",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run sudo apt-get update && sudo apt-get install -y postgresql-client-16",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run echo /usr/lib/postgresql/16/bin >> \"$GITHUB_PATH\"",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci --prefix apps/mobile --ignore-scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install pinned native component test renderer",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run web regression tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run build > artifacts/build.txt 2>&1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck > artifacts/types.txt 2>&1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm audit --omit=dev --audit-level=high > artifacts/dependency-audit.txt 2>&1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "newMobileBuilds": 0,
+  "newMobileExports": 0
+}

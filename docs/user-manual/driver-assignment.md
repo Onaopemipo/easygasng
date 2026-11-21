@@ -48,3 +48,15 @@ A duty trip can cover multiple orders. Complete delivery custody and vehicle/sto
 ## Continue through handover and reconciliation
 
 The [current order-to-delivery guide](order-to-delivery.md) explains the actual driver trip, separate dispatch assignment, acknowledged manifest/LPG custody, delivery proof, handover, independent cash review and failed-delivery return/retry. If a duplicate trip is attempted, open **Manage trip** to review the current trip. A vehicle already on another trip must be reconciled or replaced by another eligible vehicle. These conflicts now give an actionable message while preserving the existing trip.
+
+## Verify your password when registering a vehicle
+
+Open **Deliveries → Manifests, LPG, trips & returns → Driver trips, vehicle and fuel records** as the business owner. Fill the vehicle details, enter your existing login password in **Current password**, then choose **Verify and register vehicle**. Verification and registration run through that one action.
+
+![Current password and the verification action](../fleet-verification/evidence/phone-current-password.jpg)
+
+If the password is incorrect, the form displays the error and clears only the password field. Your branch, registration label, capacities and other vehicle entries stay in place. Enter the correct password and submit again. After a successful save, the password input is removed and the form confirms it was saved.
+
+Other shared operation forms display the same inline field if their server verification has expired. Complete verification in the original form; you do not need a separate page or to re-enter the operation details. The server still checks your role, branch and five-minute verification window. The show-password control only changes visibility and does not submit the form.
+
+The fix was verified with one labelled synthetic QA vehicle, with LPG suitability left off. Only the labelled QA vehicle was created; existing orders, stock, ledger records, vehicles and trips were preserved. See the [verification matrix](../traceability/fleet-verification-rtm.md).

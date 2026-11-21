@@ -16,3 +16,7 @@ Source 64c9bb4 / Ready dpl_cF8LLJJK9N1rmP3Gd1pKB9biFpFs, 439 exact application f
 ## 21 November fresh hosted continuation
 
 [Current acceptance](role-order-acceptance-20261121-rtm.md) verifies all 11 bounded requirements/gates using fresh synthetic orders and existing accounts, including actual driver trip/assignment, gas/COD delivery, independent return/retry, refunds and invoice review. Final source `eb3913e`, Ready `dpl_Gci51BMxmVPk4mPU8gK9DQhgxsiZ`, 439 exact application files and CI 1,162 web tests plus 3 native dependency tests passed; no new mobile binaries. This historical matrix retains its original IDs, coverage and scope decisions. Broader production/native/physical/provider/import/retain-all gates remain unchanged.
+
+## Fleet password recovery - 22 November Brisbane
+
+[Current verification matrix](fleet-verification-rtm.md) closes four bounded gates. Actual desktop/phone, wrong-password retention and one verified QA save passed; existing22orders, ledger, inventory, vehicles and trips preserved. Final `dd5bbc7` / Ready `dpl_4itAxT5TKq2UPro9Z8FeYAVEu3hJ`,439exact app files; CI1,168web plus3native dependency tests passed, export skipped. Original requirement IDs/coverage and production NO-GO unchanged.
