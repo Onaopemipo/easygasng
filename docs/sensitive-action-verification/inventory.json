@@ -1,0 +1,4566 @@
+{
+  "scope": "All server recentVerification call sites and browser transports; indirect policy/privilege callers retained in guard-site denominator. Workflow business acceptance is separate.",
+  "guardSites": [
+    {
+      "id": "SVERIFY-SITE-001",
+      "file": "apps/web/lib/accounts.ts",
+      "line": 346,
+      "function": "accountAction",
+      "conditions": [
+        "action === \"account.export\""
+      ],
+      "actionCandidates": [
+        "account.recover",
+        "account.reset",
+        "account.verify",
+        "invitation.accept",
+        "security.permissions",
+        "invitation.accepted",
+        "account.profile",
+        "account.checkout-details",
+        "address.save",
+        "account.export",
+        "account.update",
+        "account.updated",
+        "account.password",
+        "account.verification.send",
+        "account.session.revoke",
+        "address.default",
+        "address.archive",
+        "preferences.save",
+        "privacy.request",
+        "privacy.requested",
+        "notifications.read",
+        "staff.invite",
+        "staff.invited",
+        "staff.invitation.revoke",
+        "staff.invitation.resend",
+        "staff.suspend",
+        "staff.suspended"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-002",
+      "file": "apps/web/lib/accounts.ts",
+      "line": 697,
+      "function": "accountAction",
+      "conditions": [
+        "action === \"privacy.request\""
+      ],
+      "actionCandidates": [
+        "account.recover",
+        "account.reset",
+        "account.verify",
+        "invitation.accept",
+        "security.permissions",
+        "invitation.accepted",
+        "account.profile",
+        "account.checkout-details",
+        "address.save",
+        "account.export",
+        "account.update",
+        "account.updated",
+        "account.password",
+        "account.verification.send",
+        "account.session.revoke",
+        "address.default",
+        "address.archive",
+        "preferences.save",
+        "privacy.request",
+        "privacy.requested",
+        "notifications.read",
+        "staff.invite",
+        "staff.invited",
+        "staff.invitation.revoke",
+        "staff.invitation.resend",
+        "staff.suspend",
+        "staff.suspended"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-003",
+      "file": "apps/web/lib/accounts.ts",
+      "line": 760,
+      "function": "accountAction",
+      "conditions": [
+        "action === \"staff.invite\""
+      ],
+      "actionCandidates": [
+        "account.recover",
+        "account.reset",
+        "account.verify",
+        "invitation.accept",
+        "security.permissions",
+        "invitation.accepted",
+        "account.profile",
+        "account.checkout-details",
+        "address.save",
+        "account.export",
+        "account.update",
+        "account.updated",
+        "account.password",
+        "account.verification.send",
+        "account.session.revoke",
+        "address.default",
+        "address.archive",
+        "preferences.save",
+        "privacy.request",
+        "privacy.requested",
+        "notifications.read",
+        "staff.invite",
+        "staff.invited",
+        "staff.invitation.revoke",
+        "staff.invitation.resend",
+        "staff.suspend",
+        "staff.suspended"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-004",
+      "file": "apps/web/lib/accounts.ts",
+      "line": 830,
+      "function": "accountAction",
+      "conditions": [
+        "action === \"staff.invitation.revoke\" ||\n    action === \"staff.invitation.resend\""
+      ],
+      "actionCandidates": [
+        "account.recover",
+        "account.reset",
+        "account.verify",
+        "invitation.accept",
+        "security.permissions",
+        "invitation.accepted",
+        "account.profile",
+        "account.checkout-details",
+        "address.save",
+        "account.export",
+        "account.update",
+        "account.updated",
+        "account.password",
+        "account.verification.send",
+        "account.session.revoke",
+        "address.default",
+        "address.archive",
+        "preferences.save",
+        "privacy.request",
+        "privacy.requested",
+        "notifications.read",
+        "staff.invite",
+        "staff.invited",
+        "staff.invitation.revoke",
+        "staff.invitation.resend",
+        "staff.suspend",
+        "staff.suspended"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-005",
+      "file": "apps/web/lib/accounts.ts",
+      "line": 893,
+      "function": "accountAction",
+      "conditions": [
+        "action === \"staff.suspend\""
+      ],
+      "actionCandidates": [
+        "account.recover",
+        "account.reset",
+        "account.verify",
+        "invitation.accept",
+        "security.permissions",
+        "invitation.accepted",
+        "account.profile",
+        "account.checkout-details",
+        "address.save",
+        "account.export",
+        "account.update",
+        "account.updated",
+        "account.password",
+        "account.verification.send",
+        "account.session.revoke",
+        "address.default",
+        "address.archive",
+        "preferences.save",
+        "privacy.request",
+        "privacy.requested",
+        "notifications.read",
+        "staff.invite",
+        "staff.invited",
+        "staff.invitation.revoke",
+        "staff.invitation.resend",
+        "staff.suspend",
+        "staff.suspended"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-006",
+      "file": "apps/web/lib/approval-workflow.ts",
+      "line": 73,
+      "function": "approvalWorkflowAction",
+      "conditions": [
+        "def.additional_verification &&\n    (action === \"approval.retry\" ||\n      (action === \"approval.cancel\" &&\n        [\"approved\", \"scheduled\", \"failed\"].includes(r.status)))"
+      ],
+      "actionCandidates": [
+        "approval.submit",
+        "approval.edit",
+        "approval.cancel",
+        "approval.retry",
+        "approval.revise"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-007",
+      "file": "apps/web/lib/bulk-lpg-recovery.ts",
+      "line": 30,
+      "function": "requestBulkRecovery",
+      "conditions": [],
+      "actionCandidates": [
+        "bulk.recovery.requested"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-008",
+      "file": "apps/web/lib/bulk-lpg-recovery.ts",
+      "line": 132,
+      "function": "applyBulkRecovery",
+      "conditions": [],
+      "actionCandidates": [
+        "bulk.recovery.applied"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-009",
+      "file": "apps/web/lib/bulk-lpg.ts",
+      "line": 116,
+      "function": "bulkLPG",
+      "conditions": [
+        "[\"bulk.meter.recalibrate\", \"bulk.meter.retire\"].includes(action)"
+      ],
+      "actionCandidates": [
+        "bulk.summary",
+        "bulk.recovery.request",
+        "bulk.meter.recalibrate",
+        "bulk.meter.retire",
+        "bulk.meter.register",
+        "bulk.load.issue",
+        "bulk.load.recover",
+        "load.recovered",
+        "load.issued",
+        "bulk.dispense",
+        "bulk.collection.record",
+        "bulk.load.acknowledge",
+        "collection.recorded",
+        "bulk.return.declare",
+        "bulk.return.receive",
+        "return.received",
+        "return.discrepancy"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-010",
+      "file": "apps/web/lib/bulk-lpg.ts",
+      "line": 220,
+      "function": "bulkLPG",
+      "conditions": [
+        "action === \"bulk.meter.register\""
+      ],
+      "actionCandidates": [
+        "bulk.summary",
+        "bulk.recovery.request",
+        "bulk.meter.recalibrate",
+        "bulk.meter.retire",
+        "bulk.meter.register",
+        "bulk.load.issue",
+        "bulk.load.recover",
+        "load.recovered",
+        "load.issued",
+        "bulk.dispense",
+        "bulk.collection.record",
+        "bulk.load.acknowledge",
+        "collection.recorded",
+        "bulk.return.declare",
+        "bulk.return.receive",
+        "return.received",
+        "return.discrepancy"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-011",
+      "file": "apps/web/lib/bulk-lpg.ts",
+      "line": 262,
+      "function": "bulkLPG",
+      "conditions": [
+        "[\"bulk.load.issue\", \"bulk.load.recover\"].includes(action)"
+      ],
+      "actionCandidates": [
+        "bulk.summary",
+        "bulk.recovery.request",
+        "bulk.meter.recalibrate",
+        "bulk.meter.retire",
+        "bulk.meter.register",
+        "bulk.load.issue",
+        "bulk.load.recover",
+        "load.recovered",
+        "load.issued",
+        "bulk.dispense",
+        "bulk.collection.record",
+        "bulk.load.acknowledge",
+        "collection.recorded",
+        "bulk.return.declare",
+        "bulk.return.receive",
+        "return.received",
+        "return.discrepancy"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-012",
+      "file": "apps/web/lib/bulk-lpg.ts",
+      "line": 779,
+      "function": "bulkLPG",
+      "conditions": [
+        "action === \"bulk.return.receive\"",
+        "action === \"bulk.return.declare\"",
+        "action === \"bulk.dispense\"",
+        "action === \"bulk.collection.record\"",
+        "action === \"bulk.load.acknowledge\""
+      ],
+      "actionCandidates": [
+        "bulk.summary",
+        "bulk.recovery.request",
+        "bulk.meter.recalibrate",
+        "bulk.meter.retire",
+        "bulk.meter.register",
+        "bulk.load.issue",
+        "bulk.load.recover",
+        "load.recovered",
+        "load.issued",
+        "bulk.dispense",
+        "bulk.collection.record",
+        "bulk.load.acknowledge",
+        "collection.recorded",
+        "bulk.return.declare",
+        "bulk.return.receive",
+        "return.received",
+        "return.discrepancy"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-013",
+      "file": "apps/web/lib/catalogue.ts",
+      "line": 80,
+      "function": "catalogueAction",
+      "conditions": [
+        "action === \"compatibility.review\""
+      ],
+      "actionCandidates": [
+        "compatibility.manage",
+        "compatibility.propose",
+        "compatibility.proposed",
+        "compatibility.review",
+        "compatibility.reviewed",
+        "catalogue.manage",
+        "category.save",
+        "product.metadata",
+        "media.update",
+        "recommendation.event",
+        "recommendations.manage",
+        "recommendation.propose",
+        "recommendation.proposed",
+        "recommendation.approve",
+        "recommendation.reviewed"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-014",
+      "file": "apps/web/lib/catalogue.ts",
+      "line": 348,
+      "function": "catalogueAction",
+      "conditions": [
+        "action === \"recommendation.approve\""
+      ],
+      "actionCandidates": [
+        "compatibility.manage",
+        "compatibility.propose",
+        "compatibility.proposed",
+        "compatibility.review",
+        "compatibility.reviewed",
+        "catalogue.manage",
+        "category.save",
+        "product.metadata",
+        "media.update",
+        "recommendation.event",
+        "recommendations.manage",
+        "recommendation.propose",
+        "recommendation.proposed",
+        "recommendation.approve",
+        "recommendation.reviewed"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-015",
+      "file": "apps/web/lib/commerce.ts",
+      "line": 103,
+      "function": "commerceAction",
+      "conditions": [
+        "action === \"credit.request\""
+      ],
+      "actionCandidates": [
+        "credit.customers",
+        "credit.request",
+        "refund.lines",
+        "refund.request",
+        "refund.requested",
+        "credit.decide",
+        "wallet.maximum",
+        "wallet.enabled",
+        "pos.open",
+        "pos.sale",
+        "pos.close",
+        "pos.verify"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-016",
+      "file": "apps/web/lib/commerce.ts",
+      "line": 264,
+      "function": "commerceAction",
+      "conditions": [
+        "action === \"credit.decide\""
+      ],
+      "actionCandidates": [
+        "credit.customers",
+        "credit.request",
+        "refund.lines",
+        "refund.request",
+        "refund.requested",
+        "credit.decide",
+        "wallet.maximum",
+        "wallet.enabled",
+        "pos.open",
+        "pos.sale",
+        "pos.close",
+        "pos.verify"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-017",
+      "file": "apps/web/lib/commerce.ts",
+      "line": 690,
+      "function": "commerceAction",
+      "conditions": [
+        "action === \"pos.verify\""
+      ],
+      "actionCandidates": [
+        "credit.customers",
+        "credit.request",
+        "refund.lines",
+        "refund.request",
+        "refund.requested",
+        "credit.decide",
+        "wallet.maximum",
+        "wallet.enabled",
+        "pos.open",
+        "pos.sale",
+        "pos.close",
+        "pos.verify"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-018",
+      "file": "apps/web/lib/delegation.ts",
+      "line": 64,
+      "function": "delegationAction",
+      "conditions": [
+        "action === \"delegation.request\""
+      ],
+      "actionCandidates": [
+        "delegation.request",
+        "delegation.requested",
+        "delegation.decide",
+        "delegation.revoke",
+        "delegation.revoked"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-019",
+      "file": "apps/web/lib/delegation.ts",
+      "line": 149,
+      "function": "delegationAction",
+      "conditions": [
+        "action === \"delegation.decide\""
+      ],
+      "actionCandidates": [
+        "delegation.request",
+        "delegation.requested",
+        "delegation.decide",
+        "delegation.revoke",
+        "delegation.revoked"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-020",
+      "file": "apps/web/lib/delegation.ts",
+      "line": 220,
+      "function": "delegationAction",
+      "conditions": [
+        "action === \"delegation.revoke\""
+      ],
+      "actionCandidates": [
+        "delegation.request",
+        "delegation.requested",
+        "delegation.decide",
+        "delegation.revoke",
+        "delegation.revoked"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-021",
+      "file": "apps/web/lib/delivery.ts",
+      "line": 222,
+      "function": "reconcileCash",
+      "conditions": [],
+      "actionCandidates": [
+        "cash.reconciled"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-022",
+      "file": "apps/web/lib/dispatch-routing.ts",
+      "line": 33,
+      "function": "confirmDispatchDestination",
+      "conditions": [],
+      "actionCandidates": [
+        "dispatch.destination.confirm"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-023",
+      "file": "apps/web/lib/doorstep-execution.ts",
+      "line": 188,
+      "function": "doorstepExecution",
+      "conditions": [
+        "action === \"doorstep.prepare\""
+      ],
+      "actionCandidates": [
+        "doorstep.cancel",
+        "doorstep.collection.verify",
+        "doorstep.prepare",
+        "doorstep.reserved",
+        "doorstep.cancelled",
+        "doorstep.collection.report",
+        "doorstep.dispense",
+        "doorstep.dispensed"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-024",
+      "file": "apps/web/lib/doorstep-execution.ts",
+      "line": 426,
+      "function": "doorstepExecution",
+      "conditions": [
+        "action === \"doorstep.cancel\""
+      ],
+      "actionCandidates": [
+        "doorstep.cancel",
+        "doorstep.collection.verify",
+        "doorstep.prepare",
+        "doorstep.reserved",
+        "doorstep.cancelled",
+        "doorstep.collection.report",
+        "doorstep.dispense",
+        "doorstep.dispensed"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-025",
+      "file": "apps/web/lib/doorstep-execution.ts",
+      "line": 536,
+      "function": "doorstepExecution",
+      "conditions": [
+        "action === \"doorstep.collection.verify\""
+      ],
+      "actionCandidates": [
+        "doorstep.cancel",
+        "doorstep.collection.verify",
+        "doorstep.prepare",
+        "doorstep.reserved",
+        "doorstep.cancelled",
+        "doorstep.collection.report",
+        "doorstep.dispense",
+        "doorstep.dispensed"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-026",
+      "file": "apps/web/lib/doorstep-products.ts",
+      "line": 134,
+      "function": "doorstepProducts",
+      "conditions": [
+        "action === \"doorstep.products.prepare\""
+      ],
+      "actionCandidates": [
+        "doorstep.products.cancel",
+        "doorstep.products.collection.verify",
+        "doorstep.products.prepare",
+        "doorstep.products.reserved",
+        "doorstep.products.cancelled",
+        "doorstep.products.collection.report",
+        "doorstep.products.handover",
+        "doorstep.products.handed"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-027",
+      "file": "apps/web/lib/doorstep-products.ts",
+      "line": 335,
+      "function": "doorstepProducts",
+      "conditions": [
+        "action === \"doorstep.products.cancel\""
+      ],
+      "actionCandidates": [
+        "doorstep.products.cancel",
+        "doorstep.products.collection.verify",
+        "doorstep.products.prepare",
+        "doorstep.products.reserved",
+        "doorstep.products.cancelled",
+        "doorstep.products.collection.report",
+        "doorstep.products.handover",
+        "doorstep.products.handed"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-028",
+      "file": "apps/web/lib/doorstep-products.ts",
+      "line": 440,
+      "function": "doorstepProducts",
+      "conditions": [
+        "action === \"doorstep.products.collection.verify\""
+      ],
+      "actionCandidates": [
+        "doorstep.products.cancel",
+        "doorstep.products.collection.verify",
+        "doorstep.products.prepare",
+        "doorstep.products.reserved",
+        "doorstep.products.cancelled",
+        "doorstep.products.collection.report",
+        "doorstep.products.handover",
+        "doorstep.products.handed"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-029",
+      "file": "apps/web/lib/driver-operations.ts",
+      "line": 34,
+      "function": "driverOperations",
+      "conditions": [
+        "action === \"fleet.vehicle.payload.request\""
+      ],
+      "actionCandidates": [
+        "dispatch.destination.confirm",
+        "fleet.vehicle.payload.request",
+        "fleet.vehicle.create",
+        "trip.start",
+        "fleet.summary",
+        "dispatch.board",
+        "dispatch.assign",
+        "dispatch.reassign",
+        "dispatch.respond",
+        "trip.location.revoke",
+        "trip.end",
+        "trip.sync"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-030",
+      "file": "apps/web/lib/driver-operations.ts",
+      "line": 67,
+      "function": "driverOperations",
+      "conditions": [
+        "action === \"fleet.vehicle.create\""
+      ],
+      "actionCandidates": [
+        "dispatch.destination.confirm",
+        "fleet.vehicle.payload.request",
+        "fleet.vehicle.create",
+        "trip.start",
+        "fleet.summary",
+        "dispatch.board",
+        "dispatch.assign",
+        "dispatch.reassign",
+        "dispatch.respond",
+        "trip.location.revoke",
+        "trip.end",
+        "trip.sync"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-031",
+      "file": "apps/web/lib/gas-delivery.ts",
+      "line": 151,
+      "function": "gasDeliveryAction",
+      "conditions": [
+        "action === \"gas.stock.receive\""
+      ],
+      "actionCandidates": [
+        "delivery.locations.manage",
+        "delivery.location.create",
+        "gas.cylinders",
+        "gas.inspections",
+        "gas.stock",
+        "gas.stock.receive",
+        "delivery.coverage.confirm",
+        "gas.cylinder.intake",
+        "gas.inspection.record",
+        "gas.report"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-032",
+      "file": "apps/web/lib/gas-delivery.ts",
+      "line": 232,
+      "function": "gasDeliveryAction",
+      "conditions": [
+        "action === \"gas.cylinder.intake\""
+      ],
+      "actionCandidates": [
+        "delivery.locations.manage",
+        "delivery.location.create",
+        "gas.cylinders",
+        "gas.inspections",
+        "gas.stock",
+        "gas.stock.receive",
+        "delivery.coverage.confirm",
+        "gas.cylinder.intake",
+        "gas.inspection.record",
+        "gas.report"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-033",
+      "file": "apps/web/lib/gas-delivery.ts",
+      "line": 281,
+      "function": "gasDeliveryAction",
+      "conditions": [
+        "action === \"gas.inspection.record\""
+      ],
+      "actionCandidates": [
+        "delivery.locations.manage",
+        "delivery.location.create",
+        "gas.cylinders",
+        "gas.inspections",
+        "gas.stock",
+        "gas.stock.receive",
+        "delivery.coverage.confirm",
+        "gas.cylinder.intake",
+        "gas.inspection.record",
+        "gas.report"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-034",
+      "file": "apps/web/lib/governance.ts",
+      "line": 401,
+      "function": "autoApproveOwnerRequest",
+      "conditions": [
+        "d.additional_verification"
+      ],
+      "actionCandidates": [],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-035",
+      "file": "apps/web/lib/governance.ts",
+      "line": 887,
+      "function": "decide",
+      "conditions": [
+        "d.additional_verification || delegation"
+      ],
+      "actionCandidates": [],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-036",
+      "file": "apps/web/lib/governance.ts",
+      "line": 977,
+      "function": "emergencyDisable",
+      "conditions": [],
+      "actionCandidates": [
+        "payment.integration",
+        "delivery.enabled",
+        "emergency.disabled"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-037",
+      "file": "apps/web/lib/inventory-business.ts",
+      "line": 712,
+      "function": "inventoryBusiness",
+      "conditions": [
+        "action === \"inventory.stocktake.submit\""
+      ],
+      "actionCandidates": [
+        "inventory.stocktake.create",
+        "inventory.stocktake.sheet",
+        "inventory.stocktake.submit",
+        "inventory.receipt",
+        "inventory.adjust",
+        "inventory.stocktake",
+        "inventory.quarantine",
+        "inventory.threshold",
+        "inventory.release",
+        "inventory.return",
+        "inventory.disposition",
+        "supplier.update",
+        "supplier.updated",
+        "purchase.create",
+        "purchase.update",
+        "transfer.create",
+        "transfer.dispatch",
+        "transfer.receive",
+        "transfer.cancel",
+        "expense.create",
+        "expense.record",
+        "expense.pay",
+        "expense.reverse"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-038",
+      "file": "apps/web/lib/inventory-business.ts",
+      "line": 854,
+      "function": "inventoryBusiness",
+      "conditions": [
+        "[\n      \"inventory.adjust\",\n      \"inventory.stocktake\",\n      \"inventory.quarantine\",\n      \"inventory.threshold\",\n      \"inventory.release\",\n    ].includes(action)"
+      ],
+      "actionCandidates": [
+        "inventory.stocktake.create",
+        "inventory.stocktake.sheet",
+        "inventory.stocktake.submit",
+        "inventory.receipt",
+        "inventory.adjust",
+        "inventory.stocktake",
+        "inventory.quarantine",
+        "inventory.threshold",
+        "inventory.release",
+        "inventory.return",
+        "inventory.disposition",
+        "supplier.update",
+        "supplier.updated",
+        "purchase.create",
+        "purchase.update",
+        "transfer.create",
+        "transfer.dispatch",
+        "transfer.receive",
+        "transfer.cancel",
+        "expense.create",
+        "expense.record",
+        "expense.pay",
+        "expense.reverse"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-039",
+      "file": "apps/web/lib/inventory-business.ts",
+      "line": 1140,
+      "function": "inventoryBusiness",
+      "conditions": [
+        "action === \"inventory.disposition\""
+      ],
+      "actionCandidates": [
+        "inventory.stocktake.create",
+        "inventory.stocktake.sheet",
+        "inventory.stocktake.submit",
+        "inventory.receipt",
+        "inventory.adjust",
+        "inventory.stocktake",
+        "inventory.quarantine",
+        "inventory.threshold",
+        "inventory.release",
+        "inventory.return",
+        "inventory.disposition",
+        "supplier.update",
+        "supplier.updated",
+        "purchase.create",
+        "purchase.update",
+        "transfer.create",
+        "transfer.dispatch",
+        "transfer.receive",
+        "transfer.cancel",
+        "expense.create",
+        "expense.record",
+        "expense.pay",
+        "expense.reverse"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-040",
+      "file": "apps/web/lib/inventory-business.ts",
+      "line": 1432,
+      "function": "inventoryBusiness",
+      "conditions": [
+        "[\"transfer.dispatch\", \"transfer.receive\", \"transfer.cancel\"].includes(\n      action,\n    )"
+      ],
+      "actionCandidates": [
+        "inventory.stocktake.create",
+        "inventory.stocktake.sheet",
+        "inventory.stocktake.submit",
+        "inventory.receipt",
+        "inventory.adjust",
+        "inventory.stocktake",
+        "inventory.quarantine",
+        "inventory.threshold",
+        "inventory.release",
+        "inventory.return",
+        "inventory.disposition",
+        "supplier.update",
+        "supplier.updated",
+        "purchase.create",
+        "purchase.update",
+        "transfer.create",
+        "transfer.dispatch",
+        "transfer.receive",
+        "transfer.cancel",
+        "expense.create",
+        "expense.record",
+        "expense.pay",
+        "expense.reverse"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-041",
+      "file": "apps/web/lib/inventory-business.ts",
+      "line": 1645,
+      "function": "inventoryBusiness",
+      "conditions": [
+        "action === \"expense.create\""
+      ],
+      "actionCandidates": [
+        "inventory.stocktake.create",
+        "inventory.stocktake.sheet",
+        "inventory.stocktake.submit",
+        "inventory.receipt",
+        "inventory.adjust",
+        "inventory.stocktake",
+        "inventory.quarantine",
+        "inventory.threshold",
+        "inventory.release",
+        "inventory.return",
+        "inventory.disposition",
+        "supplier.update",
+        "supplier.updated",
+        "purchase.create",
+        "purchase.update",
+        "transfer.create",
+        "transfer.dispatch",
+        "transfer.receive",
+        "transfer.cancel",
+        "expense.create",
+        "expense.record",
+        "expense.pay",
+        "expense.reverse"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-042",
+      "file": "apps/web/lib/inventory-business.ts",
+      "line": 1740,
+      "function": "inventoryBusiness",
+      "conditions": [
+        "[\"expense.record\", \"expense.pay\", \"expense.reverse\"].includes(action)"
+      ],
+      "actionCandidates": [
+        "inventory.stocktake.create",
+        "inventory.stocktake.sheet",
+        "inventory.stocktake.submit",
+        "inventory.receipt",
+        "inventory.adjust",
+        "inventory.stocktake",
+        "inventory.quarantine",
+        "inventory.threshold",
+        "inventory.release",
+        "inventory.return",
+        "inventory.disposition",
+        "supplier.update",
+        "supplier.updated",
+        "purchase.create",
+        "purchase.update",
+        "transfer.create",
+        "transfer.dispatch",
+        "transfer.receive",
+        "transfer.cancel",
+        "expense.create",
+        "expense.record",
+        "expense.pay",
+        "expense.reverse"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-043",
+      "file": "apps/web/lib/invoice-corrections.ts",
+      "line": 221,
+      "function": "invoiceCorrections",
+      "conditions": [
+        "action === \"invoice.correction.propose\""
+      ],
+      "actionCandidates": [
+        "invoice.excess.request",
+        "invoice.request.create",
+        "invoice.request.view",
+        "invoice.correction.propose",
+        "invoice.correction.decide",
+        "invoice.request.revoke",
+        "invoice.corrections"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-044",
+      "file": "apps/web/lib/invoice-corrections.ts",
+      "line": 264,
+      "function": "invoiceCorrections",
+      "conditions": [
+        "action === \"invoice.correction.decide\""
+      ],
+      "actionCandidates": [
+        "invoice.excess.request",
+        "invoice.request.create",
+        "invoice.request.view",
+        "invoice.correction.propose",
+        "invoice.correction.decide",
+        "invoice.request.revoke",
+        "invoice.corrections"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-045",
+      "file": "apps/web/lib/invoice-corrections.ts",
+      "line": 309,
+      "function": "invoiceCorrections",
+      "conditions": [
+        "action === \"invoice.request.create\"",
+        "action === \"invoice.correction.decide\""
+      ],
+      "actionCandidates": [
+        "invoice.excess.request",
+        "invoice.request.create",
+        "invoice.request.view",
+        "invoice.correction.propose",
+        "invoice.correction.decide",
+        "invoice.request.revoke",
+        "invoice.corrections"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-046",
+      "file": "apps/web/lib/invoice-corrections.ts",
+      "line": 392,
+      "function": "invoiceCorrections",
+      "conditions": [
+        "action === \"invoice.request.revoke\"",
+        "action === \"invoice.request.view\"",
+        "action === \"invoice.request.create\"",
+        "action === \"invoice.correction.decide\""
+      ],
+      "actionCandidates": [
+        "invoice.excess.request",
+        "invoice.request.create",
+        "invoice.request.view",
+        "invoice.correction.propose",
+        "invoice.correction.decide",
+        "invoice.request.revoke",
+        "invoice.corrections"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-047",
+      "file": "apps/web/lib/invoices.ts",
+      "line": 33,
+      "function": "invoiceAction",
+      "conditions": [
+        "action === \"invoice.issue\""
+      ],
+      "actionCandidates": [
+        "invoice.issue",
+        "invoice.order"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-048",
+      "file": "apps/web/lib/phone-activation.ts",
+      "line": 54,
+      "function": "phoneActivation",
+      "conditions": [
+        "action === \"phone.invite\" || action === \"phone.revoke\""
+      ],
+      "actionCandidates": [
+        "phone.invite",
+        "phone.revoke",
+        "phone.complete",
+        "phone.review",
+        "phone.otp",
+        "phone.activated"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-049",
+      "file": "apps/web/lib/professional-services.ts",
+      "line": 654,
+      "function": "professionalServiceAction",
+      "conditions": [
+        "action === \"technician.qualify\""
+      ],
+      "actionCandidates": [
+        "technician.restrict",
+        "technician.snapshot",
+        "technician.availability",
+        "services.catalogue",
+        "services.slots",
+        "services.manage",
+        "services.propose",
+        "services.checklist.propose",
+        "technician.qualify",
+        "services.slot.create",
+        "services.slot.block",
+        "incident.update",
+        "technician.revoke",
+        "booking.create",
+        "service.material.",
+        "service.material.recovery.request",
+        "service.material.recovery.execute",
+        "booking.settlement.propose",
+        "booking.settlement.consent",
+        "booking.dispute",
+        "booking.assignment.respond",
+        "booking.assessment.save",
+        "booking.work.start",
+        "booking.transition",
+        "booking.reschedule",
+        "booking.cancel",
+        "booking.quote",
+        "booking.quote.decide",
+        "service.material.issue",
+        "service.material.usage",
+        "service.material.return",
+        "booking.report",
+        "booking.acknowledge",
+        "booking.wallet.pay",
+        "booking.cash.record",
+        "booking.cash.verify",
+        "booking.refund.request",
+        "booking.feedback"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-050",
+      "file": "apps/web/lib/professional-services.ts",
+      "line": 968,
+      "function": "professionalServiceAction",
+      "conditions": [
+        "incident.category === \"service_dispute\"",
+        "action === \"incident.update\""
+      ],
+      "actionCandidates": [
+        "technician.restrict",
+        "technician.snapshot",
+        "technician.availability",
+        "services.catalogue",
+        "services.slots",
+        "services.manage",
+        "services.propose",
+        "services.checklist.propose",
+        "technician.qualify",
+        "services.slot.create",
+        "services.slot.block",
+        "incident.update",
+        "technician.revoke",
+        "booking.create",
+        "service.material.",
+        "service.material.recovery.request",
+        "service.material.recovery.execute",
+        "booking.settlement.propose",
+        "booking.settlement.consent",
+        "booking.dispute",
+        "booking.assignment.respond",
+        "booking.assessment.save",
+        "booking.work.start",
+        "booking.transition",
+        "booking.reschedule",
+        "booking.cancel",
+        "booking.quote",
+        "booking.quote.decide",
+        "service.material.issue",
+        "service.material.usage",
+        "service.material.return",
+        "booking.report",
+        "booking.acknowledge",
+        "booking.wallet.pay",
+        "booking.cash.record",
+        "booking.cash.verify",
+        "booking.refund.request",
+        "booking.feedback"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-051",
+      "file": "apps/web/lib/professional-services.ts",
+      "line": 1000,
+      "function": "professionalServiceAction",
+      "conditions": [
+        "action === \"technician.revoke\""
+      ],
+      "actionCandidates": [
+        "technician.restrict",
+        "technician.snapshot",
+        "technician.availability",
+        "services.catalogue",
+        "services.slots",
+        "services.manage",
+        "services.propose",
+        "services.checklist.propose",
+        "technician.qualify",
+        "services.slot.create",
+        "services.slot.block",
+        "incident.update",
+        "technician.revoke",
+        "booking.create",
+        "service.material.",
+        "service.material.recovery.request",
+        "service.material.recovery.execute",
+        "booking.settlement.propose",
+        "booking.settlement.consent",
+        "booking.dispute",
+        "booking.assignment.respond",
+        "booking.assessment.save",
+        "booking.work.start",
+        "booking.transition",
+        "booking.reschedule",
+        "booking.cancel",
+        "booking.quote",
+        "booking.quote.decide",
+        "service.material.issue",
+        "service.material.usage",
+        "service.material.return",
+        "booking.report",
+        "booking.acknowledge",
+        "booking.wallet.pay",
+        "booking.cash.record",
+        "booking.cash.verify",
+        "booking.refund.request",
+        "booking.feedback"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-052",
+      "file": "apps/web/lib/professional-services.ts",
+      "line": 1627,
+      "function": "professionalServiceAction",
+      "conditions": [
+        "[\"booking.cancel.request_review\", \"booking.cancel.execute_review\"].includes(\n      action,\n    )"
+      ],
+      "actionCandidates": [
+        "technician.restrict",
+        "technician.snapshot",
+        "technician.availability",
+        "services.catalogue",
+        "services.slots",
+        "services.manage",
+        "services.propose",
+        "services.checklist.propose",
+        "technician.qualify",
+        "services.slot.create",
+        "services.slot.block",
+        "incident.update",
+        "technician.revoke",
+        "booking.create",
+        "service.material.",
+        "service.material.recovery.request",
+        "service.material.recovery.execute",
+        "booking.settlement.propose",
+        "booking.settlement.consent",
+        "booking.dispute",
+        "booking.assignment.respond",
+        "booking.assessment.save",
+        "booking.work.start",
+        "booking.transition",
+        "booking.reschedule",
+        "booking.cancel",
+        "booking.quote",
+        "booking.quote.decide",
+        "service.material.issue",
+        "service.material.usage",
+        "service.material.return",
+        "booking.report",
+        "booking.acknowledge",
+        "booking.wallet.pay",
+        "booking.cash.record",
+        "booking.cash.verify",
+        "booking.refund.request",
+        "booking.feedback"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-053",
+      "file": "apps/web/lib/professional-services.ts",
+      "line": 2395,
+      "function": "professionalServiceAction",
+      "conditions": [
+        "action === \"booking.cash.verify\""
+      ],
+      "actionCandidates": [
+        "technician.restrict",
+        "technician.snapshot",
+        "technician.availability",
+        "services.catalogue",
+        "services.slots",
+        "services.manage",
+        "services.propose",
+        "services.checklist.propose",
+        "technician.qualify",
+        "services.slot.create",
+        "services.slot.block",
+        "incident.update",
+        "technician.revoke",
+        "booking.create",
+        "service.material.",
+        "service.material.recovery.request",
+        "service.material.recovery.execute",
+        "booking.settlement.propose",
+        "booking.settlement.consent",
+        "booking.dispute",
+        "booking.assignment.respond",
+        "booking.assessment.save",
+        "booking.work.start",
+        "booking.transition",
+        "booking.reschedule",
+        "booking.cancel",
+        "booking.quote",
+        "booking.quote.decide",
+        "service.material.issue",
+        "service.material.usage",
+        "service.material.return",
+        "booking.report",
+        "booking.acknowledge",
+        "booking.wallet.pay",
+        "booking.cash.record",
+        "booking.cash.verify",
+        "booking.refund.request",
+        "booking.feedback"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-054",
+      "file": "apps/web/lib/readiness.ts",
+      "line": 204,
+      "function": "reviewReadiness",
+      "conditions": [],
+      "actionCandidates": [
+        "readiness.reviewed"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-055",
+      "file": "apps/web/lib/refills.ts",
+      "line": 183,
+      "function": "refillAction",
+      "conditions": [
+        "action === \"jobs.run\""
+      ],
+      "actionCandidates": [
+        "refill.profiles",
+        "refill.profile.create",
+        "refill.feedback",
+        "jobs.run"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-056",
+      "file": "apps/web/lib/reward-offers.ts",
+      "line": 119,
+      "function": "rewardOfferAction",
+      "conditions": [
+        "action === \"rewards.retry\""
+      ],
+      "actionCandidates": [
+        "rewards.offers",
+        "rewards.smart-offers",
+        "rewards.retry"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-057",
+      "file": "apps/web/lib/rewards.ts",
+      "line": 323,
+      "function": "rewardsAction",
+      "conditions": [
+        "action === \"rewards.export\""
+      ],
+      "actionCandidates": [
+        "rewards.checkout-outcome",
+        "rewards.summary",
+        "rewards.export",
+        "rewards.report",
+        "rewards.exported",
+        "rewards.program",
+        "rewards.redeem"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-058",
+      "file": "apps/web/lib/scheduling.ts",
+      "line": 29,
+      "function": "schedulingAction",
+      "conditions": [
+        "action === \"schedule.authorise\""
+      ],
+      "actionCandidates": [
+        "schedule.authorisations",
+        "schedule.authorise",
+        "subscription.enabled",
+        "delivery.windows",
+        "schedule.authorised",
+        "schedule.revoke",
+        "schedule.reschedule",
+        "schedule.rescheduled",
+        "campaign.create",
+        "campaign.created",
+        "campaign.decide"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-059",
+      "file": "apps/web/lib/scheduling.ts",
+      "line": 205,
+      "function": "schedulingAction",
+      "conditions": [
+        "d.decision === \"approved\"",
+        "action === \"campaign.decide\""
+      ],
+      "actionCandidates": [
+        "schedule.authorisations",
+        "schedule.authorise",
+        "subscription.enabled",
+        "delivery.windows",
+        "schedule.authorised",
+        "schedule.revoke",
+        "schedule.reschedule",
+        "schedule.rescheduled",
+        "campaign.create",
+        "campaign.created",
+        "campaign.decide"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-060",
+      "file": "apps/web/lib/service-invoices.ts",
+      "line": 83,
+      "function": "serviceInvoiceAction",
+      "conditions": [
+        "saving"
+      ],
+      "actionCandidates": [
+        "invoice.service.draft.save",
+        "invoice.service.issue",
+        "invoice.service.draft",
+        "invoice.service"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-061",
+      "file": "apps/web/lib/service-invoices.ts",
+      "line": 167,
+      "function": "serviceInvoiceAction",
+      "conditions": [
+        "action === \"invoice.service.issue\""
+      ],
+      "actionCandidates": [
+        "invoice.service.draft.save",
+        "invoice.service.issue",
+        "invoice.service.draft",
+        "invoice.service"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-062",
+      "file": "apps/web/lib/service-material-recovery.ts",
+      "line": 31,
+      "function": "serviceMaterialRecoveryAction",
+      "conditions": [],
+      "actionCandidates": [
+        "service.material.recovery.request"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-063",
+      "file": "apps/web/lib/service-settlements.ts",
+      "line": 24,
+      "function": "serviceSettlements",
+      "conditions": [
+        "action === \"booking.settlement.propose\""
+      ],
+      "actionCandidates": [
+        "booking.settlement.propose"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-064",
+      "file": "apps/web/lib/staff-privileges.ts",
+      "line": 38,
+      "function": "administration",
+      "conditions": [],
+      "actionCandidates": [],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-065",
+      "file": "apps/web/lib/staff.ts",
+      "line": 67,
+      "function": "staffAction",
+      "conditions": [
+        "action === \"staff.driver.availability\""
+      ],
+      "actionCandidates": [
+        "staff.manage",
+        "staff.lookup",
+        "staff.driver.availability",
+        "staff.edit",
+        "staff.reinstate",
+        "staff.reinstated",
+        "staff.access.request",
+        "security.permissions"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-066",
+      "file": "apps/web/lib/staff.ts",
+      "line": 77,
+      "function": "staffAction",
+      "conditions": [
+        "action === \"staff.edit\""
+      ],
+      "actionCandidates": [
+        "staff.manage",
+        "staff.lookup",
+        "staff.driver.availability",
+        "staff.edit",
+        "staff.reinstate",
+        "staff.reinstated",
+        "staff.access.request",
+        "security.permissions"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-067",
+      "file": "apps/web/lib/staff.ts",
+      "line": 124,
+      "function": "staffAction",
+      "conditions": [
+        "action === \"staff.reinstate\""
+      ],
+      "actionCandidates": [
+        "staff.manage",
+        "staff.lookup",
+        "staff.driver.availability",
+        "staff.edit",
+        "staff.reinstate",
+        "staff.reinstated",
+        "staff.access.request",
+        "security.permissions"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-068",
+      "file": "apps/web/lib/staff.ts",
+      "line": 158,
+      "function": "staffAction",
+      "conditions": [
+        "action === \"staff.access.request\""
+      ],
+      "actionCandidates": [
+        "staff.manage",
+        "staff.lookup",
+        "staff.driver.availability",
+        "staff.edit",
+        "staff.reinstate",
+        "staff.reinstated",
+        "staff.access.request",
+        "security.permissions"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-069",
+      "file": "apps/web/lib/support-desk.ts",
+      "line": 86,
+      "function": "supportAdvancedAction",
+      "conditions": [
+        "action === \"support.sla.save\""
+      ],
+      "actionCandidates": [
+        "support.sla.scan",
+        "support.sla.policy",
+        "support.sla.save",
+        "support.detail",
+        "support.sla.enroll"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-070",
+      "file": "apps/web/lib/testimonials.ts",
+      "line": 432,
+      "function": "testimonialAction",
+      "conditions": [
+        "own",
+        "action === \"testimonial.transition\"",
+        "action === \"testimonial.edit\""
+      ],
+      "actionCandidates": [
+        "testimonials.public",
+        "testimonials.mine",
+        "testimonials.manage",
+        "testimonials.export",
+        "testimonials.analytics",
+        "testimonial.detail",
+        "testimonial.create",
+        "testimonial.transition",
+        "testimonial.edit"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-071",
+      "file": "apps/web/lib/transactional-mail.ts",
+      "line": 205,
+      "function": "mailAction",
+      "conditions": [],
+      "actionCandidates": [
+        "mail.status",
+        "mail.retry",
+        "mail.reconcile",
+        "mail.reconciled"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-072",
+      "file": "apps/web/lib/vehicle-products.ts",
+      "line": 116,
+      "function": "vehicleProducts",
+      "conditions": [
+        "action === \"manifest.issue\""
+      ],
+      "actionCandidates": [
+        "manifest.summary",
+        "manifest.issue",
+        "manifest.issued",
+        "manifest.acknowledge",
+        "manifest.acknowledged",
+        "manifest.return.declare",
+        "manifest.return.review",
+        "manifest.return.receive"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-073",
+      "file": "apps/web/lib/vehicle-products.ts",
+      "line": 330,
+      "function": "vehicleProducts",
+      "conditions": [],
+      "actionCandidates": [
+        "manifest.summary",
+        "manifest.issue",
+        "manifest.issued",
+        "manifest.acknowledge",
+        "manifest.acknowledged",
+        "manifest.return.declare",
+        "manifest.return.review",
+        "manifest.return.receive"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-074",
+      "file": "apps/web/lib/workspace.ts",
+      "line": 179,
+      "function": "workspaceAction",
+      "conditions": [
+        "action === \"product.import\"",
+        "action === \"product.save\" || action === \"product.import\""
+      ],
+      "actionCandidates": [
+        "support.list",
+        "support.reply",
+        "support.update",
+        "support.manage",
+        "product.save",
+        "product.import",
+        "product.updated",
+        "product.created",
+        "supplier.create",
+        "supplier.created",
+        "purchase.create",
+        "purchase.created",
+        "purchase.update",
+        "cylinder.inspect",
+        "cylinder.inspected",
+        "cylinder.custody",
+        "cylinder.fill",
+        "cylinder.filled",
+        "branch.create",
+        "branch.created",
+        "transfer.create",
+        "transfer.receive"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-075",
+      "file": "apps/web/lib/workspace.ts",
+      "line": 376,
+      "function": "workspaceAction",
+      "conditions": [
+        "d.status === \"approved\"",
+        "action === \"purchase.update\""
+      ],
+      "actionCandidates": [
+        "support.list",
+        "support.reply",
+        "support.update",
+        "support.manage",
+        "product.save",
+        "product.import",
+        "product.updated",
+        "product.created",
+        "supplier.create",
+        "supplier.created",
+        "purchase.create",
+        "purchase.created",
+        "purchase.update",
+        "cylinder.inspect",
+        "cylinder.inspected",
+        "cylinder.custody",
+        "cylinder.fill",
+        "cylinder.filled",
+        "branch.create",
+        "branch.created",
+        "transfer.create",
+        "transfer.receive"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-076",
+      "file": "apps/web/lib/workspace.ts",
+      "line": 459,
+      "function": "workspaceAction",
+      "conditions": [
+        "d.passed",
+        "action === \"cylinder.inspect\""
+      ],
+      "actionCandidates": [
+        "support.list",
+        "support.reply",
+        "support.update",
+        "support.manage",
+        "product.save",
+        "product.import",
+        "product.updated",
+        "product.created",
+        "supplier.create",
+        "supplier.created",
+        "purchase.create",
+        "purchase.created",
+        "purchase.update",
+        "cylinder.inspect",
+        "cylinder.inspected",
+        "cylinder.custody",
+        "cylinder.fill",
+        "cylinder.filled",
+        "branch.create",
+        "branch.created",
+        "transfer.create",
+        "transfer.receive"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
+      "id": "SVERIFY-SITE-077",
+      "file": "apps/web/lib/workspace.ts",
+      "line": 571,
+      "function": "workspaceAction",
+      "conditions": [
+        "action === \"branch.create\""
+      ],
+      "actionCandidates": [
+        "support.list",
+        "support.reply",
+        "support.update",
+        "support.manage",
+        "product.save",
+        "product.import",
+        "product.updated",
+        "product.created",
+        "supplier.create",
+        "supplier.created",
+        "purchase.create",
+        "purchase.created",
+        "purchase.update",
+        "cylinder.inspect",
+        "cylinder.inspected",
+        "cylinder.custody",
+        "cylinder.fill",
+        "cylinder.filled",
+        "branch.create",
+        "branch.created",
+        "transfer.create",
+        "transfer.receive"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    }
+  ],
+  "browserEntryPoints": [
+    {
+      "file": "apps/web/components/admin-order-details.tsx",
+      "line": 231,
+      "transport": "form action",
+      "target": "delivery.coverage.confirm",
+      "literal": "delivery.coverage.confirm"
+    },
+    {
+      "file": "apps/web/components/admin-order-details.tsx",
+      "line": 479,
+      "transport": "api",
+      "target": "\"order.transition\"",
+      "literal": "order.transition"
+    },
+    {
+      "file": "apps/web/components/admin-order-details.tsx",
+      "line": 588,
+      "transport": "api",
+      "target": "\"delivery.complete\"",
+      "literal": "delivery.complete"
+    },
+    {
+      "file": "apps/web/components/admin-overview.tsx",
+      "line": 139,
+      "transport": "api",
+      "target": "\"business.snapshot?\" + ownerQuery",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/admin-overview.tsx",
+      "line": 149,
+      "transport": "api",
+      "target": "\"approvals?\" + query",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 148,
+      "transport": "api",
+      "target": "\"navigation\"",
+      "literal": "navigation"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 201,
+      "transport": "api",
+      "target": "\"logout\"",
+      "literal": "logout"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 443,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 466,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 925,
+      "transport": "api",
+      "target": "`setting.history?key=${encodeURIComponent(d.key)}&scope=${d.scope}`",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1026,
+      "transport": "api",
+      "target": "\"setting.rollback\"",
+      "literal": "setting.rollback"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1095,
+      "transport": "api",
+      "target": "\"approval.decide\"",
+      "literal": "approval.decide"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1513,
+      "transport": "api",
+      "target": "\"approval.owner_apply\"",
+      "literal": "approval.owner_apply"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1585,
+      "transport": "form action",
+      "target": "approval.submit",
+      "literal": "approval.submit"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1615,
+      "transport": "form action",
+      "target": "approval.cancel",
+      "literal": "approval.cancel"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1635,
+      "transport": "form action",
+      "target": "approval.retry",
+      "literal": "approval.retry"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1703,
+      "transport": "api",
+      "target": "\"approval.activate\"",
+      "literal": "approval.activate"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1752,
+      "transport": "api",
+      "target": "\"inventory.receive\"",
+      "literal": "inventory.receive"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1906,
+      "transport": "api",
+      "target": "\"orders?id=\" + encodeURIComponent(targetOrder)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 1951,
+      "transport": "api",
+      "target": "\"finance.export\"",
+      "literal": "finance.export"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 2241,
+      "transport": "api",
+      "target": "\"cylinder.create\"",
+      "literal": "cylinder.create"
+    },
+    {
+      "file": "apps/web/components/admin.tsx",
+      "line": 2346,
+      "transport": "api",
+      "target": "\"cash.reconcile\"",
+      "literal": "cash.reconcile"
+    },
+    {
+      "file": "apps/web/components/assisted-order.tsx",
+      "line": 69,
+      "transport": "api",
+      "target": "\"catalogue\"",
+      "literal": "catalogue"
+    },
+    {
+      "file": "apps/web/components/assisted-order.tsx",
+      "line": 81,
+      "transport": "api",
+      "target": "\"customers.lookup\"",
+      "literal": "customers.lookup"
+    },
+    {
+      "file": "apps/web/components/assisted-order.tsx",
+      "line": 107,
+      "transport": "api",
+      "target": "\"customers.provisional\"",
+      "literal": "customers.provisional"
+    },
+    {
+      "file": "apps/web/components/assisted-order.tsx",
+      "line": 161,
+      "transport": "api",
+      "target": "\"order.assisted.quote\"",
+      "literal": "order.assisted.quote"
+    },
+    {
+      "file": "apps/web/components/assisted-order.tsx",
+      "line": 167,
+      "transport": "api",
+      "target": "\"order.assisted.create\"",
+      "literal": "order.assisted.create"
+    },
+    {
+      "file": "apps/web/components/audit-history.tsx",
+      "line": 54,
+      "transport": "api",
+      "target": "\"audit?\" + params",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/bundles.tsx",
+      "line": 10,
+      "transport": "api",
+      "target": "\"bundles\"",
+      "literal": "bundles"
+    },
+    {
+      "file": "apps/web/components/bundles.tsx",
+      "line": 54,
+      "transport": "api",
+      "target": "\"bundles.manage\"",
+      "literal": "bundles.manage"
+    },
+    {
+      "file": "apps/web/components/bundles.tsx",
+      "line": 75,
+      "transport": "api",
+      "target": "\"bundle.create\"",
+      "literal": "bundle.create"
+    },
+    {
+      "file": "apps/web/components/bundles.tsx",
+      "line": 128,
+      "transport": "api",
+      "target": "\"bundle.propose\"",
+      "literal": "bundle.propose"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 145,
+      "transport": "api",
+      "target": "\"business.snapshot\"",
+      "literal": "business.snapshot"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 241,
+      "transport": "api",
+      "target": "\"business.snapshot?\" + financeQuery",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 285,
+      "transport": "api",
+      "target": "format ? \"business.export\" : \"business.report\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 731,
+      "transport": "form action",
+      "target": "inventory.receipt",
+      "literal": "inventory.receipt"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 796,
+      "transport": "form action",
+      "target": "inventory.stocktake.create",
+      "literal": "inventory.stocktake.create"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 929,
+      "transport": "form action",
+      "target": "inventory.return",
+      "literal": "inventory.return"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 952,
+      "transport": "form action",
+      "target": "inventory.release",
+      "literal": "inventory.release"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 971,
+      "transport": "form action",
+      "target": "inventory.disposition",
+      "literal": "inventory.disposition"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 999,
+      "transport": "form action",
+      "target": "technician.qualify",
+      "literal": "technician.qualify"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1043,
+      "transport": "form action",
+      "target": "transfer.create",
+      "literal": "transfer.create"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1090,
+      "transport": "form action",
+      "target": "transfer.dispatch",
+      "literal": "transfer.dispatch"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1099,
+      "transport": "form action",
+      "target": "transfer.receive",
+      "literal": "transfer.receive"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1126,
+      "transport": "form action",
+      "target": "transfer.cancel",
+      "literal": "transfer.cancel"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1146,
+      "transport": "form action",
+      "target": "purchase.create",
+      "literal": "purchase.create"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1179,
+      "transport": "form action",
+      "target": "supplier.create",
+      "literal": "supplier.create"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1192,
+      "transport": "form action",
+      "target": "supplier.update",
+      "literal": "supplier.update"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1283,
+      "transport": "form action",
+      "target": "expense.category",
+      "literal": "expense.category"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1310,
+      "transport": "form action",
+      "target": "expense.create",
+      "literal": "expense.create"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1645,
+      "transport": "form action",
+      "target": "report.schedule",
+      "literal": "report.schedule"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1677,
+      "transport": "api",
+      "target": "\"report.delivery\"",
+      "literal": "report.delivery"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1693,
+      "transport": "form action",
+      "target": "report.schedule.cancel",
+      "literal": "report.schedule.cancel"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1766,
+      "transport": "api",
+      "target": "\"inventory.stocktake.sheet\"",
+      "literal": "inventory.stocktake.sheet"
+    },
+    {
+      "file": "apps/web/components/business-centre.tsx",
+      "line": 1799,
+      "transport": "api",
+      "target": "\"inventory.stocktake.submit\"",
+      "literal": "inventory.stocktake.submit"
+    },
+    {
+      "file": "apps/web/components/cash-reconciliation.tsx",
+      "line": 82,
+      "transport": "api",
+      "target": "\"cash.collections\"",
+      "literal": "cash.collections"
+    },
+    {
+      "file": "apps/web/components/cash-reconciliation.tsx",
+      "line": 172,
+      "transport": "form action",
+      "target": "reauth",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/cash-reconciliation.tsx",
+      "line": 193,
+      "transport": "api",
+      "target": "\"cash.reconcile\"",
+      "literal": "cash.reconcile"
+    },
+    {
+      "file": "apps/web/components/catalogue-tools.tsx",
+      "line": 21,
+      "transport": "api",
+      "target": "\"catalogue.manage\"",
+      "literal": "catalogue.manage"
+    },
+    {
+      "file": "apps/web/components/catalogue-tools.tsx",
+      "line": 51,
+      "transport": "api",
+      "target": "\"category.save\"",
+      "literal": "category.save"
+    },
+    {
+      "file": "apps/web/components/catalogue-tools.tsx",
+      "line": 160,
+      "transport": "api",
+      "target": "\"product.metadata\"",
+      "literal": "product.metadata"
+    },
+    {
+      "file": "apps/web/components/catalogue-tools.tsx",
+      "line": 199,
+      "transport": "api",
+      "target": "\"media.update\"",
+      "literal": "media.update"
+    },
+    {
+      "file": "apps/web/components/checkout-delivery-fields.tsx",
+      "line": 25,
+      "transport": "api",
+      "target": "\"account.profile\"",
+      "literal": "account.profile"
+    },
+    {
+      "file": "apps/web/components/checkout-payment-methods.tsx",
+      "line": 49,
+      "transport": "api",
+      "target": "\"checkout.payment-options?branchId=\" + encodeURIComponent(currentBranch)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/combined-checkout.tsx",
+      "line": 134,
+      "transport": "api",
+      "target": "\"checkout.mixed\"",
+      "literal": "checkout.mixed"
+    },
+    {
+      "file": "apps/web/components/compatibility.tsx",
+      "line": 19,
+      "transport": "api",
+      "target": "(manage ? \"compatibility.manage\" : \"compatibility\") +\n        \"?productId=\" +\n        encodeURIComponent(productId)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/compatibility.tsx",
+      "line": 68,
+      "transport": "api",
+      "target": "\"compatibility.review\"",
+      "literal": "compatibility.review"
+    },
+    {
+      "file": "apps/web/components/compatibility.tsx",
+      "line": 105,
+      "transport": "api",
+      "target": "\"compatibility.propose\"",
+      "literal": "compatibility.propose"
+    },
+    {
+      "file": "apps/web/components/credit-customer-search.tsx",
+      "line": 34,
+      "transport": "api",
+      "target": "\"credit.customers?\" + new URLSearchParams({ q: query.trim() })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 470,
+      "transport": "api",
+      "target": "\"address.default\"",
+      "literal": "address.default"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 529,
+      "transport": "api",
+      "target": "\"preferences.save\"",
+      "literal": "preferences.save"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 690,
+      "transport": "api",
+      "target": "\"channels.consent\"",
+      "literal": "channels.consent"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 741,
+      "transport": "form action",
+      "target": "reauth",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 771,
+      "transport": "form action",
+      "target": "privacy.request",
+      "literal": "privacy.request"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 862,
+      "transport": "form action",
+      "target": "account.verification.send",
+      "literal": "account.verification.send"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 871,
+      "transport": "form action",
+      "target": "account.update",
+      "literal": "account.update"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 891,
+      "transport": "form action",
+      "target": "address.save",
+      "literal": "address.save"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 986,
+      "transport": "form action",
+      "target": "address.archive",
+      "literal": "address.archive"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 1009,
+      "transport": "form action",
+      "target": "account.password",
+      "literal": "account.password"
+    },
+    {
+      "file": "apps/web/components/customer-account.tsx",
+      "line": 1038,
+      "transport": "form action",
+      "target": "account.session.revoke",
+      "literal": "account.session.revoke"
+    },
+    {
+      "file": "apps/web/components/customer-bookings.tsx",
+      "line": 146,
+      "transport": "api",
+      "target": "\"bookings?id=\" + encodeURIComponent(id)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/customer-bookings.tsx",
+      "line": 179,
+      "transport": "api",
+      "target": "\"booking.recover?key=\" + encodeURIComponent(key)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/customer-bookings.tsx",
+      "line": 207,
+      "transport": "api",
+      "target": "\"bookings?id=\" + encodeURIComponent(older.id)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/customer-data.ts",
+      "line": 18,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/customer-management.tsx",
+      "line": 55,
+      "transport": "api",
+      "target": "\"customers.manage\"",
+      "literal": "customers.manage"
+    },
+    {
+      "file": "apps/web/components/customer-management.tsx",
+      "line": 150,
+      "transport": "api",
+      "target": "\"customers.detail?id=\" + encodeURIComponent(id)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/customer-management.tsx",
+      "line": 163,
+      "transport": "api",
+      "target": "modal.id ? \"customers.update\" : \"customers.create\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/customer-notifications.tsx",
+      "line": 370,
+      "transport": "api",
+      "target": "\"notifications.read.bulk\"",
+      "literal": "notifications.read.bulk"
+    },
+    {
+      "file": "apps/web/components/customer-orders.tsx",
+      "line": 131,
+      "transport": "api",
+      "target": "`refund.lines?orderId=${encodeURIComponent(order.id)}`",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/customer-orders.tsx",
+      "line": 167,
+      "transport": "api",
+      "target": "\"refund.request\"",
+      "literal": "refund.request"
+    },
+    {
+      "file": "apps/web/components/customer-orders.tsx",
+      "line": 355,
+      "transport": "api",
+      "target": "\"order.transition\"",
+      "literal": "order.transition"
+    },
+    {
+      "file": "apps/web/components/customer-workspace.tsx",
+      "line": 375,
+      "transport": "form action",
+      "target": "/products",
+      "literal": "/products"
+    },
+    {
+      "file": "apps/web/components/dispatch-centre.tsx",
+      "line": 135,
+      "transport": "api",
+      "target": "\"dispatch.centre?\" + query",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/dispatch-centre.tsx",
+      "line": 226,
+      "transport": "api",
+      "target": "\"dispatch.candidates?orderId=\" + encodeURIComponent(order.id)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/dispatch-centre.tsx",
+      "line": 239,
+      "transport": "api",
+      "target": "\"dispatch.candidates?orderId=\" + encodeURIComponent(orderId)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/dispatch-centre.tsx",
+      "line": 285,
+      "transport": "api",
+      "target": "candidate.action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/document-library.tsx",
+      "line": 42,
+      "transport": "api",
+      "target": "\"documents.list?\" + q",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/doorstep-actions.tsx",
+      "line": 52,
+      "transport": "form action",
+      "target": "invoice.correction.decide",
+      "literal": "invoice.correction.decide"
+    },
+    {
+      "file": "apps/web/components/doorstep-actions.tsx",
+      "line": 72,
+      "transport": "form action",
+      "target": "doorstep.collection.report",
+      "literal": "doorstep.collection.report"
+    },
+    {
+      "file": "apps/web/components/doorstep-actions.tsx",
+      "line": 89,
+      "transport": "form action",
+      "target": "doorstep.collection.verify",
+      "literal": "doorstep.collection.verify"
+    },
+    {
+      "file": "apps/web/components/doorstep-actions.tsx",
+      "line": 112,
+      "transport": "form action",
+      "target": "doorstep.dispense",
+      "literal": "doorstep.dispense"
+    },
+    {
+      "file": "apps/web/components/doorstep-actions.tsx",
+      "line": 143,
+      "transport": "form action",
+      "target": "doorstep.cancel",
+      "literal": "doorstep.cancel"
+    },
+    {
+      "file": "apps/web/components/doorstep-cylinder-form.tsx",
+      "line": 49,
+      "transport": "api",
+      "target": "amendment ? \"doorstep.prepare\" : \"doorstep.gas.propose\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/doorstep-product-actions.tsx",
+      "line": 29,
+      "transport": "form action",
+      "target": "doorstep.products.prepare",
+      "literal": "doorstep.products.prepare"
+    },
+    {
+      "file": "apps/web/components/doorstep-product-actions.tsx",
+      "line": 71,
+      "transport": "form action",
+      "target": "invoice.correction.decide",
+      "literal": "invoice.correction.decide"
+    },
+    {
+      "file": "apps/web/components/doorstep-product-actions.tsx",
+      "line": 89,
+      "transport": "form action",
+      "target": "doorstep.products.collection.report",
+      "literal": "doorstep.products.collection.report"
+    },
+    {
+      "file": "apps/web/components/doorstep-product-actions.tsx",
+      "line": 106,
+      "transport": "form action",
+      "target": "doorstep.products.collection.verify",
+      "literal": "doorstep.products.collection.verify"
+    },
+    {
+      "file": "apps/web/components/doorstep-product-actions.tsx",
+      "line": 114,
+      "transport": "form action",
+      "target": "doorstep.products.handover",
+      "literal": "doorstep.products.handover"
+    },
+    {
+      "file": "apps/web/components/doorstep-product-actions.tsx",
+      "line": 135,
+      "transport": "form action",
+      "target": "doorstep.products.cancel",
+      "literal": "doorstep.products.cancel"
+    },
+    {
+      "file": "apps/web/components/driver-assignment.tsx",
+      "line": 71,
+      "transport": "api",
+      "target": "\"dispatch.candidates?orderId=\" + encodeURIComponent(orderId)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 112,
+      "transport": "api",
+      "target": "\"driver.restrict\"",
+      "literal": "driver.restrict"
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 114,
+      "transport": "api",
+      "target": "\"driver.snapshot\"",
+      "literal": "driver.snapshot"
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 115,
+      "transport": "api",
+      "target": "\"orders?active=1\"",
+      "literal": "orders?active=1"
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 116,
+      "transport": "api",
+      "target": "\"bulk.summary\"",
+      "literal": "bulk.summary"
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 184,
+      "transport": "api",
+      "target": "driverHistoryAction(filters)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 224,
+      "transport": "api",
+      "target": "\"delivery.photos?\" + params",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 261,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 1014,
+      "transport": "form action",
+      "target": "account.update",
+      "literal": "account.update"
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 1058,
+      "transport": "form action",
+      "target": "account.password",
+      "literal": "account.password"
+    },
+    {
+      "file": "apps/web/components/driver-experience.tsx",
+      "line": 1109,
+      "transport": "form action",
+      "target": "support.create",
+      "literal": "support.create"
+    },
+    {
+      "file": "apps/web/components/driver-trip-controls.tsx",
+      "line": 50,
+      "transport": "api",
+      "target": "\"driver.location\"",
+      "literal": "driver.location"
+    },
+    {
+      "file": "apps/web/components/driver-trip-controls.tsx",
+      "line": 101,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/drivers-workspace.tsx",
+      "line": 82,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/drivers-workspace.tsx",
+      "line": 85,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/drivers-workspace.tsx",
+      "line": 215,
+      "transport": "api",
+      "target": "\"drivers.workspace\"",
+      "literal": "drivers.workspace"
+    },
+    {
+      "file": "apps/web/components/drivers-workspace.tsx",
+      "line": 443,
+      "transport": "api",
+      "target": "\"staff.invite\"",
+      "literal": "staff.invite"
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 54,
+      "transport": "api",
+      "target": "\"rewards.summary\"",
+      "literal": "rewards.summary"
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 436,
+      "transport": "api",
+      "target": "\"rewards.report\"",
+      "literal": "rewards.report"
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 494,
+      "transport": "api",
+      "target": "\"rewards.retry\"",
+      "literal": "rewards.retry"
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 573,
+      "transport": "api",
+      "target": "\"rewards.export\"",
+      "literal": "rewards.export"
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 647,
+      "transport": "api",
+      "target": "\"rewards.summary\"",
+      "literal": "rewards.summary"
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 756,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 761,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 827,
+      "transport": "api",
+      "target": "\"rewards.smart-offers\"",
+      "literal": "rewards.smart-offers"
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 874,
+      "transport": "api",
+      "target": "`refund.lines?orderId=${encodeURIComponent(orderId)}`",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/easyrewards.tsx",
+      "line": 936,
+      "transport": "api",
+      "target": "\"refund.request\"",
+      "literal": "refund.request"
+    },
+    {
+      "file": "apps/web/components/gas-delivery-admin.tsx",
+      "line": 38,
+      "transport": "api",
+      "target": "\"delivery.locations.manage\"",
+      "literal": "delivery.locations.manage"
+    },
+    {
+      "file": "apps/web/components/gas-delivery-admin.tsx",
+      "line": 42,
+      "transport": "api",
+      "target": "\"gas.inspections\"",
+      "literal": "gas.inspections"
+    },
+    {
+      "file": "apps/web/components/gas-delivery-admin.tsx",
+      "line": 46,
+      "transport": "api",
+      "target": "\"gas.stock\"",
+      "literal": "gas.stock"
+    },
+    {
+      "file": "apps/web/components/gas-delivery-admin.tsx",
+      "line": 92,
+      "transport": "form action",
+      "target": "gas.stock.receive",
+      "literal": "gas.stock.receive"
+    },
+    {
+      "file": "apps/web/components/gas-delivery-admin.tsx",
+      "line": 129,
+      "transport": "form action",
+      "target": "delivery.location.create",
+      "literal": "delivery.location.create"
+    },
+    {
+      "file": "apps/web/components/gas-delivery-admin.tsx",
+      "line": 237,
+      "transport": "form action",
+      "target": "gas.report",
+      "literal": "gas.report"
+    },
+    {
+      "file": "apps/web/components/gas-order.tsx",
+      "line": 129,
+      "transport": "api",
+      "target": "\"gas.catalogue?branchId=\" + encodeURIComponent(requestedBranch)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/gas-order.tsx",
+      "line": 437,
+      "transport": "api",
+      "target": "\"gas.quote\"",
+      "literal": "gas.quote"
+    },
+    {
+      "file": "apps/web/components/gas-order.tsx",
+      "line": 495,
+      "transport": "api",
+      "target": "\"checkout.mixed\"",
+      "literal": "checkout.mixed"
+    },
+    {
+      "file": "apps/web/components/gas-order.tsx",
+      "line": 500,
+      "transport": "api",
+      "target": "\"checkout\"",
+      "literal": "checkout"
+    },
+    {
+      "file": "apps/web/components/gas-order.tsx",
+      "line": 607,
+      "transport": "api",
+      "target": "\"gas.quote\"",
+      "literal": "gas.quote"
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 49,
+      "transport": "pay",
+      "target": "purpose === \"wallet\" ? \"configuration?purpose=wallet\" : \"configuration\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 63,
+      "transport": "pay",
+      "target": "\"quote\"",
+      "literal": "quote"
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 85,
+      "transport": "pay",
+      "target": "\"initialize\"",
+      "literal": "initialize"
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 105,
+      "transport": "pay",
+      "target": "\"verify\"",
+      "literal": "verify"
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 216,
+      "transport": "api",
+      "target": "\"wallet.funding\"",
+      "literal": "wallet.funding"
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 217,
+      "transport": "pay",
+      "target": "\"configuration?purpose=wallet\"",
+      "literal": "configuration?purpose=wallet"
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 283,
+      "transport": "api",
+      "target": "\"wallet.transfer.request\"",
+      "literal": "wallet.transfer.request"
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 479,
+      "transport": "pay",
+      "target": "\"verify\"",
+      "literal": "verify"
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 554,
+      "transport": "pay",
+      "target": "\"configuration\"",
+      "literal": "configuration"
+    },
+    {
+      "file": "apps/web/components/lpg-load-issue.tsx",
+      "line": 68,
+      "transport": "api",
+      "target": "recovery ? \"bulk.load.recover\" : \"bulk.load.issue\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/mail-delivery.tsx",
+      "line": 13,
+      "transport": "api",
+      "target": "\"mail.status\"",
+      "literal": "mail.status"
+    },
+    {
+      "file": "apps/web/components/mail-delivery.tsx",
+      "line": 72,
+      "transport": "api",
+      "target": "\"mail.reconcile\"",
+      "literal": "mail.reconcile"
+    },
+    {
+      "file": "apps/web/components/mail-delivery.tsx",
+      "line": 133,
+      "transport": "api",
+      "target": "\"mail.retry\"",
+      "literal": "mail.retry"
+    },
+    {
+      "file": "apps/web/components/notifications-tray.tsx",
+      "line": 71,
+      "transport": "api",
+      "target": "`notifications.list?filter=${filter}&page=${page}`",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/notifications-tray.tsx",
+      "line": 104,
+      "transport": "api",
+      "target": "\"id\" in data ? \"notifications.read\" : \"notifications.read.bulk\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/operational-incidents.tsx",
+      "line": 196,
+      "transport": "api",
+      "target": "`incidents?${params}`",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/operational-incidents.tsx",
+      "line": 480,
+      "transport": "api",
+      "target": "`incidents?${new URLSearchParams({ view: \"detail\", id: incident.id, page: String(page) })}`",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/operational-incidents.tsx",
+      "line": 619,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/operational-incidents.tsx",
+      "line": 620,
+      "transport": "api",
+      "target": "\"incident.update\"",
+      "literal": "incident.update"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 70,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 76,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 185,
+      "transport": "api",
+      "target": "\"fleet.summary\"",
+      "literal": "fleet.summary"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 207,
+      "transport": "form action",
+      "target": "fleet.vehicle.create",
+      "literal": "fleet.vehicle.create"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 246,
+      "transport": "form action",
+      "target": "trip.start",
+      "literal": "trip.start"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 393,
+      "transport": "api",
+      "target": "\"trip.sync\"",
+      "literal": "trip.sync"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 427,
+      "transport": "form action",
+      "target": "trip.end",
+      "literal": "trip.end"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 445,
+      "transport": "api",
+      "target": "\"bulk.summary\"",
+      "literal": "bulk.summary"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 480,
+      "transport": "form action",
+      "target": "bulk.meter.register",
+      "literal": "bulk.meter.register"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 613,
+      "transport": "form action",
+      "target": "bulk.collection.record",
+      "literal": "bulk.collection.record"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 637,
+      "transport": "form action",
+      "target": "bulk.load.acknowledge",
+      "literal": "bulk.load.acknowledge"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 662,
+      "transport": "form action",
+      "target": "bulk.dispense",
+      "literal": "bulk.dispense"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 691,
+      "transport": "form action",
+      "target": "bulk.return.declare",
+      "literal": "bulk.return.declare"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 708,
+      "transport": "form action",
+      "target": "bulk.return.receive",
+      "literal": "bulk.return.receive"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 725,
+      "transport": "form action",
+      "target": "bulk.recovery.request",
+      "literal": "bulk.recovery.request"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 784,
+      "transport": "api",
+      "target": "\"dispatch.board\"",
+      "literal": "dispatch.board"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 813,
+      "transport": "form action",
+      "target": "dispatch.destination.confirm",
+      "literal": "dispatch.destination.confirm"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 850,
+      "transport": "form action",
+      "target": "dispatch.route.estimate",
+      "literal": "dispatch.route.estimate"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 935,
+      "transport": "api",
+      "target": "\"crm.summary?\" + new URLSearchParams({ q: query, limit: \"50\" })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 986,
+      "transport": "form action",
+      "target": "crm.followup.create",
+      "literal": "crm.followup.create"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 1002,
+      "transport": "form action",
+      "target": "crm.winback.cancel",
+      "literal": "crm.winback.cancel"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 1013,
+      "transport": "form action",
+      "target": "crm.winback.queue",
+      "literal": "crm.winback.queue"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 1037,
+      "transport": "api",
+      "target": "\"crm.summary?\" +\n                  new URLSearchParams({\n                    q: query,\n                    after: data.nextCursor,\n                    limit: \"50\",\n                  })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 1078,
+      "transport": "form action",
+      "target": "crm.followup.outcome",
+      "literal": "crm.followup.outcome"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 1096,
+      "transport": "api",
+      "target": "\"crm.followups?\" +\n                  new URLSearchParams({\n                    q: query,\n                    after: data.followupsNextCursor,\n                    limit: \"100\",\n                  })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 1157,
+      "transport": "api",
+      "target": "\"channels.preferences\"",
+      "literal": "channels.preferences"
+    },
+    {
+      "file": "apps/web/components/operations-completion.tsx",
+      "line": 1179,
+      "transport": "form action",
+      "target": "channels.consent",
+      "literal": "channels.consent"
+    },
+    {
+      "file": "apps/web/components/order-additions.tsx",
+      "line": 32,
+      "transport": "api",
+      "target": "\"order.additions\"",
+      "literal": "order.additions"
+    },
+    {
+      "file": "apps/web/components/order-additions.tsx",
+      "line": 65,
+      "transport": "api",
+      "target": "\"order.addition.create\"",
+      "literal": "order.addition.create"
+    },
+    {
+      "file": "apps/web/components/order-additions.tsx",
+      "line": 75,
+      "transport": "api",
+      "target": "\"order.addition.quote\"",
+      "literal": "order.addition.quote"
+    },
+    {
+      "file": "apps/web/components/order-cylinder-inspection.tsx",
+      "line": 25,
+      "transport": "api",
+      "target": "\"gas.cylinders?lineId=\" + encodeURIComponent(line.id)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/order-cylinder-inspection.tsx",
+      "line": 72,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/order-cylinder-inspection.tsx",
+      "line": 114,
+      "transport": "form action",
+      "target": "reauth",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/order-invoice.tsx",
+      "line": 30,
+      "transport": "api",
+      "target": "bookingId\n          ? issue\n            ? \"invoice.service.issue\"\n            : \"invoice.service\"\n          : issue\n            ? \"invoice.issue\"\n            : \"invoice.order\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/order-invoice.tsx",
+      "line": 48,
+      "transport": "api",
+      "target": "\"invoice.service.draft\"",
+      "literal": "invoice.service.draft"
+    },
+    {
+      "file": "apps/web/components/order-invoice.tsx",
+      "line": 101,
+      "transport": "form action",
+      "target": "reauth",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/order-invoice.tsx",
+      "line": 227,
+      "transport": "form action",
+      "target": "invoice.service.draft.save",
+      "literal": "invoice.service.draft.save"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 25,
+      "transport": "api",
+      "target": "\"invoice.corrections\"",
+      "literal": "invoice.corrections"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 62,
+      "transport": "form action",
+      "target": "invoice.correction.decide",
+      "literal": "invoice.correction.decide"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 89,
+      "transport": "form action",
+      "target": "invoice.excess.request",
+      "literal": "invoice.excess.request"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 107,
+      "transport": "form action",
+      "target": "invoice.correction.propose",
+      "literal": "invoice.correction.propose"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 137,
+      "transport": "form action",
+      "target": "invoice.request.create",
+      "literal": "invoice.request.create"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 168,
+      "transport": "form action",
+      "target": "invoice.request.revoke",
+      "literal": "invoice.request.revoke"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 201,
+      "transport": "api",
+      "target": "\"doorstep.list\"",
+      "literal": "doorstep.list"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 205,
+      "transport": "api",
+      "target": "\"delivery.photos?orderId=\" + order.id",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 285,
+      "transport": "form action",
+      "target": "doorstep.products.propose",
+      "literal": "doorstep.products.propose"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 344,
+      "transport": "form action",
+      "target": "doorstep.consent",
+      "literal": "doorstep.consent"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 363,
+      "transport": "form action",
+      "target": "dispatch.respond",
+      "literal": "dispatch.respond"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 415,
+      "transport": "form action",
+      "target": "channels.consent",
+      "literal": "channels.consent"
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 461,
+      "transport": "form action",
+      "target": "phone.invite",
+      "literal": "phone.invite"
+    },
+    {
+      "file": "apps/web/components/order-tracking.tsx",
+      "line": 41,
+      "transport": "api",
+      "target": "orderId ? `orders?id=${encodeURIComponent(orderId)}` : \"orders\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/order-tracking.tsx",
+      "line": 203,
+      "transport": "api",
+      "target": "\"tracking.drivers\"",
+      "literal": "tracking.drivers"
+    },
+    {
+      "file": "apps/web/components/order-tracking.tsx",
+      "line": 214,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/order-tracking.tsx",
+      "line": 219,
+      "transport": "api",
+      "target": "`tracking.operation?key=${encodeURIComponent(pending.current!.key)}`",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/payment-request.tsx",
+      "line": 18,
+      "transport": "api",
+      "target": "\"invoice.request.view\"",
+      "literal": "invoice.request.view"
+    },
+    {
+      "file": "apps/web/components/paystack-reconciliation.tsx",
+      "line": 25,
+      "transport": "api",
+      "target": "\"finance.paystack\"",
+      "literal": "finance.paystack"
+    },
+    {
+      "file": "apps/web/components/phone-completion.tsx",
+      "line": 20,
+      "transport": "api",
+      "target": "\"phone.otp\"",
+      "literal": "phone.otp"
+    },
+    {
+      "file": "apps/web/components/phone-completion.tsx",
+      "line": 32,
+      "transport": "api",
+      "target": "\"phone.review\"",
+      "literal": "phone.review"
+    },
+    {
+      "file": "apps/web/components/phone-completion.tsx",
+      "line": 46,
+      "transport": "api",
+      "target": "\"phone.complete\"",
+      "literal": "phone.complete"
+    },
+    {
+      "file": "apps/web/components/policies.tsx",
+      "line": 17,
+      "transport": "api",
+      "target": "\"policies\"",
+      "literal": "policies"
+    },
+    {
+      "file": "apps/web/components/policies.tsx",
+      "line": 70,
+      "transport": "api",
+      "target": "\"policies.manage\"",
+      "literal": "policies.manage"
+    },
+    {
+      "file": "apps/web/components/policies.tsx",
+      "line": 132,
+      "transport": "api",
+      "target": "\"setting.propose\"",
+      "literal": "setting.propose"
+    },
+    {
+      "file": "apps/web/components/product-catalogue.tsx",
+      "line": 70,
+      "transport": "api",
+      "target": "\"products.manage?\" + new URLSearchParams({ branchId: branch })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/product-catalogue.tsx",
+      "line": 71,
+      "transport": "api",
+      "target": "\"gas.catalogue?\" + new URLSearchParams({ branchId: branch })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/product-catalogue.tsx",
+      "line": 146,
+      "transport": "api",
+      "target": "\"product.import\"",
+      "literal": "product.import"
+    },
+    {
+      "file": "apps/web/components/product-catalogue.tsx",
+      "line": 461,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 322,
+      "transport": "api",
+      "target": "catalogueBranch\n              ? \"services.catalogue?branch=\" +\n                  encodeURIComponent(catalogueBranch)\n              : \"services.catalogue\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 329,
+      "transport": "api",
+      "target": "\"bookings\"",
+      "literal": "bookings"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 330,
+      "transport": "api",
+      "target": "\"services.manage\"",
+      "literal": "services.manage"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1047,
+      "transport": "api",
+      "target": "\"account.profile\"",
+      "literal": "account.profile"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1071,
+      "transport": "api",
+      "target": "serviceSlotsQuery(service, zone)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1112,
+      "transport": "api",
+      "target": "serviceSlotsQuery(service, v.zone)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1394,
+      "transport": "api",
+      "target": "\"bundles\"",
+      "literal": "bundles"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1411,
+      "transport": "api",
+      "target": "\"me\"",
+      "literal": "me"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1577,
+      "transport": "api",
+      "target": "\"services.propose\"",
+      "literal": "services.propose"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1637,
+      "transport": "api",
+      "target": "\"services.checklist.propose\"",
+      "literal": "services.checklist.propose"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1777,
+      "transport": "api",
+      "target": "\"technician.qualify\"",
+      "literal": "technician.qualify"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1813,
+      "transport": "api",
+      "target": "\"services.slot.create\"",
+      "literal": "services.slot.create"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 1833,
+      "transport": "api",
+      "target": "\"services.slot.block\"",
+      "literal": "services.slot.block"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 2287,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 2634,
+      "transport": "api",
+      "target": "\"service.followup.create\"",
+      "literal": "service.followup.create"
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 2655,
+      "transport": "api",
+      "target": "\"services.slots?\" +\n        new URLSearchParams({ serviceId: b.service_id, branchId: b.branch_id })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/professional-services.tsx",
+      "line": 2718,
+      "transport": "api",
+      "target": "\"products.manage\"",
+      "literal": "products.manage"
+    },
+    {
+      "file": "apps/web/components/public-header.tsx",
+      "line": 98,
+      "transport": "api",
+      "target": "\"customer.dashboard?widget=navigation\"",
+      "literal": "customer.dashboard?widget=navigation"
+    },
+    {
+      "file": "apps/web/components/public-header.tsx",
+      "line": 162,
+      "transport": "api",
+      "target": "\"catalogue\"",
+      "literal": "catalogue"
+    },
+    {
+      "file": "apps/web/components/public-header.tsx",
+      "line": 163,
+      "transport": "api",
+      "target": "\"services.catalogue\"",
+      "literal": "services.catalogue"
+    },
+    {
+      "file": "apps/web/components/readiness.tsx",
+      "line": 10,
+      "transport": "api",
+      "target": "\"production.readiness\"",
+      "literal": "production.readiness"
+    },
+    {
+      "file": "apps/web/components/recommendations.tsx",
+      "line": 17,
+      "transport": "api",
+      "target": "\"recommendations\" +\n        (productId ? \"?productId=\" + encodeURIComponent(productId) : \"\")",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/recommendations.tsx",
+      "line": 24,
+      "transport": "api",
+      "target": "\"recommendation.event\"",
+      "literal": "recommendation.event"
+    },
+    {
+      "file": "apps/web/components/recommendations.tsx",
+      "line": 43,
+      "transport": "api",
+      "target": "\"recommendation.event\"",
+      "literal": "recommendation.event"
+    },
+    {
+      "file": "apps/web/components/recommendations.tsx",
+      "line": 66,
+      "transport": "api",
+      "target": "\"recommendations.manage\"",
+      "literal": "recommendations.manage"
+    },
+    {
+      "file": "apps/web/components/recommendations.tsx",
+      "line": 67,
+      "transport": "api",
+      "target": "\"products.manage\"",
+      "literal": "products.manage"
+    },
+    {
+      "file": "apps/web/components/recommendations.tsx",
+      "line": 68,
+      "transport": "api",
+      "target": "\"services.manage\"",
+      "literal": "services.manage"
+    },
+    {
+      "file": "apps/web/components/recommendations.tsx",
+      "line": 262,
+      "transport": "api",
+      "target": "\"recommendation.propose\"",
+      "literal": "recommendation.propose"
+    },
+    {
+      "file": "apps/web/components/recommendations.tsx",
+      "line": 307,
+      "transport": "api",
+      "target": "\"recommendation.approve\"",
+      "literal": "recommendation.approve"
+    },
+    {
+      "file": "apps/web/components/reconciliation.tsx",
+      "line": 29,
+      "transport": "api",
+      "target": "\"finance.summary\"",
+      "literal": "finance.summary"
+    },
+    {
+      "file": "apps/web/components/reconciliation.tsx",
+      "line": 30,
+      "transport": "api",
+      "target": "\"finance.ledger\"",
+      "literal": "finance.ledger"
+    },
+    {
+      "file": "apps/web/components/reconciliation.tsx",
+      "line": 220,
+      "transport": "api",
+      "target": "\"finance.ledger?after=\" + encodeURIComponent(cursor)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/refill-profiles.tsx",
+      "line": 53,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/refill-profiles.tsx",
+      "line": 281,
+      "transport": "form action",
+      "target": "refill.profile.create",
+      "literal": "refill.profile.create"
+    },
+    {
+      "file": "apps/web/components/refill-profiles.tsx",
+      "line": 381,
+      "transport": "api",
+      "target": "\"refill.feedback\"",
+      "literal": "refill.feedback"
+    },
+    {
+      "file": "apps/web/components/save-checkout-details.tsx",
+      "line": 13,
+      "transport": "api",
+      "target": "\"account.checkout-details\"",
+      "literal": "account.checkout-details"
+    },
+    {
+      "file": "apps/web/components/save-checkout-details.tsx",
+      "line": 36,
+      "transport": "api",
+      "target": "\"account.checkout-details\"",
+      "literal": "account.checkout-details"
+    },
+    {
+      "file": "apps/web/components/service-followups.tsx",
+      "line": 14,
+      "transport": "api",
+      "target": "\"service.followups\"",
+      "literal": "service.followups"
+    },
+    {
+      "file": "apps/web/components/service-followups.tsx",
+      "line": 77,
+      "transport": "api",
+      "target": "\"service.followup.dismiss\"",
+      "literal": "service.followup.dismiss"
+    },
+    {
+      "file": "apps/web/components/service-mutation.ts",
+      "line": 5,
+      "transport": "api",
+      "target": "\"me\"",
+      "literal": "me"
+    },
+    {
+      "file": "apps/web/components/service-mutation.ts",
+      "line": 25,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/service-request.tsx",
+      "line": 106,
+      "transport": "api",
+      "target": "\"account.profile\"",
+      "literal": "account.profile"
+    },
+    {
+      "file": "apps/web/components/service-request.tsx",
+      "line": 130,
+      "transport": "api",
+      "target": "\"booking.recover?key=\" + encodeURIComponent(key.current)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/service-request.tsx",
+      "line": 161,
+      "transport": "api",
+      "target": "\"booking.recover?key=\" + encodeURIComponent(key.current)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/setting-change-form.tsx",
+      "line": 93,
+      "transport": "api",
+      "target": "\"branches\"",
+      "literal": "branches"
+    },
+    {
+      "file": "apps/web/components/setting-change-form.tsx",
+      "line": 99,
+      "transport": "api",
+      "target": "\"staff.lookup?userId=\" + encodeURIComponent(s.value.userId)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/setting-change-form.tsx",
+      "line": 217,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/setting-change-form.tsx",
+      "line": 222,
+      "transport": "api",
+      "target": "review.action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/setting-change-form.tsx",
+      "line": 1336,
+      "transport": "api",
+      "target": "\"staff.lookup?email=\" + encodeURIComponent(email.trim())",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 124,
+      "transport": "api",
+      "target": "pathname === \"/\" ? \"catalogue?view=homepage\" : \"catalogue\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 162,
+      "transport": "api",
+      "target": "\"me\"",
+      "literal": "me"
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 207,
+      "transport": "api",
+      "target": "\"logout\"",
+      "literal": "logout"
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 1230,
+      "transport": "api",
+      "target": "register ? \"register\" : \"login\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 1235,
+      "transport": "api",
+      "target": "\"me\"",
+      "literal": "me"
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 1241,
+      "transport": "api",
+      "target": "\"rewards.referral.attribute\"",
+      "literal": "rewards.referral.attribute"
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 1421,
+      "transport": "api",
+      "target": "\"checkout\"",
+      "literal": "checkout"
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 1659,
+      "transport": "api",
+      "target": "action === \"orders\" && trackingOrderId\n          ? `orders?id=${encodeURIComponent(trackingOrderId)}`\n          : action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 1707,
+      "transport": "api",
+      "target": "\"schedule.create\"",
+      "literal": "schedule.create"
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 1711,
+      "transport": "api",
+      "target": "\"schedules\"",
+      "literal": "schedules"
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 1756,
+      "transport": "api",
+      "target": "\"schedule.update\"",
+      "literal": "schedule.update"
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 1760,
+      "transport": "api",
+      "target": "\"schedules\"",
+      "literal": "schedules"
+    },
+    {
+      "file": "apps/web/components/site.tsx",
+      "line": 2029,
+      "transport": "form action",
+      "target": "support.create",
+      "literal": "support.create"
+    },
+    {
+      "file": "apps/web/components/staff-invitation.tsx",
+      "line": 51,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/staff-management.tsx",
+      "line": 52,
+      "transport": "api",
+      "target": "\"staff.manage\"",
+      "literal": "staff.manage"
+    },
+    {
+      "file": "apps/web/components/staff-management.tsx",
+      "line": 92,
+      "transport": "api",
+      "target": "actionName",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/staff-management.tsx",
+      "line": 599,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/staff-management.tsx",
+      "line": 621,
+      "transport": "api",
+      "target": "\"staff.lookup?\" + new URLSearchParams(v)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/staff-management.tsx",
+      "line": 640,
+      "transport": "api",
+      "target": "\"staff.edit\"",
+      "literal": "staff.edit"
+    },
+    {
+      "file": "apps/web/components/staff-management.tsx",
+      "line": 677,
+      "transport": "api",
+      "target": "\"staff.access.request\"",
+      "literal": "staff.access.request"
+    },
+    {
+      "file": "apps/web/components/staff-management.tsx",
+      "line": 701,
+      "transport": "api",
+      "target": "\"staff.\" + modal",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/staff-privileges.tsx",
+      "line": 29,
+      "transport": "api",
+      "target": "\"staff.privileges?\" + new URLSearchParams({ userId: target.id })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/staff-privileges.tsx",
+      "line": 51,
+      "transport": "api",
+      "target": "\"staff.privileges.save\"",
+      "literal": "staff.privileges.save"
+    },
+    {
+      "file": "apps/web/components/staff-privileges.tsx",
+      "line": 93,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/support-controls.tsx",
+      "line": 29,
+      "transport": "api",
+      "target": "action!",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/support-controls.tsx",
+      "line": 219,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/support-controls.tsx",
+      "line": 220,
+      "transport": "api",
+      "target": "\"support.sla.save\"",
+      "literal": "support.sla.save"
+    },
+    {
+      "file": "apps/web/components/technician-workspace.tsx",
+      "line": 97,
+      "transport": "api",
+      "target": "\"technician.restrict\"",
+      "literal": "technician.restrict"
+    },
+    {
+      "file": "apps/web/components/technician-workspace.tsx",
+      "line": 106,
+      "transport": "api",
+      "target": "\"technician.snapshot\"",
+      "literal": "technician.snapshot"
+    },
+    {
+      "file": "apps/web/components/technician-workspace.tsx",
+      "line": 113,
+      "transport": "api",
+      "target": "\"technician.jobs?\" + query",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/technician-workspace.tsx",
+      "line": 189,
+      "transport": "api",
+      "target": "\"bookings?id=\" + encodeURIComponent(selected)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/technician-workspace.tsx",
+      "line": 713,
+      "transport": "form action",
+      "target": "account.update",
+      "literal": "account.update"
+    },
+    {
+      "file": "apps/web/components/technician-workspace.tsx",
+      "line": 775,
+      "transport": "form action",
+      "target": "preferences.save",
+      "literal": "preferences.save"
+    },
+    {
+      "file": "apps/web/components/technicians-availability.tsx",
+      "line": 65,
+      "transport": "api",
+      "target": "\"technicians.workspace?\" +\n        new URLSearchParams({\n          q: query,\n          branchId: branch,\n          status,\n          qualification,\n          serviceId,\n          ...(date ? { date } : {}),\n          page: String(page),\n          schedulePage: String(schedulePage),\n        })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/technicians-availability.tsx",
+      "line": 582,
+      "transport": "api",
+      "target": "\"staff.invite\"",
+      "literal": "staff.invite"
+    },
+    {
+      "file": "apps/web/components/technicians-availability.tsx",
+      "line": 718,
+      "transport": "api",
+      "target": "\"staff.edit\"",
+      "literal": "staff.edit"
+    },
+    {
+      "file": "apps/web/components/technicians-availability.tsx",
+      "line": 822,
+      "transport": "api",
+      "target": "\"reauth\"",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 29,
+      "transport": "api",
+      "target": "\"testimonials.public\"",
+      "literal": "testimonials.public"
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 156,
+      "transport": "api",
+      "target": "\"testimonials.mine\" + (q.size ? \"?\" + q : \"\")",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 184,
+      "transport": "api",
+      "target": "\"testimonial.transition\"",
+      "literal": "testimonial.transition"
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 210,
+      "transport": "api",
+      "target": "\"testimonial.edit\"",
+      "literal": "testimonial.edit"
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 217,
+      "transport": "api",
+      "target": "\"testimonial.create\"",
+      "literal": "testimonial.create"
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 549,
+      "transport": "api",
+      "target": "\"testimonials.manage?\" + q",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 550,
+      "transport": "api",
+      "target": "\"testimonials.analytics\"",
+      "literal": "testimonials.analytics"
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 587,
+      "transport": "api",
+      "target": "\"testimonials.export?\" + filters()",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 621,
+      "transport": "api",
+      "target": "\"testimonial.detail?id=\" + encodeURIComponent(id)",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/testimonials.tsx",
+      "line": 648,
+      "transport": "api",
+      "target": "\"testimonial.transition\"",
+      "literal": "testimonial.transition"
+    },
+    {
+      "file": "apps/web/components/vehicle-manifest-panel.tsx",
+      "line": 11,
+      "transport": "api",
+      "target": "\"manifest.summary\"",
+      "literal": "manifest.summary"
+    },
+    {
+      "file": "apps/web/components/vehicle-manifest-panel.tsx",
+      "line": 41,
+      "transport": "form action",
+      "target": "fleet.vehicle.payload.request",
+      "literal": "fleet.vehicle.payload.request"
+    },
+    {
+      "file": "apps/web/components/vehicle-manifest-panel.tsx",
+      "line": 66,
+      "transport": "form action",
+      "target": "manifest.issue",
+      "literal": "manifest.issue"
+    },
+    {
+      "file": "apps/web/components/vehicle-manifest-panel.tsx",
+      "line": 160,
+      "transport": "form action",
+      "target": "manifest.acknowledge",
+      "literal": "manifest.acknowledge"
+    },
+    {
+      "file": "apps/web/components/vehicle-manifest-panel.tsx",
+      "line": 182,
+      "transport": "form action",
+      "target": "manifest.return.declare",
+      "literal": "manifest.return.declare"
+    },
+    {
+      "file": "apps/web/components/vehicle-manifest-panel.tsx",
+      "line": 208,
+      "transport": "form action",
+      "target": "manifest.return.receive",
+      "literal": "manifest.return.receive"
+    },
+    {
+      "file": "apps/web/components/vehicle-manifest-panel.tsx",
+      "line": 215,
+      "transport": "form action",
+      "target": "manifest.return.review",
+      "literal": "manifest.return.review"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 117,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 224,
+      "transport": "api",
+      "target": "action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 346,
+      "transport": "api",
+      "target": "enroll ? \"support.sla.enroll\" : \"support.sla.scan\"",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 553,
+      "transport": "form action",
+      "target": "supplier.create",
+      "literal": "supplier.create"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 563,
+      "transport": "form action",
+      "target": "purchase.create",
+      "literal": "purchase.create"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 611,
+      "transport": "form action",
+      "target": "purchase.update",
+      "literal": "purchase.update"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 662,
+      "transport": "form action",
+      "target": "product.save",
+      "literal": "product.save"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 743,
+      "transport": "form action",
+      "target": "cylinder.inspect",
+      "literal": "cylinder.inspect"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 763,
+      "transport": "form action",
+      "target": "cylinder.fill",
+      "literal": "cylinder.fill"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 777,
+      "transport": "form action",
+      "target": "cylinder.custody",
+      "literal": "cylinder.custody"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 813,
+      "transport": "form action",
+      "target": "branch.create",
+      "literal": "branch.create"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 823,
+      "transport": "form action",
+      "target": "transfer.create",
+      "literal": "transfer.create"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 847,
+      "transport": "form action",
+      "target": "transfer.receive",
+      "literal": "transfer.receive"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 862,
+      "transport": "form action",
+      "target": "staff.invite",
+      "literal": "staff.invite"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 872,
+      "transport": "form action",
+      "target": "staff.suspend",
+      "literal": "staff.suspend"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 894,
+      "transport": "form action",
+      "target": "jobs.run",
+      "literal": "jobs.run"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 989,
+      "transport": "form action",
+      "target": "credit.request",
+      "literal": "credit.request"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1060,
+      "transport": "form action",
+      "target": "reauth",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1104,
+      "transport": "form action",
+      "target": "reauth",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1106,
+      "transport": "form action",
+      "target": "credit.decide",
+      "literal": "credit.decide"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1158,
+      "transport": "api",
+      "target": "\"pos.sale\"",
+      "literal": "pos.sale"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1203,
+      "transport": "form action",
+      "target": "pos.open",
+      "literal": "pos.open"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1250,
+      "transport": "form action",
+      "target": "pos.close",
+      "literal": "pos.close"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1263,
+      "transport": "form action",
+      "target": "reauth",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1264,
+      "transport": "form action",
+      "target": "pos.verify",
+      "literal": "pos.verify"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1292,
+      "transport": "form action",
+      "target": "reauth",
+      "literal": "reauth"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1297,
+      "transport": "form action",
+      "target": "schedule.authorise",
+      "literal": "schedule.authorise"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1370,
+      "transport": "form action",
+      "target": "schedule.revoke",
+      "literal": "schedule.revoke"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1378,
+      "transport": "form action",
+      "target": "schedule.reschedule",
+      "literal": "schedule.reschedule"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1506,
+      "transport": "form action",
+      "target": "campaign.create",
+      "literal": "campaign.create"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1566,
+      "transport": "form action",
+      "target": "campaign.decide",
+      "literal": "campaign.decide"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1608,
+      "transport": "api",
+      "target": "\"account.export\"",
+      "literal": "account.export"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1646,
+      "transport": "form action",
+      "target": "delegation.request",
+      "literal": "delegation.request"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1695,
+      "transport": "form action",
+      "target": "delegation.decide",
+      "literal": "delegation.decide"
+    },
+    {
+      "file": "apps/web/components/workflows.tsx",
+      "line": 1714,
+      "transport": "form action",
+      "target": "delegation.revoke",
+      "literal": "delegation.revoke"
+    }
+  ],
+  "directFetch": [
+    {
+      "file": "apps/web/components/admin-overview.tsx",
+      "line": 160,
+      "transport": "fetch",
+      "target": "\"/api/admin.dashboard?\" +\n            new URLSearchParams({\n              ...period(range),\n              ...(branchId ? { branchId } : {}),\n              page: String(page),\n            })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/admin-search.tsx",
+      "line": 30,
+      "transport": "fetch",
+      "target": "\"/api/admin.search?\" +\n            new URLSearchParams({ q: q.trim(), page: String(page) })",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/driver-delivery-controls.tsx",
+      "line": 50,
+      "transport": "fetch",
+      "target": "\"/api/media\"",
+      "literal": "/api/media"
+    },
+    {
+      "file": "apps/web/components/hosted-payment.tsx",
+      "line": 8,
+      "transport": "fetch",
+      "target": "\"/api/payments/paystack/\" + action",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/image-upload.tsx",
+      "line": 36,
+      "transport": "fetch",
+      "target": "\"/api/media\"",
+      "literal": "/api/media"
+    },
+    {
+      "file": "apps/web/components/inventory-workspace.tsx",
+      "line": 130,
+      "transport": "fetch",
+      "target": "\"/api/inventory.workspace?\" + p",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/inventory-workspace.tsx",
+      "line": 141,
+      "transport": "fetch",
+      "target": "\"/api/inventory.movements?\" + parameters()",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/inventory-workspace.tsx",
+      "line": 196,
+      "transport": "fetch",
+      "target": "\"/api/inventory.export?\" + p",
+      "literal": null
+    },
+    {
+      "file": "apps/web/components/order-operations.tsx",
+      "line": 222,
+      "transport": "fetch",
+      "target": "\"/api/media\"",
+      "literal": "/api/media"
+    },
+    {
+      "file": "apps/web/components/support-controls.tsx",
+      "line": 129,
+      "transport": "fetch",
+      "target": "\"/api/media\"",
+      "literal": "/api/media"
+    },
+    {
+      "file": "apps/web/components/ui.tsx",
+      "line": 355,
+      "transport": "fetch",
+      "target": "`/api/${action}`",
+      "literal": null
+    }
+  ],
+  "summary": {
+    "guardSites": 77,
+    "guardFiles": 34,
+    "browserCalls": 370,
+    "directFetch": 11
+  },
+  "notes": [
+    "Direct fetch: three read-only workspaces/search/export, media uploads and hosted-payment transport. None invokes recentVerification outside shared /api/[action] dispatch.",
+    "Conditional governance, delegated privilege and recovery helper guards remain in scope; actionCandidates are context literals, not a count of accepted business operations.",
+    "No server role, branch, qualification, provider, approval or verification-expiry rule removed."
+  ]
+}

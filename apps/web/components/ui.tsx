@@ -1,5 +1,10 @@
 "use client";
-import { confirmAction, appDialogActive } from "./app-dialog";
+import {
+  confirmAction,
+  appDialogActive,
+  requestSessionVerification,
+} from "./app-dialog";
+import { sensitiveActionRequest } from "./sensitive-action-request";
 import { friendlyMessage } from "../../../packages/business-rules/src/friendly-message";
 import React, { createContext, useContext, useEffect, useRef } from "react";
 import {
@@ -49,7 +54,11 @@ export function ProductArt({
           style={{ width: "100%", height: "100%", objectFit: "contain" }}
         />
       ) : product.asset === "gas" ? (
-        <Flame size={large ? 100 : 66} strokeWidth={1.6} aria-label="Cooking gas" />
+        <Flame
+          size={large ? 100 : 66}
+          strokeWidth={1.6}
+          aria-label="Cooking gas"
+        />
       ) : product.asset === "cylinder" ? (
         <img
           src="/assets/cylinder-illustration.png"
@@ -125,8 +134,15 @@ export function Empty({
     </div>
   );
 }
-export function Loading({ page = false, label = "Loading information" }: { page?: boolean; label?: string } = {}) {
-  return <div className={page ? "loading loading--page" : "loading"}><EasyGasLoader variant="section" label={label} /></div>;
+export function Loading({
+  page = false,
+  label = "Loading information",
+}: { page?: boolean; label?: string } = {}) {
+  return (
+    <div className={page ? "loading loading--page" : "loading"}>
+      <EasyGasLoader variant="section" label={label} />
+    </div>
+  );
 }
 export function Notice({
   message,
@@ -168,14 +184,32 @@ export function Modal({
   busyRef.current = busy;
   const dialog = useRef<HTMLElement>(null);
   const closing = useRef(false);
-  const lifecycle = useRef<AbortController|null>(null);
+  const lifecycle = useRef<AbortController | null>(null);
   async function close() {
-    if (closing.current || busyRef.current || dialog.current?.querySelector('[data-submit-pending="true"]') || appDialogActive()) return;
+    if (
+      closing.current ||
+      busyRef.current ||
+      dialog.current?.querySelector('[data-submit-pending="true"]') ||
+      appDialogActive()
+    )
+      return;
     closing.current = true;
     if (
       dialog.current?.querySelector('[data-unsaved="true"]') &&
-      !(await confirmAction("Your changes have not been saved. Keep editing to preserve them, or discard them to close this form.", { title: "Discard unsaved changes?", confirmLabel: "Discard changes", cancelLabel: "Keep editing", destructive: true, signal: lifecycle.current?.signal }))
-    ) { closing.current = false; return; }
+      !(await confirmAction(
+        "Your changes have not been saved. Keep editing to preserve them, or discard them to close this form.",
+        {
+          title: "Discard unsaved changes?",
+          confirmLabel: "Discard changes",
+          cancelLabel: "Keep editing",
+          destructive: true,
+          signal: lifecycle.current?.signal,
+        },
+      ))
+    ) {
+      closing.current = false;
+      return;
+    }
     closing.current = false;
     onClose();
   }
@@ -189,7 +223,11 @@ export function Modal({
         dialog.current?.querySelectorAll<HTMLElement>(
           "button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), a[href]",
         ) ?? [],
-      ).filter(element => element.getClientRects().length > 0 && !element.closest("[hidden], [inert]"));
+      ).filter(
+        (element) =>
+          element.getClientRects().length > 0 &&
+          !element.closest("[hidden], [inert]"),
+      );
     targets()[0]?.focus();
     const key = (event: KeyboardEvent) => {
       if (appDialogActive()) return;
@@ -219,7 +257,10 @@ export function Modal({
     };
   }, []);
   return (
-    <div className={className ? `modal-backdrop ${className}` : "modal-backdrop"} onClick={close}>
+    <div
+      className={className ? `modal-backdrop ${className}` : "modal-backdrop"}
+      onClick={close}
+    >
       <section
         ref={dialog}
         className="modal"
@@ -239,7 +280,9 @@ export function Modal({
             <X />
           </button>
         </div>
-        <ModalCloseContext.Provider value={close}>{children}</ModalCloseContext.Provider>
+        <ModalCloseContext.Provider value={close}>
+          {children}
+        </ModalCloseContext.Provider>
       </section>
     </div>
   );
@@ -249,15 +292,90 @@ export async function api(
   data?: any,
   options?: { signal?: AbortSignal },
 ) {
+  // Snapshot once: verification must never replay later edits or a different key.
+  const body = data === undefined ? undefined : JSON.stringify(data);
+  if (
+    [
+      "reauth",
+      "login",
+      "register",
+      "logout",
+      "driver.login",
+      "technician.login",
+      "me",
+    ].includes(action.split("?")[0])
+  )
+    return requestApi(action, body, options);
+  const href = window.location.href;
+  let expectedContext: string | undefined;
+  const current = () =>
+    !options?.signal?.aborted && window.location.href === href;
+  return sensitiveActionRequest({
+    send: () => requestApi(action, body, options, true, expectedContext),
+    identity: async (rejection: any) => {
+      const { user, verificationContext } = await requestApi(
+        "me",
+        undefined,
+        options,
+      );
+      if (
+        !verificationContext ||
+        (rejection && rejection.verificationContext !== verificationContext)
+      )
+        throw Object.assign(
+          new Error(
+            "Your session changed. Refresh and review this action before continuing.",
+          ),
+          { status: 409, code: "VERIFICATION_CONTEXT_CHANGED" },
+        );
+      expectedContext = verificationContext;
+      return JSON.stringify([
+        verificationContext,
+        user.id,
+        user.role,
+        user.branchId,
+      ]);
+    },
+    verify: () =>
+      requestSessionVerification(
+        (password) =>
+          requestApi("reauth", JSON.stringify({ password }), options, false),
+        options?.signal,
+      ),
+    current,
+  });
+}
+async function requestApi(
+  action: string,
+  body?: string,
+  options?: { signal?: AbortSignal },
+  notify = true,
+  verificationContext?: string,
+) {
   const response = await fetch(
     `/api/${action}`,
-    data === undefined
-      ? { cache: "no-store", signal: options?.signal }
+    body === undefined
+      ? {
+          cache: "no-store",
+          signal: options?.signal,
+          ...(verificationContext
+            ? {
+                headers: {
+                  "X-Easygas-Verification-Context": verificationContext,
+                },
+              }
+            : {}),
+        }
       : {
           method: "POST",
           signal: options?.signal,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+            ...(verificationContext
+              ? { "X-Easygas-Verification-Context": verificationContext }
+              : {}),
+          },
+          body,
         },
   );
   const result = await response.json();
@@ -270,10 +388,15 @@ export async function api(
     if (path.startsWith("/admin")) window.location.assign("/login");
   }
   if (!response.ok)
-    throw Object.assign(new Error(friendlyMessage(result.error ?? "Something went wrong.")), {
-      status: response.status,
-      code: result.code,
-    });
-  if (data !== undefined) window.dispatchEvent(new Event("easygas:committed"));
+    throw Object.assign(
+      new Error(friendlyMessage(result.error ?? "Something went wrong.")),
+      {
+        status: response.status,
+        code: result.code,
+        verificationContext: result.verificationContext,
+      },
+    );
+  if (body !== undefined && notify)
+    window.dispatchEvent(new Event("easygas:committed"));
   return result;
 }

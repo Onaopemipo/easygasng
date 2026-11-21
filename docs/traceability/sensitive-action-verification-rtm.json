@@ -1,0 +1,265 @@
+{
+  "phase": "Whole-web sensitive action password verification audit",
+  "productionDecision": "Existing production NO-GO and native/provider/physical/import/retain-all holds unchanged",
+  "requirements": [
+    {
+      "id": "SVERIFY-01",
+      "requirement": "Inventory every recent-password guarded action and its browser entry points",
+      "priority": "P1",
+      "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
+      "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
+      "route": [
+        "/admin",
+        "/account"
+      ],
+      "implementationFiles": [
+        "apps/web/components/ui.tsx",
+        "apps/web/components/app-dialog.tsx",
+        "apps/web/components/sensitive-action-request.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
+      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "testFiles": [
+        "tests/sensitive-action-verification.test.ts",
+        "tests/sensitive-action-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "SVERIFY-CANCEL",
+        "SVERIFY-ROLES"
+      ],
+      "evidence": [],
+      "acceptanceGate": "SVERIFY-G01",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Shared recovery implemented; full acceptance and deployment pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Audit, implement, test, deploy and document"
+    },
+    {
+      "id": "SVERIFY-02",
+      "requirement": "Recover missing password verification through an accessible shared dialog",
+      "priority": "P0",
+      "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
+      "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
+      "route": [
+        "/admin",
+        "/account"
+      ],
+      "implementationFiles": [
+        "apps/web/components/ui.tsx",
+        "apps/web/components/app-dialog.tsx",
+        "apps/web/components/sensitive-action-request.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
+      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "testFiles": [
+        "tests/sensitive-action-verification.test.ts",
+        "tests/sensitive-action-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "SVERIFY-CANCEL",
+        "SVERIFY-ROLES"
+      ],
+      "evidence": [],
+      "acceptanceGate": "SVERIFY-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Shared recovery implemented; full acceptance and deployment pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Audit, implement, test, deploy and document"
+    },
+    {
+      "id": "SVERIFY-03",
+      "requirement": "Preserve request, credentials, cancellation, identity and replay safety",
+      "priority": "P0",
+      "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
+      "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
+      "route": [
+        "/admin",
+        "/account"
+      ],
+      "implementationFiles": [
+        "apps/web/components/ui.tsx",
+        "apps/web/components/app-dialog.tsx",
+        "apps/web/components/sensitive-action-request.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
+      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "testFiles": [
+        "tests/sensitive-action-verification.test.ts",
+        "tests/sensitive-action-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "SVERIFY-CANCEL",
+        "SVERIFY-ROLES"
+      ],
+      "evidence": [],
+      "acceptanceGate": "SVERIFY-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Shared recovery implemented; full acceptance and deployment pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Audit, implement, test, deploy and document"
+    },
+    {
+      "id": "SVERIFY-04",
+      "requirement": "Test canonical roles and exception cases against actual service controls",
+      "priority": "P0",
+      "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
+      "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
+      "route": [
+        "/admin",
+        "/account"
+      ],
+      "implementationFiles": [
+        "apps/web/components/ui.tsx",
+        "apps/web/components/app-dialog.tsx",
+        "apps/web/components/sensitive-action-request.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
+      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "testFiles": [
+        "tests/sensitive-action-verification.test.ts",
+        "tests/sensitive-action-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "SVERIFY-CANCEL",
+        "SVERIFY-ROLES"
+      ],
+      "evidence": [],
+      "acceptanceGate": "SVERIFY-G04",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Shared recovery implemented; full acceptance and deployment pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Audit, implement, test, deploy and document"
+    },
+    {
+      "id": "SVERIFY-05",
+      "requirement": "Deploy exact source and verify hosted roles and responsive UI",
+      "priority": "P1",
+      "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
+      "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
+      "route": [
+        "/admin",
+        "/account"
+      ],
+      "implementationFiles": [
+        "apps/web/components/ui.tsx",
+        "apps/web/components/app-dialog.tsx",
+        "apps/web/components/sensitive-action-request.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
+      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "testFiles": [
+        "tests/sensitive-action-verification.test.ts",
+        "tests/sensitive-action-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "SVERIFY-CANCEL",
+        "SVERIFY-ROLES"
+      ],
+      "evidence": [],
+      "acceptanceGate": "SVERIFY-G05",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Shared recovery implemented; full acceptance and deployment pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Audit, implement, test, deploy and document"
+    },
+    {
+      "id": "SVERIFY-06",
+      "requirement": "Update illustrated user guidance and preserve all prior production holds",
+      "priority": "P1",
+      "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
+      "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
+      "route": [
+        "/admin",
+        "/account"
+      ],
+      "implementationFiles": [
+        "apps/web/components/ui.tsx",
+        "apps/web/components/app-dialog.tsx",
+        "apps/web/components/sensitive-action-request.ts",
+        "apps/web/app/api/[action]/route.ts"
+      ],
+      "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
+      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "testFiles": [
+        "tests/sensitive-action-verification.test.ts",
+        "tests/sensitive-action-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "SVERIFY-CANCEL",
+        "SVERIFY-ROLES"
+      ],
+      "evidence": [],
+      "acceptanceGate": "SVERIFY-G06",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Shared recovery implemented; full acceptance and deployment pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Audit, implement, test, deploy and document"
+    }
+  ],
+  "gates": [
+    {
+      "id": "SVERIFY-G01",
+      "description": "Inventory every recent-password guarded action and its browser entry points",
+      "status": "PENDING",
+      "reason": "Acceptance not executed"
+    },
+    {
+      "id": "SVERIFY-G02",
+      "description": "Recover missing password verification through an accessible shared dialog",
+      "status": "PENDING",
+      "reason": "Acceptance not executed"
+    },
+    {
+      "id": "SVERIFY-G03",
+      "description": "Preserve request, credentials, cancellation, identity and replay safety",
+      "status": "PENDING",
+      "reason": "Acceptance not executed"
+    },
+    {
+      "id": "SVERIFY-G04",
+      "description": "Test canonical roles and exception cases against actual service controls",
+      "status": "PENDING",
+      "reason": "Acceptance not executed"
+    },
+    {
+      "id": "SVERIFY-G05",
+      "description": "Deploy exact source and verify hosted roles and responsive UI",
+      "status": "PENDING",
+      "reason": "Acceptance not executed"
+    },
+    {
+      "id": "SVERIFY-G06",
+      "description": "Update illustrated user guidance and preserve all prior production holds",
+      "status": "PENDING",
+      "reason": "Acceptance not executed"
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 0,
+      "total": 6
+    },
+    "gates": {
+      "passed": 0,
+      "total": 6
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-22",
+      "change": "Registered entire web-sensitive-action audit. Existing fleet fix retained; no prior requirement or production hold removed."
+    }
+  ]
+}

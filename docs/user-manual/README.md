@@ -50,3 +50,5 @@ Native mobile Orders repair (21 November): [preview instructions and acceptance 
 Current sequential mobile acceptance (21 November): [role testing and corrected behaviour](mobile-device-acceptance.md). Covers customer/commercial refunds, independent staff review, seven native component observations, seven repairs, theme and evidence-state corrections, exact older-record selection and hosted-preview restoration. No new native binary or launch waiver.
 
 Driver assignment readiness (21 November): [current Orders/Deliveries instructions and blocker resolutions](driver-assignment.md). Exact trip/vehicle/branch/availability/capacity guidance, eligible-only selection and refresh preserve final canonical guards. Verification/rollout evidence is recorded in the linked phase matrix; historical Word/PDF artifacts retained.
+
+Sensitive actions: [current password verification and recovery](sensitive-action-verification.md). Covers the shared dialog, cancellation, expiry, session changes and role/branch restrictions.

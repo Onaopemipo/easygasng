@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { reviewedSensitiveVerificationSourceHash } from './reviewed-sensitive-verification-source.mjs';
 export async function reviewedFleetVerificationSourceHash(file, incoming) {
   const review = JSON.parse(
     await readFile(
@@ -12,7 +13,7 @@ export async function reviewedFleetVerificationSourceHash(file, incoming) {
   assert.deepEqual(Object.keys(review.files), [
     "apps/web/components/operations-completion.tsx",
   ]);
-  if (!review.files[file]) return incoming;
+  if (!review.files[file]) return reviewedSensitiveVerificationSourceHash(file, incoming);
   assert.equal(
     incoming,
     review.baseline[file],
@@ -25,5 +26,5 @@ export async function reviewedFleetVerificationSourceHash(file, incoming) {
     incoming,
     file + " retained committed source",
   );
-  return review.files[file];
+  return reviewedSensitiveVerificationSourceHash(file, review.files[file]);
 }

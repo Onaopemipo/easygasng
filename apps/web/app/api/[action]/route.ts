@@ -148,6 +148,17 @@ async function handle(
     ? req.headers.get("authorization")!.slice(7)
     : (req.cookies.get("easygas_session")?.value ?? null);
   try {
+    const expectedContext = req.headers.get("x-easygas-verification-context");
+    if (
+      expectedContext &&
+      (!sessionToken ||
+        expectedContext !== digest("verification:" + sessionToken))
+    )
+      throw new AppError(
+        sessionToken ? 409 : 401,
+        "Your session changed. Refresh and review this action before continuing.",
+        sessionToken ? "VERIFICATION_CONTEXT_CHANGED" : "UNAUTHENTICATED",
+      );
     if (req.method === "POST") {
       assertRequestOrigin(req);
       if (req.headers.get("content-type")?.split(";")[0] !== "application/json")
@@ -265,15 +276,29 @@ async function handle(
       sessionToken,
       Object.fromEntries(req.nextUrl.searchParams),
     );
-    return NextResponse.json(data, {
-      headers:
-        ["documents.list", "orders", "dispatch.centre", "incidents", "checkout.payment-options"].includes(action)
+    return NextResponse.json(
+      action === "me" && sessionToken
+        ? {
+            ...data,
+            // An opaque comparison marker, never a credential or an authorisation grant.
+            verificationContext: digest("verification:" + sessionToken),
+          }
+        : data,
+      {
+        headers: [
+          "documents.list",
+          "orders",
+          "dispatch.centre",
+          "incidents",
+          "checkout.payment-options",
+        ].includes(action)
           ? {
               "Cache-Control": "private, no-store, max-age=0",
               Vary: "Cookie, Authorization",
             }
           : { "Cache-Control": "no-store" },
-    });
+      },
+    );
   } catch (e) {
     if (e instanceof ZodError)
       return NextResponse.json(
@@ -282,7 +307,13 @@ async function handle(
       );
     if (e instanceof AppError)
       return NextResponse.json(
-        { error: e.message, code: e.code },
+        {
+          error: e.message,
+          code: e.code,
+          ...(e.code === "REAUTH_REQUIRED" && sessionToken
+            ? { verificationContext: digest("verification:" + sessionToken) }
+            : {}),
+        },
         { status: e.status },
       );
     if (e instanceof SyntaxError)
