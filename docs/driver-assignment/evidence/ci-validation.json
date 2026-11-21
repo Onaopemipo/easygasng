@@ -1,0 +1,306 @@
+{
+  "checkedAt": "2026-11-21T12:36:26.078Z",
+  "initialSource": {
+    "sourceCommit": "45ddc02a88a0e20965132c12ceaae7b78d934a92",
+    "runId": 44902632931,
+    "status": "PASS",
+    "tests": {
+      "total": 1158,
+      "pass": 1158,
+      "fail": 0,
+      "skip": 0
+    },
+    "totals": [
+      "2026-11-21T12:26:21.8048758Z # tests 1158",
+      "2026-11-21T12:26:21.8049073Z # pass 1158",
+      "2026-11-21T12:26:21.8049219Z # fail 0",
+      "2026-11-21T12:26:21.8049549Z # skipped 0"
+    ],
+    "jobs": [
+      {
+        "id": 136841550523,
+        "name": "web",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Initialize containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run sudo apt-get update && sudo apt-get install -y postgresql-client-16",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run echo /usr/lib/postgresql/16/bin >> \"$GITHUB_PATH\"",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --prefix apps/mobile --ignore-scripts",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned native component test renderer",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run web regression tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run build > artifacts/build.txt 2>&1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run typecheck > artifacts/types.txt 2>&1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm audit --omit=dev --audit-level=high > artifacts/dependency-audit.txt 2>&1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Stop containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 136841550790,
+        "name": "native",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run typecheck",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run test:dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npx expo export --platform all --output-dir ../../artifacts/native",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run npm audit --omit=dev --audit-level=moderate",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "finalSource": {
+    "sourceCommit": "64c9bb4aa88e4cc9a267a43e18ac813697619e00",
+    "runId": 44903365473,
+    "status": "PASS",
+    "tests": {
+      "total": 1158,
+      "pass": 1158,
+      "fail": 0,
+      "skip": 0
+    },
+    "totals": [
+      "2026-11-21T12:35:00.3119891Z # tests 1158",
+      "2026-11-21T12:35:00.3120207Z # pass 1158",
+      "2026-11-21T12:35:00.3120362Z # fail 0",
+      "2026-11-21T12:35:00.3120662Z # skipped 0"
+    ],
+    "jobs": [
+      {
+        "id": 136843742121,
+        "name": "web",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Initialize containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run sudo apt-get update && sudo apt-get install -y postgresql-client-16",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run echo /usr/lib/postgresql/16/bin >> \"$GITHUB_PATH\"",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --prefix apps/mobile --ignore-scripts",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pinned native component test renderer",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run web regression tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run build > artifacts/build.txt 2>&1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run typecheck > artifacts/types.txt 2>&1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm audit --omit=dev --audit-level=high > artifacts/dependency-audit.txt 2>&1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Stop containers",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 136843742364,
+        "name": "native",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run typecheck",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run test:dependencies",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npx expo export --platform all --output-dir ../../artifacts/native",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Run npm audit --omit=dev --audit-level=moderate",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "newMobileExports": 0
+}

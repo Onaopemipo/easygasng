@@ -1,0 +1,110 @@
+{
+  "sourceCommit": "64c9bb4aa88e4cc9a267a43e18ac813697619e00",
+  "deploymentId": "dpl_cF8LLJJK9N1rmP3Gd1pKB9biFpFs",
+  "base": "https://easygas-client-demo.vercel.app",
+  "status": "PASS",
+  "businessWrites": 0,
+  "observations": [
+    {
+      "id": "DASSIGN-UI-ORDERS",
+      "status": "PASS",
+      "sourceCommit": "64c9bb4aa88e4cc9a267a43e18ac813697619e00",
+      "requirements": [
+        "DRIVER_UNAVAILABLE",
+        "DRIVER_TRIP_REQUIRED"
+      ],
+      "branch": "Lagos",
+      "eligible": 0,
+      "total": 3,
+      "submitDisabled": true,
+      "geometry": {
+        "dialogBottom": 874,
+        "documentWidth": 1728,
+        "noticeTop": 916,
+        "viewportWidth": 1728
+      },
+      "screenshot": "docs/driver-assignment/evidence/orders-desktop-light.jpg"
+    },
+    {
+      "id": "DASSIGN-UI-REFRESH",
+      "status": "PASS",
+      "noteRetained": true,
+      "submitDisabled": true
+    },
+    {
+      "id": "DASSIGN-UI-PHONE",
+      "status": "PASS",
+      "hasExactRequirement": true,
+      "hasResolution": true,
+      "submitDisabled": true,
+      "geometry": {
+        "dialogBottom": 708,
+        "dialogClientWidth": 366,
+        "dialogScrollWidth": 366,
+        "dialogWidth": 366,
+        "documentWidth": 390,
+        "noticeTop": 774,
+        "viewportWidth": 390
+      },
+      "screenshot": "docs/driver-assignment/evidence/orders-phone-dark.jpg"
+    },
+    {
+      "id": "DASSIGN-UI-HELP",
+      "status": "PASS",
+      "details": "Owner help link navigated to /admin/deliveries#driver-fleet, selected Operations view and opened Driver trips, vehicle and fuel records. Register vehicle visible; no submission."
+    },
+    {
+      "id": "DASSIGN-UI-DISPATCH",
+      "status": "PASS",
+      "details": "Synthetic order EG-2026-027A088D opened through Dispatch Queue on19 November. Exact shared branch/availability/trip guidance, disabled radios and disabled Confirm manual assignment. Refresh retained the unsaved synthetic reason and kept confirmation disabled."
+    },
+    {
+      "id": "DASSIGN-UI-DISPATCH-PHONE",
+      "status": "PASS",
+      "details": "390x844 viewport: blocked confirmation bottom703.87px, demo notice top774px; no horizontal overflow. Screenshot reviewed; no assignment submitted."
+    },
+    {
+      "id": "DASSIGN-UI-CLEANUP",
+      "status": "PASS",
+      "details": "QA owner signed out to /login with Login / Sign Up visible. Initial light theme and normal viewport restored. Separate existing IAB customer session not changed."
+    }
+  ],
+  "console": {
+    "entries": [
+      {
+        "level": "error",
+        "message": "Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received",
+        "timestamp": "2026-11-21T12:19:53.372Z",
+        "url": "https://easygas-client-demo.vercel.app/admin/orders?orderId=35851409-2e39-43d2-ba7d-b7e9019479f8"
+      },
+      {
+        "level": "error",
+        "message": "grm ERROR [RenderWithStyles] ░░ Couldn't load style link [href: chrome-extension://kbfnbcaeplbcioakkpcpgfkobkghlhen/src/css/cheetah.styles.css] t",
+        "timestamp": "2026-11-21T12:29:20.991Z",
+        "url": "chrome-extension://kbfnbcaeplbcioakkpcpgfkobkghlhen/src/js/Grammarly.js"
+      },
+      {
+        "level": "error",
+        "message": "grm ERROR [RenderWithStyles] ░░ Couldn't load style link [href: chrome-extension://kbfnbcaeplbcioakkpcpgfkobkghlhen/src/css/cheetah.styles.css] t",
+        "timestamp": "2026-11-21T12:29:20.991Z",
+        "url": "chrome-extension://kbfnbcaeplbcioakkpcpgfkobkghlhen/src/js/Grammarly.js"
+      },
+      {
+        "level": "error",
+        "message": "grm ERROR [RenderWithStyles] ░░ Couldn't load style link [href: chrome-extension://kbfnbcaeplbcioakkpcpgfkobkghlhen/src/css/cheetah.styles.css] t",
+        "timestamp": "2026-11-21T12:29:22.037Z",
+        "url": "chrome-extension://kbfnbcaeplbcioakkpcpgfkobkghlhen/src/js/Grammarly.js"
+      }
+    ],
+    "assessment": "Three Grammarly extension stylesheet errors and one browser listener/message-channel diagnostic observed. No application exception or failed assignment-read interaction observed; generic listener provenance is not established as an application defect."
+  },
+  "screenshots": [
+    "orders-desktop-light.jpg",
+    "orders-phone-dark.jpg",
+    "orders-phone-action.jpg",
+    "dispatch-desktop-light.jpg",
+    "dispatch-phone-action.jpg"
+  ],
+  "screenshotNote": "Phone Orders screenshot first attempt used viewport coordinates for a document-relative clip while page scrolled; replaced by inspected full viewport capture. This was a screenshot crop issue, not a product defect.",
+  "completedAt": "2026-11-21T12:29:48.772Z"
+}

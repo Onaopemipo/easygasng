@@ -365,3 +365,6 @@ PASS means the named bounded evidence passed, not independent physical/native/pr
 | DDI-G24 | OPEN | OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption. |
 | DDI-G25 | OPEN | OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption. |
 | DDI-G26 | OPEN | OPEN: full independent operational acceptance not supplied; bounded automated/local evidence does not pass this gate by assumption. |
+
+
+21 November bounded continuation: [DASSIGN-01–04](driver-assignment-rtm.md) passes exact assignment diagnostics and guarded UI rollout on the client demo. DDI-R06 receives the implementation and evidence mappings in the machine-readable matrix; its original PARTIAL status, all 84 scenarios and all 26 original gates remain. No complete hosted delivery, physical safety qualification or production acceptance is inferred.

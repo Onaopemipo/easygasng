@@ -16,6 +16,16 @@ Open **Assign Driver** (or the reassignment action), review the same readiness c
 
 ## What each blocker means
 
+The verified client-demo screens below show a driver with **two** independent requirements: availability is off and no vehicle trip is active. Resolve both, then refresh. A duty trip is separate from the driver’s availability switch.
+
+![Orders shows the exact missing requirements and resolution steps](../driver-assignment/evidence/orders-desktop-light.jpg)
+
+![Dispatch Centre uses the same driver readiness cards](../driver-assignment/evidence/dispatch-desktop-light.jpg)
+
+On a phone, scroll within the assignment panel. The confirmation stays disabled until an eligible driver is selected and the required note is supplied; the demo notice clears the action.
+
+![Phone assignment action remains blocked with the reason preserved](../driver-assignment/evidence/dispatch-phone-action.jpg)
+
 | Requirement | Who resolves it | Next step |
 | --- | --- | --- |
 | Driver has no active vehicle trip | Driver | Sign in as that driver, open **Home → Start trip**, select a suitable branch vehicle and enter the starting odometer. Location sharing is optional. Then dispatch refreshes eligibility. |
