@@ -114,6 +114,20 @@ export async function driverOperations(
       })
       .strict()
       .parse(input);
+    // Serialize starts for this driver as well as the selected vehicle. A new
+    // operation key must not turn an existing trip into a database error.
+    await tx.query("SELECT id FROM users WHERE id=$1 FOR UPDATE", [user.id]);
+    if (
+      await one(
+        tx,
+        "SELECT id FROM driver_trips WHERE driver_id=$1 AND ended_at IS NULL",
+        [user.id],
+      )
+    )
+      throw new AppError(
+        409,
+        "You already have an active duty trip. Open Manage trip to review it, or reconcile and end it before starting another.",
+      );
     const v = await one(
       tx,
       "SELECT v.* FROM driver_vehicles v JOIN branches b ON b.id=v.branch_id AND b.active=true WHERE v.id=$1 AND v.active=true FOR UPDATE OF v",
@@ -123,6 +137,17 @@ export async function driverOperations(
       throw new AppError(
         409,
         "An active suitable vehicle in your branch is required.",
+      );
+    if (
+      await one(
+        tx,
+        "SELECT id FROM driver_trips WHERE vehicle_id=$1 AND ended_at IS NULL",
+        [v.id],
+      )
+    )
+      throw new AppError(
+        409,
+        "This vehicle is already on an active duty trip. Choose another vehicle, or ask dispatch to reconcile the existing trip before using it.",
       );
     const tid = id();
     await tx.query(

@@ -1,0 +1,654 @@
+{
+  "phase": "Fresh hosted full role order-to-delivery acceptance21November2026",
+  "productionDecision": "Production NO-GO, native/device/provider/physical/actual-import/retain-all holds unchanged",
+  "historicalMatrix": "docs/traceability/role-order-acceptance-rtm.json",
+  "requirements": [
+    {
+      "id": "ROD21-01",
+      "requirement": "Role identities, permitted navigation and customer/branch isolation",
+      "priority": "P0",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROD21-ACCESS"
+      ],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G01",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-02",
+      "requirement": "Start own driver trip, validate vehicle and availability prerequisites and assign a fresh synthetic order",
+      "priority": "P0",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROD21-TRIP-GUARDS"
+      ],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G02",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-03",
+      "requirement": "Deliver a fresh serialized product COD order and independently reconcile simulated cash",
+      "priority": "P0",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROD21-HANDOVER-GUARDS"
+      ],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G03",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-04",
+      "requirement": "Deliver a fresh wallet gas order with qualified inspection, independent LPG custody, metering and handover",
+      "priority": "P0",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROD21-GAS-GUARDS"
+      ],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G04",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-05",
+      "requirement": "Reject wrong roles, stale versions, forged/incomplete custody, proof and handover inputs without partial effects",
+      "priority": "P0",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROD21-HANDOVER-GUARDS"
+      ],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G05",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-06",
+      "requirement": "Fail, independently return, reschedule and complete a second delivery attempt without double charges or stock movement",
+      "priority": "P0",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROD21-FAILED"
+      ],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G06",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-07",
+      "requirement": "Validate unpaid/prepaid cancellation, payment tampering, refund decisions and immutable invoice corrections",
+      "priority": "P0",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROD21-PAYMENT"
+      ],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G07",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-08",
+      "requirement": "Verify actual customer, sales/dispatch, owner, inventory, finance, driver and technician interfaces at desktop and phone sizes",
+      "priority": "P1",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G08",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-09",
+      "requirement": "Investigate and fix any reproduced defects; deploy exact-source web/API fixes and reverify",
+      "priority": "P0",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "apps/web/lib/driver-operations.ts"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "DUPTRIP-VEHICLE"
+      ],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G09",
+      "status": "PARTIAL",
+      "reason": "Reproduced duplicate-trip500 and vehicle unique-constraint failures; added driver/vehicle serialized conflict409 guidance.30 focused tests and4 final trip/source/concurrency checks pass; web build/types pass; hosted release pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-10",
+      "requirement": "Reconcile run-owned orders, balances, stock, serials, custody and trips; preserve unrelated records and revoke own QA sessions",
+      "priority": "P0",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "ROD21-ACCESS"
+      ],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G10",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    },
+    {
+      "id": "ROD21-11",
+      "requirement": "Update illustrated user manual and stable requirements/evidence mapping without overriding production gates",
+      "priority": "P1",
+      "scope": "Full fresh synthetic hosted web order-to-delivery acceptance continuation; existing roles/accounts/APIs only; no native binary, real goods/funds/travel/certification or live provider transaction. Safety renewal requires separately current explicit approval.",
+      "uiReference": "User request21November2026 including actual trip start, assignment, delivery and exceptions",
+      "route": [
+        "/",
+        "/orders",
+        "/track",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/inventory",
+        "/admin/finance",
+        "/admin/reconciliation",
+        "/admin/credits"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "scripts/demo-role-acceptance-20261121-client.mjs",
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs"
+      ],
+      "dataSource": "Canonical hosted users/roles/branches, orders/attempts, invoices/payments/wallet, serial/gas inventory, trips/vehicles and qualified meter/custody records through normal product APIs and UI.",
+      "securityControl": "Scoped roles/ownership/branch, recent identity verification, independent custody/finance/qualification review, canonical state/version/idempotency and safety expiry controls remain enforced; only run-owned new orders mutate.",
+      "testFiles": [
+        "scripts/run-role-order-20261121.mjs",
+        "scripts/qa-role-order-20261121.mjs",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [
+        "docs/role-order-acceptance-20261121/evidence/preflight.json",
+        "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+        "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+        "docs/role-order-acceptance-20261121/evidence/fix-regression.txt",
+        "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
+      ],
+      "acceptanceGate": "ROD21-G11",
+      "status": "PARTIAL",
+      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
+      "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ROD21-G01",
+      "description": "Role identities, permitted navigation and customer/branch isolation",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G02",
+      "description": "Start own driver trip, validate vehicle and availability prerequisites and assign a fresh synthetic order",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G03",
+      "description": "Deliver a fresh serialized product COD order and independently reconcile simulated cash",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G04",
+      "description": "Deliver a fresh wallet gas order with qualified inspection, independent LPG custody, metering and handover",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G05",
+      "description": "Reject wrong roles, stale versions, forged/incomplete custody, proof and handover inputs without partial effects",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G06",
+      "description": "Fail, independently return, reschedule and complete a second delivery attempt without double charges or stock movement",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G07",
+      "description": "Validate unpaid/prepaid cancellation, payment tampering, refund decisions and immutable invoice corrections",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G08",
+      "description": "Verify actual customer, sales/dispatch, owner, inventory, finance, driver and technician interfaces at desktop and phone sizes",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G09",
+      "description": "Investigate and fix any reproduced defects; deploy exact-source web/API fixes and reverify",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G10",
+      "description": "Reconcile run-owned orders, balances, stock, serials, custody and trips; preserve unrelated records and revoke own QA sessions",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    },
+    {
+      "id": "ROD21-G11",
+      "description": "Update illustrated user manual and stable requirements/evidence mapping without overriding production gates",
+      "status": "OPEN",
+      "reason": "Fresh acceptance pending."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 0,
+      "total": 11
+    },
+    "gates": {
+      "passed": 0,
+      "total": 11
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Registered user-authorised fresh full hosted pass. Includes trip start and assignment business writes on new labelled synthetic orders. Historical19November evidence not overwritten or reused as current acceptance; temporary renewals not automatically extended."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Actual trip start and independent dispatcher assignment succeeded. Found duplicate active trip500; reproduced both driver and vehicle conflict failures locally. Fixed with serialized checks preserving unique constraints and idempotency. Approved single QA safety window13:08:06.517Z\u201315:08:06.520Z; hosted expired qualification and calibration negative checks passed before renewal. Initial operator settings query lacked scope and driver.snapshot projection assumption was corrected; failed harness logs retained separately."
+    }
+  ]
+}

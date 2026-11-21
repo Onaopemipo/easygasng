@@ -1,0 +1,79 @@
+{
+  "reference": "EG-2026-6928994E",
+  "requirements": [
+    {
+      "code": "DRIVER_UNAVAILABLE",
+      "title": "Driver availability is off",
+      "resolution": "Confirm the driver is on duty, then update availability in Drivers if authorised, or select another available driver. Availability alone does not start a trip.",
+      "responsible": "Dispatch / authorised staff",
+      "help": "drivers"
+    },
+    {
+      "code": "DRIVER_TRIP_REQUIRED",
+      "title": "Driver has no active vehicle trip",
+      "resolution": "The driver must sign in, open Home → Start trip, choose an active LPG-suitable vehicle in this order’s branch, and enter the starting odometer. If no vehicle is offered, ask the business owner to review the branch’s vehicles. Then refresh this check.",
+      "responsible": "Driver",
+      "help": "fleet"
+    }
+  ],
+  "rejected": [
+    {
+      "role": "owner",
+      "action": "trip.start",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "manager",
+      "action": "trip.start",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "technician",
+      "action": "trip.start",
+      "status": 403,
+      "message": "This session is limited to assigned technician service work. Payments, approvals, sales and stock administration require authorised operations.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "action": "trip.start",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "driver",
+      "action": "trip.start",
+      "status": 400,
+      "message": "Too small: expected number to be >=0"
+    },
+    {
+      "role": "driver",
+      "action": "trip.start",
+      "status": 409,
+      "message": "An active suitable vehicle in your branch is required.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "dispatcher",
+      "action": "dispatch.assign",
+      "status": 409,
+      "message": "Driver availability is off; choose an available driver.",
+      "code": "INVALID_REQUEST"
+    }
+  ],
+  "before": {
+    "order": "55a06f49fab45ac4cf12a77dc40162658d56ae43403005fecb2c60975adaa2fa",
+    "inventory": "5c0caf2a590b3539b0b662cc811d0402383614a7114e435adecd9b861478ce3e",
+    "ledger": "1b36c6ada56c65ef8b8c9e688cefe5e8991cd603038ef152e73ba0108c737f1f"
+  },
+  "after": {
+    "order": "55a06f49fab45ac4cf12a77dc40162658d56ae43403005fecb2c60975adaa2fa",
+    "inventory": "5c0caf2a590b3539b0b662cc811d0402383614a7114e435adecd9b861478ce3e",
+    "ledger": "1b36c6ada56c65ef8b8c9e688cefe5e8991cd603038ef152e73ba0108c737f1f"
+  }
+}

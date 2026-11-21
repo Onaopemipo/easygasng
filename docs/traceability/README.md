@@ -370,3 +370,5 @@ Production blocker reconciliation verified (21 November): [matrix](blocker-recon
 Web transparent logo (21 November 2026): [matrix](web-transparent-logo-rtm.md) and [report](../web-transparent-logo/README.md). Existing approved alpha artwork reused; web logo backplates removed with inverse rendering on dark/fixed-green surfaces. Verification and hosted rollout status recorded in the phase matrix; no native build or production release implied.
 
 21 November actionable driver assignment: [four-requirement matrix](driver-assignment-rtm.md), [verified release report](../driver-assignment/README.md) and [illustrated manual](../user-manual/driver-assignment.md). Four bounded gates pass with actual desktop/phone Orders and Dispatch UI, seven-role hosted read checks and isolated positive/negative final transactions. Original DDI and production NO-GO remain separate.
+
+Fresh full hosted role acceptance (21 November): [matrix](role-order-acceptance-20261121-rtm.md). Includes actual synthetic trip start, assignment, gas/product delivery, exceptions, independent reconciliation and UI; all eleven requirements/gates retained from registration.

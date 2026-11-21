@@ -1,0 +1,76 @@
+EasyGas incident diagnostic {
+  reference: 'fc270f42-fd19-4d9f-8252-e8d5881a0c23',
+  action: 'trip.start',
+  sqlState: '23505'
+}
+✖ DUPTRIP-ACTIVE: a second driver trip has an actionable409 and preserves the original trip and idempotent replay (1126.600083ms)
+EasyGas incident diagnostic {
+  reference: '378d02cb-7161-426a-b9f3-6dac01f81af5',
+  action: 'trip.start',
+  sqlState: '23505'
+}
+✖ DUPTRIP-VEHICLE: a vehicle already on another active trip gives409 without exposing the other driver or changing custody (863.937167ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2680.511667
+
+✖ failing tests:
+
+test at tests/driver-trip-conflicts.test.ts:1:988
+✖ DUPTRIP-ACTIVE: a second driver trip has an actionable409 and preserves the original trip and idempotent replay (1126.600083ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  error: duplicate key value violates unique constraint "driver_active_trip"
+      at async TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/driver-trip-conflicts.test.ts:19:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: error: duplicate key value violates unique constraint "driver_active_trip"
+        at ye.Ve (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:17616)
+        at ye.nt (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:15003)
+        at ye.parse (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:13755)
+        at <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/index.js:3:191801)
+        at wasm://wasm/021cbcb2:wasm-function[3707]:0x27cef1
+        at wasm://wasm/021cbcb2:wasm-function[3717]:0x27d268
+        at wasm://wasm/021cbcb2:wasm-function[9494]:0x509d72
+        at wasm://wasm/021cbcb2:wasm-function[175]:0x598a3
+        at invoke_v (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/index.js:3:176458)
+        at wasm://wasm/021cbcb2:wasm-function[178]:0x5a0e8,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/driver-trip-conflicts.test.ts:1:1870
+✖ DUPTRIP-VEHICLE: a vehicle already on another active trip gives409 without exposing the other driver or changing custody (863.937167ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  error: duplicate key value violates unique constraint "vehicle_active_trip"
+      at async TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/driver-trip-conflicts.test.ts:27:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: error: duplicate key value violates unique constraint "vehicle_active_trip"
+        at ye.Ve (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:17616)
+        at ye.nt (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:15003)
+        at ye.parse (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:13755)
+        at <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/index.js:3:191801)
+        at wasm://wasm/021cbcb2:wasm-function[3707]:0x27cef1
+        at wasm://wasm/021cbcb2:wasm-function[3717]:0x27d268
+        at wasm://wasm/021cbcb2:wasm-function[9494]:0x509d72
+        at wasm://wasm/021cbcb2:wasm-function[175]:0x598a3
+        at invoke_v (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/index.js:3:176458)
+        at wasm://wasm/021cbcb2:wasm-function[178]:0x5a0e8,
+    operator: 'rejects',
+    diff: 'simple'
+  }

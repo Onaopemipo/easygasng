@@ -1,0 +1,140 @@
+{
+  "results": [
+    {
+      "role": "customer",
+      "action": "invoice.order",
+      "status": 404,
+      "message": "Order not found.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "action": "navigation.access",
+      "status": 403,
+      "message": "This account does not have administration workspace access.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "commercial",
+      "action": "invoice.order",
+      "status": 404,
+      "message": "Order not found.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "commercial",
+      "action": "navigation.access",
+      "status": 403,
+      "message": "This account does not have administration workspace access.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "sales",
+      "action": "finance.ledger",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "dispatcher",
+      "action": "finance.ledger",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "driver",
+      "action": "finance.ledger",
+      "status": 403,
+      "message": "This session is limited to delivery work. Contact dispatch for sales, cash, stock or financial changes.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "technician",
+      "action": "finance.ledger",
+      "status": 403,
+      "message": "This session is limited to assigned technician service work. Payments, approvals, sales and stock administration require authorised operations.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "action": "checkout",
+      "status": 409,
+      "message": "Insufficient wallet balance. Top up your wallet or choose Card or Cash.",
+      "code": "WALLET_INSUFFICIENT_FUNDS"
+    },
+    {
+      "role": "customer",
+      "action": "checkout",
+      "status": 409,
+      "message": "The quotation changed. Review and accept the revised total.",
+      "code": "PRICE_CHANGED"
+    },
+    {
+      "role": "owner",
+      "action": "credit.decide",
+      "status": 403,
+      "message": "A different finance approver must verify the credit.",
+      "code": "INVALID_REQUEST"
+    }
+  ],
+  "fundingRequest": "f3c0cdcf-ec35-4396-9686-93e1b028d657",
+  "labelledOrders": {
+    "abandoned-card": {
+      "id": "cd1769aa-fba7-43a0-b7b3-35fb4e427e02",
+      "reference": "EG-2026-185AED4E",
+      "stockBefore": [
+        {
+          "branch_id": "lagos",
+          "branch": "Lagos",
+          "product_id": null,
+          "name": "Cooking Gas (kg)",
+          "sku": "GAS-KG",
+          "asset": "gas",
+          "size_kg": null,
+          "category": "Gas",
+          "eligible": "5979000",
+          "reserved": "35500",
+          "available": "5943500",
+          "held": "0",
+          "threshold": null,
+          "unit": "grams",
+          "family": "gas",
+          "on_hand": "5979000"
+        }
+      ]
+    }
+  },
+  "checks": [
+    {
+      "id": "ROD21-PREFLIGHT",
+      "passed": true,
+      "detail": "Thirteen labelled identities authenticated; actual canonical roles mapped; baseline retained privately before any new business mutation.",
+      "at": "2026-11-21T12:58:16.706Z"
+    },
+    {
+      "id": "ROD21-ACCESS",
+      "passed": true,
+      "detail": "Own-account orders only; independent labelled operational accounts cannot access finance; driver scope excludes handover secrets",
+      "at": "2026-11-21T12:59:03.038Z"
+    },
+    {
+      "id": "ROD21-PAYMENT",
+      "passed": true,
+      "detail": "Insufficient balance and quote tampering rejected transactionally; orders, wallet and gas summary unchanged",
+      "at": "2026-11-21T12:59:23.967Z"
+    },
+    {
+      "id": "ROD21-CANCEL",
+      "passed": true,
+      "detail": "EG-2026-185AED4E: abandoned unpaid card order cancelled by its owner; reservation restored; cancellation replay has no extra effect",
+      "at": "2026-11-21T12:59:42.563Z"
+    },
+    {
+      "id": "ROD21-FUND",
+      "passed": true,
+      "detail": "₦50,000 explicitly synthetic QA credit approved independently; self-approval denied and decision replay posted one credit",
+      "at": "2026-11-21T12:59:50.725Z"
+    }
+  ]
+}

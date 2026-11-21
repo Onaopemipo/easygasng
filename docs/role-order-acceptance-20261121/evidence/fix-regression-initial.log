@@ -1,0 +1,57 @@
+✖ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (2985.895833ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (4.897333ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DASSIGN-REFRESH: actual readiness hook clears failed/stale snapshots and ignores late results after order/version changes (19.907125ms)
+✔ DASSIGN-SOURCE: historical proofs accept only the explicit six-file web continuation and reject changed baselines (454.465083ms)
+✔ DASSIGN-EXACT: missing trip, inactive account, availability, unsuitable/inactive/wrong-branch vehicle and trip have distinct resolutions (2516.431125ms)
+✔ DASSIGN-NEG: readiness probes preserve business state and deny other roles and branches; final assignment rechecks changed eligibility (1003.1775ms)
+✔ DASSIGN-CAPACITY: exact demand and approved limit are shown without allocating stock or ignoring extra vehicle custody (882.185208ms)
+✔ DASSIGN-UI: actual shared cards show exact blockers, responsible next steps, scoped help and disabled blocked drivers (6.122875ms)
+✔ DRVS-DATA: counts distinguish authoritative zero from missing, malformed or stale data (1.241041ms)
+✔ DRVS-CONTACT: foreground freshness cannot imply availability, GPS or trip consent (0.174709ms)
+✔ DRVS-NEXT: the next card only selects current assigned attempts, prioritises active handover and never mutates the source (1.319458ms)
+✔ DRVS-SCOPE: current attempt removal and branch revocation stay authoritative, and history never gains customer contacts (2862.775583ms)
+✔ DRVS-PRESERVED: historical business baselines retain explicitly reviewed notification and technician continuations (119.0715ms)
+✔ DUPTRIP-ACTIVE: a second driver trip has an actionable409 and preserves the original trip and idempotent replay (2915.395667ms)
+✔ DUPTRIP-CONCURRENT: independent PostgreSQL starts serialize both driver and vehicle conflicts (1177.907334ms)
+✔ DUPTRIP-VEHICLE: a vehicle already on another active trip gives409 without exposing the other driver or changing custody (938.509541ms)
+✔ OPS-T01: phone activation requires possession, preserves identity, expires/revokes, commits failed attempts and rejects replay (3001.5125ms)
+✔ OPS-T02: invoice notes need independent approval, never overwrite originals, invalidate stale requests and reject cross-customer access (1025.793667ms)
+✔ OPS-T03: trip capture is account scoped, replay safe, bounded to duty, and reports actual purchases separately (958.752792ms)
+✔ OPS-T04: proof photos are private, append-only, retain historical records and reject invalid image input (790.889959ms)
+✔ OPS-T05: messaging encrypts contents, rechecks consent, quarantines uncertain sends and authenticates/deduplicates callbacks (788.048792ms)
+✔ OPS-T06: GPS rejects impossible jumps and gaps; no distance-derived actual fuel claim (0.417625ms)
+✔ FIELD-GPS-02: fleet summary requires current accurate consented trip evidence and ignores future uploaded fixes (783.172916ms)
+✔ OPS-T07: enhanced dispatch requires a suitable active trip, records acknowledgement and rejects stale versions (815.817875ms)
+✔ OPS-T08: win-back uses true completed delivery timestamps, preserves low-data state and requires marketing consent (824.541542ms)
+✔ OPS-T09: doorstep review preserves original order, rejects driver-as-customer consent and never commits unverified van stock (763.709042ms)
+✔ OPS-T10: encrypted offline records reject tampering, wrong keys and cross-account decryption (7.164084ms)
+✔ OPS-T11: retain-all policy preserves expired proof bytes without widening access (744.236208ms)
+✔ TRK-17: independent PostgreSQL connections serialize final-capacity assignment and duplicate proof (3299.782208ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 28
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11449.536375
+
+✖ failing tests:
+
+test at tests/customer-traceability.test.ts:1:241
+✖ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (2985.895833ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(tests.includes(name))
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/customer-traceability.test.ts:81:54)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

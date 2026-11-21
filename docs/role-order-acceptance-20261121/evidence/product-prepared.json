@@ -1,0 +1,52 @@
+{
+  "order": {
+    "id": "955545a8-0674-4302-99ac-1035049c94cb",
+    "reference": "EG-2026-6928994E",
+    "status": "preparing",
+    "totalKobo": "5700000",
+    "payment": "unpaid"
+  },
+  "serialIds": {
+    "A": "19d00220-924d-46b4-a750-3ad3deec2ff4",
+    "B": "149d942e-77f4-46c3-8781-d036d8a9dd55",
+    "C": "54e46ac1-c3c8-4b87-9430-e1a888ec3d6e"
+  },
+  "checks": [
+    {
+      "id": "ROD21-PREFLIGHT",
+      "passed": true,
+      "detail": "Thirteen labelled identities authenticated; actual canonical roles mapped; baseline retained privately before any new business mutation.",
+      "at": "2026-11-21T12:58:16.706Z"
+    },
+    {
+      "id": "ROD21-ACCESS",
+      "passed": true,
+      "detail": "Own-account orders only; independent labelled operational accounts cannot access finance; driver scope excludes handover secrets",
+      "at": "2026-11-21T12:59:03.038Z"
+    },
+    {
+      "id": "ROD21-PAYMENT",
+      "passed": true,
+      "detail": "Insufficient balance and quote tampering rejected transactionally; orders, wallet and gas summary unchanged",
+      "at": "2026-11-21T12:59:23.967Z"
+    },
+    {
+      "id": "ROD21-CANCEL",
+      "passed": true,
+      "detail": "EG-2026-185AED4E: abandoned unpaid card order cancelled by its owner; reservation restored; cancellation replay has no extra effect",
+      "at": "2026-11-21T12:59:42.563Z"
+    },
+    {
+      "id": "ROD21-FUND",
+      "passed": true,
+      "detail": "₦50,000 explicitly synthetic QA credit approved independently; self-approval denied and decision replay posted one credit",
+      "at": "2026-11-21T12:59:50.725Z"
+    },
+    {
+      "id": "ROD21-PRODUCT-PREP",
+      "passed": true,
+      "detail": "EG-2026-6928994E:2 new QA serials reserved, sales accepted/prepared and coverage confirmed; finance invoice issued; trip start and assignment still pending actual UI; no original order mutated",
+      "at": "2026-11-21T13:00:28.165Z"
+    }
+  ]
+}
