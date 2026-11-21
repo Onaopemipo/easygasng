@@ -560,3 +560,9 @@ form.support-dialog-form label[data-field-type="boolean-hidden"] { display: none
 .driver-assignment-dialog {padding-bottom:108px!important}
 @media(max-width:600px) {.driver-assignment-toolbar>div,.driver-assignment-toolbar button{width:100%}.driver-assignment-driver{padding:12px}.driver-assignment-dialog{padding:20px 16px 140px!important}}
 @media(max-width:360px) {.driver-assignment-dialog{padding-bottom:164px!important}}
+/* The persistent demo notice must not cover Orders assignment actions. */
+body:has(.client-demo-notice) .admin-order-dialog:has(.driver-assignment-workspace) {align-items:flex-start;padding-top:16px;}
+body:has(.client-demo-notice) .admin-order-dialog .modal:has(.driver-assignment-workspace) {max-height:calc(100dvh - 104px);}
+@media(max-width:600px) {
+  body:has(.client-demo-notice) .admin-order-dialog .modal:has(.driver-assignment-workspace) {max-height:calc(100dvh - 152px);}
+}

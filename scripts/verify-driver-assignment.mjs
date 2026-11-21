@@ -26,7 +26,8 @@ async function transport(route,opts){
   await fs.writeFile(config,lines.join('\n')+'\n',{mode:0o600});
   const r=await exec('vercel',['curl',route,'--deployment',base,'--scope','onaopemipos-projects','--','--config',config],{timeout:60000,maxBuffer:200000});
   const status=Number(r.stdout.trim().match(/(\d{3})$/)?.[1]);assert.ok(status);
-  return {status,json:async()=>JSON.parse(await fs.readFile(output,'utf8'))};
+  const content=await fs.readFile(output,'utf8');
+  return {status,json:async()=>JSON.parse(content)};
  }finally{await fs.rm(temp,{recursive:true,force:true})}
 }
 async function call(role,action,data){
