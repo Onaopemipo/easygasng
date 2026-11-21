@@ -1,0 +1,52 @@
+{
+  "scope": "Password-verification UI gaps only; original production incidents/blockers retained separately",
+  "findings": [
+    {
+      "id": "SVERIFY-F01",
+      "finding": "Shared ActionForm reported REAUTH_REQUIRED without a password field",
+      "affectedFile": "apps/web/components/workflows.tsx",
+      "fixFile": "apps/web/components/ui.tsx",
+      "status": "VERIFIED_COMPLETE",
+      "outstandingWork": "None in bounded verification UX scope",
+      "evidence": "Published Create branch fieldless baseline and final retained-form recovery"
+    },
+    {
+      "id": "SVERIFY-F02",
+      "finding": "Custom sensitive forms depended on scattered optional verification controls",
+      "affectedFile": "apps/web/components/ui.tsx",
+      "fixFile": "apps/web/components/app-dialog.tsx",
+      "status": "VERIFIED_COMPLETE",
+      "outstandingWork": "None in bounded verification UX scope",
+      "evidence": "Actual shared transport/dialog regression covers77 guard rejections; existing inline controls retained"
+    },
+    {
+      "id": "SVERIFY-F03",
+      "finding": "Protected individual-privilege GET also needs recovery",
+      "affectedFile": "apps/web/components/staff-privileges.tsx",
+      "fixFile": "apps/web/components/ui.tsx",
+      "status": "VERIFIED_COMPLETE",
+      "outstandingWork": "None in bounded verification UX scope",
+      "evidence": "Published individual staff privilege GET challenge completes after normal password verification"
+    },
+    {
+      "id": "SVERIFY-F04",
+      "finding": "Wrong-password error attempted focus before input was enabled",
+      "affectedFile": "apps/web/components/app-dialog.tsx",
+      "fixFile": "apps/web/components/app-dialog.tsx",
+      "status": "VERIFIED_COMPLETE",
+      "outstandingWork": "None in bounded verification UX scope",
+      "evidence": "Published phone wrong-password check: empty, enabled and focused true"
+    },
+    {
+      "id": "SVERIFY-F05",
+      "finding": "Busy focus loop included disabled inputs",
+      "affectedFile": "apps/web/components/app-dialog.tsx",
+      "fixFile": "apps/web/components/app-dialog.tsx",
+      "status": "VERIFIED_COMPLETE",
+      "outstandingWork": "None in bounded verification UX scope",
+      "evidence": "Published in-flight Shift+Tab check: busy true and focus inside on Cancel"
+    }
+  ],
+  "total": 5,
+  "excluded": 0
+}

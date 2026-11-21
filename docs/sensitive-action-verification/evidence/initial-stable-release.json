@@ -1,0 +1,460 @@
+{
+  "status": "PASS",
+  "stage": "stable",
+  "sourceCommit": "988e77c47c5ddeffa861275f906048dd58e37bed",
+  "deploymentId": "dpl_8iBNVsDzN3y6jpXP4dGC5vhBtEXf",
+  "base": "https://easygas-client-demo.vercel.app",
+  "checks": [
+    {
+      "id": "SVERIFY-HOST-STATUS",
+      "status": "PASS"
+    },
+    {
+      "id": "SVERIFY-HOST-OWNER",
+      "status": "PASS",
+      "canonicalRole": "owner",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-MANAGER",
+      "status": "PASS",
+      "canonicalRole": "manager",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "FORBIDDEN"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-FINANCE",
+      "status": "PASS",
+      "canonicalRole": "finance",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "FORBIDDEN"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-INVENTORY",
+      "status": "PASS",
+      "canonicalRole": "finance",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "FORBIDDEN"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-DISPATCHER",
+      "status": "PASS",
+      "canonicalRole": "manager",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "FORBIDDEN"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-SALES",
+      "status": "PASS",
+      "canonicalRole": "manager",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "FORBIDDEN"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-DRIVER",
+      "status": "PASS",
+      "canonicalRole": "driver",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "INVALID_REQUEST"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "INVALID_REQUEST"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "INVALID_REQUEST"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "INVALID_REQUEST"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-TECHNICIAN",
+      "status": "PASS",
+      "canonicalRole": "technician",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "INVALID_REQUEST"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "INVALID_REQUEST"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "INVALID_REQUEST"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "INVALID_REQUEST"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-SERVICE_MANAGER",
+      "status": "PASS",
+      "canonicalRole": "manager",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "FORBIDDEN"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-SAFETY_OFFICER",
+      "status": "PASS",
+      "canonicalRole": "owner",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-ADMINISTRATOR",
+      "status": "PASS",
+      "canonicalRole": "owner",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "REAUTH_REQUIRED"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-CUSTOMER",
+      "status": "PASS",
+      "canonicalRole": "customer",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "FORBIDDEN"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-COMMERCIAL",
+      "status": "PASS",
+      "canonicalRole": "commercial",
+      "unverifiedDenials": [
+        {
+          "action": "fleet.vehicle.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "branch.create",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "staff.edit",
+          "status": 403,
+          "code": "FORBIDDEN"
+        },
+        {
+          "action": "readiness.review",
+          "status": 403,
+          "code": "FORBIDDEN"
+        }
+      ],
+      "wrongPassword": 403,
+      "correctPassword": 200,
+      "malformedOrForbiddenAfterVerification": true,
+      "sessionMismatch": 409,
+      "markerNotCredential": 401
+    },
+    {
+      "id": "SVERIFY-HOST-ANONYMOUS",
+      "status": "PASS"
+    },
+    {
+      "id": "SVERIFY-HOST-PRESERVATION",
+      "status": "PASS"
+    }
+  ],
+  "identities": 13,
+  "canonicalRoles": [
+    "commercial",
+    "customer",
+    "driver",
+    "finance",
+    "manager",
+    "owner",
+    "technician"
+  ],
+  "before": {
+    "orders": "58c1848d4769bad4c648bdc4f0b9d772b0364c288e6ee5a31bb03a75c8bcd20f",
+    "inventory": "1ef65322162991bdd61e64a5ed629b2094e1b3c5a763c9450144fec6d91bc369",
+    "ledger": "99e02e342c7d50e75e510597dc1a9e699062169ee7ecfa36f211f72f0c6074e2",
+    "fleet": "d8283002f538bce363bcd50520a2d6ee128d3b1c30cdc2c7d82f3da0ea8ff27a"
+  },
+  "after": {
+    "orders": "58c1848d4769bad4c648bdc4f0b9d772b0364c288e6ee5a31bb03a75c8bcd20f",
+    "inventory": "1ef65322162991bdd61e64a5ed629b2094e1b3c5a763c9450144fec6d91bc369",
+    "ledger": "99e02e342c7d50e75e510597dc1a9e699062169ee7ecfa36f211f72f0c6074e2",
+    "fleet": "d8283002f538bce363bcd50520a2d6ee128d3b1c30cdc2c7d82f3da0ea8ff27a"
+  },
+  "limits": "No successful business writes, operational safety renewals, role changes or production authorisation. Password/session security checks only."
+}

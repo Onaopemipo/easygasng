@@ -1,0 +1,63 @@
+{
+  "verificationUx": {
+    "testedGuardRejectionSites": 77,
+    "totalGuardSites": 77,
+    "mechanism": "Same actual web API/dialog transport; each guard site represented by a standard REAUTH_REQUIRED rejection. Not77 independent business workflow completions."
+  },
+  "serverSecurity": {
+    "canonicalRoles": 7,
+    "totalCanonicalRoles": 7,
+    "directSensitiveFamilies": [
+      "fleet.vehicle.create",
+      "branch.create",
+      "readiness.review",
+      "staff.edit",
+      "rewards.export",
+      "gas.stock.receive",
+      "account.export"
+    ],
+    "exceptions": [
+      "wrong password",
+      "six-minute expiry",
+      "verified role denial",
+      "cross-branch denial",
+      "malformed input after verification",
+      "stable idempotent replay",
+      "changed-payload conflict",
+      "verification throttle"
+    ]
+  },
+  "clientExceptions": [
+    "Cancel",
+    "route change",
+    "session replacement before challenge",
+    "session replacement after verification",
+    "sign-out event",
+    "missing provider",
+    "protected GET",
+    "simultaneous second challenge",
+    "rapid repeat submit",
+    "second expiry",
+    "uncertain network outcome",
+    "ordinary permission failure",
+    "exact serialized payload retention",
+    "password clearing and exclusion"
+  ],
+  "hosted": {
+    "status": "PASS",
+    "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+    "identities": 13,
+    "canonicalRoles": [
+      "commercial",
+      "customer",
+      "driver",
+      "finance",
+      "manager",
+      "owner",
+      "technician"
+    ],
+    "groupsPassed": 16,
+    "recordPreservation": true
+  },
+  "businessWorkflowLimitation": "No assertion that every physical/provider workflow was rerun or production-ready. Existing whole-app and production denominators retained."
+}

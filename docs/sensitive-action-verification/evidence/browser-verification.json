@@ -1,0 +1,169 @@
+{
+  "status": "PASS",
+  "finalSourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+  "canonicalRoles": [
+    "commercial",
+    "customer",
+    "driver",
+    "finance",
+    "manager",
+    "owner",
+    "technician"
+  ],
+  "checks": [
+    {
+      "id": "SVERIFY-UI-BASELINE",
+      "status": "REPRODUCED",
+      "route": "/admin/operations",
+      "observation": "Original Create branch submission rejected REAUTH_REQUIRED and provided no password field; duplicate existing lagos identifier used so no branch can be created.",
+      "sourceCommit": "dd5bbc7f1da55423eba746448cf4fca815772d67"
+    },
+    {
+      "id": "SVERIFY-UI-DESKTOP",
+      "status": "PASS",
+      "route": "/admin/operations",
+      "observation": "Published shared ActionForm opens required masked password dialog with initial input focus; original lagos identifier and synthetic name remain mounted.",
+      "sourceCommit": "988e77c47c5ddeffa861275f906048dd58e37bed"
+    },
+    {
+      "id": "SVERIFY-UI-CANCEL",
+      "status": "PASS",
+      "route": "/admin/operations",
+      "observation": "Cancel closes verification, reports cancellation, re-enables Save and retains identifier/name; no branch creation.",
+      "sourceCommit": "988e77c47c5ddeffa861275f906048dd58e37bed"
+    },
+    {
+      "id": "SVERIFY-UI-FOCUS-BASELINE",
+      "status": "REPRODUCED",
+      "sourceCommit": "988e77c47c5ddeffa861275f906048dd58e37bed",
+      "route": "/admin/operations",
+      "observation": "Wrong password correctly cleared the secret, but DOM activeElement was not the password input because focus was attempted while it was disabled; corrected in final source."
+    },
+    {
+      "id": "SVERIFY-UI-FOCUS",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "route": "/admin/operations",
+      "busyFocusCheck": {
+        "busy": true,
+        "focusInside": true,
+        "focusedText": "Cancel"
+      },
+      "finalFocusCheck": {
+        "empty": true,
+        "enabled": true,
+        "focused": true,
+        "type": "password"
+      },
+      "phoneDialogBounds": {
+        "bottom": 655.40625,
+        "buttons": [
+          {
+            "bottom": 439.15625,
+            "label": "Show password",
+            "left": 301,
+            "right": 345,
+            "top": 395.15625
+          },
+          {
+            "bottom": 560.40625,
+            "label": "Cancel",
+            "left": 43,
+            "right": 347,
+            "top": 515.65625
+          },
+          {
+            "bottom": 632.40625,
+            "label": "Verify and continue",
+            "left": 43,
+            "right": 347,
+            "top": 588.40625
+          }
+        ],
+        "left": 20,
+        "overflow": false,
+        "right": 370,
+        "top": 188.5859375,
+        "viewportHeight": 844,
+        "viewportWidth": 390
+      }
+    },
+    {
+      "id": "SVERIFY-UI-PHONE-DARK",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "route": "/admin/operations",
+      "observation": "Dark phone dialog fits; Show/Hide password tested with nonsecret dummy text and cleared. Empty required field prevents submission."
+    },
+    {
+      "id": "SVERIFY-UI-CONTINUE",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "route": "/admin/operations",
+      "observation": "Correct password using Verify and continue closes challenge and reaches unchanged Branch identifier already exists validation; original lagos/name retained and no branch created. Enter-key injection was not used as acceptance evidence."
+    },
+    {
+      "id": "SVERIFY-UI-PROTECTED-GET",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "route": "/admin/staff",
+      "observation": "Fresh owner session opening existing QA driver individual privileges triggers shared password dialog for GET; correct password via button completes read and shows privileges. No grant, role or branch changed.",
+      "role": "owner"
+    },
+    {
+      "id": "SVERIFY-UI-MANAGER",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "route": "/admin",
+      "role": "manager",
+      "observation": "Labelled QA Service Manager signed in; authorised workspace/navigation loaded. Hosted unverified staff edit requires verification, verified malformed edit is rejected, owner-only actions remain403."
+    },
+    {
+      "id": "SVERIFY-UI-FINANCE",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "route": "/admin",
+      "role": "finance",
+      "observation": "Labelled QA finance identity displays Inventory role and scoped workspace. Published API checks retain403 for owner-only actions and BRANCH_FORBIDDEN for another branch even after verification."
+    },
+    {
+      "id": "SVERIFY-UI-DRIVER",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "route": "/admin/deliveries",
+      "role": "driver",
+      "observation": "Driver login remains confined to assigned Deliveries; no owner/finance navigation. No active trip or availability changed. Profile inspected without submitting a credential change."
+    },
+    {
+      "id": "SVERIFY-UI-TECHNICIAN",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "route": "/admin/bookings",
+      "role": "technician",
+      "observation": "Technician remains in assigned-service workspace; no owner/finance controls exposed. Availability, qualifications, job state and credentials unchanged."
+    },
+    {
+      "id": "SVERIFY-UI-CUSTOMER",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "routes": [
+        "/account",
+        "/account-settings?section=security"
+      ],
+      "role": "customer",
+      "observation": "Customer workspace remains scoped. Export personal data already offers required masked current-password confirmation; password-change dialog requires current and new password. Both inspected and closed without exporting, submitting privacy requests or changing credentials."
+    },
+    {
+      "id": "SVERIFY-UI-COMMERCIAL",
+      "status": "PASS",
+      "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+      "routes": [
+        "/account",
+        "/account-settings?section=security"
+      ],
+      "role": "commercial",
+      "observation": "Commercial sign-in retains customer/account scope. Export personal data presents the existing required masked current-password field; inspected and closed without exporting or requesting deletion."
+    }
+  ],
+  "limits": "Role browser checks cover entry/security visibility;13-identity API and7-role fixture evidence covers enforcement. No claim of every business/provider journey completing. Browser Enter-key injection is not acceptance evidence; the labelled submit button is verified."
+}

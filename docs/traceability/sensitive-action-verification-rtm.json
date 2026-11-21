@@ -9,32 +9,68 @@
       "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
       "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
       "route": [
+        "/admin/operations",
+        "/admin/staff",
         "/admin",
-        "/account"
+        "/admin/deliveries",
+        "/admin/bookings",
+        "/account",
+        "/account-settings?section=security"
       ],
       "implementationFiles": [
         "apps/web/components/ui.tsx",
         "apps/web/components/app-dialog.tsx",
         "apps/web/components/sensitive-action-request.ts",
-        "apps/web/app/api/[action]/route.ts"
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/auth.ts",
+        "scripts/lib/reviewed-sensitive-verification-source.mjs",
+        "docs/user-manual/sensitive-action-verification.md"
       ],
       "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
-      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "securityControl": "Keep server role, branch, five-minute verification and throttle checks. Send the dialog verification password only to reauth; never append it to the original action payload, operation identity or browser storage. Dedicated account-password-change fields retain their existing schema and current-password check.",
       "testFiles": [
         "tests/sensitive-action-verification.test.ts",
-        "tests/sensitive-action-security.test.ts"
+        "tests/sensitive-action-security.test.ts",
+        "tests/custom-alerts.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-sensitive-actions-demo.mjs",
+        "scripts/audit-sensitive-actions.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "SVERIFY-AUDIT"
+      ],
       "negativeTests": [
         "SVERIFY-CANCEL",
         "SVERIFY-ROLES"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/sensitive-action-verification/evidence/focused.txt",
+        "docs/sensitive-action-verification/evidence/focus-follow-up.txt",
+        "docs/sensitive-action-verification/evidence/focus-regression.txt",
+        "docs/sensitive-action-verification/evidence/documentation-initial.txt",
+        "docs/sensitive-action-verification/inventory.json",
+        "docs/sensitive-action-verification/findings.json",
+        "docs/sensitive-action-verification/evidence/browser-verification.json",
+        "docs/sensitive-action-verification/evidence/stable-release.json",
+        "docs/sensitive-action-verification/evidence/candidate-focus-release.json",
+        "docs/sensitive-action-verification/evidence/source-integrity.json",
+        "docs/sensitive-action-verification/evidence/stable-identity.json",
+        "docs/sensitive-action-verification/evidence/native-preservation.json",
+        "docs/sensitive-action-verification/evidence/browser-cleanup.json",
+        "docs/sensitive-action-verification/evidence/ci-validation.json",
+        "docs/sensitive-action-verification/evidence/session-cleanup.json",
+        "docs/sensitive-action-verification/evidence/final-preservation.json",
+        "docs/sensitive-action-verification/evidence/phone-verification.jpg",
+        "docs/sensitive-action-verification/evidence/phone-dark-verification.jpg",
+        "docs/sensitive-action-verification/evidence/desktop-verification.jpg",
+        "docs/sensitive-action-verification/evidence/documentation-final.txt"
+      ],
       "acceptanceGate": "SVERIFY-G01",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Shared recovery implemented; full acceptance and deployment pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Audit, implement, test, deploy and document"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Audited all77 guard sites/34modules,370discovery entry points and11fetch sites. Direct account-password checks already have required fields; no separate sensitive browser transport omitted.",
+      "testResult": "PASS \u2014 bounded sensitive verification UX and enforcement; full business/physical/provider journeys remain separate.",
+      "outstandingWork": "None in this bounded scope; production NO-GO and prior native/provider/physical/import/retain-all holds unchanged."
     },
     {
       "id": "SVERIFY-02",
@@ -43,32 +79,65 @@
       "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
       "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
       "route": [
-        "/admin",
-        "/account"
+        "/admin/operations",
+        "/admin/staff",
+        "/account-settings?section=security"
       ],
       "implementationFiles": [
         "apps/web/components/ui.tsx",
         "apps/web/components/app-dialog.tsx",
         "apps/web/components/sensitive-action-request.ts",
-        "apps/web/app/api/[action]/route.ts"
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/auth.ts",
+        "scripts/lib/reviewed-sensitive-verification-source.mjs",
+        "docs/user-manual/sensitive-action-verification.md"
       ],
       "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
-      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "securityControl": "Keep server role, branch, five-minute verification and throttle checks. Send the dialog verification password only to reauth; never append it to the original action payload, operation identity or browser storage. Dedicated account-password-change fields retain their existing schema and current-password check.",
       "testFiles": [
         "tests/sensitive-action-verification.test.ts",
-        "tests/sensitive-action-security.test.ts"
+        "tests/sensitive-action-security.test.ts",
+        "tests/custom-alerts.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-sensitive-actions-demo.mjs",
+        "scripts/audit-sensitive-actions.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "SVERIFY-DIALOG",
+        "SVERIFY-READ"
+      ],
       "negativeTests": [
         "SVERIFY-CANCEL",
         "SVERIFY-ROLES"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/sensitive-action-verification/evidence/focused.txt",
+        "docs/sensitive-action-verification/evidence/focus-follow-up.txt",
+        "docs/sensitive-action-verification/evidence/focus-regression.txt",
+        "docs/sensitive-action-verification/evidence/documentation-initial.txt",
+        "docs/sensitive-action-verification/inventory.json",
+        "docs/sensitive-action-verification/findings.json",
+        "docs/sensitive-action-verification/evidence/browser-verification.json",
+        "docs/sensitive-action-verification/evidence/stable-release.json",
+        "docs/sensitive-action-verification/evidence/candidate-focus-release.json",
+        "docs/sensitive-action-verification/evidence/source-integrity.json",
+        "docs/sensitive-action-verification/evidence/stable-identity.json",
+        "docs/sensitive-action-verification/evidence/native-preservation.json",
+        "docs/sensitive-action-verification/evidence/browser-cleanup.json",
+        "docs/sensitive-action-verification/evidence/ci-validation.json",
+        "docs/sensitive-action-verification/evidence/session-cleanup.json",
+        "docs/sensitive-action-verification/evidence/final-preservation.json",
+        "docs/sensitive-action-verification/evidence/phone-verification.jpg",
+        "docs/sensitive-action-verification/evidence/phone-dark-verification.jpg",
+        "docs/sensitive-action-verification/evidence/desktop-verification.jpg",
+        "docs/sensitive-action-verification/evidence/documentation-final.txt"
+      ],
       "acceptanceGate": "SVERIFY-G02",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Shared recovery implemented; full acceptance and deployment pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Audit, implement, test, deploy and document"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual shared API/dialog renderer covers77 standard rejections and protected GET; published ActionForm and privilege-read recovery work, existing customer/commercial fields retained.",
+      "testResult": "PASS \u2014 bounded sensitive verification UX and enforcement; full business/physical/provider journeys remain separate.",
+      "outstandingWork": "None in this bounded scope; production NO-GO and prior native/provider/physical/import/retain-all holds unchanged."
     },
     {
       "id": "SVERIFY-03",
@@ -77,32 +146,65 @@
       "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
       "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
       "route": [
-        "/admin",
-        "/account"
+        "/admin/operations",
+        "/admin/staff",
+        "/account-settings?section=security"
       ],
       "implementationFiles": [
         "apps/web/components/ui.tsx",
         "apps/web/components/app-dialog.tsx",
         "apps/web/components/sensitive-action-request.ts",
-        "apps/web/app/api/[action]/route.ts"
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/auth.ts",
+        "scripts/lib/reviewed-sensitive-verification-source.mjs",
+        "docs/user-manual/sensitive-action-verification.md"
       ],
       "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
-      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "securityControl": "Keep server role, branch, five-minute verification and throttle checks. Send the dialog verification password only to reauth; never append it to the original action payload, operation identity or browser storage. Dedicated account-password-change fields retain their existing schema and current-password check.",
       "testFiles": [
         "tests/sensitive-action-verification.test.ts",
-        "tests/sensitive-action-security.test.ts"
+        "tests/sensitive-action-security.test.ts",
+        "tests/custom-alerts.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-sensitive-actions-demo.mjs",
+        "scripts/audit-sensitive-actions.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "SVERIFY-REQUEST",
+        "SVERIFY-CANCEL"
+      ],
       "negativeTests": [
         "SVERIFY-CANCEL",
         "SVERIFY-ROLES"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/sensitive-action-verification/evidence/focused.txt",
+        "docs/sensitive-action-verification/evidence/focus-follow-up.txt",
+        "docs/sensitive-action-verification/evidence/focus-regression.txt",
+        "docs/sensitive-action-verification/evidence/documentation-initial.txt",
+        "docs/sensitive-action-verification/inventory.json",
+        "docs/sensitive-action-verification/findings.json",
+        "docs/sensitive-action-verification/evidence/browser-verification.json",
+        "docs/sensitive-action-verification/evidence/stable-release.json",
+        "docs/sensitive-action-verification/evidence/candidate-focus-release.json",
+        "docs/sensitive-action-verification/evidence/source-integrity.json",
+        "docs/sensitive-action-verification/evidence/stable-identity.json",
+        "docs/sensitive-action-verification/evidence/native-preservation.json",
+        "docs/sensitive-action-verification/evidence/browser-cleanup.json",
+        "docs/sensitive-action-verification/evidence/ci-validation.json",
+        "docs/sensitive-action-verification/evidence/session-cleanup.json",
+        "docs/sensitive-action-verification/evidence/final-preservation.json",
+        "docs/sensitive-action-verification/evidence/phone-verification.jpg",
+        "docs/sensitive-action-verification/evidence/phone-dark-verification.jpg",
+        "docs/sensitive-action-verification/evidence/desktop-verification.jpg",
+        "docs/sensitive-action-verification/evidence/documentation-final.txt"
+      ],
       "acceptanceGate": "SVERIFY-G03",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Shared recovery implemented; full acceptance and deployment pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Audit, implement, test, deploy and document"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact body/key and credentials isolation tested; cancellation, wrong password, repeat submits, double expiry, route/session/role context, network uncertainty and focus timing are guarded. Published busy Tab loop and phone/light/dark layout confirmed.",
+      "testResult": "PASS \u2014 bounded sensitive verification UX and enforcement; full business/physical/provider journeys remain separate.",
+      "outstandingWork": "None in this bounded scope; production NO-GO and prior native/provider/physical/import/retain-all holds unchanged."
     },
     {
       "id": "SVERIFY-04",
@@ -111,32 +213,68 @@
       "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
       "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
       "route": [
+        "/admin/operations",
+        "/admin/staff",
         "/admin",
-        "/account"
+        "/admin/deliveries",
+        "/admin/bookings",
+        "/account",
+        "/account-settings?section=security"
       ],
       "implementationFiles": [
         "apps/web/components/ui.tsx",
         "apps/web/components/app-dialog.tsx",
         "apps/web/components/sensitive-action-request.ts",
-        "apps/web/app/api/[action]/route.ts"
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/auth.ts",
+        "scripts/lib/reviewed-sensitive-verification-source.mjs",
+        "docs/user-manual/sensitive-action-verification.md"
       ],
       "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
-      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "securityControl": "Keep server role, branch, five-minute verification and throttle checks. Send the dialog verification password only to reauth; never append it to the original action payload, operation identity or browser storage. Dedicated account-password-change fields retain their existing schema and current-password check.",
       "testFiles": [
         "tests/sensitive-action-verification.test.ts",
-        "tests/sensitive-action-security.test.ts"
+        "tests/sensitive-action-security.test.ts",
+        "tests/custom-alerts.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-sensitive-actions-demo.mjs",
+        "scripts/audit-sensitive-actions.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "SVERIFY-ROLES"
+      ],
       "negativeTests": [
         "SVERIFY-CANCEL",
         "SVERIFY-ROLES"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/sensitive-action-verification/evidence/focused.txt",
+        "docs/sensitive-action-verification/evidence/focus-follow-up.txt",
+        "docs/sensitive-action-verification/evidence/focus-regression.txt",
+        "docs/sensitive-action-verification/evidence/documentation-initial.txt",
+        "docs/sensitive-action-verification/inventory.json",
+        "docs/sensitive-action-verification/findings.json",
+        "docs/sensitive-action-verification/evidence/browser-verification.json",
+        "docs/sensitive-action-verification/evidence/stable-release.json",
+        "docs/sensitive-action-verification/evidence/candidate-focus-release.json",
+        "docs/sensitive-action-verification/evidence/source-integrity.json",
+        "docs/sensitive-action-verification/evidence/stable-identity.json",
+        "docs/sensitive-action-verification/evidence/native-preservation.json",
+        "docs/sensitive-action-verification/evidence/browser-cleanup.json",
+        "docs/sensitive-action-verification/evidence/ci-validation.json",
+        "docs/sensitive-action-verification/evidence/session-cleanup.json",
+        "docs/sensitive-action-verification/evidence/final-preservation.json",
+        "docs/sensitive-action-verification/evidence/phone-verification.jpg",
+        "docs/sensitive-action-verification/evidence/phone-dark-verification.jpg",
+        "docs/sensitive-action-verification/evidence/desktop-verification.jpg",
+        "docs/sensitive-action-verification/evidence/documentation-final.txt"
+      ],
       "acceptanceGate": "SVERIFY-G04",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Shared recovery implemented; full acceptance and deployment pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Audit, implement, test, deploy and document"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All7 canonical roles tested through actual service fixture;13 distinct hosted QA identities passed unverified/verified role denials, wrong/correct passwords, same-session marker, invalid input, branch denial and anonymous checks.",
+      "testResult": "PASS \u2014 bounded sensitive verification UX and enforcement; full business/physical/provider journeys remain separate.",
+      "outstandingWork": "None in this bounded scope; production NO-GO and prior native/provider/physical/import/retain-all holds unchanged."
     },
     {
       "id": "SVERIFY-05",
@@ -145,32 +283,68 @@
       "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
       "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
       "route": [
+        "/admin/operations",
+        "/admin/staff",
         "/admin",
-        "/account"
+        "/admin/deliveries",
+        "/admin/bookings",
+        "/account",
+        "/account-settings?section=security"
       ],
       "implementationFiles": [
         "apps/web/components/ui.tsx",
         "apps/web/components/app-dialog.tsx",
         "apps/web/components/sensitive-action-request.ts",
-        "apps/web/app/api/[action]/route.ts"
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/auth.ts",
+        "scripts/lib/reviewed-sensitive-verification-source.mjs",
+        "docs/user-manual/sensitive-action-verification.md"
       ],
       "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
-      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "securityControl": "Keep server role, branch, five-minute verification and throttle checks. Send the dialog verification password only to reauth; never append it to the original action payload, operation identity or browser storage. Dedicated account-password-change fields retain their existing schema and current-password check.",
       "testFiles": [
         "tests/sensitive-action-verification.test.ts",
-        "tests/sensitive-action-security.test.ts"
+        "tests/sensitive-action-security.test.ts",
+        "tests/custom-alerts.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-sensitive-actions-demo.mjs",
+        "scripts/audit-sensitive-actions.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "SVERIFY-AUDIT"
+      ],
       "negativeTests": [
         "SVERIFY-CANCEL",
         "SVERIFY-ROLES"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/sensitive-action-verification/evidence/focused.txt",
+        "docs/sensitive-action-verification/evidence/focus-follow-up.txt",
+        "docs/sensitive-action-verification/evidence/focus-regression.txt",
+        "docs/sensitive-action-verification/evidence/documentation-initial.txt",
+        "docs/sensitive-action-verification/inventory.json",
+        "docs/sensitive-action-verification/findings.json",
+        "docs/sensitive-action-verification/evidence/browser-verification.json",
+        "docs/sensitive-action-verification/evidence/stable-release.json",
+        "docs/sensitive-action-verification/evidence/candidate-focus-release.json",
+        "docs/sensitive-action-verification/evidence/source-integrity.json",
+        "docs/sensitive-action-verification/evidence/stable-identity.json",
+        "docs/sensitive-action-verification/evidence/native-preservation.json",
+        "docs/sensitive-action-verification/evidence/browser-cleanup.json",
+        "docs/sensitive-action-verification/evidence/ci-validation.json",
+        "docs/sensitive-action-verification/evidence/session-cleanup.json",
+        "docs/sensitive-action-verification/evidence/final-preservation.json",
+        "docs/sensitive-action-verification/evidence/phone-verification.jpg",
+        "docs/sensitive-action-verification/evidence/phone-dark-verification.jpg",
+        "docs/sensitive-action-verification/evidence/desktop-verification.jpg",
+        "docs/sensitive-action-verification/evidence/documentation-final.txt"
+      ],
       "acceptanceGate": "SVERIFY-G05",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Shared recovery implemented; full acceptance and deployment pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Audit, implement, test, deploy and document"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Final440-file committed source deployed to Ready dpl_H5STrxVa3PUyb9166mbG2UzmGreh and promoted. Final CI44919152786 passes1,174web tests plus3native dependency tests; build/types/audits pass and Expo export is skipped.13final hosted identities,7browser roles, shared POST/GET and desktop/phone/light/dark checks pass. All13own API sessions revoked401, browser signed out, and business/native snapshots unchanged.",
+      "testResult": "PASS \u2014 final exact-source CI1,174web+3native dependency tests, hosted/browser acceptance and cleanup.",
+      "outstandingWork": "None in bounded client-demo verification UX scope. Production NO-GO and prior native/provider/physical/import/retain-all holds unchanged."
     },
     {
       "id": "SVERIFY-06",
@@ -179,80 +353,149 @@
       "scope": "All web sensitive-action verification recovery; no new mobile binaries or production authorisation",
       "uiReference": "User-reported missing vehicle password field; expanded whole-web sensitive-action audit",
       "route": [
+        "/admin/operations",
+        "/admin/staff",
         "/admin",
-        "/account"
+        "/admin/deliveries",
+        "/admin/bookings",
+        "/account",
+        "/account-settings?section=security"
       ],
       "implementationFiles": [
         "apps/web/components/ui.tsx",
         "apps/web/components/app-dialog.tsx",
         "apps/web/components/sensitive-action-request.ts",
-        "apps/web/app/api/[action]/route.ts"
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/auth.ts",
+        "scripts/lib/reviewed-sensitive-verification-source.mjs",
+        "docs/user-manual/sensitive-action-verification.md"
       ],
       "dataSource": "Server recentVerification, canonical actor/branch/session, normal reauth API and actual web transport",
-      "securityControl": "Keep server roles, branch scope, recent-verification expiry and throttling; never include password in business payload",
+      "securityControl": "Keep server role, branch, five-minute verification and throttle checks. Send the dialog verification password only to reauth; never append it to the original action payload, operation identity or browser storage. Dedicated account-password-change fields retain their existing schema and current-password check.",
       "testFiles": [
         "tests/sensitive-action-verification.test.ts",
-        "tests/sensitive-action-security.test.ts"
+        "tests/sensitive-action-security.test.ts",
+        "tests/custom-alerts.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/user-manual.test.ts",
+        "scripts/verify-sensitive-actions-demo.mjs",
+        "scripts/audit-sensitive-actions.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "UM-MATRIX",
+        "RTM-01\u201307"
+      ],
       "negativeTests": [
         "SVERIFY-CANCEL",
         "SVERIFY-ROLES"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/sensitive-action-verification/evidence/focused.txt",
+        "docs/sensitive-action-verification/evidence/focus-follow-up.txt",
+        "docs/sensitive-action-verification/evidence/focus-regression.txt",
+        "docs/sensitive-action-verification/evidence/documentation-initial.txt",
+        "docs/sensitive-action-verification/inventory.json",
+        "docs/sensitive-action-verification/findings.json",
+        "docs/sensitive-action-verification/evidence/browser-verification.json",
+        "docs/sensitive-action-verification/evidence/stable-release.json",
+        "docs/sensitive-action-verification/evidence/candidate-focus-release.json",
+        "docs/sensitive-action-verification/evidence/source-integrity.json",
+        "docs/sensitive-action-verification/evidence/stable-identity.json",
+        "docs/sensitive-action-verification/evidence/native-preservation.json",
+        "docs/sensitive-action-verification/evidence/browser-cleanup.json",
+        "docs/sensitive-action-verification/evidence/ci-validation.json",
+        "docs/sensitive-action-verification/evidence/session-cleanup.json",
+        "docs/sensitive-action-verification/evidence/final-preservation.json",
+        "docs/sensitive-action-verification/evidence/phone-verification.jpg",
+        "docs/sensitive-action-verification/evidence/phone-dark-verification.jpg",
+        "docs/sensitive-action-verification/evidence/desktop-verification.jpg",
+        "docs/sensitive-action-verification/evidence/documentation-final.txt"
+      ],
       "acceptanceGate": "SVERIFY-G06",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Shared recovery implemented; full acceptance and deployment pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Audit, implement, test, deploy and document"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Illustrated current manual and stable matrix updated; no commercial release, safety renewal, permission grant, destructive action or mobile binary/export/install. Historical holds retained.",
+      "testResult": "PASS \u2014 bounded sensitive verification UX and enforcement; full business/physical/provider journeys remain separate.",
+      "outstandingWork": "None in this bounded scope; production NO-GO and prior native/provider/physical/import/retain-all holds unchanged."
     }
   ],
   "gates": [
     {
       "id": "SVERIFY-G01",
       "description": "Inventory every recent-password guarded action and its browser entry points",
-      "status": "PENDING",
-      "reason": "Acceptance not executed"
+      "status": "PASS",
+      "reason": "Audited all77 guard sites/34modules,370discovery entry points and11fetch sites. Direct account-password checks already have required fields; no separate sensitive browser transport omitted."
     },
     {
       "id": "SVERIFY-G02",
       "description": "Recover missing password verification through an accessible shared dialog",
-      "status": "PENDING",
-      "reason": "Acceptance not executed"
+      "status": "PASS",
+      "reason": "Actual shared API/dialog renderer covers77 standard rejections and protected GET; published ActionForm and privilege-read recovery work, existing customer/commercial fields retained."
     },
     {
       "id": "SVERIFY-G03",
       "description": "Preserve request, credentials, cancellation, identity and replay safety",
-      "status": "PENDING",
-      "reason": "Acceptance not executed"
+      "status": "PASS",
+      "reason": "Exact body/key and credentials isolation tested; cancellation, wrong password, repeat submits, double expiry, route/session/role context, network uncertainty and focus timing are guarded. Published busy Tab loop and phone/light/dark layout confirmed."
     },
     {
       "id": "SVERIFY-G04",
       "description": "Test canonical roles and exception cases against actual service controls",
-      "status": "PENDING",
-      "reason": "Acceptance not executed"
+      "status": "PASS",
+      "reason": "All7 canonical roles tested through actual service fixture;13 distinct hosted QA identities passed unverified/verified role denials, wrong/correct passwords, same-session marker, invalid input, branch denial and anonymous checks."
     },
     {
       "id": "SVERIFY-G05",
       "description": "Deploy exact source and verify hosted roles and responsive UI",
-      "status": "PENDING",
-      "reason": "Acceptance not executed"
+      "status": "PASS",
+      "reason": "Final440-file committed source deployed to Ready dpl_H5STrxVa3PUyb9166mbG2UzmGreh and promoted. Final CI44919152786 passes1,174web tests plus3native dependency tests; build/types/audits pass and Expo export is skipped.13final hosted identities,7browser roles, shared POST/GET and desktop/phone/light/dark checks pass. All13own API sessions revoked401, browser signed out, and business/native snapshots unchanged."
     },
     {
       "id": "SVERIFY-G06",
       "description": "Update illustrated user guidance and preserve all prior production holds",
-      "status": "PENDING",
-      "reason": "Acceptance not executed"
+      "status": "PASS",
+      "reason": "Illustrated current manual and stable matrix updated; no commercial release, safety renewal, permission grant, destructive action or mobile binary/export/install. Historical holds retained."
     }
   ],
   "coverage": {
-    "requirements": {
-      "verified": 0,
+    "implementation": {
+      "implemented": 6,
       "total": 6
     },
-    "gates": {
-      "passed": 0,
+    "verification": {
+      "verified": 6,
       "total": 6
+    },
+    "requirements": {
+      "verified": 6,
+      "total": 6
+    },
+    "critical": {
+      "verified": 3,
+      "total": 3
+    },
+    "gates": {
+      "passed": 6,
+      "total": 6
+    },
+    "selectedBrowserRoutes": {
+      "verified": 7,
+      "total": 7
+    },
+    "guardRejectionUx": {
+      "verified": 77,
+      "total": 77
+    },
+    "canonicalRoles": {
+      "verified": 7,
+      "total": 7
+    },
+    "hostedIdentities": {
+      "verified": 13,
+      "total": 13
+    },
+    "sharedDialogConfigurations": {
+      "verified": 3,
+      "total": 3
     },
     "excluded": 0
   },
@@ -264,6 +507,26 @@
     {
       "date": "2026-11-22",
       "change": "Initial13-identity candidate API acceptance and promotion passed. Actual browser testing found failed-password focus timing and disabled-input focus-loop defects; fix and final hosted follow-up in progress. No requirement or hold dropped."
+    },
+    {
+      "date": "2026-11-22",
+      "change": "Expanded selected browser acceptance routes to7 covering shared POST/GET and all7 canonical role entry/security views. Final focus source deployed;13identity final stable checks and actual desktop/phone/light/dark checks pass.5/6gates accepted; final CI gate remains pending. Original production and feature matrices retained."
+    },
+    {
+      "date": "2026-11-22",
+      "change": "Closed6/6bounded gates after final exact-source CI1,174web+3native dependency tests,13identity final stable pass,7role browser checks, actual busy/failure focus and current illustrated manual.13own API tokens revoked; browser light/default viewport/signed-out restored. Business/native preservation passes. No new mobile binary/export/install or production decision change."
     }
-  ]
+  ],
+  "release": {
+    "sourceCommit": "dbf7353bf3553a5aedf52369c3098f6809bd7568",
+    "deploymentId": "dpl_H5STrxVa3PUyb9166mbG2UzmGreh",
+    "projectId": "prj_cFSaJuN9r4x93RLov1LLVO3cdVA2",
+    "url": "https://easygas-client-demo.vercel.app",
+    "rollbackDeployment": "dpl_8iBNVsDzN3y6jpXP4dGC5vhBtEXf",
+    "fileCount": 440,
+    "ciRun": 44919152786,
+    "newMobileBuilds": 0,
+    "newMobileExports": 0,
+    "newMobileInstalls": 0
+  }
 }

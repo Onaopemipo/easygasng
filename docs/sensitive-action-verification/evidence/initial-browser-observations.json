@@ -1,0 +1,34 @@
+{
+  "status": "HISTORICAL_FINDINGS_RESOLVED",
+  "checks": [
+    {
+      "id": "SVERIFY-UI-BASELINE",
+      "status": "REPRODUCED",
+      "route": "/admin/operations",
+      "observation": "Original Create branch submission rejected REAUTH_REQUIRED and provided no password field; duplicate existing lagos identifier used so no branch can be created.",
+      "sourceCommit": "dd5bbc7f1da55423eba746448cf4fca815772d67"
+    },
+    {
+      "id": "SVERIFY-UI-DESKTOP",
+      "status": "PASS",
+      "route": "/admin/operations",
+      "observation": "Published shared ActionForm opens required masked password dialog with initial input focus; original lagos identifier and synthetic name remain mounted.",
+      "sourceCommit": "988e77c47c5ddeffa861275f906048dd58e37bed"
+    },
+    {
+      "id": "SVERIFY-UI-CANCEL",
+      "status": "PASS",
+      "route": "/admin/operations",
+      "observation": "Cancel closes verification, reports cancellation, re-enables Save and retains identifier/name; no branch creation.",
+      "sourceCommit": "988e77c47c5ddeffa861275f906048dd58e37bed"
+    },
+    {
+      "id": "SVERIFY-UI-FOCUS-BASELINE",
+      "status": "REPRODUCED",
+      "sourceCommit": "988e77c47c5ddeffa861275f906048dd58e37bed",
+      "route": "/admin/operations",
+      "observation": "Wrong password correctly cleared the secret, but DOM activeElement was not the password input because focus was attempted while it was disabled; corrected in final source."
+    }
+  ],
+  "resolvedBy": "docs/sensitive-action-verification/evidence/browser-verification.json"
+}

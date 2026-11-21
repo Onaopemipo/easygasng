@@ -1,0 +1,60 @@
+{
+  "status": "success",
+  "runId": 44917892595,
+  "jobId": 136887326803,
+  "sourceCommit": "988e77c47c5ddeffa861275f906048dd58e37bed",
+  "counts": {
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "skipped": 0
+  },
+  "steps": [
+    {
+      "name": "Set up job",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/checkout@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/setup-node@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run npm ci",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run npm run typecheck",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run npm run test:dependencies",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run npx expo export --platform all --output-dir ../../artifacts/native",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Run npm audit --omit=dev --audit-level=moderate",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/setup-node@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/checkout@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "conclusion": "success"
+    }
+  ],
+  "newMobileBuilds": 0,
+  "newMobileExports": 0
+}

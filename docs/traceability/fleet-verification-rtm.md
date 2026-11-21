@@ -12,3 +12,5 @@
 [Full source/security/test mapping](fleet-verification-rtm.json) · [Release report](../fleet-verification/README.md) · [Current manual](../user-manual/driver-assignment.md#verify-your-password-when-registering-a-vehicle).
 
 One labelled synthetic QA vehicle created, suitability false. Existing22orders, inventory, ledger, vehicles and trips preserved. This is verification of the shared recovery component and the vehicle registration flow, not a blanket acceptance of every operational form.
+
+22November whole-web continuation: [sensitive-action verification matrix](sensitive-action-verification-rtm.md) adds common POST/GET recovery, session binding and keyboard fixes. Its6bounded gates pass; these4original fleet requirements/gates/coverage remain unchanged.
