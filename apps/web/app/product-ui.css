@@ -540,3 +540,23 @@ form.support-dialog-form label[data-field-type="boolean-hidden"] { display: none
 .owner-priority-links { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
 .owner-priority-links a { min-height: 44px; display: inline-flex; align-items: center; }
 #owner-operations-summary { scroll-margin-top: 6rem; }
+
+/* Scoped canonical driver assignment readiness cards and drawer notice clearance. */
+.driver-assignment-workspace {min-width:0;display:grid;gap:12px;overflow-wrap:anywhere}
+.driver-assignment-toolbar {display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.driver-assignment-toolbar p,.driver-assignment-note {margin:4px 0 0;color:var(--muted);font-size:14px;line-height:1.5}
+.driver-assignment-toolbar button {min-height:44px;white-space:nowrap}
+.driver-assignment-options {min-width:0;border:0!important;padding:0!important;margin:0!important;display:grid;gap:12px}
+.driver-assignment-options legend {font-size:14px;color:var(--muted);margin-bottom:10px}
+.driver-assignment-driver {border:1px solid var(--border);border-radius:12px;padding:14px;background:var(--surface);min-width:0}
+.driver-assignment-choice {display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin:0}
+.driver-assignment-choice input {width:18px!important;height:18px;margin:3px 0 0!important;flex-shrink:0}
+.driver-assignment-choice small {display:block;font-size:14px;margin-top:3px;color:var(--muted)}
+.driver-assignment-issues {margin:14px 0 0;padding-left:20px;display:grid;gap:12px;font-size:14px}
+.driver-assignment-issues p {margin:4px 0 0;line-height:1.55;color:var(--muted)}
+.driver-assignment-responsible {font-weight:650;color:var(--foreground)}
+.driver-assignment-help {display:block;margin:12px 0 0;text-decoration:underline;text-underline-offset:3px;min-height:32px;color:var(--foreground)}
+.driver-assignment-blocked {margin:0;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--raised);line-height:1.5}
+.driver-assignment-dialog {padding-bottom:108px!important}
+@media(max-width:600px) {.driver-assignment-toolbar>div,.driver-assignment-toolbar button{width:100%}.driver-assignment-driver{padding:12px}.driver-assignment-dialog{padding:20px 16px 140px!important}}
+@media(max-width:360px) {.driver-assignment-dialog{padding-bottom:164px!important}}

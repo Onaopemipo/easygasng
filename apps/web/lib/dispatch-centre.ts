@@ -8,6 +8,12 @@ import { fulfilmentReady } from "./order-tracking";
 import { invoiceBalance } from "./invoice-corrections";
 import { vehicleReady } from "./fleet-constraints";
 import { driverAvailabilityWritesEnabled } from "./driver-availability";
+import { AssignmentRequirementError } from "./assignment-requirement-error";
+import {
+  assignmentIssue,
+  fulfilmentIssue,
+  type AssignmentIssue,
+} from "../../../packages/business-rules/src/assignment-requirements";
 import {
   dispatchTab,
   dispatchOrderTab,
@@ -21,10 +27,18 @@ async function probe(tx: SQL, work: () => Promise<void>) {
   await tx.query("SAVEPOINT dispatch_probe");
   try {
     await work();
-    return { ready: true as boolean | null, reasons: [] as string[] };
+    return {
+      ready: true as boolean | null,
+      reasons: [] as string[],
+      issues: [] as AssignmentIssue[],
+    };
   } catch (e) {
     if (!(e instanceof AppError)) throw e;
-    return { ready: false as boolean | null, reasons: [e.message] };
+    const issues =
+      e instanceof AssignmentRequirementError
+        ? e.issues
+        : [fulfilmentIssue(e.message, e.code)];
+    return { ready: false as boolean | null, reasons: [e.message], issues };
   } finally {
     await tx.query("ROLLBACK TO SAVEPOINT dispatch_probe");
     await tx.query("RELEASE SAVEPOINT dispatch_probe");
@@ -38,18 +52,26 @@ export async function dispatchCentre(
 ) {
   allow(user, ["owner", "manager"]);
   if (action === "drivers.workspace") {
-    z.object({}).strict().parse(input ?? {});
-    if (user.role !== "owner" && !(await one(tx,
-      "SELECT id FROM branches WHERE id=$1 AND active", [user.branch_id],
-    ))) throw new AppError(403, "No active authorised branch assigned.");
+    z.object({})
+      .strict()
+      .parse(input ?? {});
+    if (
+      user.role !== "owner" &&
+      !(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active", [
+        user.branch_id,
+      ]))
+    )
+      throw new AppError(403, "No active authorised branch assigned.");
     const canEdit =
       ["owner", "manager"].includes(user.role) &&
       user.privilege_overrides?.["staff.manage"] !== "deny";
     const canManageAccounts = canEdit && user.role === "owner";
     const branches = canManageAccounts
-      ? (await tx.query(
-          "SELECT id AS value,name AS label FROM branches WHERE active ORDER BY name,id",
-        )).rows
+      ? (
+          await tx.query(
+            "SELECT id AS value,name AS label FROM branches WHERE active ORDER BY name,id",
+          )
+        ).rows
       : [];
     const { rows: drivers } = await tx.query(
       `SELECT u.id,u.name,u.active,u.driver_available,b.name AS branch,
@@ -61,7 +83,13 @@ export async function dispatchCentre(
        ORDER BY lower(u.name),u.id`,
       [user.role === "owner", user.branch_id],
     );
-    return { drivers, canEdit, canManageAccounts, canChangeAvailability: canEdit && driverAvailabilityWritesEnabled(), branches };
+    return {
+      drivers,
+      canEdit,
+      canManageAccounts,
+      canChangeAvailability: canEdit && driverAvailabilityWritesEnabled(),
+      branches,
+    };
   }
   if (action === "dispatch.candidates") {
     const d = z.object({ orderId: z.string().uuid() }).strict().parse(input);
@@ -92,20 +120,32 @@ export async function dispatchCentre(
     const candidates = [];
     for (const driver of drivers) {
       const readiness = await probe(tx, async () => {
+        const issues: AssignmentIssue[] = [];
         if (driver.id === order.driver_id)
-          throw new AppError(
-            409,
-            "Already assigned; select a different eligible driver for reassignment.",
-          );
-        if (!driver.active || !driver.driver_available)
-          throw new AppError(409, "Driver is inactive or unavailable.");
+          issues.push(assignmentIssue("DRIVER_ALREADY_ASSIGNED"));
+        if (!driver.active) issues.push(assignmentIssue("DRIVER_INACTIVE"));
+        if (!driver.driver_available)
+          issues.push(assignmentIssue("DRIVER_UNAVAILABLE"));
+        try {
+          await vehicleReady(tx, driver.id, order.id, order.branch_id);
+        } catch (e) {
+          if (!(e instanceof AssignmentRequirementError)) throw e;
+          issues.push(...e.issues);
+        }
+        if (issues.length) throw new AssignmentRequirementError(issues);
         await fulfilmentReady(tx, { ...order, driver_id: driver.id });
-        await vehicleReady(tx, driver.id, order.id, order.branch_id);
       });
       candidates.push({ ...driver, readiness });
     }
     return {
       orderId: order.id,
+      reference: order.reference,
+      branch: await one(tx, "SELECT id,name FROM branches WHERE id=$1", [
+        order.branch_id,
+      ]),
+      checkedAt: new Date().toISOString(),
+      canReviewVehicles: user.role === "owner",
+      canReviewDrivers: user.privilege_overrides?.["staff.manage"] !== "deny",
       action:
         order.status === "assigned" ? "dispatch.reassign" : "dispatch.assign",
       version: Number(order.tracking_version),

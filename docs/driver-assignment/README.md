@@ -1,0 +1,13 @@
+# Actionable driver assignment readiness
+
+The previous message combined missing trips, inactive/unsuitable vehicles and branch mismatches. The Orders modal listed active drivers without checking those prerequisites. The Orders status action and Dispatch Centre now share server-authoritative readiness cards: exact blockers, responsible person, resolution steps, branch context and Refresh eligibility. Blocked drivers and unknown/loading/failed eligibility cannot be submitted. Refresh clears selection and preserves the reason. A changed prerequisite is rechecked transactionally at submission; errors retain the Dispatch drawer context.
+
+Canonical fleet validation now returns distinct codes for missing trip, trip branch, vehicle branch, vehicle activity, LPG suitability and capacity. Independent driver account/availability issues are shown together. Capacity uses the original assigned-order and supplementary physical LPG custody calculations; no allocation or guard is relaxed. One discovered gap is closed: the vehicle’s own branch is now checked as well as its trip’s branch. Other payment/inspection/custody failures keep their canonical messages with responsible next steps. Other order checks still report the first rejection reached by the existing guarded workflow; the UI does not claim an exhaustive safety certificate.
+
+Owner vehicle help opens the existing Deliveries → Manifests, LPG, trips & returns → Driver trips, vehicle and fuel records section. Managers are directed to the business owner for vehicle registration; neither actor can start a driver trip on the driver’s behalf. The same-branch driver starts their own duty trip with the existing vehicle and odometer controls.
+
+47 focused checks pass, including distinct exception states, role/branch denial, read-only snapshots, expired/stale eligibility, final legacy/enhanced assignment rejection, a successful isolated assignment, capacity including extra physical LPG, actual card rendering and actual async hook order/version/failed-refresh behavior. Six original prototype checks pass. Existing source proofs retain original hashes/commits and explicitly map only the six authorised web files; no assertions are dropped. The new source files are separately hashed.
+
+Hosted read-only acceptance and deployment are pending. No hosted assignment, trip start/end, qualification renewal, stock/payment mutation, message or mobile binary is required by this verification. Production NO-GO and all original DDI/native/provider/import/retain-all gates remain.
+
+[Matrix](../traceability/driver-assignment-rtm.md) · [Manual addendum](../user-manual/driver-assignment.md)

@@ -24,6 +24,7 @@ import { api, Notice, Loading, money } from "./ui";
 import { ActionLoadingIndicator } from "./easygas-loader";
 import DispatchTracking from "./order-tracking";
 import { OperationsExtensions } from "./operations-completion";
+import { DriverAssignmentChoices } from "./driver-assignment";
 import {
   lagosDate,
   type DispatchTab,
@@ -46,6 +47,19 @@ export default function DispatchCentre({ user }: { user: any }) {
     [reason, setReason] = useState(""),
     [selected, setSelected] = useState(""),
     [working, setWorking] = useState(false);
+  const [candidateLoading, setCandidateLoading] = useState(false);
+  const [assignmentError, setAssignmentError] = useState("");
+  useEffect(() => {
+    const openFleet = () => {
+      if (window.location.hash === "#driver-fleet") {
+        setView("operations");
+        setCandidate(null);
+      }
+    };
+    openFleet();
+    window.addEventListener("hashchange", openFleet);
+    return () => window.removeEventListener("hashchange", openFleet);
+  }, []);
   const [mapDriver, setMapDriver] = useState("");
   const [mapFreshness, setMapFreshness] = useState("");
   const [locationScope, setLocationScope] = useState("");
@@ -175,7 +189,8 @@ export default function DispatchCentre({ user }: { user: any }) {
     const prior = openerRef.current;
     const handler = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setCandidate(null);
+        if (dialogRef.current?.getAttribute("aria-busy") !== "true")
+          setCandidate(null);
         return;
       }
       if (event.key !== "Tab") return;
@@ -199,12 +214,13 @@ export default function DispatchCentre({ user }: { user: any }) {
       document.removeEventListener("keydown", handler);
       prior?.focus();
     };
-  }, [candidate]);
+  }, [candidate?.orderId]);
   async function choose(order: any) {
     openerRef.current = document.activeElement as HTMLElement | null;
     setError("");
     setReason("");
     setSelected("");
+    setAssignmentError("");
     const generation = sequence.current;
     try {
       const result = await api(
@@ -215,10 +231,47 @@ export default function DispatchCentre({ user }: { user: any }) {
       setError(e.message);
     }
   }
+  async function refreshCandidates(orderId = candidate?.orderId) {
+    if (!orderId) return;
+    setSelected("");
+    setCandidateLoading(true);
+    try {
+      const result = await api(
+        "dispatch.candidates?orderId=" + encodeURIComponent(orderId),
+      );
+      setCandidate((prior: any) =>
+        prior?.orderId === orderId ? result : prior,
+      );
+    } catch (e: any) {
+      // Retain context/reason but fail closed: a failed refresh cannot reuse old eligibility.
+      setCandidate((prior: any) =>
+        prior?.orderId === orderId
+          ? {
+              ...prior,
+              writesEnabled: false,
+              candidates: [],
+              eligibilityUnavailable: true,
+            }
+          : prior,
+      );
+      setAssignmentError(e.message);
+    } finally {
+      setCandidateLoading(false);
+    }
+  }
   async function assign() {
-    if (!candidate || !selected) return;
+    if (
+      !candidate ||
+      !selected ||
+      candidateLoading ||
+      !candidate.writesEnabled ||
+      !candidate.candidates.some(
+        (d: any) => d.id === selected && d.readiness.ready === true,
+      )
+    )
+      return;
     setWorking(true);
-    setError("");
+    setAssignmentError("");
     try {
       const fingerprint = JSON.stringify({
         identity: user.id,
@@ -240,9 +293,9 @@ export default function DispatchCentre({ user }: { user: any }) {
       setCandidate(null);
       await refresh();
     } catch (e: any) {
-      setCandidate(null);
+      setAssignmentError(e.message);
+      await refreshCandidates(candidate.orderId);
       await refresh();
-      setError(e.message);
     } finally {
       setWorking(false);
     }
@@ -333,13 +386,15 @@ export default function DispatchCentre({ user }: { user: any }) {
         <div className="dc-heading-controls">
           <span className="dc-contact" aria-live="polite">
             <span className={error || !data ? "dc-dot stale" : "dc-dot"} />
-            {busy
-              ? <ActionLoadingIndicator label="Refreshing dispatch records" />
-              : error
-                ? "Updates unavailable"
-                : data
-                  ? "Polling updates"
-                  : "Waiting for update"}
+            {busy ? (
+              <ActionLoadingIndicator label="Refreshing dispatch records" />
+            ) : error ? (
+              "Updates unavailable"
+            ) : data ? (
+              "Polling updates"
+            ) : (
+              "Waiting for update"
+            )}
             <small>
               {data
                 ? "Last checked " +
@@ -371,7 +426,10 @@ export default function DispatchCentre({ user }: { user: any }) {
         </div>
       </header>
       {error && <Notice type="error" message={error} />}
-      {!data ? (!error || busy) && <Loading page label="Loading dispatch records" /> : <>
+      {!data ? (
+        (!error || busy) && <Loading page label="Loading dispatch records" />
+      ) : (
+        <>
       <div className="dc-kpis">
         {cards.map((c) => (
           <button
@@ -450,7 +508,10 @@ export default function DispatchCentre({ user }: { user: any }) {
       ) : (
         <>
           <div className="dc-layout">
-            <section className="dc-panel dc-queue" aria-label="Dispatch orders">
+                <section
+                  className="dc-panel dc-queue"
+                  aria-label="Dispatch orders"
+                >
               <div
                 className="dc-tabs"
                 role="tablist"
@@ -743,7 +804,9 @@ export default function DispatchCentre({ user }: { user: any }) {
                   >
                     <option value="">All visible drivers</option>
                     {data?.drivers
-                      .filter((driver: any) => Number(driver.active_stops) > 0)
+                          .filter(
+                            (driver: any) => Number(driver.active_stops) > 0,
+                          )
                       .map((driver: any) => (
                         <option key={driver.id} value={driver.id}>
                           {driver.name}
@@ -755,7 +818,9 @@ export default function DispatchCentre({ user }: { user: any }) {
                   Location status
                   <select
                     value={mapFreshness}
-                    onChange={(event) => setMapFreshness(event.target.value)}
+                        onChange={(event) =>
+                          setMapFreshness(event.target.value)
+                        }
                   >
                     <option value="">All recorded locations</option>
                     <option value="recent_observation">
@@ -780,7 +845,9 @@ export default function DispatchCentre({ user }: { user: any }) {
                     : { ...driver, location: null };
                   return (
                     <div className="dc-driver" key={d.id}>
-                      <span className="dc-avatar">{d.name.slice(0, 1)}</span>
+                          <span className="dc-avatar">
+                            {d.name.slice(0, 1)}
+                          </span>
                       <div>
                         <strong>{d.name}</strong>
                         <small>
@@ -835,14 +902,18 @@ export default function DispatchCentre({ user }: { user: any }) {
                             0,
                             Math.floor(
                               (Date.now() -
-                                Date.parse(d.location.lastKnown.recordedAt)) /
+                                    Date.parse(
+                                      d.location.lastKnown.recordedAt,
+                                    )) /
                                 1000,
                             ),
                           )}
                           s old · ±{d.location.lastKnown.accuracy}m
                         </small>
                       )}
-                      {!d.location?.lastKnown && <small>GPS unavailable</small>}
+                          {!d.location?.lastKnown && (
+                            <small>GPS unavailable</small>
+                          )}
                       <details
                         className="dc-driver-details"
                         id={`dispatch-driver-${d.id}`}
@@ -851,10 +922,11 @@ export default function DispatchCentre({ user }: { user: any }) {
                         <p>
                           Last authenticated contact:{" "}
                           {d.driver_last_seen_at
-                            ? new Date(d.driver_last_seen_at).toLocaleString(
-                                "en-NG",
-                                { timeZone: "Africa/Lagos" },
-                              ) + " (Lagos)"
+                                ? new Date(
+                                    d.driver_last_seen_at,
+                                  ).toLocaleString("en-NG", {
+                                    timeZone: "Africa/Lagos",
+                                  }) + " (Lagos)"
                             : "Unknown"}
                         </p>
                         {d.location?.lastKnown ? (
@@ -887,9 +959,9 @@ export default function DispatchCentre({ user }: { user: any }) {
                           </>
                         ) : (
                           <p>
-                            No authorised GPS observation is available. Location
-                            is shown only during an active, consented delivery
-                            trip.
+                                No authorised GPS observation is available.
+                                Location is shown only during an active,
+                                consented delivery trip.
                           </p>
                         )}
                       </details>
@@ -921,7 +993,8 @@ export default function DispatchCentre({ user }: { user: any }) {
                   <div>
                     <dt>Gas Delivered</dt>
                     <dd>
-                      {data ? data.operations.deliveredGrams / 1000 : "—"} kg
+                          {data ? data.operations.deliveredGrams / 1000 : "—"}{" "}
+                          kg
                     </dd>
                   </div>
                   <div>
@@ -936,13 +1009,14 @@ export default function DispatchCentre({ user }: { user: any }) {
                 </dl>
               </div>
               <p className="dc-muted">
-                Branch scope; loading, deliveries and verified returns use the
-                selected Lagos date. Order search filters do not partition
-                vehicle mass. Remaining is current open-load custody, including
-                held loads; it is not a physical stock verification. Held loads:{" "}
+                    Branch scope; loading, deliveries and verified returns use
+                    the selected Lagos date. Order search filters do not
+                    partition vehicle mass. Remaining is current open-load
+                    custody, including held loads; it is not a physical stock
+                    verification. Held loads:{" "}
                 {data?.operations.heldLoads ?? "—"}. Verified returns:{" "}
-                {data ? data.operations.verifiedReturnsGrams / 1000 : "—"} kg.
-                Return discrepancies recorded:{" "}
+                    {data ? data.operations.verifiedReturnsGrams / 1000 : "—"}{" "}
+                    kg. Return discrepancies recorded:{" "}
                 {data?.operations.discrepancyEvents ?? "—"}.
               </p>
             </section>
@@ -981,20 +1055,23 @@ export default function DispatchCentre({ user }: { user: any }) {
           </div>
         </>
       )}
-      </>}
+        </>
+      )}
       {candidate && (
         <div className="dc-modal-backdrop">
           <section
-            className="dc-drawer"
+            className="dc-drawer driver-assignment-dialog"
             ref={dialogRef}
             role="dialog"
             aria-modal="true"
+            aria-busy={working}
             aria-labelledby="assign-title"
           >
             <button
               autoFocus
               className="dc-close"
               aria-label="Close assignment"
+              disabled={working}
               onClick={() => setCandidate(null)}
             >
               <X />
@@ -1008,38 +1085,18 @@ export default function DispatchCentre({ user }: { user: any }) {
               Manual selection only. All safety, payment and custody checks run
               again when you submit.
             </p>
-            {!candidate.writesEnabled && (
-              <Notice
-                type="error"
-                message="Dispatch writes remain disabled pending operational release approval."
-              />
-            )}
-            <fieldset>
-              <legend><FieldCaption required={true}>Branch drivers</FieldCaption></legend>
-              {candidate.candidates.map((d: any) => (
-                <label key={d.id} className="dc-candidate">
-                  <input
-                    type="radio"
-                    name="driver"
-                    value={d.id}
-                    disabled={!d.readiness.ready}
-                    checked={selected === d.id}
-                    onChange={() => setSelected(d.id)}
+            <DriverAssignmentChoices
+              data={candidate.eligibilityUnavailable ? null : candidate}
+              loading={candidateLoading}
+              error={assignmentError}
+              selected={selected}
+              onSelect={setSelected}
+              disabled={working}
+              onRefresh={() => {
+                setAssignmentError("");
+                void refreshCandidates();
+              }}
                   />
-                  <span>
-                    <strong>{d.name}</strong>
-                    <small>
-                      {d.readiness.ready
-                        ? "Eligible at last check"
-                        : d.readiness.reasons.join(" ")}
-                    </small>
-                  </span>
-                </label>
-              ))}
-              {!candidate.candidates.length && (
-                <p>No drivers in this branch.</p>
-              )}
-            </fieldset>
             <label>
               <FieldCaption required={true}>Assignment reason</FieldCaption>
               <textarea
@@ -1053,8 +1110,12 @@ export default function DispatchCentre({ user }: { user: any }) {
               className="primary"
               disabled={
                 working ||
+                candidateLoading ||
                 !candidate.writesEnabled ||
                 !selected ||
+                !candidate.candidates.some(
+                  (d: any) => d.id === selected && d.readiness.ready === true,
+                ) ||
                 reason.trim().length < 10
               }
               onClick={assign}

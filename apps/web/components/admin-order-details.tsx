@@ -14,6 +14,10 @@ import OrderAdditions from "./order-additions";
 import OrderCylinderInspection from "./order-cylinder-inspection";
 import { orderTransitions } from "../../../packages/business-rules/src/forecast";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
+import {
+  DriverAssignmentChoices,
+  useAssignmentCandidates,
+} from "./driver-assignment";
 
 const early = ["placed", "accepted", "preparing"];
 const labels: Record<string, string> = {
@@ -215,7 +219,12 @@ export default function AdminOrderDetails({
             <DeliveryCompletion order={order} onDone={onChanged} />
           )}
           {view === "additions" && (
-            <OrderAdditions compact order={order} user={user} onChanged={onChanged} />
+            <OrderAdditions
+              compact
+              order={order}
+              user={user}
+              onChanged={onChanged}
+            />
           )}
           {view === "coverage" && (
             <ActionForm
@@ -444,11 +453,25 @@ export function OrderStatusAction({
     ),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const [selectedDriver, setSelectedDriver] = useState("");
+  const candidates = useAssignmentCandidates(
+    order.id,
+    Number(order.tracking_version),
+    status === "assigned",
+  );
+  const driverReady = Boolean(
+    candidates.data?.writesEnabled &&
+      candidates.data.candidates.some(
+        (d) => d.id === selectedDriver && d.readiness.ready === true,
+      ),
+  );
   return (
     <form
       className="stack"
       onSubmit={async (e) => {
         e.preventDefault();
+        if (status === "assigned" && (!driverReady || candidates.loading))
+          return;
         setBusy(true);
         setError("");
         const f = new FormData(e.currentTarget);
@@ -456,7 +479,10 @@ export function OrderStatusAction({
           await api("order.transition", {
             id: order.id,
             operationKey: crypto.randomUUID(),
-            version: Number(order.tracking_version),
+            version:
+              status === "assigned"
+                ? candidates.data!.version
+                : Number(order.tracking_version),
             status,
             note: String(f.get("note")),
             ...(status === "assigned"
@@ -469,6 +495,10 @@ export function OrderStatusAction({
           onDone();
         } catch (e: any) {
           setError(e.message);
+          if (status === "assigned") {
+            setSelectedDriver("");
+            await candidates.refresh();
+          }
         } finally {
           setBusy(false);
         }
@@ -479,7 +509,11 @@ export function OrderStatusAction({
         <select
           required
           value={status}
-          onChange={(e) => setStatus(e.target.value)}
+          onChange={(e) => {
+            setStatus(e.target.value);
+            setSelectedDriver("");
+            setError("");
+          }}
         >
           {allowed.map((s) => (
             <option value={s} key={s}>
@@ -489,21 +523,21 @@ export function OrderStatusAction({
         </select>
       </label>
       {status === "assigned" && (
-        <label>
-          <FieldCaption required>Driver</FieldCaption>
-          <select name="driverId" required defaultValue="">
-            <option value="" disabled>
-              Choose a driver
-            </option>
-            {drivers
-              .filter((d) => d.role === "driver" && d.active)
-              .map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name}
-                </option>
-              ))}
-          </select>
-        </label>
+        <>
+          <input type="hidden" name="driverId" value={selectedDriver} />
+          <DriverAssignmentChoices
+            data={candidates.data}
+            loading={candidates.loading}
+            error={candidates.error}
+            selected={selectedDriver}
+            onSelect={setSelectedDriver}
+            disabled={busy}
+            onRefresh={() => {
+              setSelectedDriver("");
+              void candidates.refresh();
+            }}
+          />
+        </>
       )}
       {status === "delivery_failed" && (
         <label>
@@ -522,7 +556,13 @@ export function OrderStatusAction({
         <FormInput name="note" required minLength={5} maxLength={500} />
       </label>
       {error && <Notice type="error" message={error} />}
-      <button className="button" disabled={busy}>
+      <button
+        className="button"
+        disabled={
+          busy ||
+          (status === "assigned" && (candidates.loading || !driverReady))
+        }
+      >
         {busy ? "Saving…" : (labels[status] ?? "Update order")}
       </button>
     </form>

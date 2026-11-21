@@ -42,3 +42,5 @@ Current consolidated Settings acceptance: [roles, typed editors, history and exc
 Native mobile Orders repair (21 November): [preview instructions and acceptance limits](mobile-orders-preview.md). Includes reloading the existing Expo Go source preview. The owner-session refund finding is now resolved by the [Orders and refunds authority addendum](native-order-refunds.md). Historical manual artifacts retained.
 
 Current sequential mobile acceptance (21 November): [role testing and corrected behaviour](mobile-device-acceptance.md). Covers customer/commercial refunds, independent staff review, seven native component observations, seven repairs, theme and evidence-state corrections, exact older-record selection and hosted-preview restoration. No new native binary or launch waiver.
+
+Driver assignment readiness (21 November): [current Orders/Deliveries instructions and blocker resolutions](driver-assignment.md). Exact trip/vehicle/branch/availability/capacity guidance, eligible-only selection and refresh preserve final canonical guards. Verification/rollout evidence is recorded in the linked phase matrix; historical Word/PDF artifacts retained.

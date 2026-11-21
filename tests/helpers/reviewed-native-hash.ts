@@ -2,13 +2,14 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
+import { reviewedAssignmentSourceHash } from "../../scripts/lib/reviewed-assignment-source.mjs";
 // Extend earlier preservation guards through the existing approved phases.
 // Every transition must match both its incoming hash and its historical commit.
 export async function reviewedNativeHash(
   file: string,
   prior: string,
 ): Promise<string> {
-  if (!file.startsWith("apps/mobile/")) return prior;
+  if (!file.startsWith("apps/mobile/")) return reviewedAssignmentSourceHash(file, prior);
   for (const phase of [
     "mobile-transparent-logo",
     "mobile-orders-text-fix",

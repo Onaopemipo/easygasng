@@ -1,0 +1,69 @@
+{
+  "stage": "before",
+  "base": "https://easygas-client-demo.vercel.app",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "name": "Seven existing labelled QA identities authenticated without changing authority",
+      "status": "PASS"
+    },
+    {
+      "name": "Five non-dispatch roles denied; anonymous access denied",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid order reference rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Readiness refresh leaves order version, assignment, attempts, inventory, vehicles and trips unchanged",
+      "status": "PASS"
+    }
+  ],
+  "selection": {
+    "orderId": "35851409-2e39-43d2-ba7d-b7e9019479f8",
+    "reference": "EG-2026-027A088D"
+  },
+  "before": {
+    "order": "951441667e48987713cb12e5e7e58eb04aadbecabf0905b5f42419760f54b727",
+    "inventory": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e",
+    "fleet": "de6ee1ff03cd1d986946f9c75bb71f84a4525e57972f43aa0efcd4d3333927bc"
+  },
+  "after": {
+    "order": "951441667e48987713cb12e5e7e58eb04aadbecabf0905b5f42419760f54b727",
+    "inventory": "586805f59bf87cd83056d9bd8b53a39161400d0a3a5ebfcda791ef4fa425d67e",
+    "fleet": "de6ee1ff03cd1d986946f9c75bb71f84a4525e57972f43aa0efcd4d3333927bc"
+  },
+  "status": "PASS",
+  "sessionsRevoked": [
+    {
+      "role": "owner",
+      "status": 200
+    },
+    {
+      "role": "manager",
+      "status": 200
+    },
+    {
+      "role": "finance",
+      "status": 200
+    },
+    {
+      "role": "driver",
+      "status": 200
+    },
+    {
+      "role": "technician",
+      "status": 200
+    },
+    {
+      "role": "customer",
+      "status": 200
+    },
+    {
+      "role": "commercial",
+      "status": 200
+    }
+  ],
+  "completedAt": "2026-11-21T12:09:45.541Z"
+}

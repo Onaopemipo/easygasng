@@ -386,13 +386,14 @@ test("PBR21-RELEASE: historical baseline evidence is linked to immutable CI and 
 
 test('PBR21-SOURCE-CONTINUATION: historical web proofs extend only through explicit approved files and reject altered incoming hashes',async()=>{
  const {reviewedBlockerSourceHash}=await import('../scripts/lib/reviewed-blocker-source.mjs');
+ const {reviewedAssignmentSourceHash}=await import('../scripts/lib/reviewed-assignment-source.mjs');
  const {createHash}=await import('node:crypto');const sha=(b:Buffer)=>createHash('sha256').update(b).digest('hex');
  const review=JSON.parse(await readFile('docs/blocker-reconciliation/reviewed-source-changes.json','utf8'));
  assert.deepEqual(Object.keys(review.files).sort(),['apps/web/app/product-ui.css','apps/web/components/operational-incidents.css','apps/web/components/operational-incidents.tsx','apps/web/components/readiness.tsx','apps/web/lib/observability.ts','apps/web/lib/professional-services.ts','apps/web/lib/readiness.ts','apps/web/lib/service.ts']);
  assert.ok(Object.keys(review.files).every(p=>p.startsWith('apps/web/')));
  for(const [file,hash]of Object.entries(review.files)){
-  assert.equal(sha(await readFile(file)),hash);
-  assert.equal(await reviewedBlockerSourceHash(file,review.baseline[file]),hash);
+  assert.equal(sha(await readFile(file)),await reviewedAssignmentSourceHash(file,hash));
+  assert.equal(await reviewedBlockerSourceHash(file,review.baseline[file]),await reviewedAssignmentSourceHash(file,hash));
   await assert.rejects(()=>reviewedBlockerSourceHash(file,'0'.repeat(64)),/historical hash/);
  }
  for(const [file,hash]of Object.entries(review.addedFiles))assert.equal(sha(await readFile(file)),hash);

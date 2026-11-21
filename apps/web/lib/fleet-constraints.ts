@@ -1,5 +1,9 @@
 import { one, type SQL } from "./db";
-import { AppError } from "./auth";
+import { AssignmentRequirementError } from "./assignment-requirement-error";
+import {
+  assignmentIssue,
+  type AssignmentIssue,
+} from "../../../packages/business-rules/src/assignment-requirements";
 export async function vehicleReady(
   tx: SQL,
   driverId: string,
@@ -9,14 +13,21 @@ export async function vehicleReady(
   await tx.query("SELECT id FROM users WHERE id=$1 FOR UPDATE", [driverId]);
   const t = await one(
     tx,
-    "SELECT t.*,v.capacity_grams,v.lpg_suitable,v.active FROM driver_trips t JOIN driver_vehicles v ON v.id=t.vehicle_id WHERE t.driver_id=$1 AND t.ended_at IS NULL FOR UPDATE OF t,v",
+    "SELECT t.*,v.capacity_grams,v.lpg_suitable,v.active,v.branch_id AS vehicle_branch_id FROM driver_trips t JOIN driver_vehicles v ON v.id=t.vehicle_id WHERE t.driver_id=$1 AND t.ended_at IS NULL FOR UPDATE OF t,v",
     [driverId],
   );
-  if (!t?.active || !t.lpg_suitable || t.branch_id !== branchId)
-    throw new AppError(
-      409,
-      "Driver needs an active suitable vehicle trip in the fulfilment branch.",
-    );
+  if (!t)
+    throw new AssignmentRequirementError([
+      assignmentIssue("DRIVER_TRIP_REQUIRED"),
+    ]);
+  const issues: AssignmentIssue[] = [];
+  if (t.branch_id !== branchId)
+    issues.push(assignmentIssue("TRIP_BRANCH_MISMATCH"));
+  if (!t.active) issues.push(assignmentIssue("VEHICLE_INACTIVE"));
+  if (!t.lpg_suitable) issues.push(assignmentIssue("VEHICLE_LPG_UNVERIFIED"));
+  if (t.vehicle_branch_id !== branchId)
+    issues.push(assignmentIssue("VEHICLE_BRANCH_MISMATCH"));
+  if (issues.length) throw new AssignmentRequirementError(issues);
   const grams = Number(
     (
       await one(
@@ -36,6 +47,15 @@ export async function vehicleReady(
     )?.n ?? 0,
   );
   if (grams + extraCustody > Number(t.capacity_grams))
-    throw new AppError(409, "Vehicle gas capacity exceeded.");
+    throw new AssignmentRequirementError([
+      {
+        code: "VEHICLE_CAPACITY_EXCEEDED",
+        title: `Vehicle gas capacity exceeded: ${(grams + extraCustody) / 1000} kg required, ${Number(t.capacity_grams) / 1000} kg approved`,
+        resolution:
+          "This includes the order, other assigned deliveries and extra physical LPG custody. Choose another eligible vehicle/driver, or reconcile existing deliveries and custody before refreshing. Do not increase the approved capacity just to clear the check.",
+        responsible: "Dispatch / authorised operations staff",
+        help: "fleet",
+      },
+    ]);
   return t;
 }

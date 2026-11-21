@@ -209,7 +209,14 @@
         "apps/web/lib/order-tracking.ts",
         "apps/web/lib/cylinder-allocation.ts",
         "apps/web/components/order-tracking.tsx",
-        "packages/business-rules/src/forecast.ts"
+        "packages/business-rules/src/forecast.ts",
+        "apps/web/lib/fleet-constraints.ts",
+        "apps/web/lib/assignment-requirement-error.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/app/product-ui.css",
+        "packages/business-rules/src/assignment-requirements.ts"
       ],
       "dataSource": "Canonical orders/attempt versions; active/available branch users; trip/vehicle, reserved stock/serials, net verified payment and approved COD",
       "securityControl": "Role/branch/assignment scoping, guarded transactions/idempotency, retained safety blockers and OFF release flags",
@@ -218,7 +225,9 @@
         "tests/operations-completion.test.ts",
         "tests/order-tracking.test.ts",
         "tests/order-tracking-postgres.test.ts",
-        "tests/dispatch-custody-capacity.test.ts"
+        "tests/dispatch-custody-capacity.test.ts",
+        "tests/driver-assignment.test.ts",
+        "tests/driver-assignment-components.test.ts"
       ],
       "testIds": [
         "DDI-S024",
@@ -239,13 +248,14 @@
       "evidence": [
         "docs/dispatch-driver/evidence/dispatch-final-tests.txt",
         "docs/dispatch-driver/evidence/final-tests.txt",
-        "docs/dispatch-driver/evidence/final-serial-guard-tests.txt"
+        "docs/dispatch-driver/evidence/final-serial-guard-tests.txt",
+        "docs/driver-assignment/evidence/focused-tests.txt"
       ],
       "acceptanceGate": "DDI-G07",
       "status": "PARTIAL",
       "reason": "Existing canonical systems extended and bounded controls verified; no full-scope production or device acceptance claimed.",
       "testResult": "Bounded automated checks PASS; full operational acceptance remains open",
-      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope."
+      "outstandingWork": "See docs/dispatch-driver/09-open-blockers-and-production-gates.md; native/device, provider, large-queue performance and independent release acceptance remain in scope. The bounded DASSIGN continuation is tracked separately in docs/traceability/driver-assignment-rtm.json; its verification does not close the complete DDI scope."
     },
     {
       "id": "DDI-R07",
@@ -1302,6 +1312,10 @@
     {
       "date": "2026-11-18",
       "change": "User-reported missing web-bell notice extends DDI-S040: prior TRK-18 customer outbox evidence did not prove initial driver alerts. DAN-01\u201304 correct and locally verify this bounded gap; all original DDI requirements/scenarios/gates and production holds retained."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "DDI-R06 retains its original scope and PARTIAL status. Added explicit driver/trip/vehicle/branch/capacity prerequisites and shared Orders/Dispatch cards under DASSIGN-01\u201304; exact evidence tracked separately. Final transactional safety/payment/custody guards and all original gates remain."
     }
   ],
   "coverage": {

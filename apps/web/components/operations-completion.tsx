@@ -125,6 +125,20 @@ export function OperationForm({
   );
 }
 export function FleetPanel({ user }: { user: any }) {
+  const [fleetOpen, setFleetOpen] = useState(false);
+  const fleetRef = useRef<HTMLDetailsElement | null>(null);
+  useEffect(() => {
+    const reveal = () => {
+      if (window.location.hash !== "#driver-fleet") return;
+      setFleetOpen(true);
+      requestAnimationFrame(() =>
+        fleetRef.current?.scrollIntoView({ block: "start" }),
+      );
+    };
+    reveal();
+    window.addEventListener("hashchange", reveal);
+    return () => window.removeEventListener("hashchange", reveal);
+  }, []);
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [version, setVersion] = useState(0);
@@ -135,7 +149,13 @@ export function FleetPanel({ user }: { user: any }) {
   }, [version]);
   const refresh = () => setVersion((v) => v + 1);
   return (
-    <details className="panel">
+    <details
+      className="panel"
+      id="driver-fleet"
+      ref={fleetRef}
+      open={fleetOpen}
+      onToggle={(e) => setFleetOpen(e.currentTarget.open)}
+    >
       <summary>Driver trips, vehicle and fuel records</summary>
       {error && <Notice type="error" message={error} />}
       <p>

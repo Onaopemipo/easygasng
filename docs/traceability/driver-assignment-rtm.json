@@ -1,0 +1,244 @@
+{
+  "phase": "Actionable driver assignment readiness \u2014 21 November 2026",
+  "productionDecision": "Production NO-GO and original DDI/PR/native/provider/import/retain-all gates retained; no new mobile binaries",
+  "requirements": [
+    {
+      "id": "DASSIGN-01",
+      "requirement": "Return exact canonical driver/trip/vehicle/branch/capacity blockers and responsible next steps",
+      "priority": "P0",
+      "scope": "Bounded web Orders/Dispatch assignment diagnostics; retained legacy callers receive precise final errors. No new workflow authority or native binary.",
+      "uiReference": "User-reported generic active suitable vehicle trip message while assigning an order",
+      "route": [
+        "/admin/orders",
+        "/admin/deliveries",
+        "GET /api/dispatch.candidates",
+        "POST /api/order.transition",
+        "POST /api/dispatch.assign"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/fleet-constraints.ts",
+        "apps/web/lib/assignment-requirement-error.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/app/product-ui.css",
+        "packages/business-rules/src/assignment-requirements.ts"
+      ],
+      "dataSource": "Authorised canonical orders, branch drivers, open driver_trips, driver_vehicles, assigned gas and extra physical LPG custody; existing fulfilment guards.",
+      "securityControl": "Owner/manager scoped reads and final guarded transactions; no role/branch grant expansion, savepoint rollback, no writes from readiness reads.",
+      "testFiles": [
+        "tests/driver-assignment.test.ts",
+        "tests/driver-assignment-components.test.ts",
+        "tests/dispatch-custody-capacity.test.ts"
+      ],
+      "testIds": [
+        "DASSIGN-EXACT",
+        "DASSIGN-CAPACITY"
+      ],
+      "negativeTests": [
+        "DASSIGN-NEG"
+      ],
+      "evidence": [
+        "docs/driver-assignment/evidence/focused-tests.txt",
+        "docs/driver-assignment/evidence/build.txt",
+        "docs/driver-assignment/evidence/typecheck.txt",
+        "docs/driver-assignment/evidence/prototype-checks.txt"
+      ],
+      "acceptanceGate": "DASSIGN-G01",
+      "status": "PARTIAL",
+      "reason": "Implemented; 47 focused exception/rendering/async/history regressions and six prototype checks pass. Hosted verification/deployment and final manual evidence pending.",
+      "testResult": "PASS: 47 focused checks, zero failures/skips; six historical prototype checks, production build and sequential typecheck. Hosted acceptance pending.",
+      "outstandingWork": "Hosted exact-source deployment, read-only seven-role probes, actual desktop/phone UI and final manual/matrix evidence."
+    },
+    {
+      "id": "DASSIGN-02",
+      "requirement": "Show shared readiness cards before assignment in Orders and Dispatch, with safe refresh and eligible-only selection",
+      "priority": "P1",
+      "scope": "Bounded web Orders/Dispatch assignment diagnostics; retained legacy callers receive precise final errors. No new workflow authority or native binary.",
+      "uiReference": "User-reported generic active suitable vehicle trip message while assigning an order",
+      "route": [
+        "/admin/orders",
+        "/admin/deliveries",
+        "GET /api/dispatch.candidates",
+        "POST /api/order.transition",
+        "POST /api/dispatch.assign"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/fleet-constraints.ts",
+        "apps/web/lib/assignment-requirement-error.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/app/product-ui.css",
+        "packages/business-rules/src/assignment-requirements.ts"
+      ],
+      "dataSource": "Authorised canonical orders, branch drivers, open driver_trips, driver_vehicles, assigned gas and extra physical LPG custody; existing fulfilment guards.",
+      "securityControl": "Owner/manager scoped reads and final guarded transactions; no role/branch grant expansion, savepoint rollback, no writes from readiness reads.",
+      "testFiles": [
+        "tests/driver-assignment.test.ts",
+        "tests/driver-assignment-components.test.ts",
+        "tests/dispatch-custody-capacity.test.ts"
+      ],
+      "testIds": [
+        "DASSIGN-UI",
+        "DASSIGN-REFRESH"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-assignment/evidence/focused-tests.txt",
+        "docs/driver-assignment/evidence/build.txt",
+        "docs/driver-assignment/evidence/typecheck.txt",
+        "docs/driver-assignment/evidence/prototype-checks.txt"
+      ],
+      "acceptanceGate": "DASSIGN-G02",
+      "status": "PARTIAL",
+      "reason": "Implemented; 47 focused exception/rendering/async/history regressions and six prototype checks pass. Hosted verification/deployment and final manual evidence pending.",
+      "testResult": "PASS: 47 focused checks, zero failures/skips; six historical prototype checks, production build and sequential typecheck. Hosted acceptance pending.",
+      "outstandingWork": "Hosted exact-source deployment, read-only seven-role probes, actual desktop/phone UI and final manual/matrix evidence."
+    },
+    {
+      "id": "DASSIGN-03",
+      "requirement": "Preserve final transactional guards, branch/role isolation, read-only probes and existing custody/payment checks",
+      "priority": "P0",
+      "scope": "Bounded web Orders/Dispatch assignment diagnostics; retained legacy callers receive precise final errors. No new workflow authority or native binary.",
+      "uiReference": "User-reported generic active suitable vehicle trip message while assigning an order",
+      "route": [
+        "/admin/orders",
+        "/admin/deliveries",
+        "GET /api/dispatch.candidates",
+        "POST /api/order.transition",
+        "POST /api/dispatch.assign"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/fleet-constraints.ts",
+        "apps/web/lib/assignment-requirement-error.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/app/product-ui.css",
+        "packages/business-rules/src/assignment-requirements.ts"
+      ],
+      "dataSource": "Authorised canonical orders, branch drivers, open driver_trips, driver_vehicles, assigned gas and extra physical LPG custody; existing fulfilment guards.",
+      "securityControl": "Owner/manager scoped reads and final guarded transactions; no role/branch grant expansion, savepoint rollback, no writes from readiness reads.",
+      "testFiles": [
+        "tests/driver-assignment.test.ts",
+        "tests/driver-assignment-components.test.ts",
+        "tests/dispatch-custody-capacity.test.ts"
+      ],
+      "testIds": [
+        "DASSIGN-NEG",
+        "DISP-CUSTODY01"
+      ],
+      "negativeTests": [
+        "DASSIGN-NEG"
+      ],
+      "evidence": [
+        "docs/driver-assignment/evidence/focused-tests.txt",
+        "docs/driver-assignment/evidence/build.txt",
+        "docs/driver-assignment/evidence/typecheck.txt",
+        "docs/driver-assignment/evidence/prototype-checks.txt"
+      ],
+      "acceptanceGate": "DASSIGN-G03",
+      "status": "PARTIAL",
+      "reason": "Implemented; 47 focused exception/rendering/async/history regressions and six prototype checks pass. Hosted verification/deployment and final manual evidence pending.",
+      "testResult": "PASS: 47 focused checks, zero failures/skips; six historical prototype checks, production build and sequential typecheck. Hosted acceptance pending.",
+      "outstandingWork": "Hosted exact-source deployment, read-only seven-role probes, actual desktop/phone UI and final manual/matrix evidence."
+    },
+    {
+      "id": "DASSIGN-04",
+      "requirement": "Deploy and verify the client demo correction and update the manual and stable traceability",
+      "priority": "P1",
+      "scope": "Bounded web Orders/Dispatch assignment diagnostics; retained legacy callers receive precise final errors. No new workflow authority or native binary.",
+      "uiReference": "User-reported generic active suitable vehicle trip message while assigning an order",
+      "route": [
+        "/admin/orders",
+        "/admin/deliveries",
+        "GET /api/dispatch.candidates",
+        "POST /api/order.transition",
+        "POST /api/dispatch.assign"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/fleet-constraints.ts",
+        "apps/web/lib/assignment-requirement-error.ts",
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/components/driver-assignment.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/app/product-ui.css",
+        "packages/business-rules/src/assignment-requirements.ts"
+      ],
+      "dataSource": "Authorised canonical orders, branch drivers, open driver_trips, driver_vehicles, assigned gas and extra physical LPG custody; existing fulfilment guards.",
+      "securityControl": "Owner/manager scoped reads and final guarded transactions; no role/branch grant expansion, savepoint rollback, no writes from readiness reads.",
+      "testFiles": [
+        "tests/driver-assignment.test.ts",
+        "tests/driver-assignment-components.test.ts",
+        "tests/dispatch-custody-capacity.test.ts"
+      ],
+      "testIds": [
+        "DASSIGN-SOURCE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-assignment/evidence/focused-tests.txt",
+        "docs/driver-assignment/evidence/build.txt",
+        "docs/driver-assignment/evidence/typecheck.txt",
+        "docs/driver-assignment/evidence/prototype-checks.txt"
+      ],
+      "acceptanceGate": "DASSIGN-G04",
+      "status": "PARTIAL",
+      "reason": "Implemented; 47 focused exception/rendering/async/history regressions and six prototype checks pass. Hosted verification/deployment and final manual evidence pending.",
+      "testResult": "PASS: 47 focused checks, zero failures/skips; six historical prototype checks, production build and sequential typecheck. Hosted acceptance pending.",
+      "outstandingWork": "Hosted exact-source deployment, read-only seven-role probes, actual desktop/phone UI and final manual/matrix evidence."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DASSIGN-G01",
+      "description": "Return exact canonical driver/trip/vehicle/branch/capacity blockers and responsible next steps",
+      "status": "PARTIAL",
+      "reason": "Implementation/verification pending."
+    },
+    {
+      "id": "DASSIGN-G02",
+      "description": "Show shared readiness cards before assignment in Orders and Dispatch, with safe refresh and eligible-only selection",
+      "status": "PARTIAL",
+      "reason": "Implementation/verification pending."
+    },
+    {
+      "id": "DASSIGN-G03",
+      "description": "Preserve final transactional guards, branch/role isolation, read-only probes and existing custody/payment checks",
+      "status": "PARTIAL",
+      "reason": "Implementation/verification pending."
+    },
+    {
+      "id": "DASSIGN-G04",
+      "description": "Deploy and verify the client demo correction and update the manual and stable traceability",
+      "status": "PARTIAL",
+      "reason": "Implementation/verification pending."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 0,
+      "total": 4
+    },
+    "gates": {
+      "passed": 0,
+      "total": 4
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-21",
+      "change": "Registered authorised improvement. Two principal assignment entry points share canonical readiness; precise final API blockers also cover retained legacy assignment callers. No automatic vehicle/trip/availability change or hosted fulfilment authorised by verification."
+    }
+  ]
+}
