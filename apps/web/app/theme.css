@@ -312,16 +312,14 @@ html[data-theme="dark"]
   outline-offset: 3px;
 }
 html[data-theme="dark"] .brand .logo-mark {
-  background-image: url("/assets/easygas-logo-hd.png");
-  background-color: #eef8ef;
-  border-radius: 8px;
+  background-color: transparent;
+  filter: brightness(0) invert(1);
 }
 html[data-theme="dark"]
   :is(.customer-sidebar, .header)
-  img[alt="EasyGas Energy Solutions"] {
-  background: #f1f9f2;
-  border-radius: 9px;
-  padding: 3px;
+  :is(.customer-full-logo, .customer-small-logo) {
+  background: transparent;
+  filter: brightness(0) invert(1);
 }
 button,
 a,
@@ -971,10 +969,6 @@ html[data-theme="dark"]
   ) {
   border-color: var(--line);
 }
-html[data-theme="dark"] .workspace-full-logo {
-  background: #fff;
-  border-radius: 8px;
-}
 html[data-theme="dark"] .admin-header .theme-toggle {
   display: inline-grid;
   flex-shrink: 0;
@@ -1581,7 +1575,13 @@ html[data-theme] .admin-shell.workspace-shell .workspace-sidebar {
   background: radial-gradient(ellipse at top,#064631 0,#032c23 48%,#021f1a 100%);
   color:#f0fff5;border-color:#225d49;
 }
-.workspace-shell .workspace-full-logo {background:#f5fff5;border-radius:12px;padding:7px;object-fit:contain;}
+/* The staff sidebar stays dark green in both themes: inverse alpha artwork,
+   with no light tile. Public/customer logos retain brand colours in light mode. */
+.workspace-shell :is(.workspace-full-logo, .workspace-compact-logo) {
+  background: transparent;
+  filter: brightness(0) invert(1);
+  object-fit: contain;
+}
 .workspace-shell .workspace-sidebar :is(.workspace-group-toggle,.workspace-nav-link,.workspace-collapse,.workspace-drawer-close,.workspace-footer-link,.workspace-branch,.workspace-profile-name,.workspace-profile-name small,.workspace-nav-link>svg){color:#e1f0e8;}
 .workspace-shell .workspace-sidebar .workspace-group-toggle{min-height:44px;font-size:15px;text-transform:none;font-weight:650;letter-spacing:0;}
 .workspace-shell .workspace-sidebar :is(.workspace-nav-group,.workspace-sidebar-footer,.workspace-profile){border-color:#245243;}

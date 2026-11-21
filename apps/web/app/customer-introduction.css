@@ -56,10 +56,11 @@ body:has(.customer-intro[open]) {
 .intro-bar img {
   display: block;
   object-fit: contain;
-  padding: 4px;
-  border-radius: 9px;
-  background: white;
+  background: transparent;
   max-width: 50%;
+}
+:root[data-theme="dark"] .intro-bar img {
+  filter: brightness(0) invert(1);
 }
 .intro-skip,
 .intro-next,

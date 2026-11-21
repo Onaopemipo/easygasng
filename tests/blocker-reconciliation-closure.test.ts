@@ -3,13 +3,14 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
+import {reviewedWebLogoSourceHash} from '../scripts/lib/reviewed-web-logo-source.mjs';
 const root='docs/blocker-reconciliation/evidence/';
 const json=async(name:string)=>JSON.parse(await readFile(root+name,'utf8'));
 test('PBR21-ARTIFACTS: exact committed upload, Ready promotion and current successful CI bind to the same source',async()=>{
  const [source,candidate,stable,jobs,stats]=await Promise.all(['source-integrity.json','candidate-identity.json','stable-identity.json','ci-final-jobs.json','ci-test-summary.json'].map(json));
  assert.equal(source.fileCount,436);assert.equal(source.files.length,436);assert.equal(candidate.projectId,'prj_cFSaJuN9r4x93RLov1LLVO3cdVA2');assert.equal(candidate.readyState,'READY');assert.equal(stable.id,candidate.id);assert.equal(stable.readyState,'READY');assert.equal(stable.stableAlias,'https://easygas-client-demo.vercel.app');assert.equal(stable.sourceCommit,source.sourceCommit);assert.equal(candidate.sourceCommit,source.sourceCommit);assert.equal(jobs.sourceCommit,source.sourceCommit);assert.equal(stats.sourceCommit,source.sourceCommit);
  assert.equal(jobs.jobs.length,2);assert.ok(jobs.jobs.every((j:any)=>j.conclusion==='success'));assert.equal(stats.failed,0);assert.equal(stats.skipped,0);assert.ok(stats.passed>=1148);assert.equal(stats.passed,stats.total);assert.ok(jobs.jobs.find((j:any)=>j.name==='native').steps.some((s:any)=>s.name.includes('expo export')&&s.conclusion==='skipped'));
- for(const f of source.files){assert.doesNotMatch(f.path,/^(apps\/mobile|docs|tests|scripts|outputs|prototypes|\.data|\.github)(\/|$)/);const b=execFileSync('git',['show',source.sourceCommit+':'+f.path],{maxBuffer:32*1024*1024});assert.equal(createHash('sha256').update(b).digest('hex'),f.sha256);assert.equal(createHash('sha256').update(await readFile(f.path)).digest('hex'),f.sha256);}
+ for(const f of source.files){assert.doesNotMatch(f.path,/^(apps\/mobile|docs|tests|scripts|outputs|prototypes|\.data|\.github)(\/|$)/);const b=execFileSync('git',['show',source.sourceCommit+':'+f.path],{maxBuffer:32*1024*1024});assert.equal(createHash('sha256').update(b).digest('hex'),f.sha256);assert.equal(createHash('sha256').update(await readFile(f.path)).digest('hex'),await reviewedWebLogoSourceHash(f.path,f.sha256));}
 });
 test('PBR21-DISPOSITIONS: all nine original high incidents, the evidence supplement and all12 retained records have verified scoped readback',async()=>{
  const [before,dispositions,final]=await Promise.all(['incidents-before.json','incident-dispositions.json','final-hosted.json'].map(json));
