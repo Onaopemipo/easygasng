@@ -34,13 +34,20 @@
         "docs/web-transparent-logo/evidence/prototype-checks.txt",
         "docs/web-transparent-logo/evidence/assets.json",
         "docs/web-transparent-logo/evidence/build.txt",
-        "docs/web-transparent-logo/evidence/typecheck.txt"
+        "docs/web-transparent-logo/evidence/typecheck.txt",
+        "docs/web-transparent-logo/evidence/browser-observations.json",
+        "docs/web-transparent-logo/evidence/candidate.json",
+        "docs/web-transparent-logo/evidence/stable.json",
+        "docs/web-transparent-logo/evidence/source-integrity.json",
+        "docs/web-transparent-logo/evidence/preservation.json",
+        "docs/web-transparent-logo/evidence/native-preservation.json",
+        "docs/web-transparent-logo/evidence/traceability.txt"
       ],
       "acceptanceGate": "WLOGO-G01",
-      "status": "PARTIAL",
-      "reason": "Two CSS backplates removed; existing alpha artwork unchanged. Local checks pass; hosted visual acceptance pending.",
-      "testResult": "PASS: 21 focused source/history/header/introduction regressions; six historical prototype checks; local web production build and sequential typecheck. Hosted visual acceptance pending.",
-      "outstandingWork": "Exact-source demo rollout and actual light/dark/sidebar/introduction/responsive verification."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Approved existing alpha wordmark, compact icon and introduction artwork reused byte-for-byte; CSS backplates removed on public header/footer, customer sidebar, staff sidebar and introduction.",
+      "testResult": "PASS: 21 focused regressions, six historical prototype checks, build/types and two matrix checks; 13 hosted browser observations, four candidate and seven stable checks. Original native artifacts retained. Broader GitHub Release validation is tracked separately.",
+      "outstandingWork": "None for the bounded web logo correction. Broader production/device/provider acceptance remains governed by existing matrices; no new mobile binaries."
     },
     {
       "id": "WLOGO-02",
@@ -74,13 +81,20 @@
         "docs/web-transparent-logo/evidence/prototype-checks.txt",
         "docs/web-transparent-logo/evidence/assets.json",
         "docs/web-transparent-logo/evidence/build.txt",
-        "docs/web-transparent-logo/evidence/typecheck.txt"
+        "docs/web-transparent-logo/evidence/typecheck.txt",
+        "docs/web-transparent-logo/evidence/browser-observations.json",
+        "docs/web-transparent-logo/evidence/candidate.json",
+        "docs/web-transparent-logo/evidence/stable.json",
+        "docs/web-transparent-logo/evidence/source-integrity.json",
+        "docs/web-transparent-logo/evidence/preservation.json",
+        "docs/web-transparent-logo/evidence/native-preservation.json",
+        "docs/web-transparent-logo/evidence/traceability.txt"
       ],
       "acceptanceGate": "WLOGO-G02",
-      "status": "PARTIAL",
-      "reason": "Two CSS backplates removed; existing alpha artwork unchanged. Local checks pass; hosted visual acceptance pending.",
-      "testResult": "PASS: 21 focused source/history/header/introduction regressions; six historical prototype checks; local web production build and sequential typecheck. Hosted visual acceptance pending.",
-      "outstandingWork": "Exact-source demo rollout and actual light/dark/sidebar/introduction/responsive verification."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "13 actual hosted observations pass: light/dark public and customer views, fixed-green staff sidebar in both themes, compact staff/customer icons, introduction and 390px phone views. Loaded artwork, accessible names, transparent backgrounds and readable inverse rendering verified; no horizontal overflow.",
+      "testResult": "PASS: 21 focused regressions, six historical prototype checks, build/types and two matrix checks; 13 hosted browser observations, four candidate and seven stable checks. Original native artifacts retained. Broader GitHub Release validation is tracked separately.",
+      "outstandingWork": "None for the bounded web logo correction. Broader production/device/provider acceptance remains governed by existing matrices; no new mobile binaries."
     },
     {
       "id": "WLOGO-03",
@@ -114,43 +128,66 @@
         "docs/web-transparent-logo/evidence/prototype-checks.txt",
         "docs/web-transparent-logo/evidence/assets.json",
         "docs/web-transparent-logo/evidence/build.txt",
-        "docs/web-transparent-logo/evidence/typecheck.txt"
+        "docs/web-transparent-logo/evidence/typecheck.txt",
+        "docs/web-transparent-logo/evidence/browser-observations.json",
+        "docs/web-transparent-logo/evidence/candidate.json",
+        "docs/web-transparent-logo/evidence/stable.json",
+        "docs/web-transparent-logo/evidence/source-integrity.json",
+        "docs/web-transparent-logo/evidence/preservation.json",
+        "docs/web-transparent-logo/evidence/native-preservation.json",
+        "docs/web-transparent-logo/evidence/traceability.txt"
       ],
       "acceptanceGate": "WLOGO-G03",
-      "status": "PARTIAL",
-      "reason": "Two CSS backplates removed; existing alpha artwork unchanged. Local checks pass; hosted visual acceptance pending.",
-      "testResult": "PASS: 21 focused source/history/header/introduction regressions; six historical prototype checks; local web production build and sequential typecheck. Hosted visual acceptance pending.",
-      "outstandingWork": "Exact-source demo rollout and actual light/dark/sidebar/introduction/responsive verification."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact committed source 2731e4e deployed Ready and promoted to the stable demo. All 436 uploaded files verified; four candidate and seven stable checks pass. Original native artifacts and historical prototype proofs retained. No new mobile binaries or business-data changes.",
+      "testResult": "PASS: 21 focused regressions, six historical prototype checks, build/types and two matrix checks; 13 hosted browser observations, four candidate and seven stable checks. Original native artifacts retained. Broader GitHub Release validation is tracked separately.",
+      "outstandingWork": "None for the bounded web logo correction. Broader production/device/provider acceptance remains governed by existing matrices; no new mobile binaries."
     }
   ],
   "gates": [
     {
       "id": "WLOGO-G01",
       "description": "Remove white logo-only backplates across public, customer, staff and introduction web placements",
-      "status": "PARTIAL",
-      "reason": "Implementation/verification pending."
+      "status": "PASS",
+      "reason": "Approved existing alpha wordmark, compact icon and introduction artwork reused byte-for-byte; CSS backplates removed on public header/footer, customer sidebar, staff sidebar and introduction."
     },
     {
       "id": "WLOGO-G02",
       "description": "Maintain readable light/dark/fixed-green logos, accessible names and responsive sizing",
-      "status": "PARTIAL",
-      "reason": "Implementation/verification pending."
+      "status": "PASS",
+      "reason": "13 actual hosted observations pass: light/dark public and customer views, fixed-green staff sidebar in both themes, compact staff/customer icons, introduction and 390px phone views. Loaded artwork, accessible names, transparent backgrounds and readable inverse rendering verified; no horizontal overflow."
     },
     {
       "id": "WLOGO-G03",
       "description": "Verify and publish the bounded web presentation fix while preserving original artwork and native artifacts",
-      "status": "PARTIAL",
-      "reason": "Implementation/verification pending."
+      "status": "PASS",
+      "reason": "Exact committed source 2731e4e deployed Ready and promoted to the stable demo. All 436 uploaded files verified; four candidate and seven stable checks pass. Original native artifacts and historical prototype proofs retained. No new mobile binaries or business-data changes."
     }
   ],
   "coverage": {
     "requirements": {
-      "verified": 0,
+      "verified": 3,
       "total": 3
     },
     "gates": {
-      "passed": 0,
+      "passed": 3,
       "total": 3
+    },
+    "critical": {
+      "verified": 0,
+      "total": 0
+    },
+    "browserObservations": {
+      "passed": 13,
+      "total": 13
+    },
+    "candidateChecks": {
+      "passed": 4,
+      "total": 4
+    },
+    "stableChecks": {
+      "passed": 7,
+      "total": 7
     },
     "excluded": 0
   },
@@ -158,6 +195,10 @@
     {
       "date": "2026-11-21",
       "change": "Registered authorised web continuation of transparent native logo. Existing wordmark and compact icon already have alpha; CSS creates the white backplates. Preserve source history and all unrelated gates."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Implemented the two stylesheet changes and explicit historical-source continuation. Verified 21 scoped regressions, six original prototype checks, local/cloud build/types, source-byte integrity and 13 actual hosted logo contexts. Promoted Ready dpl_AxiNLNdQPqtxRhhnk49NNcVUf5fW. Original artwork/native/prototype artifacts, business authority and production NO-GO retained."
     }
   ]
 }

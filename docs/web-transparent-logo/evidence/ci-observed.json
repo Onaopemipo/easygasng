@@ -1,0 +1,166 @@
+{
+  "sourceCommit": "2731e4ee4d8027dbf0fdc4e754f2a36b96386f5f",
+  "runId": 44880506232,
+  "url": "https://github.com/Onaopemipo/easygasng/actions/runs/44880506232",
+  "status": "IN_PROGRESS",
+  "recordedAt": "2026-11-21T07:36:07Z",
+  "scope": "Additional full-suite workflow; no success claimed while running. Bounded logo acceptance uses executed focused/build/types/prototype/hosted evidence.",
+  "jobs": [
+    {
+      "id": 136774573606,
+      "name": "native",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run test:dependencies",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npx expo export --platform all --output-dir ../../artifacts/native",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run npm audit --omit=dev --audit-level=moderate",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 136774573839,
+      "name": "web",
+      "status": "in_progress",
+      "conclusion": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run sudo apt-get update && sudo apt-get install -y postgresql-client-16",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run echo /usr/lib/postgresql/16/bin >> \"$GITHUB_PATH\"",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci --prefix apps/mobile --ignore-scripts",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install pinned native component test renderer",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run web regression tests",
+          "status": "in_progress",
+          "conclusion": null
+        },
+        {
+          "name": "Run npm run build > artifacts/build.txt 2>&1",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Run npm run typecheck > artifacts/types.txt 2>&1",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Run npm audit --omit=dev --audit-level=high > artifacts/dependency-audit.txt 2>&1",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "pending",
+          "conclusion": null
+        },
+        {
+          "name": "Stop containers",
+          "status": "pending",
+          "conclusion": null
+        }
+      ]
+    }
+  ]
+}
