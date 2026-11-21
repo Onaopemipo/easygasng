@@ -73,6 +73,43 @@ if(phase==='before-trip'){
  const after={order:hash(await owned('product-cod')),inventory:hash(await c.ok('inventory','inventory')),ledger:hash(await c.ok('finance','finance.ledger'))};assert.deepEqual(after,before);assert.equal((await c.ok('driver','driver.snapshot')).trip,null);
  await write('before-trip',{reference:o.reference,requirements:driver.readiness.issues,rejected:rows,before,after});await c.check('ROD21-TRIP-GUARDS','No-trip and unavailable guidance verified; four wrong-role starts, negative odometer, nonexistent vehicle and assignment without prerequisites rejected without order/stock/ledger effects.');
 }
+if(phase==='reconcile'){
+ const expected={'abandoned-card':['cancelled','unpaid'],'product-cod':['delivered','verified'],'gas-wallet':['delivered','verified'],'failed-wallet':['delivered','verified'],'wallet-cancel':['cancelled','refunded'],'commercial-unpaid':['cancelled','unpaid']};
+ const orders=await c.ok('owner','orders'),ids=new Set(c.state.baseline.orders.map(o=>o.id));
+ assert.deepEqual(orders.filter(o=>ids.has(o.id)),c.state.baseline.orders);assert.equal(orders.length,ids.size+6);
+ for(const[name,statuses]of Object.entries(expected)){const o=await owned(name);assert.deepEqual([o.status,o.payment_status],statuses);}
+ const wallet=await c.ok('customer','wallet'),credits=await c.ok('finance','credits');
+ const fund=credits.find(r=>r.id===c.state.funding),refund=credits.find(r=>r.id===c.state.refundApproved);assert.equal(fund.status,'approved');assert.equal(refund.status,'approved');
+ const gas=await owned('gas-wallet'),retry=await owned('failed-wallet');
+ const expectedBalance=Number(c.state.baseline.wallet.balanceKobo)+Number(fund.amount_kobo)-Number(gas.total_kobo)-Number(retry.total_kobo)+Number(refund.amount_kobo);
+ assert.equal(wallet.balanceKobo,expectedBalance);assert.equal(wallet.entries.reduce((n,e)=>n+Number(e.amount_kobo),0),wallet.balanceKobo);assert.equal(new Set(wallet.entries.map(e=>e.reference)).size,wallet.entries.length);
+ for(const old of c.state.baseline.wallet.entries)assert.deepEqual(wallet.entries.find(e=>e.id===old.id),old);
+ assert.deepEqual(await c.ok('commercial','wallet'),c.state.baseline.commercialWallet);
+ const ledger=await c.ok('finance','finance.ledger?limit=500');assert.equal(ledger.hasMore,false);for(const old of c.state.baseline.ledger.rows)assert.deepEqual(ledger.rows.find(r=>r.id===old.id),old);
+ const physical=(await c.ok('inventory','inventory')).find(r=>r.product_id==='cylinder-empty-6'),oldPhysical=c.state.orders['product-cod'].stockBefore.find(r=>r.product_id==='cylinder-empty-6');
+ assert.equal(Number(physical.quantity),Number(oldPhysical.quantity)-3);assert.equal(Number(physical.reserved),Number(oldPhysical.reserved));
+ const gasStock=(await c.ok('inventory','inventory.workspace')).gas;
+ for(const old of c.state.baseline.inventory.gas){const row=gasStock.find(r=>r.branch_id===old.branch_id);assert.ok(row);assert.equal(Number(row.on_hand),Number(old.on_hand)-(old.branch_id==='lagos'?6000:0));assert.equal(Number(row.reserved),Number(old.reserved));}
+ const cylinders=await c.ok('inventory','cylinders');for(const id of Object.values(c.state.serials)){const r=cylinders.find(r=>r.id===id);assert.equal(r.status,'sold');assert.equal(r.customer_id,c.state.roles.customer.id);}
+ const load=(await c.ok('owner','bulk.summary')).loads.find(l=>l.id===c.state.gasLoad.id);assert.equal(load.state,'reconciled');assert.equal(Number(load.dispensed_grams),6000);
+ const cash=(await c.ok('finance','cash.collections')).find(r=>r.id===c.state.cashCollection);assert.ok(cash.verified_at);assert.equal(Number(cash.amount_kobo),5700000);assert.notEqual(cash.collector_id,c.state.roles.finance.id);
+ const invoices={};for(const name of ['product-cod','gas-wallet','failed-wallet','wallet-cancel']){const inv=(await c.ok('customer','invoice.order',{orderId:c.state.orders[name].id})).invoice;assert.equal(inv.status,name==='wallet-cancel'?'voided':'paid');assert.equal(inv.amountDueKobo,0);invoices[name]={number:inv.invoice_number,status:inv.status,totalKobo:inv.total_kobo,effectiveTotalKobo:inv.effectiveTotalKobo,paidKobo:inv.paidKobo,dueKobo:inv.amountDueKobo};}
+ assert.equal(credits.filter(r=>r.kind==='refund'&&r.status==='approved'&&r.order_id===c.state.orders['product-cod'].id).length,1);
+ const incident=(await c.ok('dispatcher','incidents')).find(i=>i.category==='delivery_failure'&&i.target===c.state.failedWalletSnapshot.attemptId);assert.ok(incident);assert.equal(retry.status,'delivered');
+ if(incident.status!=='resolved')await c.ok('dispatcher','incident.update',{id:incident.id,status:'resolved',note:note('Independent full return and successful second attempt resolved this synthetic failure; original history retained')});
+ assert.equal((await c.ok('dispatcher','incidents')).find(i=>i.id===incident.id).status,'resolved');
+ let driver=await c.ok('driver','driver.snapshot');if(driver.trip){assert.equal(driver.trip.id,c.state.trip.id);await c.ok('driver','trip.end',{tripId:c.state.trip.id,endOdometer:1000,operationKey:c.key('final.trip.end')});}
+ const restoreAvailability={available:c.state.initialDriverAvailable,operationKey:c.key('final.availability.restore')};await c.save();await c.ok('driver','driver.availability',restoreAvailability);driver=await c.ok('driver','driver.snapshot');assert.equal(driver.trip,null);assert.equal(driver.profile.driver_available,c.state.initialDriverAvailable);
+ const final={status:'PASS',completedAt:new Date().toISOString(),originalOrdersPreserved:ids.size,totalOrders:orders.length,originalWalletAndLedgerRowsPreserved:true,newOrders:Object.fromEntries(Object.keys(expected).map(n=>{const o=orders.find(o=>o.id===c.state.orders[n].id);return[n,{id:o.id,reference:o.reference,status:o.status,payment:o.payment_status}]})),walletBaselineKobo:c.state.baseline.wallet.balanceKobo,syntheticFundingKobo:Number(fund.amount_kobo),gasDebitKobo:Number(gas.total_kobo),retryDebitKobo:Number(retry.total_kobo),partialRefundKobo:Number(refund.amount_kobo),walletBalanceKobo:wallet.balanceKobo,empty6kg:{before:oldPhysical.quantity,after:physical.quantity,reserved:physical.reserved,soldTestSerials:3},gas:gasStock,loadReconciled:true,cash:{collectedKobo:Number(cash.amount_kobo),verifiedAt:cash.verified_at,independent:true},invoices,incident:{id:incident.id,resolvedAfterRetry:true},qaTripEnded:true,driverAvailabilityRestored:true,qaQualificationExpiry:c.state.qaRenewal.expiresAt,productionDecision:'Existing production NO-GO, native/provider/physical/actual-import/retain-all holds unchanged',scope:'Synthetic hosted demo only; no actual goods, funds, gas, GPS, travel, certification or provider transaction'};
+ await write('final-reconciliation',final);await c.check('ROD21-RECONCILE','Six new orders reconciled; sixteen original orders and original wallet/ledger rows preserved; one6kg gas debit and three sold serials; independent cash/invoice/return review; own trip closed and initial availability restored.');console.log('PASS ROD21-RECONCILE');
+}
+if(phase==='logout'){
+ const results=[];for(const[role,token]of Object.entries(c.state.tokens)){
+  const r=await fetch(c.state.origin+'/api/logout',{method:'POST',headers:{origin:c.state.origin,'content-type':'application/json','x-easygas-client':'native',authorization:'Bearer '+token},body:'{}'});assert.equal(r.status,200,role+' logout');
+  const denied=await fetch(c.state.origin+'/api/me',{headers:{'x-easygas-client':'native',authorization:'Bearer '+token}});assert.equal(denied.status,401,role+' revoked token');results.push({role,logoutStatus:r.status,revokedReadStatus:denied.status});delete c.state.tokens[role];await c.save();
+ }
+ await write('session-cleanup',{status:'PASS',results,ownSessionsOnly:true});await c.check('ROD21-CLEANUP','All fourteen run-owned API sessions revoked; each old bearer now401; other users and browser sessions untouched.');console.log('PASS ROD21-CLEANUP');
+}
 if(phase==='sync-trip'){
  const profile=await c.ok('driver','driver.snapshot');const d=await c.ok('driver','driver.location');assert.ok(d.trip);assert.equal(d.trip.vehicle_id,c.state.qaVehicleId);assert.equal(d.trip.driver_id,c.state.roles.driver.id);assert.equal(Number(d.trip.start_odometer),1000);assert.equal(d.trip.location_consent,false);assert.equal(profile.profile.driver_available,true);
  c.state.trip={id:d.trip.id,vehicleId:d.trip.vehicle_id};c.state.driverWasAvailable=c.state.initialDriverAvailable;await c.save();

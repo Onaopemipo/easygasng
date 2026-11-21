@@ -4,6 +4,10 @@ Edition 2, 20 November 2026. Current website: <https://easygas-client-demo.verce
 
 The customised manual covers Customer, the sole Admin/business owner, Service Manager, Inventory including finance, Driver and Technician workflows. It retains 31 task chapters, linked contents and 25 genuine client-demo screenshots. Each task explains its entry point, steps, expected result and blocking conditions.
 
+## Current order-to-delivery guide
+
+The [21 November role guide](order-to-delivery.md) adds the exercised trip, assignment, metered gas, COD reconciliation, return/retry, refund and invoice-correction workflows with current demo screenshots. See its [fresh acceptance matrix](../traceability/role-order-acceptance-20261121-rtm.md) for executed coverage and release status. The original Word/PDF editions and their audit evidence remain historical artifacts.
+
 ## Deliverables
 
 - [User manual PDF](../../output/pdf/EasyGas-User-Manual.pdf) - 33 pages.

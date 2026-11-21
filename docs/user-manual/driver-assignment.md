@@ -44,3 +44,7 @@ On a phone, scroll within the assignment panel. The confirmation stays disabled 
 Use **Review branch vehicles and trips** on a blocked driver’s card. This opens **Deliveries → Manifests, LPG, trips & returns → Driver trips, vehicle and fuel records**. Review the branch, vehicle status, genuine LPG suitability and approved capacity. Only the business owner has the existing **Register vehicle** action. Do not create duplicate accounts or fabricated safety evidence. The driver starts their own trip; admin assignment does not do this automatically.
 
 A duty trip can cover multiple orders. Complete delivery custody and vehicle/stock/LPG reconciliation before ending it. If the list is empty, ask the business owner to review driver accounts and branch assignments. If eligibility cannot load, refresh before assigning; a failed read does not make a driver eligible.
+
+## Continue through handover and reconciliation
+
+The [current order-to-delivery guide](order-to-delivery.md) explains the actual driver trip, separate dispatch assignment, acknowledged manifest/LPG custody, delivery proof, handover, independent cash review and failed-delivery return/retry. If a duplicate trip is attempted, open **Manage trip** to review the current trip. A vehicle already on another trip must be reconciled or replaced by another eligible vehicle. These conflicts now give an actionable message while preserving the existing trip.

@@ -1,0 +1,47 @@
+{
+  "rejected": [
+    {
+      "role": "customer",
+      "action": "payments/paystack/verify",
+      "status": 404,
+      "message": "Payment not found.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "owner",
+      "action": "payments/paystack/quote",
+      "status": 403,
+      "message": "Customer payment access required.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "commercial",
+      "action": "payments/paystack/quote",
+      "status": 404,
+      "message": "Order not found.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "action": "payments/paystack/quote",
+      "status": 409,
+      "message": "This order is not payable by card.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "action": "payments/paystack/quote",
+      "status": 400,
+      "message": "Invalid payment request."
+    },
+    {
+      "role": "",
+      "action": "payments/paystack/webhook",
+      "status": 401,
+      "message": "Invalid payment event signature.",
+      "code": "INVALID_REQUEST"
+    }
+  ],
+  "walletLedgerAndOrdersUnchanged": true,
+  "liveProviderTransaction": false
+}

@@ -1,0 +1,27 @@
+{
+  "stage": "candidate",
+  "base": "https://easygas-client-demo-1phmo0uel-onaopemipos-projects.vercel.app",
+  "sourceCommit": "d6bf8c9a247a1c6e7a72092afdb5ea6ceb85aae7",
+  "deploymentId": "dpl_CjNBL34AtUVvofDe7d97NHqoi7wZ",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "name": "Client demo remains ready with test payments",
+      "status": "PASS"
+    },
+    {
+      "name": "Deployed duplicate active trip returns actionable409, preserving the current trip",
+      "status": "PASS"
+    }
+  ],
+  "duplicateTrip": {
+    "status": 409,
+    "data": {
+      "error": "You already have an active duty trip. Open Manage trip to review it, or reconcile and end it before starting another.",
+      "code": "INVALID_REQUEST"
+    }
+  },
+  "status": "FAIL",
+  "failure": "Expected values to be strictly equal:\n\n409 !== 200\n",
+  "completedAt": "2026-11-21T13:41:37.219Z"
+}

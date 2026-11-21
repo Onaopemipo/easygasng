@@ -1,0 +1,70 @@
+{
+  "reference": "EG-2026-95EC6288",
+  "status": "delivery_failed",
+  "attempt": {
+    "id": "af50be17-9f38-4736-8623-8903c91943d4",
+    "state": "returned",
+    "driver_id": "109b986c-740b-4932-bdbc-65bc3f051010",
+    "assignment_version": 4,
+    "picked_up_at": "2026-11-21T13:55:24.519Z",
+    "arrived_at": null,
+    "completed_at": "2026-11-21T13:55:54.597Z"
+  },
+  "manifest": {
+    "items": [
+      {
+        "product_id": "cylinder-empty-6",
+        "quantity": 1
+      }
+    ],
+    "serials": [
+      "DEMO-QA-ROLE-20261121-PRODUCT-C"
+    ],
+    "gas": []
+  },
+  "rejected": [
+    {
+      "role": "driver",
+      "action": "delivery.pickup",
+      "status": 409,
+      "message": "Confirm the complete quantities and cylinder serials against the current manifest.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "sales",
+      "action": "order.transition",
+      "status": 409,
+      "message": "This order status transition is not allowed.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "sales",
+      "action": "order.transition",
+      "status": 409,
+      "message": "Physically receive and inspect the held goods before cancellation.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "dispatcher",
+      "action": "dispatch.assign",
+      "status": 409,
+      "message": "Physically receive and inspect the held goods/cylinders before reassignment.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "driver",
+      "action": "delivery.return",
+      "status": 403,
+      "message": "This session is limited to delivery work. Contact dispatch for sales, cash, stock or financial changes.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "inventory",
+      "action": "delivery.return",
+      "status": 409,
+      "message": "Inspect and receive every item and serial before reconciling return.",
+      "code": "INVALID_REQUEST"
+    }
+  ],
+  "walletBalanceKobo": 5840000
+}

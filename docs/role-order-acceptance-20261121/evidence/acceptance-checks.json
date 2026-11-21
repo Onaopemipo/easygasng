@@ -1,0 +1,365 @@
+{
+  "status": "PASS",
+  "nodeScenarioTests": 23,
+  "operatorAndScenarioGroups": 31,
+  "uiObservations": 22,
+  "groups": [
+    {
+      "id": "ROD21-CANCEL-INVOICE",
+      "detail": "independently void the refunded cancelled test invoice without changing its issued snapshot or wallet (14826.758125ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/cancel-invoice-review.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-CASH-GUARDS",
+      "detail": "collected cash is not verified and the collector cannot reconcile their own collection (7672.356042ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/cash-guards.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-COMMERCIAL",
+      "detail": "a business customer owns and cancels a fresh unpaid order while other customer access and insufficient wallet remain blocked (28448.0105ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/commercial.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-EXPIRED",
+      "detail": "expired QA qualification rejects inspection without changing the paid synthetic gas order (23675.2505ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/expired-qualification.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-FAILED",
+      "detail": "failed wallet delivery blocks cancellation/retry until an independent exact manifest return and preserves reservations (77835.751208ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/failed-prepare.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-GAS",
+      "detail": "restricted driver UI metered/proof/handover completes fresh wallet gas order once and independent zero-return custody reconciles (21058.367916ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/gas-completed.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-GAS-GUARDS",
+      "detail": "wrong-role, stale and incorrect simulated meter readings cannot dispense or complete without proof (15687.804875ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/gas-guards.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-GAS-PREP",
+      "detail": "fresh wallet gas checkout, qualified cylinder inspection, sales preparation, invoice and independent dispatch/custody issuance use normal controls (35170.324333ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/gas-prepare.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-PROVIDER-GUARDS",
+      "detail": "forged verification, foreign or cancelled targets, client-selected amount and unsigned success webhook cannot create payment success (49203.801625ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/payment-guards.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-ACCESS",
+      "detail": "customer, commercial, driver and technician cannot read or operate another account's protected order or finance (11130.133292ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-PAYMENT",
+      "detail": "insufficient wallet and tampered pricing do not create an order, debit the wallet or consume gas (20923.187959ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-CANCEL",
+      "detail": "unpaid card checkout stays unpaid and customer cancellation releases reservation exactly once (18595.614042ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-FUND",
+      "detail": "explicit synthetic purchase-credit receipt needs a different reauthenticated finance approver and posts once (8161.668292ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/preexceptions.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-HANDOVER-GUARDS",
+      "detail": "restricted driver cash, stale progression, false handover, wrong code and cross-account completion are rejected (17167.730584ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/product-handover-guards.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-PRODUCT-PREP",
+      "detail": "synthetic serial registration, customer COD checkout, sales preparation and independent dispatch use normal product controls (29411.697708ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/product-prepare.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-COD",
+      "detail": "supervised COD delivery and independent finance verification post one settlement; rejected partial refund leaves wallet and stock unchanged (25045.522542ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/product-verified.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-PRODUCT-VISIT",
+      "detail": "assigned driver acknowledges, checks manifest and arrives with labelled consented synthetic proof (27385.067666ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/product-visit.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-QA-RENEWAL",
+      "detail": "explicitly approved two-hour synthetic qualifications and existing sandbox meter renew independently through product APIs (22706.383541ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/qa-renewal.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-REFUND",
+      "detail": "UI partial refund approval posts one wallet credit, rejects over-refund and preserves stock and immutable invoice with independently approved credit note (21101.684959ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/refund-approved.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-RETRY-COMPLETE",
+      "detail": "second-attempt driver UI delivery consumes one reserved serial once with retained failure/return history and paid invoice (11983.854667ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/retry-finish.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-RETRY-PROOF",
+      "detail": "a new delivery attempt requires its own consented proof and cannot complete from a stale version (10099.014042ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/retry-guards.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-RETRY",
+      "detail": "returned failed delivery reschedules and reassigns as a new attempt without another wallet debit or stock reservation (18121.562375ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/retry-prepare.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-WALLET-CANCEL",
+      "detail": "customer cancellation before pickup releases gas and refunds wallet exactly once while invoice remains explicit adjustment required (30565.263958ms)",
+      "source": "docs/role-order-acceptance-20261121/evidence/wallet-cancel.txt",
+      "passed": true
+    },
+    {
+      "id": "ROD21-PREFLIGHT",
+      "passed": true,
+      "detail": "Thirteen labelled identities authenticated; actual canonical roles mapped; baseline retained privately before any new business mutation.",
+      "at": "2026-11-21T12:58:16.706Z",
+      "source": ".data/role-order-acceptance-20261121/state.json (private executed check journal)"
+    },
+    {
+      "id": "ROD21-TRIP-GUARDS",
+      "passed": true,
+      "detail": "No-trip and unavailable guidance verified; four wrong-role starts, negative odometer, nonexistent vehicle and assignment without prerequisites rejected without order/stock/ledger effects.",
+      "at": "2026-11-21T13:01:08.905Z",
+      "source": ".data/role-order-acceptance-20261121/state.json (private executed check journal)"
+    },
+    {
+      "id": "ROD21-TRIP",
+      "passed": true,
+      "detail": "Actual driver UI started own sandbox trip with consent off and availability on; duplicate trip rejected409 with original trip retained.",
+      "at": "2026-11-21T13:16:47.109Z",
+      "source": ".data/role-order-acceptance-20261121/state.json (private executed check journal)"
+    },
+    {
+      "id": "ROD21-ACTIVE-GUARDS",
+      "passed": true,
+      "detail": "Owner cannot end driver trip; lower odometer and unreconciled LPG custody block end; active trip preserved.",
+      "at": "2026-11-21T13:18:42.161Z",
+      "source": ".data/role-order-acceptance-20261121/state.json (private executed check journal)"
+    },
+    {
+      "id": "ROD21-BOUNDARIES",
+      "passed": true,
+      "detail": "Alternate existing driver cannot view or pick up another assignment or reuse its active vehicle; customer/commercial/technician proof boundaries and foreign-branch finance ledger/cursor denial verified.",
+      "at": "2026-11-21T13:19:32.488Z",
+      "source": ".data/role-order-acceptance-20261121/state.json (private executed check journal)"
+    },
+    {
+      "id": "ROD21-PROOF-GUARDS",
+      "passed": true,
+      "detail": "Wrong uploader role, missing consent and future capture rejected; exact original proof replay retained one record.",
+      "at": "2026-11-21T13:25:31.685Z",
+      "source": ".data/role-order-acceptance-20261121/state.json (private executed check journal)"
+    },
+    {
+      "id": "ROD21-RECONCILE",
+      "passed": true,
+      "detail": "Six new orders reconciled; sixteen original orders and original wallet/ledger rows preserved; one6kg gas debit and three sold serials; independent cash/invoice/return review; own trip closed and initial availability restored.",
+      "at": "2026-11-21T14:04:13.275Z",
+      "source": ".data/role-order-acceptance-20261121/state.json (private executed check journal)"
+    },
+    {
+      "id": "ROD21-CLEANUP",
+      "passed": true,
+      "detail": "All fourteen run-owned API sessions revoked; each old bearer now401; other users and browser sessions untouched.",
+      "at": "2026-11-21T14:05:59.390Z",
+      "source": ".data/role-order-acceptance-20261121/state.json (private executed check journal)"
+    },
+    {
+      "id": "ROD21-UI-DRIVER-INITIAL",
+      "status": "PASS",
+      "details": "Restricted driver Home shows availability off, no active trip and Start trip; actual trip modal exposes optional location consent and backend branch vehicle list.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-TRIP-START",
+      "status": "PASS",
+      "details": "Actual driver Home Start trip submitted sandbox vehicle with1000km and consent unchecked. Modal readback Active trip,1000km, location consent off.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-ASSIGN",
+      "status": "PASS",
+      "reference": "EG-2026-6928994E",
+      "details": "Actual independent dispatcher selected eligible QA driver and confirmed manual assignment. New order moved to Live Deliveries Assigned; role has no owner vehicle-review shortcut.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-GAS-CUSTODY",
+      "status": "PASS",
+      "reference": "EG-2026-F068343F",
+      "details": "Driver acknowledged assignment and independently simulated6000g/1000000g load in actual UI. Custody active, order allocation6kg, pickup enabled;390px settled document fits. No GPS capture.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-GAS-HANDOVER",
+      "status": "PASS",
+      "reference": "EG-2026-F068343F",
+      "details": "Actual restricted driver UI acknowledged assignment/load, confirmed exact pickup, started delivery and simulated arrival, recorded1006000g cumulative meter(6000g delta), uploaded labelled synthetic consented PNG and submitted customer-code/full-handover attestation. Order left current assignments.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-OWNER-COD",
+      "status": "PASS",
+      "reference": "EG-2026-6928994E",
+      "details": "Actual owner Confirm delivery form recorded simulated57000Naira collection and customer-code handover. Table read Delivered/collected, pending independent finance.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-FINANCE-CASH",
+      "status": "PASS",
+      "route": "/admin/reconciliation",
+      "reference": "EG-2026-6928994E",
+      "details": "Actual separate finance identity verified password and confirmed synthetic57000Naira cash on390px phone viewport. New row now Verified; unverified total0; dialog bottom568.9<notice774, document fits390. Desktop tab/control discovery also verified.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-FINANCE-OVERVIEW",
+      "status": "PASS",
+      "route": "/admin/finance",
+      "details": "Finance overview and scoped lagos records loaded on desktop and390px; unavailable profit remains explicit and link to ledger/cash available; settled page fits.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-REFUND-DRAFT",
+      "status": "PASS",
+      "route": "/orders",
+      "details": "Actual customer selected quantity1 and labelled reason; closing triggered discard protection. Keep editing retained both fields. Discarded only own synthetic draft, saved separately for re-entry after CSS correction.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-CUSTOMER-ORDERS",
+      "status": "PASS",
+      "route": "/orders",
+      "details": "Customer sees only own paged order cards, delivered verified gas/product totals, invoices and refund action. Desktop and390px list fit. Unsaved refund protection separately tested; fixed-banner obstruction retained as initial defect awaiting corrected submission.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-TRACK",
+      "status": "PASS",
+      "detail": "Customer legacy /track resolves to own Orders details; fresh gas order displays complete Lagos-timed delivery timeline on desktop and390px phone.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-STOREFRONT",
+      "status": "PASS",
+      "detail": "Public storefront reviewed desktop and390px, order/track links and disabled incomplete quick-order submit; responsive page has no horizontal overflow.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-CUSTOMER-LIST",
+      "status": "PASS",
+      "detail": "Customer Orders list inspected at desktop and390px; own fresh delivered/cancelled cards and receipt actions render. Phone tracking dialog had notice overlap, retained as before evidence for same corrected clearance.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-INVENTORY",
+      "status": "PASS",
+      "detail": "Separate inventory role reviewed actual Lagos stock15units/5973kg, unavailable acquisition valuation explicit, stock/returns tabs on desktop and390px phone. No other branch option.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-REFUND-FIX",
+      "status": "PASS",
+      "detail": "Final deployed390px customer refund dialog submit bottom687.86 clears notice top774; actual selected one-unit synthetic refund submitted through visible button.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-TECHNICIAN",
+      "status": "PASS",
+      "detail": "Technician limited to assigned service workspace; own zero-job/connected branch state and Jobs view verified desktop/390px, no Orders/Deliveries/finance navigation; direct API denials separately verified.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-COMMERCIAL",
+      "status": "PASS",
+      "detail": "Business customer sees exactly own new cancelled/unpaid order, no retail customer orders; desktop list and390px details reviewed, fresh API foreign ownership/cancellation denials separately passed.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-FINANCE-REFUND",
+      "status": "PASS",
+      "detail": "Final compact phone review Save bottom674.89 inside dialog708 and above notice774; separate reauthenticated finance selected approval, saved, and row now Credited to wallet26000.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-OWNER-PHONE",
+      "status": "PASS",
+      "detail": "Owner Orders search restricts visible result to fresh QAref,390px modal Overview/Payment tabs show delivered verified COD with independent receipt; prior actual owner desktop handover tested.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-DISPATCH-PHONE",
+      "status": "PASS",
+      "detail": "Separate manager/dispatch phone Live Deliveries shows only searched fresh retryref assigned, Paid and correct driver; no GPS/ETA fabricated. Desktop actual original assignment passed.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-RETRY",
+      "status": "PASS",
+      "detail": "Restricted driver completed second attempt through390px acknowledgement, exact serial pickup, departure, simulated arrival, consented current-attempt proof and full code handover. History retains separate Returned and Delivered entries; no real travel/goods assertion.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    },
+    {
+      "id": "ROD21-UI-CLEANUP",
+      "status": "PASS",
+      "detail": "Driver Home confirms zero assignments, availability paused and no active trip after final independent reconciliation.",
+      "passed": true,
+      "source": "docs/role-order-acceptance-20261121/evidence/ui-observations.json"
+    }
+  ]
+}

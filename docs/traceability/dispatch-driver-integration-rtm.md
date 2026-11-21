@@ -368,3 +368,7 @@ PASS means the named bounded evidence passed, not independent physical/native/pr
 
 
 21 November bounded continuation: [DASSIGN-01–04](driver-assignment-rtm.md) passes exact assignment diagnostics and guarded UI rollout on the client demo. DDI-R06 receives the implementation and evidence mappings in the machine-readable matrix; its original PARTIAL status, all 84 scenarios and all 26 original gates remain. No complete hosted delivery, physical safety qualification or production acceptance is inferred.
+
+## 21 November fresh hosted continuation
+
+[Current acceptance](role-order-acceptance-20261121-rtm.md) verifies all 11 bounded requirements/gates using fresh synthetic orders and existing accounts, including actual driver trip/assignment, gas/COD delivery, independent return/retry, refunds and invoice review. Final source `eb3913e`, Ready `dpl_Gci51BMxmVPk4mPU8gK9DQhgxsiZ`, 439 exact application files and CI 1,162 web tests plus 3 native dependency tests passed; no new mobile binaries. This historical matrix retains its original IDs, coverage and scope decisions. Broader production/native/physical/provider/import/retain-all gates remain unchanged. DDI-R06 remains PARTIAL; all 84 scenarios and 26 gates remain in the denominator.

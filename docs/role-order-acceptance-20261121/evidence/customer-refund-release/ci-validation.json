@@ -1,0 +1,146 @@
+{
+  "sourceCommit": "d6bf8c9a247a1c6e7a72092afdb5ea6ceb85aae7",
+  "runId": 44909653948,
+  "status": "PASS",
+  "totals": [
+    "2026-11-21T13:50:28.8350591Z # tests 1162",
+    "2026-11-21T13:50:28.8350909Z # pass 1162",
+    "2026-11-21T13:50:28.8351053Z # fail 0",
+    "2026-11-21T13:50:28.8351360Z # skipped 0"
+  ],
+  "jobs": [
+    {
+      "id": 136862534620,
+      "name": "web",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run sudo apt-get update && sudo apt-get install -y postgresql-client-16",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run echo /usr/lib/postgresql/16/bin >> \"$GITHUB_PATH\"",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci --prefix apps/mobile --ignore-scripts",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install pinned native component test renderer",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run web regression tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run build > artifacts/build.txt 2>&1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck > artifacts/types.txt 2>&1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm audit --omit=dev --audit-level=high > artifacts/dependency-audit.txt 2>&1",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 136862534813,
+      "name": "native",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run test:dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npx expo export --platform all --output-dir ../../artifacts/native",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run npm audit --omit=dev --audit-level=moderate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "newMobileExports": 0
+}
