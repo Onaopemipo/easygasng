@@ -151,7 +151,13 @@ const tick = () => new Promise((r) => setTimeout(r, 0));
 test("SVERIFY-DIALOG: actual shared api and password dialog retain exact payload, clear wrong passwords, block repeat submits and complete once for every guarded site", async () => {
   const env = environment();
   let tree: any;
-  const password = { value: "", focus() {} };
+  const focusStates: boolean[] = [];
+  const password = {
+    value: "",
+    focus() {
+      focusStates.push(tree.root.findByType("input").props.disabled);
+    },
+  };
   try {
     await act(async () => {
       tree = create(React.createElement(AppDialogProvider), {
@@ -222,6 +228,7 @@ test("SVERIFY-DIALOG: actual shared api and password dialog retain exact payload
           JSON.stringify(tree.toJSON()),
           /Password verification failed/,
         );
+        assert.deepEqual(focusStates, [false], "failure focuses only an enabled password input");
         assert.equal(password.value, "");
         assert.equal(
           calls.filter((c) => c.url === "/api/synthetic.sensitive").length,

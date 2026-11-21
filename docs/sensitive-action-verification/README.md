@@ -6,7 +6,7 @@ The common web API client now offers a compact **Verify your identity** dialog w
 
 ## Audit boundary and retained denominator
 
-[Reproducible inventory](inventory.json) records **77 actual guard sites across 34 server modules**, **370 browser API/form entry points**, and **11 direct fetch sites**. `node scripts/audit-sensitive-actions.mjs` regenerates source locations. Every guard stays in the denominator, including conditional governance, delegated approval and recovery helpers. Context literals are discovery candidates, not a count of completed business workflows.
+[Reproducible inventory](inventory.json) records **77 actual guard sites across 34 server modules**, **370 browser API/form entry points**, and **11 direct fetch sites**. `node scripts/audit-sensitive-actions.mjs` regenerates source locations. Every guard stays in the denominator, including conditional governance, delegated approval and recovery helpers. Direct password checks were also reviewed: sign-in, invitation/reset entry and account password change already have their own required password fields; account password change still requires the current password and revokes existing sessions. Context literals are discovery candidates, not a count of completed business workflows.
 
 | Purpose | Audited guard families | Recovery |
 | --- | --- | --- |
@@ -18,7 +18,7 @@ The common web API client now offers a compact **Verify your identity** dialog w
 | Services and governance | Technician qualifications, dispute/cancellation reviews, service cash verification, emergency controls, readiness reviews | Verification cannot approve policy or safety evidence |
 | Communications and rewards | SLA policy, mail retry/reconciliation, moderation, scheduled campaigns, reward exports/retries and jobs | Password verification does not enable providers or jobs |
 
-The 11 separate fetch sites were reviewed: workspace/search/export reads, media uploads and hosted-payment endpoints. They do not call `recentVerification` outside the shared dispatch endpoint. Hosted checkout retains its separate consent/quote/provider controls. Ordinary API calls, including dynamic action names, all benefit from the shared recovery; this does not depend on a manually maintained sensitive-action allowlist.
+All 11 fetch call sites were reviewed: one is the shared API client; the other ten handle workspace/search/export reads, media uploads and hosted-payment endpoints. No separate browser transport bypasses a recent-password guard outside the shared dispatch endpoint. Hosted checkout retains its separate consent/quote/provider controls. Ordinary API calls, including dynamic action names, all benefit from the shared recovery; this does not depend on a manually maintained sensitive-action allowlist.
 
 ## Request and security behaviour
 
@@ -34,3 +34,5 @@ The 11 separate fetch sites were reviewed: workspace/search/export reads, media 
 Focused suite: 26/26 passed, including actual rendered dialog/transport coverage for all77 inventoried rejection sites and actual service controls for all seven canonical roles. These are verification UX and security-boundary checks, not a rerun of all end-to-end physical/business workflows. Local fixture writes are isolated; production controls are retained.
 
 Hosted candidate/stable release, browser acceptance, final full CI and manual screenshots are pending. See the [phase matrix](../traceability/sensitive-action-verification-rtm.md). Production NO-GO, external/provider/physical/signed-native gates, actual-import hold and retain-all remain unchanged. No new mobile binary/export/install is authorised or performed.
+
+Browser follow-up found a keyboard defect after wrong-password rejection: focus was attempted while the field was disabled. The dialog now focuses after the enabled render and excludes disabled inputs from its Tab loop. A renderer regression checks that focus occurs only after re-enabling; hosted follow-up is pending. Initial API acceptance remains evidence for the unchanged server and transport; final release identity will be recorded separately.

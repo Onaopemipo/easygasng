@@ -125,6 +125,10 @@ function Dialog({
   const [error, setError] = useState("");
   const password = useRef<HTMLInputElement>(null);
   const submitting = useRef(false);
+  useEffect(() => {
+    // Wait for the input to be enabled again before focusing it after failure.
+    if (error && !busy) password.current?.focus();
+  }, [error, busy]);
   const panel = useRef<HTMLElement>(null);
   const o = item.options;
   const close = (confirmed = false) =>
@@ -145,7 +149,6 @@ function Dialog({
       close(true);
     } catch (e: any) {
       setError(e.message);
-      password.current?.focus();
     } finally {
       submitting.current = false;
       setBusy(false);
@@ -159,7 +162,7 @@ function Dialog({
     const targets = () =>
       Array.from(
         panel.current?.querySelectorAll<HTMLElement>(
-          "button:not(:disabled),input,textarea",
+          "button:not(:disabled),input:not(:disabled),textarea:not(:disabled)",
         ) ?? [],
       );
     (
