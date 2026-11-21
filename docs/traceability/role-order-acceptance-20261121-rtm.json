@@ -404,8 +404,8 @@
         "docs/role-order-acceptance-20261121/evidence/final-trip-tests.txt"
       ],
       "acceptanceGate": "ROD21-G08",
-      "status": "PARTIAL",
-      "reason": "Fresh thirteen-account preflight and initial role/payment/trip/expiry negatives pass. Actual driver UI trip and dispatcher assignment completed. Full delivery/reconciliation and fix rollout remain pending.",
+      "status": "DEFECTIVE",
+      "reason": "Phone refund submit is visually obscured by fixed demo notice; scoped CSS correction awaits exact-source rollout and actual submission verification.",
       "testResult": "PASS for mapped current scenarios only; full fresh acceptance still pending.",
       "outstandingWork": "Execute new hosted journey and exceptions, browser verification, reconciliation, documentation and any necessary fixes."
     },
@@ -649,6 +649,10 @@
     {
       "date": "2026-11-21",
       "change": "Actual trip start and independent dispatcher assignment succeeded. Found duplicate active trip500; reproduced both driver and vehicle conflict failures locally. Fixed with serialized checks preserving unique constraints and idempotency. Approved single QA safety window13:08:06.517Z\u201315:08:06.520Z; hosted expired qualification and calibration negative checks passed before renewal. Initial operator settings query lacked scope and driver.snapshot projection assumption was corrected; failed harness logs retained separately."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "Second observed defect:390px customer refund dialog submit at775.86\u2013813.86px visually covered by demo notice beginning774px. Retained screenshot/geometry. Added demo-only co-dialog height/position clearance to product-ui.css, with prior proof chain extended explicitly to these two reviewed files. Refund not submitted until corrected live UI verified."
     }
   ]
 }

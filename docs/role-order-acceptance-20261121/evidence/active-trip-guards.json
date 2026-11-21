@@ -1,0 +1,27 @@
+{
+  "tripId": "dfda1ed7-1a9e-4afd-aabd-c82aabb497f4",
+  "rejected": [
+    {
+      "role": "owner",
+      "action": "trip.end",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "driver",
+      "action": "trip.end",
+      "status": 400,
+      "message": "End odometer must be at least the start.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "driver",
+      "action": "trip.end",
+      "status": 409,
+      "message": "Receive and reconcile all bulk LPG custody before ending the trip.",
+      "code": "INVALID_REQUEST"
+    }
+  ],
+  "activeTripPreserved": true
+}

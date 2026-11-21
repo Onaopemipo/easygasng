@@ -11,6 +11,9 @@ export async function client() {
   await mkdir(evidenceRoot, { recursive: true });
   const manifest = JSON.parse(await readFile(".data/demo-test-logins-20261110.json", "utf8"));
   assert.equal(manifest.project, "easygas-client-demo");
+  const staff=(await readFile(".data/demo-staff-logins-qa-ac7e0495.md","utf8")).split("\n").filter(x=>x.startsWith("|")&&x.includes("@")).map(x=>x.split("|").map(v=>v.trim().replaceAll("`","")));
+  const other=staff.find(x=>x[1]==="Delivery Driver");assert.ok(other);
+  manifest.accounts.push({role:"other_driver",email:other[2],password:other[3]});
   let state;
   try { state = JSON.parse(await readFile(statePath, "utf8")); }
   catch { state = { origin, label, tokens: {}, keys: {}, orders: {}, checks: [], calls: [] }; }
@@ -32,7 +35,7 @@ export async function client() {
   }
   async function login(role) {
     const a = manifest.accounts.find((a) => a.role === role); assert.ok(a, role);
-    const action = role === "driver" ? "driver.login" : role === "technician" ? "technician.login" : "login";
+    const action = ["driver","other_driver"].includes(role) ? "driver.login" : role === "technician" ? "technician.login" : "login";
     const r = await request(role, action, { identifier: a.email, password: a.password });
     assert.equal(r.status, 200, role + " login"); assert.ok(r.data.token, role + " token");
     state.tokens[role] = r.data.token; await save();

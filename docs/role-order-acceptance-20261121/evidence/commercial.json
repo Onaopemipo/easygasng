@@ -1,0 +1,22 @@
+{
+  "reference": "EG-2026-20FACF96",
+  "owner": "e7a1e6cb-eef0-4311-8dcd-4984147dc5f1",
+  "status": "cancelled",
+  "payment": "unpaid",
+  "walletDenied": {
+    "role": "commercial",
+    "action": "checkout",
+    "status": 409,
+    "message": "Insufficient wallet balance. Top up your wallet or choose Card or Cash.",
+    "code": "WALLET_INSUFFICIENT_FUNDS"
+  },
+  "other": {
+    "role": "customer",
+    "action": "order.transition",
+    "status": 403,
+    "message": "You can only cancel your own newly placed orders.",
+    "code": "INVALID_REQUEST"
+  },
+  "commercialWalletUnchanged": true,
+  "gasReservationReleasedOnce": true
+}

@@ -1,0 +1,34 @@
+{
+  "reference": "EG-2026-F068343F",
+  "rejected": [
+    {
+      "role": "finance",
+      "action": "bulk.dispense",
+      "status": 403,
+      "message": "Your account does not have permission for this action.",
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "driver",
+      "action": "bulk.dispense",
+      "status": 409,
+      "message": "Trip or load changed. Refresh before continuing.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "driver",
+      "action": "bulk.dispense",
+      "status": 409,
+      "message": "Meter delta must equal the complete reserved allocation; buffer is not authorised for sale.",
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "driver",
+      "action": "driver.complete",
+      "status": 409,
+      "message": "Upload an authorised proof photo for this delivery attempt before completion.",
+      "code": "INVALID_REQUEST"
+    }
+  ],
+  "dispensedUnchanged": true
+}

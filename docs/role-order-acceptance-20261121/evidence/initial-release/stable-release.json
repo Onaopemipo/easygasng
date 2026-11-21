@@ -1,0 +1,48 @@
+{
+  "stage": "stable",
+  "base": "https://easygas-client-demo.vercel.app",
+  "sourceCommit": "b09c00fd9343707e33ab1bc9db374bb3370c9af7",
+  "deploymentId": "dpl_CzA2eujVppuKAAVkyq5pruGuQmU3",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "name": "Client demo remains ready with test payments",
+      "status": "PASS"
+    },
+    {
+      "name": "Deployed duplicate active trip returns actionable409, preserving the current trip",
+      "status": "PASS"
+    },
+    {
+      "name": "Current canonical roles and anonymous assignment-read boundaries remain enforced",
+      "status": "PASS"
+    },
+    {
+      "name": "Orders, ledger, inventory, trips and LPG custody unchanged by release probes",
+      "status": "PASS"
+    }
+  ],
+  "duplicateTrip": {
+    "status": 409,
+    "data": {
+      "error": "You already have an active duty trip. Open Manage trip to review it, or reconcile and end it before starting another.",
+      "code": "INVALID_REQUEST"
+    }
+  },
+  "before": {
+    "orders": "6f033959b9e6555e936b3b8fd16625c9829306a8e49170b6ce6252509d004571",
+    "inventory": "5c0caf2a590b3539b0b662cc811d0402383614a7114e435adecd9b861478ce3e",
+    "ledger": "975efd24065dccc4b3a4fd6dc2427f2ac44c6d447cc54297ae26277dac66a408",
+    "trips": "1659a93a2bf3fba2a555ad5051042fd6b4b81d0475d4a9e4c5b086d22f156863",
+    "loads": "7a1308049805458fd289b8c6d2d3eaf3b2cd1f7de33529b7952eee0d3f824f4c"
+  },
+  "after": {
+    "orders": "6f033959b9e6555e936b3b8fd16625c9829306a8e49170b6ce6252509d004571",
+    "inventory": "5c0caf2a590b3539b0b662cc811d0402383614a7114e435adecd9b861478ce3e",
+    "ledger": "975efd24065dccc4b3a4fd6dc2427f2ac44c6d447cc54297ae26277dac66a408",
+    "trips": "1659a93a2bf3fba2a555ad5051042fd6b4b81d0475d4a9e4c5b086d22f156863",
+    "loads": "7a1308049805458fd289b8c6d2d3eaf3b2cd1f7de33529b7952eee0d3f824f4c"
+  },
+  "status": "PASS",
+  "completedAt": "2026-11-21T13:16:30.235Z"
+}

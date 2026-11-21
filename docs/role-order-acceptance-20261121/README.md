@@ -7,3 +7,7 @@ Duplicate active trip returned500; local driver/vehicle constraint reproductions
 User explicitly approved one fresh two-hour, demo-only safety renewal. Normal independent product review renewed four QA qualifications and the existing sandbox meter until2026-11-21T15:08:06.520Z; expired inspection403 and expired calibration409 were verified before renewal. No real certification or physical meter observation is claimed.
 
 Original19November acceptance, all larger operational/native/provider/physical gates and production NO-GO remain unchanged. No native build/export/install is authorised or performed.
+
+First sourceb09c00f/Readydpl_CzA2eujVppuKAAVkyq5pruGuQmU3 passed439-byte source proof, four candidate/four stable grouped role/conflict/preservation checks and fullCI44907451163:1162/1162 tests, zero failures/skips; native export skipped. Fresh gas order delivered through actual driver UI and load independently reconciled. Product COD collected by owner and independently verified through390px finance UI; initial partial refund rejected without money/stock changes.
+
+Phone customer refund submit was visually covered by the demo notice. Source and initial screenshot/geometry retained; added demo-only customer Orders dialog clearance.17 focused/source/PostgreSQL checks and local build/types pass. Corrected hosted phone submission, approved refund, failure/retry and final reconciliation remain pending.

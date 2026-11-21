@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {client,hash,evidenceRoot,label} from './demo-role-acceptance-20261121-client.mjs';
 const phase=process.argv[2]??'preflight';
+assert.ok(['preflight','before-trip','sync-trip','active-guards','role-boundaries','media-guards','reconcile','logout'].includes(phase));
 const c=await client();
 const note=s=>`${label}: ${s}. Synthetic QA only; no real goods, funds, travel or certification.`;
 const write=(name,value)=>fs.writeFile(`${evidenceRoot}/${name}.json`,JSON.stringify(value,null,2)+'\n');
@@ -23,6 +24,40 @@ if(phase==='preflight'){
  const ids=new Set(Object.values(c.state.roles).map(r=>r.id));
  const summary={at:new Date().toISOString(),roles:c.state.roles,originalOrderCount:values.orders.length,baselineHashes:Object.fromEntries(Object.entries(values).map(([k,v])=>[k,hash(v)])),walletKobo:values.wallet.balanceKobo,qaActiveTrip:values.driver.trip?{id:values.driver.trip.id,vehicleId:values.driver.trip.vehicle_id}:null,driverAvailable:values.driver.profile.driver_available,vehicles:values.fleet.vehicles.map(v=>({id:v.id,label:v.label,branchId:v.branch_id,active:v.active,lpgSuitable:v.lpg_suitable,capacityGrams:v.capacity_grams})),meters:values.bulk.meters.map(m=>({id:m.id,vehicleId:m.vehicle_id,serial:m.serial,calibrationExpiresAt:m.calibration_expires_at,expired:Date.parse(m.calibration_expires_at)<=Date.now()})),qualifications:values.services.qualifications.filter(q=>ids.has(q.user_id)).map(q=>({userId:q.user_id,code:q.code,expiresAt:q.expires_at,expired:Date.parse(q.expires_at)<=Date.now(),verifiedBy:q.verified_by})),products:values.catalogue.products.map(p=>({id:p.id,name:p.name,available:p.available,priceKobo:p.price_kobo}))};
  await c.check('ROD21-PREFLIGHT','Thirteen labelled identities authenticated; actual canonical roles mapped; baseline retained privately before any new business mutation.');await write('preflight',summary);console.log(JSON.stringify(summary,null,2));
+}
+if(phase==='media-guards'){
+ const o=await owned('product-cod');assert.equal(o.status,'delivered');const before=await c.ok('driver','delivery.photos?orderId='+o.id);assert.equal(before.photos.length,1);
+ const bytes=await fs.readFile(evidenceRoot+'/product-proof.png');const rows=[];
+ async function upload(role,consent,capturedAt){const form=new FormData();form.set('image',new File([bytes],'product-proof.png',{type:'image/png'}));form.set('orderId',o.id);form.set('alt',label+' synthetic product QA proof; no real goods or delivery');if(consent)form.set('photoConsent','on');form.set('capturedAt',capturedAt);const response=await fetch(c.state.origin+'/api/media',{method:'POST',headers:{origin:c.state.origin,'x-easygas-client':'native',authorization:'Bearer '+c.state.tokens[role]},body:form,signal:AbortSignal.timeout(30000)});return{status:response.status,data:await response.json()};}
+ const actual=before.photos[0].captured_at;
+ for(const[role,consent,at,status]of [['finance',true,actual,403],['driver',false,actual,400],['driver',true,new Date(Date.now()+120000).toISOString(),409]]){const r=await upload(role,consent,at);assert.equal(r.status,status);rows.push({role,status:r.status,message:r.data.error});}
+ const replay=await upload('driver',true,actual);assert.equal(replay.status,200);assert.equal(replay.data.id,before.photos[0].id);assert.equal(replay.data.replayed,true);
+ assert.deepEqual(await c.ok('driver','delivery.photos?orderId='+o.id),before);await write('proof-guards',{reference:o.reference,rejected:rows,replay:{id:replay.data.id,replayed:true},proofCountUnchanged:true});await c.check('ROD21-PROOF-GUARDS','Wrong uploader role, missing consent and future capture rejected; exact original proof replay retained one record.');
+}
+if(phase==='active-guards'){
+ const trip=(await c.ok('driver','driver.location')).trip;assert.equal(trip.id,c.state.trip.id);const rows=[];
+ rows.push(await rejected('owner','trip.end',{tripId:trip.id,endOdometer:1000,operationKey:c.key('owner.end.own-driver.trip')},[403]));
+ rows.push(await rejected('driver','trip.end',{tripId:trip.id,endOdometer:999,operationKey:c.key('lower.end.odometer')},[400]));
+ rows.push(await rejected('driver','trip.end',{tripId:trip.id,endOdometer:1000,operationKey:c.key('unreconciled.load.end')},[409]));
+ assert.equal((await c.ok('driver','driver.location')).trip.id,trip.id);await write('active-trip-guards',{tripId:trip.id,rejected:rows,activeTripPreserved:true});await c.check('ROD21-ACTIVE-GUARDS','Owner cannot end driver trip; lower odometer and unreconciled LPG custody block end; active trip preserved.');
+}
+if(phase==='role-boundaries'){
+ const o=await owned('product-cod'),before=hash(o),rows=[];
+ for(const role of Object.keys(c.state.roles)){
+  const u=(await c.ok(role,'me')).user;c.state.roles[role].branch=u.branchId??u.branch_id;
+ }
+ const u=(await c.ok('other_driver','me')).user;assert.equal(u.role,'driver');assert.notEqual(u.id,c.state.roles.driver.id);c.state.roles.other_driver={id:u.id,canonicalRole:u.role,branch:u.branchId??u.branch_id};await c.save();
+ assert.deepEqual(await c.ok('other_driver','orders?id='+o.id),[]);
+ rows.push(await rejected('other_driver','trip.start',{vehicleId:c.state.trip.vehicleId,startOdometer:1000,locationConsent:false,operationKey:c.key('other.driver.occupied.vehicle')},[409]));
+ rows.push(await rejected('other_driver','delivery.pickup',{orderId:o.id,version:Number(o.tracking_version),manifest:o.manifest,reason:note('Unassigned driver must not pick up this order'),operationKey:c.key('other.driver.pickup')},[403,404,409]));
+ for(const role of ['commercial','technician','other_driver'])rows.push(await rejected(role,'delivery.photos?orderId='+o.id,undefined,[403,404]));
+ await c.ok('customer','delivery.photos?orderId='+o.id);
+ const foreignOrder=c.state.baseline.orders.find(x=>x.customer_id!==c.state.roles.customer.id);assert.ok(foreignOrder);rows.push(await rejected('customer','delivery.photos?orderId='+foreignOrder.id,undefined,[404]));
+ const owner=await c.ok('owner','finance.ledger?limit=500'),finance=await c.ok('finance','finance.ledger?limit=500');assert.equal(owner.hasMore,false);assert.equal(finance.hasMore,false);
+ const foreign=owner.rows.find(r=>r.reference==='SYNTHETIC-QA-HLED-PAY-20261121');assert.ok(foreign);assert.notEqual(foreign.branch_id,c.state.roles.finance.branch);
+ assert.ok(finance.rows.every(r=>r.branch_id===c.state.roles.finance.branch));assert.ok(!finance.rows.some(r=>r.id===foreign.id));
+ rows.push(await rejected('finance','finance.ledger?after='+foreign.id,undefined,[400]));rows.push(await rejected('finance','finance.ledger?branchId='+foreign.branch_id,undefined,[400]));
+ assert.equal(hash(await owned('product-cod')),before);await write('role-boundaries',{identities:c.state.roles,foreignBranchHidden:true,foreignCursorRejected:true,rejected:rows,productOrderUnchanged:true});await c.check('ROD21-BOUNDARIES','Alternate existing driver cannot view or pick up another assignment or reuse its active vehicle; customer/commercial/technician proof boundaries and foreign-branch finance ledger/cursor denial verified.');
 }
 if(phase==='before-trip'){
  const o=await owned('product-cod');assert.equal(o.status,'preparing');

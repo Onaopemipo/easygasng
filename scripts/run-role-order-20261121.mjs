@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFile, writeFile } from "node:fs/promises";
 import { client, hash, evidenceRoot, label } from "./demo-role-acceptance-20261121-client.mjs";
 const phase = process.argv[2];
-assert.ok(["preexceptions","product-prepare","renew-safety","gas-expiry","gas-prepare","product-handover-guards","cash-guards","product-verified","failed-prepare","retry-prepare","gas-arrived-guards","gas-finish","wallet-cancel","payment-guards","retry-guards","retry-finish","cancel-invoice-review","refund-approved"].includes(phase), "Explicit approved fresh-run stage required");
+assert.ok(["preexceptions","product-prepare","product-progress","commercial","renew-safety","gas-expiry","gas-prepare","product-handover-guards","cash-guards","product-verified","failed-prepare","retry-prepare","gas-arrived-guards","gas-finish","wallet-cancel","payment-guards","retry-guards","retry-finish","cancel-invoice-review","refund-approved"].includes(phase), "Explicit approved fresh-run stage required");
 const note = (text) => `${label}: ${text}. Synthetic QA only; no real goods, funds, travel or certification.`;
 async function gasInput(c, name, method = "cash_on_delivery", kg = 0.5) {
   const capacityKg = Math.max(6, kg);
@@ -352,6 +352,7 @@ if (phase === "gas-arrived-guards") test("ROD21-GAS-GUARDS: wrong-role, stale an
   denied.push(await reject(c,"driver","bulk.dispense",{...input,version:Number(load.version)-1,operationKey:c.key("gas.stale.meter")},[409]));
   denied.push(await reject(c,"driver","bulk.dispense",{...input,meterReadingGrams:1000001,operationKey:c.key("gas.wrong.mass")},[409]));
   const own=await snapshot(c,"gas-wallet","customer");
+  await writeFile(".data/role-order-acceptance-20261121/gas-handover.json",JSON.stringify({orderId:o.id,code:own.confirmation_code}),{mode:0o600});
   denied.push(await reject(c,"driver","driver.complete",{orderId:o.id,version:Number(o.tracking_version),code:own.confirmation_code,handover:true,operationKey:c.key("gas.missing.fulfilment")},[409]));
   assert.equal((await c.ok("owner","bulk.summary")).loads.find(r=>r.id===load.id).dispensed_grams,load.dispensed_grams);
   await writeFile(evidenceRoot+"/gas-guards.json",JSON.stringify({reference:o.reference,rejected:denied,dispensedUnchanged:true},null,2)+"\n");
@@ -417,4 +418,29 @@ if(phase==="cancel-invoice-review")test("ROD21-CANCEL-INVOICE: independently voi
  await c.reauth("owner");await operation(c,"owner","invoice.correction.decide","cancel.invoice.void.approve",{orderId:o.id,noteId:c.state.cancelInvoiceNote,approve:true});
  const after=(await c.ok("customer","invoice.order",{orderId:o.id})).invoice;assert.equal(after.status,"voided");assert.equal(after.amountDueKobo,0);assert.deepEqual(after.snapshot,before.snapshot);assert.deepEqual(await c.ok("customer","wallet"),wallet);
  await writeFile(evidenceRoot+"/cancel-invoice-reviewed.json",JSON.stringify({reference:o.reference,invoice:after.invoice_number,status:after.status,dueKobo:after.amountDueKobo,originalIssuedSnapshotPreserved:true,walletUnchanged:true,independentFinanceAndOwnerReview:true},null,2)+"\n");
+});
+
+if(phase==="product-progress")test("ROD21-PRODUCT-VISIT: assigned driver acknowledges, checks manifest and arrives with labelled consented synthetic proof",async()=>{
+ const c=await client();let o=await snapshot(c,"product-cod");assert.equal(o.status,"assigned");
+ const early=await reject(c,"driver","delivery.pickup",{orderId:o.id,version:Number(o.tracking_version),manifest:o.manifest,reason:note("Unacknowledged pickup must fail"),operationKey:c.key("product.early.pickup")},[409]);
+ await operation(c,"driver","dispatch.respond","product.ack",{orderId:o.id,version:Number(o.tracking_version),decision:"acknowledged",reason:note("Synthetic product assignment acknowledged")});o=await snapshot(c,"product-cod");
+ await operation(c,"driver","delivery.pickup","product.pickup",{orderId:o.id,version:Number(o.tracking_version),manifest:o.manifest,reason:note("Simulated exact full serial manifest received")});await transition(c,"product-cod","out_for_delivery","driver");o=await snapshot(c,"product-cod");
+ await operation(c,"driver","delivery.arrived","product.arrived",{orderId:o.id,version:Number(o.tracking_version),reason:note("Simulated arrival only; no actual travel or location claim")});o=await snapshot(c,"product-cod");assert.equal(o.attempt.state,"arrived");
+ const photo=await uploadProof(c,"product-cod","product");await writeFile(evidenceRoot+"/product-visit.json",JSON.stringify({reference:o.reference,state:o.attempt.state,earlyPickup:early,proof:photo},null,2)+"\n");await c.check("ROD21-PRODUCT-VISIT","Canonical product acknowledgement, manifest pickup, departure, arrival and synthetic consented proof recorded; no physical travel");
+});
+async function uploadProof(c,name,image){
+ const o=await snapshot(c,name);const bytes=await readFile(evidenceRoot+"/"+image+"-proof.png");
+ const form=()=>{const f=new FormData();f.set("image",new File([bytes],image+"-proof.png",{type:"image/png"}));f.set("orderId",o.id);f.set("alt",label+" synthetic "+image+" QA proof; no real goods or delivery");f.set("photoConsent","on");return f;};
+ const response=await fetch(c.state.origin+"/api/media",{method:"POST",headers:{origin:c.state.origin,"x-easygas-client":"native",authorization:"Bearer "+c.state.tokens.driver},body:form(),signal:AbortSignal.timeout(30000)});const data=await response.json();assert.equal(response.status,200,data.error);return{id:data.id,synthetic:true};
+}
+
+if(phase==="commercial")test("ROD21-COMMERCIAL: a business customer owns and cancels a fresh unpaid order while other customer access and insufficient wallet remain blocked",async()=>{
+ const c=await client();const name="commercial-unpaid",before={wallet:await c.ok("commercial","wallet"),gas:(await c.ok("inventory","inventory.workspace")).gas};
+ const input=await gasInput(c,name,"card",0.5);input.instructions=note("Commercial account isolated unpaid cancellation scenario");input.idempotencyKey=c.key("checkout:"+name);
+ const walletDenied=await reject(c,"commercial","checkout",{...input,paymentMethod:"wallet",idempotencyKey:c.key("commercial.insufficient.wallet")},[409],/Insufficient wallet/);
+ if(!c.state.orders[name]){await c.save();const made=await c.ok("commercial","checkout",input);c.state.orders[name]={id:made.id,reference:made.reference,input,actor:"commercial"};await c.save();}
+ const o=await snapshot(c,name);assert.equal(o.customer_id,c.state.roles.commercial.id);assert.equal((await c.ok("commercial","orders?id="+o.id)).length,1);assert.deepEqual(await c.ok("customer","orders?id="+o.id),[]);
+ const other=await reject(c,"customer","order.transition",{id:o.id,status:"cancelled",version:Number(o.tracking_version),note:note("Another customer cannot cancel commercial order"),operationKey:c.key("commercial.foreign.cancel")},[403]);
+ await transition(c,name,"cancelled","commercial");await transition(c,name,"cancelled","commercial");assert.equal((await snapshot(c,name)).status,"cancelled");assert.deepEqual(await c.ok("commercial","wallet"),before.wallet);assert.deepEqual((await c.ok("inventory","inventory.workspace")).gas,before.gas);
+ await writeFile(evidenceRoot+"/commercial.json",JSON.stringify({reference:o.reference,owner:c.state.roles.commercial.id,status:"cancelled",payment:"unpaid",walletDenied,other,commercialWalletUnchanged:true,gasReservationReleasedOnce:true},null,2)+"\n");await c.check("ROD21-COMMERCIAL","Commercial own checkout/read/cancel/replay passed; insufficient wallet and other-customer cancellation rejected; no payment or stock debit");
 });

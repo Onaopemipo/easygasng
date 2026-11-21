@@ -566,3 +566,10 @@ body:has(.client-demo-notice) .admin-order-dialog .modal:has(.driver-assignment-
 @media(max-width:600px) {
   body:has(.client-demo-notice) .admin-order-dialog .modal:has(.driver-assignment-workspace) {max-height:calc(100dvh - 152px);}
 }
+
+/* Customer order/refund actions must stay above the fixed demo notice. */
+body:has(.client-demo-notice) .co-dialog {align-items:flex-start;padding-top:16px;}
+body:has(.client-demo-notice) .co-dialog .modal {max-height:calc(100dvh - 104px);}
+@media(max-width:600px) {
+  body:has(.client-demo-notice) .co-dialog .modal {max-height:calc(100dvh - 152px);}
+}

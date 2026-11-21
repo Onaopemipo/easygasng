@@ -7,7 +7,7 @@ import { Pool } from "pg";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { reviewedRoleAcceptanceSourceHash } from "../scripts/lib/reviewed-role-acceptance-source.mjs";
-test("DUPTRIP-SOURCE: the reviewed one-file web correction retains historical and native baselines and rejects tampered incoming proof", async () => {
+test("DUPTRIP-SOURCE: reviewed trip and phone-dialog corrections retain historical and native baselines and rejects tampered incoming proof", async () => {
   const review = JSON.parse(
     await readFile(
       "docs/role-order-acceptance-20261121/reviewed-source-changes.json",
