@@ -1,0 +1,185 @@
+{
+  "phase": "Fleet form password verification recovery",
+  "productionDecision": "Existing production NO-GO and native/provider/physical/import/retain-all holds unchanged",
+  "requirements": [
+    {
+      "id": "FVERIFY-01",
+      "requirement": "Vehicle registration offers current-password verification before submitting",
+      "priority": "P0",
+      "scope": "Hosted client-demo vehicle/operation form verification UX. No new mobile binary or security-control relaxation.",
+      "uiReference": "User screenshot /admin/deliveries#driver-fleet on22November Brisbane",
+      "route": [
+        "/admin/deliveries#driver-fleet"
+      ],
+      "implementationFiles": [
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/auth.ts"
+      ],
+      "dataSource": "Normal reauth and fleet.vehicle.create APIs, canonical owner/branch/session and vehicle records.",
+      "securityControl": "Five-minute recent verification, server role/branch checks and stable operationKey retained; password sent only to reauth, never mutation.",
+      "testFiles": [
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "FVERIFY-AUTH",
+        "FVERIFY-RECOVER"
+      ],
+      "evidence": [
+        "docs/fleet-verification/evidence/regression.txt"
+      ],
+      "acceptanceGate": "FVERIFY-G01",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Inline initial/recovery verification implemented. Local component and backend negative checks pass; cloud and actual browser checks pending.",
+      "testResult": "PASS for current local checks; hosted acceptance pending.",
+      "outstandingWork": "Implement, test, deploy, verify actual UI and update manual."
+    },
+    {
+      "id": "FVERIFY-02",
+      "requirement": "Other OperationForm sensitive rejections provide inline recovery without losing fields or replay key",
+      "priority": "P0",
+      "scope": "Hosted client-demo vehicle/operation form verification UX. No new mobile binary or security-control relaxation.",
+      "uiReference": "User screenshot /admin/deliveries#driver-fleet on22November Brisbane",
+      "route": [
+        "/admin/deliveries#driver-fleet"
+      ],
+      "implementationFiles": [
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/auth.ts"
+      ],
+      "dataSource": "Normal reauth and fleet.vehicle.create APIs, canonical owner/branch/session and vehicle records.",
+      "securityControl": "Five-minute recent verification, server role/branch checks and stable operationKey retained; password sent only to reauth, never mutation.",
+      "testFiles": [
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "FVERIFY-AUTH",
+        "FVERIFY-RECOVER"
+      ],
+      "evidence": [
+        "docs/fleet-verification/evidence/regression.txt"
+      ],
+      "acceptanceGate": "FVERIFY-G02",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Inline initial/recovery verification implemented. Local component and backend negative checks pass; cloud and actual browser checks pending.",
+      "testResult": "PASS for current local checks; hosted acceptance pending.",
+      "outstandingWork": "Implement, test, deploy, verify actual UI and update manual."
+    },
+    {
+      "id": "FVERIFY-03",
+      "requirement": "Owner, branch, recent-verification and idempotency controls remain enforced",
+      "priority": "P0",
+      "scope": "Hosted client-demo vehicle/operation form verification UX. No new mobile binary or security-control relaxation.",
+      "uiReference": "User screenshot /admin/deliveries#driver-fleet on22November Brisbane",
+      "route": [
+        "/admin/deliveries#driver-fleet"
+      ],
+      "implementationFiles": [
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/auth.ts"
+      ],
+      "dataSource": "Normal reauth and fleet.vehicle.create APIs, canonical owner/branch/session and vehicle records.",
+      "securityControl": "Five-minute recent verification, server role/branch checks and stable operationKey retained; password sent only to reauth, never mutation.",
+      "testFiles": [
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "FVERIFY-AUTH",
+        "FVERIFY-RECOVER"
+      ],
+      "evidence": [
+        "docs/fleet-verification/evidence/regression.txt"
+      ],
+      "acceptanceGate": "FVERIFY-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Inline initial/recovery verification implemented. Local component and backend negative checks pass; cloud and actual browser checks pending.",
+      "testResult": "PASS for current local checks; hosted acceptance pending.",
+      "outstandingWork": "Implement, test, deploy, verify actual UI and update manual."
+    },
+    {
+      "id": "FVERIFY-04",
+      "requirement": "Deploy exact source, verify desktop/phone and update current manual and evidence",
+      "priority": "P0",
+      "scope": "Hosted client-demo vehicle/operation form verification UX. No new mobile binary or security-control relaxation.",
+      "uiReference": "User screenshot /admin/deliveries#driver-fleet on22November Brisbane",
+      "route": [
+        "/admin/deliveries#driver-fleet"
+      ],
+      "implementationFiles": [
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/auth.ts"
+      ],
+      "dataSource": "Normal reauth and fleet.vehicle.create APIs, canonical owner/branch/session and vehicle records.",
+      "securityControl": "Five-minute recent verification, server role/branch checks and stable operationKey retained; password sent only to reauth, never mutation.",
+      "testFiles": [
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "FVERIFY-AUTH",
+        "FVERIFY-RECOVER"
+      ],
+      "evidence": [
+        "docs/fleet-verification/evidence/regression.txt"
+      ],
+      "acceptanceGate": "FVERIFY-G04",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Inline initial/recovery verification implemented. Local component and backend negative checks pass; cloud and actual browser checks pending.",
+      "testResult": "PASS for current local checks; hosted acceptance pending.",
+      "outstandingWork": "Implement, test, deploy, verify actual UI and update manual."
+    }
+  ],
+  "gates": [
+    {
+      "id": "FVERIFY-G01",
+      "description": "Vehicle registration offers current-password verification before submitting",
+      "status": "OPEN",
+      "reason": "Verification pending."
+    },
+    {
+      "id": "FVERIFY-G02",
+      "description": "Other OperationForm sensitive rejections provide inline recovery without losing fields or replay key",
+      "status": "OPEN",
+      "reason": "Verification pending."
+    },
+    {
+      "id": "FVERIFY-G03",
+      "description": "Owner, branch, recent-verification and idempotency controls remain enforced",
+      "status": "OPEN",
+      "reason": "Verification pending."
+    },
+    {
+      "id": "FVERIFY-G04",
+      "description": "Deploy exact source, verify desktop/phone and update current manual and evidence",
+      "status": "OPEN",
+      "reason": "Verification pending."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 0,
+      "total": 4
+    },
+    "gates": {
+      "passed": 0,
+      "total": 4
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-22",
+      "change": "Registered screenshot-reported vehicle registration dead end. Fix UI verification and shared operation-form recovery; server verification and permissions remain. Synthetic own QA vehicle only; no user-supplied vehicle registration or safety certification."
+    }
+  ]
+}

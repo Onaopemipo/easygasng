@@ -1,0 +1,64 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ FVERIFY-INITIAL: actual owner vehicle form exposes current password before registration and other roles cannot register (10.031792ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ FVERIFY-RECOVER: actual shared form preserves mounted fields and operation key across expired and incorrect verification, excludes password from mutation and commits once (26.739958ms)
+✖ FVERIFY-EXPIRY: verification rejected again during submission reopens the field, never loops automatically, and excludes verification from request mapping (1.787125ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 377.816291
+
+✖ failing tests:
+
+test at tests/fleet-verification-components.test.ts:1:2276
+✖ FVERIFY-INITIAL: actual owner vehicle form exposes current password before registration and other roles cannot register (10.031792ms)
+  ReferenceError: window is not defined
+      at reveal (/private/var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-fleet-verification-D1sT0o/component.cjs:23362:7)
+      at /private/var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-fleet-verification-D1sT0o/component.cjs:23368:5
+      at Object.react_stack_bottom_frame (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-renderer/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15755:20)
+      at runWithFiberInDEV (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-renderer/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2312:30)
+      at commitHookEffectListMount (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-renderer/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9530:29)
+      at commitHookPassiveMountEffects (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-renderer/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9617:11)
+      at commitPassiveMountOnFiber (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-renderer/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11205:13)
+      at recursivelyTraversePassiveMountEffects (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-renderer/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11160:11)
+      at commitPassiveMountOnFiber (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-renderer/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11240:11)
+      at flushPendingEffects (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-renderer/node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14086:11)
+
+test at tests/fleet-verification-components.test.ts:1:3010
+✖ FVERIFY-RECOVER: actual shared form preserves mounted fields and operation key across expired and incorrect verification, excludes password from mutation and commits once (26.739958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/fleet-verification-components.test.ts:28:405)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fleet-verification-components.test.ts:1:4982
+✖ FVERIFY-EXPIRY: verification rejected again during submission reopens the field, never loops automatically, and excludes verification from request mapping (1.787125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/fleet-verification-components.test.ts:32:232)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

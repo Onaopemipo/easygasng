@@ -12,6 +12,7 @@ export function OperationForm({
   fields,
   onDone,
   mapRequest,
+  requireVerification = false,
 }: {
   action: string;
   title: string;
@@ -25,13 +26,19 @@ export function OperationForm({
   }[];
   onDone?: (r: any) => void;
   mapRequest?: (data: Record<string, any>) => Record<string, any>;
+  requireVerification?: boolean;
 }) {
   const [error, setError] = useState(""),
     [result, setResult] = useState<any>(null),
     [busy, setBusy] = useState(false);
+  const [needsVerification, setNeedsVerification] = useState(requireVerification);
+  const verificationInput = useRef<HTMLInputElement | null>(null);
+  const inFlight = useRef(false);
   const pending = useRef<{ fingerprint: string; key: string } | null>(null);
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setError("");
     const f = new FormData(e.currentTarget),
@@ -58,6 +65,14 @@ export function OperationForm({
       const fingerprint = JSON.stringify(request);
       if (pending.current?.fingerprint !== fingerprint)
         pending.current = { fingerprint, key: crypto.randomUUID() };
+      if (needsVerification) {
+        try {
+          await api("reauth", { password: f.get("verificationPassword") });
+        } finally {
+          if (verificationInput.current) verificationInput.current.value = "";
+        }
+        setNeedsVerification(false);
+      }
       const r = await api(action, {
         ...request,
         operationKey: pending.current!.key,
@@ -67,7 +82,9 @@ export function OperationForm({
       onDone?.(r);
     } catch (e: any) {
       setError(e.message);
+      if (e.code === "REAUTH_REQUIRED") setNeedsVerification(true);
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   }
@@ -107,9 +124,31 @@ export function OperationForm({
           )}
         </label>
       ))}
+      {needsVerification && (
+        <section className="stack" aria-label="Confirm your identity">
+          <p className="muted">
+            Confirm your password to continue. Your entries stay in this form.
+          </p>
+          <label>
+            <FieldCaption required>Current password</FieldCaption>
+            <FormInput
+              ref={verificationInput}
+              name="verificationPassword"
+              type="password"
+              autoComplete="current-password"
+              required
+              disabled={busy}
+            />
+          </label>
+        </section>
+      )}
       {error && <Notice type="error" message={error} />}
       <button className="button" disabled={busy}>
-        {busy ? "Saving…" : title}
+        {busy
+          ? "Saving…"
+          : needsVerification
+            ? `Verify and ${title.charAt(0).toLowerCase()}${title.slice(1)}`
+            : title}
       </button>
       {result && (
         <Notice
@@ -166,6 +205,7 @@ export function FleetPanel({ user }: { user: any }) {
         <OperationForm
           title="Register vehicle"
           action="fleet.vehicle.create"
+          requireVerification
           onDone={refresh}
           fields={[
             {
