@@ -20,4 +20,8 @@ Rollback: promote previous Ready `dpl_EPFsgJFKDE2457trgZd7SoVvAUEg` in the same 
 
 ![Verified dark staff sidebar without a white logo tile](evidence/staff-dark.jpg)
 
-Additional [GitHub Release validation](https://github.com/Onaopemipo/easygasng/actions/runs/44880506232) was still running at the recorded observation (native checks successful; full web regressions in progress). No full-suite success is claimed for this revision. The bounded logo acceptance above is based on completed focused/build/types/prototype and hosted visual evidence. See [observed CI state](evidence/ci-observed.json).
+Full [GitHub Release validation](https://github.com/Onaopemipo/easygasng/actions/runs/44880506232) has now passed on the exact deployed application revision: **1,152 tests, 1,152 passed, zero failures/skips**, web build/types/dependency audit and native type/dependency/audit. Native export stayed skipped. [Successful jobs and executed test totals](evidence/ci-success.json); the earlier in-progress observation is retained as historical evidence.
+
+## Deploy-all request verified
+
+The subsequent user request to deploy all changes was checked against current GitHub HEAD `3750725a404ae8fb3c92f1130d5ad349b88318cf`. All 436 deployable files match the existing Ready build byte-for-byte; intervening changes are excluded documentation/evidence only. Seven fresh stable checks passed (homepage/login/robots, all three original image assets and anonymous private-identity denial). No rebuild or alias change was necessary. [Executed deployment/current-source verification](evidence/deploy-all-verification.json). No new mobile binaries, provider activation or business-data changes; production NO-GO remains.

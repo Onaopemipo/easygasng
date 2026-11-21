@@ -41,12 +41,14 @@
         "docs/web-transparent-logo/evidence/source-integrity.json",
         "docs/web-transparent-logo/evidence/preservation.json",
         "docs/web-transparent-logo/evidence/native-preservation.json",
-        "docs/web-transparent-logo/evidence/traceability.txt"
+        "docs/web-transparent-logo/evidence/traceability.txt",
+        "docs/web-transparent-logo/evidence/ci-success.json",
+        "docs/web-transparent-logo/evidence/deploy-all-verification.json"
       ],
       "acceptanceGate": "WLOGO-G01",
       "status": "VERIFIED_COMPLETE",
       "reason": "Approved existing alpha wordmark, compact icon and introduction artwork reused byte-for-byte; CSS backplates removed on public header/footer, customer sidebar, staff sidebar and introduction.",
-      "testResult": "PASS: 21 focused regressions, six historical prototype checks, build/types and two matrix checks; 13 hosted browser observations, four candidate and seven stable checks. Original native artifacts retained. Broader GitHub Release validation is tracked separately.",
+      "testResult": "PASS: full CI on exact deployed source: 1,152/1,152 tests, zero failures/skips; web build/types/audit and native type/dependency/audit (export skipped). 21 focused and six historical prototype checks overlap; 13 actual browser observations, four candidate/seven stable checks, plus seven fresh deploy-all checks. Original artwork/native artifacts retained.",
       "outstandingWork": "None for the bounded web logo correction. Broader production/device/provider acceptance remains governed by existing matrices; no new mobile binaries."
     },
     {
@@ -88,12 +90,14 @@
         "docs/web-transparent-logo/evidence/source-integrity.json",
         "docs/web-transparent-logo/evidence/preservation.json",
         "docs/web-transparent-logo/evidence/native-preservation.json",
-        "docs/web-transparent-logo/evidence/traceability.txt"
+        "docs/web-transparent-logo/evidence/traceability.txt",
+        "docs/web-transparent-logo/evidence/ci-success.json",
+        "docs/web-transparent-logo/evidence/deploy-all-verification.json"
       ],
       "acceptanceGate": "WLOGO-G02",
       "status": "VERIFIED_COMPLETE",
       "reason": "13 actual hosted observations pass: light/dark public and customer views, fixed-green staff sidebar in both themes, compact staff/customer icons, introduction and 390px phone views. Loaded artwork, accessible names, transparent backgrounds and readable inverse rendering verified; no horizontal overflow.",
-      "testResult": "PASS: 21 focused regressions, six historical prototype checks, build/types and two matrix checks; 13 hosted browser observations, four candidate and seven stable checks. Original native artifacts retained. Broader GitHub Release validation is tracked separately.",
+      "testResult": "PASS: full CI on exact deployed source: 1,152/1,152 tests, zero failures/skips; web build/types/audit and native type/dependency/audit (export skipped). 21 focused and six historical prototype checks overlap; 13 actual browser observations, four candidate/seven stable checks, plus seven fresh deploy-all checks. Original artwork/native artifacts retained.",
       "outstandingWork": "None for the bounded web logo correction. Broader production/device/provider acceptance remains governed by existing matrices; no new mobile binaries."
     },
     {
@@ -135,12 +139,15 @@
         "docs/web-transparent-logo/evidence/source-integrity.json",
         "docs/web-transparent-logo/evidence/preservation.json",
         "docs/web-transparent-logo/evidence/native-preservation.json",
-        "docs/web-transparent-logo/evidence/traceability.txt"
+        "docs/web-transparent-logo/evidence/traceability.txt",
+        "docs/web-transparent-logo/evidence/ci-success.json",
+        "docs/web-transparent-logo/evidence/deploy-all-verification.json",
+        "docs/web-transparent-logo/evidence/traceability-deploy-all.txt"
       ],
       "acceptanceGate": "WLOGO-G03",
       "status": "VERIFIED_COMPLETE",
       "reason": "Exact committed source 2731e4e deployed Ready and promoted to the stable demo. All 436 uploaded files verified; four candidate and seven stable checks pass. Original native artifacts and historical prototype proofs retained. No new mobile binaries or business-data changes.",
-      "testResult": "PASS: 21 focused regressions, six historical prototype checks, build/types and two matrix checks; 13 hosted browser observations, four candidate and seven stable checks. Original native artifacts retained. Broader GitHub Release validation is tracked separately.",
+      "testResult": "PASS: full CI on exact deployed source: 1,152/1,152 tests, zero failures/skips; web build/types/audit and native type/dependency/audit (export skipped). 21 focused and six historical prototype checks overlap; 13 actual browser observations, four candidate/seven stable checks, plus seven fresh deploy-all checks. Original artwork/native artifacts retained.",
       "outstandingWork": "None for the bounded web logo correction. Broader production/device/provider acceptance remains governed by existing matrices; no new mobile binaries."
     }
   ],
@@ -189,7 +196,17 @@
       "passed": 7,
       "total": 7
     },
-    "excluded": 0
+    "excluded": 0,
+    "fullCI": {
+      "passed": 1152,
+      "failed": 0,
+      "skipped": 0,
+      "total": 1152
+    },
+    "freshDeploymentChecks": {
+      "passed": 7,
+      "total": 7
+    }
   },
   "changeLog": [
     {
@@ -199,6 +216,10 @@
     {
       "date": "2026-11-21",
       "change": "Implemented the two stylesheet changes and explicit historical-source continuation. Verified 21 scoped regressions, six original prototype checks, local/cloud build/types, source-byte integrity and 13 actual hosted logo contexts. Promoted Ready dpl_AxiNLNdQPqtxRhhnk49NNcVUf5fW. Original artwork/native/prototype artifacts, business authority and production NO-GO retained."
+    },
+    {
+      "date": "2026-11-21",
+      "change": "User requested all changes deployed. Confirmed all 436 deployable files at HEAD3750725 equal the existing Ready deployment; only excluded documentation/evidence followed application source2731e4e. Seven fresh stable checks passed; no redundant rebuild or native binary. Full CI now succeeded:1152/1152, zero failures/skips, web/native checks pass and native export skipped. Original in-progress observation retained."
     }
   ]
 }
