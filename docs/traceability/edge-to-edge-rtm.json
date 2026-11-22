@@ -329,11 +329,16 @@
         "docs/edge-to-edge/ci-20261123/ci-regression-tests.txt",
         "docs/edge-to-edge/ci-20261123/clean-checkout-final-tests.txt",
         "docs/edge-to-edge/ci-20261123/traceability-tests.txt",
-        "docs/edge-to-edge/ci-20261123/native-preservation.json"
+        "docs/edge-to-edge/ci-20261123/native-preservation.json",
+        "docs/edge-to-edge/ci-20261123/run-results.json",
+        "docs/edge-to-edge/ci-20261123/hosted-job-summary.txt",
+        "docs/edge-to-edge/ci-20261123/hosted-build.txt",
+        "docs/edge-to-edge/ci-20261123/hosted-types.txt",
+        "docs/edge-to-edge/ci-20261123/hosted-dependency-audit.txt"
       ],
       "acceptanceGate": "EDGE-G05",
       "status": "PARTIAL",
-      "reason": "All 14 required representative iOS/iPadOS simulator role/device cases PASS, 0 partial, 0 untested, 0 excluded. Three UI repairs rechecked; QA cleanup complete. 75 regressions pass, 0 fail, 1 existing PostgreSQL concurrency skip; native types pass. Historical 36 native families/300 features/14 external blocks and production release holds retained.",
+      "reason": "All 14 required representative iOS/iPadOS simulator cases PASS, zero exclusions; three UI repairs and cleanup complete. Hosted CI run 74 on repair 5027eb3 passes all 1190 regressions with zero failures/skips, web build/types/audit and native types/3 dependency tests/audit. EDGE-CI-01/02/03 source-checkout/evidence/prototype-proof defects resolved. Historical 36 native families/300 features/14 external blocks and broader physical/release/production holds retained.",
       "testResult": "PASS_IOS_SIMULATOR_WITH_PHYSICAL_RELEASE_ACCEPTANCE_OPEN",
       "outstandingWork": "Physical Android/iOS and installed release-device verification remain open under original native/device gates. This simulator subset is complete; no broader workflow, provider, actual-import or retain-all hold is closed."
     },
@@ -413,11 +418,16 @@
         "docs/edge-to-edge/ci-20261123/ci-regression-tests.txt",
         "docs/edge-to-edge/ci-20261123/clean-checkout-final-tests.txt",
         "docs/edge-to-edge/ci-20261123/traceability-tests.txt",
-        "docs/edge-to-edge/ci-20261123/native-preservation.json"
+        "docs/edge-to-edge/ci-20261123/native-preservation.json",
+        "docs/edge-to-edge/ci-20261123/run-results.json",
+        "docs/edge-to-edge/ci-20261123/hosted-job-summary.txt",
+        "docs/edge-to-edge/ci-20261123/hosted-build.txt",
+        "docs/edge-to-edge/ci-20261123/hosted-types.txt",
+        "docs/edge-to-edge/ci-20261123/hosted-dependency-audit.txt"
       ],
       "acceptanceGate": "EDGE-G06",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Manual, indexes, matrix, 14 exact observations and 37 unaltered captures reconciled. No new EasyGas mobile binary/export/install or web deployment; two existing cached Expo Go runtime installations recorded separately. Three original release artifacts unchanged.",
+      "reason": "Manual, six-requirement matrix, 14 role/device observations, 37 captures and authoritative CI run 74 evidence reconciled. All three CI defects resolved without rewriting historic source/binary proofs. No new EasyGas binary/export/install; three original release artifacts unchanged. Earlier cached Expo Go runtime installations remain separately documented.",
       "testResult": "PASS",
       "outstandingWork": "None for this bounded implementation/documentation requirement; release/device holds remain separately tracked."
     }
@@ -451,13 +461,13 @@
       "id": "EDGE-G05",
       "description": "Verify responsive/role coverage and preserve security and existing release holds",
       "status": "PARTIAL",
-      "reason": "All 14 required representative iOS/iPadOS simulator role/device cases PASS, 0 partial, 0 untested, 0 excluded. Three UI repairs rechecked; QA cleanup complete. 75 regressions pass, 0 fail, 1 existing PostgreSQL concurrency skip; native types pass. Historical 36 native families/300 features/14 external blocks and production release holds retained."
+      "reason": "All 14 required representative iOS/iPadOS simulator cases PASS, zero exclusions; three UI repairs and cleanup complete. Hosted CI run 74 on repair 5027eb3 passes all 1190 regressions with zero failures/skips, web build/types/audit and native types/3 dependency tests/audit. EDGE-CI-01/02/03 source-checkout/evidence/prototype-proof defects resolved. Historical 36 native families/300 features/14 external blocks and broader physical/release/production holds retained."
     },
     {
       "id": "EDGE-G06",
       "description": "Record native source/preview evidence, manual guidance and traceability without a new binary",
       "status": "PASS",
-      "reason": "Manual, indexes, matrix, 14 exact observations and 37 unaltered captures reconciled. No new EasyGas mobile binary/export/install or web deployment; two existing cached Expo Go runtime installations recorded separately. Three original release artifacts unchanged."
+      "reason": "Manual, six-requirement matrix, 14 role/device observations, 37 captures and authoritative CI run 74 evidence reconciled. All three CI defects resolved without rewriting historic source/binary proofs. No new EasyGas binary/export/install; three original release artifacts unchanged. Earlier cached Expo Go runtime installations remain separately documented."
     }
   ],
   "coverage": {
@@ -505,6 +515,10 @@
     {
       "date": "2026-11-23",
       "change": "Full original CI completed with 1187 passes and 3 failures. EDGE-CI-02 assigns explicit IDs to the six existing canvas/root/source assertions and records ID migration in matrix; EDGE-CI-03 extends prototype current-source comparison through retained reviewed edge continuations, without rewriting historic manifests. All three failure causes now pass in a source-only checkout: 37 tests, zero failures/skips. Full repaired-source hosted rerun pending; physical/release and production holds unchanged."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Closed CI follow-up on hosted run 74, source5027eb3: 1190/1190 regressions PASS, zero failed/skipped; web build/typecheck/audit and native typecheck/3 dependency tests/audit PASS, zero vulnerabilities, native export SKIPPED. Runs72/73 and all three defects retained as history. Original local native artifacts unchanged. Documentation-only evidence publication; six requirements retained, EDGE-04/05 physical/release and production NO-GO/provider/import/retain-all holds unchanged."
     }
   ],
   "visualAcceptance": {
@@ -526,7 +540,7 @@
     "originalRun": 45074671341,
     "originalNative": "PASS",
     "originalWeb": "FAIL_1187_PASS_3_FAIL_0_SKIP",
-    "status": "PENDING_COMPLETE_REPAIR_HOSTED_RUN",
+    "status": "PASS",
     "issue": "EDGE-CI-01",
     "repairFiles": [
       "tests/native-edge-to-edge.test.ts",
@@ -554,6 +568,37 @@
       "shared role shells and auth/onboarding retain full-width content and keyboard safety": "EDGE-ROOTS",
       "reviewed source continuation rejects a mismatched prior hash and retains exact native scope": "EDGE-SOURCE-PROOF"
     },
-    "originalFailureEvidence": "docs/edge-to-edge/ci-20261123/original-ci-failures.txt"
+    "originalFailureEvidence": "docs/edge-to-edge/ci-20261123/original-ci-failures.txt",
+    "repairSha": "5027eb3f91a4409bfb13e80866fa3478ee5d5634",
+    "repairRun": 45076301926,
+    "repairNative": "PASS",
+    "repairWeb": "PASS",
+    "nativeExport": "SKIPPED",
+    "intermediateRun": 45075015137,
+    "intermediateWeb": "FAIL_1188_PASS_2_FAIL_0_SKIP",
+    "regression": {
+      "tests": 1190,
+      "passed": 1190,
+      "failed": 0,
+      "skipped": 0
+    },
+    "nativeDependencyTests": {
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    "webBuild": "PASS",
+    "webTypecheck": "PASS",
+    "webAudit": "PASS_ZERO_VULNERABILITIES",
+    "nativeTypecheck": "PASS",
+    "nativeAudit": "PASS_ZERO_VULNERABILITIES",
+    "runResults": "docs/edge-to-edge/ci-20261123/run-results.json",
+    "documentationPublication": "Documentation-only continuation of exact CI-tested repair source; no application or test change after run 74.",
+    "validation": "docs/edge-to-edge/ci-20261123/validation.json",
+    "finalLocalTraceability": {
+      "passed": 2,
+      "failed": 0
+    }
   }
 }

@@ -40,3 +40,7 @@ Historical proof tests that formerly used `App.tsx` as an unreviewed no-op senti
 ## Role/device visual continuation
 
 The [22–23 November visual review](visual-acceptance/README.md) completes 14/14 representative role/device simulator cases with no exclusions. Manager access feedback and icons plus shared full-screen form confirmation presentation were repaired and rechecked on phone/tablet. Actual software keyboards, cancel/confirm behavior, representative light/dark, tablet landscape and QA cleanup passed. Final regression: 75 passed, 0 failed, 1 existing PostgreSQL concurrency skip; native types passed. Three original release artifacts remain unchanged. Two existing cached Expo Go runtimes were installed, with no new EasyGas binary/export/install or web rollout. EDGE-04/05 remain PARTIAL for broader physical Android/iOS and installed release-device verification only. Original source proof remains historical; additive visual proof identifies current bytes.
+
+## Hosted CI follow-up — 23 November
+
+[Run #74](https://github.com/Onaopemipo/easygasng/actions/runs/45076301926) on `5027eb3` passes all 1,190 regressions with zero failures/skips, web build/types/audit and native typecheck/3 dependency tests/audit. Three CI test/evidence defects and their exact repairs are recorded in the [follow-up report](ci-20261123/README.md). Native export skipped; original artifacts unchanged and broader physical/release/production gates retained.
