@@ -51,7 +51,7 @@ for (const insets of [
   { top: 62, bottom: 34, left: 0, right: 0 },
   { top: 0, bottom: 21, left: 59, right: 59 },
 ])
-  test(`canvas fills window and keeps safe content for ${JSON.stringify(insets)}`, async () => {
+  test(`EDGE-CANVAS-${insets.top === 62 ? "NOTCH" : insets.left ? "SIDE" : "ZERO"}: canvas fills window and keeps safe content for ${JSON.stringify(insets)}`, async () => {
     (globalThis as any).edgeInsets = insets;
     let tree: any;
     await act(async () => {
@@ -90,7 +90,7 @@ for (const insets of [
     assert.equal(flatten(paint[1].props.style).right, 0);
     await act(async () => tree.unmount());
   });
-test("default canvas paints themed system areas without extra inset layers", async () => {
+test("EDGE-CANVAS-THEME: default canvas paints themed system areas without extra inset layers", async () => {
   (globalThis as any).edgeInsets = { top: 62, bottom: 34, left: 0, right: 0 };
   let tree: any;
   await act(async () => {
@@ -134,7 +134,7 @@ for (const transparent of [true, false, undefined])
     assert.equal(modal.findAllByType("Control").length, 1);
     await act(async () => tree.unmount());
   });
-test("shared role shells and auth/onboarding retain full-width content and keyboard safety", async () => {
+test("EDGE-ROOTS: shared role shells and auth/onboarding retain full-width content and keyboard safety", async () => {
   assert.deepEqual(fullWidthScreenContent, {
     width: "100%",
     alignSelf: "stretch",
@@ -185,7 +185,7 @@ test("shared role shells and auth/onboarding retain full-width content and keybo
   assert.equal(Object.hasOwn(config.android, "edgeToEdgeEnabled"), false);
 });
 
-test('reviewed source continuation rejects a mismatched prior hash and retains exact native scope', async () => {
+test('EDGE-SOURCE-PROOF: reviewed source continuation rejects a mismatched prior hash and retains exact native scope', async () => {
   const {reviewedNativeEdgeSourceHash,nativeEdgeFiles} = await import('../scripts/lib/reviewed-native-edge-source.mjs');
   const {createHash}=await import('node:crypto');
   const review=JSON.parse(await fs.readFile('docs/edge-to-edge/reviewed-source-changes.json','utf8'));

@@ -23,12 +23,12 @@
         "tests/native-edge-to-edge.test.ts"
       ],
       "testIds": [
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
-        "default canvas paints themed system areas without extra inset layers",
-        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
-        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope"
+        "EDGE-CANVAS-ZERO",
+        "EDGE-CANVAS-NOTCH",
+        "EDGE-CANVAS-SIDE",
+        "EDGE-CANVAS-THEME",
+        "EDGE-ROOTS",
+        "EDGE-SOURCE-PROOF"
       ],
       "negativeTests": [
         "Caller finite width/maxWidth overridden by full-window canvas",
@@ -45,7 +45,8 @@
         "docs/edge-to-edge/evidence/home-light.png",
         "docs/edge-to-edge/evidence/home-dark.png",
         "docs/edge-to-edge/evidence/preview-runtime.json",
-        "docs/edge-to-edge/evidence/validation.json"
+        "docs/edge-to-edge/evidence/validation.json",
+        "docs/edge-to-edge/ci-20261123/ci-regression-tests.txt"
       ],
       "acceptanceGate": "EDGE-G01",
       "status": "VERIFIED_COMPLETE",
@@ -75,12 +76,12 @@
         "tests/native-edge-to-edge.test.ts"
       ],
       "testIds": [
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
-        "default canvas paints themed system areas without extra inset layers",
-        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
-        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope"
+        "EDGE-CANVAS-ZERO",
+        "EDGE-CANVAS-NOTCH",
+        "EDGE-CANVAS-SIDE",
+        "EDGE-CANVAS-THEME",
+        "EDGE-ROOTS",
+        "EDGE-SOURCE-PROOF"
       ],
       "negativeTests": [
         "Caller finite width/maxWidth overridden by full-window canvas",
@@ -97,7 +98,8 @@
         "docs/edge-to-edge/evidence/home-light.png",
         "docs/edge-to-edge/evidence/home-dark.png",
         "docs/edge-to-edge/evidence/preview-runtime.json",
-        "docs/edge-to-edge/evidence/validation.json"
+        "docs/edge-to-edge/evidence/validation.json",
+        "docs/edge-to-edge/ci-20261123/ci-regression-tests.txt"
       ],
       "acceptanceGate": "EDGE-G02",
       "status": "VERIFIED_COMPLETE",
@@ -131,12 +133,12 @@
         "tests/native-edge-to-edge.test.ts"
       ],
       "testIds": [
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
-        "default canvas paints themed system areas without extra inset layers",
-        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
-        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope"
+        "EDGE-CANVAS-ZERO",
+        "EDGE-CANVAS-NOTCH",
+        "EDGE-CANVAS-SIDE",
+        "EDGE-CANVAS-THEME",
+        "EDGE-ROOTS",
+        "EDGE-SOURCE-PROOF"
       ],
       "negativeTests": [
         "Caller finite width/maxWidth overridden by full-window canvas",
@@ -151,7 +153,8 @@
         "docs/edge-to-edge/evidence/typecheck.txt",
         "docs/edge-to-edge/README.md",
         "docs/edge-to-edge/evidence/preview-runtime.json",
-        "docs/edge-to-edge/evidence/validation.json"
+        "docs/edge-to-edge/evidence/validation.json",
+        "docs/edge-to-edge/ci-20261123/ci-regression-tests.txt"
       ],
       "acceptanceGate": "EDGE-G03",
       "status": "VERIFIED_COMPLETE",
@@ -187,12 +190,12 @@
         "tests/native-edge-visual.test.ts"
       ],
       "testIds": [
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
-        "default canvas paints themed system areas without extra inset layers",
-        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
-        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope",
+        "EDGE-CANVAS-ZERO",
+        "EDGE-CANVAS-NOTCH",
+        "EDGE-CANVAS-SIDE",
+        "EDGE-CANVAS-THEME",
+        "EDGE-ROOTS",
+        "EDGE-SOURCE-PROOF",
         "EDGE-VISUAL-ACCESS",
         "EDGE-VISUAL-FAILURE",
         "EDGE-VISUAL-NAV",
@@ -226,7 +229,8 @@
         "docs/edge-to-edge/visual-acceptance/typecheck.txt",
         "docs/edge-to-edge/visual-acceptance/native-preservation.json",
         "docs/edge-to-edge/visual-acceptance/runtime-provenance.json",
-        "docs/edge-to-edge/visual-acceptance/validation.json"
+        "docs/edge-to-edge/visual-acceptance/validation.json",
+        "docs/edge-to-edge/ci-20261123/ci-regression-tests.txt"
       ],
       "acceptanceGate": "EDGE-G04",
       "status": "PARTIAL",
@@ -256,7 +260,8 @@
         "scripts/lib/reviewed-native-edge-visual-source.mjs",
         "docs/edge-to-edge/visual-acceptance/reviewed-source-changes.json",
         "apps/mobile/NativeDialog.tsx",
-        "apps/mobile/AppAlert.tsx"
+        "apps/mobile/AppAlert.tsx",
+        "scripts/validate-mobile-prototype.mjs"
       ],
       "dataSource": "Actual native safe-area insets, current-source Expo Go phone/tablet views, hosted synthetic QA identities and authoritative navigation.access; read-only business records.",
       "securityControl": "UI presentation only: authoritative navigation.access required before fleet query; existing API role/branch, password, approval, safety and financial controls retained. Shared dialog queue preserves cancel/back, stale-action rejection and exactly-once callbacks.",
@@ -271,15 +276,17 @@
         "tests/sensitive-action-security.test.ts",
         "tests/blocker-reconciliation.test.ts",
         "tests/driver-trip-conflicts.test.ts",
-        "tests/native-edge-visual.test.ts"
+        "tests/native-edge-visual.test.ts",
+        "tests/mobile-experience-prototype.test.ts",
+        "tests/customer-traceability.test.ts"
       ],
       "testIds": [
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
-        "default canvas paints themed system areas without extra inset layers",
-        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
-        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope",
+        "EDGE-CANVAS-ZERO",
+        "EDGE-CANVAS-NOTCH",
+        "EDGE-CANVAS-SIDE",
+        "EDGE-CANVAS-THEME",
+        "EDGE-ROOTS",
+        "EDGE-SOURCE-PROOF",
         "EDGE-VISUAL-ACCESS",
         "EDGE-VISUAL-FAILURE",
         "EDGE-VISUAL-NAV",
@@ -317,9 +324,12 @@
         "docs/edge-to-edge/visual-acceptance/runtime-provenance.json",
         "docs/edge-to-edge/visual-acceptance/validation.json",
         "docs/edge-to-edge/ci-20261123/README.md",
-        "docs/edge-to-edge/ci-20261123/clean-checkout-before.txt",
         "docs/edge-to-edge/ci-20261123/clean-checkout-tests.txt",
-        "docs/edge-to-edge/ci-20261123/native-job-137369136356.txt"
+        "docs/edge-to-edge/ci-20261123/native-job-137369136356.txt",
+        "docs/edge-to-edge/ci-20261123/ci-regression-tests.txt",
+        "docs/edge-to-edge/ci-20261123/clean-checkout-final-tests.txt",
+        "docs/edge-to-edge/ci-20261123/traceability-tests.txt",
+        "docs/edge-to-edge/ci-20261123/native-preservation.json"
       ],
       "acceptanceGate": "EDGE-G05",
       "status": "PARTIAL",
@@ -342,21 +352,24 @@
       "implementationFiles": [
         "docs/user-manual/native-edge-to-edge.md",
         "docs/edge-to-edge/README.md",
-        "docs/traceability/README.md"
+        "docs/traceability/README.md",
+        "scripts/validate-mobile-prototype.mjs"
       ],
       "dataSource": "Actual shared layouts, role entry shells, Expo configuration and runtime safe-area insets",
       "securityControl": "No API, role, branch, approval, financial, safety or authentication controls changed",
       "testFiles": [
         "tests/native-edge-to-edge.test.ts",
-        "tests/native-edge-visual.test.ts"
+        "tests/native-edge-visual.test.ts",
+        "tests/mobile-experience-prototype.test.ts",
+        "tests/customer-traceability.test.ts"
       ],
       "testIds": [
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
-        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
-        "default canvas paints themed system areas without extra inset layers",
-        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
-        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope",
+        "EDGE-CANVAS-ZERO",
+        "EDGE-CANVAS-NOTCH",
+        "EDGE-CANVAS-SIDE",
+        "EDGE-CANVAS-THEME",
+        "EDGE-ROOTS",
+        "EDGE-SOURCE-PROOF",
         "EDGE-VISUAL-ACCESS",
         "EDGE-VISUAL-FAILURE",
         "EDGE-VISUAL-NAV",
@@ -395,9 +408,12 @@
         "docs/edge-to-edge/visual-acceptance/runtime-provenance.json",
         "docs/edge-to-edge/visual-acceptance/validation.json",
         "docs/edge-to-edge/ci-20261123/README.md",
-        "docs/edge-to-edge/ci-20261123/clean-checkout-before.txt",
         "docs/edge-to-edge/ci-20261123/clean-checkout-tests.txt",
-        "docs/edge-to-edge/ci-20261123/native-job-137369136356.txt"
+        "docs/edge-to-edge/ci-20261123/native-job-137369136356.txt",
+        "docs/edge-to-edge/ci-20261123/ci-regression-tests.txt",
+        "docs/edge-to-edge/ci-20261123/clean-checkout-final-tests.txt",
+        "docs/edge-to-edge/ci-20261123/traceability-tests.txt",
+        "docs/edge-to-edge/ci-20261123/native-preservation.json"
       ],
       "acceptanceGate": "EDGE-G06",
       "status": "VERIFIED_COMPLETE",
@@ -485,6 +501,10 @@
     {
       "date": "2026-11-23",
       "change": "CI follow-up: original native job passes type/dependency/audit checks and skips mobile export. Fresh source-only checkout exposed ignored generated Android gradle.properties dependency in EDGE test. Replaced with committed/evaluated Expo configuration assertions; 16 clean-checkout edge tests pass without prebuild/build/export. Hosted web and repaired-source rerun remain pending; no broader gate closed."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Full original CI completed with 1187 passes and 3 failures. EDGE-CI-02 assigns explicit IDs to the six existing canvas/root/source assertions and records ID migration in matrix; EDGE-CI-03 extends prototype current-source comparison through retained reviewed edge continuations, without rewriting historic manifests. All three failure causes now pass in a source-only checkout: 37 tests, zero failures/skips. Full repaired-source hosted rerun pending; physical/release and production holds unchanged."
     }
   ],
   "visualAcceptance": {
@@ -505,19 +525,35 @@
     "sourceSha": "1b4a281762cf8265bc3dd6b460e9744e8acda787",
     "originalRun": 45074671341,
     "originalNative": "PASS",
-    "originalWeb": "IN_PROGRESS",
-    "status": "PENDING_HOSTED_RECHECK",
+    "originalWeb": "FAIL_1187_PASS_3_FAIL_0_SKIP",
+    "status": "PENDING_COMPLETE_REPAIR_HOSTED_RUN",
     "issue": "EDGE-CI-01",
     "repairFiles": [
-      "tests/native-edge-to-edge.test.ts"
+      "tests/native-edge-to-edge.test.ts",
+      "scripts/validate-mobile-prototype.mjs",
+      "docs/traceability/edge-to-edge-rtm.json"
     ],
     "localCleanCheckout": {
-      "passed": 16,
+      "passed": 37,
       "failed": 0,
       "skipped": 0
     },
     "newMobileBinaries": 0,
     "nativeExports": 0,
-    "evidence": "docs/edge-to-edge/ci-20261123/README.md"
+    "evidence": "docs/edge-to-edge/ci-20261123/README.md",
+    "issues": [
+      "EDGE-CI-01",
+      "EDGE-CI-02",
+      "EDGE-CI-03"
+    ],
+    "testIdMigration": {
+      "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}": "EDGE-CANVAS-ZERO",
+      "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}": "EDGE-CANVAS-NOTCH",
+      "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}": "EDGE-CANVAS-SIDE",
+      "default canvas paints themed system areas without extra inset layers": "EDGE-CANVAS-THEME",
+      "shared role shells and auth/onboarding retain full-width content and keyboard safety": "EDGE-ROOTS",
+      "reviewed source continuation rejects a mismatched prior hash and retains exact native scope": "EDGE-SOURCE-PROOF"
+    },
+    "originalFailureEvidence": "docs/edge-to-edge/ci-20261123/original-ci-failures.txt"
   }
 }
