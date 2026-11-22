@@ -397,5 +397,5 @@ test('PBR21-SOURCE-CONTINUATION: historical web proofs extend only through expli
   await assert.rejects(()=>reviewedBlockerSourceHash(file,'0'.repeat(64)),/historical hash/);
  }
  for(const [file,hash]of Object.entries(review.addedFiles))assert.equal(sha(await readFile(file)),hash);
- assert.equal(await reviewedBlockerSourceHash('apps/mobile/App.tsx','original-native-proof'),'original-native-proof');
+ assert.equal(await reviewedBlockerSourceHash('apps/mobile/unreviewed-surface.tsx','original-native-proof'),'original-native-proof');
 });

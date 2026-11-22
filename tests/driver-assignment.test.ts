@@ -18,7 +18,7 @@ test("DASSIGN-SOURCE: historical proofs accept only the explicit six-file web co
     assert.equal(await reviewedAssignmentSourceHash(file,baseline),createHash('sha256').update(await readFile(file)).digest('hex'));
     await assert.rejects(()=>reviewedAssignmentSourceHash(file,'0'.repeat(64)),/historical assignment baseline/);
   }
-  assert.equal(await reviewedAssignmentSourceHash('apps/mobile/App.tsx','retained-native-proof'),'retained-native-proof');
+  assert.equal(await reviewedAssignmentSourceHash('apps/mobile/unreviewed-surface.tsx','retained-native-proof'),'retained-native-proof');
   for(const [file, hash] of Object.entries(review.addedFiles)) assert.equal(createHash('sha256').update(await readFile(file)).digest('hex'),hash);
 });
 

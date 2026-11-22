@@ -52,3 +52,7 @@ Current sequential mobile acceptance (21 November): [role testing and corrected 
 Driver assignment readiness (21 November): [current Orders/Deliveries instructions and blocker resolutions](driver-assignment.md). Exact trip/vehicle/branch/availability/capacity guidance, eligible-only selection and refresh preserve final canonical guards. Verification/rollout evidence is recorded in the linked phase matrix; historical Word/PDF artifacts retained.
 
 Sensitive actions: [current password verification and recovery](sensitive-action-verification.md). Covers the shared dialog, cancellation, expiry, session changes and role/branch restrictions.
+
+## Native edge-to-edge display
+
+The [native display guide](native-edge-to-edge.md) covers the full-window canvas, role navigation and modal behavior. It includes actual current-source iOS development-preview screenshots and explicitly retains physical-device and authenticated-role visual acceptance limits. No new binary or web deployment is implied.

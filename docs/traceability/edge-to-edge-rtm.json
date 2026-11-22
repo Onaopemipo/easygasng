@@ -1,0 +1,491 @@
+{
+  "phase": "Full-viewport edge-to-edge display",
+  "productionDecision": "Existing production NO-GO, native/provider/physical/import/retain-all holds unchanged",
+  "requirements": [
+    {
+      "id": "EDGE-01",
+      "requirement": "Define a consistent full-viewport native screen canvas",
+      "priority": "P1",
+      "scope": "Native mobile app only; web app unchanged. Existing no-new-mobile-binaries constraint retained. Backgrounds fill the viewport; controls retain safe-area and readable spacing.",
+      "uiReference": "User request: full screen and edge-to-edge on all screens",
+      "route": [
+        "native shared customer/business shell",
+        "native Driver shell",
+        "native Technician shell",
+        "native sign-in and onboarding"
+      ],
+      "implementationFiles": [
+        "apps/mobile/ScreenCanvas.tsx"
+      ],
+      "dataSource": "Actual shared layouts, role entry shells, Expo configuration and runtime safe-area insets",
+      "securityControl": "No API, role, branch, approval, financial, safety or authentication controls changed",
+      "testFiles": [
+        "tests/native-edge-to-edge.test.ts"
+      ],
+      "testIds": [
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
+        "default canvas paints themed system areas without extra inset layers",
+        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
+        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope"
+      ],
+      "negativeTests": [
+        "Caller finite width/maxWidth overridden by full-window canvas",
+        "Zero/tall/side insets keep safe content and non-intercepting paint",
+        "pageSheet caller cannot downgrade full-screen modal",
+        "Modal close handler remains callable",
+        "Historical source baseline tampering rejected",
+        "Signed-out Orders opens sign-in rather than protected data"
+      ],
+      "evidence": [
+        "docs/edge-to-edge/evidence/regression-tests.txt",
+        "docs/edge-to-edge/evidence/typecheck.txt",
+        "docs/edge-to-edge/README.md",
+        "docs/edge-to-edge/evidence/home-light.png",
+        "docs/edge-to-edge/evidence/home-dark.png",
+        "docs/edge-to-edge/evidence/preview-runtime.json",
+        "docs/edge-to-edge/evidence/validation.json"
+      ],
+      "acceptanceGate": "EDGE-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Full-window background and safe-area content verified with actual Canvas renderer at zero, tall and side insets; current-source iOS guest preview observed.",
+      "testResult": "PASS",
+      "outstandingWork": "None for this bounded implementation/documentation requirement; release/device holds remain separately tracked."
+    },
+    {
+      "id": "EDGE-02",
+      "requirement": "Use full available width for customer, commercial and business native screens",
+      "priority": "P1",
+      "scope": "Native mobile app only; web app unchanged. Existing no-new-mobile-binaries constraint retained. Backgrounds fill the viewport; controls retain safe-area and readable spacing.",
+      "uiReference": "User request: full screen and edge-to-edge on all screens",
+      "route": [
+        "native shared customer/business shell",
+        "native Driver shell",
+        "native Technician shell",
+        "native sign-in and onboarding"
+      ],
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/ScreenCanvas.tsx"
+      ],
+      "dataSource": "Actual shared layouts, role entry shells, Expo configuration and runtime safe-area insets",
+      "securityControl": "No API, role, branch, approval, financial, safety or authentication controls changed",
+      "testFiles": [
+        "tests/native-edge-to-edge.test.ts"
+      ],
+      "testIds": [
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
+        "default canvas paints themed system areas without extra inset layers",
+        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
+        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope"
+      ],
+      "negativeTests": [
+        "Caller finite width/maxWidth overridden by full-window canvas",
+        "Zero/tall/side insets keep safe content and non-intercepting paint",
+        "pageSheet caller cannot downgrade full-screen modal",
+        "Modal close handler remains callable",
+        "Historical source baseline tampering rejected",
+        "Signed-out Orders opens sign-in rather than protected data"
+      ],
+      "evidence": [
+        "docs/edge-to-edge/evidence/regression-tests.txt",
+        "docs/edge-to-edge/evidence/typecheck.txt",
+        "docs/edge-to-edge/README.md",
+        "docs/edge-to-edge/evidence/home-light.png",
+        "docs/edge-to-edge/evidence/home-dark.png",
+        "docs/edge-to-edge/evidence/preview-runtime.json",
+        "docs/edge-to-edge/evidence/validation.json"
+      ],
+      "acceptanceGate": "EDGE-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Customer/commercial and business shared shell uses available width; all seven roles observed on iOS phone and iPadOS tablet in 14 bounded visual cases, with loaded content and scrolling.",
+      "testResult": "PASS",
+      "outstandingWork": "None for this bounded implementation/documentation requirement; release/device holds remain separately tracked."
+    },
+    {
+      "id": "EDGE-03",
+      "requirement": "Apply the same edge-to-edge canvas to Driver, Technician, sign-in and onboarding screens",
+      "priority": "P1",
+      "scope": "Native mobile app only; web app unchanged. Existing no-new-mobile-binaries constraint retained. Backgrounds fill the viewport; controls retain safe-area and readable spacing.",
+      "uiReference": "User request: full screen and edge-to-edge on all screens",
+      "route": [
+        "native shared customer/business shell",
+        "native Driver shell",
+        "native Technician shell",
+        "native sign-in and onboarding"
+      ],
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/DriverSignIn.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "apps/mobile/Onboarding.tsx",
+        "apps/mobile/ScreenCanvas.tsx"
+      ],
+      "dataSource": "Actual shared layouts, role entry shells, Expo configuration and runtime safe-area insets",
+      "securityControl": "No API, role, branch, approval, financial, safety or authentication controls changed",
+      "testFiles": [
+        "tests/native-edge-to-edge.test.ts"
+      ],
+      "testIds": [
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
+        "default canvas paints themed system areas without extra inset layers",
+        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
+        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope"
+      ],
+      "negativeTests": [
+        "Caller finite width/maxWidth overridden by full-window canvas",
+        "Zero/tall/side insets keep safe content and non-intercepting paint",
+        "pageSheet caller cannot downgrade full-screen modal",
+        "Modal close handler remains callable",
+        "Historical source baseline tampering rejected",
+        "Signed-out Orders opens sign-in rather than protected data"
+      ],
+      "evidence": [
+        "docs/edge-to-edge/evidence/regression-tests.txt",
+        "docs/edge-to-edge/evidence/typecheck.txt",
+        "docs/edge-to-edge/README.md",
+        "docs/edge-to-edge/evidence/preview-runtime.json",
+        "docs/edge-to-edge/evidence/validation.json"
+      ],
+      "acceptanceGate": "EDGE-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Field/auth/onboarding roots use shared full-width canvas; Driver/Technician authenticated phone/tablet visuals and Customer introduction/Skip observed. Broader physical/release verification stays under EDGE-04/05.",
+      "testResult": "PASS",
+      "outstandingWork": "None for this bounded implementation/documentation requirement; release/device holds remain separately tracked."
+    },
+    {
+      "id": "EDGE-04",
+      "requirement": "Keep notch, system-bar, keyboard and navigation controls safe",
+      "priority": "P1",
+      "scope": "Native mobile app only; web app unchanged. Existing no-new-mobile-binaries constraint retained. Backgrounds fill the viewport; controls retain safe-area and readable spacing.",
+      "uiReference": "User request: full screen and edge-to-edge on all screens",
+      "route": [
+        "native shared customer/business shell",
+        "native Driver shell",
+        "native Technician shell",
+        "native sign-in and onboarding"
+      ],
+      "implementationFiles": [
+        "apps/mobile/ScreenCanvas.tsx",
+        "apps/mobile/AppAlert.tsx",
+        "apps/mobile/ContextSheet.tsx",
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "apps/mobile/TechniciansManagement.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/NativeDialog.tsx"
+      ],
+      "dataSource": "Actual native safe-area insets, current-source Expo Go phone/tablet views, hosted synthetic QA identities and authoritative navigation.access; read-only business records.",
+      "securityControl": "UI presentation only: authoritative navigation.access required before fleet query; existing API role/branch, password, approval, safety and financial controls retained. Shared dialog queue preserves cancel/back, stale-action rejection and exactly-once callbacks.",
+      "testFiles": [
+        "tests/native-edge-to-edge.test.ts",
+        "tests/native-edge-visual.test.ts"
+      ],
+      "testIds": [
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
+        "default canvas paints themed system areas without extra inset layers",
+        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
+        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope",
+        "EDGE-VISUAL-ACCESS",
+        "EDGE-VISUAL-FAILURE",
+        "EDGE-VISUAL-NAV",
+        "EDGE-VISUAL-PROOF",
+        "EDGE-VISUAL-DIALOG",
+        "EDGE-VISUAL-DIALOG-BACK",
+        "EDGE-VISUAL-DIALOG-ABANDON"
+      ],
+      "negativeTests": [
+        "Caller finite width/maxWidth overridden by full-window canvas",
+        "Zero/tall/side insets keep safe content and non-intercepting paint",
+        "pageSheet caller cannot downgrade full-screen modal",
+        "Modal close handler remains callable",
+        "Historical source baseline tampering rejected",
+        "Signed-out Orders opens sign-in rather than protected data",
+        "Denied/offline/malformed access cannot initiate fleet data query",
+        "Confirmation cancel/back never executes sensitive action",
+        "Repeated confirmation settles exactly once",
+        "Unmounting top modal cancels pending action without revealing it in root modal"
+      ],
+      "evidence": [
+        "docs/edge-to-edge/evidence/regression-tests.txt",
+        "docs/edge-to-edge/evidence/typecheck.txt",
+        "docs/edge-to-edge/README.md",
+        "docs/edge-to-edge/evidence/preview-runtime.json",
+        "docs/edge-to-edge/evidence/validation.json",
+        "docs/edge-to-edge/visual-acceptance/README.md",
+        "docs/edge-to-edge/visual-acceptance/observations.json",
+        "docs/edge-to-edge/visual-acceptance/screenshot-manifest.json",
+        "docs/edge-to-edge/visual-acceptance/regression-tests.txt",
+        "docs/edge-to-edge/visual-acceptance/typecheck.txt",
+        "docs/edge-to-edge/visual-acceptance/native-preservation.json",
+        "docs/edge-to-edge/visual-acceptance/runtime-provenance.json",
+        "docs/edge-to-edge/visual-acceptance/validation.json"
+      ],
+      "acceptanceGate": "EDGE-G04",
+      "status": "PARTIAL",
+      "reason": "Phone and tablet software keyboards, full-screen forms, repaired top-screen confirmations, cancel/confirm logout, safe headers/footers, branch backdrops, representative light/dark and actual tablet landscape observed. 75 regressions pass; physical Android/iOS and release-device verification remain open.",
+      "testResult": "PASS_IOS_SIMULATOR_WITH_PHYSICAL_RELEASE_ACCEPTANCE_OPEN",
+      "outstandingWork": "Physical Android/iOS and installed release-device verification remain open under original native/device gates. This simulator subset is complete; no broader workflow, provider, actual-import or retain-all hold is closed."
+    },
+    {
+      "id": "EDGE-05",
+      "requirement": "Verify responsive/role coverage and preserve security and existing release holds",
+      "priority": "P1",
+      "scope": "Native mobile app only; web app unchanged. Existing no-new-mobile-binaries constraint retained. Backgrounds fill the viewport; controls retain safe-area and readable spacing.",
+      "uiReference": "User request: full screen and edge-to-edge on all screens",
+      "route": [
+        "native shared customer/business shell",
+        "native Driver shell",
+        "native Technician shell",
+        "native sign-in and onboarding"
+      ],
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/ScreenCanvas.tsx",
+        "scripts/lib/reviewed-native-edge-source.mjs",
+        "scripts/lib/reviewed-sensitive-verification-source.mjs",
+        "docs/edge-to-edge/reviewed-source-changes.json",
+        "apps/mobile/FleetLocations.tsx",
+        "scripts/lib/reviewed-native-edge-visual-source.mjs",
+        "docs/edge-to-edge/visual-acceptance/reviewed-source-changes.json",
+        "apps/mobile/NativeDialog.tsx",
+        "apps/mobile/AppAlert.tsx"
+      ],
+      "dataSource": "Actual native safe-area insets, current-source Expo Go phone/tablet views, hosted synthetic QA identities and authoritative navigation.access; read-only business records.",
+      "securityControl": "UI presentation only: authoritative navigation.access required before fleet query; existing API role/branch, password, approval, safety and financial controls retained. Shared dialog queue preserves cancel/back, stale-action rejection and exactly-once callbacks.",
+      "testFiles": [
+        "tests/native-edge-to-edge.test.ts",
+        "tests/native-workflow-traceability.test.ts",
+        "tests/native-order-authority.test.ts",
+        "tests/mobile-device-remediation.test.ts",
+        "tests/mobile-dependencies.test.ts",
+        "tests/driver-assignment.test.ts",
+        "tests/fleet-verification-security.test.ts",
+        "tests/sensitive-action-security.test.ts",
+        "tests/blocker-reconciliation.test.ts",
+        "tests/driver-trip-conflicts.test.ts",
+        "tests/native-edge-visual.test.ts"
+      ],
+      "testIds": [
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
+        "default canvas paints themed system areas without extra inset layers",
+        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
+        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope",
+        "EDGE-VISUAL-ACCESS",
+        "EDGE-VISUAL-FAILURE",
+        "EDGE-VISUAL-NAV",
+        "EDGE-VISUAL-PROOF",
+        "EDGE-VISUAL-DIALOG",
+        "EDGE-VISUAL-DIALOG-BACK",
+        "EDGE-VISUAL-DIALOG-ABANDON"
+      ],
+      "negativeTests": [
+        "Caller finite width/maxWidth overridden by full-window canvas",
+        "Zero/tall/side insets keep safe content and non-intercepting paint",
+        "pageSheet caller cannot downgrade full-screen modal",
+        "Modal close handler remains callable",
+        "Historical source baseline tampering rejected",
+        "Signed-out Orders opens sign-in rather than protected data",
+        "Denied/offline/malformed access cannot initiate fleet data query",
+        "Confirmation cancel/back never executes sensitive action",
+        "Repeated confirmation settles exactly once",
+        "Unmounting top modal cancels pending action without revealing it in root modal"
+      ],
+      "evidence": [
+        "docs/edge-to-edge/evidence/regression-tests.txt",
+        "docs/edge-to-edge/evidence/typecheck.txt",
+        "docs/edge-to-edge/README.md",
+        "docs/edge-to-edge/evidence/native-preservation.json",
+        "docs/edge-to-edge/evidence/preview-runtime.json",
+        "docs/edge-to-edge/evidence/validation.json",
+        "docs/edge-to-edge/evidence/preservation-regression.txt",
+        "docs/edge-to-edge/visual-acceptance/README.md",
+        "docs/edge-to-edge/visual-acceptance/observations.json",
+        "docs/edge-to-edge/visual-acceptance/screenshot-manifest.json",
+        "docs/edge-to-edge/visual-acceptance/regression-tests.txt",
+        "docs/edge-to-edge/visual-acceptance/typecheck.txt",
+        "docs/edge-to-edge/visual-acceptance/native-preservation.json",
+        "docs/edge-to-edge/visual-acceptance/runtime-provenance.json",
+        "docs/edge-to-edge/visual-acceptance/validation.json"
+      ],
+      "acceptanceGate": "EDGE-G05",
+      "status": "PARTIAL",
+      "reason": "All 14 required representative iOS/iPadOS simulator role/device cases PASS, 0 partial, 0 untested, 0 excluded. Three UI repairs rechecked; QA cleanup complete. 75 regressions pass, 0 fail, 1 existing PostgreSQL concurrency skip; native types pass. Historical 36 native families/300 features/14 external blocks and production release holds retained.",
+      "testResult": "PASS_IOS_SIMULATOR_WITH_PHYSICAL_RELEASE_ACCEPTANCE_OPEN",
+      "outstandingWork": "Physical Android/iOS and installed release-device verification remain open under original native/device gates. This simulator subset is complete; no broader workflow, provider, actual-import or retain-all hold is closed."
+    },
+    {
+      "id": "EDGE-06",
+      "requirement": "Record native source/preview evidence, manual guidance and traceability without a new binary",
+      "priority": "P1",
+      "scope": "Native mobile app only; web app unchanged. Existing no-new-mobile-binaries constraint retained. Backgrounds fill the viewport; controls retain safe-area and readable spacing.",
+      "uiReference": "User request: full screen and edge-to-edge on all screens",
+      "route": [
+        "native shared customer/business shell",
+        "native Driver shell",
+        "native Technician shell",
+        "native sign-in and onboarding"
+      ],
+      "implementationFiles": [
+        "docs/user-manual/native-edge-to-edge.md",
+        "docs/edge-to-edge/README.md",
+        "docs/traceability/README.md"
+      ],
+      "dataSource": "Actual shared layouts, role entry shells, Expo configuration and runtime safe-area insets",
+      "securityControl": "No API, role, branch, approval, financial, safety or authentication controls changed",
+      "testFiles": [
+        "tests/native-edge-to-edge.test.ts",
+        "tests/native-edge-visual.test.ts"
+      ],
+      "testIds": [
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":0,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":62,\"bottom\":34,\"left\":0,\"right\":0}",
+        "canvas fills window and keeps safe content for {\"top\":0,\"bottom\":21,\"left\":59,\"right\":59}",
+        "default canvas paints themed system areas without extra inset layers",
+        "shared role shells and auth/onboarding retain full-width content and keyboard safety",
+        "reviewed source continuation rejects a mismatched prior hash and retains exact native scope",
+        "EDGE-VISUAL-ACCESS",
+        "EDGE-VISUAL-FAILURE",
+        "EDGE-VISUAL-NAV",
+        "EDGE-VISUAL-PROOF",
+        "EDGE-VISUAL-DIALOG",
+        "EDGE-VISUAL-DIALOG-BACK",
+        "EDGE-VISUAL-DIALOG-ABANDON"
+      ],
+      "negativeTests": [
+        "Caller finite width/maxWidth overridden by full-window canvas",
+        "Zero/tall/side insets keep safe content and non-intercepting paint",
+        "pageSheet caller cannot downgrade full-screen modal",
+        "Modal close handler remains callable",
+        "Historical source baseline tampering rejected",
+        "Signed-out Orders opens sign-in rather than protected data",
+        "Denied/offline/malformed access cannot initiate fleet data query",
+        "Confirmation cancel/back never executes sensitive action",
+        "Repeated confirmation settles exactly once",
+        "Unmounting top modal cancels pending action without revealing it in root modal"
+      ],
+      "evidence": [
+        "docs/edge-to-edge/evidence/regression-tests.txt",
+        "docs/edge-to-edge/evidence/typecheck.txt",
+        "docs/edge-to-edge/README.md",
+        "docs/edge-to-edge/evidence/native-preservation.json",
+        "docs/edge-to-edge/evidence/home-light.png",
+        "docs/edge-to-edge/evidence/home-dark.png",
+        "docs/edge-to-edge/evidence/preview-runtime.json",
+        "docs/edge-to-edge/evidence/validation.json",
+        "docs/edge-to-edge/visual-acceptance/README.md",
+        "docs/edge-to-edge/visual-acceptance/observations.json",
+        "docs/edge-to-edge/visual-acceptance/screenshot-manifest.json",
+        "docs/edge-to-edge/visual-acceptance/regression-tests.txt",
+        "docs/edge-to-edge/visual-acceptance/typecheck.txt",
+        "docs/edge-to-edge/visual-acceptance/native-preservation.json",
+        "docs/edge-to-edge/visual-acceptance/runtime-provenance.json",
+        "docs/edge-to-edge/visual-acceptance/validation.json"
+      ],
+      "acceptanceGate": "EDGE-G06",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Manual, indexes, matrix, 14 exact observations and 37 unaltered captures reconciled. No new EasyGas mobile binary/export/install or web deployment; two existing cached Expo Go runtime installations recorded separately. Three original release artifacts unchanged.",
+      "testResult": "PASS",
+      "outstandingWork": "None for this bounded implementation/documentation requirement; release/device holds remain separately tracked."
+    }
+  ],
+  "gates": [
+    {
+      "id": "EDGE-G01",
+      "description": "Define a consistent full-viewport native screen canvas",
+      "status": "PASS",
+      "reason": "Full-window background and safe-area content verified with actual Canvas renderer at zero, tall and side insets; current-source iOS guest preview observed."
+    },
+    {
+      "id": "EDGE-G02",
+      "description": "Use full available width for customer, commercial and business native screens",
+      "status": "PASS",
+      "reason": "Customer/commercial and business shared shell uses available width; all seven roles observed on iOS phone and iPadOS tablet in 14 bounded visual cases, with loaded content and scrolling."
+    },
+    {
+      "id": "EDGE-G03",
+      "description": "Apply the same edge-to-edge canvas to Driver, Technician, sign-in and onboarding screens",
+      "status": "PASS",
+      "reason": "Field/auth/onboarding roots use shared full-width canvas; Driver/Technician authenticated phone/tablet visuals and Customer introduction/Skip observed. Broader physical/release verification stays under EDGE-04/05."
+    },
+    {
+      "id": "EDGE-G04",
+      "description": "Keep notch, system-bar, keyboard and navigation controls safe",
+      "status": "PARTIAL",
+      "reason": "Phone and tablet software keyboards, full-screen forms, repaired top-screen confirmations, cancel/confirm logout, safe headers/footers, branch backdrops, representative light/dark and actual tablet landscape observed. 75 regressions pass; physical Android/iOS and release-device verification remain open."
+    },
+    {
+      "id": "EDGE-G05",
+      "description": "Verify responsive/role coverage and preserve security and existing release holds",
+      "status": "PARTIAL",
+      "reason": "All 14 required representative iOS/iPadOS simulator role/device cases PASS, 0 partial, 0 untested, 0 excluded. Three UI repairs rechecked; QA cleanup complete. 75 regressions pass, 0 fail, 1 existing PostgreSQL concurrency skip; native types pass. Historical 36 native families/300 features/14 external blocks and production release holds retained."
+    },
+    {
+      "id": "EDGE-G06",
+      "description": "Record native source/preview evidence, manual guidance and traceability without a new binary",
+      "status": "PASS",
+      "reason": "Manual, indexes, matrix, 14 exact observations and 37 unaltered captures reconciled. No new EasyGas mobile binary/export/install or web deployment; two existing cached Expo Go runtime installations recorded separately. Three original release artifacts unchanged."
+    }
+  ],
+  "coverage": {
+    "requirements": {
+      "verified": 4,
+      "partial": 2,
+      "total": 6
+    },
+    "gates": {
+      "passed": 4,
+      "partial": 2,
+      "total": 6
+    },
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-22",
+      "change": "Registered edge-to-edge request. Platform preference requested asynchronously; both assumed after independent layout audit. No new mobile binary authorised."
+    },
+    {
+      "date": "2026-11-22",
+      "change": "User explicitly selected native mobile app only. Removed the provisional web assumption before any web/application edit; stable EDGE IDs retained and requirement02 refined to native customer/business width. All 6 requirements stay in the denominator; no web change or deployment."
+    },
+    {
+      "date": "2026-11-22",
+      "change": "Implemented native-only shared full-window canvas, uncapped role/auth content and full-window modal presentation. Bounded source/renderer and iOS preview evidence recorded. Two device/role-visual gates remain PARTIAL; no exclusions or changes to prior production decisions."
+    },
+    {
+      "date": "2026-11-22",
+      "change": "User requested remaining native role-by-role phone/tablet visual acceptance, exception checks and fixes without creating new mobile binaries. Existing EDGE IDs and six-requirement denominator retained; new preview evidence distinguishes simulator/runtime installation from application builds and physical device certification."
+    },
+    {
+      "date": "2026-11-22",
+      "change": "Visual continuation: 5/14 cases pass, 1 partial, 8 untested. Repaired standalone Manager dispatch access feedback and 3 navigation glyphs. 72 tests pass with 1 existing concurrency skip; native types pass. User priority requested after repeated Device Hub selection changes and explicit CUA user-changed rejection; remaining device work and cleanup retained. No new EasyGas binary/export/install or web rollout; cached Expo Go installed on 2 dedicated simulators."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "User authorized EasyGas Device Hub priority and pause of competing preview. Completed all 14/14 representative role/device simulator cases and post-fix Manager checks, actual phone/tablet software keyboards, form cancel/confirm, light/dark and tablet landscape. Repaired confirmation hidden behind full-screen form via shared top-screen dialog host. 75 tests pass, 0 fail, 1 existing concurrency skip; native types pass. QA logout/preferences cleanup and own Metro stop complete. EDGE-04/05 retain broader physical/release outstanding work: no requirement dropped or production gate changed; no new EasyGas binary/export/install/web deployment."
+    }
+  ],
+  "visualAcceptance": {
+    "evidence": "docs/edge-to-edge/visual-acceptance/observations.json",
+    "requiredRoleDeviceCases": 14,
+    "passed": 14,
+    "partial": 0,
+    "notTested": 0,
+    "excluded": 0,
+    "commonDeviceChecksOpen": [],
+    "status": "PASS_IOS_SIMULATOR_VISUAL_SCOPE",
+    "previewServer": "Own Metro 8084 stopped; unrelated 8081 untouched. Dedicated and earlier shared QA sessions signed out, tablet preferences restored, Device Hub released.",
+    "completedLocalDate": "2026-11-23",
+    "limits": "Representative seven-role phone/tablet iOS/iPadOS simulator visuals only; physical Android/iOS and release gates remain PARTIAL without exclusions."
+  }
+}

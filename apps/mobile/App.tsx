@@ -1,3 +1,4 @@
+import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
 import BrandLogo from "./BrandLogo";
 import {NativeEntryScreen,NativePublicPolicies,NativeServiceInfo} from './NativeEntry';
 import {nativeEntryLink,type NativeEntry} from '../../packages/business-rules/src/native-entry-links';
@@ -80,7 +81,6 @@ import {
 import { View, ScrollView, Pressable } from "./surfaces";
 import { FieldCaption, fieldAccessibilityLabel, Text, TextInput } from "./typography";
 import * as SecureStore from "expo-secure-store";
-import { SafeAreaView } from "react-native-safe-area-context";
 const origin = process.env.EXPO_PUBLIC_API_URL ?? "http://127.0.0.1:3003";
 const currency = (n: number | string | null) =>
   n === null ? "Pricing soon" : `₦${(Number(n) / 100).toLocaleString("en-NG")}`;
@@ -775,7 +775,7 @@ export default function App() {
     appearance: "Appearance",
   };
   return (
-    <SafeAreaView style={[s.app, { backgroundColor: colors.background }]}>
+    <ScreenCanvas style={[s.app, { backgroundColor: colors.background }]}>
       {initialLinkResolved && introductionAudience(user ? (user.role ?? "unknown") : token ? "unverified" : null) !== "excluded" && (
         <Onboarding key={user?.id ?? "guest"} request={intro} automatic={canAutoShowIntroduction({
           role: user?.role, initialLinkResolved, home: screen === "home",
@@ -877,12 +877,12 @@ export default function App() {
           ref={scrollRef}
           contentContainerStyle={[
             s.content,
+            fullWidthScreenContent,
             !hydrated && { flexGrow: 1, justifyContent: "center" },
             customerView && {
               padding: 16,
               width: "100%",
-              maxWidth: 780,
-              alignSelf: "center",
+              alignSelf: "stretch",
             },
           ]}
           keyboardShouldPersistTaps="handled"
@@ -1980,7 +1980,7 @@ export default function App() {
           ) : screen === "technicians-management" && user && ["owner", "manager", "finance"].includes(user.role) ? (
             <TechniciansManagement key={user.id} user={user} api={api} />
           ) : screen === "branch-dispatch" && user?.role === "manager" ? (
-            <FleetLocations key={user.id + user.branchId} api={api} />
+            <FleetLocations key={user.id + user.branchId} api={api} standalone />
           ) : screen === "sales-customers" && user?.role === "manager" ? (
             <SalesCustomerLookup key={user.id} api={api} />
           ) : screen === "retail-pos" && canOpenRetailPos(user?.role) ? (
@@ -2068,6 +2068,9 @@ export default function App() {
                     "owner-operations": "bus-outline",
                     "owner-approvals": "shield-checkmark-outline",
                     "owner-reports": "stats-chart-outline",
+                    "branch-dispatch": "bus-outline",
+                    "sales-customers": "people-outline",
+                    "retail-pos": "desktop-outline",
                     products: "cube-outline",
                     orders: "bag-check-outline",
                     cart: "cart-outline",
@@ -2098,7 +2101,7 @@ export default function App() {
           </Pressable>
         ))}
       </View>
-    </SafeAreaView>
+    </ScreenCanvas>
   );
 }
 const s = StyleSheet.create({

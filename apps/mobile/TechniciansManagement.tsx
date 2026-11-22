@@ -1,6 +1,6 @@
+import { ScreenModal, ScreenCanvas } from "./ScreenCanvas";
 import React, { useEffect, useState, useRef } from "react";
 import {
-  Modal,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
@@ -314,251 +314,260 @@ export default function TechniciansManagement({
               schedulePage * 10 >= data.scheduleTotal || busy,
             )}
           </View>
-          <Modal
+          <ScreenModal
             visible={!!modal}
             animationType="slide"
-            presentationStyle="pageSheet"
             onRequestClose={close}
           >
-            <KeyboardAvoidingView
-              style={{ flex: 1, backgroundColor: colors.background }}
-              behavior={Platform.OS === "ios" ? "padding" : undefined}
-            >
-              <ScrollView
-                contentContainerStyle={s.workspace}
-                keyboardShouldPersistTaps="handled"
+            <ScreenCanvas>
+              <KeyboardAvoidingView
+                style={{ flex: 1, backgroundColor: colors.background }}
+                behavior={Platform.OS === "ios" ? "padding" : undefined}
               >
-                <Text accessibilityRole="header" style={s.heading}>
-                  {modal === "details"
-                    ? target?.name
-                    : modal === "invite"
-                      ? "Add Technician"
-                      : modal === "verify"
-                        ? "Independent qualification verification"
-                        : modal === "block"
-                          ? "Manage appointment"
-                          : "Create availability"}
-                </Text>
-                {button("Close", close)}
-                {modal === "details" && target ? (
-                  <>
-                    <Text>
-                      {target.id} · {target.branch_id}
-                    </Text>
-                    <Text>
-                      Account {target.active ? "active" : "inactive"} ·
-                      Assignment availability{" "}
-                      {target.technician_available ? "enabled" : "disabled"}
-                    </Text>
-                    {target.qualifications.map((v) => (
-                      <View key={v.id} style={s.card}>
-                        <Text>
-                          {v.code.replaceAll("_", " ")} ·{" "}
-                          {v.verified
-                            ? "Verified"
-                            : "Expired or no longer eligible"}
-                        </Text>
-                        <Text>Expiry {local(v.expires_at)}</Text>
-                        {v.evidence && (
-                          <Text>Verification reference: {v.evidence}</Text>
+                <ScrollView
+                  contentContainerStyle={s.workspace}
+                  keyboardShouldPersistTaps="handled"
+                >
+                  <Text accessibilityRole="header" style={s.heading}>
+                    {modal === "details"
+                      ? target?.name
+                      : modal === "invite"
+                        ? "Add Technician"
+                        : modal === "verify"
+                          ? "Independent qualification verification"
+                          : modal === "block"
+                            ? "Manage appointment"
+                            : "Create availability"}
+                  </Text>
+                  {button("Close", close)}
+                  {modal === "details" && target ? (
+                    <>
+                      <Text>
+                        {target.id} · {target.branch_id}
+                      </Text>
+                      <Text>
+                        Account {target.active ? "active" : "inactive"} ·
+                        Assignment availability{" "}
+                        {target.technician_available ? "enabled" : "disabled"}
+                      </Text>
+                      {target.qualifications.map((v) => (
+                        <View key={v.id} style={s.card}>
+                          <Text>
+                            {v.code.replaceAll("_", " ")} ·{" "}
+                            {v.verified
+                              ? "Verified"
+                              : "Expired or no longer eligible"}
+                          </Text>
+                          <Text>Expiry {local(v.expires_at)}</Text>
+                          {v.evidence && (
+                            <Text>Verification reference: {v.evidence}</Text>
+                          )}
+                        </View>
+                      ))}
+                      {data.permissions.verify &&
+                        target.id !== user.id &&
+                        button("Verify qualification", () =>
+                          setModal("verify"),
                         )}
-                      </View>
-                    ))}
-                    {data.permissions.verify &&
-                      target.id !== user.id &&
-                      button("Verify qualification", () => setModal("verify"))}
-                    {data.permissions.verify &&
-                      target.id !== user.id &&
-                      button("Revoke qualification", () => setModal("revoke"))}
-                    {data.permissions.edit &&
-                      button("Edit name", () => setModal("edit"))}
-                  </>
-                ) : modal === "edit" && target ? (
-                  <NativeForm
-                    api={api}
-                    action="staff.edit"
-                    title="Edit technician name"
-                    fields={[
-                      {
-                        name: "userId",
-                        label: "Technician",
-                        value: target.id,
-                        type: "hidden",
-                      },
-                      { name: "name", label: "Full name", value: target.name },
-                      { name: "reason", label: "Reason for change" },
-                    ]}
-                    onDone={done}
-                  />
-                ) : modal === "revoke" && target ? (
-                  <NativeForm
-                    api={managedApi}
-                    action="technician.revoke"
-                    title="Revoke qualification"
-                    fields={[
-                      {
-                        name: "id",
-                        label: "Qualification",
-                        options: target.qualifications
-                          .filter((q) => q.verified)
-                          .map((q) => ({ value: q.id, label: q.code })),
-                      },
-                      { name: "reason", label: "Reason" },
-                    ]}
-                    onDone={done}
-                  />
-                ) : modal === "invite" ? (
-                  <>
-                    <Text>
-                      Invitations grant no technician privilege or
-                      qualification. Complete the existing Staff Management
-                      access review after acceptance.
-                    </Text>
+                      {data.permissions.verify &&
+                        target.id !== user.id &&
+                        button("Revoke qualification", () =>
+                          setModal("revoke"),
+                        )}
+                      {data.permissions.edit &&
+                        button("Edit name", () => setModal("edit"))}
+                    </>
+                  ) : modal === "edit" && target ? (
                     <NativeForm
                       api={api}
-                      action="staff.invite"
-                      title="Invite colleague"
-                      fields={[
-                        { name: "name", label: "Full name" },
-                        { name: "email", label: "Email address" },
-                        {
-                          name: "branchId",
-                          label: "Branch",
-                          value: user.branchId || user.branch_id || "lagos",
-                          options: data.branches
-                            .filter((b) => b.active)
-                            .map((b) => ({ value: b.id, label: b.name })),
-                        },
-                      ]}
-                      onDone={done}
-                    />
-                  </>
-                ) : modal === "availability" ? (
-                  <>
-                    <Text>
-                      Enter Africa/Lagos dates as YYYY-MM-DDTHH:mm. A slot does
-                      not authorise chargeable work.
-                    </Text>
-                    <NativeForm
-                      api={managedApi}
-                      action="services.slot.create"
-                      title="New appointment"
-                      fields={[
-                        {
-                          name: "branchId",
-                          label: "Branch",
-                          type: "hidden",
-                          value: user.branchId || user.branch_id || "lagos",
-                        },
-                        {
-                          name: "serviceId",
-                          label: "Service",
-                          options: data.services
-                            .filter((s) => s.config.active)
-                            .map((s) => ({ value: s.id, label: s.name })),
-                        },
-                        {
-                          name: "technicianId",
-                          label: "Technician from current results",
-                          options: data.people
-                            .filter((p) => p.active)
-                            .map((p) => ({ value: p.id, label: p.name })),
-                        },
-                        { name: "startsAt", label: "Start (Africa/Lagos)" },
-                        { name: "endsAt", label: "End (Africa/Lagos)" },
-                      ]}
-                      onDone={done}
-                    />
-                  </>
-                ) : modal === "verify" ? (
-                  <>
-                    <Text>
-                      Only independent authorised verification is accepted.
-                      Genuine document evidence and identity verification are
-                      required.
-                    </Text>
-                    <NativeForm
-                      api={managedApi}
-                      action="technician.qualify"
-                      title="Record qualification"
+                      action="staff.edit"
+                      title="Edit technician name"
                       fields={[
                         {
                           name: "userId",
                           label: "Technician",
-                          value: target?.id,
-                          options: data.verificationTargets
-                            .filter((p) => p.id !== user.id)
-                            .map((p) => ({
-                              value: p.id,
-                              label: p.name + " · " + staffRoleLabel(p.role),
-                            })),
-                        },
-                        { name: "code", label: "Qualification code" },
-                        {
-                          name: "evidence",
-                          label:
-                            "Issuer, verification method and document reference",
+                          value: target.id,
+                          type: "hidden",
                         },
                         {
-                          name: "expiresAt",
-                          label:
-                            "Documented expiry, YYYY-MM-DDTHH:mm (Africa/Lagos)",
+                          name: "name",
+                          label: "Full name",
+                          value: target.name,
                         },
+                        { name: "reason", label: "Reason for change" },
                       ]}
                       onDone={done}
                     />
-                  </>
-                ) : modal === "block" && slot ? (
-                  <>
-                    <Text>
-                      {slot.bookings
-                        ? "Reschedule the active booking with the customer before blocking."
-                        : "The server checks for bookings again before saving."}
-                    </Text>
+                  ) : modal === "revoke" && target ? (
                     <NativeForm
                       api={managedApi}
-                      action="services.slot.block"
-                      title={
-                        slot.blocked
-                          ? "Unblock appointment"
-                          : "Block appointment"
-                      }
+                      action="technician.revoke"
+                      title="Revoke qualification"
                       fields={[
                         {
                           name: "id",
-                          label: "Appointment",
-                          value: slot.id,
-                          type: "hidden",
-                        },
-                        {
-                          name: "blocked",
-                          label: "Blocked",
-                          value: !slot.blocked,
-                          type: "hidden",
+                          label: "Qualification",
+                          options: target.qualifications
+                            .filter((q) => q.verified)
+                            .map((q) => ({ value: q.id, label: q.code })),
                         },
                         { name: "reason", label: "Reason" },
                       ]}
                       onDone={done}
                     />
-                  </>
-                ) : null}
-                {["invite", "verify", "edit", "revoke"].includes(modal) && (
-                  <NativeForm
-                    api={api}
-                    action="reauth"
-                    title="Verify your identity if requested"
-                    fields={[
-                      {
-                        name: "password",
-                        label: "Current password",
-                        type: "password",
-                      },
-                    ]}
-                  />
-                )}
-              </ScrollView>
-            </KeyboardAvoidingView>
-          </Modal>
+                  ) : modal === "invite" ? (
+                    <>
+                      <Text>
+                        Invitations grant no technician privilege or
+                        qualification. Complete the existing Staff Management
+                        access review after acceptance.
+                      </Text>
+                      <NativeForm
+                        api={api}
+                        action="staff.invite"
+                        title="Invite colleague"
+                        fields={[
+                          { name: "name", label: "Full name" },
+                          { name: "email", label: "Email address" },
+                          {
+                            name: "branchId",
+                            label: "Branch",
+                            value: user.branchId || user.branch_id || "lagos",
+                            options: data.branches
+                              .filter((b) => b.active)
+                              .map((b) => ({ value: b.id, label: b.name })),
+                          },
+                        ]}
+                        onDone={done}
+                      />
+                    </>
+                  ) : modal === "availability" ? (
+                    <>
+                      <Text>
+                        Enter Africa/Lagos dates as YYYY-MM-DDTHH:mm. A slot
+                        does not authorise chargeable work.
+                      </Text>
+                      <NativeForm
+                        api={managedApi}
+                        action="services.slot.create"
+                        title="New appointment"
+                        fields={[
+                          {
+                            name: "branchId",
+                            label: "Branch",
+                            type: "hidden",
+                            value: user.branchId || user.branch_id || "lagos",
+                          },
+                          {
+                            name: "serviceId",
+                            label: "Service",
+                            options: data.services
+                              .filter((s) => s.config.active)
+                              .map((s) => ({ value: s.id, label: s.name })),
+                          },
+                          {
+                            name: "technicianId",
+                            label: "Technician from current results",
+                            options: data.people
+                              .filter((p) => p.active)
+                              .map((p) => ({ value: p.id, label: p.name })),
+                          },
+                          { name: "startsAt", label: "Start (Africa/Lagos)" },
+                          { name: "endsAt", label: "End (Africa/Lagos)" },
+                        ]}
+                        onDone={done}
+                      />
+                    </>
+                  ) : modal === "verify" ? (
+                    <>
+                      <Text>
+                        Only independent authorised verification is accepted.
+                        Genuine document evidence and identity verification are
+                        required.
+                      </Text>
+                      <NativeForm
+                        api={managedApi}
+                        action="technician.qualify"
+                        title="Record qualification"
+                        fields={[
+                          {
+                            name: "userId",
+                            label: "Technician",
+                            value: target?.id,
+                            options: data.verificationTargets
+                              .filter((p) => p.id !== user.id)
+                              .map((p) => ({
+                                value: p.id,
+                                label: p.name + " · " + staffRoleLabel(p.role),
+                              })),
+                          },
+                          { name: "code", label: "Qualification code" },
+                          {
+                            name: "evidence",
+                            label:
+                              "Issuer, verification method and document reference",
+                          },
+                          {
+                            name: "expiresAt",
+                            label:
+                              "Documented expiry, YYYY-MM-DDTHH:mm (Africa/Lagos)",
+                          },
+                        ]}
+                        onDone={done}
+                      />
+                    </>
+                  ) : modal === "block" && slot ? (
+                    <>
+                      <Text>
+                        {slot.bookings
+                          ? "Reschedule the active booking with the customer before blocking."
+                          : "The server checks for bookings again before saving."}
+                      </Text>
+                      <NativeForm
+                        api={managedApi}
+                        action="services.slot.block"
+                        title={
+                          slot.blocked
+                            ? "Unblock appointment"
+                            : "Block appointment"
+                        }
+                        fields={[
+                          {
+                            name: "id",
+                            label: "Appointment",
+                            value: slot.id,
+                            type: "hidden",
+                          },
+                          {
+                            name: "blocked",
+                            label: "Blocked",
+                            value: !slot.blocked,
+                            type: "hidden",
+                          },
+                          { name: "reason", label: "Reason" },
+                        ]}
+                        onDone={done}
+                      />
+                    </>
+                  ) : null}
+                  {["invite", "verify", "edit", "revoke"].includes(modal) && (
+                    <NativeForm
+                      api={api}
+                      action="reauth"
+                      title="Verify your identity if requested"
+                      fields={[
+                        {
+                          name: "password",
+                          label: "Current password",
+                          type: "password",
+                        },
+                      ]}
+                    />
+                  )}
+                </ScrollView>
+              </KeyboardAvoidingView>
+            </ScreenCanvas>
+          </ScreenModal>
         </>
       )}
     </View>

@@ -1,0 +1,1145 @@
+
+> easygas-platform@0.1.0 test
+> node --import tsx --test --test-concurrency=1 tests/*.test.ts
+
+EasyGas incident diagnostic {
+  reference: '6a01c3b2-86a6-4c80-9a51-f9d8dba5be8d',
+  action: 'customer.dashboard',
+  sqlState: '42703'
+}
+✔ ACI-01: older recorded migrations repair missing default-address field without losing addresses or inferring a default (1140.989209ms)
+✔ ONBOARD-01: staff email acceptance, replacement before access and replay rejection (1742.665125ms)
+✔ ONBOARD-02: admin-created customer must accept and replace the emailed password (1414.774458ms)
+✔ ONBOARD-03: recovery covers staff and customers with bounded sends and single-use links (1302.327958ms)
+✔ ADR-01: full house addresses identify a single configured locality (0.990667ms)
+✔ ADR-04: addresses without commas match only explicit locality and city suffixes (0.071417ms)
+✔ ADR-02: ambiguous, unknown and street-name matches require confirmation (0.119958ms)
+✔ ADR-03: changing or deleting an address cannot reuse a previous automatic match (0.055041ms)
+✔ ADR-07: address edits preserve explicitly selected and saved areas (0.171583ms)
+✔ ADR-08: an automatic suggestion follows the address and respects current choices (0.070417ms)
+✔ ACMP-UI01: support desktop and phone layouts fit with bounded content and no default dialog (1.502208ms)
+✔ ACMP-UI02: bookings desktop and phone layouts fit with bounded content and no default dialog (0.300542ms)
+✔ ACMP-UI03: services desktop and phone layouts fit with bounded content and no default dialog (0.284542ms)
+✔ ACMP-UI04: quotations desktop and phone layouts fit with bounded content and no default dialog (0.284875ms)
+✔ ACMP-UI05: finance desktop and phone layouts fit with bounded content and no default dialog (0.382833ms)
+✔ ACMP-UI06: reconciliation desktop and phone layouts fit with bounded content and no default dialog (0.379875ms)
+✔ ACMP-UI07: credits desktop and phone layouts fit with bounded content and no default dialog (0.209458ms)
+✔ ACMP-UI08: reports desktop and phone layouts fit with bounded content and no default dialog (0.824ms)
+✔ ACMP-INTERACT: recorded browser checks cover canonical lookup, draft guards, focus, document pages and full CSV export (0.610959ms)
+✔ ACMP-CREDITS: one server pager retains all scoped credit requests and rejects invalid size, role and branch access (1477.452291ms)
+✔ ACMP-DOCS: compact document pages preserve canonical records, totals and status filtering and reject invalid page sizes (1455.915125ms)
+✔ ACMP-PAGE: record windows retain every loaded record without duplicates or out-of-range blanks (4.025084ms)
+✔ ACMP-BOOK: staff booking list bounds rows and excludes private details and unselected action forms (4.245625ms)
+✔ ACMP-QUOTE: quotation scope and explicit empty/search states do not display unrelated bookings (1.592584ms)
+✔ ACMP-CAT: one catalogue table shows draft state and no public booking card or inline service editor (1.690083ms)
+✔ ACMP-FIN: unavailable profits remain distinct from zero and secondary financial details stay out of the overview (0.715667ms)
+✔ ACMP-DIALOG: secondary workflows do not mount until requested and tabs retain accessible current state (0.271542ms)
+✔ ACMP-REPORT: schedule history retains records with bounded tables and one empty state (1.639583ms)
+Admin isolated HTTP search60 request total ms: 336
+✔ ADM-HTTP18: admin reads enforce authentication, read-only HTTP methods and a persistent per-user search budget (1491.660583ms)
+✔ ADM-BIZ01: dashboard uses canonical scoped records, real statuses and zero-data states (1082.041083ms)
+✔ ADM-AUTH03: dashboard and search reject customer, forged role and cross-branch scope (809.832208ms)
+✔ ADM-SEARCH12: search returns permitted records only and treats wildcards/injection as literal input (763.059667ms)
+✔ ADM-REL01: failed order widget is isolated without discarding other canonical widgets (746.315459ms)
+✔ ADM-FILTER03: invalid dates, oversized ranges and excessive pages are rejected (709.9955ms)
+✔ ADM-BIZ02: receipts exclude unverified collections and match the existing finance definition after reconciliation (862.2185ms)
+✔ ADM-AUTH01: single canonical login returns actual role, never accepts a requested privilege (862.684166ms)
+✔ ADM-NOTIFY12: unread totals are not limited to display rows and links recheck branch and module access (783.659375ms)
+✔ AORD-BROWSER: saved desktop/phone observations show a compact summary, one workflow dialog, bounded dimensions and retained interactions (2.56475ms)
+✔ AORD-SUMMARY: completed order opens one summary dialog with four tabs, no forms, hidden IDs, prep actions or mounted history/invoice (6.534708ms)
+✔ AORD-ACTIONS: status and role determine available workflows; paid/assigned orders cannot offer additions, finance cannot update delivery and only provisional customers expose messaging (0.196209ms)
+✔ AORD-FORMS: status form shows only relevant fields, communications keep context IDs hidden and private history excludes messaging forms (3.374875ms)
+✔ AORD-HISTORY: timeline retains original notes with eight bounded records and lazy visit evidence (1.295667ms)
+✔ AORD-SCOPE: canonical staff provisional flag is scoped, absent from customer payloads and cannot expose another customer's order (1070.872167ms)
+✔ ASACC-DEPLOY: exact reviewed web source, ready demo identity and safe upload boundaries (6782.959292ms)
+✔ ASACC-HOSTED: candidate and stable six-role API checks pass without changing business state (4.154917ms)
+✔ ASACC-NO-MOBILE-BUILD: original native artifacts retained byte-for-byte with original modification times (19.056708ms)
+✔ ASACC-EVIDENCE: seven-role exhaustive coverage, all editor types and exact inactive browser drafts are recorded (1.805541ms)
+✔ ASACC-ROLES: all seven canonical roles, every definition, history/proposal permissions and legacy aliases are authoritative (2686.331042ms)
+✔ ASACC-EDITORS: every existing definition renders with typed valid data; malformed values are rejected by real proposals (1097.97675ms)
+✔ ASACC-LIFECYCLE: manager draft, independent approval, owner versioned restoration, scheduling and stale conflict preserve history (968.549416ms)
+✔ ASACC-EXCEPTIONS: anonymous, inactive/expired/revoked sessions, branch forgery, stale/invalid values, history leaks and readonly restoration are denied (863.101583ms)
+✔ ASACC-HISTORY: view-only/locked histories expose no restoration; busy, failure and server result states remain explicit (7.189708ms)
+✔ ASACC-CONTENT: malformed service activation, unsafe checklists and incomplete publication remain blocked; valid typed drafts cannot publish or activate (824.484709ms)
+✔ ASSET-COVERAGE: every live setting appears exactly once across nine categories; all remaining 71 and payment six retained (9.546875ms)
+✔ ASSET-LABELS: current policies, legacy fields and independent operational purposes stay distinct and searchable (0.367084ms)
+✔ ASSET-SECURITY: six-role real service data retain canonical definitions; renamed delivery/catalogue/rewards/safety/access requests remain scoped, draft-only and server-validated (1017.138708ms)
+✔ ASSET-DEPLOY: exact reviewed web source, ready demo identity and safe upload boundaries (5866.219792ms)
+✔ ASSET-HOSTED: candidate and stable six-role API checks pass without changing business state (3.782917ms)
+✔ ASSET-NO-MOBILE-BUILD: original native artifacts retained byte-for-byte with original modification times (18.062291ms)
+✔ APC-BROWSER: hosted desktop and phone distinguish requester, review and verified owner approval with retained dual-review history (3.727667ms)
+✔ APC-OWNER: existing EasyRewards request stays pending until its sole owner explicitly verifies and applies it once (1093.165333ms)
+✔ APC-PROGRESS: dual-review progress counts only current valid decisions and preserves mandatory roles (879.523417ms)
+✔ APC-SECURITY: owner authority cannot be borrowed, used for restricted payment changes, or applied after expiry/version conflict (875.881917ms)
+✔ APC-LABELS: approval labels distinguish owner, dual-review and missing required roles without inventing progress (0.186166ms)
+✔ APPROVAL-PAGE01: server pagination covers more than 200 records with stable ordering, filtering, totals and bounded pages (1251.39625ms)
+✔ APPROVAL-SCOPE01: pagination and summary enforce branch and view permissions; field roles cannot read requests (700.275875ms)
+✔ APPROVAL-HTTP01: paginated approvals require authentication and are read only over HTTP (669.219583ms)
+﹣ DAN-PG01: concurrent assignment retries commit one driver notification and rolled-back writes publish none (0.296625ms) # Explicit disposable local PostgreSQL required; not concurrency evidence when skipped
+✔ DAN-01: owner first assignment notifies only its driver once across operation replay and keeps customer code private (1014.057333ms)
+✔ DAN-02: enhanced first assignment and reassignment each notify the receiving driver exactly once (831.681916ms)
+✔ DAN-03: unavailable driver rejection and a failure after attempt creation leave no phantom assignment alert (814.167625ms)
+✔ AUDIT-PAGE01: server pages beyond the legacy200 cap with stable ties, full-history literal search and no mutation (1305.315292ms)
+✔ AUDIT-PAGE02: authorised administrator retains global read; customer/operational roles and invalid pagination are rejected (838.691834ms)
+✔ WEB-A02: technician help uses the public contact destination while customer conversations remain protected (1221.756959ms)
+✔ WEB-A03: verification guidance routes to the actual resend control and tokens retain purpose expiry and replay guards (937.000083ms)
+✔ WEB-A01 and WEB-A06: sole-owner policy UI reflects existing authority without widening access or financial approval (941.571041ms)
+✔ WEB-A05: readiness supports one business owner and reports sandbox payments truthfully without releasing production (906.061292ms)
+✔ WEB-A04 and WEB-A07: expired meters and missing valuation are explained without inventing safe equipment or zero profit (3.141583ms)
+✔ AUD-HOSTED: deployed source, approved notices, bounded renewal and protected hosted records have executed evidence (2.965583ms)
+✔ encrypted backup verifies authentication and restores the actual database in isolation (1477.130458ms)
+✔ encrypted restore preserves completed service reports, verified receipts and immutable history (1632.035709ms)
+
+Interrupted while running:
+
+⚠ tests/blocker-reconciliation-closure.test.ts (tests/blocker-reconciliation-closure.test.ts:1:1)
+✖ tests/blocker-reconciliation-closure.test.ts (4662.364208ms)
+✖ tests/blocker-reconciliation.test.ts
+✖ tests/bulk-lpg-http.test.ts
+✖ tests/bulk-lpg-postgres.test.ts
+✖ tests/bulk-lpg.test.ts
+✖ tests/bulk-meter-lifecycle.test.ts
+✖ tests/bulk-recovery.test.ts
+✖ tests/bundles.test.ts
+✖ tests/campaign-return.test.ts
+✖ tests/cancelled-wallet-invoice.test.ts
+✖ tests/cash-reconciliation.test.ts
+✖ tests/catalogue-cylinder-availability.test.ts
+✖ tests/catalogue-import.test.ts
+✖ tests/catalogue-services-integration.test.ts
+✖ tests/checkout-delivery.test.ts
+✖ tests/commerce.test.ts
+✖ tests/compact-gas-quantity.test.ts
+✖ tests/cooking-gas-profiles-postgres.test.ts
+✖ tests/cooking-gas-profiles.test.ts
+✖ tests/credit-customer-search.test.ts
+✖ tests/crm-followup-pagination.test.ts
+✖ tests/crm-http.test.ts
+✖ tests/custom-alerts.test.ts
+✖ tests/customer-account-redesign.test.ts
+✖ tests/customer-dashboard.test.ts
+✖ tests/customer-introduction.test.ts
+✖ tests/customer-management.test.ts
+✖ tests/customer-mobile.test.ts
+✖ tests/customer-notifications.test.ts
+✖ tests/customer-orders.test.ts
+✖ tests/customer-service-booking-redesign.test.ts
+✖ tests/customer-traceability.test.ts
+✖ tests/delegation.test.ts
+✖ tests/demo-provisioning-guards.test.ts
+✖ tests/deployment.test.ts
+✖ tests/dispatch-centre-safety.test.ts
+✖ tests/dispatch-custody-capacity.test.ts
+✖ tests/dispatch-driver-photos.test.ts
+✖ tests/dispatch-routing-postgres.test.ts
+✖ tests/dispatch-routing.test.ts
+✖ tests/document-brand.test.ts
+✖ tests/doorstep-cylinders.test.ts
+✖ tests/doorstep-execution.test.ts
+✖ tests/doorstep-postgres.test.ts
+✖ tests/doorstep-products.test.ts
+✖ tests/driver-assignment-alerts.test.ts
+✖ tests/driver-assignment-components.test.ts
+✖ tests/driver-assignment.test.ts
+✖ tests/driver-experience-redesign.test.ts
+✖ tests/driver-local-config.test.ts
+✖ tests/driver-lpg-http.test.ts
+✖ tests/driver-lpg-workflow.test.ts
+✖ tests/driver-saas-redesign.test.ts
+✖ tests/driver-trip-conflicts.test.ts
+✖ tests/driver-workspace.test.ts
+✖ tests/easygas-loader.test.ts
+✖ tests/easyrewards-completion.test.ts
+✖ tests/easyrewards-postgres-completion.test.ts
+✖ tests/easyrewards-postgres.test.ts
+✖ tests/easyrewards-redesign.test.ts
+✖ tests/easyrewards.test.ts
+✖ tests/effective-date.test.ts
+✖ tests/excel-preview.test.ts
+✖ tests/experience-prototype.test.ts
+✖ tests/financial-document-integration.test.ts
+✖ tests/financial-document-pdf.test.ts
+✖ tests/financial-document.test.ts
+✖ tests/fleet-verification-components.test.ts
+✖ tests/fleet-verification-security.test.ts
+✖ tests/form-contrast.test.ts
+✖ tests/google-analytics-browser.test.ts
+✖ tests/google-analytics-realtime.test.ts
+✖ tests/google-analytics.test.ts
+✖ tests/growth-compact-browser-evidence.test.ts
+✖ tests/growth-compact.test.ts
+✖ tests/homepage-task-register.test.ts
+✖ tests/hosted-ledger-cross-branch.test.ts
+✖ tests/hosted-ledger-evidence.test.ts
+✖ tests/hosted-ledger.test.ts
+✖ tests/http.test.ts
+✖ tests/integrity-regressions.test.ts
+✖ tests/inventory-finance.test.ts
+✖ tests/inventory-workspace-http.test.ts
+✖ tests/inventory-workspace.test.ts
+✖ tests/invoice-pdf.test.ts
+✖ tests/linked-request-contact.test.ts
+✖ tests/live-rider-tracking.test.ts
+✖ tests/local-rewards-upgrade.test.ts
+✖ tests/menu-visibility.test.ts
+✖ tests/mobile-acceptance.test.ts
+✖ tests/mobile-appearance.test.ts
+✖ tests/mobile-dependencies.test.ts
+✖ tests/mobile-device-evidence.test.ts
+✖ tests/mobile-device-remediation.test.ts
+✖ tests/mobile-experience-prototype.test.ts
+✖ tests/mobile-orders-text.test.ts
+✖ tests/mobile-origin.test.ts
+✖ tests/mobile-ui-design.test.ts
+✖ tests/mobile-web-corrections.test.ts
+✖ tests/native-edge-to-edge.test.ts
+✖ tests/native-entry.test.ts
+✖ tests/native-order-authority.test.ts
+✖ tests/native-order-refund-api.test.ts
+✖ tests/native-web-release.test.ts
+✖ tests/native-workflow-traceability.test.ts
+✖ tests/native-workflows-api.test.ts
+✖ tests/native-workflows.test.ts
+✖ tests/navigation-badge-render.test.ts
+✖ tests/navigation.test.ts
+✖ tests/notification-inbox.test.ts
+✖ tests/offline-driver-location.test.ts
+✖ tests/operational-incidents.test.ts
+✖ tests/operations-completion-postgres.test.ts
+✖ tests/operations-completion.test.ts
+✖ tests/order-additions-postgres.test.ts
+✖ tests/order-additions.test.ts
+✖ tests/order-tracking-postgres.test.ts
+✖ tests/order-tracking.test.ts
+✖ tests/owner-auto-approval-postgres.test.ts
+✖ tests/owner-auto-approval.test.ts
+✖ tests/password-minimum.test.ts
+✖ tests/password-visibility.test.ts
+✖ tests/payment-fees.test.ts
+✖ tests/paystack-orchestration.test.ts
+✖ tests/paystack-policy.test.ts
+✖ tests/paystack-postgres.test.ts
+✖ tests/paystack-provider.test.ts
+✖ tests/platform.test.ts
+✖ tests/post-meeting-forecast.test.ts
+✖ tests/post-meeting-identity.test.ts
+✖ tests/post-meeting-invoices.test.ts
+✖ tests/post-meeting-postgres.test.ts
+✖ tests/post-meeting-private-role.test.ts
+✖ tests/postgres-approval-concurrency.test.ts
+✖ tests/product-import.test.ts
+✖ tests/product-ui.test.ts
+✖ tests/production-audit-findings.test.ts
+✖ tests/production-backup-postgres.test.ts
+✖ tests/production-release.test.ts
+✖ tests/professional-services.test.ts
+✖ tests/public-header.test.ts
+✖ tests/refill-feedback.test.ts
+✖ tests/refund-restricted-role.test.ts
+✖ tests/report-empty-state.test.ts
+✖ tests/request-origin.test.ts
+✖ tests/retail-pos-postgres.test.ts
+✖ tests/role-acceptance-ui.test.ts
+✖ tests/scheduling.test.ts
+✖ tests/sensitive-action-security.test.ts
+✖ tests/sensitive-action-verification.test.ts
+✖ tests/service-booking-postgres.test.ts
+✖ tests/service-booking-recovery.test.ts
+✖ tests/service-cancellation-review.test.ts
+✖ tests/service-detail-redesign.test.ts
+✖ tests/service-document-privacy.test.ts
+✖ tests/service-exception-settlements.test.ts
+✖ tests/service-governance.test.ts
+✖ tests/service-invoice-drafts.test.ts
+✖ tests/service-invoices-http.test.ts
+✖ tests/service-invoices-postgres.test.ts
+✖ tests/service-invoices.test.ts
+✖ tests/service-material-recovery.test.ts
+✖ tests/settings-categories-release.test.ts
+✖ tests/settings-categories.test.ts
+✖ tests/settings-cleanup.test.ts
+✖ tests/settings-datetime.test.ts
+✖ tests/settings-modal.test.ts
+✖ tests/settings-money.test.ts
+✖ tests/settings-release.test.ts
+✖ tests/shared-approval-gas.test.ts
+✖ tests/shopping-demo.test.ts
+✖ tests/sidebar-browser-evidence.test.ts
+✖ tests/sidebar-scroll.test.ts
+✖ tests/smart-refill-redesign.test.ts
+✖ tests/staff-management.test.ts
+✖ tests/staff-privileges-postgres.test.ts
+✖ tests/staff-privileges.test.ts
+✖ tests/staff-role-consolidation.test.ts
+✖ tests/support-completion.test.ts
+✖ tests/technician-four-screen.test.ts
+✖ tests/technician-postgres.test.ts
+✖ tests/technician-recovery.test.ts
+✖ tests/technician-saas.test.ts
+✖ tests/technician-work.test.ts
+✖ tests/technicians-availability-http.test.ts
+✖ tests/technicians-availability-postgres.test.ts
+✖ tests/technicians-availability.test.ts
+✖ tests/testimonial-postgres.test.ts
+✖ tests/testimonials.test.ts
+✖ tests/transactional-mail.test.ts
+✖ tests/trip-location-evidence.test.ts
+✖ tests/trip-recovery.test.ts
+✖ tests/unified-sign-in.test.ts
+✖ tests/user-manual.test.ts
+✖ tests/vehicle-products-http.test.ts
+✖ tests/vehicle-products-postgres.test.ts
+✖ tests/vehicle-products.test.ts
+✖ tests/vercel-demo.test.ts
+✖ tests/wallet-order.test.ts
+✖ tests/wallet-payments-editor.test.ts
+✖ tests/wallet-payments-release.test.ts
+✖ tests/wallet-topups-ui.test.ts
+✖ tests/wallet-topups.test.ts
+✖ tests/web-api-publication.test.ts
+✖ tests/web-driver-trips.test.ts
+✖ tests/web-transparent-logo.test.ts
+✖ tests/winback-cancellation.test.ts
+✖ tests/workflows.test.ts
+ℹ tests 289
+ℹ suites 0
+ℹ pass 80
+ℹ fail 0
+ℹ cancelled 208
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 68890.695667
+
+✖ failing tests:
+
+test at tests/blocker-reconciliation-closure.test.ts:1:1
+✖ tests/blocker-reconciliation-closure.test.ts (4662.364208ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/blocker-reconciliation.test.ts:1:1
+✖ tests/blocker-reconciliation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/bulk-lpg-http.test.ts:1:1
+✖ tests/bulk-lpg-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/bulk-lpg-postgres.test.ts:1:1
+✖ tests/bulk-lpg-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/bulk-lpg.test.ts:1:1
+✖ tests/bulk-lpg.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/bulk-meter-lifecycle.test.ts:1:1
+✖ tests/bulk-meter-lifecycle.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/bulk-recovery.test.ts:1:1
+✖ tests/bulk-recovery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/bundles.test.ts:1:1
+✖ tests/bundles.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/campaign-return.test.ts:1:1
+✖ tests/campaign-return.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/cancelled-wallet-invoice.test.ts:1:1
+✖ tests/cancelled-wallet-invoice.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/cash-reconciliation.test.ts:1:1
+✖ tests/cash-reconciliation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/catalogue-cylinder-availability.test.ts:1:1
+✖ tests/catalogue-cylinder-availability.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/catalogue-import.test.ts:1:1
+✖ tests/catalogue-import.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/catalogue-services-integration.test.ts:1:1
+✖ tests/catalogue-services-integration.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/checkout-delivery.test.ts:1:1
+✖ tests/checkout-delivery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/commerce.test.ts:1:1
+✖ tests/commerce.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/compact-gas-quantity.test.ts:1:1
+✖ tests/compact-gas-quantity.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/cooking-gas-profiles-postgres.test.ts:1:1
+✖ tests/cooking-gas-profiles-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/cooking-gas-profiles.test.ts:1:1
+✖ tests/cooking-gas-profiles.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/credit-customer-search.test.ts:1:1
+✖ tests/credit-customer-search.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/crm-followup-pagination.test.ts:1:1
+✖ tests/crm-followup-pagination.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/crm-http.test.ts:1:1
+✖ tests/crm-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/custom-alerts.test.ts:1:1
+✖ tests/custom-alerts.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/customer-account-redesign.test.ts:1:1
+✖ tests/customer-account-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/customer-dashboard.test.ts:1:1
+✖ tests/customer-dashboard.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/customer-introduction.test.ts:1:1
+✖ tests/customer-introduction.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/customer-management.test.ts:1:1
+✖ tests/customer-management.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/customer-mobile.test.ts:1:1
+✖ tests/customer-mobile.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/customer-notifications.test.ts:1:1
+✖ tests/customer-notifications.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/customer-orders.test.ts:1:1
+✖ tests/customer-orders.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/customer-service-booking-redesign.test.ts:1:1
+✖ tests/customer-service-booking-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/customer-traceability.test.ts:1:1
+✖ tests/customer-traceability.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/delegation.test.ts:1:1
+✖ tests/delegation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/demo-provisioning-guards.test.ts:1:1
+✖ tests/demo-provisioning-guards.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/deployment.test.ts:1:1
+✖ tests/deployment.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/dispatch-centre-safety.test.ts:1:1
+✖ tests/dispatch-centre-safety.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/dispatch-custody-capacity.test.ts:1:1
+✖ tests/dispatch-custody-capacity.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/dispatch-driver-photos.test.ts:1:1
+✖ tests/dispatch-driver-photos.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/dispatch-routing-postgres.test.ts:1:1
+✖ tests/dispatch-routing-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/dispatch-routing.test.ts:1:1
+✖ tests/dispatch-routing.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/document-brand.test.ts:1:1
+✖ tests/document-brand.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/doorstep-cylinders.test.ts:1:1
+✖ tests/doorstep-cylinders.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/doorstep-execution.test.ts:1:1
+✖ tests/doorstep-execution.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/doorstep-postgres.test.ts:1:1
+✖ tests/doorstep-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/doorstep-products.test.ts:1:1
+✖ tests/doorstep-products.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-assignment-alerts.test.ts:1:1
+✖ tests/driver-assignment-alerts.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-assignment-components.test.ts:1:1
+✖ tests/driver-assignment-components.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-assignment.test.ts:1:1
+✖ tests/driver-assignment.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-experience-redesign.test.ts:1:1
+✖ tests/driver-experience-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-local-config.test.ts:1:1
+✖ tests/driver-local-config.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-lpg-http.test.ts:1:1
+✖ tests/driver-lpg-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-lpg-workflow.test.ts:1:1
+✖ tests/driver-lpg-workflow.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-saas-redesign.test.ts:1:1
+✖ tests/driver-saas-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-trip-conflicts.test.ts:1:1
+✖ tests/driver-trip-conflicts.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/driver-workspace.test.ts:1:1
+✖ tests/driver-workspace.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easygas-loader.test.ts:1:1
+✖ tests/easygas-loader.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards-completion.test.ts:1:1
+✖ tests/easyrewards-completion.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards-postgres-completion.test.ts:1:1
+✖ tests/easyrewards-postgres-completion.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards-postgres.test.ts:1:1
+✖ tests/easyrewards-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards-redesign.test.ts:1:1
+✖ tests/easyrewards-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/easyrewards.test.ts:1:1
+✖ tests/easyrewards.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/effective-date.test.ts:1:1
+✖ tests/effective-date.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/excel-preview.test.ts:1:1
+✖ tests/excel-preview.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/experience-prototype.test.ts:1:1
+✖ tests/experience-prototype.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/financial-document-integration.test.ts:1:1
+✖ tests/financial-document-integration.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/financial-document-pdf.test.ts:1:1
+✖ tests/financial-document-pdf.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/financial-document.test.ts:1:1
+✖ tests/financial-document.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/fleet-verification-components.test.ts:1:1
+✖ tests/fleet-verification-components.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/fleet-verification-security.test.ts:1:1
+✖ tests/fleet-verification-security.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/form-contrast.test.ts:1:1
+✖ tests/form-contrast.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/google-analytics-browser.test.ts:1:1
+✖ tests/google-analytics-browser.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/google-analytics-realtime.test.ts:1:1
+✖ tests/google-analytics-realtime.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/google-analytics.test.ts:1:1
+✖ tests/google-analytics.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/growth-compact-browser-evidence.test.ts:1:1
+✖ tests/growth-compact-browser-evidence.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/growth-compact.test.ts:1:1
+✖ tests/growth-compact.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/homepage-task-register.test.ts:1:1
+✖ tests/homepage-task-register.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/hosted-ledger-cross-branch.test.ts:1:1
+✖ tests/hosted-ledger-cross-branch.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/hosted-ledger-evidence.test.ts:1:1
+✖ tests/hosted-ledger-evidence.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/hosted-ledger.test.ts:1:1
+✖ tests/hosted-ledger.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/http.test.ts:1:1
+✖ tests/http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/integrity-regressions.test.ts:1:1
+✖ tests/integrity-regressions.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/inventory-finance.test.ts:1:1
+✖ tests/inventory-finance.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/inventory-workspace-http.test.ts:1:1
+✖ tests/inventory-workspace-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/inventory-workspace.test.ts:1:1
+✖ tests/inventory-workspace.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/invoice-pdf.test.ts:1:1
+✖ tests/invoice-pdf.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/linked-request-contact.test.ts:1:1
+✖ tests/linked-request-contact.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/live-rider-tracking.test.ts:1:1
+✖ tests/live-rider-tracking.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/local-rewards-upgrade.test.ts:1:1
+✖ tests/local-rewards-upgrade.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/menu-visibility.test.ts:1:1
+✖ tests/menu-visibility.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-acceptance.test.ts:1:1
+✖ tests/mobile-acceptance.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-appearance.test.ts:1:1
+✖ tests/mobile-appearance.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-dependencies.test.ts:1:1
+✖ tests/mobile-dependencies.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-device-evidence.test.ts:1:1
+✖ tests/mobile-device-evidence.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-device-remediation.test.ts:1:1
+✖ tests/mobile-device-remediation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-experience-prototype.test.ts:1:1
+✖ tests/mobile-experience-prototype.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-orders-text.test.ts:1:1
+✖ tests/mobile-orders-text.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-origin.test.ts:1:1
+✖ tests/mobile-origin.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-ui-design.test.ts:1:1
+✖ tests/mobile-ui-design.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/mobile-web-corrections.test.ts:1:1
+✖ tests/mobile-web-corrections.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/native-edge-to-edge.test.ts:1:1
+✖ tests/native-edge-to-edge.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/native-entry.test.ts:1:1
+✖ tests/native-entry.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/native-order-authority.test.ts:1:1
+✖ tests/native-order-authority.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/native-order-refund-api.test.ts:1:1
+✖ tests/native-order-refund-api.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/native-web-release.test.ts:1:1
+✖ tests/native-web-release.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/native-workflow-traceability.test.ts:1:1
+✖ tests/native-workflow-traceability.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/native-workflows-api.test.ts:1:1
+✖ tests/native-workflows-api.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/native-workflows.test.ts:1:1
+✖ tests/native-workflows.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/navigation-badge-render.test.ts:1:1
+✖ tests/navigation-badge-render.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/navigation.test.ts:1:1
+✖ tests/navigation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/notification-inbox.test.ts:1:1
+✖ tests/notification-inbox.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/offline-driver-location.test.ts:1:1
+✖ tests/offline-driver-location.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/operational-incidents.test.ts:1:1
+✖ tests/operational-incidents.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/operations-completion-postgres.test.ts:1:1
+✖ tests/operations-completion-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/operations-completion.test.ts:1:1
+✖ tests/operations-completion.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/order-additions-postgres.test.ts:1:1
+✖ tests/order-additions-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/order-additions.test.ts:1:1
+✖ tests/order-additions.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/order-tracking-postgres.test.ts:1:1
+✖ tests/order-tracking-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/order-tracking.test.ts:1:1
+✖ tests/order-tracking.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/owner-auto-approval-postgres.test.ts:1:1
+✖ tests/owner-auto-approval-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/owner-auto-approval.test.ts:1:1
+✖ tests/owner-auto-approval.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/password-minimum.test.ts:1:1
+✖ tests/password-minimum.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/password-visibility.test.ts:1:1
+✖ tests/password-visibility.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/payment-fees.test.ts:1:1
+✖ tests/payment-fees.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/paystack-orchestration.test.ts:1:1
+✖ tests/paystack-orchestration.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/paystack-policy.test.ts:1:1
+✖ tests/paystack-policy.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/paystack-postgres.test.ts:1:1
+✖ tests/paystack-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/paystack-provider.test.ts:1:1
+✖ tests/paystack-provider.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/platform.test.ts:1:1
+✖ tests/platform.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-forecast.test.ts:1:1
+✖ tests/post-meeting-forecast.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-identity.test.ts:1:1
+✖ tests/post-meeting-identity.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-invoices.test.ts:1:1
+✖ tests/post-meeting-invoices.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-postgres.test.ts:1:1
+✖ tests/post-meeting-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/post-meeting-private-role.test.ts:1:1
+✖ tests/post-meeting-private-role.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/postgres-approval-concurrency.test.ts:1:1
+✖ tests/postgres-approval-concurrency.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/product-import.test.ts:1:1
+✖ tests/product-import.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/product-ui.test.ts:1:1
+✖ tests/product-ui.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/production-audit-findings.test.ts:1:1
+✖ tests/production-audit-findings.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/production-backup-postgres.test.ts:1:1
+✖ tests/production-backup-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/production-release.test.ts:1:1
+✖ tests/production-release.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/professional-services.test.ts:1:1
+✖ tests/professional-services.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/public-header.test.ts:1:1
+✖ tests/public-header.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/refill-feedback.test.ts:1:1
+✖ tests/refill-feedback.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/refund-restricted-role.test.ts:1:1
+✖ tests/refund-restricted-role.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/report-empty-state.test.ts:1:1
+✖ tests/report-empty-state.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/request-origin.test.ts:1:1
+✖ tests/request-origin.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/retail-pos-postgres.test.ts:1:1
+✖ tests/retail-pos-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/role-acceptance-ui.test.ts:1:1
+✖ tests/role-acceptance-ui.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/scheduling.test.ts:1:1
+✖ tests/scheduling.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/sensitive-action-security.test.ts:1:1
+✖ tests/sensitive-action-security.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/sensitive-action-verification.test.ts:1:1
+✖ tests/sensitive-action-verification.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-booking-postgres.test.ts:1:1
+✖ tests/service-booking-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-booking-recovery.test.ts:1:1
+✖ tests/service-booking-recovery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-cancellation-review.test.ts:1:1
+✖ tests/service-cancellation-review.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-detail-redesign.test.ts:1:1
+✖ tests/service-detail-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-document-privacy.test.ts:1:1
+✖ tests/service-document-privacy.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-exception-settlements.test.ts:1:1
+✖ tests/service-exception-settlements.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-governance.test.ts:1:1
+✖ tests/service-governance.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-invoice-drafts.test.ts:1:1
+✖ tests/service-invoice-drafts.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-invoices-http.test.ts:1:1
+✖ tests/service-invoices-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-invoices-postgres.test.ts:1:1
+✖ tests/service-invoices-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-invoices.test.ts:1:1
+✖ tests/service-invoices.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/service-material-recovery.test.ts:1:1
+✖ tests/service-material-recovery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-categories-release.test.ts:1:1
+✖ tests/settings-categories-release.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-categories.test.ts:1:1
+✖ tests/settings-categories.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-cleanup.test.ts:1:1
+✖ tests/settings-cleanup.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-datetime.test.ts:1:1
+✖ tests/settings-datetime.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-modal.test.ts:1:1
+✖ tests/settings-modal.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-money.test.ts:1:1
+✖ tests/settings-money.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/settings-release.test.ts:1:1
+✖ tests/settings-release.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/shared-approval-gas.test.ts:1:1
+✖ tests/shared-approval-gas.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/shopping-demo.test.ts:1:1
+✖ tests/shopping-demo.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/sidebar-browser-evidence.test.ts:1:1
+✖ tests/sidebar-browser-evidence.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/sidebar-scroll.test.ts:1:1
+✖ tests/sidebar-scroll.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/smart-refill-redesign.test.ts:1:1
+✖ tests/smart-refill-redesign.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/staff-management.test.ts:1:1
+✖ tests/staff-management.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/staff-privileges-postgres.test.ts:1:1
+✖ tests/staff-privileges-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/staff-privileges.test.ts:1:1
+✖ tests/staff-privileges.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/staff-role-consolidation.test.ts:1:1
+✖ tests/staff-role-consolidation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/support-completion.test.ts:1:1
+✖ tests/support-completion.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-four-screen.test.ts:1:1
+✖ tests/technician-four-screen.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-postgres.test.ts:1:1
+✖ tests/technician-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-recovery.test.ts:1:1
+✖ tests/technician-recovery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-saas.test.ts:1:1
+✖ tests/technician-saas.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technician-work.test.ts:1:1
+✖ tests/technician-work.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technicians-availability-http.test.ts:1:1
+✖ tests/technicians-availability-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technicians-availability-postgres.test.ts:1:1
+✖ tests/technicians-availability-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/technicians-availability.test.ts:1:1
+✖ tests/technicians-availability.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/testimonial-postgres.test.ts:1:1
+✖ tests/testimonial-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/testimonials.test.ts:1:1
+✖ tests/testimonials.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/transactional-mail.test.ts:1:1
+✖ tests/transactional-mail.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/trip-location-evidence.test.ts:1:1
+✖ tests/trip-location-evidence.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/trip-recovery.test.ts:1:1
+✖ tests/trip-recovery.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/unified-sign-in.test.ts:1:1
+✖ tests/unified-sign-in.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/user-manual.test.ts:1:1
+✖ tests/user-manual.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/vehicle-products-http.test.ts:1:1
+✖ tests/vehicle-products-http.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/vehicle-products-postgres.test.ts:1:1
+✖ tests/vehicle-products-postgres.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/vehicle-products.test.ts:1:1
+✖ tests/vehicle-products.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/vercel-demo.test.ts:1:1
+✖ tests/vercel-demo.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/wallet-order.test.ts:1:1
+✖ tests/wallet-order.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/wallet-payments-editor.test.ts:1:1
+✖ tests/wallet-payments-editor.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/wallet-payments-release.test.ts:1:1
+✖ tests/wallet-payments-release.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/wallet-topups-ui.test.ts:1:1
+✖ tests/wallet-topups-ui.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/wallet-topups.test.ts:1:1
+✖ tests/wallet-topups.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/web-api-publication.test.ts:1:1
+✖ tests/web-api-publication.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/web-driver-trips.test.ts:1:1
+✖ tests/web-driver-trips.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/web-transparent-logo.test.ts:1:1
+✖ tests/web-transparent-logo.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/winback-cancellation.test.ts:1:1
+✖ tests/winback-cancellation.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at tests/workflows.test.ts:1:1
+✖ tests/workflows.test.ts
+  'Promise resolution is still pending but the event loop has already resolved'

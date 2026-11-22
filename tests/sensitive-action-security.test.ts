@@ -167,7 +167,7 @@ test("SVERIFY-AUDIT: retained guard inventory covers server sites and all browse
   }
   assert.equal(
     await reviewedSensitiveVerificationSourceHash(
-      "apps/mobile/App.tsx",
+      "apps/mobile/unreviewed-surface.tsx",
       "untouched",
     ),
     "untouched",

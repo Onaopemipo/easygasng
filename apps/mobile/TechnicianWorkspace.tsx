@@ -1,3 +1,4 @@
+import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
 import CustomerNotifications from "./CustomerNotifications";
 import { EasyGasAlert } from "./AppAlert";
 import { technicianPending, syncTechnicianFieldQueue } from "./field-queue";
@@ -13,7 +14,7 @@ import {
   BackHandler,
   RefreshControl,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import { Ionicons } from "@expo/vector-icons";
 import { randomUUID } from "expo-crypto";
 import { Text } from "./typography";
@@ -304,7 +305,14 @@ export default function TechnicianWorkspace({
                     } as Record<string, string>
                   )[page] ?? "Help & Support");
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+    <ScreenCanvas
+      topBackgroundColor={
+        !selected && tabs.some((t) => t[1] === page)
+          ? colors.surface
+          : colors.background
+      }
+      style={{ flex: 1, backgroundColor: colors.background }}
+    >
       <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
       {!selected && tabs.some((t) => t[1] === page) ? (
         <TechnicianBrandHeader
@@ -364,11 +372,11 @@ export default function TechnicianWorkspace({
         automaticallyAdjustKeyboardInsets
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
+          ...fullWidthScreenContent,
           padding: 16,
           gap: 14,
-          maxWidth: 760,
           width: "100%",
-          alignSelf: "center",
+          alignSelf: "stretch",
           paddingBottom: 35,
         }}
       >
@@ -702,6 +710,6 @@ export default function TechnicianWorkspace({
           </Pressable>
         ))}
       </View>
-    </SafeAreaView>
+    </ScreenCanvas>
   );
 }

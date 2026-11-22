@@ -27,7 +27,7 @@ test("FVERIFY-SOURCE: narrow current proof retains committed historical source a
   );
   assert.equal(
     await reviewedFleetVerificationSourceHash(
-      "apps/mobile/App.tsx",
+      "apps/mobile/unreviewed-surface.tsx",
       "unchanged-native",
     ),
     "unchanged-native",

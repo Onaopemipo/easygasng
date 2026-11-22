@@ -1,5 +1,6 @@
+import { ScreenModal } from "./ScreenCanvas";
 import React, { useEffect, useRef, useState } from "react";
-import { AppState, Modal, Platform, ScrollView, View } from "react-native";
+import { AppState, Platform, ScrollView, View } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as SecureStore from "expo-secure-store";
 import {
@@ -434,7 +435,7 @@ export default function DriverAssignmentAlerts({
       )}
       {notice ? <Copy>{notice}</Copy> : null}
       {!alert && error ? <Copy>{error}</Copy> : null}
-      <Modal
+      <ScreenModal
         visible={alert !== null}
         transparent
         animationType="fade"
@@ -544,7 +545,7 @@ export default function DriverAssignmentAlerts({
             />
           </ScrollView>
         </View>
-      </Modal>
+      </ScreenModal>
     </>
   );
 }

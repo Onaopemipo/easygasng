@@ -1,3 +1,4 @@
+import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
 import BrandLogo from "./BrandLogo";
 import {
   DriverPanel,
@@ -31,10 +32,7 @@ import {
   AppState,
   BackHandler,
 } from "react-native";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import { randomUUID } from "expo-crypto";
@@ -618,7 +616,9 @@ export default function DriverWorkspace({
   }
 
   return (
-    <SafeAreaView
+    <ScreenCanvas
+      topBackgroundColor={headerGreen}
+      bottomBackgroundColor={colors.surface}
       edges={["left", "right", "bottom"]}
       style={{ flex: 1, backgroundColor: colors.background }}
     >
@@ -669,7 +669,8 @@ export default function DriverWorkspace({
               gap: 8,
             }}
           >
-            <BrandLogo tone="inverse"
+            <BrandLogo
+              tone="inverse"
               accessibilityLabel="EasyGas"
               style={{ width: 92, height: 36 }}
             />
@@ -803,12 +804,12 @@ export default function DriverWorkspace({
         automaticallyAdjustKeyboardInsets
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
+          ...fullWidthScreenContent,
           gap: 14,
           padding: 16,
           paddingBottom: 40,
           width: "100%",
-          maxWidth: 760,
-          alignSelf: "center",
+          alignSelf: "stretch",
         }}
       >
         {!!snapshot && !revoked && (
@@ -1019,12 +1020,14 @@ export default function DriverWorkspace({
                             borderRadius: 12,
                           }}
                         />
-                        {!response && !order.assignment_response_open && order.attempt?.state === "assigned" && (
-                          <Copy>
-                            Ask dispatch to renew this assignment before
-                            responding.
-                          </Copy>
-                        )}
+                        {!response &&
+                          !order.assignment_response_open &&
+                          order.attempt?.state === "assigned" && (
+                            <Copy>
+                              Ask dispatch to renew this assignment before
+                              responding.
+                            </Copy>
+                          )}
                         {!response && order.assignment_response_open && (
                           <>
                             <Button
@@ -2043,7 +2046,7 @@ export default function DriverWorkspace({
           </Pressable>
         ))}
       </View>
-    </SafeAreaView>
+    </ScreenCanvas>
   );
 }
 

@@ -1,3 +1,8 @@
+import {
+  ScreenCanvas,
+  fullWidthScreenContent,
+  ScreenModal,
+} from "./ScreenCanvas";
 import BrandLogo from "./BrandLogo";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -5,7 +10,6 @@ import {
   Animated,
   Easing,
   Image,
-  Modal,
   PanResponder,
   Pressable,
   ScrollView,
@@ -15,7 +19,7 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import Svg, { Defs, LinearGradient, Path, Rect, Stop } from "react-native-svg";
 import * as SecureStore from "expo-secure-store";
@@ -252,10 +256,7 @@ export default function Onboarding({
   const copy = (
     <View style={[s.copy, index === 0 && s.center]} {...gesture.panHandlers}>
       {index === 0 && (
-        <BrandLogo tone="inverse"
-          accessible={false}
-          style={s.brand}
-        />
+        <BrandLogo tone="inverse" accessible={false} style={s.brand} />
       )}
       {index > 0 && (
         <View style={s.sceneIcon}>
@@ -292,13 +293,13 @@ export default function Onboarding({
   );
 
   return (
-    <Modal
+    <ScreenModal
       visible={open}
       animationType="none"
       onRequestClose={() => (index > 0 ? jump(index - 1) : void finish())}
     >
       <SafeAreaProvider>
-        <SafeAreaView accessibilityViewIsModal style={s.screen}>
+        <ScreenCanvas accessibilityViewIsModal style={s.screen}>
           <StatusBar barStyle="light-content" />
           <View style={s.frame}>
             <View style={s.bar}>
@@ -422,15 +423,15 @@ export default function Onboarding({
               </View>
             </View>
           </View>
-        </SafeAreaView>
+        </ScreenCanvas>
       </SafeAreaProvider>
-    </Modal>
+    </ScreenModal>
   );
 }
 
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#042e21" },
-  frame: { flex: 1, width: "100%", maxWidth: 640, alignSelf: "center" },
+  frame: { ...fullWidthScreenContent, flex: 1 },
   bar: {
     flexDirection: "row",
     alignItems: "center",

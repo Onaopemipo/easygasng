@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-22",
+  "runtime": "existing Expo Go on iPhone17Pro iOS26.5",
+  "endpoint": "https://easygas-client-demo.vercel.app",
+  "developmentUrl": "exp://127.0.0.1:8084",
+  "served": "iOS Bundled 4948ms index.ts (1169 modules)",
+  "sourceProof": "docs/edge-to-edge/reviewed-source-changes.json",
+  "observations": [
+    {
+      "screen": "guest home",
+      "result": "PASS light/dark full-window background; content and navigation remain safe"
+    },
+    {
+      "screen": "introduction",
+      "result": "PASS full-screen canvas including system areas; Skip returns to home"
+    },
+    {
+      "screen": "signed-out Orders",
+      "result": "PASS sign-in shown; no protected records or credentials used"
+    },
+    {
+      "screen": "sign-in input focus",
+      "result": "PASS input reachable; Paste/AutoFill OS menu shown; software keyboard not verified"
+    }
+  ],
+  "limits": [
+    "Authenticated per-role visual pass not executed",
+    "Physical Android/iOS, software keyboard and tablet layout checks remain open",
+    "Expo Go remote notification capability is limited; provider certification unchanged"
+  ],
+  "cleanup": {
+    "newAuthenticationSessions": 0,
+    "appPreferenceRestored": "light",
+    "osAppearanceUnchanged": "dark",
+    "keyboardCapture": "off",
+    "priorAppScreen": "restored",
+    "metro8084": "stopped after preview",
+    "unrelatedMetro8081": "untouched"
+  },
+  "newMobileBuilds": 0,
+  "mobileExports": 0,
+  "installs": 0
+}

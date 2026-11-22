@@ -1,5 +1,6 @@
 /** Host surfaces only. Tests retain the real forms, workspace controller and API transport. */
 import React from 'react';
+export const SafeAreaView='SafeAreaView',SafeAreaProvider='SafeAreaProvider';
 export const View='View',Text='Text',TextInput='TextInput',Pressable='Pressable',ScrollView='ScrollView',Modal='Modal',KeyboardAvoidingView='KeyboardAvoidingView',Image='Image',Switch='Switch',ActivityIndicator='ActivityIndicator';
 export const Platform={OS:'ios',select:(x:any)=>x.ios??x.default},StyleSheet={create:(x:any)=>x,absoluteFillObject:{},hairlineWidth:1},AppState={addEventListener:()=>({remove(){}})},Appearance={getColorScheme:()=> 'light',addChangeListener:()=>({remove(){}})};
 export const useSafeAreaInsets=()=>({top:0,bottom:0,left:0,right:0});

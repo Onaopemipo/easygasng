@@ -28,7 +28,7 @@ test("DUPTRIP-SOURCE: reviewed trip and phone-dialog corrections retain historic
   }
   assert.equal(
     await reviewedRoleAcceptanceSourceHash(
-      "apps/mobile/App.tsx",
+      "apps/mobile/unreviewed-surface.tsx",
       "unchanged-native",
     ),
     "unchanged-native",

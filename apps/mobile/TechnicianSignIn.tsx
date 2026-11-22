@@ -1,7 +1,8 @@
+import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
 import BrandLogo from "./BrandLogo";
 import React from "react";
 import { View, ScrollView, StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import { FieldCaption, Text, TextInput } from "./typography";
 import { useTheme } from "./theme";
 import { Card, Copy, Title, Button, Feedback } from "./CustomerUI";
@@ -39,19 +40,19 @@ export default function TechnicianSignIn({
 }) {
   const { colors, dark } = useTheme();
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+    <ScreenCanvas style={{ flex: 1, backgroundColor: colors.background }}>
       <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
       <ScrollView
         automaticallyAdjustKeyboardInsets
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
+          ...fullWidthScreenContent,
           padding: 24,
           gap: 18,
           flexGrow: 1,
           justifyContent: "center",
           width: "100%",
-          maxWidth: 600,
-          alignSelf: "center",
+          alignSelf: "stretch",
         }}
       >
         <BrandLogo
@@ -59,7 +60,7 @@ export default function TechnicianSignIn({
           style={{
             width: 250,
             height: 100,
-            alignSelf: "center",
+            alignSelf: "stretch",
           }}
         />
         <Title>
@@ -77,9 +78,19 @@ export default function TechnicianSignIn({
               api={api}
               action="account.recover"
               title="Request secure recovery"
-              fields={[{ name: "email", label: "Registered work email", value: identifier.includes("@") ? identifier : "", type: "email" }]}
+              fields={[
+                {
+                  name: "email",
+                  label: "Registered work email",
+                  value: identifier.includes("@") ? identifier : "",
+                  type: "email",
+                },
+              ]}
             />
-            <Copy>Open the link in your email to set a new password, then return here to sign in.</Copy>
+            <Copy>
+              Open the link in your email to set a new password, then return
+              here to sign in.
+            </Copy>
             <Button
               label="Back to Technician Sign In"
               secondary
@@ -147,7 +158,13 @@ export default function TechnicianSignIn({
               </>
             )}
             <Button
-              label={busy ? "Signing in…" : passwordChangeRequired ? "Change Password & Sign In" : "Sign In"}
+              label={
+                busy
+                  ? "Signing in…"
+                  : passwordChangeRequired
+                    ? "Change Password & Sign In"
+                    : "Sign In"
+              }
               disabled={busy || !identifier || !password}
               onPress={submit}
             />
@@ -162,6 +179,6 @@ export default function TechnicianSignIn({
           Service work only · approved scope and verified payment required.
         </Copy>
       </ScrollView>
-    </SafeAreaView>
+    </ScreenCanvas>
   );
 }

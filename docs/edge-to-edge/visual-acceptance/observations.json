@@ -1,0 +1,400 @@
+{
+  "date": "2026-11-22",
+  "scope": "Native source development preview only, hosted synthetic demo identities; no new EasyGas binaries",
+  "productionDecision": "Existing NO-GO, native/provider/physical/import/retain-all holds unchanged",
+  "requiredRoleDeviceCases": 14,
+  "excluded": 0,
+  "roles": [
+    "owner",
+    "manager",
+    "finance",
+    "driver",
+    "technician",
+    "customer",
+    "commercial"
+  ],
+  "devices": [
+    {
+      "name": "iPhone17Pro",
+      "os": "iOS26.5",
+      "udid": "EAECACA9-D6A3-4512-83C9-25CAE9A2AE95",
+      "screenshots": "phone-owner-*",
+      "widthPoints": 402,
+      "notes": "Initial Owner observations and final normal logout of the earlier shared-phone Manager QA session; other preview restored to foreground."
+    },
+    {
+      "name": "EasyGas First Sign-In QA / iPhone15",
+      "os": "iOS26.5",
+      "udid": "1DEB740D-CCB3-41CC-9992-CFCB859CD985",
+      "widthPoints": 393
+    },
+    {
+      "name": "iPadPro13-inch(M5)",
+      "os": "iPadOS27.0",
+      "udid": "228FAD79-CB98-4552-9323-663A1A04740F",
+      "widthPoints": 1032
+    }
+  ],
+  "cases": [
+    {
+      "id": "EDGE-VIS-PHONE-OWNER",
+      "role": "owner",
+      "deviceClass": "phone",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Business Overview, scoped branch picker with full-window backdrop, dismissal, account and normal sign-out on the initial shared phone.",
+        "Current-source dedicated phone: full-screen empty Add Technician form, stable title below notch, actual software keyboard clearance; Close confirmation appears above form; Keep editing retains it and Close form dismisses it; no invitation submitted."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/phone-owner-home.png",
+        "docs/edge-to-edge/visual-acceptance/phone-owner-branch-sheet.png",
+        "docs/edge-to-edge/visual-acceptance/phone-owner-close-dialog.png",
+        "docs/edge-to-edge/visual-acceptance/phone-owner-modal-keyboard.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-PHONE-MANAGER",
+      "role": "manager",
+      "deviceClass": "phone",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Authenticated branch dashboard, distinct Dispatch/Customers/POS glyphs, Dispatch access-check loader, fleet view and No active deliveries state after repairs.",
+        "Long account scrolling and normal sign-out; denied/offline/malformed/retry states additionally exercised in actual component tests."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/phone-manager-home-after-fix.png",
+        "docs/edge-to-edge/visual-acceptance/phone-manager-dispatch-after-fix.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-PHONE-FINANCE",
+      "role": "finance",
+      "deviceClass": "phone",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Authenticated Finance Overview, verified and explicit Unavailable values, full-width cards, account navigation/scrolling and normal sign-out."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/phone-finance-home.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-PHONE-DRIVER",
+      "role": "driver",
+      "deviceClass": "phone",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Full-width green header, safe footer, home, Orders/no matching assignments, search above actual software keyboard, Profile scrolling; Keep working cancels sign-out and Sign Out ends session.",
+        "No active trip, GPS permission missing and assignments paused remain explicit; availability, OS permissions and trips unchanged."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/phone-driver-home.png",
+        "docs/edge-to-edge/visual-acceptance/phone-driver-keyboard.png",
+        "docs/edge-to-edge/visual-acceptance/phone-driver-signout-dialog.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-PHONE-TECHNICIAN",
+      "role": "technician",
+      "deviceClass": "phone",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Authenticated home, Jobs/no matches, inline location filter, Profile scrolling and normal sign-out with existing unsynchronised-record warning; no job or qualification changes."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/phone-technician-home.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-PHONE-CUSTOMER",
+      "role": "customer",
+      "deviceClass": "phone",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Authenticated account/home, full-screen introduction and Skip, light/dark appearance with transparent logo; long account scrolling, restored System appearance and normal sign-out.",
+        "Loaded Orders timeline wraps in available width with unavailable rider location/ETA fallback and no text-render crash."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/phone-customer-home.png",
+        "docs/edge-to-edge/visual-acceptance/phone-customer-dark.png",
+        "docs/edge-to-edge/visual-acceptance/phone-customer-orders.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-PHONE-COMMERCIAL",
+      "role": "commercial",
+      "deviceClass": "phone",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Authenticated named account, loaded home, Wallet zero-credit/no-transactions state, long account scrolling and normal sign-out."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/phone-commercial-account.png",
+        "docs/edge-to-edge/visual-acceptance/phone-commercial-wallet.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-TABLET-OWNER",
+      "role": "owner",
+      "deviceClass": "tablet",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Full-width Business Overview, branch selector full-window backdrop and dismissal; Technicians list and full-screen empty Add Technician form.",
+        "Actual software keyboard clearance; repaired Close confirmation visible above form, Keep editing retains form, Close form dismisses; no invitation submitted; normal sign-out."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/tablet-owner-home.png",
+        "docs/edge-to-edge/visual-acceptance/tablet-owner-branch-sheet.png",
+        "docs/edge-to-edge/visual-acceptance/tablet-owner-keyboard.png",
+        "docs/edge-to-edge/visual-acceptance/tablet-owner-close-dialog.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-TABLET-MANAGER",
+      "role": "manager",
+      "deviceClass": "tablet",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Authenticated branch dashboard and repaired glyphs; Dispatch access-check loader, fleet loading and No active deliveries; account and normal sign-out."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/tablet-manager-home.png",
+        "docs/edge-to-edge/visual-acceptance/tablet-manager-dispatch.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-TABLET-FINANCE",
+      "role": "finance",
+      "deviceClass": "tablet",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Finance Overview full-width summaries, actual values and Unavailable rows, scrolling, account and normal sign-out."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/tablet-finance-home.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-TABLET-DRIVER",
+      "role": "driver",
+      "deviceClass": "tablet",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Full-width header/body/footer, no active trip, GPS permission absent and availability off explicitly shown; Orders/no matches and long Profile scrolling.",
+        "Keep working cancels sign-out; repeated Sign Out confirmation completes normal logout. No permissions, availability or trips changed."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/tablet-driver-home.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-TABLET-TECHNICIAN",
+      "role": "technician",
+      "deviceClass": "tablet",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Home, Jobs loading/empty current assignments, expanded location filter, Profile scrolling, Dark appearance then restored System; existing sign-out warning and confirmed logout."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/tablet-technician-home.png",
+        "docs/edge-to-edge/visual-acceptance/tablet-technician-dark.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-TABLET-CUSTOMER",
+      "role": "customer",
+      "deviceClass": "tablet",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Authenticated account/home, full-screen introduction and Skip, loaded long Orders timeline with wrapping and missing-ETA fallback.",
+        "Actual landscape window fills 1376 x 1032 points with usable bottom navigation; restored original portrait, account-bottom scrolling and normal sign-out. This runtime observation does not change release orientation configuration."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/tablet-customer-account.png",
+        "docs/edge-to-edge/visual-acceptance/tablet-customer-home.png",
+        "docs/edge-to-edge/visual-acceptance/tablet-customer-introduction.png",
+        "docs/edge-to-edge/visual-acceptance/tablet-customer-landscape.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    },
+    {
+      "id": "EDGE-VIS-TABLET-COMMERCIAL",
+      "role": "commercial",
+      "deviceClass": "tablet",
+      "required": true,
+      "status": "PASS",
+      "scenarios": [
+        "Authenticated named account and loaded home, Wallet zero-credit/no-transactions state, long account scrolling and normal sign-out."
+      ],
+      "screenshots": [
+        "docs/edge-to-edge/visual-acceptance/tablet-commercial-account.png",
+        "docs/edge-to-edge/visual-acceptance/tablet-commercial-home.png"
+      ],
+      "outstandingWork": "None for these bounded iOS/iPadOS simulator visual scenarios. Physical Android/iOS, release and full operational workflow acceptance remain separate."
+    }
+  ],
+  "commonChecks": [
+    {
+      "id": "EDGE-VIS-KEYBOARD-PHONE",
+      "status": "PASS",
+      "evidence": [
+        "phone-driver-keyboard.png",
+        "phone-owner-modal-keyboard.png"
+      ],
+      "observation": "Actual software keyboard visible; search/form input remains above it; dialog opening dismisses keyboard."
+    },
+    {
+      "id": "EDGE-VIS-KEYBOARD-TABLET",
+      "status": "PASS",
+      "evidence": [
+        "tablet-owner-keyboard.png",
+        "tablet-owner-close-dialog.png"
+      ],
+      "observation": "Actual software keyboard clearance and form confirmation/dismissal verified after repair."
+    },
+    {
+      "id": "EDGE-VIS-POSTFIX-MANAGER",
+      "status": "PASS",
+      "evidence": [
+        "phone-manager-dispatch-after-fix.png",
+        "tablet-manager-dispatch.png"
+      ],
+      "observation": "Current-source loading, fleet empty state and purpose-specific navigation glyphs rechecked on phone and tablet."
+    },
+    {
+      "id": "EDGE-VIS-CLEANUP",
+      "status": "PASS",
+      "evidence": [
+        "phone-signed-out-cleanup.png",
+        "tablet-signed-out-cleanup.png"
+      ],
+      "observation": "Dedicated QA sessions and earlier shared-phone Manager session signed out; tablet portrait/System appearance and Increase Contrast OFF restored; own duplicate compact QA window closed; other preview foreground restored; own Metro stopped."
+    },
+    {
+      "id": "EDGE-VIS-FORM-CONFIRMATION",
+      "status": "PASS",
+      "evidence": [
+        "phone-owner-close-dialog.png",
+        "tablet-owner-close-dialog.png"
+      ],
+      "observation": "Confirmation above full-screen form; Keep editing retains form; Close form dismisses, without submitting an invitation."
+    },
+    {
+      "id": "EDGE-VIS-APPEARANCE-ORIENTATION",
+      "status": "PASS",
+      "evidence": [
+        "phone-customer-dark.png",
+        "tablet-technician-dark.png",
+        "tablet-customer-landscape.png"
+      ],
+      "observation": "Light/dark representatives and actual tablet landscape observed; original tablet portrait and preferences restored. Not every screen/theme/orientation combination is claimed."
+    }
+  ],
+  "issues": [
+    {
+      "id": "EDGE-UI-01",
+      "issue": "Standalone Manager Dispatch rendered no content while checking navigation.access and also returned null on denied/failed access.",
+      "implementation": [
+        "apps/mobile/FleetLocations.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "repair": "Standalone loading, denied, failed/malformed response and retry states; optional owner widget retains hidden behavior. No access grant added.",
+      "automatedResult": "PASS",
+      "deviceRecheck": "PASS_PHONE_AND_TABLET"
+    },
+    {
+      "id": "EDGE-UI-02",
+      "issue": "Manager Dispatch, Customers and POS footer destinations fell back to generic ellipse glyphs.",
+      "implementation": [
+        "apps/mobile/App.tsx"
+      ],
+      "repair": "Purpose-specific bus, people and desktop glyphs. Navigation and handlers retained.",
+      "automatedResult": "PASS",
+      "deviceRecheck": "PASS_PHONE_AND_TABLET"
+    },
+    {
+      "id": "EDGE-UI-03",
+      "issue": "Root confirmation was presented behind a full-screen native form, leaving Close confirmation invisible and form controls blocked.",
+      "implementation": [
+        "apps/mobile/NativeDialog.tsx",
+        "apps/mobile/AppAlert.tsx",
+        "apps/mobile/ScreenCanvas.tsx"
+      ],
+      "repair": "Render queued confirmation inside the top presented screen; hide underlying controls from touch/accessibility while active; retain root overFullScreen alerts, cancel/back behavior, stale-action rejection and queue callbacks. Dismiss software keyboard when confirmation opens.",
+      "automatedResult": "PASS",
+      "deviceRecheck": "PASS_PHONE_AND_TABLET"
+    }
+  ],
+  "automation": {
+    "tests": 76,
+    "passed": 75,
+    "failed": 0,
+    "skipped": 1,
+    "skipReason": "Existing PostgreSQL concurrency test requires an explicitly enabled disposable database",
+    "nativeTypecheck": "PASS",
+    "evidence": [
+      "regression-tests.txt",
+      "typecheck.txt"
+    ]
+  },
+  "runtime": {
+    "existingCachedExpoGo": "58.0.7",
+    "runtimeInstalls": 2,
+    "newEasyGasBuilds": 0,
+    "easyGasExports": 0,
+    "easyGasInstalls": 0,
+    "existingReleaseArtifacts": "Final SHA256, size and nanosecond mtime verified unchanged for all 3 retained artifacts.",
+    "developmentSource": "Own Metro 8084 restarted with --clear and existing Expo Go reloaded after semantic repairs; final preview used repaired source. No EasyGas binary created."
+  },
+  "environmentBlock": {
+    "status": "RESOLVED",
+    "observed": "Repeated primary Device Hub selection changes to an unrelated iPhone17Pro SmartInvoice preview between native actions. CUA explicitly returned user-changed and rejected the action. Guarded helpers abort on wrong device.",
+    "question": "Which run should have Device Hub control first?",
+    "requiredBeforeDependentWork": "User chooses EasyGas first and the competing Device Hub input is paused.",
+    "userDecision": "Finish EasyGas checks first; pause the other preview",
+    "resolution": "User-authorized Device Hub priority used; all 14 cases completed and GUI control released. Prior input conflict retained as history, no longer blocks this pass."
+  },
+  "cleanup": {
+    "dedicatedMetroPort": 8084,
+    "dedicatedMetroStatus": "STOPPED",
+    "otherPreviewPort8081": "UNTOUCHED",
+    "remaining": [],
+    "reason": "Normal QA logout and preference restoration observed; own Metro stopped and other preview released.",
+    "tabletOrientation": "Original portrait restored",
+    "tabletAppearance": "System / OS Light",
+    "tabletIncreaseContrast": "OFF restored",
+    "dedicatedPhone": "Signed out",
+    "dedicatedTablet": "Signed out",
+    "initialSharedPhone": "Earlier Manager QA session signed out; guest Welcome to EasyGas observed",
+    "otherPreview": "SmartInvoice foreground restored on iPhone17Pro. Its Concept B splash advanced to Home during one stale accessibility-index action; no business record, setting or source changed. Other chat informed.",
+    "duplicateCompactQaWindow": "Closed"
+  },
+  "completedLocalDate": "2026-11-23",
+  "timezone": "Australia/Brisbane",
+  "status": "PASS_IOS_SIMULATOR_VISUAL_SCOPE"
+}

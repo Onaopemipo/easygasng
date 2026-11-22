@@ -1,3 +1,4 @@
+import {reviewedNativeEdgeSourceHash} from '../../scripts/lib/reviewed-native-edge-source.mjs';
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -38,5 +39,5 @@ export async function reviewedNativeHash(
     );
     prior = review.files[file];
   }
-  return prior;
+  return reviewedNativeEdgeSourceHash(file, prior);
 }
