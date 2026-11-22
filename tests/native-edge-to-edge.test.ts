@@ -172,10 +172,17 @@ test("shared role shells and auth/onboarding retain full-width content and keybo
       await fs.readFile(`apps/mobile/${name}.tsx`, "utf8"),
       /automaticallyAdjustKeyboardInsets/,
     );
-  assert.match(
-    await fs.readFile("apps/mobile/android/gradle.properties", "utf8"),
-    /edgeToEdgeEnabled=true/,
+  // CNG output is ignored and absent in a clean checkout. SDK 55+ removed
+  // the edgeToEdgeEnabled flag; the pinned SDK targets mandatory edge-to-edge.
+  // https://expo.dev/changelog/sdk-55
+  const mobilePackage = JSON.parse(
+    await fs.readFile("apps/mobile/package.json", "utf8"),
   );
+  assert.match(mobilePackage.dependencies.expo, /^~58\./);
+  const config = createRequire(import.meta.url)("../apps/mobile/app.config.js");
+  assert.ok(config.platforms.includes("android"));
+  assert.equal(config.android.package, "com.easygasng.customer");
+  assert.equal(Object.hasOwn(config.android, "edgeToEdgeEnabled"), false);
 });
 
 test('reviewed source continuation rejects a mismatched prior hash and retains exact native scope', async () => {

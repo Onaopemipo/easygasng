@@ -1,0 +1,213 @@
+﻿2026-11-22T21:54:19.1551015Z Current runner version: '2.338.2'
+2026-11-22T21:54:19.1568915Z ##[group]Runner Image Provisioner
+2026-11-22T21:54:19.1569530Z Hosted Compute Agent
+2026-11-22T21:54:19.1569994Z Version: 20261111.635
+2026-11-22T21:54:19.1570444Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-22T21:54:19.1570983Z Build Date: 2026-11-11T01:49:01Z
+2026-11-22T21:54:19.1571785Z Worker ID: {a5ad6a15-04e2-4115-9d55-5b16fb1e4521}
+2026-11-22T21:54:19.1572306Z Region: us-east-1
+2026-11-22T21:54:19.1572708Z Cloud: AWS
+2026-11-22T21:54:19.1573080Z ##[endgroup]
+2026-11-22T21:54:19.1574075Z ##[group]Operating System
+2026-11-22T21:54:19.1574549Z Ubuntu
+2026-11-22T21:54:19.1574907Z 24.04.5
+2026-11-22T21:54:19.1575259Z LTS
+2026-11-22T21:54:19.1575622Z ##[endgroup]
+2026-11-22T21:54:19.1575999Z ##[group]Runner Image
+2026-11-22T21:54:19.1576469Z Image: ubuntu-24.04
+2026-11-22T21:54:19.1576871Z Version: 20261116.133.1
+2026-11-22T21:54:19.1577795Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.133/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-22T21:54:19.1579218Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.133
+2026-11-22T21:54:19.1579903Z ##[endgroup]
+2026-11-22T21:54:19.1580643Z ##[group]GITHUB_TOKEN Permissions
+2026-11-22T21:54:19.1582692Z Contents: read
+2026-11-22T21:54:19.1583096Z Metadata: read
+2026-11-22T21:54:19.1583523Z ##[endgroup]
+2026-11-22T21:54:19.1585241Z Secret source: Actions
+2026-11-22T21:54:19.1585975Z Cache mode: write
+2026-11-22T21:54:19.1586589Z Prepare workflow directory
+2026-11-22T21:54:19.1863162Z Prepare all required actions
+2026-11-22T21:54:19.1900718Z Getting action download info
+2026-11-22T21:54:19.3701875Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-22T21:54:20.8169722Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-22T21:54:21.0236104Z Complete job name: native
+2026-11-22T21:54:21.0981340Z ##[group]Run actions/checkout@v4
+2026-11-22T21:54:21.0982821Z with:
+2026-11-22T21:54:21.0983669Z   repository: Onaopemipo/easygasng
+2026-11-22T21:54:21.0990134Z   token: ***
+2026-11-22T21:54:21.0990888Z   ssh-strict: true
+2026-11-22T21:54:21.0991851Z   ssh-user: git
+2026-11-22T21:54:21.0992643Z   persist-credentials: true
+2026-11-22T21:54:21.0993481Z   clean: true
+2026-11-22T21:54:21.0994308Z   sparse-checkout-cone-mode: true
+2026-11-22T21:54:21.0995190Z   fetch-depth: 1
+2026-11-22T21:54:21.0995982Z   fetch-tags: false
+2026-11-22T21:54:21.0996747Z   show-progress: true
+2026-11-22T21:54:21.0997531Z   lfs: false
+2026-11-22T21:54:21.0998286Z   submodules: false
+2026-11-22T21:54:21.0999088Z   set-safe-directory: true
+2026-11-22T21:54:21.1000177Z   allow-unsafe-pr-checkout: false
+2026-11-22T21:54:21.1001266Z ##[endgroup]
+2026-11-22T21:54:24.5835323Z Syncing repository: Onaopemipo/easygasng
+2026-11-22T21:54:24.5836937Z ##[group]Getting Git version info
+2026-11-22T21:54:24.5837498Z Working directory is '/home/runner/work/easygasng/easygasng'
+2026-11-22T21:54:24.5838206Z [command]/usr/bin/git version
+2026-11-22T21:54:24.8603753Z git version 2.56.1
+2026-11-22T21:54:24.8620112Z ##[endgroup]
+2026-11-22T21:54:24.8632125Z Temporarily overriding HOME='/home/runner/work/_temp/7ce43877-7d9f-40fd-8e2c-776182547581' before making global git config changes
+2026-11-22T21:54:24.8633193Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-22T21:54:24.8637272Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/easygasng/easygasng
+2026-11-22T21:54:24.8993807Z Deleting the contents of '/home/runner/work/easygasng/easygasng'
+2026-11-22T21:54:24.8996663Z ##[group]Initializing the repository
+2026-11-22T21:54:24.9000285Z [command]/usr/bin/git init /home/runner/work/easygasng/easygasng
+2026-11-22T21:54:24.9936643Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-22T21:54:24.9937392Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-22T21:54:24.9938477Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-22T21:54:24.9938913Z hint: call:
+2026-11-22T21:54:24.9939189Z hint:
+2026-11-22T21:54:24.9939548Z hint: 	git config --global init.defaultBranch <name>
+2026-11-22T21:54:24.9939884Z hint:
+2026-11-22T21:54:24.9940277Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-22T21:54:24.9940872Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-22T21:54:24.9941318Z hint:
+2026-11-22T21:54:24.9941865Z hint: 	git branch -m <name>
+2026-11-22T21:54:24.9942230Z hint:
+2026-11-22T21:54:24.9942723Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-22T21:54:24.9943387Z Initialized empty Git repository in /home/runner/work/easygasng/easygasng/.git/
+2026-11-22T21:54:24.9951922Z [command]/usr/bin/git remote add origin https://github.com/Onaopemipo/easygasng
+2026-11-22T21:54:24.9994734Z ##[endgroup]
+2026-11-22T21:54:24.9995476Z ##[group]Disabling automatic garbage collection
+2026-11-22T21:54:24.9997445Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-22T21:54:25.0020552Z ##[endgroup]
+2026-11-22T21:54:25.0020967Z ##[group]Setting up auth
+2026-11-22T21:54:25.0025747Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-22T21:54:25.0053718Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-22T21:54:25.3526404Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-22T21:54:25.3554406Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-22T21:54:25.3708835Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-22T21:54:25.3733526Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-22T21:54:25.3887777Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-22T21:54:25.3916095Z ##[endgroup]
+2026-11-22T21:54:25.3916755Z ##[group]Fetching the repository
+2026-11-22T21:54:25.3926418Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1b4a281762cf8265bc3dd6b460e9744e8acda787:refs/remotes/origin/codex/technician-saas-redesign
+2026-11-22T21:54:29.5870544Z From https://github.com/Onaopemipo/easygasng
+2026-11-22T21:54:29.5871721Z  * [new ref]         1b4a281762cf8265bc3dd6b460e9744e8acda787 -> origin/codex/technician-saas-redesign
+2026-11-22T21:54:29.5875587Z ##[endgroup]
+2026-11-22T21:54:29.5876080Z ##[group]Determining the checkout info
+2026-11-22T21:54:29.5877085Z ##[endgroup]
+2026-11-22T21:54:29.5882445Z [command]/usr/bin/git sparse-checkout disable
+2026-11-22T21:54:29.5935106Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-22T21:54:29.5956896Z ##[group]Checking out the ref
+2026-11-22T21:54:29.5960484Z [command]/usr/bin/git checkout --progress --force -B codex/technician-saas-redesign refs/remotes/origin/codex/technician-saas-redesign
+2026-11-22T21:54:30.4954499Z Switched to a new branch 'codex/technician-saas-redesign'
+2026-11-22T21:54:30.4959741Z branch 'codex/technician-saas-redesign' set up to track 'origin/codex/technician-saas-redesign'.
+2026-11-22T21:54:30.4990514Z ##[endgroup]
+2026-11-22T21:54:30.5028825Z [command]/usr/bin/git log -1 --format=%H
+2026-11-22T21:54:30.5048857Z 1b4a281762cf8265bc3dd6b460e9744e8acda787
+2026-11-22T21:54:30.5258289Z ##[group]Run actions/setup-node@v4
+2026-11-22T21:54:30.5258575Z with:
+2026-11-22T21:54:30.5258789Z   node-version: 22
+2026-11-22T21:54:30.5259011Z   cache: npm
+2026-11-22T21:54:30.5259272Z   cache-dependency-path: apps/mobile/package-lock.json
+2026-11-22T21:54:30.5259710Z   always-auth: false
+2026-11-22T21:54:30.5259951Z   check-latest: false
+2026-11-22T21:54:30.5262053Z   token: ***
+2026-11-22T21:54:30.5262327Z ##[endgroup]
+2026-11-22T21:54:30.7160838Z Found in cache @ /opt/hostedtoolcache/node/22.23.5/x64
+2026-11-22T21:54:30.7164732Z (node:2131) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-22T21:54:30.7165318Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-22T21:54:30.7172290Z ##[group]Environment details
+2026-11-22T21:54:34.1511234Z node: v22.23.5
+2026-11-22T21:54:34.1511762Z npm: 10.9.9
+2026-11-22T21:54:34.1512058Z yarn: 1.22.22
+2026-11-22T21:54:34.1513097Z ##[endgroup]
+2026-11-22T21:54:34.1525025Z [command]/opt/hostedtoolcache/node/22.23.5/x64/bin/npm config get cache
+2026-11-22T21:54:34.4835504Z /home/runner/.npm
+2026-11-22T21:54:34.6335722Z Cache hit for: node-cache-Linux-x64-npm-3daee4c34efb5d8ef1b24df3def321857641421d4adff2fc8e68031c94191721
+2026-11-22T21:54:34.6415126Z (node:2131) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-22T21:54:35.7187686Z Received 125829120 of 140009584 (89.9%), 120.0 MBs/sec
+2026-11-22T21:54:35.9336106Z Received 140009584 of 140009584 (100.0%), 109.9 MBs/sec
+2026-11-22T21:54:35.9336568Z Cache Size: ~134 MB (140009584 B)
+2026-11-22T21:54:35.9442272Z [command]/usr/bin/tar -xf /home/runner/work/_temp/39bbc0a9-7a64-4f7c-b9d7-0418fdb90945/cache.tzst -P -C /home/runner/work/easygasng/easygasng --use-compress-program unzstd
+2026-11-22T21:54:36.0421436Z Cache restored successfully
+2026-11-22T21:54:36.0473351Z Cache restored from key: node-cache-Linux-x64-npm-3daee4c34efb5d8ef1b24df3def321857641421d4adff2fc8e68031c94191721
+2026-11-22T21:54:36.0605448Z ##[group]Run npm ci
+2026-11-22T21:54:36.0605848Z [36;1mnpm ci[0m
+2026-11-22T21:54:36.1733499Z shell: /usr/bin/bash -e {0}
+2026-11-22T21:54:36.1733872Z ##[endgroup]
+2026-11-22T21:54:41.6838077Z
+2026-11-22T21:54:41.6844729Z added 497 packages, and audited 498 packages in 5s
+2026-11-22T21:54:41.6845038Z
+2026-11-22T21:54:41.6845233Z 52 packages are looking for funding
+2026-11-22T21:54:41.6845663Z   run `npm fund` for details
+2026-11-22T21:54:41.6846600Z
+2026-11-22T21:54:41.6846943Z found 0 vulnerabilities
+2026-11-22T21:54:41.7203337Z ##[group]Run npm run typecheck
+2026-11-22T21:54:41.7203671Z [36;1mnpm run typecheck[0m
+2026-11-22T21:54:41.7229298Z shell: /usr/bin/bash -e {0}
+2026-11-22T21:54:41.7229624Z ##[endgroup]
+2026-11-22T21:54:41.8034664Z
+2026-11-22T21:54:41.8035403Z > @easygas/mobile@0.1.0 typecheck
+2026-11-22T21:54:41.8035900Z > tsc --noEmit
+2026-11-22T21:54:41.8036124Z
+2026-11-22T21:54:44.8536977Z ##[group]Run npm run test:dependencies
+2026-11-22T21:54:44.8537329Z [36;1mnpm run test:dependencies[0m
+2026-11-22T21:54:44.8564975Z shell: /usr/bin/bash -e {0}
+2026-11-22T21:54:44.8565295Z ##[endgroup]
+2026-11-22T21:54:44.9342692Z
+2026-11-22T21:54:44.9343251Z > @easygas/mobile@0.1.0 test:dependencies
+2026-11-22T21:54:44.9343677Z > node --test ../../tests/mobile-dependencies.test.ts
+2026-11-22T21:54:44.9343884Z
+2026-11-22T21:54:44.9943836Z TAP version 13
+2026-11-22T21:54:45.3776583Z # Subtest: MOBILE-DEP-01: every installed glob consumer uses the integrity-pinned reviewed security patch
+2026-11-22T21:54:45.3790483Z ok 1 - MOBILE-DEP-01: every installed glob consumer uses the integrity-pinned reviewed security patch
+2026-11-22T21:54:45.3790955Z   ---
+2026-11-22T21:54:45.3791233Z   duration_ms: 3.420937
+2026-11-22T21:54:45.3791682Z   type: 'test'
+2026-11-22T21:54:45.3791921Z   ...
+2026-11-22T21:54:45.3792537Z # Subtest: MOBILE-DEP-02: malicious repeated extglobs finish in bounded processes for every installed copy
+2026-11-22T21:54:45.3793179Z ok 2 - MOBILE-DEP-02: malicious repeated extglobs finish in bounded processes for every installed copy
+2026-11-22T21:54:45.3793583Z   ---
+2026-11-22T21:54:45.3794058Z   duration_ms: 147.152279
+2026-11-22T21:54:45.3794358Z   type: 'test'
+2026-11-22T21:54:45.3794583Z   ...
+2026-11-22T21:54:45.3794971Z # Subtest: MOBILE-DEP-03: Metro glob APIs and codegen file discovery retain expected matching
+2026-11-22T21:54:45.3795551Z ok 3 - MOBILE-DEP-03: Metro glob APIs and codegen file discovery retain expected matching
+2026-11-22T21:54:45.3795925Z   ---
+2026-11-22T21:54:45.3796143Z   duration_ms: 30.878315
+2026-11-22T21:54:45.3796416Z   type: 'test'
+2026-11-22T21:54:45.3796697Z   ...
+2026-11-22T21:54:45.3842853Z 1..3
+2026-11-22T21:54:45.3843725Z # tests 3
+2026-11-22T21:54:45.3844798Z # suites 0
+2026-11-22T21:54:45.3845210Z # pass 3
+2026-11-22T21:54:45.3845569Z # fail 0
+2026-11-22T21:54:45.3845880Z # cancelled 0
+2026-11-22T21:54:45.3846182Z # skipped 0
+2026-11-22T21:54:45.3846547Z # todo 0
+2026-11-22T21:54:45.3850459Z # duration_ms 425.92533
+2026-11-22T21:54:45.3959512Z ##[group]Run npm audit --omit=dev --audit-level=moderate
+2026-11-22T21:54:45.3959887Z [36;1mnpm audit --omit=dev --audit-level=moderate[0m
+2026-11-22T21:54:45.3986218Z shell: /usr/bin/bash -e {0}
+2026-11-22T21:54:45.3986496Z ##[endgroup]
+2026-11-22T21:54:45.7329906Z found 0 vulnerabilities
+2026-11-22T21:54:45.7453773Z Post job cleanup.
+2026-11-22T21:54:45.8363509Z (node:2295) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-22T21:54:45.8364172Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-22T21:54:45.8366200Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-3daee4c34efb5d8ef1b24df3def321857641421d4adff2fc8e68031c94191721, not saving cache.
+2026-11-22T21:54:45.8469140Z Post job cleanup.
+2026-11-22T21:54:45.9075335Z [command]/usr/bin/git version
+2026-11-22T21:54:45.9108210Z git version 2.56.1
+2026-11-22T21:54:45.9138568Z Temporarily overriding HOME='/home/runner/work/_temp/6546f1a0-6350-4e53-bf1b-3678b1439b7d' before making global git config changes
+2026-11-22T21:54:45.9139321Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-22T21:54:45.9143628Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/easygasng/easygasng
+2026-11-22T21:54:45.9172017Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-22T21:54:45.9196233Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-22T21:54:45.9371072Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-22T21:54:45.9392489Z http.https://github.com/.extraheader
+2026-11-22T21:54:45.9399933Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-22T21:54:45.9423662Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-22T21:54:45.9587619Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-22T21:54:45.9615955Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-22T21:54:45.9885753Z Cleaning up orphan processes
+2026-11-22T21:54:46.0148698Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

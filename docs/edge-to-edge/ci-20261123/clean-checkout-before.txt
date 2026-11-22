@@ -1,0 +1,40 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ canvas fills window and keeps safe content for {"top":0,"bottom":0,"left":0,"right":0} (5.661833ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ canvas fills window and keeps safe content for {"top":62,"bottom":34,"left":0,"right":0} (0.709417ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ canvas fills window and keeps safe content for {"top":0,"bottom":21,"left":59,"right":59} (0.562667ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ default canvas paints themed system areas without extra inset layers (0.4615ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ modal presentation covers window (transparent=true) and preserves close handler (1.671417ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ modal presentation covers window (transparent=false) and preserves close handler (0.884791ms)
+✔ modal presentation covers window (transparent=undefined) and preserves close handler (0.465458ms)
+✖ shared role shells and auth/onboarding retain full-width content and keyboard safety (1.768583ms)
+✔ reviewed source continuation rejects a mismatched prior hash and retains exact native scope (148.919667ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 388.545666
+
+✖ failing tests:
+
+test at tests/native-edge-to-edge.test.ts:1:4184
+✖ shared role shells and auth/onboarding retain full-width content and keyboard safety (1.768583ms)
+  Error: ENOENT: no such file or directory, open 'apps/mobile/android/gradle.properties'
+      at async open (node:internal/fs/promises:1345:25)
+      at async Object.readFile (node:internal/fs/promises:1996:14)
+      at async TestContext.<anonymous> (/private/var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-ci-source-uhtw3pym/tests/native-edge-to-edge.test.ts:176:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'apps/mobile/android/gradle.properties'
+  }

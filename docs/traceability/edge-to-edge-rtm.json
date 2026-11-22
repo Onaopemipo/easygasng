@@ -315,7 +315,11 @@
         "docs/edge-to-edge/visual-acceptance/typecheck.txt",
         "docs/edge-to-edge/visual-acceptance/native-preservation.json",
         "docs/edge-to-edge/visual-acceptance/runtime-provenance.json",
-        "docs/edge-to-edge/visual-acceptance/validation.json"
+        "docs/edge-to-edge/visual-acceptance/validation.json",
+        "docs/edge-to-edge/ci-20261123/README.md",
+        "docs/edge-to-edge/ci-20261123/clean-checkout-before.txt",
+        "docs/edge-to-edge/ci-20261123/clean-checkout-tests.txt",
+        "docs/edge-to-edge/ci-20261123/native-job-137369136356.txt"
       ],
       "acceptanceGate": "EDGE-G05",
       "status": "PARTIAL",
@@ -389,7 +393,11 @@
         "docs/edge-to-edge/visual-acceptance/typecheck.txt",
         "docs/edge-to-edge/visual-acceptance/native-preservation.json",
         "docs/edge-to-edge/visual-acceptance/runtime-provenance.json",
-        "docs/edge-to-edge/visual-acceptance/validation.json"
+        "docs/edge-to-edge/visual-acceptance/validation.json",
+        "docs/edge-to-edge/ci-20261123/README.md",
+        "docs/edge-to-edge/ci-20261123/clean-checkout-before.txt",
+        "docs/edge-to-edge/ci-20261123/clean-checkout-tests.txt",
+        "docs/edge-to-edge/ci-20261123/native-job-137369136356.txt"
       ],
       "acceptanceGate": "EDGE-G06",
       "status": "VERIFIED_COMPLETE",
@@ -473,6 +481,10 @@
     {
       "date": "2026-11-23",
       "change": "User authorized EasyGas Device Hub priority and pause of competing preview. Completed all 14/14 representative role/device simulator cases and post-fix Manager checks, actual phone/tablet software keyboards, form cancel/confirm, light/dark and tablet landscape. Repaired confirmation hidden behind full-screen form via shared top-screen dialog host. 75 tests pass, 0 fail, 1 existing concurrency skip; native types pass. QA logout/preferences cleanup and own Metro stop complete. EDGE-04/05 retain broader physical/release outstanding work: no requirement dropped or production gate changed; no new EasyGas binary/export/install/web deployment."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "CI follow-up: original native job passes type/dependency/audit checks and skips mobile export. Fresh source-only checkout exposed ignored generated Android gradle.properties dependency in EDGE test. Replaced with committed/evaluated Expo configuration assertions; 16 clean-checkout edge tests pass without prebuild/build/export. Hosted web and repaired-source rerun remain pending; no broader gate closed."
     }
   ],
   "visualAcceptance": {
@@ -487,5 +499,25 @@
     "previewServer": "Own Metro 8084 stopped; unrelated 8081 untouched. Dedicated and earlier shared QA sessions signed out, tablet preferences restored, Device Hub released.",
     "completedLocalDate": "2026-11-23",
     "limits": "Representative seven-role phone/tablet iOS/iPadOS simulator visuals only; physical Android/iOS and release gates remain PARTIAL without exclusions."
+  },
+  "ciVerification": {
+    "dateLocal": "2026-11-23",
+    "sourceSha": "1b4a281762cf8265bc3dd6b460e9744e8acda787",
+    "originalRun": 45074671341,
+    "originalNative": "PASS",
+    "originalWeb": "IN_PROGRESS",
+    "status": "PENDING_HOSTED_RECHECK",
+    "issue": "EDGE-CI-01",
+    "repairFiles": [
+      "tests/native-edge-to-edge.test.ts"
+    ],
+    "localCleanCheckout": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    },
+    "newMobileBinaries": 0,
+    "nativeExports": 0,
+    "evidence": "docs/edge-to-edge/ci-20261123/README.md"
   }
 }
