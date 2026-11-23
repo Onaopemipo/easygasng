@@ -27,3 +27,7 @@ All six bounded store-distribution requirements and gates passed. This accepts s
 ## Acceptance limits
 
 No tester device install, launch, background/locked GPS, notifications, camera, offline recovery, real delivery/safety, provider performance or full seven-role signed-device acceptance was performed in this phase. All remain in their original matrices and denominators. No public production release, external beta invitation group or live payment activation was performed.
+
+## iOS-only refresh in progress
+
+The new user request authorises an iOS-only build/upload of the approved Mobile Next design and repairs. STORE23-R01 preflight passes; STORE23-R03/R05/R06 are PARTIAL for the new artifact/distribution evidence. Earlier build2 and Android acceptance are retained. Current continuation coverage:3verified/3partial/0excluded. [Preflight](../ios-testflight-refresh-20261123/preflight.json). Production NO-GO remains.

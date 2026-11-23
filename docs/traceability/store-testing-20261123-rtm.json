@@ -4,7 +4,8 @@
   "productionDecision": "Existing production NO-GO and unrelated native/provider/physical/import/retain-all holds preserved",
   "scopeChanges": [
     "User explicitly authorised new Android/iOS test binaries and test-store uploads, superseding earlier no-new-mobile-binary instruction only within this phase.",
-    "User first selected live backend, then approved existing website backend after discovery showed only hosted synthetic demo API is configured."
+    "User first selected live backend, then approved existing website backend after discovery showed only hosted synthetic demo API is configured.",
+    "User requested a new iOS-only build and TestFlight upload after approving native Mobile Next redesign and Android/provider repairs. Android build2 historical acceptance retained; no new Android build authorised in this continuation."
   ],
   "requirements": [
     {
@@ -38,11 +39,12 @@
         "docs/store-testing-20261123/preflight.json",
         "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
         "docs/store-testing-20261123/artifact-verification.json",
-        "docs/store-testing-20261123/artifact-verification.txt"
+        "docs/store-testing-20261123/artifact-verification.txt",
+        "docs/ios-testflight-refresh-20261123/preflight.json"
       ],
       "acceptanceGate": "STORE23-G01",
       "status": "VERIFIED_COMPLETE",
-      "reason": "PASS \u2014 configured project-scoped approved API/identifier guard; signed builds use approved source and HTTPS API",
+      "reason": "Current iOS refresh preflight verified: approved HTTPS demo API/project guard, exact app/team identity, source b062123 with1219/1219CI. Earlier build2 artifact evidence retained.",
       "testResult": "PASS \u2014 configured project-scoped approved API/identifier guard; signed builds use approved source and HTTPS API",
       "outstandingWork": "None for this bounded configuration gate; physical/live readiness separate."
     },
@@ -119,13 +121,18 @@
         "docs/store-testing-20261123/preflight.json",
         "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
         "docs/store-testing-20261123/artifact-verification.json",
-        "docs/store-testing-20261123/artifact-verification.txt"
+        "docs/store-testing-20261123/artifact-verification.txt",
+        "docs/ios-testflight-refresh-20261123/preflight.json"
       ],
       "acceptanceGate": "STORE23-G03",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "PASS \u2014 actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified",
-      "testResult": "PASS \u2014 actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified",
-      "outstandingWork": "None for artifact generation; TestFlight processing/compliance/tester availability remains R05."
+      "status": "PARTIAL",
+      "reason": "User-authorised iOS refresh in progress; earlier build2 remains historically accepted. New build artifact/upload/processing/testing evidence is pending.",
+      "testResult": "CURRENT_IOS_REFRESH_PENDING; HISTORICAL_BUILD2_ACCEPTANCE_RETAINED",
+      "outstandingWork": "Complete signed iOS artifact verification, exact TestFlight submission and Apple processing/internal-group readback for the new build.",
+      "previousVerifiedBuild2": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "PASS \u2014 actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified"
+      }
     },
     {
       "id": "STORE23-R04",
@@ -199,13 +206,18 @@
         "docs/store-testing-20261123/artifact-verification.json",
         "docs/store-testing-20261123/artifact-verification.txt",
         "docs/store-testing-20261123/store-acceptance.md",
-        "docs/store-testing-20261123/store-acceptance.txt"
+        "docs/store-testing-20261123/store-acceptance.txt",
+        "docs/ios-testflight-refresh-20261123/preflight.json"
       ],
       "acceptanceGate": "STORE23-G05",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "PASS \u2014 exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved.",
-      "testResult": "PASS \u2014 exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved.",
-      "outstandingWork": "None for bounded TestFlight internal distribution; tester install/launch and full native acceptance remain separate."
+      "status": "PARTIAL",
+      "reason": "User-authorised iOS refresh in progress; earlier build2 remains historically accepted. New build artifact/upload/processing/testing evidence is pending.",
+      "testResult": "CURRENT_IOS_REFRESH_PENDING; HISTORICAL_BUILD2_ACCEPTANCE_RETAINED",
+      "outstandingWork": "Complete signed iOS artifact verification, exact TestFlight submission and Apple processing/internal-group readback for the new build.",
+      "previousVerifiedBuild2": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "PASS \u2014 exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved."
+      }
     },
     {
       "id": "STORE23-R06",
@@ -244,13 +256,18 @@
         "docs/store-testing-20261123/artifact-verification.json",
         "docs/store-testing-20261123/artifact-verification.txt",
         "docs/store-testing-20261123/store-acceptance.md",
-        "docs/store-testing-20261123/store-acceptance.txt"
+        "docs/store-testing-20261123/store-acceptance.txt",
+        "docs/ios-testflight-refresh-20261123/preflight.json"
       ],
       "acceptanceGate": "STORE23-G06",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "PASS \u2014 immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved.",
-      "testResult": "PASS \u2014 immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved.",
-      "outstandingWork": "None for this evidence gate; original physical/provider/lifecycle/commercial acceptance remains open in its original matrices."
+      "status": "PARTIAL",
+      "reason": "User-authorised iOS refresh in progress; earlier build2 remains historically accepted. New build artifact/upload/processing/testing evidence is pending.",
+      "testResult": "CURRENT_IOS_REFRESH_PENDING; HISTORICAL_BUILD2_ACCEPTANCE_RETAINED",
+      "outstandingWork": "Complete signed iOS artifact verification, exact TestFlight submission and Apple processing/internal-group readback for the new build.",
+      "previousVerifiedBuild2": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "PASS \u2014 immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved."
+      }
     }
   ],
   "gates": [
@@ -258,7 +275,7 @@
       "id": "STORE23-G01",
       "description": "Verify source, approved API and build configuration",
       "status": "PASS",
-      "reason": "PASS \u2014 configured project-scoped approved API/identifier guard; signed builds use approved source and HTTPS API"
+      "reason": "Current iOS refresh preflight verified: approved HTTPS demo API/project guard, exact app/team identity, source b062123 with1219/1219CI. Earlier build2 artifact evidence retained."
     },
     {
       "id": "STORE23-G02",
@@ -269,8 +286,8 @@
     {
       "id": "STORE23-G03",
       "description": "Produce a signed device iOS archive for TestFlight",
-      "status": "PASS",
-      "reason": "PASS \u2014 actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified"
+      "status": "PENDING",
+      "reason": "User-authorised iOS refresh in progress; earlier build2 remains historically accepted. New build artifact/upload/processing/testing evidence is pending."
     },
     {
       "id": "STORE23-G04",
@@ -281,20 +298,20 @@
     {
       "id": "STORE23-G05",
       "description": "Upload iOS build and verify TestFlight processing",
-      "status": "PASS",
-      "reason": "PASS \u2014 exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved."
+      "status": "PENDING",
+      "reason": "User-authorised iOS refresh in progress; earlier build2 remains historically accepted. New build artifact/upload/processing/testing evidence is pending."
     },
     {
       "id": "STORE23-G06",
       "description": "Record artifact and hosted testing evidence while preserving original release holds",
-      "status": "PASS",
-      "reason": "PASS \u2014 immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved."
+      "status": "PENDING",
+      "reason": "User-authorised iOS refresh in progress; earlier build2 remains historically accepted. New build artifact/upload/processing/testing evidence is pending."
     }
   ],
   "coverage": {
     "total": 6,
-    "verified": 6,
-    "partial": 0,
+    "verified": 3,
+    "partial": 3,
     "blocked": 0,
     "notImplemented": 0,
     "excluded": 0
@@ -323,6 +340,16 @@
     {
       "date": "2026-11-23",
       "change": "User approved actual Apple encryption/no-France declaration and explicitly requested reuse of AfriMarket testing accounts. Saved compliance; matched AfriMarket Pilot Testers(48) on Google and two existing internal testers on Apple. Google track Active and Apple build Testing; beta notes Saved. STORE23-R01\u201306 bounded store distribution accepted, while prior production/physical/provider/300-feature native gates remain unchanged."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Registered new iOS-only refresh. Reusing STORE23 stable IDs and preserving earlier Android/iOS build2 evidence. Current source CI1219passed; approved demo API/project/team verified. New signed iOS artifact, TestFlight processing and tester assignment pending. No Android build or commercial rollout authorised."
     }
-  ]
+  ],
+  "iosRefresh20261123": {
+    "applicationSource": "b062123205661508f6a777db4da404c94b25fcbc",
+    "evidence": "docs/ios-testflight-refresh-20261123/preflight.json",
+    "status": "BUILD_PENDING",
+    "androidChanged": false
+  }
 }
