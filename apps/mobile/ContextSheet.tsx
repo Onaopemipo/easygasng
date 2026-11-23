@@ -1,3 +1,6 @@
+import { NextIcon, NextText } from "./MobileNextUI";
+import { FocusedFormContext, ScreenTitleContext } from "./CustomerUI";
+import { ScreenTransition } from "./ScreenTransition";
 import { ScreenModal } from "./ScreenCanvas";
 import React, { type ReactNode } from "react";
 import {
@@ -43,6 +46,16 @@ export function ContextSheet({
             },
           ]}
         >
+          <View
+            style={{
+              width: 38,
+              height: 4,
+              borderRadius: 2,
+              backgroundColor: colors.border,
+              alignSelf: "center",
+              marginBottom: 12,
+            }}
+          />
           <View style={styles.header}>
             <Text accessibilityRole="header" style={styles.title}>
               {title}
@@ -53,12 +66,22 @@ export function ContextSheet({
               onPress={onClose}
               style={styles.close}
             >
-              <Text>Close</Text>
+              <NextIcon name="x" color={colors.text} />
             </Pressable>
           </View>
-          <ScrollView keyboardShouldPersistTaps="handled">
-            {children}
-          </ScrollView>
+          <FocusedFormContext.Provider value={true}>
+            <ScreenTitleContext.Provider value={title}>
+              <ScrollView
+                keyboardShouldPersistTaps="handled"
+                automaticallyAdjustKeyboardInsets
+                contentContainerStyle={{ paddingVertical: 12, gap: 16 }}
+              >
+                <ScreenTransition identity={title} fill={false}>
+                  {children}
+                </ScreenTransition>
+              </ScrollView>
+            </ScreenTitleContext.Provider>
+          </FocusedFormContext.Provider>
         </View>
       </KeyboardAvoidingView>
     </ScreenModal>
@@ -69,9 +92,9 @@ const styles = StyleSheet.create({
   overlay: { flex: 1, justifyContent: "flex-end" },
   sheet: {
     maxHeight: "88%",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    padding: 16,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+    padding: 24,
   },
   header: { flexDirection: "row", alignItems: "center", gap: 12 },
   title: { flex: 1, fontSize: 21, fontWeight: "700" },

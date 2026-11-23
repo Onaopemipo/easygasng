@@ -10,6 +10,10 @@ The [21 November role guide](order-to-delivery.md) adds the exercised trip, assi
 
 The [vehicle registration password guide](driver-assignment.md#verify-your-password-when-registering-a-vehicle) covers the 22 November verification fix, including retained entries and the single verification action.
 
+## Native mobile design adoption
+
+The [Mobile Next native guide](mobile-native-next.md) explains the approved customer checkout, payment recovery and focused role workspaces. See its [acceptance matrix](../traceability/mobile-native-next-rtm.md) for executed source/API checks and remaining device/distribution gates.
+
 ## Deliverables
 
 - [User manual PDF](../../output/pdf/EasyGas-User-Manual.pdf) - 33 pages.

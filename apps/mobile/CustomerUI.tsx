@@ -11,10 +11,24 @@ export type CustomerAPI = (action: string, data?: any) => Promise<any>;
 type ReadStore = Map<string, { data: any; at: number }>;
 const ReadContext = createContext<ReadStore | null>(null);
 /** Private reads never survive an account/session change. Re-entry revalidates in place. */
-export function RemoteReadScope({ scope, children }: { scope: string; children: React.ReactNode }) {
+export function RemoteReadScope({
+  scope,
+  children,
+}: {
+  scope: string;
+  children: React.ReactNode;
+}) {
   const store = useRef({ scope, entries: new Map() as ReadStore });
-  if (store.current.scope !== scope) store.current = { scope, entries: new Map() };
-  return <ReadContext.Provider value={store.current.entries}>{children}</ReadContext.Provider>;
+  if (store.current.scope !== scope)
+    store.current = { scope, entries: new Map() };
+  return (
+    <ReadContext.Provider value={store.current.entries}>
+      {children}
+    </ReadContext.Provider>
+  );
+}
+export function usePrivateReadCache() {
+  return useContext(ReadContext);
 }
 export function useRemote(
   api: CustomerAPI,
@@ -23,11 +37,20 @@ export function useRemote(
   enabled = true,
 ) {
   const fingerprint = JSON.stringify(input ?? {});
-  const request = enabled ? customerReadAction(action, JSON.parse(fingerprint)) : null;
+  const request = enabled
+    ? customerReadAction(action, JSON.parse(fingerprint))
+    : null;
   const cache = useContext(ReadContext);
   const cached = request ? cache?.get(request) : undefined;
   const fresh = cached && Date.now() - cached.at < 30000 ? cached : undefined;
-  const [result, setResult] = useState<{ request: string; data: any; error: string; store: ReadStore | null } | undefined>(() => request && fresh ? { request, data: fresh.data, error: "", store: cache } : undefined);
+  const [result, setResult] = useState<
+    | { request: string; data: any; error: string; store: ReadStore | null }
+    | undefined
+  >(() =>
+    request && fresh
+      ? { request, data: fresh.data, error: "", store: cache }
+      : undefined,
+  );
   const [version, reload] = useState(0);
   useEffect(() => {
     if (!request) {
@@ -36,19 +59,39 @@ export function useRemote(
     }
     let live = true;
     const prior = cache?.get(request);
-    setResult(previous => previous?.store === cache && previous?.request === request && !previous.error ? previous : prior && Date.now() - prior.at < 30000 ? { request, data: prior.data, error: "", store: cache } : undefined);
+    setResult((previous) =>
+      previous?.store === cache &&
+      previous?.request === request &&
+      !previous.error
+        ? previous
+        : prior && Date.now() - prior.at < 30000
+          ? { request, data: prior.data, error: "", store: cache }
+          : undefined,
+    );
     api(request)
-      .then(data => {
-        if (live) { cache?.set(request, { data, at: Date.now() }); setResult({ request, data, error: "", store: cache }); }
+      .then((data) => {
+        if (live) {
+          cache?.set(request, { data, at: Date.now() });
+          setResult({ request, data, error: "", store: cache });
+        }
       })
       .catch(() => {
-        if (live) setResult({ request, data: null, error: "Could not load this information. Please try again.", store: cache });
+        if (live) {
+          cache?.delete(request);
+          setResult({
+            request,
+            data: null,
+            error: "Could not load this information. Please try again.",
+            store: cache,
+          });
+        }
       });
     return () => {
       live = false;
     };
   }, [request, version, cache]);
-  const current = result?.store === cache && result?.request === request ? result : undefined;
+  const current =
+    result?.store === cache && result?.request === request ? result : undefined;
   return {
     data: current?.data ?? null,
     error: current?.error ?? "",
@@ -76,8 +119,8 @@ export function Button({
       onPress={onPress}
       style={{
         padding: 14,
-        minHeight: 48,
-        borderRadius: 14,
+        minHeight: 50,
+        borderRadius: 16,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: secondary ? colors.surface : colors.button,
@@ -110,9 +153,9 @@ export function Card({
   return (
     <View
       style={{
-        padding: 18,
-        borderRadius: 18,
-        gap: 10,
+        padding: 21,
+        borderRadius: 22,
+        gap: 12,
         borderWidth: 1,
         borderColor: colors.border,
         backgroundColor: accent ? colors.elevated : colors.surface,
@@ -122,6 +165,7 @@ export function Card({
     </View>
   );
 }
+export const FocusedFormContext = createContext(false);
 export const ScreenTitleContext = createContext<string | null>(null);
 export function Title({ children }: { children: React.ReactNode }) {
   const header = useContext(ScreenTitleContext);
@@ -132,9 +176,9 @@ export function Title({ children }: { children: React.ReactNode }) {
       preserveColor
       accessibilityRole="header"
       style={{
-        fontSize: 25,
-        lineHeight: 32,
-        fontWeight: "800",
+        fontSize: 19,
+        lineHeight: 25,
+        fontWeight: "700",
         color: colors.text,
         marginBottom: 8,
       }}
@@ -179,8 +223,22 @@ export function Feedback({
         accessibilityState={{ busy: true }}
         style={{ padding: 16, gap: 10, alignSelf: "stretch" }}
       >
-        <View style={{ height: 12, width: "62%", borderRadius: 6, backgroundColor: colors.skeleton }} />
-        <View style={{ height: 12, width: "88%", borderRadius: 6, backgroundColor: colors.skeleton }} />
+        <View
+          style={{
+            height: 12,
+            width: "62%",
+            borderRadius: 6,
+            backgroundColor: colors.skeleton,
+          }}
+        />
+        <View
+          style={{
+            height: 12,
+            width: "88%",
+            borderRadius: 6,
+            backgroundColor: colors.skeleton,
+          }}
+        />
       </View>
     );
   if (error)

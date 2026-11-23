@@ -172,10 +172,12 @@ await build({
   platform: "node",
   format: "cjs",
   jsx: "automatic",
+  loader:{".png":"dataurl"},
   plugins: [
     {
       name: "ux23-hosts",
       setup(b) {
+        b.onResolve({filter:/^react-native-svg$/},()=>({path:path.resolve("tests/helpers/native-svg-host.tsx")}));
         b.onResolve({ filter: /^react(\/.*)?$/ }, (a) => ({
           path: req.resolve(a.path),
           external: true,
@@ -269,7 +271,7 @@ test("MOBUX23-NATIVE-RETURN: payment verifies on entry and overlapping retry sta
   await act(async () => button.props.onPress());
   assert.equal(calls, 1);
   await act(async () => resolve({ status: "paid" }));
-  assert.match(text(t), /payment verified/);
+  assert.match(text(t), /payment verified/i);
   await act(async () => t.unmount());
 });
 test("MOBUX23-WEB-RETURN: native callback never asks browser cookies to verify or shows a sign-in loop", async () => {

@@ -1,9 +1,33 @@
+import { useRemote } from "./CustomerUI";
+import {
+  NextIntro,
+  NextText,
+  NextCard,
+  NextRow,
+  NextList,
+  NextButton,
+  NextIcon,
+  NextEmpty,
+  NextChoice,
+} from "./MobileNextUI";
 import { Ionicons } from "@expo/vector-icons";
 import { ContextSheet } from "./ContextSheet";
 import { useTheme } from "./theme";
-import { bookingPhone, bookingPhoneMessage } from "../../packages/business-rules/src/booking-contact";
 import {
-  activeServiceSlots, assertServiceSelection, serviceAvailabilityMessage, serviceDetailText, serviceMoney, servicePrice, serviceSlotDay, serviceSlotTime, serviceSlotsQuery, type ServiceAvailability,
+  bookingPhone,
+  bookingPhoneMessage,
+} from "../../packages/business-rules/src/booking-contact";
+import {
+  activeServiceSlots,
+  assertServiceSelection,
+  serviceAvailabilityMessage,
+  serviceDetailText,
+  serviceMoney,
+  servicePrice,
+  serviceSlotDay,
+  serviceSlotTime,
+  serviceSlotsQuery,
+  type ServiceAvailability,
 } from "../../packages/business-rules/src/service-detail";
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasLoader } from "./EasyGasLoader";
@@ -73,49 +97,36 @@ export default function Services({
   initialServiceId?: string;
   onHelp?: () => void;
 }) {
-  const [bundles, setBundles] = useState<any[]>([]),
-    [bundle, setBundle] = useState<any>(null),
-    [followups, setFollowups] = useState<any[]>([]),
+  const { colors } = useTheme();
+  const [activeBooking, setActiveBooking] = useState<string | null>(null),
+    [serviceSheet, setServiceSheet] = useState<string | null>(null);
+  const catalogueRead = useRemote(api, "services.catalogue"),
+    bundlesRead = useRemote(api, "bundles"),
+    bookingsRead = useRemote(api, "bookings", undefined, !!user),
+    followupsRead = useRemote(
+      api,
+      "service.followups",
+      undefined,
+      !!user && ["customer", "commercial"].includes(user.role),
+    );
+  const bundles = Array.isArray(bundlesRead.data) ? bundlesRead.data : [],
+    items = Array.isArray(catalogueRead.data) ? catalogueRead.data : [],
+    bookings = Array.isArray(bookingsRead.data) ? bookingsRead.data : [],
+    followups = Array.isArray(followupsRead.data) ? followupsRead.data : [];
+  const [bundle, setBundle] = useState<any>(null),
     [followup, setFollowup] = useState<any>(null),
-    [items, setItems] = useState<any[]>([]),
-    [bookings, setBookings] = useState<any[]>([]),
     [selected, setSelected] = useState<any>(() =>
       initialServiceId ? { id: initialServiceId } : null,
     ),
-    [error, setError] = useState(""),
-    [loading, setLoading] = useState(true),
-    [version, setVersion] = useState(0);
-  const reload = () => setVersion((n) => n + 1);
-  useEffect(() => {
-    let live = true;
-    setLoading(true);
-    Promise.all([
-      api("services.catalogue"),
-      api("bundles"),
-      user ? api("bookings") : Promise.resolve([]),
-      user && ["customer", "commercial"].includes(user.role)
-        ? api("service.followups")
-        : Promise.resolve([]),
-    ])
-      .then(([c, offers, b, f]) => {
-        if (live) {
-          setItems(c);
-          setBundles(offers);
-          setBookings(b);
-          setFollowups(f);
-          setError("");
-        }
-      })
-      .catch((e) => {
-        if (live) setError(e.message);
-      })
-      .finally(() => {
-        if (live) setLoading(false);
-      });
-    return () => {
-      live = false;
-    };
-  }, [user?.id, version]);
+    [error, setError] = useState("");
+  const loading = bookingsOnly ? bookingsRead.loading : catalogueRead.loading;
+  const readError = bookingsOnly ? bookingsRead.error : catalogueRead.error;
+  const reload = () => {
+    catalogueRead.reload();
+    bundlesRead.reload();
+    bookingsRead.reload();
+    followupsRead.reload();
+  };
   const clearSelection = () => {
     setSelected(null);
     setFollowup(null);
@@ -134,69 +145,72 @@ export default function Services({
   const currentService = items.find((item) => item.id === selected?.id);
   return (
     <View>
-      {!bookingsOnly && !selected && (
-        <CustomerCard accent>
-          <CustomerTitle>Professional Gas Services</CustomerTitle>
-          <CustomerCopy>
-            Installation, maintenance and safety checks. Choose an available
-            service below; appointments and quotations are confirmed by EasyGas.
-          </CustomerCopy>
-        </CustomerCard>
-      )}
-      {!bookingsOnly &&
-        !selected &&
-        bundles.map((b) => (
-          <View style={s.card} key={b.id}>
-            <Text style={s.heading}>{b.name}</Text>
-            <Text style={s.body}>{b.config.description}</Text>
-            {b.products.map((p: any) => (
-              <Text key={p.productId}>
-                {p.quantity} × {p.name}
-              </Text>
-            ))}
-            <Text style={s.body}>
-              Subtotal {money(b.totalKobo)} · Service saving{" "}
-              {money(b.discountKobo)}. Product delivery additional. Additional
-              quoted work priced separately.
-            </Text>
-            <Button
-              text="Use bundle cart & choose appointment"
-              press={() => {
-                const service = items.find((x) => x.id === b.config.serviceId);
-                if (!service) {
-                  setError("This service is unavailable.");
-                  return;
-                }
-                onBundle?.(b);
-                setBundle(b);
-                setSelected(service);
-              }}
-            />
-          </View>
-        ))}
       {!selected && (
-        <CustomerTitle>
-          {bookingsOnly ? "My service appointments" : "Book a Service"}
-        </CustomerTitle>
+        <NextIntro
+          title={bookingsOnly ? "Your appointments." : "A little expert help."}
+          detail={
+            bookingsOnly
+              ? "Requests, reviewed scope and appointment updates."
+              : "Installation, maintenance and safety, in one place."
+          }
+        />
       )}
-      {loading && <EasyGasLoader color="#07592e" />}
-      {error && (
-        <>
-          <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>
-          <Button text="Try again" press={reload} />
-        </>
+      <CustomerFeedback
+        loading={loading}
+        error={error || readError}
+        retry={reload}
+      />
+      {!bookingsOnly && !selected && !!bundles.length && (
+        <NextList>
+          <NextRow
+            title="Product & service bundles"
+            detail={bundles.length + " available offers"}
+            icon="layers"
+            onPress={() => setServiceSheet("bundles")}
+          />
+        </NextList>
       )}
       {(!bookingsOnly || Boolean(followup)) &&
         (!selected ? (
           <>
-            {items.map((item) => (
-              <View key={item.id} style={{ marginBottom: 12 }}>
-                <CustomerRow
-                  label={item.name}
-                  detail={`${item.config.description} · ${money(item.config.priceKobo)}`}
-                  icon="construct-outline"
-                  onPress={() => setSelected(item)}
-                />
+            {items.map((item, i) => (
+              <View
+                key={item.id}
+                style={{
+                  flexDirection: "row",
+                  marginBottom: 16,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  backgroundColor: colors.surface,
+                  borderRadius: 22,
+                  overflow: "hidden",
+                }}
+              >
+                <View
+                  style={{
+                    width: 92,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: colors.elevated,
+                  }}
+                >
+                  <NextIcon name="wrench" size={34} />
+                </View>
+                <View style={{ flex: 1, padding: 20, gap: 10 }}>
+                  <NextText kind="heading">{item.name}</NextText>
+                  <NextText kind="small" style={{ color: colors.muted }}>
+                    {servicePrice(item.config)}
+                  </NextText>
+                  <Pressable
+                    accessibilityRole="button"
+                    onPress={() => setSelected(item)}
+                    style={{ minHeight: 44, justifyContent: "center" }}
+                  >
+                    <NextText kind="label" style={{ color: colors.primary }}>
+                      View service & request
+                    </NextText>
+                  </Pressable>
+                </View>
               </View>
             ))}
             {!loading && !items.length && (
@@ -215,11 +229,18 @@ export default function Services({
             />
             {currentService ? (
               <>
-                <NativeServiceDetail
-                  key={currentService.id}
-                  service={currentService}
-                  apiUrl={apiUrl}
+                <NextIntro
+                  title={currentService.name}
+                  detail={servicePrice(currentService.config)}
                 />
+                <NextList>
+                  <NextRow
+                    title="Scope, pricing & terms"
+                    detail="Review inclusions, exclusions and safety requirements"
+                    icon="shield-check"
+                    onPress={() => setServiceSheet("terms")}
+                  />
+                </NextList>
                 {user && ["customer", "commercial"].includes(user.role) ? (
                   <Booking
                     key={user.id + ":" + currentService.id}
@@ -259,47 +280,79 @@ export default function Services({
             )}
           </>
         ))}
-      {user && ["customer", "commercial"].includes(user.role) && (
-        <View style={s.card}>
-          <Text style={s.heading}>Service follow-ups</Text>
-          {!followups.length && (
-            <Text style={s.body}>No recorded follow-ups.</Text>
+      {!selected && user && (
+        <NextList>
+          <NextRow
+            title="Your appointments"
+            detail={bookings.length + " recorded"}
+            icon="calendar-days"
+            onPress={() => {
+              if (!bookingsOnly) {
+                setServiceSheet("appointments");
+              } else setServiceSheet(null);
+            }}
+          />
+          {!!followups.length && (
+            <NextRow
+              title="Service follow-ups"
+              detail={followups.length + " recorded"}
+              icon="clock"
+              onPress={() => setServiceSheet("followups")}
+            />
           )}
-          {followups.map((f) => (
-            <View style={s.panel} key={f.id}>
-              <Text style={s.body}>
-                {f.name} · {new Date(f.due_date).toLocaleDateString()}
-              </Text>
-              <Text style={s.body}>{f.reason}</Text>
-              {f.dismissed_at || f.rebooked_id ? (
+        </NextList>
+      )}
+      {serviceSheet === "followups" && user && (
+        <ContextSheet
+          title="Service follow-ups"
+          onClose={() => setServiceSheet(null)}
+        >
+          <View style={s.card}>
+            <Text style={s.heading}>Service follow-ups</Text>
+            {!followups.length && (
+              <Text style={s.body}>No recorded follow-ups.</Text>
+            )}
+            {followups.map((f) => (
+              <View style={s.panel} key={f.id}>
                 <Text style={s.body}>
-                  {f.rebooked_id ? "Linked appointment requested" : "Dismissed"}
+                  {f.name} · {new Date(f.due_date).toLocaleDateString()}
                 </Text>
-              ) : (
-                <>
-                  <Button
-                    text="Review service appointments"
-                    press={() => {
-                      const service = items.find((x) => x.id === f.service_id);
-                      if (service) {
-                        setFollowup(f);
-                        setSelected(service);
-                      } else setError("This service is currently unavailable.");
-                    }}
-                  />
-                  <Button
-                    text="Dismiss reminder"
-                    press={() =>
-                      api("service.followup.dismiss", { id: f.id })
-                        .then(reload)
-                        .catch((e) => setError(e.message))
-                    }
-                  />
-                </>
-              )}
-            </View>
-          ))}
-        </View>
+                <Text style={s.body}>{f.reason}</Text>
+                {f.dismissed_at || f.rebooked_id ? (
+                  <Text style={s.body}>
+                    {f.rebooked_id
+                      ? "Linked appointment requested"
+                      : "Dismissed"}
+                  </Text>
+                ) : (
+                  <>
+                    <Button
+                      text="Review service appointments"
+                      press={() => {
+                        const service = items.find(
+                          (x) => x.id === f.service_id,
+                        );
+                        if (service) {
+                          setFollowup(f);
+                          setSelected(service);
+                        } else
+                          setError("This service is currently unavailable.");
+                      }}
+                    />
+                    <Button
+                      text="Dismiss reminder"
+                      press={() =>
+                        api("service.followup.dismiss", { id: f.id })
+                          .then(reload)
+                          .catch((e) => setError(e.message))
+                      }
+                    />
+                  </>
+                )}
+              </View>
+            ))}
+          </View>
+        </ContextSheet>
       )}
       {bookingsOnly &&
         (!user ? (
@@ -309,19 +362,114 @@ export default function Services({
             {!loading && !bookings.length && (
               <Text style={s.body}>No service appointments yet.</Text>
             )}
-            {bookings.map((b) => (
-              <Appointment
-                key={b.id + ":" + b.version}
-                b={b}
-                user={user}
-                api={api}
-                done={reload}
-                token={token}
-                apiUrl={apiUrl}
-              />
-            ))}
+            <NextList>
+              {bookings.map((b) => (
+                <NextRow
+                  key={b.id}
+                  title={b.reference}
+                  detail={
+                    (b.snapshot?.name || "Service visit") +
+                    " · " +
+                    b.status.replaceAll("_", " ")
+                  }
+                  icon="wrench"
+                  onPress={() => setActiveBooking(b.id)}
+                />
+              ))}
+            </NextList>
           </>
         ))}
+      {serviceSheet === "terms" && currentService && (
+        <ContextSheet
+          title="Service scope & terms"
+          onClose={() => setServiceSheet(null)}
+        >
+          <NativeServiceDetail service={currentService} apiUrl={apiUrl} />
+        </ContextSheet>
+      )}
+      {serviceSheet === "bundles" && (
+        <ContextSheet
+          title="Product & service bundles"
+          onClose={() => setServiceSheet(null)}
+        >
+          <View style={{ gap: 18 }}>
+            {bundles.map((b) => (
+              <NextCard key={b.id}>
+                <NextText kind="heading">{b.name}</NextText>
+                <NextText>{b.config.description}</NextText>
+                {b.products.map((p: any) => (
+                  <NextText kind="small" key={p.productId}>
+                    {p.quantity} × {p.name}
+                  </NextText>
+                ))}
+                <NextText>
+                  Total {money(b.totalKobo)} · Service saving{" "}
+                  {money(b.discountKobo)}. Product delivery and additional
+                  quoted work are separate.
+                </NextText>
+                <NextButton
+                  label="Choose appointment"
+                  onPress={() => {
+                    const service = items.find(
+                      (x) => x.id === b.config.serviceId,
+                    );
+                    if (!service) {
+                      setError("This service is unavailable.");
+                      return;
+                    }
+                    onBundle?.(b);
+                    setBundle(b);
+                    setSelected(service);
+                    setServiceSheet(null);
+                  }}
+                />
+              </NextCard>
+            ))}
+          </View>
+        </ContextSheet>
+      )}
+      {serviceSheet === "appointments" && (
+        <ContextSheet
+          title="Your appointments"
+          onClose={() => setServiceSheet(null)}
+        >
+          <NextList>
+            {bookings.map((b) => (
+              <NextRow
+                key={b.id}
+                title={b.reference}
+                detail={b.status.replaceAll("_", " ")}
+                icon="wrench"
+                onPress={() => {
+                  setServiceSheet(null);
+                  setActiveBooking(b.id);
+                }}
+              />
+            ))}
+          </NextList>
+          {!bookings.length && <NextEmpty title="No appointments yet" />}
+        </ContextSheet>
+      )}
+      {activeBooking && bookings.find((b) => b.id === activeBooking) && (
+        <ContextSheet
+          title="Service appointment"
+          onClose={() => setActiveBooking(null)}
+        >
+          <Appointment
+            key={
+              activeBooking +
+              ":" +
+              bookings.find((b) => b.id === activeBooking).version
+            }
+            b={bookings.find((b) => b.id === activeBooking)}
+            user={user}
+            api={api}
+            done={reload}
+            token={token}
+            apiUrl={apiUrl}
+          />
+        </ContextSheet>
+      )}
     </View>
   );
 }
@@ -678,7 +826,11 @@ function Booking({
         {error ? (
           <CustomerFeedback error={error} />
         ) : !current ? (
-          <EasyGasLoader size="sm" variant="section" label="Checking appointment availability" />
+          <EasyGasLoader
+            size="sm"
+            variant="section"
+            label="Checking appointment availability"
+          />
         ) : changed ? (
           <CustomerCopy>
             Service details or pricing changed. Refresh the service and review
@@ -706,7 +858,11 @@ function Booking({
               label="Contact EasyGas"
               secondary
               onPress={() => {
-                if(onHelp)onHelp();else setError("Open Help & support in your account to contact EasyGas.");
+                if (onHelp) onHelp();
+                else
+                  setError(
+                    "Open Help & support in your account to contact EasyGas.",
+                  );
               }}
             />
           </>
@@ -795,6 +951,7 @@ function Booking({
             api={adapted}
             action="booking.create"
             title="Request an appointment"
+            collapsedFields={["brand", "notes"]}
             onDone={done}
             disabled={!canProceed}
             reviewKey={service.version + ":" + zone + ":" + slotId}
@@ -854,7 +1011,11 @@ function Booking({
                 type: "checkbox",
               },
               { name: "concerns", label: "Describe equipment and concerns" },
-              { name: "notes", label: "Additional instructions", required: false },
+              {
+                name: "notes",
+                label: "Additional instructions",
+                required: false,
+              },
               {
                 name: "combineWithProducts",
                 label: "Confirm together with my product cart",
@@ -1677,7 +1838,9 @@ function BookingPhotos({
             value={alt}
             onChangeText={setAlt}
           />
-          <FieldCaption required={true}>Customer consent for private service evidence</FieldCaption>
+          <FieldCaption required={true}>
+            Customer consent for private service evidence
+          </FieldCaption>
           <Switch
             accessibilityLabel="Customer consents to private service evidence, required"
             value={consent}

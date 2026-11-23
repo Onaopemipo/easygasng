@@ -1,3 +1,11 @@
+import { NextRow, NextList, NextIcon } from "./MobileNextUI";
+import { useTheme } from "./theme";
+import {
+  Feedback,
+  FocusedFormContext,
+  ScreenTitleContext,
+  usePrivateReadCache,
+} from "./CustomerUI";
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
 import { EasyGasLoader } from "./EasyGasLoader";
@@ -7,7 +15,7 @@ import {
   Title as CustomerTitle,
 } from "./CustomerUI";
 import * as SecureStore from "expo-secure-store";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import {
   AppState,
   Image,
@@ -79,6 +87,14 @@ export function NativeForm({
   feedbackResetKey?: number;
   collapsedFields?: string[];
 }) {
+  const [formOpen, setFormOpen] = useState(false),
+    focusedForm = useContext(FocusedFormContext);
+  const focusedAction =
+    /^(account\.(update|password|session)|address\.|privacy\.|schedule\.|cylinder\.|order\.|trip\.|bulk\.|manifest\.|fleet\.|dispatch\.|delivery\.|doorstep\.|service\.material\.|booking\.(assessment|transition|report|quote|work|completion|cash|safety|cancel|reschedule|feedback|refund|settlement|wallet|acknowledge))/.test(
+      action,
+    );
+  const { colors } = useTheme(),
+    sheetTitle = useContext(ScreenTitleContext);
   const [showOptionalDetails, setShowOptionalDetails] = useState(false);
   const [values, setValues] = useState<Record<string, any>>(() =>
       Object.fromEntries(
@@ -90,7 +106,9 @@ export function NativeForm({
     ),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
-  useEffect(() => { setMessage(""); }, [feedbackResetKey]);
+  useEffect(() => {
+    setMessage("");
+  }, [feedbackResetKey]);
   const [reviewed, setReviewed] = useState<Record<string, any> | null>(null);
   const [openOption, setOpenOption] = useState<string | null>(null);
   const [optionQuery, setOptionQuery] = useState("");
@@ -156,13 +174,39 @@ export function NativeForm({
       mounted.current = false;
     };
   }, []);
-  return (
+  const form = (
     <View style={s.card}>
-      <Text style={s.heading}>{title}</Text>
-      {!reviewed && collapsedFields.length > 0 && <Pressable accessibilityRole="button" accessibilityState={{ expanded: showOptionalDetails }} onPress={() => setShowOptionalDetails(v => !v)} style={{ minHeight: 48, justifyContent: "center" }}><Text>{showOptionalDetails ? "Hide delivery instructions" : "Add delivery instructions (optional)"}</Text></Pressable>}
+      {sheetTitle !== title && (
+        <Text
+          style={[
+            s.heading,
+            { color: colors.text, fontSize: 19, lineHeight: 25 },
+          ]}
+        >
+          {title}
+        </Text>
+      )}
+      {!reviewed && collapsedFields.length > 0 && (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityState={{ expanded: showOptionalDetails }}
+          onPress={() => setShowOptionalDetails((v) => !v)}
+          style={{ minHeight: 48, justifyContent: "center" }}
+        >
+          <Text>
+            {showOptionalDetails
+              ? "Hide delivery instructions"
+              : "Add delivery instructions (optional)"}
+          </Text>
+        </Pressable>
+      )}
       {!reviewed &&
         fields
-          .filter((f) => f.type !== "hidden" && (showOptionalDetails || !collapsedFields.includes(f.name)))
+          .filter(
+            (f) =>
+              f.type !== "hidden" &&
+              (showOptionalDetails || !collapsedFields.includes(f.name)),
+          )
           .map((f) => {
             const required = f.required ?? f.type !== "checkbox";
             return (
@@ -193,7 +237,10 @@ export function NativeForm({
                       </Text>
                     </Pressable>
                     {openOption === f.name && (
-                      <View style={{ gap: 6 }}>
+                      <ContextSheet
+                        title={f.label}
+                        onClose={() => setOpenOption(null)}
+                      >
                         {f.options.length > 8 && (
                           <TextInput
                             accessibilityLabel={
@@ -205,51 +252,33 @@ export function NativeForm({
                             onChangeText={setOptionQuery}
                           />
                         )}
-                        {f.options
-                          .filter(
-                            (o) =>
-                              !optionQuery ||
-                              o.label
-                                .toLowerCase()
-                                .includes(optionQuery.toLowerCase()),
-                          )
-                          .slice(0, 30)
-                          .map((o) => (
-                            <Pressable
-                              key={o.value}
-                              accessibilityRole="radio"
-                              accessibilityLabel={o.label}
-                              accessibilityState={{
-                                checked: values[f.name] === o.value,
-                              }}
-                              style={[
-                                s.button,
-                                {
-                                  backgroundColor:
-                                    values[f.name] === o.value
-                                      ? "#087a36"
-                                      : "#edf6e9",
-                                  minHeight: 44,
-                                },
-                              ]}
-                              onPress={() => {
-                                setValues({ ...values, [f.name]: o.value });
-                                setOpenOption(null);
-                                setOptionQuery("");
-                              }}
-                            >
-                              <Text
-                                style={{
-                                  color:
-                                    values[f.name] === o.value
-                                      ? "white"
-                                      : "#07592e",
+                        <NextList>
+                          {f.options
+                            .filter(
+                              (o) =>
+                                !optionQuery ||
+                                o.label
+                                  .toLowerCase()
+                                  .includes(optionQuery.toLowerCase()),
+                            )
+                            .slice(0, 30)
+                            .map((o) => (
+                              <NextRow
+                                key={o.value}
+                                title={o.label}
+                                icon={
+                                  values[f.name] === o.value
+                                    ? "check-circle-2"
+                                    : "package"
+                                }
+                                onPress={() => {
+                                  setValues({ ...values, [f.name]: o.value });
+                                  setOpenOption(null);
+                                  setOptionQuery("");
                                 }}
-                              >
-                                {o.label}
-                              </Text>
-                            </Pressable>
-                          ))}
+                              />
+                            ))}
+                        </NextList>
                         {f.options.filter(
                           (o) =>
                             !optionQuery ||
@@ -261,7 +290,7 @@ export function NativeForm({
                             Showing 30 choices. Search to narrow the list.
                           </Text>
                         )}
-                      </View>
+                      </ContextSheet>
                     )}
                   </View>
                 ) : f.type === "checkbox" ? (
@@ -304,10 +333,12 @@ export function NativeForm({
           {review(reviewed)}
           <Pressable
             accessibilityRole="button"
-            style={s.button}
+            style={[s.button, { backgroundColor: colors.button }]}
             onPress={() => setReviewed(null)}
           >
-            <Text style={s.buttonText}>Back to details</Text>
+            <Text style={[s.buttonText, { color: colors.onButton }]}>
+              Back to details
+            </Text>
           </Pressable>
         </View>
       )}
@@ -318,7 +349,7 @@ export function NativeForm({
       ) : null}
       {draftConflict && (
         <Pressable
-          style={s.button}
+          style={[s.button, { backgroundColor: colors.button }]}
           onPress={() => {
             setDraftConflict(false);
             setMessage(
@@ -326,14 +357,18 @@ export function NativeForm({
             );
           }}
         >
-          <Text style={s.buttonText}>
+          <Text style={[s.buttonText, { color: colors.onButton }]}>
             I have reviewed this draft against the current record
           </Text>
         </Pressable>
       )}
       <Pressable
         accessibilityRole="button"
-        style={[s.button, disabled && { opacity: 0.5 }]}
+        style={[
+          s.button,
+          { backgroundColor: colors.button },
+          disabled && { opacity: 0.5 },
+        ]}
         disabled={disabled || busy || !draftReady || draftConflict}
         onPress={async () => {
           if (submitting.current || disabled) return;
@@ -345,11 +380,28 @@ export function NativeForm({
             for (const f of fields.filter((field) => field.type !== "hidden")) {
               const required = f.required ?? f.type !== "checkbox";
               const value = data[f.name];
-              const empty = value === undefined || value === null ||
+              const empty =
+                value === undefined ||
+                value === null ||
                 (typeof value === "string" && value.trim() === "");
-              if (required && (empty || (f.type === "checkbox" && value !== true)))
-                throw new Error((f.options ? "Choose " : f.type === "checkbox" ? "Confirm " : "Enter ") + f.label + ".");
-              if (!empty && f.type === "number" && !Number.isFinite(Number(value)))
+              if (
+                required &&
+                (empty || (f.type === "checkbox" && value !== true))
+              )
+                throw new Error(
+                  (f.options
+                    ? "Choose "
+                    : f.type === "checkbox"
+                      ? "Confirm "
+                      : "Enter ") +
+                    f.label +
+                    ".",
+                );
+              if (
+                !empty &&
+                f.type === "number" &&
+                !Number.isFinite(Number(value))
+              )
                 throw new Error("Enter a valid number for " + f.label + ".");
             }
             for (const f of fields)
@@ -399,6 +451,7 @@ export function NativeForm({
             if (mounted.current) {
               setMessage(r.message ?? "Saved successfully.");
               onDone?.(r);
+              setFormOpen(false);
             }
           } catch (e: any) {
             if (mounted.current) setMessage(e.message);
@@ -408,7 +461,7 @@ export function NativeForm({
           }
         }}
       >
-        <Text style={s.buttonText}>
+        <Text style={[s.buttonText, { color: colors.onButton }]}>
           {busy
             ? review && !reviewed
               ? "Checking…"
@@ -422,6 +475,26 @@ export function NativeForm({
       </Pressable>
     </View>
   );
+  if (focusedAction && !focusedForm)
+    return (
+      <View style={{ gap: 8 }}>
+        <NextRow
+          title={title}
+          detail="Open a focused form"
+          icon="layers"
+          onPress={() => setFormOpen(true)}
+        />
+        {!formOpen && message && (
+          <Text accessibilityRole="status">{message}</Text>
+        )}
+        {formOpen && (
+          <ContextSheet title={title} onClose={() => setFormOpen(false)}>
+            {form}
+          </ContextSheet>
+        )}
+      </View>
+    );
+  return form;
 }
 export default function Workflows({
   api,
@@ -430,13 +503,18 @@ export default function Workflows({
   api: API;
   screen: string;
 }) {
-  const [data, setData] = useState<any>(null),
+  const cache = usePrivateReadCache(),
+    cached = cache?.get("workflow:" + screen);
+  const [data, setData] = useState<any>(() =>
+      cached && Date.now() - cached.at < 30000 ? cached.data : null,
+    ),
     [error, setError] = useState(""),
     [version, setVersion] = useState(0);
   const reload = () => setVersion((v) => v + 1);
   useEffect(() => {
     let active = true;
-    setData(null);
+    const cached = cache?.get("workflow:" + screen);
+    if (!cached || Date.now() - cached.at >= 30000) setData(null);
     setError("");
     const load = async () => {
       if (screen === "notifications") return api("me");
@@ -462,15 +540,21 @@ export default function Workflows({
     };
     load()
       .then((d) => {
-        if (active) setData(d);
+        if (active) {
+          cache?.set("workflow:" + screen, { data: d, at: Date.now() });
+          setData(d);
+        }
       })
       .catch((e) => {
-        if (active) setError(e.message);
+        if (active) {
+          cache?.delete("workflow:" + screen);
+          setError(e.message);
+        }
       });
     return () => {
       active = false;
     };
-  }, [screen, version]);
+  }, [screen, version, cache]);
   if (error)
     return (
       <View>
@@ -482,7 +566,7 @@ export default function Workflows({
         </Pressable>
       </View>
     );
-  if (!data) return <EasyGasLoader color="#087a36" />;
+  if (!data) return <Feedback loading />;
   if (screen === "notifications")
     return (
       <>
@@ -530,7 +614,8 @@ export default function Workflows({
           fields={[{ name: "email", label: "Account email", type: "email" }]}
         />
         <Text style={s.body}>
-          Open your reset link in EasyGas, or choose “Open an account link” on Sign In and paste the link from your email.
+          Open your reset link in EasyGas, or choose “Open an account link” on
+          Sign In and paste the link from your email.
         </Text>
       </>
     );
@@ -971,7 +1056,8 @@ export default function Workflows({
         </Text>
       ))}
       <Text style={s.body}>
-        Available funding methods and refund progress are shown in Wallet & Credit. Financial changes require server confirmation.
+        Available funding methods and refund progress are shown in Wallet &
+        Credit. Financial changes require server confirmation.
       </Text>
     </>
   );
@@ -1147,7 +1233,7 @@ export function MobileSupportInbox({
             )}
           </>
         ) : (
-          !detail.error && <EasyGasLoader />
+          !detail.error && <Feedback loading />
         )
       ) : (
         <>
@@ -1164,7 +1250,7 @@ export function MobileSupportInbox({
             setPage(1);
           })}
           {action("New request", () => setSheet("new"))}
-          {!list.data && !list.error && <EasyGasLoader />}
+          {!list.data && !list.error && <Feedback loading />}
           {list.data?.rows.length === 0 && (
             <CustomerCard>
               <CustomerTitle>
@@ -1377,20 +1463,22 @@ const s = StyleSheet.create({
     padding: 18,
     borderWidth: 1,
     borderColor: "#e2e8da",
-    borderRadius: 15,
+    borderRadius: 22,
     marginVertical: 10,
   },
   body: { fontSize: 15, lineHeight: 24, color: "#586954", marginVertical: 8 },
   label: { fontSize: 15, color: "#24361f", marginTop: 9, marginBottom: 6 },
   input: {
     borderWidth: 1,
-    borderRadius: 10,
-    padding: 13,
+    borderRadius: 14,
+    padding: 14,
+    minHeight: 52,
   },
   button: {
     backgroundColor: "#087a36",
     padding: 15,
-    borderRadius: 12,
+    borderRadius: 16,
+    minHeight: 50,
     alignItems: "center",
     marginTop: 15,
   },

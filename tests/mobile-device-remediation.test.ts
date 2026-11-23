@@ -18,7 +18,7 @@ hosts = hosts.replace(
   "export const useTheme=()=>({colors:{button:'#087a36',onButton:'#fff',surface:globalThis.__deviceTestDark?'#102b22':'#fff',text:globalThis.__deviceTestDark?'#f4faf6':'#10251c',border:'#ddd',overlay:'#0008'},dark:!!globalThis.__deviceTestDark});",
 );
 hosts +=
-  "\nexport const Feedback=Text,ContextSheet=View;export const Share={},Ionicons='Icon',useColorScheme=()=> 'dark';\n";
+  "\nexport const FocusedFormContext=React.createContext(false),ScreenTitleContext=React.createContext(null),usePrivateReadCache=()=>null;export const Feedback=Text,ContextSheet=View;export const Share={},Ionicons='Icon',useColorScheme=()=> 'dark';\n";
 await fs.writeFile(shim, hosts);
 await build({
   stdin: {
@@ -32,10 +32,12 @@ await build({
   platform: "node",
   format: "cjs",
   jsx: "automatic",
+  loader:{".png":"dataurl"},
   plugins: [
     {
       name: "native-hosts",
       setup(b) {
+        b.onResolve({filter:/^react-native-svg$/},()=>({path:path.resolve("tests/helpers/native-svg-host.tsx")}));
         b.onResolve({ filter: /^react(\/.*)?$/ }, (a) => ({
           path: req.resolve(a.path),
           external: true,
@@ -127,6 +129,7 @@ test("MDEV-REQUIRED: missing choices, numbers and consent fail before API while 
       { name: "locationConsent", label: "Location consent", type: "checkbox" },
     ],
   });
+  await press(t, "Trip");
   await press(t, "Continue");
   assert.match(text(t), /Choose Vehicle\./);
   assert.equal(calls.length, 0);

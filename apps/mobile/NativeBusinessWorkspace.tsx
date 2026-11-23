@@ -1,4 +1,15 @@
 import {
+  NextIntro,
+  NextText,
+  NextRow,
+  NextList,
+  NextField,
+  NextEmpty,
+  NextIcon,
+  NextButton,
+} from "./MobileNextUI";
+import { Feedback, usePrivateReadCache } from "./CustomerUI";
+import {
   nativeReportsForRole,
   nativeReportFilterKeys,
   nativeReportRequest,
@@ -281,9 +292,14 @@ export function NativeContractForm({
         const target = nativeActionRecordSources[action];
         const selectedCredit = action === "credit.decide" && record?.id;
         next.id = target
-          ? rawRows(await apiRef.current(selectedCredit
-              ? target[0] + "&q=" + encodeURIComponent(record.id)
-              : target[0]), target[1])
+          ? rawRows(
+              await apiRef.current(
+                selectedCredit
+                  ? target[0] + "&q=" + encodeURIComponent(record.id)
+                  : target[0],
+              ),
+              target[1],
+            )
           : action.endsWith(".create") ||
               [
                 "product.save",
@@ -296,7 +312,9 @@ export function NativeContractForm({
         if (selectedCredit) {
           const current = next.id.find((row: any) => row.id === record.id);
           if (!current)
-            throw new Error("Selected credit or refund is no longer available. Refresh the workspace.");
+            throw new Error(
+              "Selected credit or refund is no longer available. Refresh the workspace.",
+            );
           setBoundRecord(current);
         }
         if (action === "compatibility.review") {
@@ -567,7 +585,10 @@ export function NativeContractForm({
           fields={[
             { name: "password", label: "Current password", type: "password" },
           ]}
-          onDone={() => { setVerifyNeeded(false); setVerificationEpoch((n) => n + 1); }}
+          onDone={() => {
+            setVerifyNeeded(false);
+            setVerificationEpoch((n) => n + 1);
+          }}
         />
       )}
       <Copy>
@@ -655,10 +676,21 @@ export default function NativeBusinessWorkspace({
   const { colors } = useTheme(),
     apiRef = useRef(api);
   apiRef.current = api;
-  const [currentTab, setCurrentTab] = useState(""),
-    [data, setData] = useState<any>(null),
-    [allowed, setAllowed] = useState<string[]>([]),
-    [busy, setBusy] = useState(true),
+  const cache = usePrivateReadCache(),
+    cacheKey =
+      "workspaceLast:" +
+      user.id +
+      ":" +
+      moduleKey +
+      ":" +
+      JSON.stringify(scope);
+  const cached = cache?.get(cacheKey),
+    restored = cached && Date.now() - cached.at < 30000 ? cached.data : null;
+  const [view, setView] = useState("Overview");
+  const [currentTab, setCurrentTab] = useState(restored?.tab ?? ""),
+    [data, setData] = useState<any>(restored?.data ?? null),
+    [allowed, setAllowed] = useState<string[]>(restored?.allowed ?? []),
+    [busy, setBusy] = useState(!restored),
     [error, setError] = useState(""),
     [feedback, setFeedback] = useState(""),
     [query, setQuery] = useState(""),
@@ -701,6 +733,7 @@ export default function NativeBusinessWorkspace({
   }, [reportSheet]);
   const clear = useCallback(() => {
     generation.current++;
+    cache?.delete(cacheKey);
     setAllowed([]);
     setData(null);
     setSelected(null);
@@ -708,10 +741,17 @@ export default function NativeBusinessWorkspace({
     setReport(null);
     setBusy(false);
     setError("Your access changed. Return to your account and sign in again.");
-  }, []);
+  }, [cache, cacheKey]);
   const load = useCallback(async () => {
     const request = ++generation.current;
-    setBusy(true);
+    const previous = cache?.get(cacheKey);
+    const display =
+      previous &&
+      Date.now() - previous.at < 30000 &&
+      !query &&
+      page === 1 &&
+      !Object.keys(filters).length;
+    setBusy(!display);
     setError("");
     try {
       const nav = await apiRef.current("navigation");
@@ -769,6 +809,11 @@ export default function NativeBusinessWorkspace({
         const result = await apiRef.current(endpoint);
         if (request === generation.current && alive.current) {
           setData(result);
+          if (!query && page === 1 && !Object.keys(filters).length)
+            cache?.set(cacheKey, {
+              data: { data: result, allowed: permissions, tab },
+              at: Date.now(),
+            });
           session.current.confirmReadback();
         }
       } else setData(null);
@@ -797,8 +842,9 @@ export default function NativeBusinessWorkspace({
     setSelected(null);
     setAction(null);
     setReport(null);
-    setData(null);
-    setCurrentTab("");
+    setData(restored?.data ?? null);
+    setCurrentTab(restored?.tab ?? "");
+    setView("Overview");
     setPage(1);
     return () => {
       alive.current = false;
@@ -1104,201 +1150,341 @@ export default function NativeBusinessWorkspace({
   }
   return (
     <View style={{ gap: 14 }}>
-      <Title>{work?.title || "Workspaces"}</Title>
-      <Copy>
-        Current server records · permissions follow your signed-in account.
-      </Copy>
-      <View style={{ flexDirection: "row", gap: 10, flexWrap: "wrap" }}>
-        <Button label="Refresh records" secondary onPress={() => void load()} />
-        {work && (
-          <Button
-            label="All workspaces"
-            secondary
-            onPress={() => navigate("native-workspaces")}
+      <NextIntro
+        eyebrow={
+          work
+            ? user.role === "owner"
+              ? "Business owner"
+              : user.role === "manager"
+                ? "Service manager"
+                : "Inventory & finance"
+            : undefined
+        }
+        title={work?.title || "Everything you need.\nOne clear place."}
+        detail={
+          work
+            ? "Current records and the next appropriate action."
+            : "Only the workspaces available to your signed-in account."
+        }
+      />
+      {!!error && <Feedback error={error} retry={() => void load()} />}
+      {!!feedback && <Text accessibilityRole="status">{feedback}</Text>}
+      <Feedback loading={busy && !error} />
+      {!work && !busy && (
+        <>
+          <NextField
+            label="Search workspaces"
+            placeholder="Find a workspace or feature"
+            value={query}
+            onChange={setQuery}
           />
-        )}
-        <Button
-          label="Verify identity"
-          secondary
-          onPress={() => setReauth(true)}
-        />
-      </View>
-      {error && <Text accessibilityRole="alert">{error}</Text>}
-      {feedback && <Text accessibilityRole="status">{feedback}</Text>}
-      {busy && <EasyGasLoader label="Loading workspace" />}
-      {!work &&
-        !busy &&
-        visibleWorkspaces(user.role, allowed).map(([key, w]) => (
-          <Button
-            key={key}
-            label={w.title}
-            secondary
-            onPress={() => navigate("workspace:" + key)}
-          />
-        ))}
+          <NextList>
+            {visibleWorkspaces(user.role, allowed)
+              .filter(([key, w]) =>
+                (w.title + " " + workspaceActions(key, user.role).join(" "))
+                  .toLowerCase()
+                  .includes(query.toLowerCase()),
+              )
+              .map(([key, w]) => (
+                <NextRow
+                  key={key}
+                  title={w.title}
+                  detail="Records, actions and activity"
+                  icon="layers"
+                  onPress={() => navigate("workspace:" + key)}
+                />
+              ))}
+          </NextList>
+          <NextList>
+            {allowed.includes("orders") && (
+              <NextRow
+                title="Order management"
+                icon="package"
+                onPress={() => navigate("orders")}
+              />
+            )}
+            <NextRow
+              title="Support desk"
+              icon="message-circle"
+              onPress={() => navigate("conversations")}
+            />
+            {["owner", "finance"].includes(user.role) && (
+              <NextRow
+                title="Finance workspace"
+                icon="wallet"
+                onPress={() => navigate("finance-work")}
+              />
+            )}
+            <NextRow
+              title="Retail point of sale"
+              icon="receipt"
+              onPress={() => navigate("retail-pos")}
+            />
+            <NextRow
+              title="Global navigation and appearance"
+              icon="moon"
+              onPress={() => navigate("appearance")}
+            />
+          </NextList>
+        </>
+      )}
       {work && allowed.includes(work.access) && (
         <>
-          <ScrollView horizontal contentContainerStyle={{ gap: 8 }}>
-            {Object.keys(work.reads).map((t) => (
+          <View
+            accessibilityRole="tablist"
+            style={{
+              flexDirection: "row",
+              gap: 4,
+              padding: 4,
+              borderRadius: 15,
+              backgroundColor: colors.elevated,
+            }}
+          >
+            {["Overview", "Actions", "Activity"].map((label) => (
               <Pressable
-                key={t}
+                key={label}
                 accessibilityRole="tab"
-                accessibilityLabel={t}
-                accessibilityState={{ selected: tab === t }}
+                accessibilityLabel={label}
+                accessibilityState={{ selected: view === label }}
                 onPress={() => {
-                  setCurrentTab(t);
-                  setPage(1);
-                  setSelected(null);
+                  setView(label);
+                  if (label === "Activity") {
+                    const history = Object.keys(work.reads).find((t) =>
+                      /activity|history|movement|audit|decision|ledger/i.test(
+                        t,
+                      ),
+                    );
+                    if (history) setCurrentTab(history);
+                  }
                 }}
                 style={{
-                  padding: 12,
-                  borderRadius: 20,
-                  backgroundColor: tab === t ? colors.button : colors.surface,
+                  flex: 1,
+                  minHeight: 44,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 12,
+                  backgroundColor:
+                    view === label ? colors.surface : "transparent",
                 }}
               >
-                <Text
-                  style={{ color: tab === t ? colors.onButton : colors.text }}
+                <NextText
+                  kind="label"
+                  style={{ color: view === label ? colors.text : colors.muted }}
                 >
-                  {t}
-                </Text>
+                  {label}
+                </NextText>
               </Pressable>
             ))}
-          </ScrollView>
-          <TextInput
-            accessibilityLabel={"Search " + work.title}
-            value={query}
-            onChangeText={(value) => {
-              setQuery(value);
-              setPage(1);
-            }}
-            placeholder="Search records…"
-            style={{
-              borderWidth: 1,
-              borderColor: colors.border,
-              borderRadius: 12,
-              padding: 12,
-            }}
-          />
-          {moduleKey === "products" && user.role === "owner" && (
-            <Button
-              label="Product import preview"
-              secondary
-              onPress={() => setCataloguePreview(true)}
-            />
-          )}
-          {filterFields.length > 0 && (
-            <Button
-              label="Filters"
-              secondary
-              onPress={() => setFiltersOpen(true)}
-            />
-          )}
-          {["inventory", "testimonials", "rewards"].includes(
-            moduleKey || "",
-          ) && (
-            <Button
-              label={exportBusy ? "Preparing export…" : "Export filtered CSV"}
-              secondary
-              onPress={() => void exportWorkspace()}
-            />
-          )}
-          {moduleKey === "reports" && (
-            <Button
-              label="Generate report"
-              onPress={() => {
-                setReportKind("deliveries");
-                setReportSheet(true);
-              }}
-            />
-          )}
-          {actions.length > 0 && (
-            <Button label="Actions" onPress={() => setActionPicker(true)} />
-          )}
-          {rows.length
-            ? rows.map((r: any, i: number) => (
+          </View>
+          {view === "Actions" ? (
+            <>
+              <NextList>
+                {actions.map((a) => (
+                  <NextRow
+                    key={a}
+                    title={nativeActionLabels[a] || words(a)}
+                    detail="Open a focused form"
+                    icon="layers"
+                    onPress={() => void openAction(a)}
+                  />
+                ))}
+              </NextList>
+              <NextList>
+                {moduleKey === "products" && user.role === "owner" && (
+                  <NextRow
+                    title="Product import preview"
+                    icon="package"
+                    onPress={() => setCataloguePreview(true)}
+                  />
+                )}
+                {["inventory", "testimonials", "rewards"].includes(
+                  moduleKey || "",
+                ) && (
+                  <NextRow
+                    title={
+                      exportBusy ? "Preparing export…" : "Export filtered CSV"
+                    }
+                    icon="receipt"
+                    onPress={() => void exportWorkspace()}
+                  />
+                )}
+                {moduleKey === "reports" && (
+                  <NextRow
+                    title="Generate report"
+                    icon="receipt"
+                    onPress={() => {
+                      setReportKind("deliveries");
+                      setReportSheet(true);
+                    }}
+                  />
+                )}
+                <NextRow
+                  title="Verify identity"
+                  detail="Confirm your password for a sensitive action"
+                  icon="shield-check"
+                  onPress={() => setReauth(true)}
+                />
+                <NextRow
+                  title="Refresh records"
+                  icon="refresh-cw"
+                  onPress={() => void load()}
+                />
+                <NextRow
+                  title="All workspaces"
+                  icon="layers"
+                  onPress={() => navigate("native-workspaces")}
+                />
+              </NextList>
+            </>
+          ) : (
+            <>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ gap: 12 }}
+              >
+                {Object.keys(work.reads).map((t) => (
+                  <Pressable
+                    key={t}
+                    accessibilityRole="tab"
+                    accessibilityLabel={t}
+                    accessibilityState={{ selected: tab === t }}
+                    onPress={() => {
+                      setCurrentTab(t);
+                      setPage(1);
+                      setSelected(null);
+                    }}
+                    style={{
+                      paddingVertical: 12,
+                      paddingHorizontal: 15,
+                      minHeight: 44,
+                      borderRadius: 13,
+                      backgroundColor:
+                        tab === t ? colors.elevated : colors.surface,
+                    }}
+                  >
+                    <NextText
+                      kind="label"
+                      style={{
+                        color: tab === t ? colors.primary : colors.muted,
+                      }}
+                    >
+                      {t}
+                    </NextText>
+                  </Pressable>
+                ))}
+              </ScrollView>
+              <NextField
+                label={"Search " + work.title}
+                value={query}
+                onChange={(value) => {
+                  setQuery(value);
+                  setPage(1);
+                }}
+                placeholder="Search records…"
+              />
+              {filterFields.length > 0 && (
                 <Pressable
-                  key={r.id || r.key || i}
                   accessibilityRole="button"
-                  accessibilityLabel={"View " + title(r)}
-                  onPress={() => setSelected(r)}
+                  onPress={() => setFiltersOpen(true)}
+                  style={{
+                    minHeight: 44,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                    alignSelf: "flex-start",
+                  }}
                 >
-                  <Card>
-                    <Text style={{ fontWeight: "700", fontSize: 16 }}>
-                      {title(r)}
-                    </Text>
-                    <Copy>
-                      {words(
-                        String(r.status || r.state || r.kind || r.role || ""),
-                      )}
-                      {r.version != null ? " · Revision " + r.version : ""}
-                    </Copy>
-                    {r.available != null && (
-                      <Copy>{r.available} available</Copy>
-                    )}
-                  </Card>
+                  <NextIcon name="sliders-horizontal" />
+                  <NextText kind="label" style={{ color: colors.primary }}>
+                    Filters
+                  </NextText>
                 </Pressable>
-              ))
-            : !busy &&
-              !error && (
+              )}
+              {rows.length ? (
+                <NextList>
+                  {rows.map((r: any, i: number) => (
+                    <NextRow
+                      key={r.id || r.key || i}
+                      title={title(r)}
+                      detail={[
+                        words(
+                          String(r.status || r.state || r.kind || r.role || ""),
+                        ),
+                        r.version != null ? "Revision " + r.version : null,
+                        r.available != null ? r.available + " available" : null,
+                      ]
+                        .filter(Boolean)
+                        .join(" · ")}
+                      icon="package"
+                      onPress={() => setSelected(r)}
+                    />
+                  ))}
+                </NextList>
+              ) : (
+                !busy &&
+                !error && (
+                  <NextEmpty
+                    title="No matching records"
+                    detail="Adjust your filters or open an authorised action."
+                  />
+                )
+              )}
+              {tab === "Analytics" && data && !busy && (
+                <NativeRecord value={data} />
+              )}
+              <Copy>
+                {total} records
+                {pages > 1 ? " · Page " + page + " of " + pages : ""}
+              </Copy>
+              {pages > 1 && (
+                <View style={{ flexDirection: "row", gap: 12 }}>
+                  {page > 1 && (
+                    <Button
+                      label="Previous page"
+                      secondary
+                      onPress={() => setPage((p) => p - 1)}
+                    />
+                  )}
+                  {page < pages && (
+                    <Button
+                      label="Next page"
+                      secondary
+                      onPress={() => setPage((p) => p + 1)}
+                    />
+                  )}
+                </View>
+              )}
+              {report && (
                 <Card>
-                  <Title>No matching records</Title>
-                  <Copy>
-                    Adjust your filters or start an authorised action.
-                  </Copy>
+                  <Title>{report.report} report</Title>
+                  <NativeRecord
+                    value={{
+                      filters: report.filters,
+                      ignoredFilters: report.ignoredFilters,
+                      summary: report.summary,
+                    }}
+                  />
+                  <Copy>{report.rows.length} report rows</Copy>
+                  <NativeRecord value={report.rows} />
+                  <Button
+                    label="Share CSV"
+                    secondary
+                    onPress={() => void exportReport("csv")}
+                  />
+                  <Button
+                    label="Share Excel XML"
+                    secondary
+                    onPress={() => void exportReport("excel")}
+                  />
+                  <Button
+                    label="Share PDF"
+                    secondary
+                    onPress={() => void exportReport("print")}
+                  />
                 </Card>
               )}
-          {tab === "Analytics" && data && !busy && (
-            <NativeRecord value={data} />
-          )}
-          <Copy>
-            {total} records{pages > 1 ? " · Page " + page + " of " + pages : ""}
-          </Copy>
-          {pages > 1 && (
-            <View style={{ flexDirection: "row", gap: 12 }}>
-              {page > 1 && (
-                <Button
-                  label="Previous page"
-                  secondary
-                  onPress={() => setPage((p) => p - 1)}
-                />
-              )}
-              {page < pages && (
-                <Button
-                  label="Next page"
-                  secondary
-                  onPress={() => setPage((p) => p + 1)}
-                />
-              )}
-            </View>
-          )}
-          {report && (
-            <Card>
-              <Title>{report.report} report</Title>
-              <NativeRecord
-                value={{
-                  filters: report.filters,
-                  ignoredFilters: report.ignoredFilters,
-                  summary: report.summary,
-                }}
-              />
-              <Copy>{report.rows.length} report rows</Copy>
-              <NativeRecord value={report.rows} />
-              <Button
-                label="Share CSV"
-                secondary
-                onPress={() => void exportReport("csv")}
-              />
-              <Button
-                label="Share Excel XML"
-                secondary
-                onPress={() => void exportReport("excel")}
-              />
-              <Button
-                label="Share PDF"
-                secondary
-                onPress={() => void exportReport("print")}
-              />
-            </Card>
+            </>
           )}
         </>
       )}

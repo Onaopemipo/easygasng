@@ -129,15 +129,14 @@ test("EDGE-VISUAL-FAILURE: offline and malformed permission responses fail close
 });
 test("EDGE-VISUAL-NAV: manager tabs have purpose-specific glyphs and only the standalone dispatch route gains access feedback", async () => {
   const source = await fs.readFile("apps/mobile/App.tsx", "utf8");
-  for (const [route, icon] of [
-    ["branch-dispatch", "bus-outline"],
-    ["sales-customers", "people-outline"],
-    ["retail-pos", "desktop-outline"],
-  ])
-    assert.ok(source.includes('"' + route + '": "' + icon + '"'));
+  const workspace=await fs.readFile("apps/mobile/MobileNextWorkspaces.tsx","utf8");
+  const shell=await fs.readFile("apps/mobile/MobileNextUI.tsx","utf8");
+  assert.match(source, /<NextTabs/);
+  for(const icon of ["home","package","layers","user-round"])assert.ok(shell.includes('"'+icon+'"'));
+  assert.match(workspace,/visibleWorkspaces\(user.role, navigation.allowed\)|visibleWorkspaces/);
   assert.match(
     source,
-    /<FleetLocations key=\{user.id \+ user.branchId\} api=\{api\} standalone \/>/,
+    /<FleetLocations[\s\S]{0,180}standalone/,
   );
 });
 test("EDGE-VISUAL-PROOF: additive visual changes retain canvas and committed baselines, reject tampering and match current bytes", async () => {

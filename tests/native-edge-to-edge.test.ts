@@ -165,8 +165,9 @@ test("EDGE-ROOTS: shared role shells and auth/onboarding retain full-width conte
   }
   assert.match(await fs.readFile("apps/mobile/NativeDialog.tsx", "utf8"), /presentationStyle="overFullScreen"/);
   const driver = await fs.readFile("apps/mobile/DriverWorkspace.tsx", "utf8");
-  assert.match(driver, /paddingTop:\s*insets.top/);
-  assert.match(driver, /edges=\{\["left", "right", "bottom"\]\}/);
+  // Approved shared header now receives the default ScreenCanvas safe area.
+  assert.match(driver, /<NextHeader/);
+  assert.doesNotMatch(driver, /edges=\{\["left", "right", "bottom"\]\}/);
   for (const name of ["DriverSignIn", "TechnicianSignIn"])
     assert.match(
       await fs.readFile(`apps/mobile/${name}.tsx`, "utf8"),
@@ -193,7 +194,7 @@ test('EDGE-SOURCE-PROOF: reviewed source continuation rejects a mismatched prior
   const ux=JSON.parse(await fs.readFile('docs/mobile-ux-20261123/reviewed-source-changes.json','utf8'));
   const {reviewedNativeUxSourceHash}=await import('../scripts/lib/reviewed-native-ux-source.mjs');
   assert.deepEqual(Object.keys(review.files).sort(),nativeEdgeFiles);
-  for(const file of nativeEdgeFiles){assert.equal(await reviewedNativeEdgeSourceHash(file,review.baseline[file]),await reviewedNativeUxSourceHash(file,visual.files[file]??review.files[file]));assert.equal(createHash('sha256').update(await fs.readFile(file)).digest('hex'),ux.files[file]??visual.files[file]??review.files[file]);}
+  for(const file of nativeEdgeFiles){assert.equal(await reviewedNativeEdgeSourceHash(file,review.baseline[file]),await reviewedNativeUxSourceHash(file,visual.files[file]??review.files[file]));assert.equal(createHash('sha256').update(await fs.readFile(file)).digest('hex'),await reviewedNativeUxSourceHash(file,visual.files[file]??review.files[file]));}
   await assert.rejects(()=>reviewedNativeEdgeSourceHash(nativeEdgeFiles[0],'tampered'),/historical baseline/);
   assert.equal(await reviewedNativeEdgeSourceHash('apps/web/unchanged.tsx','retained'),'retained');
   assert.equal(createHash('sha256').update(await fs.readFile('apps/mobile/ScreenCanvas.tsx')).digest('hex'),visual.files['apps/mobile/ScreenCanvas.tsx']??review.newFiles['apps/mobile/ScreenCanvas.tsx']);

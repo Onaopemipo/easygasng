@@ -1,12 +1,14 @@
 /** Disposable loopback-only API for native acceptance. Never connects to an existing database. */
 import { createServer } from "node:http";
-import { writeFile } from "node:fs/promises";
+import { writeFile,mkdir } from "node:fs/promises";
 import { NextRequest } from "next/server";
 import { GET, POST } from "../apps/web/app/api/[action]/route";
 import { fixture } from "../tests/helpers/order-tracking-fixture";
 import { fixture as serviceFixture } from "../tests/helpers/service-fixture";
 import { hashPassword, id, issueSession } from "../apps/web/lib/auth";
 import { one } from "../apps/web/lib/db";
+const evidenceDirectory=process.env.NATIVE_ACCEPTANCE_EVIDENCE_DIR||"docs/mobile-device-acceptance/evidence";
+await mkdir(evidenceDirectory,{recursive:true});
 const port = Number(process.env.NATIVE_ACCEPTANCE_PORT || 3107);
 if (process.env.DATABASE_URL || process.env.NODE_ENV === "production")
   throw Error(
@@ -118,7 +120,7 @@ const evidence = {
   port,
 };
 await writeFile(
-  "docs/mobile-device-acceptance/evidence/fixture.json",
+  evidenceDirectory+"/fixture.json",
   JSON.stringify(evidence, null, 2) + "\n",
 );
 const server = createServer(async (req, res) => {
@@ -146,6 +148,11 @@ const server = createServer(async (req, res) => {
       ).rows;
       res.setHeader("content-type", "application/json");
       res.end(JSON.stringify({ refunds, balances, requests }));
+      return;
+    }
+    if (req.url === "/launch") {
+      res.setHeader("content-type", "text/html");
+      res.end('<html><meta name="viewport" content="width=device-width, initial-scale=1"><body><h1>EasyGas native acceptance</h1><p>Disposable synthetic QA only.</p><a style="font-size:24px" href="exp://127.0.0.1:8083">Open updated EasyGas in Expo Go</a></body></html>');
       return;
     }
     if (req.url === "/health") {
@@ -210,7 +217,7 @@ const server = createServer(async (req, res) => {
       ...(activeFault ? { fault: activeFault.mode } : {}),
     });
     await writeFile(
-      "docs/mobile-device-acceptance/evidence/api-requests.json",
+      evidenceDirectory+"/api-requests.json",
       JSON.stringify(requests, null, 2) + "\n",
     );
     if (activeFault?.mode === "after") {

@@ -1,35 +1,76 @@
-import { useCheckoutPayments, CheckoutWalletBalance } from "./CheckoutPayments";
-import { NativeHostedPayment } from "./HostedPayment";
-import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress, type CheckoutAddress } from "../../packages/business-rules/src/checkout-delivery";
-import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
-import { useCheckoutProfile } from "./useCheckoutProfile";
-import { EasyGasLoader } from "./EasyGasLoader";
-import {
-  deliveryCoveragePending,
-  hasConfirmedDeliveryCoverage,
-} from "../../packages/business-rules/src/delivery-coverage";
-import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
-import {
-  Card as CustomerCard,
-  Copy as CustomerCopy,
-  Title as CustomerTitle,
-} from "./CustomerUI";
-import { Ionicons } from "@expo/vector-icons";
-import { AppState } from "react-native";
-import { useTheme } from "./theme";
-import { NativeRewardSelector } from "./EasyRewards";
-import * as SecureStore from "expo-secure-store";
+import { ScreenTransition } from "./ScreenTransition";
+import { TextInput } from "./typography";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
-import { View, Pressable } from "./surfaces";
-import { FieldCaption, Text, TextInput } from "./typography";
-import { NativeForm } from "./Workflows";
+import { View, Pressable, AppState, Keyboard, Switch } from "react-native";
+import * as SecureStore from "expo-secure-store";
+import { randomUUID } from "expo-crypto";
+import { useTheme } from "./theme";
+import { useCheckoutProfile } from "./useCheckoutProfile";
+import {
+  checkoutAddresses,
+  checkoutDelivery,
+  defaultCheckoutAddress,
+} from "../../packages/business-rules/src/checkout-delivery";
 import {
   gasLine,
   nextGasQuantity,
   gasMoney as money,
 } from "../../packages/business-rules/src/gas-pricing";
-import { randomUUID } from "expo-crypto";
+import {
+  nativeCheckoutContact,
+  nativeCheckoutPayload,
+  nativeQuoteTotal,
+  sameNativeQuote,
+  validateNativeLines,
+} from "../../packages/business-rules/src/mobile-next-checkout";
+import {
+  hasConfirmedDeliveryCoverage,
+  deliveryCoveragePending,
+} from "../../packages/business-rules/src/delivery-coverage";
+import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
+import { useCheckoutPayments } from "./CheckoutPayments";
+import { NativeHostedPayment } from "./HostedPayment";
+import { NativeRewardSelector } from "./EasyRewards";
+import { Feedback } from "./CustomerUI";
+import { ContextSheet } from "./ContextSheet";
+import {
+  NextIntro,
+  NextText,
+  NextIcon,
+  NextButton,
+  NextCard,
+  NextNotice,
+  NextChoice,
+  NextField,
+  NextRow,
+  NextList,
+  NextStatus,
+  useNextDock,
+} from "./MobileNextUI";
+import MobileNextCalendar, { lagosDate } from "./MobileNextCalendar";
+import {
+  readCheckoutDraft,
+  saveCheckoutDraft,
+  clearCheckoutDraft,
+} from "./CustomerCheckoutDraft";
+
+type Props = {
+  api: (action: string, data?: any) => Promise<any>;
+  catalogue: any;
+  user: any;
+  cart: any[];
+  done: () => void;
+  onPlaced: (id: string) => void;
+  viewServices: () => void;
+  gasEnabled?: boolean;
+  fromCart?: boolean;
+  linked?: boolean;
+  onSignIn?: (draft: any) => void;
+  onStageChange?: (step: number) => void;
+  initialDraft?: any;
+  onLinkedRequests?: () => void;
+  backRef?: React.RefObject<(() => boolean) | null>;
+};
 export default function GasOrder({
   api,
   catalogue,
@@ -38,804 +79,1323 @@ export default function GasOrder({
   done,
   onPlaced,
   viewServices,
-}: {
-  api: (a: string, d?: any) => Promise<any>;
-  catalogue: any;
-  user: any;
-  cart: any[];
-  done: () => void;
-  onPlaced: (orderId: string) => void;
-  viewServices: () => void;
-}) {
-  const { colors } = useTheme();
-  const [quantityText, setQuantityText] = useState<Record<number, string>>({});
-  const [rewardSelection, setRewardSelection] = useState<any>({});
-  const [config, setConfig] = useState<any>(catalogue?.gas ?? null),
-    [lines, setLines] = useState([{ capacityKg: 12.5, kg: 0 }]),
-    [error, setError] = useState(""),
-    [storedQuote, setQuote] = useState<any>(null),
-    [key] = useState(() => randomUUID()),
+  gasEnabled = true,
+  fromCart = false,
+  linked = false,
+  onSignIn,
+  backRef,
+  initialDraft,
+  onLinkedRequests,
+  onStageChange,
+}: Props) {
+  const { colors } = useTheme(),
+    { profile, loading: loadingProfile } = useCheckoutProfile(api, user?.id);
+  const [step, setStep] = useState(gasEnabled ? 0 : 1),
+    [config, setConfig] = useState<any>(catalogue?.gas),
+    [lines, setLines] = useState(() => {
+      const existing = fromCart
+        ? cart.flatMap((item) => {
+            const p = catalogue?.products?.find(
+              (p: any) => p.id === item.productId,
+            );
+            return p?.category === "Gas refills"
+              ? Array.from({ length: item.quantity }, () => ({
+                  capacityKg: Number(p.size_kg),
+                  kg: Number(p.size_kg),
+                }))
+              : [];
+          })
+        : [];
+      return existing.length ? existing : [{ capacityKg: 12.5, kg: 6 }];
+    }),
+    [contact, setContact] = useState<any>({
+      name: user?.name || "",
+      phone: "",
+      street: "",
+      building: "",
+      landmark: "",
+      directions: "",
+    }),
+    [locationId, setLocationId] = useState(""),
+    [date, setDate] = useState(""),
+    [window, setWindow] = useState(""),
+    [method, setMethod] = useState("card"),
+    [quote, setQuote] = useState<any>(null),
     [order, setOrder] = useState<any>(null),
     [appointments, setAppointments] = useState<any[]>([]),
-    [includeAppointments, setIncludeAppointments] = useState(false),
-    [locationId, setLocationId] = useState(""),
-    [picked, setPicked] = useState<CheckoutAddress>();
-  const { profile, loading: loadingDelivery } = useCheckoutProfile(api, user?.id);
-  const saved = checkoutAddresses(profile);
-  const deliveryEdited = useRef(false);
-  const recipient = checkoutDelivery(profile, picked, user?.name);
-  const [picker, setPicker] = useState<string | null>(null);
-  const [street, setStreet] = useState("");
-  const [catalogueRevision, refreshCatalogue] = useState(0);
-  const [pricingBranch, setPricingBranch] = useState<string | null>(null);
-  const [pricingFailed, setPricingFailed] = useState<string | null>(null);
-  const [loadingQuote, setLoadingQuote] = useState(false);
-  const quoteLock = useRef(false);
-  const [showGuide, setShowGuide] = useState(false);
-  const selectedArea = config?.locations?.find((l: any) => l.id === locationId);
-  const selectedBranch = selectedArea?.branch_id;
-  const pendingCoverage =
-    selectedArea && !hasConfirmedDeliveryCoverage(selectedArea.coverage);
-  const inputKey = JSON.stringify([
+    [includeAppointments, setIncludeAppointments] = useState(linked),
+    [rewardSelection, setRewardSelection] = useState<any>({}),
+    [optional, setOptional] = useState(false),
+    [picker, setPicker] = useState<string | null>(null),
+    [error, setError] = useState(""),
+    [busy, setBusy] = useState(false),
+    [pricingReady, setPricingReady] = useState(false),
+    [revision, reload] = useState(0),
+    [storageReady, setStorageReady] = useState(!user),
+    [pending, setPending] = useState<any>(null),
+    [saveDetails, setSaveDetails] = useState(false),
+    [saveNote, setSaveNote] = useState(""),
+    [servicePending, setServicePending] = useState(false);
+  const completed = useRef(false);
+  const lock = useRef(false),
+    alive = useRef(true),
+    key = useRef(randomUUID()),
+    edited = useRef(false),
+    restored = useRef(false),
+    journal = useRef<any>(null),
+    apiRef = useRef(api);
+  apiRef.current = api;
+  const area = config?.locations?.find((a: any) => a.id === locationId),
+    branch = area?.branch_id ?? "lagos",
+    payments = useCheckoutPayments(api, user?.id, branch, !!user && !order);
+  const physical = cart.filter(
+    (i) =>
+      catalogue?.products?.find((p: any) => p.id === i.productId)?.category !==
+      "Gas refills",
+  );
+  const fingerprint = JSON.stringify([
+      gasEnabled
+        ? lines.map((l) => ({
+            kg: Number(l.kg),
+            capacityKg: Number(l.capacityKg),
+          }))
+        : [],
+      physical,
+      locationId,
+    ]),
+    currentFingerprint = useRef(fingerprint);
+  currentFingerprint.current = fingerprint;
+  const ready =
+    storageReady && pricingReady && (!gasEnabled || config?.policy) && !busy;
+  const stateRef = useRef<any>(null);
+  stateRef.current = {
+    step,
     lines,
-    cart,
+    contact,
     locationId,
-    street,
-    picked?.id,
+    date,
+    window,
+    method,
+    optional,
+    key: key.current,
     includeAppointments,
-    catalogueRevision,
-  ]);
-  const latestInput = useRef(inputKey);
-  latestInput.current = inputKey;
-  const quote = storedQuote?.inputKey === inputKey ? storedQuote : null;
-  const requestedBranch = selectedBranch ?? "lagos";
-  const payments = useCheckoutPayments(api, user?.id, requestedBranch);
+    linked,
+    rewardSelection,
+    saveDetails,
+  };
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", (state) => {
-      if (state === "active") refreshCatalogue((n) => n + 1);
-    });
-    return () => subscription.remove();
+    alive.current = true;
+    return () => {
+      alive.current = false;
+    };
   }, []);
+  const stageCallback = useRef(onStageChange);
+  stageCallback.current = onStageChange;
+  useEffect(() => stageCallback.current?.(step), [step]);
   useEffect(() => {
+    if (!backRef) return;
+    backRef.current = () => {
+      if (busy || pending) return true;
+      if (order) return false;
+      if (step > (gasEnabled ? 0 : 1)) {
+        setStep((s) => s - 1);
+        return true;
+      }
+      return false;
+    };
+    return () => {
+      backRef.current = null;
+    };
+  }, [step, order, busy, pending]);
+  useEffect(() => {
+    if (!user?.id) {
+      setStorageReady(true);
+      return;
+    }
     let live = true;
-    setPricingBranch(null);
-    setPricingFailed(null);
-    setQuote(null);
-    api("gas.catalogue?branchId=" + encodeURIComponent(requestedBranch))
-      .then((value) => {
+    setStorageReady(false);
+    readCheckoutDraft(user.id)
+      .then((saved) => {
         if (!live) return;
-        setConfig(value);
-        setPricingBranch(requestedBranch);
-        setLines((current) =>
-          current.map((line) => {
-            const capacities = value.policy?.capacitiesKg ?? [];
-            return capacities.length && !capacities.includes(line.capacityKg)
-              ? { ...line, capacityKg: capacities[0] }
-              : line;
-          }),
-        );
+        const draft = saved?.draft ?? initialDraft;
+        if (draft && draft.gasEnabled === gasEnabled) {
+          const d = draft;
+          restored.current = true;
+          edited.current = true;
+          setLines(d.lines);
+          setStep(Math.min(1, d.step ?? 1));
+          setContact(d.contact);
+          setLocationId(d.locationId);
+          setDate(d.date);
+          setWindow(d.window);
+          setMethod(d.method);
+          setIncludeAppointments(
+            d.linked === linked ? d.includeAppointments : linked,
+          );
+          setRewardSelection(d.rewardSelection || {});
+          key.current = d.key || key.current;
+        }
+        if (
+          saved?.pending?.action === "checkout.mixed" &&
+          !saved.pending.payload.products
+        ) {
+          setServicePending(true);
+          return;
+        }
+        if (saved?.pending) {
+          journal.current = saved.pending;
+          setPending(saved.pending);
+          setStep(2);
+        }
+        if (saved?.order) {
+          completed.current = true;
+          setOrder(saved.order);
+        }
+        setStorageReady(true);
       })
       .catch((e) => {
-        if (live) {
-          setPricingFailed(requestedBranch);
-          setError(e.message);
-        }
+        if (live)
+          setError(
+            e.message +
+              " Your saved checkout has not been discarded. Open Orders before starting another request.",
+          );
       });
     return () => {
       live = false;
     };
-  }, [requestedBranch, catalogueRevision]);
+  }, [user?.id]);
   useEffect(() => {
-    if (user)
-      SecureStore.getItemAsync("easygas.serviceDrafts." + user.id)
-        .then((raw) =>
-          setAppointments(
-            JSON.parse(raw ?? "[]").filter((a: any) => !a.bundleId),
-          ),
-        )
-        .catch(() => {});
-  }, [user]);
+    if (!user?.id || !storageReady || order || pending) return;
+    const timer = setTimeout(
+      () =>
+        (lock.current || journal.current || completed.current
+          ? Promise.resolve()
+          : saveCheckoutDraft({
+              userId: user.id,
+              draft: { ...stateRef.current, gasEnabled },
+            })
+        ).catch((e) => {
+          if (alive.current)
+            setError("Could not save this checkout securely: " + e.message);
+        }),
+      350,
+    );
+    return () => clearTimeout(timer);
+  }, [
+    user?.id,
+    storageReady,
+    order,
+    pending,
+    JSON.stringify(stateRef.current),
+  ]);
   useEffect(() => {
-    if (!profile || deliveryEdited.current) return;
-    const primary = defaultCheckoutAddress(checkoutAddresses(profile));
-    if (primary) {
-      setPicked(primary);
-      setStreet(primary.street);
-      setLocationId(primary.location_id ?? "");
-    }
+    if (!profile || edited.current || restored.current) return;
+    const saved = defaultCheckoutAddress(checkoutAddresses(profile)),
+      d = checkoutDelivery(profile, saved, user?.name);
+    setContact({ ...d });
+    setLocationId(d.locationId || "");
   }, [profile]);
-  if (!config)
-    return error ? (
-      <View>
-        <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>
-        <Pressable
-          accessibilityRole="button"
-          onPress={() => {
-            setError("");
-            refreshCatalogue((n) => n + 1);
-          }}
-        >
-          <Text>Retry gas prices</Text>
-        </Pressable>
-      </View>
-    ) : (
-      <EasyGasLoader variant="section" label="Loading gas prices" />
-    );
-  const capacities: number[] = config.policy?.capacitiesKg ?? [];
-  const pricingReady = pricingBranch === requestedBranch;
-  const pricingLoading = !pricingReady && pricingFailed !== requestedBranch;
-  const feeReady =
-    Number.isSafeInteger(config.deliveryKobo) &&
-    config.deliveryKobo >= 0 &&
-    config.feeVersion != null;
-  const physical = cart.filter(
-    (i) =>
-      catalogue.products.find((p: any) => p.id === i.productId)?.category !==
-      "Gas refills",
-  );
-  const extra = physical.reduce(
-    (n, i) =>
-      n +
-      Number(
-        catalogue.products.find((p: any) => p.id === i.productId)?.price_kobo ??
-          0,
-      ) *
-        i.quantity,
-    0,
-  );
-  const ready =
-    config.policy &&
-    ["minimumKg", "maximumKg", "incrementKg", "precision"].every(
-      (k) => config.policy[k] != null,
-    );
-  let subtotal = 0,
+  useEffect(() => {
+    if (!user) return;
+    let live = true;
+    SecureStore.getItemAsync("easygas.serviceDrafts." + user.id)
+      .then((raw) => {
+        if (live) setAppointments(JSON.parse(raw || "[]").slice(0, 5));
+      })
+      .catch(() => {
+        if (live)
+          setError(
+            "Saved service requests could not be read. They have not been discarded.",
+          );
+      });
+    return () => {
+      live = false;
+    };
+  }, [user?.id]);
+  useEffect(() => {
+    if (order || pending) return;
+    let live = true;
+    setPricingReady(false);
+    setQuote(null);
+    apiRef
+      .current("gas.catalogue?branchId=" + encodeURIComponent(branch))
+      .then((c) => {
+        if (!live) return;
+        setConfig(c);
+        setPricingReady(true);
+        if (!locationId && c.locations?.length === 1 && !edited.current)
+          setLocationId(c.locations[0].id);
+        // Keep the customer’s quantity when policy/pricing changes; validation
+        // explains the exact issue instead of silently replacing it with zero.
+      })
+      .catch((e) => {
+        if (live) setError(friendlyMessage(e.message));
+      });
+    return () => {
+      live = false;
+    };
+  }, [branch, revision, !!order, !!pending]);
+  useEffect(() => {
+    if (order || pending) return;
+    const sub = AppState.addEventListener("change", (s) => {
+      if (s === "active") reload((n) => n + 1);
+    });
+    return () => sub.remove();
+  }, [order, pending]);
+  let preview: number | undefined,
     quantityError = "";
   try {
-    subtotal = lines.reduce(
-      (n, l, i) =>
-        n +
-        gasLine(
-          quantityText[i] ?? l.kg,
-          l.capacityKg,
-          config.priceKobo,
-          config.policy,
-        ).subtotalKobo,
-      0,
-    );
+    const gas = gasEnabled
+      ? validateNativeLines(lines, config?.priceKobo, config?.policy).reduce(
+          (n, l) => n + l.subtotalKobo,
+          0,
+        )
+      : 0;
+    const extras = physical.reduce((n, i) => {
+      const p = catalogue.products.find((p: any) => p.id === i.productId);
+      if (!p?.price_kobo) throw Error("A product price is unavailable.");
+      return n + Number(p.price_kobo) * i.quantity;
+    }, 0);
+    if (Number.isSafeInteger(config?.deliveryKobo))
+      preview = gas + extras + config.deliveryKobo;
   } catch (e: any) {
     quantityError = e.message;
   }
-  const button = (
-    label: string,
-    press: () => void,
-    disabled = false,
-    full = false,
-  ) => (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityState={{ disabled: disabled || loadingQuote }}
-      disabled={disabled || loadingQuote}
-      style={[
-        s.button,
-        {
-          backgroundColor: colors.button,
-          opacity: disabled || loadingQuote ? 0.55 : 1,
-        },
-        full && s.primaryButton,
-      ]}
-      onPress={press}
-    >
-      <Text preserveColor style={{ color: colors.onButton }}>
-        {label}
-      </Text>
-    </Pressable>
-  );
-  const update = (i: number, key: string, value: number, raw?: string) => {
-    if (key === "kg")
-      setQuantityText((current) => ({
-        ...current,
-        [i]: raw ?? String(value),
-      }));
-    setLines(lines.map((l, n) => (n === i ? { ...l, [key]: value } : l)));
+  function patchContact(field: string, value: string) {
+    edited.current = true;
+    setContact((c: any) => ({ ...c, [field]: value }));
+  }
+  function updateLine(index: number, values: any) {
+    setLines((l) =>
+      l.map((line, i) => (i === index ? { ...line, ...values } : line)),
+    );
     setQuote(null);
-  };
+  }
+  async function review() {
+    if (lock.current) return;
+    if (!user) {
+      onSignIn?.({ ...stateRef.current, gasEnabled });
+      return;
+    }
+    setError("");
+    try {
+      nativeCheckoutContact(contact);
+      if (!area || !hasConfirmedDeliveryCoverage(area.coverage))
+        throw Error(
+          area ? deliveryCoveragePending : "Choose an available delivery area.",
+        );
+      if (!date || date < lagosDate() || !window)
+        throw Error(
+          "Choose today or a future delivery date and a time window.",
+        );
+      if (gasEnabled)
+        validateNativeLines(lines, config.priceKobo, config.policy);
+      if (!gasEnabled && !physical.length && !appointments.length)
+        throw Error("Add a product or service before checkout.");
+      lock.current = true;
+      setBusy(true);
+      const input = fingerprint;
+      const result = await apiRef.current("gas.quote", {
+        lines: gasEnabled
+          ? lines.map((l) => ({
+              kg: Number(l.kg),
+              capacityKg: Number(l.capacityKg),
+            }))
+          : [],
+        items: physical,
+        branchId: branch,
+        locationId,
+      });
+      if (!alive.current || input !== currentFingerprint.current) return;
+      setQuote({ ...result, inputKey: input });
+      Keyboard.dismiss();
+      setStep(2);
+    } catch (e: any) {
+      if (alive.current) setError(friendlyMessage(e.message));
+    } finally {
+      lock.current = false;
+      if (alive.current) setBusy(false);
+    }
+  }
+  async function confirm() {
+    if (lock.current || !user) return;
+    lock.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      let request = journal.current;
+      if (!request) {
+        if (!quote || quote.inputKey !== fingerprint)
+          throw Error("Review the current order before confirming.");
+        if (!payments.data?.methods.includes(method))
+          throw Error("Choose an available payment method.");
+        const latest = await apiRef.current("gas.quote", {
+          lines: gasEnabled
+            ? lines.map((l) => ({
+                kg: Number(l.kg),
+                capacityKg: Number(l.capacityKg),
+              }))
+            : [],
+          items: physical,
+          branchId: branch,
+          locationId,
+        });
+        if (!sameNativeQuote(quote, latest)) {
+          setQuote({ ...latest, inputKey: fingerprint });
+          throw Error(
+            "The quotation changed. Review the revised amount before confirming.",
+          );
+        }
+        const payload = nativeCheckoutPayload({
+          lines: gasEnabled
+            ? lines.map((l) => ({
+                kg: Number(l.kg),
+                capacityKg: Number(l.capacityKg),
+              }))
+            : [],
+          items: physical,
+          contact,
+          area,
+          date,
+          window,
+          paymentMethod: method,
+          quote: latest,
+          key: key.current,
+          rewardSelection,
+        });
+        request =
+          includeAppointments && appointments.length
+            ? {
+                action: "checkout.mixed",
+                payload: {
+                  products: payload,
+                  appointments: appointments.map((a) => a.request),
+                  idempotencyKey: key.current,
+                  ...(appointments[0]?.bundleId
+                    ? {
+                        bundleId: appointments[0].bundleId,
+                        bundleVersion: appointments[0].bundleVersion,
+                        bundleTotalKobo: appointments[0].bundleTotalKobo,
+                      }
+                    : {}),
+                },
+              }
+            : { action: "checkout", payload };
+        await saveCheckoutDraft({
+          userId: user.id,
+          draft: { ...stateRef.current, gasEnabled },
+          pending: request,
+        });
+        journal.current = request;
+        setPending(request);
+      }
+      const response = await apiRef.current(request.action, request.payload);
+      const raw = response.order ?? response,
+        made = response.order
+          ? {
+              ...raw,
+              total_kobo: raw.totalKobo,
+              payment_status: raw.paymentStatus,
+            }
+          : raw;
+      if (!made?.id)
+        throw Error(
+          "The server response needs review. Your original request has been retained.",
+        );
+      await saveCheckoutDraft({ userId: user.id, order: made });
+      if (!alive.current) return;
+      completed.current = true;
+      setOrder(made);
+      setPending(null);
+      journal.current = null;
+      if (request.action === "checkout.mixed")
+        await SecureStore.deleteItemAsync("easygas.serviceDrafts." + user.id);
+      onPlaced(made.id);
+      if (saveDetails) {
+        try {
+          const offer = await apiRef.current("account.checkout-details", {
+            orderId: made.id,
+          });
+          if (offer.phone || offer.address)
+            await apiRef.current("account.checkout-details", {
+              orderId: made.id,
+              save: {
+                phone: !!offer.phone,
+                address: !!offer.address,
+                version: offer.version,
+              },
+            });
+        } catch {
+          setSaveNote(
+            "Your order is saved. Update your preferred delivery details in Account.",
+          );
+        }
+      }
+    } catch (e: any) {
+      if (!alive.current) return;
+      if (Number.isInteger(e.status) && e.status < 500 && journal.current) {
+        journal.current = null;
+        setPending(null);
+        key.current = randomUUID();
+        await saveCheckoutDraft({
+          userId: user.id,
+          draft: { ...stateRef.current, gasEnabled },
+        });
+      }
+      setError(
+        friendlyMessage(e.message) +
+          (journal.current
+            ? " Your order may already be saved. Retry the same request or check Orders; do not start another order."
+            : ""),
+      );
+    } finally {
+      lock.current = false;
+      if (alive.current) setBusy(false);
+    }
+  }
+  async function finish() {
+    if (user) await clearCheckoutDraft(user.id).catch(() => {});
+    done();
+  }
+  const stageLabels = gasEnabled
+    ? ["Refill", "Delivery", "Review"]
+    : ["Items", "Delivery", "Review"];
+  const usableQuote = quote?.inputKey === fingerprint ? quote : null;
+  useNextDock(
+    order || servicePending
+      ? null
+      : {
+          total: usableQuote
+            ? money(nativeQuoteTotal(usableQuote))
+            : preview !== undefined
+              ? money(preview)
+              : undefined,
+          label: busy
+            ? "Please wait…"
+            : pending
+              ? "Retry saved request"
+              : step === 0
+                ? "Delivery details"
+                : step === 1
+                  ? "Review order"
+                  : "Confirm order",
+          disabled:
+            busy ||
+            !storageReady ||
+            (!pending &&
+              (!ready ||
+                (step === 0 && !!quantityError) ||
+                (step === 2 &&
+                  (!usableQuote || !payments.data?.methods.includes(method))))),
+          onPress: () => {
+            if (pending) void confirm();
+            else if (step === 0) {
+              setError("");
+              Keyboard.dismiss();
+              setStep(1);
+            } else if (step === 1) void review();
+            else void confirm();
+          },
+        },
+  );
+  if (servicePending)
+    return (
+      <View style={{ gap: 18 }}>
+        <NextNotice>
+          You have a saved appointment request to recover.
+        </NextNotice>
+        <NextButton
+          label="View linked requests"
+          onPress={() => onLinkedRequests?.()}
+        />
+      </View>
+    );
   if (order)
     return (
-      <View>
-        <Text style={s.title}>Order {order.reference}</Text>
-        <Text>
-          {money(Number(order.total_kobo))} · Payment {order.payment_status}
-        </Text>
-        {order.payment_method === "card" && order.payment_status !== "verified" && <NativeHostedPayment api={api} userId={user.id} purpose="order" orderId={order.id} />}
-        <Text>Verified cylinder inspection is required before dispatch.</Text>
-        {button("View my orders", done)}
+      <View style={{ gap: 18 }}>
+        {order.payment_method === "card" &&
+        order.payment_status !== "verified" ? (
+          <>
+            <NextIntro
+              title="One last step."
+              detail="Your order is saved. Review the exact amount before opening secure payment."
+            />
+            <NativeHostedPayment
+              api={api}
+              userId={user.id}
+              purpose="order"
+              orderId={order.id}
+              autoReview
+              onPaid={() =>
+                setOrder((o: any) => ({ ...o, payment_status: "verified" }))
+              }
+            />
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => void finish()}
+              style={{
+                minHeight: 48,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <NextText kind="label" style={{ color: colors.primary }}>
+                View saved order
+              </NextText>
+            </Pressable>
+          </>
+        ) : (
+          <>
+            <View style={{ paddingTop: 24, alignItems: "center", gap: 15 }}>
+              <NextIcon name="check-circle-2" size={62} />
+              <NextText kind="eyebrow" style={{ color: colors.primary }}>
+                {order.payment_status === "verified"
+                  ? "PAYMENT CONFIRMED"
+                  : "ORDER SAVED"}
+              </NextText>
+              <NextText kind="title" style={{ textAlign: "center" }}>
+                You’re all set.
+              </NextText>
+              <NextText style={{ color: colors.muted, textAlign: "center" }}>
+                We’ve received your order.{"\n"}You’ll see every update right
+                here.
+              </NextText>
+            </View>
+            <NextCard>
+              <NextText kind="heading">{order.reference}</NextText>
+              <NextStatus value={order.status || "placed"} />
+              <NextText>Order total {money(order.total_kobo)}</NextText>
+              <NextText style={{ color: colors.muted }}>
+                {order.address?.street || contact.street}
+                {"\n"}
+                {order.address?.zone || area?.name}
+              </NextText>
+            </NextCard>
+            <NextText kind="small" style={{ color: colors.muted }}>
+              We’ll confirm delivery coverage and cylinder eligibility before
+              dispatch.
+            </NextText>
+            {saveNote && <NextNotice>{saveNote}</NextNotice>}
+            <NextButton
+              label="Track your order"
+              onPress={() => void finish()}
+            />
+          </>
+        )}
+        {!!error && <NextNotice error>{error}</NextNotice>}
       </View>
     );
   return (
-    <View>
-      <View
-        style={[
-          s.card,
-          { backgroundColor: colors.surface, borderColor: colors.border },
-          quote && { display: "none" },
-        ]}
-      >
-        <View style={s.row}>
-          <Ionicons name="flame-outline" size={26} color={colors.primary} />
-          <View style={{ flex: 1 }}>
-            <CustomerTitle>Order Cooking Gas</CustomerTitle>
-            <CustomerCopy>Quick, secure and home delivery</CustomerCopy>
-          </View>
-        </View>
-        <View style={[s.priceStrip, { backgroundColor: colors.elevated }]}>
-          <View style={s.priceCell}>
-            <Ionicons
-              name="pricetag-outline"
-              size={18}
-              color={colors.primary}
-            />
-            <View style={{ flex: 1 }}>
-              {pricingLoading ? <EasyGasLoader size="xs" label="Loading gas price" /> : <Text>
-                {pricingReady && config.priceKobo > 0
-                  ? money(config.priceKobo) + "/kg"
-                  : "Unavailable"}
-              </Text>}
-              <CustomerCopy>Gas price</CustomerCopy>
-            </View>
-          </View>
-          <View style={s.priceCell}>
-            <Ionicons name="car-outline" size={18} color={colors.primary} />
-            <View style={{ flex: 1 }}>
-              {pricingLoading ? <EasyGasLoader size="xs" label="Loading delivery fee" /> : <Text>
-                {pricingReady && feeReady
-                  ? money(config.deliveryKobo)
-                  : "Unavailable"}
-              </Text>}
-              <CustomerCopy>Flat delivery</CustomerCopy>
-            </View>
-          </View>
-        </View>
-        {!ready && (
-          <Text>Ordering opens once gas quantity limits are configured.</Text>
-        )}
-        {lines.map((l, i) => {
-          const label =
-            lines.length > 1
-              ? `Cylinder ${i + 1} capacity`
-              : "Cylinder capacity";
-          const field = `capacity-${i}`;
-          const raw = quantityText[i] ?? (l.kg ? String(l.kg) : "");
-          return (
-            <View key={i} style={{ gap: 5, marginBottom: 10 }}>
-              <FieldCaption required={true}>{label}</FieldCaption>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={`${label}, required, ${l.capacityKg} kg`}
-                accessibilityState={{ expanded: picker === field }}
-                disabled={loadingQuote || !capacities.length}
-                style={[
-                  s.control,
-                  { backgroundColor: colors.input, borderColor: colors.border },
-                ]}
-                onPress={() => setPicker(picker === field ? null : field)}
-              >
-                <Text style={{ flex: 1 }}>
-                  {capacities.length ? l.capacityKg + " kg" : "Unavailable"}
-                </Text>
-                <Ionicons
-                  name="chevron-down"
-                  size={18}
-                  color={colors.primary}
-                />
-              </Pressable>
-              {picker === field &&
-                capacities.map((c) => (
-                  <Pressable
-                    key={c}
-                    accessibilityRole="radio"
-                    accessibilityState={{ selected: l.capacityKg === c }}
-                    disabled={loadingQuote}
-                    style={[
-                      s.control,
-                      {
-                        borderColor: colors.border,
-                        backgroundColor:
-                          l.capacityKg === c ? colors.elevated : colors.surface,
-                      },
-                    ]}
-                    onPress={() => {
-                      update(i, "capacityKg", c);
-                      setPicker(null);
-                    }}
-                  >
-                    <Text>{c} kg</Text>
-                  </Pressable>
-                ))}
-              <FieldCaption required={true}>Gas quantity (kg)</FieldCaption>
-              <View
-                style={[
-                  s.stepper,
-                  { borderColor: colors.border, backgroundColor: colors.input },
-                ]}
-              >
-                {([-1, 0, 1] as const).map((direction) => {
-                  if (direction === 0)
-                    return (
-                      <TextInput
-                        key={0}
-                        accessibilityLabel={`Cylinder ${i + 1} gas kilograms`}
-                        style={s.quantity}
-                        keyboardType="decimal-pad"
-                        editable={!loadingQuote}
-                        maxLength={12}
-                        placeholder="0"
-                        value={raw}
-                        onChangeText={(v) => update(i, "kg", Number(v), v)}
-                      />
-                    );
-                  const next = nextGasQuantity(
-                    raw,
-                    direction,
-                    l.capacityKg,
-                    config.policy,
-                  );
-                  return (
-                    <Pressable
-                      key={direction}
-                      accessibilityRole="button"
-                      accessibilityLabel={
-                        direction < 0
-                          ? "Decrease gas quantity"
-                          : "Increase gas quantity"
-                      }
-                      disabled={loadingQuote || next === null}
-                      style={[
-                        s.stepButton,
-                        { opacity: next === null ? 0.4 : 1 },
-                      ]}
-                      onPress={() => next !== null && update(i, "kg", next)}
-                    >
-                      <Text>{direction < 0 ? "−" : "+"}</Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
-              {lines.length > 1 &&
-                button("Remove cylinder", () => {
-                  setLines(lines.filter((_, n) => n !== i));
-                  setQuantityText(
-                    Object.fromEntries(
-                      Object.entries(quantityText)
-                        .filter(([n]) => Number(n) !== i)
-                        .map(([n, v]) => [
-                          Number(n) > i ? Number(n) - 1 : Number(n),
-                          v,
-                        ]),
-                    ),
-                  );
-                  setQuote(null);
-                  setPicker(null);
-                })}
-            </View>
-          );
-        })}
-        {capacities.length > 0 &&
-          lines.length < 20 &&
-          button("Add another cylinder", () => {
-            setLines([...lines, { capacityKg: capacities[0], kg: 0 }]);
-            setQuote(null);
-          })}
-        <FieldCaption required={true}>Delivery location</FieldCaption>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Delivery location"
-          accessibilityState={{ expanded: picker === "location" }}
-          disabled={loadingQuote}
-          style={[
-            s.control,
-            { borderColor: colors.border, backgroundColor: colors.input },
-          ]}
-          onPress={() => setPicker(picker === "location" ? null : "location")}
+    <ScreenTransition identity={String(step)} fill={false}>
+      <View style={{ gap: 18 }}>
+        <View
+          accessibilityLabel={"Step " + (step + 1) + " of 3"}
+          style={{ flexDirection: "row", gap: 14, paddingVertical: 12 }}
         >
-          <Ionicons name="location-outline" size={18} color={colors.primary} />
-          <Text style={{ flex: 1 }}>
-            {config.locations.find((l: any) => l.id === locationId)?.name ??
-              "Select location"}
-          </Text>
-          <Ionicons name="chevron-down" size={18} color={colors.primary} />
-        </Pressable>
-        {picker === "location" &&
-          config.locations.map((l: any) => (
-            <Pressable
-              key={l.id}
-              accessibilityRole="radio"
-              accessibilityState={{ selected: l.id === locationId }}
-              disabled={loadingQuote}
-              style={[
-                s.control,
-                { borderColor: colors.border, backgroundColor: colors.surface },
-              ]}
-              onPress={() => {
-                deliveryEdited.current = true;
-                setPicked(undefined);
-                setLocationId(l.id);
-                setQuote(null);
-                setPicker(null);
+          {stageLabels.map((label, i) => (
+            <View
+              key={label}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 6,
+                flex: 1,
               }}
             >
-              <Text>{l.name}</Text>
-            </Pressable>
-          ))}
-        <FieldCaption required={true}>House address</FieldCaption>
-        <TextInput
-          accessibilityLabel="House address"
-          editable={!loadingQuote}
-          value={street}
-          maxLength={250}
-          style={[
-            s.control,
-            { borderColor: colors.border, backgroundColor: colors.input },
-          ]}
-          placeholder="House number, street, estate, area"
-          onChangeText={(value) => {
-            deliveryEdited.current = true;
-            setPicked(undefined);
-            setStreet(value);
-            setQuote(null);
-          }}
-        />
-        {loadingDelivery && <EasyGasLoader size="sm" variant="section" label="Loading your delivery details" />}
-        {saved.map((a) =>
-            button(`Use ${a.label}`, () => {
-              deliveryEdited.current = true;
-              setPicked(a);
-              setStreet(a.street);
-              setLocationId(a.location_id ?? "");
-              setQuote(null);
-            }),
-          )}
-        {!!saved.length && button("Use a different address", () => {
-          deliveryEdited.current = true;
-          setPicked(undefined);
-          setStreet("");
-          setLocationId("");
-          setQuote(null);
-        })}
-        {pendingCoverage && (
-          <Text accessibilityRole="alert">{deliveryCoveragePending}</Text>
-        )}
-        <CustomerCard accent>
-          <CustomerTitle>
-            {quote ? "Quoted total" : "Order summary"}
-          </CustomerTitle>
-          {pricingLoading ? (
-            <EasyGasLoader size="sm" variant="section" label="Loading the order estimate" />
-          ) : !pricingReady || !feeReady ? (
-            <CustomerCopy>Current pricing unavailable.</CustomerCopy>
-          ) : quantityError ? (
-            <CustomerCopy>{quantityError}</CustomerCopy>
-          ) : (
-            <>
-              <CustomerCopy>
-                Gas {money(subtotal)} · Products {money(extra)}
-              </CustomerCopy>
-              <CustomerCopy>
-                Delivery {money(config.deliveryKobo)} — charged once for this
-                visit
-              </CustomerCopy>
-              <CustomerTitle>
-                {money(
-                  quote
-                    ? quote.subtotalKobo +
-                        quote.physicalSubtotalKobo +
-                        quote.deliveryKobo
-                    : subtotal + extra + config.deliveryKobo,
+              <View
+                style={{
+                  height: 23,
+                  width: 23,
+                  borderRadius: 12,
+                  backgroundColor: step >= i ? colors.elevated : colors.border,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {i < step ? (
+                  <NextIcon name="check" size={13} />
+                ) : (
+                  <NextText kind="small">{i + 1}</NextText>
                 )}
-              </CustomerTitle>
-            </>
-          )}
-          <CustomerCopy>
-            The server confirms current pricing, availability and cylinder
-            eligibility before creating an order.
-          </CustomerCopy>
-        </CustomerCard>
-        <Text>
-          Address coverage must be confirmed before dispatch. New cylinders and
-          installation cost extra. Nominal capacity does not establish safe
-          filling eligibility.
-        </Text>
-        {error && (
-          <Text accessibilityRole="alert">{friendlyMessage(error)}</Text>
+              </View>
+              <NextText
+                kind="small"
+                style={{ color: step >= i ? colors.text : colors.muted }}
+              >
+                {label}
+              </NextText>
+            </View>
+          ))}
+        </View>
+        {!!error && <NextNotice error>{error}</NextNotice>}
+        {!storageReady && (
+          <NextButton secondary label="Open Orders" onPress={done} />
         )}
-        {error &&
-          !pricingReady &&
-          button("Retry gas prices", () => {
-            setError("");
-            refreshCatalogue((n) => n + 1);
-          })}
-        {appointments.length > 0 && (
-          <View>
-            {button(
-              includeAppointments
-                ? "Exclude my staged services"
-                : "Include my staged services",
-              () => {
-                setIncludeAppointments(!includeAppointments);
-                setQuote(null);
-              },
-            )}
-            {appointments.map((a, i) => (
-              <Text key={i}>
-                {a.name} ·{" "}
-                {a.totalKobo === null
-                  ? "Quotation required"
-                  : money(a.totalKobo ?? 0)}{" "}
-                · Service charges are separate.
-              </Text>
-            ))}
-          </View>
-        )}
-        {button(
-          loadingQuote ? "Checking quote…" : "Review order",
-          async () => {
-            if (quoteLock.current) return;
-            quoteLock.current = true;
-            setLoadingQuote(true);
-            setError("");
-            try {
-              const result = await api("gas.quote", {
-                lines,
-                items: physical,
-                branchId: selectedBranch,
-                locationId,
-              });
-              if (latestInput.current === inputKey)
-                setQuote({ ...result, inputKey });
-            } catch (e: any) {
-              setQuote(null);
-              setError(e.message);
-            } finally {
-              quoteLock.current = false;
-              setLoadingQuote(false);
-            }
-          },
-          loadingDelivery ||
-          !ready ||
-            !pricingReady ||
-            !feeReady ||
-            !!quantityError ||
-            !selectedBranch ||
-            !!pendingCoverage ||
-            street.trim().length < 8,
-          true,
-        )}
-        <Pressable
-          accessibilityRole="link"
-          disabled={loadingQuote}
-          onPress={viewServices}
-          style={s.serviceLink}
-        >
-          <Text
-            preserveColor
-            style={{ color: colors.primary, fontWeight: "700" }}
-          >
-            View Our Services
-          </Text>
-        </Pressable>
-      </View>
-      {quote && user && (
-        <CustomerCard>
-          <CustomerTitle>Delivery & payment</CustomerTitle>
-          <CustomerCopy>{lines.map(l => `${l.kg} kg refill`).join(" · ")} · {money(quote.subtotalKobo + quote.deliveryKobo + quote.physicalSubtotalKobo)}</CustomerCopy>
-          <CustomerCopy>
-            {street} · {selectedArea?.name}
-          </CustomerCopy>
-          {button("Change order details", () => setQuote(null))}
-        </CustomerCard>
-      )}
-      {quote && user && (
-        <NativeRewardSelector api={api} onChange={setRewardSelection} />
-      )}
-      {quote && user && <CheckoutWalletBalance payments={payments} />}
-      {quote && user && (
-        <NativeForm
-          disabled={!payments.data?.methods.length}
-          key={picked?.id ?? "new"}
-          api={async (action, data) => {
-            if (latestInput.current !== inputKey)
-              throw new Error("Review the updated order before confirming.");
-            const l = config.locations.find(
-              (l: any) => l.id === data.address.locationId,
-            );
-            if (!l) throw new Error("Select an active location.");
-            data.address.zone = l.name;
-            data.address.phone = bookingPhone(data.address.phone ?? "") ?? data.address.phone;
-            if (!payments.data?.methods.includes(data.paymentMethod)) throw new Error("Choose an available Card, Cash or Wallet payment method.");
-            const payload = {
-              ...data,
-              ...rewardSelection,
-              items: physical,
-              source: "MOBILE",
-              gasLines: lines,
-              pricing: {
-                priceVersion: quote.priceVersion,
-                feeVersion: quote.feeVersion,
-                policyVersion: quote.policyVersion,
-                totalKobo:
-                  quote.subtotalKobo +
-                  quote.deliveryKobo +
-                  quote.physicalSubtotalKobo,
-              },
-              idempotencyKey: key,
-            };
-            const result = includeAppointments
-              ? await api("checkout.mixed", {
-                  products: payload,
-                  appointments: appointments.map((a) => a.request),
-                  idempotencyKey: key,
-                })
-              : await api(action, payload);
-            if (includeAppointments)
-              await SecureStore.deleteItemAsync(
-                "easygas.serviceDrafts." + user.id,
-              );
-            setOrder(
-              result.order
-                ? {
-                    id: result.order.id,
-                    payment_method: result.order.payment_method,
-                    reference: result.order.reference,
-                    total_kobo: result.order.totalKobo,
-                    payment_status: result.order.paymentStatus,
-                  }
-                : result,
-            );
-            onPlaced(result.order?.id ?? result.id);
-            return result;
-          }}
-          action="checkout"
-          title="Confirm your delivery"
-          submitLabel={`Confirm order · ${money(quote.subtotalKobo + quote.deliveryKobo + quote.physicalSubtotalKobo)}`}
-          collapsedFields={["address.building", "address.landmark", "address.directions"]}
-          fields={[
-            {
-              name: "address.locationId",
-              label: "Delivery location",
-              type: "hidden",
-              value: locationId,
-            },
-            {
-              name: "address.name",
-              label: "Recipient name",
-              value: recipient.name,
-            },
-            {
-              name: "address.phone",
-              label: "Nigerian mobile number",
-              value: recipient.phone,
-            },
-            {
-              name: "address.street",
-              label: "Street address",
-              value: street.trim(),
-            },
-            {
-              name: "address.building",
-              required: false,
-              label: "House / building number",
-              value: recipient.building,
-            },
-            {
-              name: "address.landmark",
-              required: false,
-              label: "Estate / landmark",
-              value: recipient.landmark,
-            },
-            {
-              name: "address.directions",
-              required: false,
-              label: "Additional directions",
-              value: recipient.directions,
-            },
-            { name: "date", label: "Delivery date YYYY-MM-DD" },
-            {
-              name: "window",
-              label: "Delivery window",
-              options: catalogue.windows.map((w: string) => ({
-                value: w,
-                label: w,
-              })),
-            },
-            {
-              name: "paymentMethod",
-              label: "Payment method",
-              options: payments.options,
-            },
-          ]}
-          onDone={() => {}}
+        <Feedback
+          loading={!pending && (!storageReady || !pricingReady)}
+          error={pricingReady ? "" : error}
+          retry={() => reload((n) => n + 1)}
         />
-      )}
-      {!quote && button(
-        showGuide ? "Hide cylinder size guide" : "Cylinder size guide",
-        () => setShowGuide(!showGuide),
-      )}
-      {showGuide && pricingLoading && <EasyGasLoader size="sm" variant="section" label="Loading cylinder prices" />}
-      {showGuide && !pricingLoading && (!pricingReady || !feeReady || !(config.priceKobo > 0)) && (
-        <CustomerCopy>Current price estimates are unavailable.</CustomerCopy>
-      )}
-      {showGuide &&
-        pricingReady &&
-        feeReady &&
-        config.priceKobo > 0 &&
-        capacities.map((c: number) => (
-          <Text key={c}>
-            {c} kg: gas {money(gasLine(c, c, config.priceKobo).subtotalKobo)} ·
-            with delivery{" "}
-            {money(
-              gasLine(c, c, config.priceKobo).subtotalKobo +
-                config.deliveryKobo,
+        {pending ? (
+          <>
+            <NextIntro
+              title="Your order is safe."
+              detail="The last response was interrupted. Your original request and identity are saved securely on this device."
+            />
+            <NextNotice>
+              Retry sends the same request with the same idempotency key. Order
+              details stay locked until its outcome is confirmed.
+            </NextNotice>
+            <NextButton secondary label="View my orders" onPress={done} />
+          </>
+        ) : step === 0 ? (
+          <>
+            <NextIntro
+              title={"How much do\nyou need?"}
+              detail="Order the gas you need, within your cylinder’s capacity."
+            />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                gap: 10,
+              }}
+            >
+              <NextText kind="label">
+                {pricingReady
+                  ? money(config.priceKobo) + " / kg"
+                  : "Current gas price"}
+              </NextText>
+              <NextText kind="small" style={{ color: colors.muted }}>
+                Delivery{" "}
+                {pricingReady ? money(config.deliveryKobo) : "unavailable"}
+              </NextText>
+            </View>
+            {lines.map((line, i) => (
+              <NextCard key={i}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <NextText kind="heading">Cylinder {i + 1}</NextText>
+                  {lines.length > 1 && (
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={"Remove cylinder " + (i + 1)}
+                      onPress={() =>
+                        setLines((l) => l.filter((_, n) => n !== i))
+                      }
+                      style={{
+                        minHeight: 44,
+                        minWidth: 44,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <NextIcon name="x" />
+                    </Pressable>
+                  )}
+                </View>
+                <NextChoice
+                  label="Cylinder capacity"
+                  value={line.capacityKg + " kg"}
+                  onPress={() => setPicker("capacity:" + i)}
+                />
+                <NextText kind="eyebrow" style={{ color: colors.muted }}>
+                  GAS TO REFILL
+                </NextText>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: 10,
+                    borderRadius: 14,
+                    backgroundColor: colors.elevated,
+                  }}
+                >
+                  {[-1, 1].map((direction) => (
+                    <React.Fragment key={direction}>
+                      {direction === 1 && (
+                        <TextInput
+                          accessibilityLabel={
+                            "Cylinder " + (i + 1) + " gas quantity in kilograms"
+                          }
+                          keyboardType="decimal-pad"
+                          value={String(line.kg)}
+                          onChangeText={(raw) => updateLine(i, { kg: raw })}
+                          style={{
+                            flex: 1,
+                            textAlign: "center",
+                            fontSize: 25,
+                            fontWeight: "600",
+                            color: colors.text,
+                            minHeight: 48,
+                          }}
+                        />
+                      )}
+                      <Pressable
+                        accessibilityRole="button"
+                        accessibilityLabel={
+                          (direction === -1 ? "Reduce" : "Increase") +
+                          " cylinder " +
+                          (i + 1) +
+                          " gas"
+                        }
+                        onPress={() => {
+                          const next = nextGasQuantity(
+                            line.kg,
+                            direction as -1 | 1,
+                            line.capacityKg,
+                            config.policy,
+                          );
+                          if (next !== null) updateLine(i, { kg: next });
+                        }}
+                        style={{
+                          height: 48,
+                          width: 48,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: 14,
+                          backgroundColor: colors.surface,
+                        }}
+                      >
+                        <NextIcon name={direction === -1 ? "minus" : "plus"} />
+                      </Pressable>
+                    </React.Fragment>
+                  ))}
+                </View>
+                <View style={{ flexDirection: "row", gap: 10 }}>
+                  {[...new Set([3, 6, line.capacityKg])]
+                    .filter((kg) => {
+                      try {
+                        gasLine(
+                          kg,
+                          line.capacityKg,
+                          config.priceKobo,
+                          config.policy,
+                        );
+                        return true;
+                      } catch {
+                        return false;
+                      }
+                    })
+                    .map((kg) => (
+                      <Pressable
+                        accessibilityRole="button"
+                        accessibilityLabel={kg + " kg"}
+                        key={kg}
+                        onPress={() => updateLine(i, { kg })}
+                        style={{
+                          minHeight: 44,
+                          flex: 1,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: 13,
+                          borderWidth: 1,
+                          borderColor: colors.border,
+                          backgroundColor:
+                            Number(line.kg) === kg
+                              ? colors.elevated
+                              : colors.surface,
+                        }}
+                      >
+                        <NextText kind="label">{kg} kg</NextText>
+                      </Pressable>
+                    ))}
+                </View>
+                <NextText kind="small" style={{ color: colors.muted }}>
+                  Cylinder condition will be checked before filling.
+                </NextText>
+              </NextCard>
+            ))}
+            {lines.length < 20 && (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Add another cylinder"
+                disabled={!ready || !!quantityError}
+                onPress={() =>
+                  setLines((l) => [
+                    ...l,
+                    {
+                      capacityKg: config.policy?.capacitiesKg?.[0] ?? 12.5,
+                      kg:
+                        nextGasQuantity(
+                          0,
+                          1,
+                          config.policy?.capacitiesKg?.[0] ?? 12.5,
+                          config.policy,
+                        ) ?? 0,
+                    },
+                  ])
+                }
+                style={{
+                  minHeight: 48,
+                  flexDirection: "row",
+                  gap: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <NextIcon name="plus" />
+                <NextText kind="label" style={{ color: colors.primary }}>
+                  Add another cylinder
+                </NextText>
+              </Pressable>
             )}
-          </Text>
-        ))}
-    </View>
+            {!!quantityError && <NextNotice error>{quantityError}</NextNotice>}
+            <NextText kind="small" style={{ color: colors.muted }}>
+              One delivery fee for this visit. Cylinder purchases and
+              installation are separate.
+            </NextText>
+          </>
+        ) : step === 1 ? (
+          <>
+            <NextIntro
+              title={"Where should\nwe deliver?"}
+              detail="Your saved details, ready to go."
+            />
+            {!!checkoutAddresses(profile).length && (
+              <NextChoice
+                label="Saved address"
+                value="Choose a saved place"
+                onPress={() => setPicker("address")}
+              />
+            )}
+            <NextField
+              label="Recipient name"
+              value={contact.name}
+              onChange={(v) => patchContact("name", v)}
+            />
+            <NextField
+              label="Mobile number"
+              value={contact.phone}
+              onChange={(v) => patchContact("phone", v)}
+              keyboardType="phone-pad"
+            />
+            <NextChoice
+              label="Delivery area"
+              value={area?.name || "Choose your area"}
+              onPress={() => setPicker("area")}
+            />
+            <NextField
+              label="Street address"
+              value={contact.street}
+              onChange={(v) => patchContact("street", v)}
+            />
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => setOptional(!optional)}
+              style={{
+                minHeight: 44,
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 8,
+              }}
+            >
+              <NextIcon name="plus" size={17} />
+              <NextText kind="label" style={{ color: colors.primary }}>
+                {optional ? "Hide" : "Add"} delivery instructions (optional)
+              </NextText>
+            </Pressable>
+            {optional && (
+              <View style={{ gap: 15 }}>
+                <NextField
+                  label="House / building number"
+                  value={contact.building || ""}
+                  onChange={(v) => patchContact("building", v)}
+                />
+                <NextField
+                  label="Estate / landmark"
+                  value={contact.landmark || ""}
+                  onChange={(v) => patchContact("landmark", v)}
+                />
+                <NextField
+                  label="Additional directions"
+                  value={contact.directions || ""}
+                  onChange={(v) => patchContact("directions", v)}
+                  multiline
+                />
+              </View>
+            )}
+            <View style={{ flexDirection: "row", gap: 12 }}>
+              <View style={{ flex: 1 }}>
+                <NextChoice
+                  label="Delivery date"
+                  value={date || "Choose date"}
+                  onPress={() => setPicker("date")}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <NextChoice
+                  label="Time window"
+                  value={window || "Choose time"}
+                  onPress={() => setPicker("window")}
+                />
+              </View>
+            </View>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
+            >
+              <Switch
+                value={saveDetails}
+                onValueChange={setSaveDetails}
+                accessibilityLabel="Save delivery details for future orders"
+              />
+              <NextText kind="small" style={{ flex: 1, color: colors.muted }}>
+                Save delivery details for future orders
+              </NextText>
+            </View>
+          </>
+        ) : (
+          <>
+            <NextIntro
+              title={"Everything\nlooking good?"}
+              detail="A clear total before you confirm."
+            />
+            {!usableQuote ? (
+              <NextNotice>
+                Return to Delivery to refresh your quote before confirming.
+              </NextNotice>
+            ) : (
+              <>
+                <NextCard>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <NextText kind="heading">
+                      Your {gasEnabled ? "refill" : "items"}
+                    </NextText>
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel="Edit refill"
+                      onPress={() => setStep(gasEnabled ? 0 : 1)}
+                      style={{ minHeight: 44, justifyContent: "center" }}
+                    >
+                      <NextText kind="label" style={{ color: colors.primary }}>
+                        Edit
+                      </NextText>
+                    </Pressable>
+                  </View>
+                  {gasEnabled &&
+                    lines.map((l, i) => (
+                      <View
+                        key={i}
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          gap: 10,
+                        }}
+                      >
+                        <NextText kind="small">
+                          {l.kg} kg · {l.capacityKg} kg cylinder
+                        </NextText>
+                        <NextText kind="small">
+                          {money(
+                            gasLine(
+                              l.kg,
+                              l.capacityKg,
+                              usableQuote.priceKobo,
+                              usableQuote.policy,
+                            ).subtotalKobo,
+                          )}
+                        </NextText>
+                      </View>
+                    ))}
+                  {usableQuote.physicalLines?.map((p: any) => (
+                    <View
+                      key={p.productId}
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        gap: 10,
+                      }}
+                    >
+                      <NextText kind="small" style={{ flex: 1 }}>
+                        {p.quantity} × {p.name}
+                      </NextText>
+                      <NextText kind="small">
+                        {money(p.quantity * p.unitPriceKobo)}
+                      </NextText>
+                    </View>
+                  ))}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <NextText kind="small">Delivery · one visit</NextText>
+                    <NextText kind="small">
+                      {money(usableQuote.deliveryKobo)}
+                    </NextText>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      borderTopWidth: 1,
+                      borderColor: colors.border,
+                      paddingTop: 15,
+                    }}
+                  >
+                    <NextText kind="label">Order total</NextText>
+                    <NextText kind="heading">
+                      {money(nativeQuoteTotal(usableQuote))}
+                    </NextText>
+                  </View>
+                </NextCard>
+                <NextCard>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <NextText kind="heading">Deliver to</NextText>
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel="Edit delivery details"
+                      onPress={() => setStep(1)}
+                      style={{ minHeight: 44, justifyContent: "center" }}
+                    >
+                      <NextText kind="label" style={{ color: colors.primary }}>
+                        Edit
+                      </NextText>
+                    </Pressable>
+                  </View>
+                  <NextText kind="label">{contact.name}</NextText>
+                  <NextText style={{ color: colors.muted }}>
+                    {contact.street}
+                  </NextText>
+                  <NextText kind="small" style={{ color: colors.muted }}>
+                    {area?.name} · {contact.phone}
+                    {"\n"}
+                    {date} · {window}
+                  </NextText>
+                </NextCard>
+                <NextText kind="heading">How would you like to pay?</NextText>
+                <Feedback
+                  loading={!payments.data && !payments.error}
+                  error={payments.error}
+                  retry={payments.refresh}
+                />
+                {payments.options.map((p) => (
+                  <Pressable
+                    key={p.value}
+                    accessibilityRole="radio"
+                    accessibilityLabel={p.label}
+                    accessibilityState={{ checked: method === p.value }}
+                    onPress={() => setMethod(p.value)}
+                    style={{
+                      minHeight: 76,
+                      padding: 17,
+                      borderRadius: 18,
+                      borderWidth: 1,
+                      borderColor:
+                        method === p.value ? colors.primary : colors.border,
+                      backgroundColor:
+                        method === p.value ? colors.elevated : colors.surface,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 13,
+                    }}
+                  >
+                    <NextIcon
+                      name={
+                        p.value === "wallet"
+                          ? "wallet"
+                          : p.value === "card"
+                            ? "credit-card"
+                            : "banknote"
+                      }
+                    />
+                    <View style={{ flex: 1, gap: 4 }}>
+                      <NextText kind="label">
+                        {p.value === "card"
+                          ? "Credit / debit card"
+                          : p.value === "wallet"
+                            ? "EasyGas wallet"
+                            : "Cash on delivery"}
+                      </NextText>
+                      <NextText kind="small" style={{ color: colors.muted }}>
+                        {p.value === "card"
+                          ? "Processing fee shown before payment"
+                          : p.value === "wallet"
+                            ? money(payments.data?.balanceKobo ?? 0) +
+                              " available"
+                            : "Subject to current branch policy"}
+                      </NextText>
+                    </View>
+                    <View
+                      style={{
+                        width: 19,
+                        height: 19,
+                        borderRadius: 10,
+                        borderWidth: method === p.value ? 5 : 1,
+                        borderColor:
+                          method === p.value ? colors.primary : colors.muted,
+                      }}
+                    />
+                  </Pressable>
+                ))}
+                <Pressable
+                  accessibilityRole="button"
+                  onPress={() => setPicker("rewards")}
+                  style={{
+                    minHeight: 48,
+                    flexDirection: "row",
+                    gap: 10,
+                    alignItems: "center",
+                  }}
+                >
+                  <NextIcon name="gift" />
+                  <NextText kind="label" style={{ color: colors.primary }}>
+                    Rewards & credits (optional)
+                  </NextText>
+                </Pressable>
+                <NextText kind="small" style={{ color: colors.muted }}>
+                  Your order uses the current quote. Stock, coverage and safe
+                  filling remain subject to confirmation.
+                </NextText>
+              </>
+            )}
+          </>
+        )}
+        {!!appointments.length && !order && !pending && (
+          <NextCard>
+            <NextText kind="heading">Linked service requests</NextText>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
+            >
+              <Switch
+                value={includeAppointments}
+                onValueChange={setIncludeAppointments}
+                accessibilityLabel="Include staged service requests"
+              />
+              <NextText kind="small" style={{ flex: 1 }}>
+                Include {appointments.length} saved service request
+                {appointments.length === 1 ? "" : "s"}. Service charges are
+                separate.
+              </NextText>
+            </View>
+            {includeAppointments &&
+              appointments.map((a, i) => (
+                <NextText kind="small" key={i}>
+                  {a.name} ·{" "}
+                  {a.totalKobo == null
+                    ? "Quotation required"
+                    : money(a.totalKobo)}
+                </NextText>
+              ))}
+          </NextCard>
+        )}
+        {picker === "date" && (
+          <MobileNextCalendar
+            value={date}
+            onSelect={setDate}
+            onClose={() => setPicker(null)}
+          />
+        )}
+        {picker === "rewards" && (
+          <ContextSheet
+            title="Rewards & credits"
+            onClose={() => setPicker(null)}
+          >
+            <NativeRewardSelector api={api} onChange={setRewardSelection} />
+          </ContextSheet>
+        )}
+        {picker && picker !== "date" && picker !== "rewards" && (
+          <ContextSheet
+            title={
+              picker.startsWith("capacity:")
+                ? "Cylinder capacity"
+                : picker === "area"
+                  ? "Delivery area"
+                  : picker === "address"
+                    ? "Saved addresses"
+                    : "Delivery window"
+            }
+            onClose={() => setPicker(null)}
+          >
+            <NextList>
+              {picker.startsWith("capacity:")
+                ? (config?.policy?.capacitiesKg ?? []).map(
+                    (capacity: number) => (
+                      <NextRow
+                        key={capacity}
+                        title={capacity + " kg"}
+                        icon="flame"
+                        onPress={() => {
+                          const i = Number(picker.split(":")[1]);
+                          updateLine(i, {
+                            capacityKg: capacity,
+                            kg: Math.min(Number(lines[i].kg), capacity),
+                          });
+                          setPicker(null);
+                        }}
+                      />
+                    ),
+                  )
+                : picker === "area"
+                  ? (config?.locations ?? []).map((a: any) => (
+                      <NextRow
+                        key={a.id}
+                        title={a.name}
+                        detail={
+                          hasConfirmedDeliveryCoverage(a.coverage)
+                            ? "Delivery coverage confirmed"
+                            : "Coverage confirmation required"
+                        }
+                        icon="map-pin"
+                        onPress={() => {
+                          edited.current = true;
+                          setLocationId(a.id);
+                          setQuote(null);
+                          setPicker(null);
+                        }}
+                      />
+                    ))
+                  : picker === "address"
+                    ? checkoutAddresses(profile).map((a) => (
+                        <NextRow
+                          key={a.id}
+                          title={a.label}
+                          detail={a.street}
+                          icon="map-pin"
+                          onPress={() => {
+                            edited.current = true;
+                            setContact(
+                              checkoutDelivery(profile, a, user?.name),
+                            );
+                            setLocationId(a.location_id || "");
+                            setPicker(null);
+                          }}
+                        />
+                      ))
+                    : (catalogue?.windows ?? []).map((w: string) => (
+                        <NextRow
+                          key={w}
+                          title={w}
+                          icon="clock"
+                          onPress={() => {
+                            setWindow(w);
+                            setPicker(null);
+                          }}
+                        />
+                      ))}
+            </NextList>
+          </ContextSheet>
+        )}
+      </View>
+    </ScreenTransition>
   );
 }
-const s = StyleSheet.create({
-  title: { fontSize: 26, fontWeight: "700", marginVertical: 16 },
-  card: {
-    padding: 16,
-    borderWidth: 1,
-
-    borderRadius: 16,
-    marginVertical: 12,
-  },
-  row: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-  priceStrip: {
-    flexDirection: "row",
-    borderRadius: 12,
-    padding: 9,
-    marginVertical: 12,
-    gap: 8,
-  },
-  priceCell: { flex: 1, flexDirection: "row", alignItems: "center", gap: 5 },
-  control: {
-    minHeight: 44,
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 7,
-    marginBottom: 5,
-  },
-  stepper: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-  stepButton: {
-    width: 44,
-    minHeight: 44,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  quantity: { flex: 1, minHeight: 44, textAlign: "center" },
-  primaryButton: {
-    alignSelf: "stretch",
-    alignItems: "center",
-    borderRadius: 999,
-    minHeight: 46,
-  },
-  serviceLink: {
-    minHeight: 44,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    padding: 14,
-    borderRadius: 12,
-    marginVertical: 6,
-    alignSelf: "flex-start",
-  },
-});

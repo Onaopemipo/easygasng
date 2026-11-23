@@ -1,17 +1,56 @@
+import { NextCatalogue, NextProduct, NextCart } from "./MobileNextCatalogue";
+import {
+  CustomerNextQuotations,
+  CustomerNextTestimonials,
+} from "./MobileNextCustomerExtras";
+import MobileNextOrders from "./MobileNextOrders";
+import {
+  NextIntro,
+  NextList,
+  NextRow,
+  NextHeader,
+  NextTabs,
+  NextDockContext,
+  customerNextTabs,
+  businessNextTabs,
+  nextActiveTab,
+} from "./MobileNextUI";
+import {
+  StaffNextHome,
+  StaffNextAccount,
+  CustomerNextDirectory,
+} from "./MobileNextWorkspaces";
 import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
 import { ScreenTransition } from "./ScreenTransition";
 import BrandLogo from "./BrandLogo";
-import {NativeEntryScreen,NativePublicPolicies,NativeServiceInfo} from './NativeEntry';
-import {nativeEntryLink,type NativeEntry} from '../../packages/business-rules/src/native-entry-links';
-import NativeBusinessWorkspace from './NativeBusinessWorkspace';
-import {nativeInternalDestination} from '../../packages/business-rules/src/native-workspaces';
+import {
+  NativeEntryScreen,
+  NativePublicPolicies,
+  NativeServiceInfo,
+} from "./NativeEntry";
+import {
+  nativeEntryLink,
+  type NativeEntry,
+} from "../../packages/business-rules/src/native-entry-links";
+import NativeBusinessWorkspace from "./NativeBusinessWorkspace";
+import {
+  nativeWorkspaces,
+  nativeInternalDestination,
+} from "../../packages/business-rules/src/native-workspaces";
 import { useCheckoutPayments, CheckoutWalletBalance } from "./CheckoutPayments";
-import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress, type CheckoutDetailsOffer } from "../../packages/business-rules/src/checkout-delivery";
+import {
+  checkoutAddresses,
+  checkoutDelivery,
+  defaultCheckoutAddress,
+  type CheckoutDetailsOffer,
+} from "../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../packages/business-rules/src/booking-contact";
 import { useCheckoutProfile } from "./useCheckoutProfile";
 import { CookingGasProfiles } from "./CookingGasProfiles";
 import OwnerSupportWorkspace from "./OwnerSupportWorkspace";
-import OwnerGovernanceWorkspace, { isOwnerGovernanceScreen } from "./OwnerGovernanceWorkspace";
+import OwnerGovernanceWorkspace, {
+  isOwnerGovernanceScreen,
+} from "./OwnerGovernanceWorkspace";
 import { OwnerWorkspace, type OwnerScope } from "./OwnerWorkspace";
 import { OwnerApprovals } from "./OwnerApprovals";
 import { FinanceOverview } from "./FinanceOverview";
@@ -57,7 +96,10 @@ import { randomUUID } from "expo-crypto";
 import GasOrder from "./GasOrder";
 import CombinedCheckout from "./CombinedCheckout";
 import Onboarding from "./Onboarding";
-import { canAutoShowIntroduction, introductionAudience } from "../../packages/business-rules/src/customer-introduction";
+import {
+  canAutoShowIntroduction,
+  introductionAudience,
+} from "../../packages/business-rules/src/customer-introduction";
 import Services from "./Services";
 import TechniciansManagement from "./TechniciansManagement";
 import {
@@ -80,7 +122,12 @@ import {
   AppState,
 } from "react-native";
 import { View, ScrollView, Pressable } from "./surfaces";
-import { FieldCaption, fieldAccessibilityLabel, Text, TextInput } from "./typography";
+import {
+  FieldCaption,
+  fieldAccessibilityLabel,
+  Text,
+  TextInput,
+} from "./typography";
 import * as SecureStore from "expo-secure-store";
 const origin = process.env.EXPO_PUBLIC_API_URL ?? "http://127.0.0.1:3003";
 const currency = (n: number | string | null) =>
@@ -89,7 +136,7 @@ type Item = { productId: string; quantity: number };
 export default function App() {
   const { dark, colors, preference, setPreference } = useTheme();
   const scrollRef = useRef<React.ComponentRef<typeof ScrollView>>(null);
-  const [entryLink,setEntryLink]=useState<NativeEntry|null>(null);
+  const [entryLink, setEntryLink] = useState<NativeEntry | null>(null);
   const [intro, setIntro] = useState({ revision: 0, preview: false });
   const technicianShell = Constants.expoConfig?.extra?.technicianOnly === true;
   const driverShell = Constants.expoConfig?.extra?.driverOnly === true;
@@ -98,7 +145,10 @@ export default function App() {
     [user, setUser] = useState<any>(null),
     [catalogue, setCatalogue] = useState<any>(null),
     [screen, setScreen] = useState("home"),
-    [ownerScope, setOwnerScope] = useState<OwnerScope>({ branchId: "", period: "month" }),
+    [ownerScope, setOwnerScope] = useState<OwnerScope>({
+      branchId: "",
+      period: "month",
+    }),
     [cart, setCart] = useState<Item[]>([]),
     [hydrated, setHydrated] = useState(false),
     [orders, setOrders] = useState<any[] | null>(null),
@@ -131,14 +181,24 @@ export default function App() {
     [date, setDate] = useState(""),
     [window, setWindow] = useState(""),
     [key, setKey] = useState<string | null>(null);
-  const checkoutPayments = useCheckoutPayments(api, user?.id, catalogue?.gas?.locations?.find((l: any) => l.name === address.zone)?.branch_id ?? "lagos", screen === "checkout" && ["customer", "commercial"].includes(user?.role));
+  const [nextDock, setNextDock] = useState<React.ReactNode>(null);
+  const checkoutPayments = useCheckoutPayments(
+    api,
+    user?.id,
+    catalogue?.gas?.locations?.find((l: any) => l.name === address.zone)
+      ?.branch_id ?? "lagos",
+    screen === "checkout" && ["customer", "commercial"].includes(user?.role),
+  );
   useEffect(() => {
     scrollRef.current?.scrollTo({ y: 0, animated: false });
   }, [screen, user?.id]);
   const navHistory = useRef<string[]>(["home"]);
   const serviceBack = useRef<(() => boolean) | null>(null);
   const pendingServiceSignIn = useRef<string | null>(null);
-  const [initialServiceId, setInitialServiceId] = useState<string | undefined>();
+  const checkoutGuestDraft = useRef<any>(null);
+  const [initialServiceId, setInitialServiceId] = useState<
+    string | undefined
+  >();
   const pendingLink = useRef<{ screen: string; id?: string } | null>(null);
   const initialLink = useRef(false);
   const [initialLinkResolved, setInitialLinkResolved] = useState(false);
@@ -153,6 +213,10 @@ export default function App() {
   }, [screen]);
   function back() {
     if (serviceBack.current?.()) return true;
+    if (navHistory.current.at(-1) === "orders" && orderFilterRef.current) {
+      setOrderFilter(null);
+      return true;
+    }
     if (navHistory.current.length < 2) return false;
     navHistory.current.pop();
     setScreen(navHistory.current.at(-1) ?? "home");
@@ -168,8 +232,18 @@ export default function App() {
   useEffect(() => {
     if (!hydrated) return;
     const handle = (url: string) => {
-      const entry=nativeEntryLink(url,origin);
-      if(entry){if(user){setError('Sign out before opening an account-entry link. Your current workspace has been preserved.');return;}setEntryLink(entry);setScreen('entry-link');return;}
+      const entry = nativeEntryLink(url, origin);
+      if (entry) {
+        if (user) {
+          setError(
+            "Sign out before opening an account-entry link. Your current workspace has been preserved.",
+          );
+          return;
+        }
+        setEntryLink(entry);
+        setScreen("entry-link");
+        return;
+      }
       const dest = customerMobileLink(url);
       if (!dest) return;
       if (user && !["customer", "commercial"].includes(user.role)) {
@@ -216,7 +290,9 @@ export default function App() {
   const orderFilterRef = useRef(orderFilter);
   orderFilterRef.current = orderFilter;
   const lastScreen = useRef(screen);
-  useEffect(() => { EasyGasAlert.dismissAll(); }, [user?.id]);
+  useEffect(() => {
+    EasyGasAlert.dismissAll();
+  }, [user?.id]);
   function navigateCustomer(destination: string) {
     if (
       !user &&
@@ -238,7 +314,8 @@ export default function App() {
     }
     setScreen(destination);
   }
-  function clearPrivateState() {
+  function clearPrivateState(keepGuestCheckout = false) {
+    if (!keepGuestCheckout) checkoutGuestDraft.current = null;
     setEntryLink(null);
     setNativeScope({});
     setOwnerScope({ branchId: "", period: "month" });
@@ -258,17 +335,33 @@ export default function App() {
     setKey(null);
     setPassword("");
   }
-  const [nativeScope,setNativeScope]=useState<Record<string,string>>({});
-  function openNativeWorkspace(path:string){
-    const destination=nativeInternalDestination(path);
-    if(!destination){setError("This link has no native destination. Return to the workspace directory.");return;}
-    if('orderId' in destination)setOrderFilter(destination.orderId||null);
-    setNativeScope(('scope' in destination?destination.scope:undefined)||{});
+  const [nativeScope, setNativeScope] = useState<Record<string, string>>({});
+  function openNativeWorkspace(path: string) {
+    const destination = nativeInternalDestination(path);
+    if (!destination) {
+      setError(
+        "This link has no native destination. Return to the workspace directory.",
+      );
+      return;
+    }
+    if ("orderId" in destination) setOrderFilter(destination.orderId || null);
+    setNativeScope(
+      ("scope" in destination ? destination.scope : undefined) || {},
+    );
     setScreen(destination.screen);
   }
   function ownerWorkspace(mode: "home" | "operations" | "finance" | "reports") {
-    return <OwnerWorkspace key={user?.id + mode} api={api} mode={mode} scope={ownerScope} onScope={setOwnerScope}
-      navigate={setScreen} openWorkspace={openNativeWorkspace} />;
+    return (
+      <OwnerWorkspace
+        key={user?.id + mode}
+        api={api}
+        mode={mode}
+        scope={ownerScope}
+        onScope={setOwnerScope}
+        navigate={setScreen}
+        openWorkspace={openNativeWorkspace}
+      />
+    );
   }
 
   async function api(action: string, data?: any, session = token) {
@@ -288,21 +381,30 @@ export default function App() {
         "x-easygas-client": "native",
         ...(session ? { Authorization: `Bearer ${session}` } : {}),
       },
-      ...(data === undefined ? {} : { body: multipart ? data : JSON.stringify(data) }),
+      ...(data === undefined
+        ? {}
+        : { body: multipart ? data : JSON.stringify(data) }),
     });
     const body = await response.json();
     if (!response.ok) {
-      if (response.status === 401 && session && sessionRef.current === session) {
+      if (
+        response.status === 401 &&
+        session &&
+        sessionRef.current === session
+      ) {
         await SecureStore.deleteItemAsync("easygas.session");
         setToken(null);
         setUser(null);
         clearPrivateState();
         setScreen("login");
       }
-      throw Object.assign(new Error(friendlyMessage(body.error ?? "Please try again.")), {
-        status: response.status,
-        code: body.code,
-      });
+      throw Object.assign(
+        new Error(friendlyMessage(body.error ?? "Please try again.")),
+        {
+          status: response.status,
+          code: body.code,
+        },
+      );
     }
     if (body.signedOut && sessionRef.current === session) {
       await SecureStore.deleteItemAsync("easygas.session");
@@ -322,22 +424,34 @@ export default function App() {
     } catch {
       return;
     }
-    if (accountRef.current !== customerId || (!offer.phone && !offer.address)) return;
+    if (accountRef.current !== customerId || (!offer.phone && !offer.address))
+      return;
 
     const keep = (phone: boolean, address: boolean) => async () => {
       if (accountRef.current !== customerId) return;
       try {
-        await api("account.checkout-details", { orderId, save: { phone, address, version: offer.version } });
-        if (accountRef.current === customerId) EasyGasAlert.alert("Delivery details saved", "We’ll use them for future orders.");
+        await api("account.checkout-details", {
+          orderId,
+          save: { phone, address, version: offer.version },
+        });
+        if (accountRef.current === customerId)
+          EasyGasAlert.alert(
+            "Delivery details saved",
+            "We’ll use them for future orders.",
+          );
       } catch (error) {
-        if (accountRef.current === customerId) EasyGasAlert.alert(
-          "Delivery details weren’t saved",
-          friendlyMessage(error),
-          [
-            { text: "Try again", onPress: () => offerCheckoutDetails(orderId) },
-            { text: "Keep for this order only", style: "cancel" },
-          ],
-        );
+        if (accountRef.current === customerId)
+          EasyGasAlert.alert(
+            "Delivery details weren’t saved",
+            friendlyMessage(error),
+            [
+              {
+                text: "Try again",
+                onPress: () => offerCheckoutDetails(orderId),
+              },
+              { text: "Keep for this order only", style: "cancel" },
+            ],
+          );
       }
     };
     const address = offer.address;
@@ -345,21 +459,48 @@ export default function App() {
       "Save delivery details for next time?",
       [
         offer.phone && `Delivery phone number: ${offer.phone}`,
-        address && `Address: ${address.street}, ${address.zone}. Recipient: ${address.recipient}. A saved address includes its contact number.`,
-      ].filter(Boolean).join("\n"),
+        address &&
+          `Address: ${address.street}, ${address.zone}. Recipient: ${address.recipient}. A saved address includes its contact number.`,
+      ]
+        .filter(Boolean)
+        .join("\n"),
       [
-        ...(offer.phone && address ? [{ text: "Save phone and address", onPress: keep(true, true) }] : []),
-        ...(offer.phone ? [{ text: address ? "Save phone only" : "Save phone number", onPress: keep(true, false) }] : []),
-        ...(address ? [{ text: offer.phone ? "Save address only" : "Save address", onPress: keep(false, true) }] : []),
+        ...(offer.phone && address
+          ? [{ text: "Save phone and address", onPress: keep(true, true) }]
+          : []),
+        ...(offer.phone
+          ? [
+              {
+                text: address ? "Save phone only" : "Save phone number",
+                onPress: keep(true, false),
+              },
+            ]
+          : []),
+        ...(address
+          ? [
+              {
+                text: offer.phone ? "Save address only" : "Save address",
+                onPress: keep(false, true),
+              },
+            ]
+          : []),
         { text: "Use for this order only", style: "cancel" },
       ],
     );
   }
-  const ordersAction = orderFilter ? "orders?id=" + encodeURIComponent(orderFilter) : "orders";
+  const ordersAction = orderFilter
+    ? "orders?id=" + encodeURIComponent(orderFilter)
+    : "orders";
   async function reloadOrders() {
     const next = await api(ordersAction);
-    if (accountRef.current !== user?.id || orderFilterRef.current !== orderFilter) return;
-    setOrders(AppState.currentState === "active" ? next : withoutRiderLocations(next));
+    if (
+      accountRef.current !== user?.id ||
+      orderFilterRef.current !== orderFilter
+    )
+      return;
+    setOrders(
+      AppState.currentState === "active" ? next : withoutRiderLocations(next),
+    );
     setOrdersScope(orderFilter ?? "");
   }
   useEffect(() => {
@@ -409,7 +550,8 @@ export default function App() {
     }
   }, [screen]);
   const checkoutCustomerId = screen === "checkout" ? user?.id : undefined;
-  const { profile: checkoutProfile, loading: loadingDelivery } = useCheckoutProfile(api, checkoutCustomerId);
+  const { profile: checkoutProfile, loading: loadingDelivery } =
+    useCheckoutProfile(api, checkoutCustomerId);
   const savedCheckoutAddresses = checkoutAddresses(checkoutProfile).filter(
     (item) => catalogue?.zones?.includes(item.zone),
   );
@@ -419,12 +561,24 @@ export default function App() {
       setCheckoutAddressId(undefined);
       return;
     }
-    if (loadingDelivery || !catalogue || checkoutAddressId !== undefined) return;
+    if (loadingDelivery || !catalogue || checkoutAddressId !== undefined)
+      return;
     const chosen = defaultCheckoutAddress(savedCheckoutAddresses);
     setCheckoutAddressId(chosen?.id ?? "");
-    const { name, phone, street, zone } = checkoutDelivery(checkoutProfile, chosen, user?.name);
+    const { name, phone, street, zone } = checkoutDelivery(
+      checkoutProfile,
+      chosen,
+      user?.name,
+    );
     setAddress({ name, phone, street, zone });
-  }, [checkoutCustomerId, checkoutProfile, loadingDelivery, catalogue, checkoutAddressId, user?.name]);
+  }, [
+    checkoutCustomerId,
+    checkoutProfile,
+    loadingDelivery,
+    catalogue,
+    checkoutAddressId,
+    user?.name,
+  ]);
   useEffect(() => {
     if (!hydrated) return;
     let active = true;
@@ -433,9 +587,15 @@ export default function App() {
       setError("");
       setLoading(true);
       api("wallet")
-        .then((data) => { if (active) setWallet(data); })
-        .catch((e) => { if (active) setError(e.message); })
-        .finally(() => { if (active) setLoading(false); });
+        .then((data) => {
+          if (active) setWallet(data);
+        })
+        .catch((e) => {
+          if (active) setError(e.message);
+        })
+        .finally(() => {
+          if (active) setLoading(false);
+        });
     } else setLoading(false);
     return () => {
       active = false;
@@ -475,7 +635,11 @@ export default function App() {
       api(ordersAction)
         .then((next) => {
           if (!active || request !== generation) return;
-          setOrders(AppState.currentState === "active" ? next : withoutRiderLocations(next));
+          setOrders(
+            AppState.currentState === "active"
+              ? next
+              : withoutRiderLocations(next),
+          );
           setOrdersScope(scope);
           setError("");
           setLoading(false);
@@ -483,7 +647,11 @@ export default function App() {
         .catch((e) => {
           if (!active || request !== generation) return;
           clearLocations();
-          setError(initial ? e.message : "Tracking couldn’t refresh. Displayed order status may be out of date.");
+          setError(
+            initial
+              ? e.message
+              : "Tracking couldn’t refresh. Displayed order status may be out of date.",
+          );
           setLoading(false);
         });
     };
@@ -538,7 +706,9 @@ export default function App() {
   }
   async function login() {
     if (passwordChangeRequired && newPassword.length < PASSWORD_MIN_LENGTH) {
-      setLoginError(`Use at least ${PASSWORD_MIN_LENGTH} characters for your new password.`);
+      setLoginError(
+        `Use at least ${PASSWORD_MIN_LENGTH} characters for your new password.`,
+      );
       return;
     }
     setLoading(true);
@@ -566,7 +736,7 @@ export default function App() {
         return;
       }
       await SecureStore.setItemAsync("easygas.session", result.token);
-      clearPrivateState();
+      clearPrivateState(true);
       setToken(result.token);
       const me = await api("me", undefined, result.token);
       Keyboard.dismiss();
@@ -581,10 +751,16 @@ export default function App() {
       if (serviceId && ["customer", "commercial"].includes(me.user.role)) {
         setInitialServiceId(serviceId);
         setScreen("services");
-      } else if (destination && ["customer", "commercial"].includes(me.user.role)) {
+      } else if (
+        destination &&
+        ["customer", "commercial"].includes(me.user.role)
+      ) {
         setOrderFilter(destination.id ?? null);
         setScreen(destination.screen);
-      } else setScreen("home");
+      } else {
+        checkoutGuestDraft.current = null;
+        setScreen("home");
+      }
     } catch (e: any) {
       setLoginError(e.message);
     } finally {
@@ -620,7 +796,6 @@ export default function App() {
           )
         : [...items, { productId: p.id, quantity: 1 }];
     });
-    EasyGasAlert.alert("Added to your cart", p.name);
   }
   const button = (
     label: string,
@@ -647,9 +822,17 @@ export default function App() {
     required: boolean | null = true,
   ) => (
     <View style={s.field}>
-      {required === null ? <Text style={s.label}>{label}</Text> : <FieldCaption style={s.label} required={required}>{label}</FieldCaption>}
+      {required === null ? (
+        <Text style={s.label}>{label}</Text>
+      ) : (
+        <FieldCaption style={s.label} required={required}>
+          {label}
+        </FieldCaption>
+      )}
       <TextInput
-        accessibilityLabel={required === null ? label : fieldAccessibilityLabel(label, required)}
+        accessibilityLabel={
+          required === null ? label : fieldAccessibilityLabel(label, required)
+        }
         style={s.input}
         value={value}
         onChangeText={set}
@@ -743,7 +926,11 @@ export default function App() {
         setPassword={setPassword}
         submit={login}
         busy={loading || !hydrated}
-        error={user ? "This app requires a verified driver account." : loginError || error}
+        error={
+          user
+            ? "This app requires a verified driver account."
+            : loginError || error
+        }
         recover={driverRecover}
         setRecover={setDriverRecover}
         api={api}
@@ -776,1338 +963,1322 @@ export default function App() {
     notifications: "Notifications",
     more: "My Account",
     appearance: "Appearance",
+    products: "Discover",
+    detail: "Product details",
+    cart: "Shopping cart",
+    "customer-quotations": "Quotations",
+    "customer-testimonials": "Your feedback",
+    "combined-checkout": "Linked requests",
   };
   return (
-    <RemoteReadScope scope={`${user?.id ?? "guest"}:${token ?? "anonymous"}`}>
-    <ScreenCanvas style={[s.app, { backgroundColor: colors.background }]}>
-      {initialLinkResolved && introductionAudience(user ? (user.role ?? "unknown") : token ? "unverified" : null) !== "excluded" && (
-        <Onboarding key={user?.id ?? "guest"} request={intro} automatic={canAutoShowIntroduction({
-          role: user?.role, initialLinkResolved, home: screen === "home",
-          dedicatedStaffShell: driverShell || technicianShell,
-        })} />
-      )}
-      <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
-      {customerView && screen !== "home" && screen !== "login" && (
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            paddingHorizontal: 14,
-            paddingVertical: 8,
-            gap: 10,
-            borderBottomWidth: 1,
-            borderColor: colors.border,
-          }}
-        >
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Back"
-            onPress={() => {
-              if (!back()) setScreen("home");
-            }}
-            style={{ width: 44, height: 44, justifyContent: "center" }}
-          >
-            <Ionicons
-              accessible={false}
-              name="chevron-back"
-              size={25}
-              color={colors.text}
-            />
-          </Pressable>
-          <Text
-            preserveColor
-            style={{
-              fontSize: 20,
-              lineHeight: 27,
-              fontWeight: "800",
-              color: colors.text,
-              flex: 1,
-            }}
-          >
-            {headerTitle[screen] ?? "Your EasyGas"}
-          </Text>
-        </View>
-      )}
-      {!customerView &&
-        screen !== "login" &&
-        !(
-          screen === "home" &&
-          (!user || ["customer", "commercial"].includes(user.role))
-        ) && (
-          <View style={s.header}>
-            {screen !== "home" && (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Back"
-                onPress={() => {
-                  if (!back()) setScreen("home");
-                }}
-                style={{
-                  minWidth: 44,
-                  minHeight: 48,
-                  justifyContent: "center",
-                }}
-              >
-                <Ionicons
-                  accessible={false}
-                  name="chevron-back"
-                  size={25}
-                  color={colors.text}
-                />
-              </Pressable>
+    <RemoteReadScope
+      scope={`${user?.id ?? "guest"}:${user?.role ?? "public"}:${user?.branchId ?? user?.branch_id ?? ""}:${token ?? "anonymous"}`}
+    >
+      <NextDockContext.Provider value={setNextDock}>
+        <ScreenCanvas style={[s.app, { backgroundColor: colors.background }]}>
+          {initialLinkResolved &&
+            introductionAudience(
+              user ? (user.role ?? "unknown") : token ? "unverified" : null,
+            ) !== "excluded" && (
+              <Onboarding
+                key={user?.id ?? "guest"}
+                request={intro}
+                automatic={canAutoShowIntroduction({
+                  role: user?.role,
+                  initialLinkResolved,
+                  home: screen === "home",
+                  dedicatedStaffShell: driverShell || technicianShell,
+                })}
+              />
             )}
-            <View>
-              <View
-                style={{ width: 151, height: 50 }}
-                accessibilityLabel="EasyGas Energy Solutions"
-              >
-                <BrandLogo
-                  style={{ width: 151, height: 50 }}
-                />
-              </View>
-              <Text style={s.location}>More Cooking. Less Worry.</Text>
-            </View>
-            <Pressable onPress={() => setScreen(user ? "more" : "login")}>
-              <Text style={s.headerAction}>
-                {user ? user.name.split(" ")[0] : "Sign In"}
-              </Text>
-            </Pressable>
-          </View>
-        )}
-      <ScreenTitleContext.Provider
-        value={customerView ? (headerTitle[screen] ?? null) : null}
-      >
-        <ScreenTransition identity={screen}>
-        <ScrollView
-          ref={scrollRef}
-          contentContainerStyle={[
-            s.content,
-            fullWidthScreenContent,
-            !hydrated && { flexGrow: 1, justifyContent: "center" },
-            customerView && {
-              padding: 16,
-              width: "100%",
-              alignSelf: "stretch",
-            },
-          ]}
-          keyboardShouldPersistTaps="handled"
-          automaticallyAdjustKeyboardInsets
-          keyboardDismissMode="on-drag"
-        >
-          {error ? (
-            <View style={s.notice}>
-              <Text style={s.noticeText}>{friendlyMessage(error)}</Text>
-              {!catalogue &&
-                button("Retry connection", refreshCatalogue, true, loading)}
-            </View>
-          ) : null}
-          {!hydrated ? (
-            <EasyGasLoader variant="section" label="Loading EasyGas" />
-          ) : loading && (screen === "checkout" || (!catalogue && screen !== "orders" && screen !== "wallet")) ? (
-            <EasyGasLoader size="sm" variant="section" label="Refreshing EasyGas information" />
-          ) : null}
-          {!hydrated ? null : ["gas-order", "combined-checkout", "products", "checkout"].includes(
-            screen,
-          ) && !catalogue ? (
-            loading ? null : <View style={s.notice}>
-              <Text style={s.title}>Catalogue unavailable</Text>
-              <Text style={s.body}>
-                Reconnect and retry to check current prices and availability
-                before ordering.
-              </Text>
-              {button("Retry catalogue", refreshCatalogue, true, loading)}
-            </View>
-          ) : screen==='entry-link'&&!user ? (
-            <NativeEntryScreen api={(a,d)=>api(a,d,null)} entry={entryLink} origin={origin} onEntry={setEntryLink} onClose={()=>{setEntryLink(null);setScreen('login')}} onPolicies={()=>setScreen('public-policies')} onSession={async result=>{const me=await api('me',undefined,result.token);if(me.user.id!==result.customerId||!['customer','commercial'].includes(me.user.role)){await api('logout',{},result.token);throw Error('The completed account does not match this invitation.');}await SecureStore.setItemAsync('easygas.session',result.token);clearPrivateState();setToken(result.token);setUser(me.user);setOrderFilter(result.orderId);setScreen('orders');}}/>
-          ) : screen==='public-info' ? (
-            <NativeServiceInfo api={(a,d)=>api(a,d,null)} onBack={()=>setScreen(user?'more':'login')} onPolicies={()=>setScreen('public-policies')}/>
-          ) : screen==='public-policies' ? (
-            <NativePublicPolicies api={(a,d)=>api(a,d,null)} onBack={()=>setScreen(user?'more':entryLink?'entry-link':'login')}/>
-          ) : screen === "gas-order" ? (
-            <GasOrder
-              key={user?.id ?? "guest"}
-              viewServices={() => setScreen("services")}
-              onPlaced={(orderId) => {
-                setCart([]);
-                void offerCheckoutDetails(orderId);
-              }}
-              api={api}
-              catalogue={catalogue}
+          <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
+          {screen !== "login" && (
+            <NextHeader
+              home={screen === "home"}
+              title={
+                headerTitle[screen] ??
+                (screen.startsWith("workspace:")
+                  ? nativeWorkspaces[screen.slice(10)]?.title
+                  : screen === "native-workspaces" ||
+                      screen === "customer-workspaces"
+                    ? "Workspaces"
+                    : screen === "finance-work"
+                      ? "Finance workspace"
+                      : "Your EasyGas")
+              }
               user={user}
-              cart={cart}
-              done={() => {
-                setCart([]);
-                setScreen("orders");
+              onBack={() => {
+                if (!back()) setScreen("home");
               }}
-            />
-          ) : screen === "combined-checkout" ? (
-            <CombinedCheckout
-              key={user?.id ?? "guest"}
-              orderGas={() => setScreen("gas-order")}
-              api={api}
-              user={user}
-              cart={cart}
-              catalogue={catalogue}
-              done={(orderId) => {
-                setCart([]);
-                void offerCheckoutDetails(orderId);
-                setScreen("bookings");
-              }}
-            />
-          ) : user && ["owner","manager","finance"].includes(user.role) && (screen === "native-workspaces" || screen.startsWith("workspace:")) ? (
-            <NativeBusinessWorkspace key={user.id+screen} api={api} user={user} moduleKey={screen.startsWith("workspace:")?screen.slice(10):undefined} scope={nativeScope} navigate={setScreen}/>
-          ) : screen === "services" || screen === "bookings" ? (
-            <Services
-              key={screen + ":" + (user?.id ?? "guest")}
-              backRef={serviceBack}
-              initialServiceId={screen === "services" ? initialServiceId : undefined}
-              onSignIn={(serviceId) => {
-                pendingServiceSignIn.current = serviceId;
-                setScreen("login");
-              }}
-              api={api}
-              user={user}
-              onHelp={()=>navigateCustomer("conversations")}
-              bookingsOnly={screen === "bookings"}
-              token={token}
-              apiUrl={origin}
-              onBundle={(b) =>
-                setCart(
-                  b.products.map((p: any) => ({
-                    productId: p.productId,
-                    quantity: p.quantity,
-                  })),
+              onWork={() =>
+                setScreen(
+                  customerView ? "customer-workspaces" : "native-workspaces",
                 )
               }
-              onStage={() => setScreen("combined-checkout")}
-            />
-          ) : screen === "cylinders" ? (
-            user ? (
-              <Cylinders key={user.id} api={api} navigate={navigateCustomer} />
-            ) : (
-              <Text>Sign in to view your cylinders.</Text>
-            )
-          ) : screen === "notifications" ? (
-            user ? (
-              <CustomerNotifications
-                key={user.id}
-                api={api}
-                navigate={navigateCustomer}
-                onOrder={(id) => {
-                  setOrderFilter(id);
-                  setScreen("orders");
-                }}
-              />
-            ) : (
-              <Text>Sign in to view notifications.</Text>
-            )
-          ) : ["consumption", "smart-refill"].includes(screen) && user && customerView ? (
-            <CookingGasProfiles
-              key={`${user.id}:${user.role}:${user.branchId}:${screen}`}
-              api={api}
-              smart={screen === "smart-refill"}
-              onPreferences={() => navigateCustomer("profile")}
-              onOrderGas={() => navigateCustomer("gas-order")}
-              onOrders={(id) => {
-                setOrderFilter(id ?? null);
-                setScreen("orders");
-              }}
-              onOffer={(offer) => {
-                setRewardPoints(String(offer.points));
-                setRewardOfferId(offer.id);
-                setKey(null);
-                setScreen(cart.length ? "checkout" : "products");
-              }}
-            />
-          ) : [
-              "profile",
-              "credit",
-              "plans",
-              "recovery",
-              "recurring",
-              "notifications",
-            ].includes(screen) ? (
-            <>
-              {["plans", "recurring"].includes(screen) && (
-                <NativeSmartOffers
-                  api={api}
-                  onOffer={(o) => {
-                    setRewardPoints(String(o.points));
-                    setRewardOfferId(o.id);
-                    setKey(null);
-                    setScreen(cart.length ? "checkout" : "products");
-                  }}
-                />
-              )}
-              <Workflows
-                key={`${user?.id ?? "guest"}:${screen}`}
-                screen={screen}
-                api={api}
-              />
-            </>
-          ) : screen === "login" ? (
-            <>
-              <View
-                style={{
-                  alignItems: "center",
-                  marginTop: 35,
-                  marginBottom: 25,
-                }}
-              >
-                <BrandLogo
-                  style={{
-                    width: 245,
-                    height: 82,
-                  }}
-                />
-              </View>
-              <Text style={s.title}>
-                {register ? "Make yourself at home." : "Welcome back."}
-              </Text>
-              <Text style={s.body}>More Cooking. Less Worry.</Text>
-              {register &&
-                field("Full name", name, setName, { autoComplete: "name" })}
-              {field(register ? "Email address" : "Email or phone number", identifier, setIdentifier, {
-                autoCapitalize: "none",
-                autoCorrect: false,
-                keyboardType: register ? "email-address" : "default",
-                autoComplete: register ? "email" : "username",
-              })}
-              {field(passwordChangeRequired ? "Temporary password" : "Password", password, setPassword, {
-                secureTextEntry: true,
-                autoComplete: register ? "new-password" : "current-password",
-              })}
-              {passwordChangeRequired && (
-                <>
-                  <Text style={s.caption}>Choose a new password to finish your first sign-in.</Text>
-                  {field("New password", newPassword, setNewPassword, {
-                    secureTextEntry: true,
-                    autoComplete: "new-password",
-                  })}
-                </>
-              )}
-              {register && (
-                <Text style={s.caption}>
-                  Use at least {PASSWORD_MIN_LENGTH} characters. No role selection is required.
-                </Text>
-              )}
-              {loginError ? (
-                <View style={s.notice}>
-                  <Text accessibilityRole="alert" style={s.noticeText}>
-                    {friendlyMessage(loginError)}
-                  </Text>
-                </View>
-              ) : null}
-              {button(
-                passwordChangeRequired ? "Change Password & Sign In" : register ? "Create Account" : "Sign In",
-                login,
-                false,
-                loading || !hydrated,
-              )}
-              {button(
-                register
-                  ? "Already a member? Sign in"
-                  : "New to EasyGas? Create an account",
-                () => {
-                  setLoginError("");
-                  setPasswordChangeRequired(false);
-                  setNewPassword("");
-                  setRegister(!register);
-                },
-                true,
-              )}
-              {button("Forgot password?", () => {
-                setPassword("");
-                setNewPassword("");
-                setPasswordChangeRequired(false);
-                setScreen("recovery");
-              }, true)}
-              {button('Open an account link',()=>{setEntryLink(null);setScreen('entry-link')},true)}
-              {button('Policies & terms',()=>setScreen('public-policies'),true)}
-              {button('About & delivery',()=>setScreen('public-info'),true)}
-            </>
-          ) : screen === "payment" ? (
-            <NativePaymentReturn api={api} intentId={orderFilter} />
-          ) : screen === "invoices" ? (
-            user ? (
-              <Invoices
-                key={user.id}
-                api={api}
-                origin={origin}
-                token={token}
-                userId={user.id}
-              />
-            ) : (
-              <Text>Sign in to view your invoices.</Text>
-            )
-          ) : screen === "appearance" ? (
-            <>
-              <Text style={s.title}>Appearance</Text>
-              <Text style={s.body}>
-                This device preference follows you between sessions. System
-                follows your device settings.
-              </Text>
-              {(["light", "dark", "system"] as const).map((value) => (
-                <Pressable
-                  key={value}
-                  accessibilityRole="radio"
-                  accessibilityState={{ checked: preference === value }}
-                  onPress={() =>
-                    setPreference(value).catch(() =>
-                      setError("Could not save appearance. Please try again."),
-                    )
-                  }
-                  style={[
-                    s.menuItem,
-                    {
-                      backgroundColor: colors.surface,
-                      borderColor: colors.border,
-                      minHeight: 56,
-                    },
-                  ]}
-                >
-                  <Text style={{ color: colors.text }}>
-                    {value[0].toUpperCase() + value.slice(1)}
-                  </Text>
-                  <Text style={{ color: colors.primary }}>
-                    {preference === value ? "●" : "○"}
-                  </Text>
-                </Pressable>
-              ))}
-              {customerView && button(
-                "View introduction",
-                () => setIntro((value) => ({ revision: value.revision + 1, preview: false })),
-                true,
-              )}
-            </>
-          ) : screen === "home" &&
-            (!user || ["customer", "commercial"].includes(user.role)) ? (
-            <>
-              <CustomerHome
-                key={user?.id ?? "guest"}
-                user={user}
-                api={api}
-                navigate={(destination) =>
-                  navigateCustomer(destination === "consumption" ? "smart-refill" : destination)
-                }
-              />
-              {!user && !token && initialLinkResolved && button(
-                "Take a quick EasyGas tour",
-                () => setIntro((value) => ({ revision: value.revision + 1, preview: true })),
-                true,
-              )}
-            </>
-          ) : screen === "home" ? (
-            <>
-              {user?.role !== "owner" && <Text style={s.title}>{staffHomeTitles[user?.role] ?? "Staff Workspace"}</Text>}
-              {user?.role === "owner" && ownerWorkspace("home")}
-              {user?.role === "manager" && <OwnerOverview key={user.id} api={api} branchManager />}
-              {user?.role === "manager" && button("Dispatch Centre", () => setScreen("branch-dispatch"))}
-
-              <Text style={s.body}>{user?.name}</Text>
-              {user?.role === "finance" && <>
-                <FinanceOverview key={user.id} api={api} />
-                {button("Audit History", () => setScreen("owner-audit"))}
-                {button("Inventory workspace", () => {
-                  openNativeWorkspace("/admin/inventory");
-                })}
-              </>}
-              {user?.role === "manager" && button("Find a customer", () => setScreen("sales-customers"), true)}
-              {canOpenRetailPos(user?.role) &&
-                button("Retail POS", () => setScreen("retail-pos"))}
-              {user && ["owner", "manager", "finance"].includes(user.role) &&
-                button("Technicians & Availability", () => setScreen("technicians-management"))}
-              {user&&["owner","manager","finance"].includes(user.role)&&button("Workspaces",()=>setScreen("native-workspaces"))}
-              {button("Account", () => setScreen("more"), true)}
-            </>
-          ) : screen === "products" ? (
-            <>
-              <Text style={s.title}>For your kitchen.</Text>
-              {field("Search products", search, setSearch, {
-                placeholder: "Search gas and accessories…",
-              }, null)}
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={{ marginVertical: 15 }}
-              >
-                {["All", ...(catalogue?.categories ?? [])].map((c) => (
-                  <Pressable
-                    key={c}
-                    onPress={() => setCategory(c)}
-                    style={[s.chip, category === c && s.activeChip]}
-                  >
-                    <Text
-                      style={{
-                        color: category === c ? "white" : "#667560",
-                        fontSize: 15,
-                      }}
-                    >
-                      {c}
-                    </Text>
-                  </Pressable>
-                ))}
-              </ScrollView>
-              <View style={s.productGrid}>
-                {products
-                  .filter(
-                    (p: any) =>
-                      (category === "All" || p.category === category) &&
-                      p.name.toLowerCase().includes(search.toLowerCase()),
-                  )
-                  .map((p: any) => (
-                    <Pressable
-                      style={s.product}
-                      key={p.id}
-                      onPress={() => {
-                        setDetail(p);
-                        setScreen("detail");
-                      }}
-                    >
-                      {art(p)}
-                      <Text style={s.productName}>{p.name}</Text>
-                      <Text style={s.productPrice}>
-                        {currency(p.price_kobo)}
-                      </Text>
-                      <Text style={s.caption}>
-                        {p.published && p.available
-                          ? "Available"
-                          : "Being prepared for sale"}
-                      </Text>
-                    </Pressable>
-                  ))}
-              </View>
-              <Text style={s.caption}>
-                Product visuals are illustrative. Live prices are
-                business-approved.
-              </Text>
-            </>
-          ) : screen === "detail" && detail ? (
-            <>
-              {art(detail, true)}
-              <Text style={s.title}>{detail.name}</Text>
-              <Text style={s.price}>{currency(detail.price_kobo)}</Text>
-              <Text style={s.body}>{detail.description}</Text>
-              <Text style={s.body}>SKU: {detail.sku}</Text>
-              {detail.attributes?.specifications && (
-                <Text style={s.body}>{detail.attributes.specifications}</Text>
-              )}
-              {detail.attributes?.warranty && (
-                <Text style={s.body}>
-                  Warranty: {detail.attributes.warranty}
-                </Text>
-              )}
-              {detail.attributes?.installationRequired && (
-                <Text style={s.body}>Professional installation required.</Text>
-              )}
-              {detail.images?.slice(1).map((m: any) => (
-                <Image
-                  key={m.id}
-                  accessibilityLabel={m.alt}
-                  source={{ uri: origin + "/api/media/" + m.id }}
-                  style={{ width: "100%", height: 200, resizeMode: "contain" }}
-                />
-              ))}
-              <NativeCompatibility api={api} productId={detail.id} />
-              {products
-                .filter(
-                  (v: any) =>
-                    (detail.parent_id
-                      ? v.parent_id === detail.parent_id ||
-                        v.id === detail.parent_id
-                      : v.parent_id === detail.id) && v.id !== detail.id,
+              onNotifications={() =>
+                navigateCustomer(
+                  customerView ? "notifications" : "owner-notifications",
                 )
-                .map((v: any) => (
-                  <Pressable
-                    key={v.id}
-                    accessibilityRole="button"
-                    onPress={() => setDetail(v)}
-                  >
-                    <Text style={s.body}>
-                      {v.name} · {currency(v.price_kobo)}
-                    </Text>
-                  </Pressable>
-                ))}
-              <View style={s.notice}>
-                <Text style={s.noticeText}>
-                  {detail.published && detail.available
-                    ? "Available for delivery."
-                    : "Availability is being confirmed."}
-                </Text>
-              </View>
-              {button(
-                "Add to Cart",
-                () => add(detail),
-                false,
-                !detail.published || !detail.available || !detail.price_kobo,
-              )}
-              {button("Back to Products", () => setScreen("products"), true)}
-              <Text style={s.sectionTitle}>Care for your kitchen.</Text>
-              <Text style={s.body}>{detail.safety}</Text>
-            </>
-          ) : screen === "cart" ? (
-            <>
-              <Text style={s.title}>Your next good meal.</Text>
-              {cart.length ? (
-                cart.map((i) => {
-                  const p = products.find((p: any) => p.id === i.productId);
-                  return (
-                    <View style={s.cartRow} key={i.productId}>
-                      {art(p)}
-                      <View style={{ flex: 1 }}>
-                        <Text style={s.productName}>{p.name}</Text>
-                        <Text>
-                          {i.quantity} × {currency(p.price_kobo)}
-                        </Text>
-                        <Pressable
-                          onPress={() =>
-                            setCart(
-                              cart.filter((c) => c.productId !== i.productId),
-                            )
-                          }
-                        >
-                          <Text style={s.remove}>Remove</Text>
-                        </Pressable>
-                      </View>
-                    </View>
-                  );
-                })
-              ) : (
-                <View style={s.card}>
-                  <Text style={s.body}>
-                    Your cart is empty. Explore products to get started.
-                  </Text>
-                </View>
-              )}
-              {cart.length > 0 && (
-                <>
-                  <Text style={s.price}>
-                    Subtotal{" "}
-                    {currency(
-                      cart.reduce(
-                        (sum, i) =>
-                          sum +
-                          Number(
-                            products.find((p: any) => p.id === i.productId)
-                              ?.price_kobo ?? 0,
-                          ) *
-                            i.quantity,
-                        0,
-                      ),
-                    )}
-                  </Text>
-                  <Text style={s.body}>
-                    Delivery fee: {currency(catalogue?.deliveryFee ?? 0)}
-                  </Text>
-                  {button(
-                    user ? "Continue to Checkout" : "Sign In to Checkout",
-                    () => {
-                      if (!user) {
-                        setScreen("login");
-                        return;
-                      }
-                      setScreen("checkout");
-                    },
-                  )}
-                </>
-              )}
-            </>
-          ) : screen === "checkout" ? (
-            checkoutAddressId === undefined ? (
-              <EasyGasLoader variant="section" label="Loading your delivery details" />
-            ) : <>
-
-              <Text style={s.greeting}>ORDER → REVIEW → CONFIRM</Text>
-              <Text style={s.body}>
-                Payment availability follows the current server configuration. Only enabled methods
-                are shown below.
-              </Text>
-              <Text style={s.title}>Where are we delivering?</Text>
-              <Text style={s.body}>Edit the recipient, phone or address for this order.</Text>
-              {savedCheckoutAddresses.length > 0 && (
-                <View style={s.wrap}>
-                  {[...savedCheckoutAddresses, null].map((item) => (
-                    <Pressable
-                      key={item?.id ?? "new"}
-                      accessibilityRole="radio"
-                      accessibilityState={{ selected: checkoutAddressId === (item?.id ?? "") }}
-                      style={s.chip}
-                      onPress={() => {
-                        setCheckoutAddressId(item?.id ?? "");
-                        const { name, phone, street, zone } = checkoutDelivery(checkoutProfile, item ?? undefined, user?.name);
-                        setAddress({ name, phone, street, zone });
-                      }}
-                    >
-                      <Text>{item ? item.label : "Use a different address"}</Text>
-                    </Pressable>
-                  ))}
-                </View>
-              )}
-              {field("Recipient name", address.name, (v) =>
-                setAddress({ ...address, name: v }),
-              )}
-              {field(
-                "Nigerian mobile number",
-                address.phone,
-                (v) => setAddress({ ...address, phone: v }),
-                { keyboardType: "phone-pad" },
-              )}
-              {field("Street address", address.street, (v) =>
-                setAddress({ ...address, street: v }),
-              )}
-              <FieldCaption style={s.label} required={true}>Delivery area</FieldCaption>
-              <View style={s.wrap}>
-                {(catalogue?.zones ?? []).map((z: string) => (
-                  <Pressable
-                    style={[s.chip, address.zone === z && s.activeChip]}
-                    key={z}
-                    onPress={() => setAddress({ ...address, zone: z })}
-                  >
-                    <Text
-                      style={{
-                        color: address.zone === z ? "white" : "#52614c",
-                      }}
-                    >
-                      {z}
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
-              {field("Delivery date (YYYY-MM-DD)", date, setDate, {
-                placeholder: "2026-11-01",
-              })}
-              <FieldCaption style={s.label} required={true}>Delivery window</FieldCaption>
-              <View style={s.wrap}>
-                {(catalogue?.windows ?? []).map((w: string) => (
-                  <Pressable
-                    style={[s.chip, window === w && s.activeChip]}
-                    key={w}
-                    onPress={() => setWindow(w)}
-                  >
-                    <Text style={{ color: window === w ? "white" : "#52614c" }}>
-                      {w}
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
-              <NativeRewardSelector
-                api={api}
-                initialValue={{
-                  rewardPoints: rewardPoints ? Number(rewardPoints) : undefined,
-                  rewardOfferId,
-                }}
-                onChange={(value) => {
-                  setRewardPoints(
-                    value.rewardPoints ? String(value.rewardPoints) : "",
-                  );
-                  setRewardOfferId(value.rewardOfferId ?? "");
-                  setKey(null);
-                }}
-              />
-              {checkoutPayments.options.map(option => button(option.label, () => {
-                setPaymentMethod(option.value); setKey(null);
-              }, paymentMethod !== option.value))}
-              <CheckoutWalletBalance payments={checkoutPayments} selected={paymentMethod} />
-              {button(
-                "Place Order",
-                async () => {
-                  setLoading(true);
-                  try {
-                    const requestKey =
-                      key ?? (await import("expo-crypto")).randomUUID();
-                    setKey(requestKey);
-                    const o = await api("checkout", {
-                      source: "MOBILE",
-                      items: cart,
-                      address: { ...address, phone: bookingPhone(address.phone) ?? address.phone },
-                      date,
-                      window,
-                      instructions: "",
-                      ...(rewardOfferId ? { rewardOfferId } : {}),
-                      ...(rewardPoints
-                        ? { rewardPoints: Number(rewardPoints) }
-                        : {}),
-                      paymentMethod,
-                      idempotencyKey: requestKey,
-                    });
-                    setCart([]);
-                    setKey(null);
-                    EasyGasAlert.alert(
-                      "Order received",
-                      `${o.reference} · ${paymentMethod === "wallet" ? "Paid from your wallet balance" : paymentMethod === "card" ? "Card payment required — continue from My Orders" : "Payment due on delivery"}`,
-                    );
-                    void offerCheckoutDetails(o.id);
-                    setScreen("orders");
-                  } catch (e: any) {
-                    setError(e.message);
-                  } finally {
-                    setLoading(false);
-                  }
-                },
-                false,
-                loading ||
-                  !catalogue?.orderingEnabled ||
-                  !checkoutPayments.data?.methods.includes(paymentMethod),
-              )}
-            </>
-          ) : screen === "orders" && !visibleOrders ? (
-            error && !loading
-              ? button("Retry orders", () => retryOrders(value => value + 1), true)
-              : <EasyGasLoader variant="section" label="Loading orders" />
-          ) : screen === "orders" ? (
-            <>
-              {orderFilter &&
-                button("Show all orders", () => setOrderFilter(null), true)}
-              {!customerView && (
-                <Text style={s.title}>
-                  {driver ? "Assigned Deliveries" : "Orders"}
-                </Text>
-              )}
-              {driver && (
-                <DriverOperations
-                  key={user.id}
-                  api={api}
-                  user={user}
-                  origin={origin}
-                  token={token}
-                />
-              )}
-              {driver && pendingDeliveries.length > 0 && (
-                <View style={s.notice}>
-                  <Text style={s.noticeText}>
-                    {pendingDeliveries.length} delivery records await server
-                    verification. Offline records do not mark an order
-                    delivered.
-                  </Text>
-                  {button(
-                    syncing
-                      ? "Synchronising…"
-                      : "Synchronise pending deliveries",
-                    syncDeliveries,
-                    false,
-                    syncing,
-                  )}
-                  {pendingDeliveries.map((event) => (
-                    <View key={event.id}>
-                      <Text style={s.caption}>
-                        {event.error ?? "Awaiting connection"}
+              }
+              onAccount={() => setScreen("more")}
+            />
+          )}
+          <ScreenTitleContext.Provider
+            value={customerView ? (headerTitle[screen] ?? null) : null}
+          >
+            <ScreenTransition identity={screen}>
+              <ScrollView
+                ref={scrollRef}
+                contentContainerStyle={[
+                  s.content,
+                  fullWidthScreenContent,
+                  !hydrated && { flexGrow: 1, justifyContent: "center" },
+                  customerView && {
+                    padding: 22,
+                    width: "100%",
+                    alignSelf: "stretch",
+                  },
+                ]}
+                keyboardShouldPersistTaps="handled"
+                automaticallyAdjustKeyboardInsets
+                keyboardDismissMode="on-drag"
+              >
+                {error ? (
+                  <View style={s.notice}>
+                    <Text style={s.noticeText}>{friendlyMessage(error)}</Text>
+                    {!catalogue &&
+                      button(
+                        "Retry connection",
+                        refreshCatalogue,
+                        true,
+                        loading,
+                      )}
+                  </View>
+                ) : null}
+                {!hydrated ? (
+                  <EasyGasLoader variant="section" label="Loading EasyGas" />
+                ) : null}
+                {!hydrated ? null : [
+                    "gas-order",
+                    "combined-checkout",
+                    "products",
+                    "checkout",
+                  ].includes(screen) && !catalogue ? (
+                  loading ? null : (
+                    <View style={s.notice}>
+                      <Text style={s.title}>Catalogue unavailable</Text>
+                      <Text style={s.body}>
+                        Reconnect and retry to check current prices and
+                        availability before ordering.
                       </Text>
                       {button(
-                        "Discard this pending record",
-                        () =>
-                          EasyGasAlert.alert(
-                            "Discard pending delivery?",
-                            "This removes only the pending update on this device. The server order will not change. Review the delivery before discarding this update.",
-                            [
-                              { text: "Keep", style: "cancel" },
-                              {
-                                text: "Discard",
-                                style: "destructive",
-                                onPress: async () => {
-                                  const q = pendingDeliveries.filter(
-                                    (q) => q.id !== event.id,
-                                  );
-                                  await saveQueue(user.id, q);
-                                  setPendingDeliveries(q);
-                                },
-                              },
-                            ],
-                          ),
+                        "Retry catalogue",
+                        refreshCatalogue,
                         true,
+                        loading,
                       )}
                     </View>
-                  ))}
-                </View>
-              )}
-              {visibleOrders?.length ? (
-                visibleOrders.map((o) => (
-                  <View style={s.card} key={o.id}>
-                    {!driver &&
-                    user &&
-                    ["customer", "commercial"].includes(user.role) ? (
-                      <TrackingSummary
-                        order={o}
-                        onSupport={() => setScreen("conversations")}
-                      />
-                    ) : (
-                      <Text style={s.productName}>{o.reference}</Text>
-                    )}
-                    {customerView && o.payment_method === "card" && o.payment_status !== "verified" && !["cancelled", "delivered"].includes(o.status) && <NativeHostedPayment key={o.id} api={api} userId={user.id} purpose="order" orderId={o.id} />}
-                    <OrderVisit
+                  )
+                ) : screen === "entry-link" && !user ? (
+                  <NativeEntryScreen
+                    api={(a, d) => api(a, d, null)}
+                    entry={entryLink}
+                    origin={origin}
+                    onEntry={setEntryLink}
+                    onClose={() => {
+                      setEntryLink(null);
+                      setScreen("login");
+                    }}
+                    onPolicies={() => setScreen("public-policies")}
+                    onSession={async (result) => {
+                      const me = await api("me", undefined, result.token);
+                      if (
+                        me.user.id !== result.customerId ||
+                        !["customer", "commercial"].includes(me.user.role)
+                      ) {
+                        await api("logout", {}, result.token);
+                        throw Error(
+                          "The completed account does not match this invitation.",
+                        );
+                      }
+                      await SecureStore.setItemAsync(
+                        "easygas.session",
+                        result.token,
+                      );
+                      clearPrivateState();
+                      setToken(result.token);
+                      setUser(me.user);
+                      setOrderFilter(result.orderId);
+                      setScreen("orders");
+                    }}
+                  />
+                ) : screen === "public-info" ? (
+                  <NativeServiceInfo
+                    api={(a, d) => api(a, d, null)}
+                    onBack={() => setScreen(user ? "more" : "login")}
+                    onPolicies={() => setScreen("public-policies")}
+                  />
+                ) : screen === "public-policies" ? (
+                  <NativePublicPolicies
+                    api={(a, d) => api(a, d, null)}
+                    onBack={() =>
+                      setScreen(
+                        user ? "more" : entryLink ? "entry-link" : "login",
+                      )
+                    }
+                  />
+                ) : screen === "gas-order" ? (
+                  <GasOrder
+                    key={user?.id ?? "guest"}
+                    viewServices={() => setScreen("services")}
+                    backRef={serviceBack}
+                    onSignIn={(draft: any) => {
+                      checkoutGuestDraft.current = draft;
+                      pendingLink.current = { screen: "gas-order" };
+                      setScreen("login");
+                    }}
+                    initialDraft={checkoutGuestDraft.current}
+                    onLinkedRequests={() => setScreen("combined-checkout")}
+                    onStageChange={() =>
+                      scrollRef.current?.scrollTo({ y: 0, animated: false })
+                    }
+                    onPlaced={(orderId) => {
+                      setCart([]);
+                      setOrderFilter(orderId);
+                    }}
+                    api={api}
+                    catalogue={catalogue}
+                    user={user}
+                    cart={cart}
+                    done={() => {
+                      setCart([]);
+                      setScreen("orders");
+                    }}
+                  />
+                ) : screen === "combined-checkout" ? (
+                  <CombinedCheckout
+                    key={user?.id ?? "guest"}
+                    orderGas={() => setScreen("gas-order")}
+                    api={api}
+                    user={user}
+                    cart={cart}
+                    catalogue={catalogue}
+                    done={(orderId) => {
+                      setCart([]);
+                      setScreen("bookings");
+                    }}
+                  />
+                ) : user &&
+                  ["owner", "manager", "finance"].includes(user.role) &&
+                  (screen === "native-workspaces" ||
+                    screen.startsWith("workspace:")) ? (
+                  <NativeBusinessWorkspace
+                    key={user.id + screen}
+                    api={api}
+                    user={user}
+                    moduleKey={
+                      screen.startsWith("workspace:")
+                        ? screen.slice(10)
+                        : undefined
+                    }
+                    scope={nativeScope}
+                    navigate={setScreen}
+                  />
+                ) : screen === "services" || screen === "bookings" ? (
+                  <Services
+                    key={screen + ":" + (user?.id ?? "guest")}
+                    backRef={serviceBack}
+                    initialServiceId={
+                      screen === "services" ? initialServiceId : undefined
+                    }
+                    onSignIn={(serviceId) => {
+                      pendingServiceSignIn.current = serviceId;
+                      setScreen("login");
+                    }}
+                    api={api}
+                    user={user}
+                    onHelp={() => navigateCustomer("conversations")}
+                    bookingsOnly={screen === "bookings"}
+                    token={token}
+                    apiUrl={origin}
+                    onBundle={(b) =>
+                      setCart(
+                        b.products.map((p: any) => ({
+                          productId: p.productId,
+                          quantity: p.quantity,
+                        })),
+                      )
+                    }
+                    onStage={() => setScreen("combined-checkout")}
+                  />
+                ) : screen === "cylinders" ? (
+                  user ? (
+                    <Cylinders
+                      key={user.id}
                       api={api}
-                      order={o}
-                      driver={driver}
-                      user={user}
-                      origin={origin}
-                      token={token}
-                      onDone={reloadOrders}
+                      navigate={navigateCustomer}
                     />
-                    <Text style={s.sectionTitle}>
-                      {o.status.replaceAll("_", " ")}
-                    </Text>
-                    <Text style={s.body}>
-                      {(o.gas_lines ?? [])
-                        .map(
-                          (g: any) =>
-                            `${Number(g.grams) / 1000} kg gas (${Number(g.capacity_grams) / 1000} kg cylinder)`,
-                        )
-                        .join(", ")}{" "}
-                      {o.items
-                        .map((i: any) => `${i.quantity} × ${i.name}`)
-                        .join(", ")}
-                    </Text>
-                    <Text style={s.body}>
-                      {o.address.street}, {o.address.zone}
-                    </Text>
-                    <Text style={s.productPrice}>{currency(o.total_kobo)}</Text>
-                    <Text style={s.caption}>
-                      Payment: {o.payment_status}
-                    </Text>
-                    <CustomerOrderRefunds
-                      key={`${user.id}:${o.id}`}
+                  ) : (
+                    <Text>Sign in to view your cylinders.</Text>
+                  )
+                ) : screen === "notifications" ? (
+                  user ? (
+                    <CustomerNotifications
+                      key={user.id}
                       api={api}
-                      user={user}
-                      order={o}
+                      navigate={navigateCustomer}
+                      onOrder={(id) => {
+                        setOrderFilter(id);
+                        setScreen("orders");
+                      }}
                     />
-                    {o.confirmation_code &&
-                      !["delivered", "cancelled"].includes(o.status) && (
-                        <View style={s.notice}>
-                          <Text style={s.noticeText}>
-                            Delivery code: {o.confirmation_code}. Share only
-                            after receiving all your items.
-                          </Text>
-                        </View>
-                      )}
-                    {driver &&
-                      o.events.map((e: any, i: number) => (
-                        <Text style={s.event} key={i}>
-                          ✓ {e.status.replaceAll("_", " ")} ·{" "}
-                          {new Date(e.created_at).toLocaleString()}
-                        </Text>
-                      ))}
-                    {driver && (
-                      <View>
-                        <Text style={s.body}>
-                          Physical load to verify: {JSON.stringify(o.manifest)}
-                        </Text>
-                        {button("Open navigation", () =>
-                          Linking.openURL(
-                            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.address.street + ", " + o.address.zone)}`,
-                          ),
-                        )}
-                        <NativeForm
-                          api={(action, data) =>
-                            api(action, {
-                              ...data,
-                              version: Number(data.version),
-                              operationKey: trackingKey("delivery.help", o),
-                            })
-                          }
-                          action="delivery.help"
-                          key={`${o.id}:${o.tracking_version}:help`}
-                          title="Request dispatch help"
-                          fields={[
-                            {
-                              name: "orderId",
-                              label: "Order",
-                              type: "hidden",
-                              value: o.id,
-                            },
-                            {
-                              name: "version",
-                              label: "Version",
-                              type: "hidden",
-                              value: o.tracking_version,
-                            },
-                            {
-                              name: "reason",
-                              label:
-                                "Describe the delivery problem and assistance needed",
-                            },
-                          ]}
-                        />
-                      </View>
-                    )}
-                    {driver &&
-                      o.status === "out_for_delivery" &&
-                      o.attempt?.state === "picked_up" &&
-                      button("Mark arrived", async () => {
-                        try {
-                          await api("delivery.arrived", {
-                            orderId: o.id,
-                            version: o.tracking_version,
-                            operationKey: trackingKey("delivery.arrived", o),
-                            reason:
-                              "Driver confirms arrival at the assigned delivery address",
-                          });
-                          await reloadOrders();
-                        } catch (e: any) {
-                          setError(e.message);
-                        }
-                      })}
-                    {driver &&
-                      o.status === "assigned" &&
-                      o.attempt?.state === "assigned" && (
-                        <NativeForm
-                          api={(action, data) =>
-                            api(action, {
-                              ...data,
-                              version: Number(data.version),
-                              manifest: o.manifest,
-                              operationKey: trackingKey("delivery.pickup", o),
-                            })
-                          }
-                          action="delivery.pickup"
-                          key={`${o.id}:${o.tracking_version}:pickup`}
-                          title="Check physical pickup"
-                          recordVersion={o.tracking_version}
-                          fields={[
-                            {
-                              name: "orderId",
-                              label: "Order",
-                              type: "hidden",
-                              value: o.id,
-                            },
-                            {
-                              name: "version",
-                              label: "Version",
-                              type: "hidden",
-                              value: o.tracking_version,
-                            },
-                            {
-                              name: "reason",
-                              label:
-                                "Physical quantity and serial inspection notes",
-                            },
-                          ]}
-                          onDone={reloadOrders}
-                        />
-                      )}
-                    {driver &&
-                      o.status === "assigned" &&
-                      button(
-                        o.status === "assigned"
-                          ? "Confirm Pickup & Dispatch"
-                          : "Report Delivery Failure",
-                        async () => {
-                          try {
-                            await api("order.transition", {
-                              id: o.id,
-                              operationKey: trackingKey("order.transition", o),
-                              version: o.tracking_version,
-                              status:
-                                o.status === "assigned"
-                                  ? "out_for_delivery"
-                                  : "delivery_failed",
-                              note:
-                                o.status === "assigned"
-                                  ? "Driver confirmed collection and dispatch."
-                                  : "Driver reported unsuccessful delivery. Follow up required.",
-                            });
-                            await reloadOrders();
-                          } catch (e: any) {
-                            setError(e.message);
-                          }
-                        },
-                      )}
-                    {driver && o.status === "out_for_delivery" && (
-                      <DriverPhoto userId={user.id} orderId={o.id} />
-                    )}
-                    {driver && o.status === "out_for_delivery" && (
-                      <NativeForm
-                        key={`${o.id}:${o.tracking_version}:failure`}
-                        api={(action, data) =>
-                          api(action, {
-                            ...data,
-                            version: Number(data.version),
-                            operationKey: trackingKey("delivery.failure", o),
-                          })
-                        }
-                        action="order.transition"
-                        title="Report unsuccessful delivery"
-                        fields={[
-                          {
-                            name: "id",
-                            label: "Order",
-                            type: "hidden",
-                            value: o.id,
-                          },
-                          {
-                            name: "version",
-                            label: "Version",
-                            type: "hidden",
-                            value: o.tracking_version,
-                          },
-                          {
-                            name: "status",
-                            label: "State",
-                            type: "hidden",
-                            value: "delivery_failed",
-                          },
-                          {
-                            name: "failureReason",
-                            label: "Failure reason",
-                            options: deliveryFailureReasons.map((r) => ({
-                              value: r,
-                              label: r.replaceAll("_", " "),
-                            })),
-                          },
-                          {
-                            name: "note",
-                            label:
-                              "Evidence, observed problem and required next step",
-                          },
-                        ]}
-                        onDone={reloadOrders}
-                      />
-                    )}
-                    {driver && o.status === "out_for_delivery" && (
-                      <NativeDelivery
-                        order={o}
-                        submit={async (data) => {
-                          try {
-                            await api("delivery.complete", data);
-                            await reloadOrders();
-                          } catch (e: any) {
-                            if (e.status) throw e;
-                            const q = await enqueueDelivery(user.id, data);
-                            if (accountRef.current === user.id)
-                              setPendingDeliveries(q);
-                            EasyGasAlert.alert(
-                              "Saved for synchronisation",
-                              "Your update is saved securely on this device. Connect to the internet to sync it. The delivery remains unconfirmed until EasyGas verifies it.",
-                            );
-                          }
+                  ) : (
+                    <Text>Sign in to view notifications.</Text>
+                  )
+                ) : ["consumption", "smart-refill"].includes(screen) &&
+                  user &&
+                  customerView ? (
+                  <CookingGasProfiles
+                    key={`${user.id}:${user.role}:${user.branchId}:${screen}`}
+                    api={api}
+                    smart={screen === "smart-refill"}
+                    onPreferences={() => navigateCustomer("profile")}
+                    onOrderGas={() => navigateCustomer("gas-order")}
+                    onOrders={(id) => {
+                      setOrderFilter(id ?? null);
+                      setScreen("orders");
+                    }}
+                    onOffer={(offer) => {
+                      setRewardPoints(String(offer.points));
+                      setRewardOfferId(offer.id);
+                      setKey(null);
+                      setScreen(cart.length ? "checkout" : "products");
+                    }}
+                  />
+                ) : [
+                    "profile",
+                    "credit",
+                    "plans",
+                    "recovery",
+                    "recurring",
+                    "notifications",
+                  ].includes(screen) ? (
+                  <>
+                    {["plans", "recurring"].includes(screen) && (
+                      <NativeSmartOffers
+                        api={api}
+                        onOffer={(o) => {
+                          setRewardPoints(String(o.points));
+                          setRewardOfferId(o.id);
+                          setKey(null);
+                          setScreen(cart.length ? "checkout" : "products");
                         }}
                       />
                     )}
-                  </View>
-                ))
-              ) : (
-                <View style={s.card}>
-                  <Text style={s.sectionTitle}>
-                    Your first delivery is still ahead.
-                  </Text>
-                  <Text style={s.body}>
-                    Real order updates will appear here.
-                  </Text>
-                </View>
-              )}
-            </>
-          ) : screen === "rewards" && user && customerView ? (
-            <NativeEasyRewards
-              key={`${user.id}:${user.role}:${user.branchId}`}
-              api={api}
-              onBookings={() => setScreen("bookings")}
-              onProducts={() => setScreen("products")}
-              onHelp={() => setScreen("conversations")}
-              onOrder={(id) => {
-                setOrderFilter(id);
-                setScreen("orders");
-              }}
-              onOffer={(o) => {
-                setRewardPoints(String(o.points));
-                setRewardOfferId(o.id);
-                setKey(null);
-                setScreen(cart.length ? "checkout" : "products");
-              }}
-            />
-          ) : screen === "wallet" && !wallet ? (
-            error && !loading
-              ? button("Retry wallet", () => retryWallet(value => value + 1), true)
-              : <EasyGasLoader variant="section" label="Loading wallet" />
-          ) : screen === "wallet" &&
-            user &&
-            ["customer", "commercial"].includes(user.role) ? (
-            <CustomerWallet
-              key={user.id}
-              wallet={wallet}
-              api={api}
-              userId={user.id}
-              navigate={navigateCustomer}
-              reload={async () => setWallet(await api("wallet"))}
-            />
-          ) : screen === "wallet" ? (
-            <>
-              <Text style={s.title}>My Wallet</Text>
-              <View style={s.balance}>
-                <Text style={{ color: "#e3efdf" }}>
-                  EasyGas purchase credit
-                </Text>
-                <Text style={s.balanceNumber}>
-                  {currency(wallet.balanceKobo)}
-                </Text>
-              </View>
-              <View style={s.notice}>
-                <Text style={s.noticeText}>
-                  Check Wallet &amp; Credit for available funding methods and verified credits.
-                </Text>
-              </View>
-              {wallet?.entries.map((e: any) => (
-                <View style={s.card} key={e.id}>
-                  <Text style={s.productName}>{e.kind}</Text>
-                  <Text>{currency(e.amount_kobo)}</Text>
-                  <Text style={s.caption}>{e.reference}</Text>
-                </View>
-              ))}
-            </>
-          ) : screen === "more" &&
-            user &&
-            ["customer", "commercial"].includes(user.role) ? (
-            <AccountHub
-              key={user.id}
-              user={user}
-              api={api}
-              navigate={navigateCustomer}
-              logout={logout}
-            />
-          ) : user && ["owner","manager","finance"].includes(user.role) && screen === "owner-notifications" ? (
-            <CustomerNotifications key={user.id + screen} api={api}
-              onBack={() => setScreen("more")}
-              openOrderLink={(path) => {
-                openNativeWorkspace(path);
-              }} />
-          ) : user && ["owner","manager","finance"].includes(user.role) && screen === "owner-profile" ? (
-            <OwnerSupportWorkspace key={user.id + screen} user={user} screen={screen} api={api} navigate={setScreen} signOut={logout} />
-          ) : user && (user.role === "owner" || (user.role === "finance" && screen === "owner-audit")) && isOwnerGovernanceScreen(screen) ? (
-            <OwnerGovernanceWorkspace key={user.id + screen} user={user} screen={screen} api={api} navigate={setScreen} />
-          ) : user?.role === "owner" && screen === "owner-operations" ? (
-            <>
-              {ownerWorkspace("operations")}
-              <FleetLocations key={user.id + ownerScope.branchId} api={api} branchId={ownerScope.branchId} />
-            </>
-          ) : user?.role === "owner" && screen === "owner-approvals" ? (
-            <OwnerApprovals api={api} branchId={ownerScope.branchId} />
-          ) : user?.role === "owner" && screen === "owner-finance" ? (
-            ownerWorkspace("finance")
-          ) : user?.role === "owner" && screen === "owner-reports" ? (
-            ownerWorkspace("reports")
-          ) : screen === "technicians-management" && user && ["owner", "manager", "finance"].includes(user.role) ? (
-            <TechniciansManagement key={user.id} user={user} api={api} />
-          ) : screen === "branch-dispatch" && user?.role === "manager" ? (
-            <FleetLocations key={user.id + user.branchId} api={api} standalone />
-          ) : screen === "sales-customers" && user?.role === "manager" ? (
-            <SalesCustomerLookup key={user.id} api={api} />
-          ) : screen === "retail-pos" && canOpenRetailPos(user?.role) ? (
-            <RetailPos key={user.id} api={api} />
-          ) : screen === "support" || screen === "conversations" ? (
-            user ? <MobileSupportInbox key={user.id} api={api} imageSource={id => ({ uri: `${origin}/api/media/${id}`, headers: { Authorization: `Bearer ${token}` }, cache: "reload" })} /> : <Text>Sign in to contact support.</Text>
-          ) : (
-            <>
-              <Text style={s.greeting}>MY ACCOUNT</Text>
-              <Text style={s.title}>{user?.name ?? "Your EasyGas"}</Text>
-              <Text style={s.body}>{user?.email}</Text>
-              {user&&["owner","manager","finance"].includes(user.role)&&button("Workspaces",()=>setScreen("native-workspaces"))}
-              {user?.role === "owner" && button("Financial Summary", () => setScreen("owner-finance"))}
-              {user?.role === "owner" && button("Management & Governance", () => setScreen("owner-governance"))}
-              {user && ["owner","manager","finance"].includes(user.role) && button("Profile & Security", () => setScreen("owner-profile"))}
-              {user && ["owner","manager","finance"].includes(user.role) && button("Notifications", () => setScreen("owner-notifications"))}
-              {canOpenRetailPos(user?.role) && button("Retail POS", () => setScreen("retail-pos"))}
-              {user && ["owner", "manager", "finance"].includes(user.role) && button("Technicians & Availability", () => setScreen("technicians-management"))}
-              {[
-                ["Appearance", "appearance"],
-                ["Policies & terms", "public-policies"],
-                ["About & delivery", "public-info"],
-                ["Browse Products", "products"],
-                ["Shopping Cart", "cart"],
-                ["Book a Service", "services"],
-                ["Products & Appointments", "combined-checkout"],
-                ["My Service Bookings", "bookings"],
-                ["Notifications", "notifications"],
-                ["My Orders", "orders"],
-                ["My Wallet", "wallet"],
-                ["My Rewards", "rewards"],
-                ["Help & Support", "conversations"],
-                ["Account & privacy", "profile"],
-                ["Cooking gas profiles", "consumption"],
-                ["Refill plans", "plans"],
-                ["Recurring orders", "recurring"],
-                ["Credit & redemption", "credit"],
-              ].filter(([, dest]) => customerView || ["appearance","public-policies","public-info"].includes(dest)).map(([text, dest]) => (
-                <Pressable
-                  style={s.menuItem}
-                  key={dest}
-                  onPress={() =>
-                    setScreen(user || dest === "appearance" ? dest : "login")
-                  }
-                >
-                  <Text>{text}</Text>
-                  <Text>›</Text>
-                </Pressable>
-              ))}
-              {user && button("Sign Out", logout, true)}
-            </>
-          )}
-        </ScrollView>
-        </ScreenTransition>
-      </ScreenTitleContext.Provider>
-      <View style={s.bottomNav}>
-        {(user?.role === "owner" ? [["Home", "home"], ["Operations", "owner-operations"], ["Approvals", "owner-approvals"], ["Reports", "owner-reports"], ["More", "more"]] : user?.role === "manager" ? [["Home", "home"], ["Dispatch", "branch-dispatch"], ["Customers", "sales-customers"], ["POS", "retail-pos"], ["Account", "more"]] : driver || (user && !["customer", "commercial"].includes(user.role))
-          ? [
-              ["Home", "home"],
-              ["Account", "more"],
-            ]
-          : [
-              ["Home", "home"],
-              ["Orders", "orders"],
-              ["Services", "services"],
-              ["Wallet", "wallet"],
-              ["Account", "more"],
-            ]
-        ).map(([text, dest]) => (
-          <Pressable
-            key={dest}
-            accessibilityRole="tab"
-            accessibilityLabel={text}
-            accessibilityState={{ selected: screen === dest }}
-            style={[s.navItem, { minHeight: 56 }]}
-            onPress={() =>
-              customerView ? navigateCustomer(dest) : setScreen(dest)
+                    <Workflows
+                      key={`${user?.id ?? "guest"}:${screen}`}
+                      screen={screen}
+                      api={api}
+                    />
+                  </>
+                ) : screen === "login" ? (
+                  <>
+                    <View
+                      style={{
+                        alignItems: "center",
+                        marginTop: 35,
+                        marginBottom: 25,
+                      }}
+                    >
+                      <BrandLogo
+                        style={{
+                          width: 245,
+                          height: 82,
+                        }}
+                      />
+                    </View>
+                    <Text style={s.title}>
+                      {register ? "Make yourself at home." : "Welcome back."}
+                    </Text>
+                    <Text style={s.body}>More Cooking. Less Worry.</Text>
+                    {register &&
+                      field("Full name", name, setName, {
+                        autoComplete: "name",
+                      })}
+                    {field(
+                      register ? "Email address" : "Email or phone number",
+                      identifier,
+                      setIdentifier,
+                      {
+                        autoCapitalize: "none",
+                        autoCorrect: false,
+                        keyboardType: register ? "email-address" : "default",
+                        autoComplete: register ? "email" : "username",
+                      },
+                    )}
+                    {field(
+                      passwordChangeRequired
+                        ? "Temporary password"
+                        : "Password",
+                      password,
+                      setPassword,
+                      {
+                        secureTextEntry: true,
+                        autoComplete: register
+                          ? "new-password"
+                          : "current-password",
+                      },
+                    )}
+                    {passwordChangeRequired && (
+                      <>
+                        <Text style={s.caption}>
+                          Choose a new password to finish your first sign-in.
+                        </Text>
+                        {field("New password", newPassword, setNewPassword, {
+                          secureTextEntry: true,
+                          autoComplete: "new-password",
+                        })}
+                      </>
+                    )}
+                    {register && (
+                      <Text style={s.caption}>
+                        Use at least {PASSWORD_MIN_LENGTH} characters. No role
+                        selection is required.
+                      </Text>
+                    )}
+                    {loginError ? (
+                      <View style={s.notice}>
+                        <Text accessibilityRole="alert" style={s.noticeText}>
+                          {friendlyMessage(loginError)}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {button(
+                      passwordChangeRequired
+                        ? "Change Password & Sign In"
+                        : register
+                          ? "Create Account"
+                          : "Sign In",
+                      login,
+                      false,
+                      loading || !hydrated,
+                    )}
+                    {button(
+                      register
+                        ? "Already a member? Sign in"
+                        : "New to EasyGas? Create an account",
+                      () => {
+                        setLoginError("");
+                        setPasswordChangeRequired(false);
+                        setNewPassword("");
+                        setRegister(!register);
+                      },
+                      true,
+                    )}
+                    {button(
+                      "Forgot password?",
+                      () => {
+                        setPassword("");
+                        setNewPassword("");
+                        setPasswordChangeRequired(false);
+                        setScreen("recovery");
+                      },
+                      true,
+                    )}
+                    {button(
+                      "Open an account link",
+                      () => {
+                        setEntryLink(null);
+                        setScreen("entry-link");
+                      },
+                      true,
+                    )}
+                    {button(
+                      "Policies & terms",
+                      () => setScreen("public-policies"),
+                      true,
+                    )}
+                    {button(
+                      "About & delivery",
+                      () => setScreen("public-info"),
+                      true,
+                    )}
+                  </>
+                ) : screen === "payment" ? (
+                  <NativePaymentReturn api={api} intentId={orderFilter} />
+                ) : screen === "customer-quotations" && user && customerView ? (
+                  <CustomerNextQuotations
+                    api={api}
+                    user={user}
+                    origin={origin}
+                    token={token}
+                  />
+                ) : screen === "customer-testimonials" &&
+                  user &&
+                  customerView ? (
+                  <CustomerNextTestimonials
+                    key={user.id}
+                    api={api}
+                    user={user}
+                    origin={origin}
+                    token={token}
+                  />
+                ) : screen === "invoices" ? (
+                  user ? (
+                    <Invoices
+                      key={user.id}
+                      api={api}
+                      origin={origin}
+                      token={token}
+                      userId={user.id}
+                    />
+                  ) : (
+                    <Text>Sign in to view your invoices.</Text>
+                  )
+                ) : screen === "appearance" ? (
+                  <>
+                    <Text style={s.title}>Appearance</Text>
+                    <Text style={s.body}>
+                      This device preference follows you between sessions.
+                      System follows your device settings.
+                    </Text>
+                    {(["light", "dark", "system"] as const).map((value) => (
+                      <Pressable
+                        key={value}
+                        accessibilityRole="radio"
+                        accessibilityState={{ checked: preference === value }}
+                        onPress={() =>
+                          setPreference(value).catch(() =>
+                            setError(
+                              "Could not save appearance. Please try again.",
+                            ),
+                          )
+                        }
+                        style={[
+                          s.menuItem,
+                          {
+                            backgroundColor: colors.surface,
+                            borderColor: colors.border,
+                            minHeight: 56,
+                          },
+                        ]}
+                      >
+                        <Text style={{ color: colors.text }}>
+                          {value[0].toUpperCase() + value.slice(1)}
+                        </Text>
+                        <Text style={{ color: colors.primary }}>
+                          {preference === value ? "●" : "○"}
+                        </Text>
+                      </Pressable>
+                    ))}
+                    {customerView &&
+                      button(
+                        "View introduction",
+                        () =>
+                          setIntro((value) => ({
+                            revision: value.revision + 1,
+                            preview: false,
+                          })),
+                        true,
+                      )}
+                  </>
+                ) : screen === "home" &&
+                  (!user || ["customer", "commercial"].includes(user.role)) ? (
+                  <>
+                    <CustomerHome
+                      key={user?.id ?? "guest"}
+                      user={user}
+                      api={api}
+                      onOrder={(id) => {
+                        setOrderFilter(id);
+                        setScreen("orders");
+                      }}
+                      navigate={(destination) =>
+                        navigateCustomer(
+                          destination === "consumption"
+                            ? "smart-refill"
+                            : destination,
+                        )
+                      }
+                    />
+                    {!user &&
+                      !token &&
+                      initialLinkResolved &&
+                      button(
+                        "Take a quick EasyGas tour",
+                        () =>
+                          setIntro((value) => ({
+                            revision: value.revision + 1,
+                            preview: true,
+                          })),
+                        true,
+                      )}
+                  </>
+                ) : screen === "customer-workspaces" ? (
+                  <CustomerNextDirectory
+                    navigate={navigateCustomer}
+                    user={user}
+                  />
+                ) : screen === "home" ? (
+                  <StaffNextHome api={api} user={user} navigate={setScreen} />
+                ) : screen === "finance-work" &&
+                  user &&
+                  ["owner", "finance"].includes(user.role) ? (
+                  <FinanceOverview
+                    key={user.id}
+                    api={api}
+                    navigate={setScreen}
+                  />
+                ) : screen === "products" ? (
+                  <NextCatalogue
+                    products={products}
+                    categories={catalogue?.categories ?? []}
+                    cartCount={cart.reduce((n, i) => n + i.quantity, 0)}
+                    onCart={() => setScreen("cart")}
+                    onSelect={(p: any) => {
+                      setDetail(p);
+                      setScreen("detail");
+                    }}
+                    art={art}
+                  />
+                ) : screen === "detail" && detail ? (
+                  <NextProduct
+                    product={detail}
+                    products={products}
+                    art={art}
+                    origin={origin}
+                    onSelect={setDetail}
+                    onAdd={() => {
+                      add(detail);
+                      if (detail.category !== "Gas refills") setScreen("cart");
+                    }}
+                    compatibility={
+                      <NativeCompatibility api={api} productId={detail.id} />
+                    }
+                  />
+                ) : screen === "cart" ? (
+                  <NextCart
+                    cart={cart}
+                    products={products}
+                    setCart={setCart}
+                    art={art}
+                    onBrowse={() => setScreen("products")}
+                    onCheckout={() => {
+                      if (!user) pendingLink.current = { screen: "checkout" };
+                      setScreen(user ? "checkout" : "login");
+                    }}
+                  />
+                ) : screen === "checkout" ? (
+                  <GasOrder
+                    key={user?.id + ":cart"}
+                    api={api}
+                    user={user}
+                    catalogue={catalogue}
+                    cart={cart}
+                    gasEnabled={cart.some(
+                      (item) =>
+                        catalogue.products.find(
+                          (p: any) => p.id === item.productId,
+                        )?.category === "Gas refills",
+                    )}
+                    fromCart
+                    backRef={serviceBack}
+                    onSignIn={(draft: any) => {
+                      checkoutGuestDraft.current = draft;
+                      pendingLink.current = { screen: "checkout" };
+                      setScreen("login");
+                    }}
+                    initialDraft={checkoutGuestDraft.current}
+                    onLinkedRequests={() => setScreen("combined-checkout")}
+                    onStageChange={() =>
+                      scrollRef.current?.scrollTo({ y: 0, animated: false })
+                    }
+                    viewServices={() => setScreen("services")}
+                    onPlaced={(id) => {
+                      setCart([]);
+                      setOrderFilter(id);
+                    }}
+                    done={() => {
+                      setCart([]);
+                      setScreen("orders");
+                    }}
+                  />
+                ) : screen === "orders" && !visibleOrders ? (
+                  error && !loading ? (
+                    button(
+                      "Retry orders",
+                      () => retryOrders((value) => value + 1),
+                      true,
+                    )
+                  ) : (
+                    <EasyGasLoader variant="section" label="Loading orders" />
+                  )
+                ) : screen === "orders" && customerView && user ? (
+                  <MobileNextOrders
+                    key={user.id + ":" + (orderFilter ?? "list")}
+                    orders={visibleOrders ?? []}
+                    user={user}
+                    selectedId={orderFilter}
+                    onSelect={setOrderFilter}
+                    api={api}
+                    origin={origin}
+                    token={token}
+                    navigate={navigateCustomer}
+                    reload={reloadOrders}
+                  />
+                ) : screen === "orders" && !customerView && !orderFilter ? (
+                  <>
+                    <NextIntro
+                      title="Orders"
+                      detail="Review status, then open one order to act."
+                    />
+                    <NextList>
+                      {(visibleOrders ?? []).map((o: any) => (
+                        <NextRow
+                          key={o.id}
+                          icon="package"
+                          title={o.reference}
+                          detail={
+                            o.status.replaceAll("_", " ") +
+                            " · " +
+                            currency(o.total_kobo)
+                          }
+                          onPress={() => setOrderFilter(o.id)}
+                        />
+                      ))}
+                    </NextList>
+                  </>
+                ) : screen === "orders" ? (
+                  <>
+                    {orderFilter &&
+                      button(
+                        "Show all orders",
+                        () => setOrderFilter(null),
+                        true,
+                      )}
+                    {!customerView && (
+                      <Text style={s.title}>
+                        {driver ? "Assigned Deliveries" : "Orders"}
+                      </Text>
+                    )}
+                    {driver && (
+                      <DriverOperations
+                        key={user.id}
+                        api={api}
+                        user={user}
+                        origin={origin}
+                        token={token}
+                      />
+                    )}
+                    {driver && pendingDeliveries.length > 0 && (
+                      <View style={s.notice}>
+                        <Text style={s.noticeText}>
+                          {pendingDeliveries.length} delivery records await
+                          server verification. Offline records do not mark an
+                          order delivered.
+                        </Text>
+                        {button(
+                          syncing
+                            ? "Synchronising…"
+                            : "Synchronise pending deliveries",
+                          syncDeliveries,
+                          false,
+                          syncing,
+                        )}
+                        {pendingDeliveries.map((event) => (
+                          <View key={event.id}>
+                            <Text style={s.caption}>
+                              {event.error ?? "Awaiting connection"}
+                            </Text>
+                            {button(
+                              "Discard this pending record",
+                              () =>
+                                EasyGasAlert.alert(
+                                  "Discard pending delivery?",
+                                  "This removes only the pending update on this device. The server order will not change. Review the delivery before discarding this update.",
+                                  [
+                                    { text: "Keep", style: "cancel" },
+                                    {
+                                      text: "Discard",
+                                      style: "destructive",
+                                      onPress: async () => {
+                                        const q = pendingDeliveries.filter(
+                                          (q) => q.id !== event.id,
+                                        );
+                                        await saveQueue(user.id, q);
+                                        setPendingDeliveries(q);
+                                      },
+                                    },
+                                  ],
+                                ),
+                              true,
+                            )}
+                          </View>
+                        ))}
+                      </View>
+                    )}
+                    {visibleOrders?.length ? (
+                      visibleOrders.map((o) => (
+                        <View style={s.card} key={o.id}>
+                          {!driver &&
+                          user &&
+                          ["customer", "commercial"].includes(user.role) ? (
+                            <TrackingSummary
+                              compact
+                              order={o}
+                              onSupport={() => setScreen("conversations")}
+                            />
+                          ) : (
+                            <Text style={s.productName}>{o.reference}</Text>
+                          )}
+                          {customerView &&
+                            o.payment_method === "card" &&
+                            o.payment_status !== "verified" &&
+                            !["cancelled", "delivered"].includes(o.status) && (
+                              <NativeHostedPayment
+                                key={o.id}
+                                api={api}
+                                userId={user.id}
+                                purpose="order"
+                                orderId={o.id}
+                              />
+                            )}
+                          <OrderVisit
+                            api={api}
+                            order={o}
+                            driver={driver}
+                            user={user}
+                            origin={origin}
+                            token={token}
+                            onDone={reloadOrders}
+                          />
+                          <Text style={s.sectionTitle}>
+                            {o.status.replaceAll("_", " ")}
+                          </Text>
+                          <Text style={s.body}>
+                            {(o.gas_lines ?? [])
+                              .map(
+                                (g: any) =>
+                                  `${Number(g.grams) / 1000} kg gas (${Number(g.capacity_grams) / 1000} kg cylinder)`,
+                              )
+                              .join(", ")}{" "}
+                            {o.items
+                              .map((i: any) => `${i.quantity} × ${i.name}`)
+                              .join(", ")}
+                          </Text>
+                          <Text style={s.body}>
+                            {o.address.street}, {o.address.zone}
+                          </Text>
+                          <Text style={s.productPrice}>
+                            {currency(o.total_kobo)}
+                          </Text>
+                          <Text style={s.caption}>
+                            Payment: {o.payment_status}
+                          </Text>
+                          <CustomerOrderRefunds
+                            key={`${user.id}:${o.id}`}
+                            api={api}
+                            user={user}
+                            order={o}
+                          />
+                          {o.confirmation_code &&
+                            !["delivered", "cancelled"].includes(o.status) && (
+                              <View style={s.notice}>
+                                <Text style={s.noticeText}>
+                                  Delivery code: {o.confirmation_code}. Share
+                                  only after receiving all your items.
+                                </Text>
+                              </View>
+                            )}
+                          {driver &&
+                            o.events.map((e: any, i: number) => (
+                              <Text style={s.event} key={i}>
+                                ✓ {e.status.replaceAll("_", " ")} ·{" "}
+                                {new Date(e.created_at).toLocaleString()}
+                              </Text>
+                            ))}
+                          {driver && (
+                            <View>
+                              <Text style={s.body}>
+                                Physical load to verify:{" "}
+                                {JSON.stringify(o.manifest)}
+                              </Text>
+                              {button("Open navigation", () =>
+                                Linking.openURL(
+                                  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.address.street + ", " + o.address.zone)}`,
+                                ),
+                              )}
+                              <NativeForm
+                                api={(action, data) =>
+                                  api(action, {
+                                    ...data,
+                                    version: Number(data.version),
+                                    operationKey: trackingKey(
+                                      "delivery.help",
+                                      o,
+                                    ),
+                                  })
+                                }
+                                action="delivery.help"
+                                key={`${o.id}:${o.tracking_version}:help`}
+                                title="Request dispatch help"
+                                fields={[
+                                  {
+                                    name: "orderId",
+                                    label: "Order",
+                                    type: "hidden",
+                                    value: o.id,
+                                  },
+                                  {
+                                    name: "version",
+                                    label: "Version",
+                                    type: "hidden",
+                                    value: o.tracking_version,
+                                  },
+                                  {
+                                    name: "reason",
+                                    label:
+                                      "Describe the delivery problem and assistance needed",
+                                  },
+                                ]}
+                              />
+                            </View>
+                          )}
+                          {driver &&
+                            o.status === "out_for_delivery" &&
+                            o.attempt?.state === "picked_up" &&
+                            button("Mark arrived", async () => {
+                              try {
+                                await api("delivery.arrived", {
+                                  orderId: o.id,
+                                  version: o.tracking_version,
+                                  operationKey: trackingKey(
+                                    "delivery.arrived",
+                                    o,
+                                  ),
+                                  reason:
+                                    "Driver confirms arrival at the assigned delivery address",
+                                });
+                                await reloadOrders();
+                              } catch (e: any) {
+                                setError(e.message);
+                              }
+                            })}
+                          {driver &&
+                            o.status === "assigned" &&
+                            o.attempt?.state === "assigned" && (
+                              <NativeForm
+                                api={(action, data) =>
+                                  api(action, {
+                                    ...data,
+                                    version: Number(data.version),
+                                    manifest: o.manifest,
+                                    operationKey: trackingKey(
+                                      "delivery.pickup",
+                                      o,
+                                    ),
+                                  })
+                                }
+                                action="delivery.pickup"
+                                key={`${o.id}:${o.tracking_version}:pickup`}
+                                title="Check physical pickup"
+                                recordVersion={o.tracking_version}
+                                fields={[
+                                  {
+                                    name: "orderId",
+                                    label: "Order",
+                                    type: "hidden",
+                                    value: o.id,
+                                  },
+                                  {
+                                    name: "version",
+                                    label: "Version",
+                                    type: "hidden",
+                                    value: o.tracking_version,
+                                  },
+                                  {
+                                    name: "reason",
+                                    label:
+                                      "Physical quantity and serial inspection notes",
+                                  },
+                                ]}
+                                onDone={reloadOrders}
+                              />
+                            )}
+                          {driver &&
+                            o.status === "assigned" &&
+                            button(
+                              o.status === "assigned"
+                                ? "Confirm Pickup & Dispatch"
+                                : "Report Delivery Failure",
+                              async () => {
+                                try {
+                                  await api("order.transition", {
+                                    id: o.id,
+                                    operationKey: trackingKey(
+                                      "order.transition",
+                                      o,
+                                    ),
+                                    version: o.tracking_version,
+                                    status:
+                                      o.status === "assigned"
+                                        ? "out_for_delivery"
+                                        : "delivery_failed",
+                                    note:
+                                      o.status === "assigned"
+                                        ? "Driver confirmed collection and dispatch."
+                                        : "Driver reported unsuccessful delivery. Follow up required.",
+                                  });
+                                  await reloadOrders();
+                                } catch (e: any) {
+                                  setError(e.message);
+                                }
+                              },
+                            )}
+                          {driver && o.status === "out_for_delivery" && (
+                            <DriverPhoto userId={user.id} orderId={o.id} />
+                          )}
+                          {driver && o.status === "out_for_delivery" && (
+                            <NativeForm
+                              key={`${o.id}:${o.tracking_version}:failure`}
+                              api={(action, data) =>
+                                api(action, {
+                                  ...data,
+                                  version: Number(data.version),
+                                  operationKey: trackingKey(
+                                    "delivery.failure",
+                                    o,
+                                  ),
+                                })
+                              }
+                              action="order.transition"
+                              title="Report unsuccessful delivery"
+                              fields={[
+                                {
+                                  name: "id",
+                                  label: "Order",
+                                  type: "hidden",
+                                  value: o.id,
+                                },
+                                {
+                                  name: "version",
+                                  label: "Version",
+                                  type: "hidden",
+                                  value: o.tracking_version,
+                                },
+                                {
+                                  name: "status",
+                                  label: "State",
+                                  type: "hidden",
+                                  value: "delivery_failed",
+                                },
+                                {
+                                  name: "failureReason",
+                                  label: "Failure reason",
+                                  options: deliveryFailureReasons.map((r) => ({
+                                    value: r,
+                                    label: r.replaceAll("_", " "),
+                                  })),
+                                },
+                                {
+                                  name: "note",
+                                  label:
+                                    "Evidence, observed problem and required next step",
+                                },
+                              ]}
+                              onDone={reloadOrders}
+                            />
+                          )}
+                          {driver && o.status === "out_for_delivery" && (
+                            <NativeDelivery
+                              order={o}
+                              submit={async (data) => {
+                                try {
+                                  await api("delivery.complete", data);
+                                  await reloadOrders();
+                                } catch (e: any) {
+                                  if (e.status) throw e;
+                                  const q = await enqueueDelivery(
+                                    user.id,
+                                    data,
+                                  );
+                                  if (accountRef.current === user.id)
+                                    setPendingDeliveries(q);
+                                  EasyGasAlert.alert(
+                                    "Saved for synchronisation",
+                                    "Your update is saved securely on this device. Connect to the internet to sync it. The delivery remains unconfirmed until EasyGas verifies it.",
+                                  );
+                                }
+                              }}
+                            />
+                          )}
+                        </View>
+                      ))
+                    ) : (
+                      <View style={s.card}>
+                        <Text style={s.sectionTitle}>
+                          Your first delivery is still ahead.
+                        </Text>
+                        <Text style={s.body}>
+                          Real order updates will appear here.
+                        </Text>
+                      </View>
+                    )}
+                  </>
+                ) : screen === "rewards" && user && customerView ? (
+                  <NativeEasyRewards
+                    key={`${user.id}:${user.role}:${user.branchId}`}
+                    api={api}
+                    onBookings={() => setScreen("bookings")}
+                    onProducts={() => setScreen("products")}
+                    onHelp={() => setScreen("conversations")}
+                    onOrder={(id) => {
+                      setOrderFilter(id);
+                      setScreen("orders");
+                    }}
+                    onOffer={(o) => {
+                      setRewardPoints(String(o.points));
+                      setRewardOfferId(o.id);
+                      setKey(null);
+                      setScreen(cart.length ? "checkout" : "products");
+                    }}
+                  />
+                ) : screen === "wallet" && !wallet ? (
+                  error && !loading ? (
+                    button(
+                      "Retry wallet",
+                      () => retryWallet((value) => value + 1),
+                      true,
+                    )
+                  ) : (
+                    <EasyGasLoader variant="section" label="Loading wallet" />
+                  )
+                ) : screen === "wallet" &&
+                  user &&
+                  ["customer", "commercial"].includes(user.role) ? (
+                  <CustomerWallet
+                    key={user.id}
+                    wallet={wallet}
+                    api={api}
+                    userId={user.id}
+                    navigate={navigateCustomer}
+                    reload={async () => setWallet(await api("wallet"))}
+                  />
+                ) : screen === "wallet" ? (
+                  <>
+                    <Text style={s.title}>My Wallet</Text>
+                    <View style={s.balance}>
+                      <Text style={{ color: "#e3efdf" }}>
+                        EasyGas purchase credit
+                      </Text>
+                      <Text style={s.balanceNumber}>
+                        {currency(wallet.balanceKobo)}
+                      </Text>
+                    </View>
+                    <View style={s.notice}>
+                      <Text style={s.noticeText}>
+                        Check Wallet &amp; Credit for available funding methods
+                        and verified credits.
+                      </Text>
+                    </View>
+                    {wallet?.entries.map((e: any) => (
+                      <View style={s.card} key={e.id}>
+                        <Text style={s.productName}>{e.kind}</Text>
+                        <Text>{currency(e.amount_kobo)}</Text>
+                        <Text style={s.caption}>{e.reference}</Text>
+                      </View>
+                    ))}
+                  </>
+                ) : screen === "more" &&
+                  user &&
+                  ["customer", "commercial"].includes(user.role) ? (
+                  <AccountHub
+                    key={user.id}
+                    user={user}
+                    api={api}
+                    navigate={navigateCustomer}
+                    logout={logout}
+                  />
+                ) : screen === "more" &&
+                  user &&
+                  ["owner", "manager", "finance"].includes(user.role) ? (
+                  <StaffNextAccount
+                    user={user}
+                    navigate={setScreen}
+                    logout={logout}
+                  />
+                ) : user &&
+                  ["owner", "manager", "finance"].includes(user.role) &&
+                  screen === "owner-notifications" ? (
+                  <CustomerNotifications
+                    key={user.id + screen}
+                    api={api}
+                    onBack={() => setScreen("more")}
+                    openOrderLink={(path) => {
+                      openNativeWorkspace(path);
+                    }}
+                  />
+                ) : user &&
+                  ["owner", "manager", "finance"].includes(user.role) &&
+                  screen === "owner-profile" ? (
+                  <OwnerSupportWorkspace
+                    key={user.id + screen}
+                    user={user}
+                    screen={screen}
+                    api={api}
+                    navigate={setScreen}
+                    signOut={logout}
+                  />
+                ) : user &&
+                  (user.role === "owner" ||
+                    (user.role === "finance" && screen === "owner-audit")) &&
+                  isOwnerGovernanceScreen(screen) ? (
+                  <OwnerGovernanceWorkspace
+                    key={user.id + screen}
+                    user={user}
+                    screen={screen}
+                    api={api}
+                    navigate={setScreen}
+                  />
+                ) : user?.role === "owner" && screen === "owner-operations" ? (
+                  <>
+                    {ownerWorkspace("operations")}
+                    <FleetLocations
+                      key={user.id + ownerScope.branchId}
+                      api={api}
+                      branchId={ownerScope.branchId}
+                    />
+                  </>
+                ) : user?.role === "owner" && screen === "owner-approvals" ? (
+                  <OwnerApprovals api={api} branchId={ownerScope.branchId} />
+                ) : user?.role === "owner" && screen === "owner-finance" ? (
+                  ownerWorkspace("finance")
+                ) : user?.role === "owner" && screen === "owner-reports" ? (
+                  ownerWorkspace("reports")
+                ) : screen === "technicians-management" &&
+                  user &&
+                  ["owner", "manager", "finance"].includes(user.role) ? (
+                  <TechniciansManagement key={user.id} user={user} api={api} />
+                ) : screen === "branch-dispatch" && user?.role === "manager" ? (
+                  <FleetLocations
+                    key={user.id + user.branchId}
+                    api={api}
+                    standalone
+                  />
+                ) : screen === "sales-customers" && user?.role === "manager" ? (
+                  <SalesCustomerLookup key={user.id} api={api} />
+                ) : screen === "retail-pos" && canOpenRetailPos(user?.role) ? (
+                  <RetailPos key={user.id} api={api} />
+                ) : screen === "support" || screen === "conversations" ? (
+                  user ? (
+                    <MobileSupportInbox
+                      key={user.id}
+                      api={api}
+                      imageSource={(id) => ({
+                        uri: `${origin}/api/media/${id}`,
+                        headers: { Authorization: `Bearer ${token}` },
+                        cache: "reload",
+                      })}
+                    />
+                  ) : (
+                    <Text>Sign in to contact support.</Text>
+                  )
+                ) : (
+                  <>
+                    <Text style={s.greeting}>MY ACCOUNT</Text>
+                    <Text style={s.title}>{user?.name ?? "Your EasyGas"}</Text>
+                    <Text style={s.body}>{user?.email}</Text>
+                    {user &&
+                      ["owner", "manager", "finance"].includes(user.role) &&
+                      button("Workspaces", () =>
+                        setScreen("native-workspaces"),
+                      )}
+                    {user?.role === "owner" &&
+                      button("Financial Summary", () =>
+                        setScreen("owner-finance"),
+                      )}
+                    {user?.role === "owner" &&
+                      button("Management & Governance", () =>
+                        setScreen("owner-governance"),
+                      )}
+                    {user &&
+                      ["owner", "manager", "finance"].includes(user.role) &&
+                      button("Profile & Security", () =>
+                        setScreen("owner-profile"),
+                      )}
+                    {user &&
+                      ["owner", "manager", "finance"].includes(user.role) &&
+                      button("Notifications", () =>
+                        setScreen("owner-notifications"),
+                      )}
+                    {canOpenRetailPos(user?.role) &&
+                      button("Retail POS", () => setScreen("retail-pos"))}
+                    {user &&
+                      ["owner", "manager", "finance"].includes(user.role) &&
+                      button("Technicians & Availability", () =>
+                        setScreen("technicians-management"),
+                      )}
+                    {[
+                      ["Appearance", "appearance"],
+                      ["Policies & terms", "public-policies"],
+                      ["About & delivery", "public-info"],
+                      ["Browse Products", "products"],
+                      ["Shopping Cart", "cart"],
+                      ["Book a Service", "services"],
+                      ["Products & Appointments", "combined-checkout"],
+                      ["My Service Bookings", "bookings"],
+                      ["Notifications", "notifications"],
+                      ["My Orders", "orders"],
+                      ["My Wallet", "wallet"],
+                      ["My Rewards", "rewards"],
+                      ["Help & Support", "conversations"],
+                      ["Account & privacy", "profile"],
+                      ["Cooking gas profiles", "consumption"],
+                      ["Refill plans", "plans"],
+                      ["Recurring orders", "recurring"],
+                      ["Credit & redemption", "credit"],
+                    ]
+                      .filter(
+                        ([, dest]) =>
+                          customerView ||
+                          [
+                            "appearance",
+                            "public-policies",
+                            "public-info",
+                          ].includes(dest),
+                      )
+                      .map(([text, dest]) => (
+                        <Pressable
+                          style={s.menuItem}
+                          key={dest}
+                          onPress={() =>
+                            setScreen(
+                              user || dest === "appearance" ? dest : "login",
+                            )
+                          }
+                        >
+                          <Text>{text}</Text>
+                          <Text>›</Text>
+                        </Pressable>
+                      ))}
+                    {user && button("Sign Out", logout, true)}
+                  </>
+                )}
+              </ScrollView>
+            </ScreenTransition>
+          </ScreenTitleContext.Provider>
+          {nextDock}
+          <NextTabs
+            tabs={customerView ? customerNextTabs : businessNextTabs}
+            active={nextActiveTab(screen, customerView)}
+            onNavigate={(destination) =>
+              customerView
+                ? navigateCustomer(destination)
+                : setScreen(destination)
             }
-          >
-            <Ionicons
-              accessible={false}
-              name={
-                (
-                  {
-                    home: "home-outline",
-                    "owner-operations": "bus-outline",
-                    "owner-approvals": "shield-checkmark-outline",
-                    "owner-reports": "stats-chart-outline",
-                    "branch-dispatch": "bus-outline",
-                    "sales-customers": "people-outline",
-                    "retail-pos": "desktop-outline",
-                    products: "cube-outline",
-                    orders: "bag-check-outline",
-                    cart: "cart-outline",
-                    services: "construct-outline",
-                    wallet: "wallet-outline",
-                    more: customerView
-                      ? "person-outline"
-                      : "ellipsis-horizontal",
-                  } as const
-                )[dest as "home"] ?? "ellipse-outline"
-              }
-              size={23}
-              color={screen === dest ? colors.primary : colors.muted}
-            />
-            <Text
-              preserveColor
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.8}
-              style={[
-                s.navText,
-                { color: colors.muted },
-                screen === dest && { color: colors.primary, fontWeight: "700" },
-              ]}
-            >
-              {text}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
-    </ScreenCanvas>
+          />
+        </ScreenCanvas>
+      </NextDockContext.Provider>
     </RemoteReadScope>
   );
 }
@@ -2310,7 +2481,12 @@ const s = StyleSheet.create({
   },
   navItem: { alignItems: "center", minWidth: 0, flex: 1, paddingHorizontal: 4 },
   navSymbol: { fontSize: 23, color: "#a3ad99" },
-  navText: { fontSize: 12, color: "#9aa48e", marginTop: 3, textAlign: "center" },
+  navText: {
+    fontSize: 12,
+    color: "#9aa48e",
+    marginTop: 3,
+    textAlign: "center",
+  },
 });
 function NativeDelivery({
   order,
@@ -2332,7 +2508,9 @@ function NativeDelivery({
         Ask for the customer's code after handing over all items. Cash will need
         independent finance verification.
       </Text>
-      <FieldCaption style={s.label} required={true}>Customer confirmation code</FieldCaption>
+      <FieldCaption style={s.label} required={true}>
+        Customer confirmation code
+      </FieldCaption>
       <TextInput
         style={s.input}
         accessibilityLabel="Customer confirmation code, required"
@@ -2344,7 +2522,9 @@ function NativeDelivery({
       {order.payment_method === "wallet" ? (
         <Text style={s.label}>Paid with purchase credit — collect no cash</Text>
       ) : (
-        <FieldCaption style={s.label} required={true}>Cash actually collected (₦)</FieldCaption>
+        <FieldCaption style={s.label} required={true}>
+          Cash actually collected (₦)
+        </FieldCaption>
       )}
       <TextInput
         style={s.input}
@@ -2365,7 +2545,9 @@ function NativeDelivery({
           over every item *
         </Text>
       </Pressable>
-      {error ? <Text style={s.noticeText}>{friendlyMessage(error)}</Text> : null}
+      {error ? (
+        <Text style={s.noticeText}>{friendlyMessage(error)}</Text>
+      ) : null}
       <Pressable
         style={[s.button, busy && { opacity: 0.5 }]}
         disabled={busy}

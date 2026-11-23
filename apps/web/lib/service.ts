@@ -197,10 +197,14 @@ export async function dispatch(
                   })
                   .strict(),
               )
-              .min(1)
+              .min(0)
               .max(20),
           })
           .strict()
+          .refine(
+            (d) => d.lines.length > 0 || (d.items?.length ?? 0) > 0,
+            "Choose gas or a physical product.",
+          )
           .parse(input);
         return gasQuote(tx, d.lines, d.branchId, d.items, d.locationId);
       }

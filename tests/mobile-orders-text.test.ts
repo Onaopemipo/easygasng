@@ -266,6 +266,8 @@ test("ORDTXT-ERRORS: offline/forbidden visit reads remain visible Text feedback 
 test("ORDTXT-GUARD: explicit JSX string children are allowed only in text hosts across current native screens", async () => {
   const allowed = new Set([
     "Text",
+    "NextText",
+    "NextNotice",
     "Copy",
     "Title",
     "FieldCaption",
@@ -286,6 +288,7 @@ test("ORDTXT-GUARD: explicit JSX string children are allowed only in text hosts 
       if (
         ts.isJsxExpression(n) &&
         n.expression &&
+        !ts.isJsxAttribute(n.parent) &&
         ts.isStringLiteral(n.expression) &&
         n.expression.text.length
       ) {

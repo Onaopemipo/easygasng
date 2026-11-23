@@ -1,0 +1,571 @@
+{
+  "phase": "Approved Mobile Next native implementation",
+  "approval": "User approved the new private mobile design and requested exact end-to-end implementation on23November2026",
+  "approvedPrototype": "https://easygas-mobile-next.philipmuyiwa.chatgpt.site",
+  "approvedPrototypeSource": "42c4911e1ebe7f5783e00bb7d3ad0584c88434e7",
+  "baselineCommit": "f52bf9bdd6eef3e0d057207491ffde4a80a3f6f2",
+  "productionDecision": "NO-GO and prior unrelated acceptance holds preserved; prototype approval is design approval, not a safety/provider/production waiver",
+  "featureDenominator": 300,
+  "familyDenominator": 36,
+  "historicalScreenDenominator": 117,
+  "requirements": [
+    {
+      "id": "NXT-R01",
+      "requirement": "Approved design system and responsive native shell",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "apps/mobile/MobileNextUI.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/ContextSheet.tsx",
+        "apps/mobile/ScreenTransition.tsx",
+        "apps/mobile/mobile-next-icons.json"
+      ],
+      "dataSource": "Approved private prototype 42c4911; shared native palette/artwork/OS safe areas and reduced-motion settings.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "NXT-NATIVE-BOUNDARY",
+        "ORDTXT-GUARD",
+        "FC-01",
+        "FC-02"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G01",
+      "status": "PARTIAL",
+      "reason": "Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
+    },
+    {
+      "id": "NXT-R02",
+      "requirement": "Native customer Home and account/navigation",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/CustomerHome.tsx",
+        "apps/mobile/AccountHub.tsx",
+        "apps/mobile/MobileNextWorkspaces.tsx"
+      ],
+      "dataSource": "Authenticated me, orders, account.profile, wallet, navigation; account/session-scoped in-memory read cache.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "MOBUX23-CACHE",
+        "CGP-T06",
+        "NXT-NATIVE-BOUNDARY",
+        "NXT-ROLE-SCREENS"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G02",
+      "status": "PARTIAL",
+      "reason": "Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
+    },
+    {
+      "id": "NXT-R03",
+      "requirement": "Three-step real API checkout and order continuity",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/CombinedCheckout.tsx",
+        "apps/mobile/CustomerCheckoutDraft.ts",
+        "apps/mobile/MobileNextCalendar.tsx",
+        "apps/mobile/MobileNextCatalogue.tsx",
+        "packages/business-rules/src/mobile-next-checkout.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "Existing gas.catalogue, gas.quote, checkout.payment-options, checkout and checkout.mixed; server database pricing, stock, coverage and schedule authority. Encrypted device-only pending journal.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "NXT-CHECKOUT-DATA",
+        "NXT-ENCRYPTED-RECOVERY",
+        "NXT-REAL-CHECKOUT",
+        "NXT-GAS-CHECKOUT",
+        "NXT-CART-LIMITS"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G03",
+      "status": "PARTIAL",
+      "reason": "Actual native component plus real API gas/product checkout, current quote, shortage/unconfigured policy, price change, COD unpaid truth and encrypted lost-response/relaunch/retry pass. Device/provider acceptance remains open.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
+    },
+    {
+      "id": "NXT-R04",
+      "requirement": "Real provider payment, return and recovery",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "apps/mobile/HostedPayment.tsx",
+        "apps/web/lib/payments/orchestrator.ts",
+        "apps/web/components/hosted-payment.tsx"
+      ],
+      "dataSource": "Existing owned payment intents and server Paystack reconciliation; status now includes its exact target IDs. No app-side paid simulation.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "NXT-PAYMENT-RETURN",
+        "NXT-PAYMENT-CONSENT",
+        "NXT-PAYMENT-RECOVERY",
+        "MWEB-03"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G04",
+      "status": "PARTIAL",
+      "reason": "Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
+    },
+    {
+      "id": "NXT-R05",
+      "requirement": "Native services, wallet, orders and tracking",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "apps/mobile/Services.tsx",
+        "apps/mobile/CustomerWallet.tsx",
+        "apps/mobile/MobileNextOrders.tsx",
+        "apps/mobile/MobileNextCustomerExtras.tsx",
+        "apps/mobile/TrackingSummary.tsx",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "dataSource": "Existing owned orders/tracking, services.catalogue, bookings, wallet, invoices, support.create, testimonials.mine/create/edit/transition and private media API.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "ORDTXT-DETAILS",
+        "ORDTXT-ERRORS",
+        "NATIVE-HTTP-READS"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G05",
+      "status": "PARTIAL",
+      "reason": "Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
+    },
+    {
+      "id": "NXT-R06",
+      "requirement": "Owner, manager and finance workspaces",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "apps/mobile/NativeBusinessWorkspace.tsx",
+        "apps/mobile/MobileNextWorkspaces.tsx",
+        "packages/business-rules/src/native-workspace-session.ts",
+        "packages/business-rules/src/native-workspaces.ts",
+        "apps/mobile/FinanceOverview.tsx"
+      ],
+      "dataSource": "Current navigation.allowed and NativeWorkspaceSession with the existing API action contracts, scoped records and current revisions.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES",
+        "NXT-ROLE-SCREENS"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G06",
+      "status": "PARTIAL",
+      "reason": "Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
+    },
+    {
+      "id": "NXT-R07",
+      "requirement": "Driver and technician workflows",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/TechnicianWorkspace.tsx",
+        "apps/mobile/TechnicianScreens.tsx",
+        "apps/mobile/MobileNextFieldWork.tsx",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "dataSource": "Existing trip, assignment, inspection, bulk/manifest, booking/work-authority and encrypted offline evidence controllers; no simulated success.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "MDEV-REQUIRED",
+        "NATIVE-HTTP-WRITES",
+        "NXT-ROLE-SCREENS"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G07",
+      "status": "PARTIAL",
+      "reason": "Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Exercise all redesigned driver/technician screens on devices, including offline/background/location/physical custody and current work authority. Existing NO-GO remains."
+    },
+    {
+      "id": "NXT-R08",
+      "requirement": "All 36 families and 300 features retained with real API authority",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "docs/mobile-native-next/feature-acceptance.json",
+        "packages/business-rules/src/native-workspaces.ts",
+        "docs/native-workflows/feature-acceptance.json"
+      ],
+      "dataSource": "Original 36 canonical families / 300 stable feature leaves and 117 historical screen entries retained. Source mapping is not installed-device acceptance.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "NXT-TRACEABILITY",
+        "NATIVE-RTM-DENOMINATORS"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G08",
+      "status": "PARTIAL",
+      "reason": "All 300 original IDs and source/API mappings remain in scope: 286 partial and 14 externally blocked leaves are preserved. No current native leaf is individually accepted.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
+    },
+    {
+      "id": "NXT-R09",
+      "requirement": "Role, exception, device and visual acceptance",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "scripts/mobile-device-acceptance-server.ts"
+      ],
+      "dataSource": "Executed real bearer route/component checks and disposable memory fixtures. Native visual connection evidence is separate and currently unsuccessful.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "NXT-REAL-CHECKOUT",
+        "NATIVE-HTTP-READS",
+        "NATIVE-HTTP-WRITES"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/simulator-connection.png",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G09",
+      "status": "PARTIAL",
+      "reason": "Real API/component role and negative checks pass. Device Hub initially unavailable; after recovery the selected Expo project could not connect. Updated launcher prepared; no current-source native visual pass claimed.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
+    },
+    {
+      "id": "NXT-R10",
+      "requirement": "Manual, traceability and delivery evidence",
+      "priority": "P1",
+      "scope": "Real React Native implementation of approved Mobile Next design; retain every existing workflow and backend authority",
+      "uiReference": "prototypes/easygas-mobile-next/main.tsx and style.css at approved source42c4911",
+      "route": [
+        "native mobile app"
+      ],
+      "implementationFiles": [
+        "docs/user-manual/mobile-native-next.md",
+        "docs/user-manual/mobile-experience-redesign.md",
+        "docs/traceability/mobile-native-next-rtm.json",
+        "docs/mobile-native-next/README.md"
+      ],
+      "dataSource": "Current source and executed evidence listed here; historical prototype/build/release evidence retained with additive committed source continuation.",
+      "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
+      "testFiles": [
+        "tests/mobile-native-next.test.ts",
+        "tests/native-workflows-api.test.ts",
+        "tests/mobile-orders-text.test.ts"
+      ],
+      "testIds": [
+        "NXT-TRACEABILITY",
+        "NXT-NATIVE-BOUNDARY"
+      ],
+      "negativeTests": [
+        "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
+      ],
+      "evidence": [
+        "docs/mobile-native-next/evidence/core-acceptance.txt",
+        "docs/mobile-native-next/evidence/source-compatibility.txt",
+        "docs/mobile-native-next/evidence/final-acceptance.txt",
+        "docs/mobile-native-next/evidence/phase-acceptance.txt",
+        "docs/mobile-native-next/evidence/regression-final.txt"
+      ],
+      "acceptanceGate": "NXT-G10",
+      "status": "PARTIAL",
+      "reason": "Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open.",
+      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
+    }
+  ],
+  "gates": [
+    {
+      "id": "NXT-G01",
+      "description": "Approved design system and responsive native shell",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    },
+    {
+      "id": "NXT-G02",
+      "description": "Native customer Home and account/navigation",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    },
+    {
+      "id": "NXT-G03",
+      "description": "Three-step real API checkout and order continuity",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    },
+    {
+      "id": "NXT-G04",
+      "description": "Real provider payment, return and recovery",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    },
+    {
+      "id": "NXT-G05",
+      "description": "Native services, wallet, orders and tracking",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    },
+    {
+      "id": "NXT-G06",
+      "description": "Owner, manager and finance workspaces",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    },
+    {
+      "id": "NXT-G07",
+      "description": "Driver and technician workflows",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    },
+    {
+      "id": "NXT-G08",
+      "description": "All 36 families and 300 features retained with real API authority",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    },
+    {
+      "id": "NXT-G09",
+      "description": "Role, exception, device and visual acceptance",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    },
+    {
+      "id": "NXT-G10",
+      "description": "Manual, traceability and delivery evidence",
+      "status": "PENDING",
+      "reason": "Bounded local implementation checks pass; current native device, hosted continuation and installed distribution are not yet accepted."
+    }
+  ],
+  "coverage": {
+    "total": 10,
+    "verified": 0,
+    "partial": 10,
+    "excluded": 0,
+    "features": 300,
+    "families": 36,
+    "historicalScreens": 117,
+    "individuallyAcceptedNativeFeatures": 0,
+    "externalBlockedFeatures": 14,
+    "partialNativeFeatures": 286
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-23",
+      "change": "Design approved for native adoption. All canonical features and prior matrices retained; native API/security/payment/physical controls must remain authoritative."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Ported the approved shared shell, customer/staff/field interfaces and focused forms. Retained all workflows and authority; added encrypted pending checkout recovery, exact payment-target binding and product-only server quotes. Cancellation remains a support request because customer direct cancellation is not an existing API privilege. All 300 leaves retained; current native device acceptance remains open."
+    }
+  ],
+  "executedResults": {
+    "fullRegression": {
+      "total": 1209,
+      "passed": 1180,
+      "failed": 0,
+      "skipped": 29,
+      "skipReason": "Disposable independent PostgreSQL concurrency checks not enabled locally"
+    },
+    "finalFocused": {
+      "total": 159,
+      "passed": 159,
+      "failed": 0
+    },
+    "latestPhase": {
+      "total": 18,
+      "passed": 18,
+      "failed": 0
+    },
+    "historicalSourceChecks": {
+      "total": 73,
+      "passed": 73,
+      "failed": 0
+    },
+    "rolesInRealApiAndHostComponentChecks": [
+      "owner",
+      "manager",
+      "finance",
+      "customer",
+      "commercial",
+      "driver",
+      "technician"
+    ],
+    "deviceVisualAcceptance": "OPEN; stale Expo project could not connect; normal launcher prepared and user handoff pending",
+    "signedBinariesBuilt": 0
+  }
+}

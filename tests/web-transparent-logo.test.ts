@@ -10,6 +10,6 @@ test('WLOGO-SOURCE: only the two approved CSS continuations advance historical p
     assert.equal(await reviewedWebLogoSourceHash(file,baseline),createHash('sha256').update(await readFile(file)).digest('hex'));
     await assert.rejects(()=>reviewedWebLogoSourceHash(file,'0'.repeat(64)), /historical logo baseline/);
   }
-  for(const file of ['apps/mobile/BrandLogo.tsx','prototypes/easygas-mobile/source-manifest.json','apps/web/lib/service.ts'])
+  for(const file of ['apps/mobile/BrandLogo.tsx','prototypes/easygas-mobile/source-manifest.json','apps/web/lib/auth.ts'])
     assert.equal(await reviewedWebLogoSourceHash(file,'unchanged'),'unchanged');
 });

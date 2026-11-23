@@ -1,3 +1,8 @@
+import {
+  FieldNextHome,
+  FieldNextWork,
+  FieldNextAccount,
+} from "./MobileNextFieldWork";
 import BrandLogo from "./BrandLogo";
 import {
   technicianDate,
@@ -483,134 +488,23 @@ export function TechnicianScreens({
   const greeting = technicianGreeting(profile.generatedAt);
   if (page === "home")
     return (
-      <>
-        <Hero
-          home
-          title={identity.name}
-          eyebrow={greeting + ","}
-          subtitle={`Technician · ${p.branch_id ?? "Branch unavailable"}`}
-        />
-        {availabilityCard()}
-        <Copy>{technicianDate(profile.generatedAt, true)} · Africa/Lagos</Copy>
-        <View style={[s.metrics, { flexWrap: "wrap" }]}>
-          <Metric
-            compact
-            label="Assigned Jobs"
-            value={summary.assigned}
-            icon="calendar-outline"
-            tone="#edf7ff"
-            onPress={() => navigate("jobs", "assigned")}
-          />
-          <Metric
-            compact
-            label="In Progress"
-            value={summary.in_progress}
-            icon="play-circle-outline"
-            tone="#fff8e7"
-            onPress={() => navigate("jobs", "in_progress")}
-          />
-          <Metric
-            compact
-            label="Completed Today"
-            value={summary.completed_today}
-            icon="checkmark-circle-outline"
-            tone="#effbea"
-            onPress={() => navigate("history", "active", "7")}
-          />
-          <Metric
-            compact
-            label="Upcoming"
-            value={summary.upcoming}
-            icon="time-outline"
-            tone="#edf7ff"
-            onPress={() => navigate("jobs", "upcoming")}
-          />
-        </View>
-        <Card>
-          <Title>Next Appointment</Title>
-          {profile.nextAppointment === undefined ? (
-            <Copy>
-              Next appointment is unavailable. Refresh to confirm your schedule.
-            </Copy>
-          ) : profile.nextAppointment ? (
-            <>
-              {jobCard(profile.nextAppointment)}
-              <Button
-                label={technicianReviewLabel(profile.nextAppointment)}
-                onPress={() => choose(profile.nextAppointment)}
-              />
-            </>
-          ) : (
-            <>
-              <Copy>No assigned appointments yet.</Copy>
-              <Button
-                label="Refresh assignments"
-                secondary
-                onPress={() => refresh().catch((e) => setError(e.message))}
-              />
-            </>
-          )}
-        </Card>
-        <Card>
-          <Title>Today’s Jobs</Title>
-          {!profile.today?.rows ? (
-            <Copy>Today’s schedule is unavailable. Refresh to confirm.</Copy>
-          ) : profile.today.rows.length ? (
-            profile.today.rows.map(jobCard)
-          ) : (
-            <Copy>No appointments scheduled today.</Copy>
-          )}
-          <Button
-            label="View All Jobs"
-            secondary
-            onPress={() => navigate("jobs", "active")}
-          />
-        </Card>
-        {profile.today?.total > 0 && (
-          <Card>
-            <Title>Today’s Scheduled Progress</Title>
-            <Copy>
-              {profile.today.completed} of {profile.today.total} completed
-            </Copy>
-            <Copy>{profile.today.basis}</Copy>
-          </Card>
-        )}
-        <Card>
-          <Title>Quick Actions</Title>
-          <ActionRow
-            label="View Jobs"
-            icon="calendar-outline"
-            onPress={() => navigate("jobs", "active")}
-          />
-          <ActionRow
-            label="Qualifications"
-            detail="Independently verified by operations"
-            icon="shield-checkmark-outline"
-            onPress={() => navigate("skills")}
-          />
-          <ActionRow
-            label="Contact Support"
-            icon="headset-outline"
-            onPress={() => navigate("support")}
-          />
-          <Copy>
-            Service reports and safety incidents stay inside the assigned job.
-          </Copy>
-        </Card>
-        <Copy>
-          Counts cover your current branch. Completed Today requires a recorded
-          terminal event in Lagos. Last confirmed sync:{" "}
-          {stamp
-            ? new Date(stamp).toLocaleString("en-GB", {
-                timeZone: "Africa/Lagos",
-              })
-            : "unavailable"}
-          .{" "}
-          {connected
-            ? "Availability is separate from connectivity."
-            : "Cached information — refresh before acting."}
-        </Copy>
-      </>
+      <FieldNextHome
+        role="technician"
+        data={profile}
+        navigate={navigate}
+        connected={connected}
+      />
+    );
+  if (page === "work")
+    return (
+      <FieldNextWork
+        role="technician"
+        data={profile}
+        navigate={navigate}
+        connected={connected}
+        availability={!!p.technician_available}
+        onAvailability={(value) => void availability(value)}
+      />
     );
   if (listPage) {
     let group = "";
@@ -748,7 +642,12 @@ export function TechnicianScreens({
               },
             ]}
           >
-            <Ionicons accessible={false} name="options-outline" size={26} color={colors.primary} />
+            <Ionicons
+              accessible={false}
+              name="options-outline"
+              size={26}
+              color={colors.primary}
+            />
           </Pressable>
         </View>
         {showFilters && (
@@ -877,119 +776,13 @@ export function TechnicianScreens({
   }
   if (page === "profile")
     return (
-      <>
-        <Hero
-          title="My Profile"
-          subtitle="Manage your account, availability and preferences."
-        />
-        <View
-          style={[
-            s.identity,
-            { backgroundColor: dark ? "#153c28" : "#075b21" },
-          ]}
-        >
-          <View style={[s.largeAvatar, { backgroundColor: "#dff7d2" }]}>
-            <Text
-              preserveColor
-              style={{ fontSize: 36, fontWeight: "800", color: "#075b21" }}
-            >
-              {identity.name?.slice(0, 1).toUpperCase() ?? "T"}
-            </Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text
-              preserveColor
-              style={{ color: "#fff", fontSize: 25, fontWeight: "800" }}
-            >
-              {identity.name}
-            </Text>
-            <Text preserveColor style={{ color: "#fff", fontSize: 15 }}>
-              Technician · {p.branch_id}
-            </Text>
-            <Text
-              preserveColor
-              style={{ color: "#e5ffbc", fontWeight: "700", fontSize: 15 }}
-            >
-              {p.active ? "Active account" : "Inactive account"}
-            </Text>
-          </View>
-        </View>
-        <View style={s.metrics}>
-          <Metric
-            label="Completed Jobs"
-            value={summary.completed}
-            icon="briefcase-outline"
-            tone="#effbea"
-          />
-          <Metric
-            label={summary.ratingCount ? "Verified Rating" : "No Reviews Yet"}
-            value={
-              summary.rating == null ? "—" : Number(summary.rating).toFixed(1)
-            }
-            icon="star-outline"
-            tone="#fff8e7"
-          />
-          <Metric
-            label="Total Jobs"
-            value={summary.total}
-            icon="calendar-outline"
-            tone="#edf7ff"
-          />
-        </View>
-        {[
-          [
-            "Personal Information",
-            "Name and authorised account details",
-            "person-outline",
-            "personal",
-          ],
-          [
-            "Availability",
-            "Your assignment availability",
-            "calendar-outline",
-            "availability",
-          ],
-          [
-            "Skills & Services",
-            "Qualifications and expiry, managed by operations",
-            "build-outline",
-            "skills",
-          ],
-          [
-            "Security",
-            "Change your password securely",
-            "lock-closed-outline",
-            "password",
-          ],
-          [
-            "Notification Preferences",
-            "Optional reminders and quiet hours",
-            "notifications-outline",
-            "preferences",
-          ],
-          [
-            "Appearance",
-            "Light, Dark or System",
-            "contrast-outline",
-            "appearance",
-          ],
-          [
-            "Help & Support",
-            "Contact service operations",
-            "help-circle-outline",
-            "support",
-          ],
-        ].map(([l, d, i, dest]) => (
-          <ActionRow
-            key={dest}
-            label={l}
-            detail={d}
-            icon={i}
-            onPress={() => navigate(dest)}
-          />
-        ))}
-        <Button label="Sign Out" secondary onPress={signout} />
-      </>
+      <FieldNextAccount
+        role="technician"
+        user={identity}
+        navigate={navigate}
+        onSignout={signout}
+        appearance={preference}
+      />
     );
   if (page === "availability")
     return (

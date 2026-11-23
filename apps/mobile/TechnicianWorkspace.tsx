@@ -1,3 +1,5 @@
+import { NextHeader, NextTabs } from "./MobileNextUI";
+import { ScreenTransition } from "./ScreenTransition";
 import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
 import CustomerNotifications from "./CustomerNotifications";
 import { EasyGasAlert } from "./AppAlert";
@@ -31,9 +33,9 @@ import { TechnicianBrandHeader, TechnicianScreens } from "./TechnicianScreens";
 import { Appointment } from "./Services";
 import { NativeForm } from "./Workflows";
 const tabs = [
-  ["Home", "home", "home-outline"],
+  ["Today", "home", "home-outline"],
   ["Jobs", "jobs", "briefcase-outline"],
-  ["History", "history", "time-outline"],
+  ["Work", "work", "layers-outline"],
   ["Profile", "profile", "person-outline"],
 ];
 const lagos = (v: string) =>
@@ -306,410 +308,357 @@ export default function TechnicianWorkspace({
                   )[page] ?? "Help & Support");
   return (
     <ScreenCanvas
-      topBackgroundColor={
-        !selected && tabs.some((t) => t[1] === page)
-          ? colors.surface
-          : colors.background
-      }
+      topBackgroundColor={colors.background}
       style={{ flex: 1, backgroundColor: colors.background }}
     >
       <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
-      {!selected && tabs.some((t) => t[1] === page) ? (
-        <TechnicianBrandHeader
-          user={{ ...user, ...profile?.profile }}
-          unread={profile?.unreadNotifications ?? 0}
-          navigate={navigate}
-        />
-      ) : (
-        <View
-          style={{
-            flexDirection: "row",
-            padding: 14,
-            gap: 12,
-            alignItems: "center",
-            borderBottomWidth: 1,
-            borderColor: colors.border,
+      <NextHeader
+        home={page === "home" && !selected}
+        title={page === "work" ? "Technician workspace" : title}
+        user={{ ...user, ...profile?.profile }}
+        onBack={back}
+        onWork={() => navigate("work")}
+        onNotifications={() => navigate("notifications")}
+        onAccount={() => navigate("profile")}
+      />
+      <ScreenTransition identity={page + ":" + (selected ?? "") + ":" + stage}>
+        <ScrollView
+          refreshControl={
+            !selected ? (
+              <RefreshControl
+                refreshing={busy}
+                onRefresh={() => refresh().catch((e) => setError(e.message))}
+                tintColor={colors.primary}
+              />
+            ) : undefined
+          }
+          automaticallyAdjustKeyboardInsets
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
+            ...fullWidthScreenContent,
+            padding: 22,
+            paddingTop: 6,
+            gap: 18,
+            width: "100%",
+            alignSelf: "stretch",
+            paddingBottom: 35,
           }}
         >
-          {(selected || !tabs.some((t) => t[1] === page)) && (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Back"
-              onPress={back}
-              style={{ width: 44, minHeight: 44, justifyContent: "center" }}
-            >
-              <Ionicons
-                accessible={false}
-                name="chevron-back"
-                size={25}
-                color={colors.text}
-              />
-            </Pressable>
-          )}
-          <Text
-            preserveColor
-            style={{
-              fontSize: 21,
-              fontWeight: "800",
-              color: colors.text,
-              flex: 1,
-            }}
-          >
-            {title}
-          </Text>
-        </View>
-      )}
-      <ScrollView
-        refreshControl={
-          !selected ? (
-            <RefreshControl
-              refreshing={busy}
-              onRefresh={() => refresh().catch((e) => setError(e.message))}
-              tintColor={colors.primary}
-            />
-          ) : undefined
-        }
-        automaticallyAdjustKeyboardInsets
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          ...fullWidthScreenContent,
-          padding: 16,
-          gap: 14,
-          width: "100%",
-          alignSelf: "stretch",
-          paddingBottom: 35,
-        }}
-      >
-        <Feedback
-          loading={!profile}
-          error={error}
-          retry={() => refresh().catch((e) => setError(e.message))}
-        />
-        {!!pending.length && (
-          <Card>
-            <Title>Pending service records: {pending.length}</Title>
-            <Copy>
-              Encrypted on this device. Pending evidence does not confirm work,
-              upload or completion. Changed assignments or scope require
-              operations review.
-            </Copy>
-            {pending.slice(0, 10).map((e) => (
-              <Copy key={e.id}>
-                {e.kind === "photo" ? "Service photograph" : "Service draft"} ·{" "}
-                {e.syncState ?? "Pending Sync"}
+          <Feedback
+            loading={!profile}
+            error={error}
+            retry={() => refresh().catch((e) => setError(e.message))}
+          />
+          {!!pending.length && (
+            <Card>
+              <Title>Pending service records: {pending.length}</Title>
+              <Copy>
+                Encrypted on this device. Pending evidence does not confirm
+                work, upload or completion. Changed assignments or scope require
+                operations review.
               </Copy>
-            ))}
-            <Button
-              label="Reconcile pending service records"
-              disabled={busy || !connected}
-              onPress={reconcilePending}
-            />
-          </Card>
-        )}
-        {!!queueMessage && <Copy>{queueMessage}</Copy>}
-        {!profile ? null : selected && !current ? (
-          <Card>
-            <Copy>
-              This job is no longer accessible. Refresh and contact operations.
-            </Copy>
-          </Card>
-        ) : selected && current ? (
-          <>
-            {stage === "details" ? (
-              <>
-                <Card>
-                  <Title>{current.reference}</Title>
-                  <Copy>{current.snapshot.name}</Copy>
-                  <Copy>
-                    {lagos(current.starts_at)} – {lagos(current.ends_at)}
-                  </Copy>
-                  <Copy>
-                    {current.address.street}, {current.address.zone}
-                  </Copy>
-                  <Copy>{current.equipment.concerns}</Copy>
-                  <Copy>
-                    Work phase: {current.work_phase}. Verified payment due:{" "}
-                    {current.billing.dueKobo === null
-                      ? "Quotation required"
-                      : "₦" +
-                        (current.billing.dueKobo / 100).toLocaleString("en-NG")}
-                  </Copy>
-                  <Copy>
-                    Arrival authorises assessment only. Chargeable service
-                    requires independent quotation approval, customer acceptance
-                    and verified payment.
-                  </Copy>
-                </Card>
-                <Button
-                  label="View on Map"
-                  secondary
-                  onPress={() =>
-                    Linking.openURL(
-                      "https://www.google.com/maps/search/?api=1&query=" +
-                        encodeURIComponent(
-                          current.address.street + ", " + current.address.zone,
-                        ),
-                    ).catch(() => setError("Navigation unavailable."))
-                  }
-                />
-                {/^\+?[0-9]{10,15}$/.test(current.address.phone) && (
-                  <Button
-                    label="Call Customer"
-                    secondary
-                    onPress={() =>
-                      Linking.openURL("tel:" + current.address.phone).catch(
-                        () => setError("Calling unavailable."),
-                      )
-                    }
-                  />
-                )}
-                {current.events.map((e: any, i: number) => (
-                  <View
-                    key={i}
-                    style={{
-                      borderLeftWidth: 2,
-                      borderColor: colors.primary,
-                      padding: 10,
-                    }}
-                  >
-                    <Copy>
-                      {e.status.replaceAll("_", " ")} · {lagos(e.created_at)}
-                    </Copy>
-                    <Copy>{e.note}</Copy>
-                  </View>
-                ))}
-                {!["completed", "cancelled", "failed"].includes(
-                  current.status,
-                ) && (
-                  <>
-                    {current.status === "assigned" &&
-                      current.assignment_response === "pending" && (
-                        <NativeForm
-                          api={(_, v) =>
-                            api("booking.assignment.respond", {
-                              ...v,
-                              bookingId: current.id,
-                              version: current.version,
-                            })
-                          }
-                          action="booking.assignment.respond"
-                          title="Respond to Assigned Job"
-                          fields={[
-                            {
-                              name: "decision",
-                              label: "Assignment response",
-                              options: [
-                                {
-                                  value: "acknowledged",
-                                  label: "Accept assignment",
-                                },
-                                {
-                                  value: "declined",
-                                  label: "Decline and notify operations",
-                                },
-                              ],
-                            },
-                            {
-                              name: "reason",
-                              label: "Response reason for operations",
-                            },
-                          ]}
-                          onDone={() =>
-                            refresh().catch((e) => setError(e.message))
-                          }
-                        />
-                      )}
-                    {current.assignment_response === "declined" && (
-                      <Copy>
-                        Declined: operations must review and reassign this
-                        appointment.
-                      </Copy>
-                    )}
-                    <Button
-                      label="Assessment & Findings"
-                      onPress={() => setStage("assessment")}
-                    />
-                    <Button
-                      label="Quotations & Work Authorisation"
-                      secondary
-                      onPress={() => setStage("workflow")}
-                    />
-                    <Button
-                      label="Service Checklist"
-                      secondary
-                      onPress={() => setStage("Service Checklist")}
-                    />
-                    <Button
-                      label="Parts & Materials"
-                      secondary
-                      onPress={() => setStage("Parts & Materials")}
-                    />
-                    <Button
-                      label="Proof of Service"
-                      secondary
-                      onPress={() => setStage("Proof of Service")}
-                    />
-                  </>
-                )}
-                {current.report && (
+              {pending.slice(0, 10).map((e) => (
+                <Copy key={e.id}>
+                  {e.kind === "photo" ? "Service photograph" : "Service draft"}{" "}
+                  · {e.syncState ?? "Pending Sync"}
+                </Copy>
+              ))}
+              <Button
+                label="Reconcile pending service records"
+                disabled={busy || !connected}
+                onPress={reconcilePending}
+              />
+            </Card>
+          )}
+          {!!queueMessage && <Copy>{queueMessage}</Copy>}
+          {!profile ? null : selected && !current ? (
+            <Card>
+              <Copy>
+                This job is no longer accessible. Refresh and contact
+                operations.
+              </Copy>
+            </Card>
+          ) : selected && current ? (
+            <>
+              {stage === "details" ? (
+                <>
                   <Card>
-                    <Title>Recorded Service Report</Title>
-                    <Copy>{current.report.outcome}</Copy>
-                    <Copy>{current.report.body.findings}</Copy>
+                    <Title>{current.reference}</Title>
+                    <Copy>{current.snapshot.name}</Copy>
                     <Copy>
-                      {current.status === "completed"
-                        ? "Customer-confirmed completed service"
-                        : "Awaiting the canonical review/acknowledgement process"}
+                      {lagos(current.starts_at)} – {lagos(current.ends_at)}
+                    </Copy>
+                    <Copy>
+                      {current.address.street}, {current.address.zone}
+                    </Copy>
+                    <Copy>{current.equipment.concerns}</Copy>
+                    <Copy>
+                      Work phase: {current.work_phase}. Verified payment due:{" "}
+                      {current.billing.dueKobo === null
+                        ? "Quotation required"
+                        : "₦" +
+                          (current.billing.dueKobo / 100).toLocaleString(
+                            "en-NG",
+                          )}
+                    </Copy>
+                    <Copy>
+                      Arrival authorises assessment only. Chargeable service
+                      requires independent quotation approval, customer
+                      acceptance and verified payment.
                     </Copy>
                   </Card>
-                )}
-              </>
-            ) : stage === "assessment" ? (
-              <>
-                <Copy>
-                  Record findings without claiming authorisation to perform
-                  chargeable work. Unsafe findings must go to operations for
-                  review.
-                </Copy>
-                <NativeForm
-                  api={(_, v) =>
-                    api("booking.assessment.save", {
-                      bookingId: current.id,
-                      version: current.version,
-                      reason: v.reason,
-                      operationKey: randomUUID(),
-                    })
-                  }
-                  action="booking.assessment.save"
-                  title="Save Assessment Findings"
-                  fields={[
-                    {
-                      name: "reason",
-                      label:
-                        "Equipment, fault, observations, safety concerns and recommended follow-up",
-                    },
-                  ]}
-                  onDone={() => {
-                    refresh().catch((e) => setError(e.message));
-                    setStage("details");
-                  }}
+                  <Button
+                    label="View on Map"
+                    secondary
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://www.google.com/maps/search/?api=1&query=" +
+                          encodeURIComponent(
+                            current.address.street +
+                              ", " +
+                              current.address.zone,
+                          ),
+                      ).catch(() => setError("Navigation unavailable."))
+                    }
+                  />
+                  {/^\+?[0-9]{10,15}$/.test(current.address.phone) && (
+                    <Button
+                      label="Call Customer"
+                      secondary
+                      onPress={() =>
+                        Linking.openURL("tel:" + current.address.phone).catch(
+                          () => setError("Calling unavailable."),
+                        )
+                      }
+                    />
+                  )}
+                  {current.events.map((e: any, i: number) => (
+                    <View
+                      key={i}
+                      style={{
+                        borderLeftWidth: 2,
+                        borderColor: colors.primary,
+                        padding: 10,
+                      }}
+                    >
+                      <Copy>
+                        {e.status.replaceAll("_", " ")} · {lagos(e.created_at)}
+                      </Copy>
+                      <Copy>{e.note}</Copy>
+                    </View>
+                  ))}
+                  {!["completed", "cancelled", "failed"].includes(
+                    current.status,
+                  ) && (
+                    <>
+                      {current.status === "assigned" &&
+                        current.assignment_response === "pending" && (
+                          <NativeForm
+                            api={(_, v) =>
+                              api("booking.assignment.respond", {
+                                ...v,
+                                bookingId: current.id,
+                                version: current.version,
+                              })
+                            }
+                            action="booking.assignment.respond"
+                            title="Respond to Assigned Job"
+                            fields={[
+                              {
+                                name: "decision",
+                                label: "Assignment response",
+                                options: [
+                                  {
+                                    value: "acknowledged",
+                                    label: "Accept assignment",
+                                  },
+                                  {
+                                    value: "declined",
+                                    label: "Decline and notify operations",
+                                  },
+                                ],
+                              },
+                              {
+                                name: "reason",
+                                label: "Response reason for operations",
+                              },
+                            ]}
+                            onDone={() =>
+                              refresh().catch((e) => setError(e.message))
+                            }
+                          />
+                        )}
+                      {current.assignment_response === "declined" && (
+                        <Copy>
+                          Declined: operations must review and reassign this
+                          appointment.
+                        </Copy>
+                      )}
+                      <Button
+                        label="Assessment & Findings"
+                        onPress={() => setStage("assessment")}
+                      />
+                      <Button
+                        label="Quotations & Work Authorisation"
+                        secondary
+                        onPress={() => setStage("workflow")}
+                      />
+                      <Button
+                        label="Service Checklist"
+                        secondary
+                        onPress={() => setStage("Service Checklist")}
+                      />
+                      <Button
+                        label="Parts & Materials"
+                        secondary
+                        onPress={() => setStage("Parts & Materials")}
+                      />
+                      <Button
+                        label="Proof of Service"
+                        secondary
+                        onPress={() => setStage("Proof of Service")}
+                      />
+                    </>
+                  )}
+                  {current.report && (
+                    <Card>
+                      <Title>Recorded Service Report</Title>
+                      <Copy>{current.report.outcome}</Copy>
+                      <Copy>{current.report.body.findings}</Copy>
+                      <Copy>
+                        {current.status === "completed"
+                          ? "Customer-confirmed completed service"
+                          : "Awaiting the canonical review/acknowledgement process"}
+                      </Copy>
+                    </Card>
+                  )}
+                </>
+              ) : stage === "assessment" ? (
+                <>
+                  <Copy>
+                    Record findings without claiming authorisation to perform
+                    chargeable work. Unsafe findings must go to operations for
+                    review.
+                  </Copy>
+                  <NativeForm
+                    api={(_, v) =>
+                      api("booking.assessment.save", {
+                        bookingId: current.id,
+                        version: current.version,
+                        reason: v.reason,
+                        operationKey: randomUUID(),
+                      })
+                    }
+                    action="booking.assessment.save"
+                    title="Save Assessment Findings"
+                    fields={[
+                      {
+                        name: "reason",
+                        label:
+                          "Equipment, fault, observations, safety concerns and recommended follow-up",
+                      },
+                    ]}
+                    onDone={() => {
+                      refresh().catch((e) => setError(e.message));
+                      setStage("details");
+                    }}
+                  />
+                  <Button
+                    label="Open Existing Assessment / Quote Workflow"
+                    secondary
+                    onPress={() => setStage("workflow")}
+                  />
+                </>
+              ) : (
+                <Appointment
+                  b={current}
+                  user={{ ...user, technician_service_only: true }}
+                  api={api}
+                  token={token}
+                  apiUrl={origin}
+                  done={() => refresh().catch((e) => setError(e.message))}
                 />
-                <Button
-                  label="Open Existing Assessment / Quote Workflow"
-                  secondary
-                  onPress={() => setStage("workflow")}
-                />
-              </>
-            ) : (
-              <Appointment
-                b={current}
-                user={{ ...user, technician_service_only: true }}
-                api={api}
-                token={token}
-                apiUrl={origin}
-                done={() => refresh().catch((e) => setError(e.message))}
-              />
-            )}
-          </>
-        ) : !["notifications", "password", "support"].includes(page) ? (
-          <TechnicianScreens
-            page={page}
-            user={user}
-            profile={profile}
-            api={api}
-            navigate={navigate}
-            openJob={openJob}
-            connected={connected}
-            stamp={stamp}
-            busy={busy}
-            availability={availability}
-            refresh={refresh}
-            signout={signout}
-            entryFilter={entryFilter}
-            entryRange={entryRange}
-          />
-        ) : page === "notifications" ? (
-          <CustomerNotifications
-            api={api}
-            relatedAction={(id) => {
-              const assigned = bookings.find((booking) => booking.id === id);
-              return assigned
-                ? { label: "Open assigned job", open: () => open(assigned) }
-                : undefined;
-            }}
-          />
-        ) : page === "password" ? (
-          <NativeForm
-            api={api}
-            action="account.password"
-            title="Change Password"
-            fields={[
-              {
-                name: "currentPassword",
-                label: "Current password",
-                type: "password",
-              },
-              { name: "newPassword", label: "New password", type: "password" },
-            ]}
-          />
-        ) : page === "support" ? (
-          <NativeForm
-            api={api}
-            action="support.create"
-            title="Contact Service Operations"
-            fields={[
-              { name: "subject", label: "Subject" },
-              {
-                name: "message",
-                label: "Describe the issue and safe next step",
-              },
-            ]}
-          />
-        ) : null}
-      </ScrollView>
-      <View
-        style={{
-          flexDirection: "row",
-          padding: 8,
-          borderTopWidth: 1,
-          borderColor: colors.border,
-        }}
-      >
-        {tabs.map(([label, dest, icon]) => (
-          <Pressable
-            key={dest}
-            accessibilityRole="tab"
-            accessibilityLabel={label}
-            accessibilityState={{ selected: page === dest && !selected }}
-            onPress={() => {
-              setSelected(null);
-              setPage(dest);
-            }}
-            style={{
-              flex: 1,
-              minHeight: 64,
-              borderRadius: 18,
-              backgroundColor:
-                page === dest && !selected ? colors.elevated : "transparent",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Ionicons
-              accessible={false}
-              name={icon as any}
-              size={24}
-              color={page === dest ? colors.primary : colors.muted}
+              )}
+            </>
+          ) : !["notifications", "password", "support"].includes(page) ? (
+            <TechnicianScreens
+              page={page}
+              user={user}
+              profile={profile}
+              api={api}
+              navigate={navigate}
+              openJob={openJob}
+              connected={connected}
+              stamp={stamp}
+              busy={busy}
+              availability={availability}
+              refresh={refresh}
+              signout={signout}
+              entryFilter={entryFilter}
+              entryRange={entryRange}
             />
-            <Text
-              preserveColor
-              style={{ color: page === dest ? colors.primary : colors.muted }}
-            >
-              {label}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
+          ) : page === "notifications" ? (
+            <CustomerNotifications
+              api={api}
+              relatedAction={(id) => {
+                const assigned = bookings.find((booking) => booking.id === id);
+                return assigned
+                  ? { label: "Open assigned job", open: () => open(assigned) }
+                  : undefined;
+              }}
+            />
+          ) : page === "password" ? (
+            <NativeForm
+              api={api}
+              action="account.password"
+              title="Change Password"
+              fields={[
+                {
+                  name: "currentPassword",
+                  label: "Current password",
+                  type: "password",
+                },
+                {
+                  name: "newPassword",
+                  label: "New password",
+                  type: "password",
+                },
+              ]}
+            />
+          ) : page === "support" ? (
+            <NativeForm
+              api={api}
+              action="support.create"
+              title="Contact Service Operations"
+              fields={[
+                { name: "subject", label: "Subject" },
+                {
+                  name: "message",
+                  label: "Describe the issue and safe next step",
+                },
+              ]}
+            />
+          ) : null}
+        </ScrollView>
+      </ScreenTransition>
+      <NextTabs
+        tabs={[
+          { label: "Today", screen: "home", icon: "home" },
+          { label: "Jobs", screen: "jobs", icon: "wrench" },
+          { label: "Work", screen: "work", icon: "layers" },
+          { label: "Profile", screen: "profile", icon: "user-round" },
+        ]}
+        active={
+          selected
+            ? "jobs"
+            : ["work", "history"].includes(page)
+              ? "work"
+              : page === "home" || page === "jobs"
+                ? page
+                : "profile"
+        }
+        onNavigate={(dest) => navigate(dest)}
+      />
     </ScreenCanvas>
   );
 }

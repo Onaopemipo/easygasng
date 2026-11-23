@@ -1,3 +1,4 @@
+import {reviewedNativeNextSourceHash} from "./reviewed-native-next-source.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
@@ -9,7 +10,7 @@ export async function reviewedNativeUxSourceHash(file, incoming) {
       "utf8",
     ),
   );
-  if (!review.files[file]) return incoming;
+  if (!review.files[file]) return reviewedNativeNextSourceHash(file,incoming);
   assert.equal(
     incoming,
     review.baseline[file],
@@ -22,5 +23,5 @@ export async function reviewedNativeUxSourceHash(file, incoming) {
     incoming,
     file + " committed UX baseline",
   );
-  return review.files[file];
+  return reviewedNativeNextSourceHash(file,review.files[file]);
 }

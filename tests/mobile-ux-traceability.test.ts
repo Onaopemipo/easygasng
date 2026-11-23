@@ -78,6 +78,7 @@ test("MOBUX23-SOURCE: all prior bytes and every new source transition remain ver
   const { reviewedNativeUxSourceHash } = await import(
     "../scripts/lib/reviewed-native-ux-source.mjs"
   );
+  const {reviewedNativeNextSourceHash}=await import("../scripts/lib/reviewed-native-next-source.mjs");
   assert.equal(Object.keys(review.files).length, 9);
   for (const [file, expected] of Object.entries(review.files)) {
     assert.equal(
@@ -90,11 +91,11 @@ test("MOBUX23-SOURCE: all prior bytes and every new source transition remain ver
       createHash("sha256")
         .update(await fs.readFile(file))
         .digest("hex"),
-      expected,
+      await reviewedNativeNextSourceHash(file,expected),
     );
     assert.equal(
       await reviewedNativeUxSourceHash(file, review.baseline[file]),
-      expected,
+      await reviewedNativeNextSourceHash(file,expected),
     );
     await assert.rejects(
       () => reviewedNativeUxSourceHash(file, "tampered"),
@@ -106,7 +107,7 @@ test("MOBUX23-SOURCE: all prior bytes and every new source transition remain ver
       createHash("sha256")
         .update(await fs.readFile(file))
         .digest("hex"),
-      expected,
+      await reviewedNativeNextSourceHash(file,expected),
     );
   const manifest = await json(
     "prototypes/easygas-mobile-next/source-manifest.json",

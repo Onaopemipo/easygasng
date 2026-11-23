@@ -230,6 +230,9 @@ function view(i: any, a: any) {
   return {
     id: i.id,
     purpose: i.purpose,
+    orderId: i.order_id ?? null,
+    invoiceId: i.invoice_id ?? null,
+    bookingId: i.booking_id ?? null,
     status:
       i.status === "quoted" &&
       a?.state === "prepared" &&

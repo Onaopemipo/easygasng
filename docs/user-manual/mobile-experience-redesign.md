@@ -1,5 +1,7 @@
 # New mobile experience review
 
+For the approved native implementation controls, see the [native Mobile Next guide](mobile-native-next.md). The following remains the original prototype review guide.
+
 Open the [private EasyGas mobile prototype](https://easygas-mobile-next.philipmuyiwa.chatgpt.site) using the owner account. The link is private. It is a design prototype with synthetic records; it cannot charge a card, send messages, fulfil orders or change your website data.
 
 Choose **Review controls → Customer** to start. The review role selector exists only in this prototype; the native app continues to use secure sign-in. Review controls also offer business customer, business owner, service manager, inventory & finance, driver, technician and visitor, light/dark appearance, exception scenarios and a synthetic-data reset.
