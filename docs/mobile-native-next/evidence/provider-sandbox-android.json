@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-23",
+  "environment": "Hosted client demo; actual Paystack TEST checkout; current native entry in Expo Go58.0.5 Android17",
+  "account": "Separate labelled Native Provider QA 23 Nov customer; tagged real email explicitly authorised, excluded from public evidence",
+  "mutations": [
+    "Created labelled customer and one synthetic default delivery address",
+    "Three Paystack TEST attempts (success, declined, abandoned); one verified synthetic wallet credit"
+  ],
+  "success": {
+    "intentId": "3a7a7e53-c5aa-4330-8548-fd2de27b294d",
+    "principalKobo": 10000,
+    "feeKobo": 153,
+    "acceptedGrossKobo": 10153,
+    "providerPage": "Paystack TEST Success selected and paid",
+    "browserCallback": "Continue in EasyGas; one app-return action; no website sign-in request or unverified paid claim",
+    "return": "Reopened EasyGas through Expo Go recent project; saved intent verified with retained app bearer session",
+    "walletBeforeKobo": 0,
+    "walletAfterKobo": 10000,
+    "walletEntryCountAfter": 1,
+    "repeatVerifyStatuses": [
+      "paid",
+      "paid"
+    ],
+    "repeatVerifyWalletEntries": 1
+  },
+  "decline": {
+    "providerPage": "Paystack TEST Declined selected; Declined result displayed",
+    "nativeResult": "Payment failed. Review a new amount before trying again.",
+    "sessionRetained": true,
+    "walletAfterKobo": 10000,
+    "walletEntryCountAfter": 1,
+    "cancelButton": "Pressed on declined provider attempt; provider remained on Declined page. App safely reconciled failed on foreground; standalone cancellation not yet asserted."
+  },
+  "authority": "Server-owned intent verification and canonical wallet read-back; provider credentials remain server-side; no fake paid flag or callback-based credit",
+  "limits": [
+    "Expo Go foreground recovery does not accept current installed easygas:// scheme",
+    "No live-money payment, physical delivery, new EasyGas binary or store upload"
+  ],
+  "abandoned": {
+    "device": "Android tablet current normal entry",
+    "action": "Opened a fresh hosted checkout, used provider Close then Android Back without pressing Pay, reopened EasyGas",
+    "nativeResult": "Your payment attempt is saved. Payment is still being confirmed. No new charge has been started.",
+    "walletKobo": 10000,
+    "walletEntries": 1,
+    "retry": "Check again re-verifies saved intent, does not open another checkout",
+    "terminalStatus": "No terminal provider cancellation asserted; pending retained honestly"
+  }
+}

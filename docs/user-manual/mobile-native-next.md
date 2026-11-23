@@ -71,3 +71,27 @@ The customer profile sheet keeps the input and Continue button above the softwar
 ![Current native tablet Home](../mobile-native-next/evidence/native-home-tablet.png)
 
 The recorded wallet test used disposable local synthetic data. It verifies continuity through sign-in and the correct tracking destination; it does not verify a real provider payment or physical delivery. Text size6 was checked, while maximal accessibility sizes, VoiceOver, Android runtime, physical devices and every feature/device combination remain open. Store-installed apps still require a separately authorised new release to receive this design.
+
+## Returning from sandbox payment
+
+Use a customer or business-customer account with an authorised real email address. Reserved test domains such as `.test` are rejected before hosted checkout, even though the client demo uses synthetic purchases. Staff accounts cannot access customer payment intents. Never enter a real card for this sandbox test; use [Paystack’s official test details](https://paystack.com/docs/payments/test-payments/).
+
+Review the amount and processing fee, then choose **Accept total & continue**. After Paystack returns, the browser should show **Continue in EasyGas** with one **Return to EasyGas app** action. The browser and app have separate sessions, so the native-return page does not ask you to sign into the website. Reopen the signed-in app if the return link cannot open it. The app checks the saved intent with the server on return/foreground; **Check again** checks that attempt rather than creating another charge.
+
+A pending, failed or expired attempt does not mean payment succeeded. Check the saved order or wallet before trying again. A provider success is accepted only after the app’s owned-intent verification and canonical ledger read-back agree. The Android sandbox continuation completed an actual Paystack TEST payment and confirmed one ₦100 wallet credit after repeated verification. A declined attempt showed a retry message without another credit; leaving a separate checkout unpaid kept its saved attempt pending. Pending is not success: reopen EasyGas and use Check again before considering another payment.
+
+## Android phone and tablet behaviour
+
+The current-source Android preview uses Expo Go58.0.5 and the client-demo backend. Its seven representative role views and phone/tablet layouts have been checked. The older installed EasyGas app remains a separate release; these changes need a new signed release before Play Store/TestFlight installations receive them.
+
+Tablets can rotate between portrait and landscape. Content fills the app window, with controls inside system safe areas. Profile forms move above the docked software keyboard. Android Back first hides the keyboard; pressing Back again closes the sheet without saving. Floating keyboards can be moved with the operating system controls.
+
+Use Account → Appearance to choose Light, Dark or System. The transparent logo remains clear in dark mode. Android phone and tablet checks include140% text scaling and gesture/threebutton navigation. Slow order reads now finish before the next polling request begins, avoiding an indefinitely replaced loader.
+
+![Android focused profile form above the keyboard](../mobile-native-next/evidence/android-phone-keyboard.png)
+
+![Android tablet in landscape](../mobile-native-next/evidence/android-tablet-landscape-home.png)
+
+![Verified synthetic wallet principal after Paystack return](../mobile-native-next/evidence/android-provider-wallet-credit.png)
+
+[Provider/Android acceptance](../mobile-native-next/provider-android-acceptance.json) records8bounded passes out of9cases. The remaining installed-build/custom-scheme gate is blocked by the no-new-binaries scope. Real iOS provider return, physical devices, screen readers/maximal accessibility and individual feature/device permutations remain open. The development runtime cannot accept remote push or Android background GPS on behalf of an installed release. Production remains NO-GO.

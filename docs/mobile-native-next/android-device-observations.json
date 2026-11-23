@@ -1,0 +1,115 @@
+{
+  "date": "2026-11-23",
+  "sourceParent": "3b556a80d75bdeadadfe7b7fa03b6abf0faed1dd",
+  "entry": "apps/mobile/index.ts (normal current source, including recorded repairs)",
+  "apiOrigin": "https://easygas-client-demo.vercel.app",
+  "control": "User explicitly approved ADB; separate EasyGas Tablet QA avoids the other project tablet",
+  "devices": [
+    {
+      "device": "Pixel8",
+      "android": "17 API37.1",
+      "runtime": "Expo Go58.0.5",
+      "viewport": "1080x2400"
+    },
+    {
+      "device": "EasyGas Tablet QA",
+      "android": "15 API35",
+      "runtime": "Expo Go58.0.5",
+      "viewport": "2560x1600 /1600x2560"
+    }
+  ],
+  "cases": [
+    {
+      "id": "NXT-AND01",
+      "case": "Seven representative phone role views",
+      "status": "PASS_BOUNDED",
+      "evidence": [
+        "docs/mobile-native-next/evidence/android-manager-home.png",
+        "docs/mobile-native-next/evidence/android-finance-home.png",
+        "docs/mobile-native-next/evidence/android-driver-home.png",
+        "docs/mobile-native-next/evidence/android-technician-home.png",
+        "docs/mobile-native-next/evidence/android-commercial-home.png",
+        "docs/mobile-native-next/evidence/android-owner-orders.png",
+        "docs/mobile-native-next/evidence/android-provider-wallet-credit.png"
+      ],
+      "observed": "Owner/manager/finance shared business shell; driver Today/Deliveries/Work/Profile; technician Today/Jobs/Work/Profile; commercial owned customer journey; authorised labelled customer wallet/payment. Screens read real hosted role-scoped APIs; no staff mutation performed."
+    },
+    {
+      "id": "NXT-AND02",
+      "case": "Slow hosted order read and business customer orders",
+      "status": "PASS_BOUNDED",
+      "evidence": [
+        "docs/mobile-native-next/evidence/android-owner-orders.png",
+        "docs/mobile-native-next/evidence/android-commercial-orders.png"
+      ],
+      "observed": "Owner list finishes after slow hosted read; commercial account shows owned orders. Request polling coalesces rather than starving initial load."
+    },
+    {
+      "id": "NXT-AND03",
+      "case": "Phone focused form and Android Back",
+      "status": "PASS_BOUNDED",
+      "evidence": [
+        "docs/mobile-native-next/evidence/android-phone-keyboard.png"
+      ],
+      "observed": "Docked Gboard: field bottom1200 and Continue bottom1423 are above keyboard top1515; first Back hides keyboard, second Back closes sheet without submission. Android17 physical-keyboard handwriting/floating mode was separately observed; emulator tested with physical keyboard temporarily disabled, config restored."
+    },
+    {
+      "id": "NXT-AND04",
+      "case": "Tablet portrait and landscape",
+      "status": "PASS_BOUNDED",
+      "evidence": [
+        "docs/mobile-native-next/evidence/android-tablet-portrait-home.png",
+        "docs/mobile-native-next/evidence/android-tablet-landscape-home.png"
+      ],
+      "observed": "Natural landscape and rotated portrait use full viewport after orientation repair; role tabs remain inside safe area."
+    },
+    {
+      "id": "NXT-AND05",
+      "case": "Tablet focused software keyboard and Back",
+      "status": "PASS_BOUNDED",
+      "evidence": [],
+      "observed": "Portrait field1458..1566, Continue1628..1736 above keyboard1824; landscape field498..606 and Continue668..776 above keyboard864. Back hides keyboard then closes sheet without save. Private captures retained outside repository because background contains authorised real QA email."
+    },
+    {
+      "id": "NXT-AND06",
+      "case": "Appearance,140% text and gesture/three-button navigation",
+      "status": "PASS_BOUNDED",
+      "evidence": [
+        "docs/mobile-native-next/evidence/android-phone-dark-home.png",
+        "docs/mobile-native-next/evidence/android-phone-large-text-buttons.png",
+        "docs/mobile-native-next/evidence/android-tablet-dark-home.png",
+        "docs/mobile-native-next/evidence/android-tablet-large-text-buttons.png"
+      ],
+      "observed": "Phone and tablet dark/light observations; font_scale1.4 and actual threebutton overlay enabled; Home text/cylinder no overlap and tabs above system buttons. Settings restored to1.0 and gestural; tablet auto-rotation restored. OS floating keyboard/Expo development overlays are not current store acceptance."
+    }
+  ],
+  "limits": [
+    "Representative role views, not every action or all 300 feature leaves",
+    "No current signed EasyGas binary installation, custom-scheme certification, remote push, background GPS or physical device acceptance",
+    "Maximal accessibility sizes and screen reader acceptance remain open"
+  ],
+  "fixes": [
+    {
+      "issue": "An initial hosted order read took19.9seconds;15second overlapping polls invalidated every response, leaving a persistent loader",
+      "files": [
+        "apps/mobile/App.tsx",
+        "packages/business-rules/src/native-order-refresh.ts"
+      ],
+      "verification": "Owner orders rendered after serialising in-flight reads; deferred/read-failure regression tests pass"
+    },
+    {
+      "issue": "Android keyboard could cover the focused form sheet",
+      "files": [
+        "apps/mobile/ContextSheet.tsx"
+      ],
+      "verification": "Android height avoidance places active field and Continue above docked software keyboard on phone and tablet portrait/landscape"
+    },
+    {
+      "issue": "Forced portrait orientation letterboxed the Android tablet",
+      "files": [
+        "apps/mobile/app.json"
+      ],
+      "verification": "default orientation manifest; tablet fills landscape and portrait in current-source Expo Go. Future installed builds require release."
+    }
+  ]
+}

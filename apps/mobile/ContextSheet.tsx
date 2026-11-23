@@ -33,7 +33,7 @@ export function ContextSheet({
       onRequestClose={onClose}
     >
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={[styles.overlay, { backgroundColor: colors.overlay }]}
       >
         <View

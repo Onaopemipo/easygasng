@@ -1,0 +1,102 @@
+{
+  "date": "2026-11-23",
+  "sourceCommit": "3b556a80d75bdeadadfe7b7fa03b6abf0faed1dd",
+  "productionDecision": "NO-GO; no new signed binary, export, install of EasyGas binary or store upload authorised in this phase",
+  "requirements": [
+    "NXT-R01",
+    "NXT-R02",
+    "NXT-R03",
+    "NXT-R04",
+    "NXT-R07",
+    "NXT-R09",
+    "NXT-R10"
+  ],
+  "cases": [
+    {
+      "id": "NXT-PA01",
+      "case": "Latest GitHub web/native jobs",
+      "status": "PASS_BOUNDED",
+      "reason": "7aa2855 run45112393313 and both current3b556a8 runs45114222003/45114218405 passed web/native validation;1216tests,0failed,0skipped. Native export skipped. This continuation source has separate pending CI until pushed.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json",
+        "docs/mobile-native-next/evidence/ci-3b556a8.json"
+      ]
+    },
+    {
+      "id": "NXT-PA02",
+      "case": "Actual Paystack sandbox success and owned app-session foreground return",
+      "status": "PASS_BOUNDED",
+      "reason": "Actual Paystack TEST Success completed from current Android customer app. Browser callback had no website sign-in requirement; app retained bearer session, verified saved intent on reopening and credited principal10000kobo once. Two repeated verifies returned paid with one wallet entry. Current installed custom-scheme handling remains PA09.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/provider-sandbox-android.json",
+        "docs/mobile-native-next/evidence/android-provider-browser-return.png",
+        "docs/mobile-native-next/evidence/android-provider-wallet-credit.png"
+      ]
+    },
+    {
+      "id": "NXT-PA03",
+      "case": "Actual Paystack declined/cancelled attempt without wallet credit or sign-out",
+      "status": "PASS_BOUNDED",
+      "reason": "Actual Paystack TEST Declined reconciles failed; a separate fresh checkout abandoned via Close/Android Back remains pending on app return and Check again. Session retained; wallet10000kobo and exactly one ledger entry after all attempts. No false cancellation or paid state asserted.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/provider-sandbox-android.json",
+        "docs/mobile-native-next/evidence/android-provider-declined.png",
+        "docs/mobile-native-next/evidence/android-provider-abandoned.png"
+      ]
+    },
+    {
+      "id": "NXT-PA04",
+      "case": "Hosted native return page without browser authentication",
+      "status": "PASS_BOUNDED",
+      "reason": "Actual stable browser page with labelled nonexistent intent shows Continue in EasyGas and exactly one Return to EasyGas app link; no Please sign in to continue and no Payment verified claim. This is a safe handoff-page check, not successful provider reconciliation."
+    },
+    {
+      "id": "NXT-PA05",
+      "case": "Provider authority/foreign intent/expired session/duplicate/uncertain response exceptions",
+      "status": "PASS_BOUNDED",
+      "reason": "51 focused checks pass,0failed,0skipped: native components/real API, provider-adapter authority, foreign/expired/duplicate/uncertain responses, single-flight slow order reads and Android/iOS keyboard policy.33 hosted access/preflight assertions remain. Adapter tests are separate from actual provider evidence.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/provider-android-focused-tests.txt"
+      ]
+    },
+    {
+      "id": "NXT-PA06",
+      "case": "Current-source Android phone role views and customer journey",
+      "status": "PASS_BOUNDED",
+      "reason": "Seven representative current-source Android phone role views pass against hosted role-scoped APIs; customer real sandbox wallet flow and commercial owned-order view observed. Slow owner order polling defect repaired and list renders. This is bounded role/view acceptance, not all300 actions.",
+      "evidence": [
+        "docs/mobile-native-next/android-device-observations.json"
+      ]
+    },
+    {
+      "id": "NXT-PA07",
+      "case": "Android keyboard, Back, gesture/button navigation, appearance and enlarged text",
+      "status": "PASS_BOUNDED",
+      "reason": "Phone/tablet focused keyboard, Back, dark/light,140% text and actual gesture/threebutton navigation observations pass. Android keyboard avoidance repaired; settings restored. Screen reader/maximal accessibility/physical-device acceptance remains open.",
+      "evidence": [
+        "docs/mobile-native-next/android-device-observations.json"
+      ]
+    },
+    {
+      "id": "NXT-PA08",
+      "case": "Android tablet portrait/landscape and focused keyboard",
+      "status": "PASS_BOUNDED",
+      "reason": "Isolated EasyGas Tablet QA API35 uses current normal entry, hosted APIs and full viewport in portrait/landscape after removing forced portrait. Focused software keyboard and Back, dark and140% text observed. No new EasyGas native binary.",
+      "evidence": [
+        "docs/mobile-native-next/android-device-observations.json"
+      ]
+    },
+    {
+      "id": "NXT-PA09",
+      "case": "Current-source installed custom-scheme return and store release acceptance",
+      "status": "BLOCKED",
+      "reason": "No new signed mobile binaries authorised. Existing installed EasyGas APK predates approved redesign; cannot count it as current source. Expo Go foreground recovery does not certify current store custom-scheme handling."
+    }
+  ],
+  "boundedResults": {
+    "cases": 9,
+    "passBounded": 8,
+    "blocked": 1,
+    "excluded": 0
+  }
+}

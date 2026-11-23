@@ -1,0 +1,240 @@
+{
+  "origin": "https://easygas-client-demo.vercel.app",
+  "sourceCommit": "3b556a8",
+  "environment": "test",
+  "scope": "Actual hosted API preflight and access denials; no provider quote/charge/credit was created",
+  "checks": [
+    {
+      "role": "public",
+      "action": "unowned verification",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "unowned intent",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "unowned verification",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "unowned intent",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "unowned verification",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "unowned intent",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "unowned verification",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "unowned intent",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "unowned verification",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "unowned intent",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "unowned verification",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "unowned intent",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "unowned verification",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "wallet before",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "reserved test email rejected",
+      "status": 409,
+      "expected": 409,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "wallet after",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "wallet unchanged after rejected quote",
+      "pass": true,
+      "sha256": "b05f070eaca143f1a8ba38cf2433f8b238eff1134dd9c2df87bb8a430aae5767"
+    },
+    {
+      "role": "customer",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "unowned intent",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "unowned verification",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    }
+  ],
+  "passed": 33,
+  "failed": 0
+}

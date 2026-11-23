@@ -4,6 +4,7 @@ import {
   CustomerNextTestimonials,
 } from "./MobileNextCustomerExtras";
 import MobileNextOrders from "./MobileNextOrders";
+import { singleFlightRefresh } from "../../packages/business-rules/src/native-order-refresh";
 import {
   NextIntro,
   NextList,
@@ -625,14 +626,14 @@ export default function App() {
       generation++;
       setOrders((prior) => prior && withoutRiderLocations(prior));
     };
-    const refreshTracking = (initial = false) => {
+    const refreshTracking = singleFlightRefresh(async (initial = false) => {
       if (AppState.currentState !== "active" && !initial) return;
       const request = ++generation;
       if (initial) {
         setError("");
         setLoading(true);
       }
-      api(ordersAction)
+      await api(ordersAction)
         .then((next) => {
           if (!active || request !== generation) return;
           setOrders(
@@ -654,7 +655,7 @@ export default function App() {
           );
           setLoading(false);
         });
-    };
+    });
     clearLocations();
     refreshTracking(true);
     const timer = setInterval(() => refreshTracking(), 15000);

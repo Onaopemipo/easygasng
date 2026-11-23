@@ -25,7 +25,7 @@ after(() => fs.rm(tmp, { recursive: true, force: true }));
 await build({
   stdin: {
     contents:
-      "export {GuestNextAccount} from './apps/mobile/AccountHub';export {NativeForm} from './apps/mobile/Workflows';export * from './apps/mobile/HostedPayment';export * from './apps/mobile/CustomerCheckoutDraft';export * from './apps/mobile/MobileNextUI';export * from './apps/mobile/FinanceOverview';export * from './apps/mobile/MobileNextCatalogue';export * from './apps/mobile/MobileNextWorkspaces';export * from './apps/mobile/MobileNextFieldWork';export {default as CustomerHome} from './apps/mobile/CustomerHome';export {default as CombinedCheckout} from './apps/mobile/CombinedCheckout';export {default as GasOrder} from './apps/mobile/GasOrder';export * as host from './tests/helpers/mobile-next-hosts';",
+      "export {ContextSheet} from './apps/mobile/ContextSheet';export {GuestNextAccount} from './apps/mobile/AccountHub';export {NativeForm} from './apps/mobile/Workflows';export * from './apps/mobile/HostedPayment';export * from './apps/mobile/CustomerCheckoutDraft';export * from './apps/mobile/MobileNextUI';export * from './apps/mobile/FinanceOverview';export * from './apps/mobile/MobileNextCatalogue';export * from './apps/mobile/MobileNextWorkspaces';export * from './apps/mobile/MobileNextFieldWork';export {default as CustomerHome} from './apps/mobile/CustomerHome';export {default as CombinedCheckout} from './apps/mobile/CombinedCheckout';export {default as GasOrder} from './apps/mobile/GasOrder';export * as host from './tests/helpers/mobile-next-hosts';",
     resolveDir: process.cwd(),
     loader: "tsx",
   },
@@ -1070,4 +1070,32 @@ test("NXT-GUEST-ACCOUNT: signed-out Account has one clear sign-in action and pub
   assert.deepEqual(destinations, ["login", "public-policies"]);
   assertTextParents(t.toJSON());
   await act(async () => t.unmount());
+});
+
+test("NXT-ANDROID-KEYBOARD: focused sheets allocate height above the Android keyboard and retain iOS padding", async () => {
+  const original = m.host.Platform.OS;
+  try {
+    for (const [platform, behavior] of [
+      ["android", "height"],
+      ["ios", "padding"],
+    ]) {
+      m.host.Platform.OS = platform;
+      const t = await mount(m.ContextSheet, {
+        title: "Profile",
+        onClose() {},
+        children: React.createElement("Text", null, "Field"),
+      });
+      assert.equal(
+        t.root.findByType("KeyboardAvoidingView").props.behavior,
+        behavior,
+      );
+      assert.equal(
+        t.root.findByType("ScrollView").props.automaticallyAdjustKeyboardInsets,
+        false,
+      );
+      await act(async () => t.unmount());
+    }
+  } finally {
+    m.host.Platform.OS = original;
+  }
 });
