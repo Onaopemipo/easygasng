@@ -14,3 +14,5 @@ The exact first draft selected by the user is now the shared native source icon.
 Source application is complete; installed appearance is not claimed. Existing TestFlight0.1.0(3) and Androidstore0.1.0(2) still contain their prior packaged icons. A later native build and install is required to advance APPICON-G04.
 
 Verification:4asset/config checks,5existing configuration contracts and2final traceability checks pass. [Final matrix validation](../mobile-app-icon/evidence/traceability-final.txt). Installed appearance remains pending.
+
+Approved icon source was pushed in `c206b6c` on24November2026. The web-only rollout does not distribute native assets. APPICON-R04 remains PARTIAL; existing installed/TestFlight/Play icons require a later native build and installation check.

@@ -26,3 +26,5 @@ Final bounded push/deploy status: **VERIFIED_COMPLETE**. Initial source commit `
 ## Fleet password recovery - 22 November Brisbane
 
 [Current verification matrix](fleet-verification-rtm.md) closes four bounded gates. Actual desktop/phone, wrong-password retention and one verified QA save passed; existing22orders, ledger, inventory, vehicles and trips preserved. Final `dd5bbc7` / Ready `dpl_4itAxT5TKq2UPro9Z8FeYAVEu3hJ`,439exact app files; CI1,168web plus3native dependency tests passed, export skipped. Original requirement IDs/coverage and production NO-GO unchanged.
+
+24November2026 continuation: [release evidence](../releases/20261124/README.md) and [PUB24 matrix](push-deploy-20261124-rtm.md) record exact-source fleet rollout at `c206b6c` / `dpl_59Y5HPQtW9ghk39TNku7J66fQgdq`,443remote source comparisons,1,226CIpasses/no skips and candidate/stable seven-role controls. Approved mobile icon source pushed only; no native binary or production gate change.

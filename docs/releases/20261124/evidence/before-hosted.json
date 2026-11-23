@@ -1,0 +1,88 @@
+{
+  "stage": "before",
+  "base": "https://easygas-client-demo.vercel.app",
+  "sourceCommit": "c206b6cc18ba0d59d13bb2388dcca00a4d25534b",
+  "deploymentId": "dpl_59Y5HPQtW9ghk39TNku7J66fQgdq",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "id": "PUB24-SESSIONS",
+      "status": "PASS",
+      "detail": "Fresh verifier-owned sessions for seven canonical roles; no identity/permission change"
+    },
+    {
+      "id": "PUB24-READY",
+      "status": "PASS",
+      "detail": "Ready demo, test payment environment and production NO-GO retained"
+    },
+    {
+      "id": "PUB24-ROLES",
+      "status": "PASS",
+      "detail": "Seven roles, management fleet scope, restricted driver own-trip access, custody/planning restrictions and anonymous denial pass"
+    },
+    {
+      "id": "PUB24-GUARDS",
+      "status": "PASS",
+      "detail": "Fresh unverified owner and six nonowner roles cannot register a vehicle"
+    },
+    {
+      "id": "PUB24-PRESERVE",
+      "status": "PASS",
+      "detail": "Orders, inventory, complete current ledger response, vehicles, trip state, LPG custody and policies unchanged"
+    }
+  ],
+  "status": "PASS",
+  "denied": [
+    {
+      "role": "owner",
+      "status": 403,
+      "code": "REAUTH_REQUIRED"
+    },
+    {
+      "role": "manager",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "finance",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "driver",
+      "status": 403,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "technician",
+      "status": 403,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "commercial",
+      "status": 403,
+      "code": "FORBIDDEN"
+    }
+  ],
+  "snapshot": {
+    "orders": "81dbac6605672f2630ab6d9db61d7266dc70a480a2e9949ad3828995055aa998",
+    "inventory": "b87bfcf6d4dfba4f552b6ef5b6c6642efbf7476544ddff5f8f423ed2a16d0a91",
+    "ledger": "abb3e54473c0e0b74497e53da2b6bc4f3b93f68ccd17677381d0c9294f8fa938",
+    "vehicles": "2e601a5f8f6b5aec53efe401fbdce10e51bf66a983cd10660571103c50617255",
+    "trips": "eae11f2e494981465aec5a644cad350ac27acecc44ffdb93b06701e4571c3a10",
+    "custody": "7a78cbe2b5d1eb2475e279b535a5a59177eb88b957d77d4d86d0cf17f4b86a65",
+    "policies": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47",
+    "counts": {
+      "orders": 24,
+      "vehicles": 6,
+      "trips": 5,
+      "custodyLoads": 5
+    }
+  },
+  "completedAt": "2026-11-23T14:53:48.264Z"
+}

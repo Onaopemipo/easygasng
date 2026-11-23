@@ -1,5 +1,5 @@
 {
-  "phase": "Temporary Vercel client demo \u2014 9 November 2026",
+  "phase": "Temporary Vercel client demo — 9 November 2026",
   "productionDecision": "NO-GO unchanged; temporary isolated demo authorised; real import remains held",
   "requirements": [
     {
@@ -158,7 +158,7 @@
       "acceptanceGate": "VDEMO-G4",
       "status": "VERIFIED_COMPLETE",
       "reason": "Set all four fulfilment values on the isolated demo project and verified a new deployment inherited them without overrides.",
-      "testResult": "PASS \u2014 project-level values and preserved Preview/Paystack settings, hosted readiness, driver controls, tracking, bulk LPG, existing proof and sandbox payment mode.",
+      "testResult": "PASS — project-level values and preserved Preview/Paystack settings, hosted readiness, driver controls, tracking, bulk LPG, existing proof and sandbox payment mode.",
       "outstandingWork": "Retain normal demo readiness and sandbox checks on future releases. Existing physical, provider and commercial production gates carry forward."
     }
   ],
@@ -263,6 +263,10 @@
     {
       "date": "2026-11-22",
       "change": "Fleet verification4/4 gates: missing owner registration password field fixed; shared recovery preserves draft/key and sends password only to reauth. Final dd5bbc7 / Ready dpl_4itAxT5TKq2UPro9Z8FeYAVEu3hJ:439exact files,3candidate/3stable checks, actual desktop/phone wrong-password and verified QA save, CI1168web+3native dependency tests, export skipped. Original requirements, coverage and production decisions unchanged."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Pushed pending fleet redesign and approved mobile icon source; deployed only web/shared exact application source c206b6cc18ba0d59d13bb2388dcca00a4d25534b to existing client demo dpl_59Y5HPQtW9ghk39TNku7J66fQgdq. No schema/env/qualification/stock/ledger change; NO-GO retained."
     }
   ],
   "redeployment20261109": {
@@ -271,7 +275,7 @@
     "deploymentId": "dpl_yZaERKondML9nt2b8FkMjfV8uXxT",
     "url": "https://easygas-client-demo.vercel.app",
     "status": "VERIFIED_COMPLETE",
-    "reason": "Bounded source push and client-demo redeployment complete; Git remote confirmed initial commit5e5b2e0. Cloud build READY; migrations070\u2013072 applied after authenticated encrypted backup; existing record counts preserved. Hosted origin/auth/privilege/catalogue/no-index and new document/wallet/dispatch endpoint checks pass. No full production acceptance inferred.",
+    "reason": "Bounded source push and client-demo redeployment complete; Git remote confirmed initial commit5e5b2e0. Cloud build READY; migrations070–072 applied after authenticated encrypted backup; existing record counts preserved. Hosted origin/auth/privilege/catalogue/no-index and new document/wallet/dispatch endpoint checks pass. No full production acceptance inferred.",
     "evidence": [
       "docs/deployment/evidence/redeploy-20261109-build.txt",
       "docs/deployment/evidence/redeploy-20261109-hosted.txt",
@@ -504,5 +508,25 @@
     },
     "excluded": 0,
     "mobileBuilds": 0
+  },
+  "publication20261124": {
+    "sourceCommit": "c206b6cc18ba0d59d13bb2388dcca00a4d25534b",
+    "deploymentId": "dpl_59Y5HPQtW9ghk39TNku7J66fQgdq",
+    "status": "READY",
+    "stableUrl": "https://easygas-client-demo.vercel.app",
+    "rollback": "dpl_G8rxXxwGYrFWHobgnpevrLfxf68W",
+    "evidence": "docs/releases/20261124/README.md",
+    "requirementsMatrix": "docs/traceability/push-deploy-20261124-rtm.json",
+    "remoteFilesVerified": 443,
+    "ci": {
+      "runId": 45197385447,
+      "passed": 1226,
+      "failed": 0,
+      "skipped": 0,
+      "nativeExport": "SKIPPED"
+    },
+    "businessMutation": false,
+    "mobileBuild": false,
+    "productionDecision": "NO-GO preserved"
   }
 }

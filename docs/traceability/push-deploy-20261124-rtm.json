@@ -27,18 +27,35 @@
       "testFiles": [
         "tests/customer-traceability.test.ts",
         "tests/fleet-verification-components.test.ts",
-        "tests/fleet-verification-security.test.ts"
+        "tests/fleet-verification-security.test.ts",
+        "scripts/verify-push-deploy-20261124.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "PUB24-SOURCE",
+        "PUB24-PUBLISH"
+      ],
       "negativeTests": [
         "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/releases/20261124/evidence/source-integrity.json",
+        "docs/releases/20261124/evidence/source-and-deployment.txt",
+        "docs/releases/20261124/evidence/deployment.json",
+        "docs/releases/20261124/evidence/ci-validation.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/before-hosted.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/hosted-browser.json",
+        "docs/releases/20261124/evidence/hosted-browser.txt",
+        "docs/releases/20261124/evidence/cleanup-hosted.txt",
+        "docs/releases/20261124/evidence/publication.txt"
+      ],
       "acceptanceGate": "PUB24-G01",
-      "status": "PARTIAL",
-      "reason": "Publication/deployment and executed hosted/CI evidence pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact application source pushed and Ready demo promoted;443remote bytes matched;full CI1226pass;seven-role candidate/stable/security/snapshot checks and bounded hostedUI pass;documentation reconciled.",
+      "testResult": "PASS — release proofs, full GitHub CI, candidate/stable controls and bounded browser smoke; no mobile export.",
+      "outstandingWork": "No remaining bounded push/web-demo rollout work. APPICON-R04 installed appearance, physical/native/provider and commercial production NO-GO remain separate."
     },
     {
       "id": "PUB24-R02",
@@ -63,18 +80,35 @@
       "testFiles": [
         "tests/customer-traceability.test.ts",
         "tests/fleet-verification-components.test.ts",
-        "tests/fleet-verification-security.test.ts"
+        "tests/fleet-verification-security.test.ts",
+        "scripts/verify-push-deploy-20261124.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "PUB24-SOURCE",
+        "PUB24-DEPLOY"
+      ],
       "negativeTests": [
         "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/releases/20261124/evidence/source-integrity.json",
+        "docs/releases/20261124/evidence/source-and-deployment.txt",
+        "docs/releases/20261124/evidence/deployment.json",
+        "docs/releases/20261124/evidence/ci-validation.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/before-hosted.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/hosted-browser.json",
+        "docs/releases/20261124/evidence/hosted-browser.txt",
+        "docs/releases/20261124/evidence/cleanup-hosted.txt",
+        "docs/releases/20261124/evidence/publication.txt"
+      ],
       "acceptanceGate": "PUB24-G02",
-      "status": "PARTIAL",
-      "reason": "Publication/deployment and executed hosted/CI evidence pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact application source pushed and Ready demo promoted;443remote bytes matched;full CI1226pass;seven-role candidate/stable/security/snapshot checks and bounded hostedUI pass;documentation reconciled.",
+      "testResult": "PASS — release proofs, full GitHub CI, candidate/stable controls and bounded browser smoke; no mobile export.",
+      "outstandingWork": "No remaining bounded push/web-demo rollout work. APPICON-R04 installed appearance, physical/native/provider and commercial production NO-GO remain separate."
     },
     {
       "id": "PUB24-R03",
@@ -99,18 +133,39 @@
       "testFiles": [
         "tests/customer-traceability.test.ts",
         "tests/fleet-verification-components.test.ts",
-        "tests/fleet-verification-security.test.ts"
+        "tests/fleet-verification-security.test.ts",
+        "scripts/verify-push-deploy-20261124.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "PUB24-ROLES",
+        "PUB24-GUARDS",
+        "PUB24-PRESERVE",
+        "PUB24-UI-VERIFY",
+        "PUB24-UI-DETAIL",
+        "PUB24-CLEANUP"
+      ],
       "negativeTests": [
         "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/releases/20261124/evidence/source-integrity.json",
+        "docs/releases/20261124/evidence/source-and-deployment.txt",
+        "docs/releases/20261124/evidence/deployment.json",
+        "docs/releases/20261124/evidence/ci-validation.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/before-hosted.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/hosted-browser.json",
+        "docs/releases/20261124/evidence/hosted-browser.txt",
+        "docs/releases/20261124/evidence/cleanup-hosted.txt",
+        "docs/releases/20261124/evidence/publication.txt"
+      ],
       "acceptanceGate": "PUB24-G03",
-      "status": "PARTIAL",
-      "reason": "Publication/deployment and executed hosted/CI evidence pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact application source pushed and Ready demo promoted;443remote bytes matched;full CI1226pass;seven-role candidate/stable/security/snapshot checks and bounded hostedUI pass;documentation reconciled.",
+      "testResult": "PASS — release proofs, full GitHub CI, candidate/stable controls and bounded browser smoke; no mobile export.",
+      "outstandingWork": "No remaining bounded push/web-demo rollout work. APPICON-R04 installed appearance, physical/native/provider and commercial production NO-GO remain separate."
     },
     {
       "id": "PUB24-R04",
@@ -135,18 +190,34 @@
       "testFiles": [
         "tests/customer-traceability.test.ts",
         "tests/fleet-verification-components.test.ts",
-        "tests/fleet-verification-security.test.ts"
+        "tests/fleet-verification-security.test.ts",
+        "scripts/verify-push-deploy-20261124.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "PUB24-CI"
+      ],
       "negativeTests": [
         "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/releases/20261124/evidence/source-integrity.json",
+        "docs/releases/20261124/evidence/source-and-deployment.txt",
+        "docs/releases/20261124/evidence/deployment.json",
+        "docs/releases/20261124/evidence/ci-validation.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/before-hosted.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/hosted-browser.json",
+        "docs/releases/20261124/evidence/hosted-browser.txt",
+        "docs/releases/20261124/evidence/cleanup-hosted.txt",
+        "docs/releases/20261124/evidence/publication.txt"
+      ],
       "acceptanceGate": "PUB24-G04",
-      "status": "PARTIAL",
-      "reason": "Publication/deployment and executed hosted/CI evidence pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact application source pushed and Ready demo promoted;443remote bytes matched;full CI1226pass;seven-role candidate/stable/security/snapshot checks and bounded hostedUI pass;documentation reconciled.",
+      "testResult": "PASS — release proofs, full GitHub CI, candidate/stable controls and bounded browser smoke; no mobile export.",
+      "outstandingWork": "No remaining bounded push/web-demo rollout work. APPICON-R04 installed appearance, physical/native/provider and commercial production NO-GO remain separate."
     },
     {
       "id": "PUB24-R05",
@@ -171,56 +242,72 @@
       "testFiles": [
         "tests/customer-traceability.test.ts",
         "tests/fleet-verification-components.test.ts",
-        "tests/fleet-verification-security.test.ts"
+        "tests/fleet-verification-security.test.ts",
+        "scripts/verify-push-deploy-20261124.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "PUB24-DOCS"
+      ],
       "negativeTests": [
         "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/releases/20261124/evidence/source-integrity.json",
+        "docs/releases/20261124/evidence/source-and-deployment.txt",
+        "docs/releases/20261124/evidence/deployment.json",
+        "docs/releases/20261124/evidence/ci-validation.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/before-hosted.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/hosted-browser.json",
+        "docs/releases/20261124/evidence/hosted-browser.txt",
+        "docs/releases/20261124/evidence/cleanup-hosted.txt",
+        "docs/releases/20261124/evidence/publication.txt"
+      ],
       "acceptanceGate": "PUB24-G05",
-      "status": "PARTIAL",
-      "reason": "Publication/deployment and executed hosted/CI evidence pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact application source pushed and Ready demo promoted;443remote bytes matched;full CI1226pass;seven-role candidate/stable/security/snapshot checks and bounded hostedUI pass;documentation reconciled.",
+      "testResult": "PASS — release proofs, full GitHub CI, candidate/stable controls and bounded browser smoke; no mobile export.",
+      "outstandingWork": "No remaining bounded push/web-demo rollout work. APPICON-R04 installed appearance, physical/native/provider and commercial production NO-GO remain separate."
     }
   ],
   "gates": [
     {
       "id": "PUB24-G01",
       "description": "Commit and push every pending authorised change without exposing private data",
-      "status": "PENDING",
-      "reason": "Pending actual release verification"
+      "status": "PASS",
+      "reason": "Executed release evidence mapped to corresponding PUB24 requirement; original production gates untouched"
     },
     {
       "id": "PUB24-G02",
       "description": "Deploy exact committed web/shared bytes to the existing client-demo project",
-      "status": "PENDING",
-      "reason": "Pending actual release verification"
+      "status": "PASS",
+      "reason": "Executed release evidence mapped to corresponding PUB24 requirement; original production gates untouched"
     },
     {
       "id": "PUB24-G03",
       "description": "Verify candidate and stable role/security/UI behaviour without business-state changes",
-      "status": "PENDING",
-      "reason": "Pending actual release verification"
+      "status": "PASS",
+      "reason": "Executed release evidence mapped to corresponding PUB24 requirement; original production gates untouched"
     },
     {
       "id": "PUB24-G04",
       "description": "Verify GitHub Actions on the published application source without mobile export",
-      "status": "PENDING",
-      "reason": "Pending actual release verification"
+      "status": "PASS",
+      "reason": "Executed release evidence mapped to corresponding PUB24 requirement; original production gates untouched"
     },
     {
       "id": "PUB24-G05",
       "description": "Publish release evidence and reconcile phase matrices/manuals",
-      "status": "PENDING",
-      "reason": "Pending actual release verification"
+      "status": "PASS",
+      "reason": "Executed release evidence mapped to corresponding PUB24 requirement; original production gates untouched"
     }
   ],
   "coverage": {
     "total": 5,
-    "verified": 0,
-    "partial": 5,
+    "verified": 5,
+    "partial": 0,
     "blocked": 0,
     "excluded": 0
   },
@@ -228,6 +315,10 @@
     {
       "date": "2026-11-24",
       "change": "Registered explicit push/deploy-all request. Prior stable rollback dpl_G8rxXxwGYrFWHobgnpevrLfxf68W captured. Existing pending fleet/icon matrices and untested installed-icon gate retained."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Published application c206b6cc18ba0d59d13bb2388dcca00a4d25534b,READY stable deployment dpl_59Y5HPQtW9ghk39TNku7J66fQgdq. All5boundedrelease requirements verified;443actualremote files match;CI1226pass/0skip;sevenrolesandnegative/snapshotchecks;manual restricteddriverguidance clarified.No mobilebinary."
     }
   ]
 }

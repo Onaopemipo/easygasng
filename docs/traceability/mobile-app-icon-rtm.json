@@ -45,7 +45,7 @@
       "acceptanceGate": "APPICON-G01",
       "status": "VERIFIED_COMPLETE",
       "reason": "Exact approved first-draft PNG is persisted at the shared native icon path; byte comparison, hash, square1254px format and opacity checks pass.",
-      "testResult": "PASS \u2014 executed exact-asset and effective configuration checks; installed-device appearance remains separate.",
+      "testResult": "PASS — executed exact-asset and effective configuration checks; installed-device appearance remains separate.",
       "outstandingWork": "None for this bounded source/documentation requirement; new-release device appearance remains APPICON-R04."
     },
     {
@@ -88,7 +88,7 @@
       "acceptanceGate": "APPICON-G02",
       "status": "VERIFIED_COMPLETE",
       "reason": "Installed Expo config resolver plus iOS/Android icon selectors resolve the approved asset in unified preview/store and local driver/technician configurations. Existing configurations and identities unchanged.",
-      "testResult": "PASS \u2014 executed exact-asset and effective configuration checks; installed-device appearance remains separate.",
+      "testResult": "PASS — executed exact-asset and effective configuration checks; installed-device appearance remains separate.",
       "outstandingWork": "None for this bounded source/documentation requirement; new-release device appearance remains APPICON-R04."
     },
     {
@@ -130,7 +130,7 @@
       "acceptanceGate": "APPICON-G03",
       "status": "VERIFIED_COMPLETE",
       "reason": "Approval, hashes, executed checks, local-only role-shell restrictions and next-build acceptance limits documented. Existing TestFlight/Play artifacts and unrelated changes preserved.",
-      "testResult": "PASS \u2014 executed exact-asset and effective configuration checks; installed-device appearance remains separate.",
+      "testResult": "PASS — executed exact-asset and effective configuration checks; installed-device appearance remains separate.",
       "outstandingWork": "None for this bounded source/documentation requirement; new-release device appearance remains APPICON-R04."
     },
     {
@@ -170,7 +170,7 @@
       "acceptanceGate": "APPICON-G04",
       "status": "PARTIAL",
       "reason": "Source icon is ready, but no new mobile build/upload/install was requested or performed. Current installed/store icons remain from earlier packaged builds.",
-      "testResult": "NOT_TESTED \u2014 signed-device/store appearance requires a new native build and installation",
+      "testResult": "NOT_TESTED — signed-device/store appearance requires a new native build and installation",
       "outstandingWork": "Build/upload when requested, then verify actual iOS/Android launcher/store appearance and platform masks."
     }
   ],
@@ -215,6 +215,10 @@
     {
       "date": "2026-11-24",
       "change": "Applied the exact approved first draft to shared app-icon.png. Four executed asset/effective-config/boundary checks pass. Three source/documentation gates accepted; installed signed-release appearance remains PARTIAL, not excluded. No new build/upload or unrelated branding change."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Exact approved icon source pushed in c206b6cc18ba0d59d13bb2388dcca00a4d25534b. Web-only demo rollout excludes mobile assets. APPICON-R04 remains PARTIAL: no new native export/build/install/store upload or installed-icon acceptance."
     }
   ]
 }

@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-24",
+  "sourceCommit": "c206b6cc18ba0d59d13bb2388dcca00a4d25534b",
+  "deploymentId": "dpl_59Y5HPQtW9ghk39TNku7J66fQgdq",
+  "base": "https://easygas-client-demo.vercel.app",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "id": "PUB24-UI-OWNER",
+      "status": "PASS",
+      "observation": "Private Safari owner login; Dispatch overview/Fleet & stock/Order tracking and4purpose tabs present;6vehicles/5distinct trips match API"
+    },
+    {
+      "id": "PUB24-UI-VERIFY",
+      "status": "PASS",
+      "observation": "Register vehicle opens focused dialog;kgfields,current password andVerify and register vehicle present;LPG suitability unchecked;closed without submitting"
+    },
+    {
+      "id": "PUB24-UI-SEARCH",
+      "status": "PASS",
+      "observation": "No-match search shows oneempty state;Clear filters restores five trips and pagination1/1"
+    },
+    {
+      "id": "PUB24-UI-DETAIL",
+      "status": "PASS",
+      "observation": "Dark trip detail shows0odometer/GPSdistance,absent approved fuel estimate,endedtrip/not-live warning and nofuelreceipt state"
+    },
+    {
+      "id": "PUB24-UI-DRIVER",
+      "status": "PASS",
+      "observation": "Existing Chrome QA driver session reaches delivery-onlyDriverworkspace,owntripStarttrip andno management Fleet&trip access;no mutation orlogout"
+    },
+    {
+      "id": "PUB24-UI-CLEANUP",
+      "status": "PASS",
+      "observation": "Safari theme restored tolight andonly verifier-owned browserlogin signedout;7APIverifier sessions separatelyrevoked;existing IABcustomer andChrome driver sessions notchanged"
+    }
+  ],
+  "screenshots": [
+    "docs/releases/20261124/evidence/hosted-fleet.jpg",
+    "docs/releases/20261124/evidence/hosted-registration.jpg",
+    "docs/releases/20261124/evidence/hosted-trip-dark.jpg"
+  ],
+  "limits": "Desktop Safari owner and existingChrome driver smoke;7roleauthorisation covered byAPI,not7UI sessions.No newhosted phone/tablet orscreenreader acceptance. Existing local390px/820px evidence retained.",
+  "initialProbeCorrection": "First API expectation incorrectly alloweddriver fleet.summary; corrected to productiondelivery-only denial plusowntripdriver.location; noapppermission change. Retained initial-before-hosted.txt. Safari native typedtexttruncatedcredentials; paste completedlogin; noaccountorpassword change."
+}

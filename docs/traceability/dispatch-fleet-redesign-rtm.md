@@ -17,3 +17,7 @@ The browser used the real Next.js app and existing APIs against disposable local
 Client-demo deployment/hosted verification and screen-reader/physical-browser acceptance remain separate. No synthetic local result changes the production decision.
 
 Final verification: [25current checks pass](../dispatch-fleet-redesign/evidence/final-focused.txt); ten manual browser cases and web build/types pass. [Initial broad run and corrected source-proof case](../dispatch-fleet-redesign/evidence/verification-summary.json) retain1,226cases and29environment skips. No complete-suite green or concurrency claim is made.
+
+## Hosted publication continuation — 24 November2026
+
+Source `c206b6c` is now deployed at the stable client demo (`dpl_59Y5HPQtW9ghk39TNku7J66fQgdq`). The historical local results above remain unchanged. The subsequent exact-source GitHub run passed **1,226/1,226,0failures,0skips**, with its independent PostgreSQL16 service, web build/types/audit and native validation; mobile export was skipped. Candidate/stable API probes cover all seven roles and leave business snapshots unchanged. Owner Safari smoke verifies the new tabs, dialog/password fields, search recovery and dark trip detail. Production drivers retain the separate delivery-only workspace and cannot read management fleet/fuel APIs. [Release evidence](../releases/20261124/README.md). No physical-device, screen-reader or commercial production acceptance is inferred.

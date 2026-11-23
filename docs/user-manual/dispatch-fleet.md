@@ -33,11 +33,11 @@ Closing an edited dialog asks whether to **Keep editing** or **Discard changes**
 
 ![Focused registration](../dispatch-fleet-redesign/evidence/desktop-registration.jpg)
 
-## Driver trip actions
+## Driver access and trip actions
 
-Drivers see their own trips. If there is no active trip, **Start duty trip** opens a focused form for an active, LPG-suitable branch vehicle, starting odometer and location consent. If none is eligible, ask the owner to register/verify a suitable vehicle. The server also prevents two active trips for one driver or vehicle.
+Hosted drivers use **Deliveries → Driver workspace → Home → Current trip**. Choose **Start trip** when there is no active trip; an active trip provides the existing trip management controls. Use an active, LPG-suitable vehicle in the fulfilment branch, provide the starting odometer and required location consent. Ask the owner to register/verify a suitable vehicle if none is eligible. The server prevents concurrent active trips for a driver or vehicle and retains custody/reconciliation checks at trip end.
 
-For an active owned trip, use **Manage trip** to record a fuel receipt or end the trip with its closing odometer. Driver-only actions do not appear to managers or finance. Fuel retries preserve the same operation key after an uncertain failure. Ending a trip still requires the existing custody/reconciliation controls.
+Production driver sessions are delivery-only. They can read their own trip through the driver endpoint and their permitted assigned manifest/LPG records. They cannot access the management Fleet & trips summary, route planning or fuel/cash/stock management APIs. Owner, manager and finance fleet reads retain their existing branch scope; only the owner can register a vehicle after password verification. The management workspace's legacy full-session driver forms, exercised by local component tests, do not expand hosted driver authority.
 
 ## Phone, tablet and refresh behaviour
 
@@ -47,4 +47,4 @@ Phone forms use one column and an internally scrolling dialog. The password and 
 
 ![Phone password and save action](../dispatch-fleet-redesign/evidence/phone-registration-password.jpg)
 
-This redesign is locally verified with synthetic data. Hosted deployment, physical-browser/screen-reader coverage and broader production acceptance are separate. Existing production NO-GO remains.
+The redesign is deployed to the [client demo](https://easygas-client-demo.vercel.app/admin/deliveries#driver-fleet), verified24November2026 (Brisbane). Hosted API checks cover all seven roles, anonymous access and denied registration; isolated Safari checks cover owner navigation, registration/password fields, search recovery and dark trip detail. [Release evidence](../releases/20261124/README.md). No hosted vehicle/trip/financial/stock mutation was needed. Phone/tablet layouts retain their preceding local browser evidence; a new hosted phone/tablet or screen-reader acceptance pass is not claimed. Existing production NO-GO remains.

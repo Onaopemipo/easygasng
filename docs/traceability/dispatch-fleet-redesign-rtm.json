@@ -24,7 +24,11 @@
         "FLEETUI-NAV",
         "FLEETUI-V01",
         "FLEETUI-V09",
-        "FLEETUI-V10"
+        "FLEETUI-V10",
+        "PUB24-CI",
+        "PUB24-ROLES",
+        "PUB24-GUARDS",
+        "PUB24-DEPLOY"
       ],
       "negativeTests": [
         "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
@@ -38,12 +42,16 @@
         "docs/dispatch-fleet-redesign/evidence/build.txt",
         "docs/user-manual/dispatch-fleet.md",
         "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
-        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/source-and-deployment.txt"
       ],
       "acceptanceGate": "FLEETUI-G01",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
-      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "reason": "Bounded UI redesign locally verified and now deployed to existing client demo; exact source/archive, hosted role/security reads and owner Safari checks accepted. Original broader production gates retained.",
+      "outstandingWork": "No remaining bounded publication work. Physical phones/tablets, screen readers, all role/browser permutations and original production/native/provider/physical/import/retention gates remain separate.",
       "priority": "P1",
       "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
       "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
@@ -51,7 +59,7 @@
         "/admin/deliveries",
         "/admin/deliveries#driver-fleet"
       ],
-      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+      "testResult": "PASS — 25focused local checks and10local browser cases retained; published-source CI1226/1226,0skipped; candidate/stable seven-role and denied-write checks; hosted owner Safari UI smoke."
     },
     {
       "id": "FLEETUI-02",
@@ -72,7 +80,11 @@
         "FLEETUI-RECORDS",
         "FLEETUI-FAILURE",
         "FLEETUI-V02",
-        "FLEETUI-V04"
+        "FLEETUI-V04",
+        "PUB24-CI",
+        "PUB24-ROLES",
+        "PUB24-GUARDS",
+        "PUB24-DEPLOY"
       ],
       "negativeTests": [
         "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
@@ -86,12 +98,16 @@
         "docs/dispatch-fleet-redesign/evidence/build.txt",
         "docs/user-manual/dispatch-fleet.md",
         "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
-        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/source-and-deployment.txt"
       ],
       "acceptanceGate": "FLEETUI-G02",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
-      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "reason": "Bounded UI redesign locally verified and now deployed to existing client demo; exact source/archive, hosted role/security reads and owner Safari checks accepted. Original broader production gates retained.",
+      "outstandingWork": "No remaining bounded publication work. Physical phones/tablets, screen readers, all role/browser permutations and original production/native/provider/physical/import/retention gates remain separate.",
       "priority": "P1",
       "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
       "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
@@ -99,7 +115,7 @@
         "/admin/deliveries",
         "/admin/deliveries#driver-fleet"
       ],
-      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+      "testResult": "PASS — 25focused local checks and10local browser cases retained; published-source CI1226/1226,0skipped; candidate/stable seven-role and denied-write checks; hosted owner Safari UI smoke."
     },
     {
       "id": "FLEETUI-03",
@@ -109,7 +125,7 @@
         "apps/web/components/operations-completion.tsx"
       ],
       "dataSource": "Existing dispatch.centre, fleet.summary, manifest.summary, bulk.summary and dispatch.board APIs; server-scoped authoritative records",
-      "securityControl": "Owner-only recent-password registration; branch and role reads, driver-owned trip actions, idempotent writes, independent custody/safety approval and honest GPS freshness preserved",
+      "securityControl": "Owner-only recent-password registration; branch and role reads, driver-owned trip actions, idempotent writes, independent custody/safety approval and honest GPS freshness preserved; hosted production drivers remain delivery-only and use existing Driver workspace, not management fleet or fuel APIs",
       "testFiles": [
         "tests/fleet-verification-components.test.ts",
         "tests/fleet-verification-security.test.ts",
@@ -126,7 +142,11 @@
         "FLEETUI-FUEL",
         "FLEETUI-UNITS",
         "FLEETUI-V03",
-        "FLEETUI-V08"
+        "FLEETUI-V08",
+        "PUB24-CI",
+        "PUB24-ROLES",
+        "PUB24-GUARDS",
+        "PUB24-DEPLOY"
       ],
       "negativeTests": [
         "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
@@ -140,12 +160,16 @@
         "docs/dispatch-fleet-redesign/evidence/build.txt",
         "docs/user-manual/dispatch-fleet.md",
         "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
-        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/source-and-deployment.txt"
       ],
       "acceptanceGate": "FLEETUI-G03",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
-      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "reason": "Bounded UI redesign locally verified and now deployed to existing client demo; exact source/archive, hosted role/security reads and owner Safari checks accepted. Original broader production gates retained.",
+      "outstandingWork": "No remaining bounded publication work. Physical phones/tablets, screen readers, all role/browser permutations and original production/native/provider/physical/import/retention gates remain separate.",
       "priority": "P1",
       "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
       "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
@@ -153,7 +177,7 @@
         "/admin/deliveries",
         "/admin/deliveries#driver-fleet"
       ],
-      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+      "testResult": "PASS — 25focused local checks and10local browser cases retained; published-source CI1226/1226,0skipped; candidate/stable seven-role and denied-write checks; hosted owner Safari UI smoke."
     },
     {
       "id": "FLEETUI-04",
@@ -177,7 +201,11 @@
         "LRT-T007",
         "FLEETUI-V05",
         "FLEETUI-V06",
-        "FLEETUI-V07"
+        "FLEETUI-V07",
+        "PUB24-CI",
+        "PUB24-ROLES",
+        "PUB24-GUARDS",
+        "PUB24-DEPLOY"
       ],
       "negativeTests": [
         "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
@@ -191,12 +219,16 @@
         "docs/dispatch-fleet-redesign/evidence/build.txt",
         "docs/user-manual/dispatch-fleet.md",
         "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
-        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/source-and-deployment.txt"
       ],
       "acceptanceGate": "FLEETUI-G04",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
-      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "reason": "Bounded UI redesign locally verified and now deployed to existing client demo; exact source/archive, hosted role/security reads and owner Safari checks accepted. Original broader production gates retained.",
+      "outstandingWork": "No remaining bounded publication work. Physical phones/tablets, screen readers, all role/browser permutations and original production/native/provider/physical/import/retention gates remain separate.",
       "priority": "P1",
       "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
       "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
@@ -204,7 +236,7 @@
         "/admin/deliveries",
         "/admin/deliveries#driver-fleet"
       ],
-      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+      "testResult": "PASS — 25focused local checks and10local browser cases retained; published-source CI1226/1226,0skipped; candidate/stable seven-role and denied-write checks; hosted owner Safari UI smoke."
     },
     {
       "id": "FLEETUI-05",
@@ -223,7 +255,11 @@
         "tests/customer-traceability.test.ts"
       ],
       "testIds": [
-        "FLEETUI-SOURCE"
+        "FLEETUI-SOURCE",
+        "PUB24-CI",
+        "PUB24-ROLES",
+        "PUB24-GUARDS",
+        "PUB24-DEPLOY"
       ],
       "negativeTests": [
         "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
@@ -237,12 +273,16 @@
         "docs/dispatch-fleet-redesign/evidence/build.txt",
         "docs/user-manual/dispatch-fleet.md",
         "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
-        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json",
+        "docs/releases/20261124/evidence/ci-validation.txt",
+        "docs/releases/20261124/evidence/candidate-hosted.txt",
+        "docs/releases/20261124/evidence/stable-hosted.txt",
+        "docs/releases/20261124/evidence/source-and-deployment.txt"
       ],
       "acceptanceGate": "FLEETUI-G05",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
-      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "reason": "Bounded UI redesign locally verified and now deployed to existing client demo; exact source/archive, hosted role/security reads and owner Safari checks accepted. Original broader production gates retained.",
+      "outstandingWork": "No remaining bounded publication work. Physical phones/tablets, screen readers, all role/browser permutations and original production/native/provider/physical/import/retention gates remain separate.",
       "priority": "P1",
       "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
       "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
@@ -250,7 +290,7 @@
         "/admin/deliveries",
         "/admin/deliveries#driver-fleet"
       ],
-      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+      "testResult": "PASS — 25focused local checks and10local browser cases retained; published-source CI1226/1226,0skipped; candidate/stable seven-role and denied-write checks; hosted owner Safari UI smoke."
     }
   ],
   "gates": [
@@ -304,6 +344,10 @@
     {
       "date": "2026-11-24",
       "change": "Final25/25focused/current source and RTM checks pass, web types/build pass. Initial full1226tests:1196passed,1historical CSS-proof mapping assertion,29environment skips. Corrected exact four-file mapping and re-executed failing case in final25; initial log retained, no full-suite green or skipped-concurrency acceptance claimed. Restored only test-regenerated unrelated fixtures."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Client-demo rollout at c206b6cc18ba0d59d13bb2388dcca00a4d25534b / dpl_59Y5HPQtW9ghk39TNku7J66fQgdq; original local evidence retained; hosted restricted driver boundary clarified; full source CI green. No production gate accepted."
     }
   ],
   "verification": {
@@ -312,7 +356,17 @@
     "initialFullPassed": 1196,
     "initialFullFailed": 1,
     "initialFullSkipped": 29,
-    "initialFailureResolvedBy": "Final25/25rerun includes PBR21-ARTIFACTS and all changed fleet tests; full suite not rerun or claimed green",
-    "excluded": 0
+    "initialFailureResolvedBy": "Final25/25 targeted rerun retained; subsequently published exact-source GitHub full suite1226/1226passes,0failures/skips with independent PostgreSQL16 service.",
+    "excluded": 0,
+    "hostedPublication": {
+      "sourceCommit": "c206b6cc18ba0d59d13bb2388dcca00a4d25534b",
+      "deploymentId": "dpl_59Y5HPQtW9ghk39TNku7J66fQgdq",
+      "ciTests": 1226,
+      "ciPassed": 1226,
+      "ciFailed": 0,
+      "ciSkipped": 0,
+      "productionDriverBoundary": "Driver workspace/own-trip; management fleet/fuel/route planning denied",
+      "releaseEvidence": "docs/releases/20261124/README.md"
+    }
   }
 }
