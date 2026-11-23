@@ -15,7 +15,7 @@ Choose **Review controls → Customer** to start. The review role selector exist
 
 Returning without completing payment keeps the order unpaid. Use **Check this payment again** or **View saved order**; do not create another order. The expired-session scenario offers **Restore sample session and check**, preserving the order. Offline/pending/declined scenarios demonstrate recovery, not a successful charge.
 
-In the real application, payment verification belongs to the signed-in native session. The native browser callback correction returns to EasyGas using an opaque payment intent, without sending an authentication token in the URL. Native source automatically checks status on entry/foreground; the server still decides whether payment is verified. Installed build 2 does not yet include the new native source changes.
+The client-demo browser callback fix is deployed. In the real application, payment verification belongs to the signed-in native session. The native browser callback correction returns to EasyGas using an opaque payment intent, without sending an authentication token in the URL. Native source automatically checks status on entry/foreground; the server still decides whether payment is verified. Installed build 2 does not yet include the new native source changes.
 
 ## Find other features
 
@@ -24,6 +24,19 @@ Home prioritises gas ordering, service booking, wallet and the latest order. Sec
 Each workspace separates **Overview**, **Actions** and **Activity**. Select a row to inspect records; select an action to open one focused form. Close the sheet to return to the same workspace. Required information, eligible records, role restrictions and independent approval requirements still apply. Finance forms accept naira; internal integer-kobo conversion happens once.
 
 Drivers begin with trip readiness and a suitable trip. Technicians begin with scoped jobs and work authority; an empty eligible-appointment selector cannot start work. Owner/manager navigation prioritises orders; finance prioritises finance. Visitor mode hides customer orders and wallet balance. Business customer is a design review persona using existing customer permissions.
+
+| Review persona | Suggested walkthrough |
+| --- | --- |
+| Visitor | Browse Home/services, open Wallet to confirm private balances stay hidden, then choose a signed-in review role |
+| Customer | Refill → delivery → review → simulated payment → tracking; then Services, Wallet and Account |
+| Business customer | Customer journey plus Quotations from All workspaces; uses the existing customer permission model |
+| Business owner | Overview → today's orders → Actions; then approvals/settings, reporting and operations from Work |
+| Service manager | Orders, dispatch, customer/service management and scoped staff workspaces |
+| Inventory & finance | Finance priority → expenses/collections; then inventory, reconciliation, refunds and reports |
+| Driver | Today → trip readiness → Start local trip; inspect assignment, pickup, arrival, handover, returns and history |
+| Technician | Today/Jobs → scoped appointments → assignment/assessment → authorised work → materials/completion |
+
+Use **Overview** to inspect an existing record before opening **Actions**. A task can remain unavailable because there is no eligible record, authority has expired or the chosen scenario blocks it. Those states are intentional; changing the review role does not grant production permissions or bypass workflow requirements.
 
 ## Loading and transitions
 

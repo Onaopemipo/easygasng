@@ -33,7 +33,8 @@
         "docs/mobile-ux-20261123/evidence/focused-tests.txt",
         "docs/mobile-ux-20261123/evidence/browser-checks.json",
         "docs/mobile-ux-20261123/evidence/private-deployment.json",
-        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+        "docs/mobile-ux-20261123/evidence/native-inventory.json",
+        "docs/mobile-ux-20261123/evidence/traceability-evidence.txt"
       ],
       "acceptanceGate": "MOBUX23-G01",
       "status": "VERIFIED_COMPLETE",
@@ -75,7 +76,8 @@
         "docs/mobile-ux-20261123/evidence/focused-tests.txt",
         "docs/mobile-ux-20261123/evidence/browser-checks.json",
         "docs/mobile-ux-20261123/evidence/private-deployment.json",
-        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+        "docs/mobile-ux-20261123/evidence/native-inventory.json",
+        "docs/mobile-ux-20261123/evidence/traceability-evidence.txt"
       ],
       "acceptanceGate": "MOBUX23-G02",
       "status": "PARTIAL",
@@ -116,7 +118,8 @@
         "docs/mobile-ux-20261123/evidence/focused-tests.txt",
         "docs/mobile-ux-20261123/evidence/browser-checks.json",
         "docs/mobile-ux-20261123/evidence/private-deployment.json",
-        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+        "docs/mobile-ux-20261123/evidence/native-inventory.json",
+        "docs/mobile-ux-20261123/evidence/traceability-evidence.txt"
       ],
       "acceptanceGate": "MOBUX23-G03",
       "status": "PARTIAL",
@@ -157,13 +160,18 @@
         "docs/mobile-ux-20261123/evidence/focused-tests.txt",
         "docs/mobile-ux-20261123/evidence/browser-checks.json",
         "docs/mobile-ux-20261123/evidence/private-deployment.json",
-        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+        "docs/mobile-ux-20261123/evidence/native-inventory.json",
+        "docs/mobile-ux-20261123/evidence/traceability-evidence.txt",
+        "docs/mobile-ux-20261123/evidence/web-browser-checks.json",
+        "docs/mobile-ux-20261123/evidence/web-candidate.json",
+        "docs/mobile-ux-20261123/evidence/web-stable.json",
+        "docs/mobile-ux-20261123/evidence/web-source-integrity.json"
       ],
       "acceptanceGate": "MOBUX23-G04",
       "status": "PARTIAL",
-      "reason": "Browser native callback and mounted native auto-verification pass tests; hosted website callback and physical provider/app return remain separate acceptance.",
+      "reason": "Mounted native auto-verification and browser callback tests pass. Client-demo callback deployed and checked at 390\u00d7844; ordinary web auth remains enforced. Physical signed-device/provider return remains open.",
       "testResult": "PASS_BOUNDED; remaining native/individual/provider scope retained",
-      "outstandingWork": "Deploy client-demo callback correction; verify signed-device Paystack return with fresh/expired sessions and actual provider results."
+      "outstandingWork": "Verify a future signed native build against actual Paystack test returns, foreground/relaunch, expired and restored sessions; adopt the complete new payment visual design."
     },
     {
       "id": "MOBUX23-R05",
@@ -197,7 +205,8 @@
         "docs/mobile-ux-20261123/evidence/focused-tests.txt",
         "docs/mobile-ux-20261123/evidence/browser-checks.json",
         "docs/mobile-ux-20261123/evidence/private-deployment.json",
-        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+        "docs/mobile-ux-20261123/evidence/native-inventory.json",
+        "docs/mobile-ux-20261123/evidence/traceability-evidence.txt"
       ],
       "acceptanceGate": "MOBUX23-G05",
       "status": "VERIFIED_COMPLETE",
@@ -237,7 +246,8 @@
         "docs/mobile-ux-20261123/evidence/focused-tests.txt",
         "docs/mobile-ux-20261123/evidence/browser-checks.json",
         "docs/mobile-ux-20261123/evidence/private-deployment.json",
-        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+        "docs/mobile-ux-20261123/evidence/native-inventory.json",
+        "docs/mobile-ux-20261123/evidence/traceability-evidence.txt"
       ],
       "acceptanceGate": "MOBUX23-G06",
       "status": "PARTIAL",
@@ -275,7 +285,8 @@
         "docs/mobile-ux-20261123/evidence/focused-tests.txt",
         "docs/mobile-ux-20261123/evidence/browser-checks.json",
         "docs/mobile-ux-20261123/evidence/private-deployment.json",
-        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+        "docs/mobile-ux-20261123/evidence/native-inventory.json",
+        "docs/mobile-ux-20261123/evidence/traceability-evidence.txt"
       ],
       "acceptanceGate": "MOBUX23-G07",
       "status": "VERIFIED_COMPLETE",
@@ -314,7 +325,8 @@
         "docs/mobile-ux-20261123/evidence/focused-tests.txt",
         "docs/mobile-ux-20261123/evidence/browser-checks.json",
         "docs/mobile-ux-20261123/evidence/private-deployment.json",
-        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+        "docs/mobile-ux-20261123/evidence/native-inventory.json",
+        "docs/mobile-ux-20261123/evidence/traceability-evidence.txt"
       ],
       "acceptanceGate": "MOBUX23-G08",
       "status": "VERIFIED_COMPLETE",
@@ -346,7 +358,7 @@
       "id": "MOBUX23-G04",
       "status": "PARTIAL",
       "description": "Session-safe native payment return and recovery",
-      "reason": "Browser native callback and mounted native auto-verification pass tests; hosted website callback and physical provider/app return remain separate acceptance."
+      "reason": "Mounted native auto-verification and browser callback tests pass. Client-demo callback deployed and checked at 390\u00d7844; ordinary web auth remains enforced. Physical signed-device/provider return remains open."
     },
     {
       "id": "MOBUX23-G05",
@@ -395,6 +407,10 @@
     {
       "date": "2026-11-23",
       "change": "Published a separate private prototype; fixed customer loading/checkout/session-return source issues, guest prototype balance, tablet frame height and finance destination. Existing original manifests, screenshots, signed build2 and production holds retained. Five stale regression assertions now follow the explicit current source chain/delayed loading contract; no historical baseline removed."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Deployed exact one-component web correction from 80194c1 to candidate dpl_7MERX1577yLJJLDM9JJNTMfH8Htd and verified stable alias identity, health and native/browser authentication distinction. No native binary or provider transaction."
     }
   ],
   "featureDenominator": 300,
