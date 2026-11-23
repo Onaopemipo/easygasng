@@ -51,10 +51,16 @@ export async function mixedCheckoutAction(
       replayed: true,
       order: await one(
         tx,
-        'SELECT o.id,o.reference,o.total_kobo AS "totalKobo",o.payment_status AS "paymentStatus" FROM checkout_fulfilments f JOIN orders o ON o.id=f.order_id WHERE f.checkout_id=$1',
+        'SELECT o.id,o.reference,o.total_kobo AS "totalKobo",o.payment_status AS "paymentStatus",o.payment_method,o.payment_status,o.status FROM checkout_fulfilments f JOIN orders o ON o.id=f.order_id WHERE f.checkout_id=$1',
         [old.id],
       ),
       reference: "EGC-" + old.id.slice(0, 8).toUpperCase(),
+      // Recover the same linked appointments after a committed response is lost.
+      // The checkout and every returned booking remain bound to this customer.
+      bookings: (await tx.query(
+        "SELECT b.id,b.reference,b.status FROM checkout_fulfilments f JOIN service_bookings b ON b.id=f.booking_id WHERE f.checkout_id=$1 AND b.customer_id=$2 ORDER BY b.created_at,b.id",
+        [old.id, user.id],
+      )).rows,
     };
   }
   const bundle = d.bundleId ? await pricedBundle(tx, d.bundleId) : null;

@@ -64,6 +64,9 @@ for (const status of ["confirmed", "assigned"])
   });
 const order = await f.assigned();
 await f.db.exec("UPDATE settings SET value='true' WHERE key='wallet.enabled'");
+// Synthetic opening state in the disposable memory fixture; never hosted policy or stock.
+await f.db.query("UPDATE settings SET value=$1 WHERE key='gas.quantity_policy' AND scope='lagos'",[JSON.stringify({minimumKg:1,maximumKg:50,incrementKg:0.5,precision:1,capacitiesKg:[3,6,12.5,25,50]})]);
+await f.db.query("INSERT INTO gas_stock(branch_id,grams,reserved_grams) VALUES('lagos',100000,0) ON CONFLICT(branch_id) DO UPDATE SET grams=100000,reserved_grams=0");
 const refundOrders: Record<string, any> = {};
 for (const role of ["customer", "commercial"]) {
   await f.db.query(

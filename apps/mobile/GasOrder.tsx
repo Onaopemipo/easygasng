@@ -59,7 +59,7 @@ type Props = {
   catalogue: any;
   user: any;
   cart: any[];
-  done: () => void;
+  done: (orderId?: string) => void;
   onPlaced: (id: string) => void;
   viewServices: () => void;
   gasEnabled?: boolean;
@@ -555,7 +555,7 @@ export default function GasOrder({
   }
   async function finish() {
     if (user) await clearCheckoutDraft(user.id).catch(() => {});
-    done();
+    done(order?.id);
   }
   const stageLabels = gasEnabled
     ? ["Refill", "Delivery", "Review"]

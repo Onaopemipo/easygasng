@@ -91,10 +91,11 @@ test("independently governed bundles calculate service-only savings and atomical
     );
     assert.equal(booking!.snapshot.priceKobo, 90000);
     assert.equal(booking!.snapshot.bundleDiscountKobo, 10000);
-    assert.equal(
-      (await f.call("customer", "checkout.mixed", request)).replayed,
-      true,
-    );
+    const replay = await f.call("customer", "checkout.mixed", request);
+    assert.equal(replay.replayed, true);
+    assert.deepEqual(replay.order, result.order, "Lost-response replay preserves payment method/status and the canonical order");
+    assert.deepEqual(replay.bookings.map((b:any)=>({id:b.id,reference:b.reference})), result.bookings.map((b:any)=>({id:b.id,reference:b.reference})));
+    assert.equal(replay.bookings[0].status, "pending_confirmation");
     const linked = await one(
       f.db,
       "SELECT bundle_snapshot FROM commerce_checkouts WHERE id=$1",

@@ -46,7 +46,9 @@
         "docs/mobile-native-next/evidence/source-compatibility.txt",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G01",
       "status": "PARTIAL",
@@ -90,7 +92,9 @@
         "docs/mobile-native-next/evidence/source-compatibility.txt",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G02",
       "status": "PARTIAL",
@@ -114,7 +118,8 @@
         "apps/mobile/MobileNextCalendar.tsx",
         "apps/mobile/MobileNextCatalogue.tsx",
         "packages/business-rules/src/mobile-next-checkout.ts",
-        "apps/web/lib/service.ts"
+        "apps/web/lib/service.ts",
+        "apps/web/lib/mixed-checkout.ts"
       ],
       "dataSource": "Existing gas.catalogue, gas.quote, checkout.payment-options, checkout and checkout.mixed; server database pricing, stock, coverage and schedule authority. Encrypted device-only pending journal.",
       "securityControl": "Existing account/role/branch/recent-password/approval/payment/idempotency/offline custody/safety controls preserved; credentials stay in SecureStore",
@@ -128,7 +133,8 @@
         "NXT-ENCRYPTED-RECOVERY",
         "NXT-REAL-CHECKOUT",
         "NXT-GAS-CHECKOUT",
-        "NXT-CART-LIMITS"
+        "NXT-CART-LIMITS",
+        "NXT-MIXED-RECOVERY"
       ],
       "negativeTests": [
         "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
@@ -138,11 +144,13 @@
         "docs/mobile-native-next/evidence/source-compatibility.txt",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G03",
       "status": "PARTIAL",
-      "reason": "Actual native component plus real API gas/product checkout, current quote, shortage/unconfigured policy, price change, COD unpaid truth and encrypted lost-response/relaunch/retry pass. Device/provider acceptance remains open.",
+      "reason": "Real native component/API gas and product checkout, changed policy/stock/price and uncertain outcomes pass. Mixed-checkout replay now returns the original customer-owned linked appointments; service recovery preserves unrelated cart, and Track your order returns the canonical order ID. Native guest phone screens observed; complete device/provider journey remains open.",
       "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
       "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
     },
@@ -181,7 +189,9 @@
         "docs/mobile-native-next/evidence/source-compatibility.txt",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G04",
       "status": "PARTIAL",
@@ -226,7 +236,9 @@
         "docs/mobile-native-next/evidence/source-compatibility.txt",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G05",
       "status": "PARTIAL",
@@ -270,7 +282,9 @@
         "docs/mobile-native-next/evidence/source-compatibility.txt",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G06",
       "status": "PARTIAL",
@@ -314,7 +328,9 @@
         "docs/mobile-native-next/evidence/source-compatibility.txt",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G07",
       "status": "PARTIAL",
@@ -355,7 +371,9 @@
         "docs/mobile-native-next/evidence/source-compatibility.txt",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G08",
       "status": "PARTIAL",
@@ -387,7 +405,8 @@
       "testIds": [
         "NXT-REAL-CHECKOUT",
         "NATIVE-HTTP-READS",
-        "NATIVE-HTTP-WRITES"
+        "NATIVE-HTTP-WRITES",
+        "NXT-MIXED-RECOVERY"
       ],
       "negativeTests": [
         "Revoked or wrong role/branch, expired session, duplicate submission, network loss, changed price, pending/declined payment and ineligible physical fulfilment"
@@ -398,12 +417,14 @@
         "docs/mobile-native-next/evidence/simulator-connection.png",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G09",
       "status": "PARTIAL",
-      "reason": "Real API/component role and negative checks pass. Device Hub initially unavailable; after recovery the selected Expo project could not connect. Updated launcher prepared; no current-source native visual pass claimed.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
+      "reason": "BOUNDED_PHONE_OBSERVED: current-source guest Home, refill, delivery, area and calendar render. Calendar AX/coordinate automation interrupted; sign-in recovery, all role/device/keyboard acceptance remain open.",
+      "testResult": "PASS_LOCAL_API_COMPONENT_AND_IMPLEMENTATION_CI; BOUNDED_PHONE_VISUAL; FULL_DEVICE_ACCEPTANCE_OPEN",
       "outstandingWork": "Finish current-source phone/tablet role/keyboard/accessibility checks; verify hosted API continuation and distribute new builds before claiming installed end-to-end parity."
     },
     {
@@ -440,7 +461,9 @@
         "docs/mobile-native-next/evidence/source-compatibility.txt",
         "docs/mobile-native-next/evidence/final-acceptance.txt",
         "docs/mobile-native-next/evidence/phase-acceptance.txt",
-        "docs/mobile-native-next/evidence/regression-final.txt"
+        "docs/mobile-native-next/evidence/regression-final.txt",
+        "docs/mobile-native-next/evidence/ci-3377eb41.json",
+        "docs/mobile-native-next/evidence/followup-acceptance.txt"
       ],
       "acceptanceGate": "NXT-G10",
       "status": "PARTIAL",
@@ -531,6 +554,10 @@
     {
       "date": "2026-11-23",
       "change": "Ported the approved shared shell, customer/staff/field interfaces and focused forms. Retained all workflows and authority; added encrypted pending checkout recovery, exact payment-target binding and product-only server quotes. Cancellation remains a support request because customer direct cancellation is not an existing API privilege. All 300 leaves retained; current native device acceptance remains open."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Actual native phone guest Home/refill/delivery/area/calendar inspected with synthetic local API. Fixed canonical order navigation and customer-owned linked-appointment replay recovery. Implementation CI passed all1212 checks including previously local-skipped PostgreSQL cases; follow-up15 checks pass. Device Hub calendar controls currently unavailable to automation; remaining device checks retained."
     }
   ],
   "executedResults": {
@@ -565,7 +592,23 @@
       "driver",
       "technician"
     ],
-    "deviceVisualAcceptance": "OPEN; stale Expo project could not connect; normal launcher prepared and user handoff pending",
-    "signedBinariesBuilt": 0
+    "deviceVisualAcceptance": "BOUNDED_PHONE_OBSERVED: current-source guest Home, refill, delivery, area and calendar render. Calendar AX/coordinate automation interrupted; sign-in recovery, all role/device/keyboard acceptance remain open.",
+    "signedBinariesBuilt": 0,
+    "ciImplementationCommit": {
+      "commit": "3377eb41b5331a3b2e6541d439d6d94d25f08264",
+      "runId": 45103971061,
+      "passed": 1212,
+      "failed": 0,
+      "skipped": 0,
+      "native": "success",
+      "web": "success",
+      "evidence": "docs/mobile-native-next/evidence/ci-3377eb41.json"
+    },
+    "followupRecovery": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "docs/mobile-native-next/evidence/followup-acceptance.txt"
+    }
   }
 }

@@ -37,7 +37,8 @@ export default function CombinedCheckout({
   done: (orderId?: string) => void;
   orderGas: () => void;
 }) {
-  if (cart.length)
+  const [resumeServices, setResumeServices] = useState(false);
+  if (cart.length && !resumeServices)
     return (
       <GasOrder
         api={api}
@@ -52,7 +53,8 @@ export default function CombinedCheckout({
         fromCart
         linked
         onPlaced={() => {}}
-        done={() => done()}
+        onLinkedRequests={() => setResumeServices(true)}
+        done={done}
         viewServices={() => {}}
       />
     );

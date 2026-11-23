@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
 import assert from "node:assert/strict";
 const origin = process.argv[2],
@@ -8,6 +9,24 @@ assert.ok(
   ),
   "Client-demo origin required",
 );
+// Use the project's existing automation credential for its protected candidate.
+// Read into memory only; do not create a bypass, alter protection or persist it.
+let protectionHeaders = {};
+if (origin !== "https://easygas-client-demo.vercel.app") {
+  const project = JSON.parse(
+    execFileSync(
+      "vercel",
+      ["api", "/v9/projects/prj_cFSaJuN9r4x93RLov1LLVO3cdVA2"],
+      { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
+    ),
+  );
+  assert.equal(project.id, "prj_cFSaJuN9r4x93RLov1LLVO3cdVA2");
+  const bypass = Object.entries(project.protectionBypass || {}).find(
+    ([, value]) => value.scope === "automation-bypass",
+  );
+  assert.ok(bypass, "Existing candidate automation access is required");
+  protectionHeaders = { "x-vercel-protection-bypass": bypass[0] };
+}
 const accounts = JSON.parse(
   await fs.readFile(".data/demo-test-logins-20261110.json", "utf8"),
 ).accounts;
@@ -17,6 +36,7 @@ async function rpc(action, input, token) {
   const response = await fetch(origin + "/api/" + action, {
     method: input === undefined ? "GET" : "POST",
     headers: {
+      ...protectionHeaders,
       "content-type": "application/json",
       "x-easygas-client": "native",
       ...(token ? { authorization: "Bearer " + token } : {}),
@@ -37,7 +57,7 @@ function verify(role, action, result, expected) {
   });
   assert.equal(result.status, expected, role + " " + action);
 }
-verify("public", "health", await rpc("health"), 200);
+verify("public", "status", await rpc("status"), 200);
 for (const role of [
   "owner",
   "manager",
@@ -78,7 +98,7 @@ for (const role of [
         : role === "manager"
           ? ["navigation", "orders", "bookings"]
           : role === "finance"
-            ? ["navigation", "orders", "finance.ledger?page=1&pageSize=25"]
+            ? ["navigation", "orders", "finance.ledger?limit=25"]
             : role === "driver"
               ? ["driver.snapshot", "orders"]
               : role === "technician"
@@ -117,11 +137,7 @@ const publicCatalogue = await rpc("catalogue");
 verify("public", "catalogue", publicCatalogue, 200);
 catalogue = publicCatalogue.body;
 const product = catalogue.products.find(
-  (p) =>
-    p.category !== "Gas refills" &&
-    p.published &&
-    p.available > 0 &&
-    p.price_kobo > 0,
+  (p) => p.category !== "Gas refills" && p.published && p.price_kobo > 0,
 );
 assert.ok(
   product,
@@ -138,9 +154,15 @@ const input = {
   items: [{ productId: product.id, quantity: 1 }],
 };
 const quote = await rpc("gas.quote", input);
-verify("public", "product-only quote", quote, 200);
-assert.equal(quote.body.physicalLines[0].productId, product.id);
-assert.ok(quote.body.physicalSubtotalKobo > 0);
+// Never add stock or misrepresent an unavailable demo item as purchasable.
+if (Number(product.available) > 0) {
+  verify("public", "product-only quote", quote, 200);
+  assert.equal(quote.body.physicalLines[0].productId, product.id);
+  assert.ok(quote.body.physicalSubtotalKobo > 0);
+} else {
+  verify("public", "out-of-stock product-only quote rejected", quote, 409);
+  assert.match(JSON.stringify(quote.body), /stock|available|unavailable/i);
+}
 verify(
   "public",
   "empty quote rejected",
@@ -163,6 +185,12 @@ await fs.writeFile(
         "Read-only business checks plus temporary own auth/session restriction/revocation and public price quotes; no order, payment, stock, policy or safety writes",
       checks,
       passed: checks.length,
+      positiveHostedProductQuote:
+        Number(product.available) > 0
+          ? "PASS"
+          : "BLOCKED_NO_PURCHASABLE_PHYSICAL_STOCK",
+      positiveProductQuoteEvidence:
+        "Local native component plus real API fixture passed; hosted positive case remains blocked by existing demo stock",
     },
     null,
     2,

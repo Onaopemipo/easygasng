@@ -12,6 +12,7 @@ import {
   nativeCheckoutPayload,
 } from "../packages/business-rules/src/mobile-next-checkout";
 import { fixture } from "./helpers/order-tracking-fixture";
+import { fixture as serviceFixture } from "./helpers/service-fixture";
 import { id, hashPassword, issueSession } from "../apps/web/lib/auth";
 import { NextRequest } from "next/server";
 import { GET, POST } from "../apps/web/app/api/[action]/route";
@@ -24,7 +25,7 @@ after(() => fs.rm(tmp, { recursive: true, force: true }));
 await build({
   stdin: {
     contents:
-      "export * from './apps/mobile/HostedPayment';export * from './apps/mobile/CustomerCheckoutDraft';export * from './apps/mobile/MobileNextUI';export * from './apps/mobile/FinanceOverview';export * from './apps/mobile/MobileNextCatalogue';export * from './apps/mobile/MobileNextWorkspaces';export * from './apps/mobile/MobileNextFieldWork';export {default as CustomerHome} from './apps/mobile/CustomerHome';export {default as GasOrder} from './apps/mobile/GasOrder';export * as host from './tests/helpers/mobile-next-hosts';",
+      "export * from './apps/mobile/HostedPayment';export * from './apps/mobile/CustomerCheckoutDraft';export * from './apps/mobile/MobileNextUI';export * from './apps/mobile/FinanceOverview';export * from './apps/mobile/MobileNextCatalogue';export * from './apps/mobile/MobileNextWorkspaces';export * from './apps/mobile/MobileNextFieldWork';export {default as CustomerHome} from './apps/mobile/CustomerHome';export {default as CombinedCheckout} from './apps/mobile/CombinedCheckout';export {default as GasOrder} from './apps/mobile/GasOrder';export * as host from './tests/helpers/mobile-next-hosts';",
     resolveDir: process.cwd(),
     loader: "tsx",
   },
@@ -363,7 +364,9 @@ test("NXT-REAL-CHECKOUT: actual native form and bearer routes quote physical pro
             },
             gasEnabled: false,
             fromCart: true,
-            done() {},
+            done(orderId: string) {
+              trackedOrderId = orderId;
+            },
             onPlaced() {},
             viewServices() {},
           }),
@@ -653,6 +656,7 @@ test("NXT-GAS-CHECKOUT: the actual three-step native refill uses current catalog
         includeAppointments: false,
       },
     });
+    let trackedOrderId: string | undefined;
     function Refill() {
       const [dock, setDock] = React.useState(null);
       return React.createElement(
@@ -666,7 +670,9 @@ test("NXT-GAS-CHECKOUT: the actual three-step native refill uses current catalog
             user,
             catalogue: { gas, products: [] },
             cart: [],
-            done() {},
+            done(orderId: string) {
+              trackedOrderId = orderId;
+            },
             onPlaced() {},
             viewServices() {},
           }),
@@ -677,7 +683,13 @@ test("NXT-GAS-CHECKOUT: the actual three-step native refill uses current catalog
     t = await mount(Refill, {});
     await drain();
     assert.match(text(t), /quantity limits must be configured/);
-    assert.equal(t.root.findAllByType("Pressable").find((b:any)=>b.props.accessibilityLabel==="Add another cylinder").props.disabled,true);
+    assert.equal(
+      t.root
+        .findAllByType("Pressable")
+        .find((b: any) => b.props.accessibilityLabel === "Add another cylinder")
+        .props.disabled,
+      true,
+    );
     assert.equal(
       t.root
         .findAllByType("TextInput")
@@ -724,6 +736,122 @@ test("NXT-GAS-CHECKOUT: the actual three-step native refill uses current catalog
     assert.equal(orders[0].payment_method, "cash_on_delivery");
     assert.notEqual(orders[0].payment_status, "verified");
     assert.equal(Number(orders[0].gas_lines[0].grams), 6000);
+    await click(t, "Track your order");
+    assert.equal(
+      trackedOrderId,
+      orders[0].id,
+      "Track order opens the canonical order, not service bookings",
+    );
+    assertTextParents(t.toJSON());
+  } finally {
+    if (t) await act(async () => t.unmount());
+    await f.db.close?.();
+  }
+});
+
+test("NXT-MIXED-RECOVERY: an uncertain service-only checkout is recoverable beside an unrelated physical cart", async () => {
+  const f = await serviceFixture();
+  let t: any;
+  try {
+    m.host.files.clear();
+    m.host.storage.clear();
+    const tasks: Promise<any>[] = [];
+    const api = (endpoint: string, input?: any) => {
+      const [action, q] = endpoint.split("?");
+      const task = f.call(
+        "customer",
+        action,
+        input ?? Object.fromEntries(new URLSearchParams(q)),
+      );
+      tasks.push(task);
+      return task;
+    };
+    async function drain() {
+      for (let n = 0; n < 5; n++) {
+        const count = tasks.length;
+        await act(async () => {
+          await Promise.allSettled(tasks);
+        });
+        if (count === tasks.length) break;
+      }
+    }
+    const user = { id: f.actors.customer.id, role: "customer" };
+    const payload = { appointments: [f.input()], idempotencyKey: id() };
+    // A real committed response was lost: the client must reuse exactly its saved key.
+    const committed = await api("checkout.mixed", payload);
+    await assert.rejects(
+      () => f.call("owner", "checkout.mixed", payload),
+      (e: any) => e.status === 403,
+    );
+    await assert.rejects(
+      () =>
+        api("checkout.mixed", {
+          ...payload,
+          appointments: [
+            { ...payload.appointments[0], notes: "Changed after commit" },
+          ],
+        }),
+      (e: any) => e.status === 409,
+    );
+    const foreign = await f
+      .call("commercial", "checkout.mixed", {
+        ...payload,
+        idempotencyKey: id(),
+      })
+      .catch((e: any) => ({ status: e.status }));
+    assert.equal(
+      foreign.status,
+      409,
+      "Another account cannot replay this customer's booking",
+    );
+    await m.saveCheckoutDraft({
+      userId: user.id,
+      pending: { action: "checkout.mixed", payload },
+      draft: { kind: "service-review" },
+    });
+    const cart = [{ productId: "unrelated-product", quantity: 1 }];
+    let finished = false,
+      destination: string | undefined;
+    function Checkout() {
+      const [dock, setDock] = React.useState(null);
+      return React.createElement(
+        m.NextDockContext.Provider,
+        { value: setDock },
+        React.createElement(
+          React.Fragment,
+          null,
+          React.createElement(m.CombinedCheckout, {
+            user,
+            api,
+            cart,
+            catalogue: {
+              products: [{ id: "unrelated-product", category: "Accessories" }],
+            },
+            done: (orderId?: string) => {
+              finished = true;
+              destination = orderId;
+            },
+            orderGas() {},
+          }),
+          dock,
+        ),
+      );
+    }
+    t = await mount(Checkout, {});
+    await drain();
+    await click(t, "View linked requests");
+    await drain();
+    await click(t, "Retry saved request");
+    await drain();
+    assert.match(text(t), /Your requests are saved/);
+    const bookings = await api("bookings");
+    assert.equal(bookings.length, 1);
+    assert.equal(bookings[0].id, committed.bookings[0].id);
+    await click(t, "View appointments");
+    assert.equal(finished, true);
+    assert.equal(destination, undefined);
+    assert.deepEqual(cart, [{ productId: "unrelated-product", quantity: 1 }]);
+    assert.equal(await m.readCheckoutDraft(user.id), null);
     assertTextParents(t.toJSON());
   } finally {
     if (t) await act(async () => t.unmount());

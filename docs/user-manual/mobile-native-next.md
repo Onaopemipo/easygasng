@@ -41,3 +41,11 @@ Technicians open the assigned job, inspect current assessment and scope, then us
 Recent private reads are scoped to the current account/session and revalidated. Fast navigation avoids a repeated branded loader; slower content uses a consistent delayed skeleton. Foreground revalidation, connection errors and retry actions remain explicit. Page transitions respect Reduce Motion. Transparent artwork and approved light/dark colours are shared across the app. Content remains edge-to-edge with safe-area and keyboard handling.
 
 Current source/API/component results and the still-open phone/tablet, accessibility, hosted and distribution checks are recorded in the [native adoption matrix](../traceability/mobile-native-next-rtm.md). Browser prototype screenshots are design evidence, not native device acceptance. Production NO-GO, genuine safety/provider acceptance and historical import/retention holds remain unchanged.
+
+## Recovering linked appointments
+
+If the app loses the response after you confirm appointments, reopen the saved checkout and select **View linked requests**, then **Retry saved request**. The same request reference recovers the original appointments. The app preserves other products in your cart. **View appointments** opens your bookings; **Track your order** opens the saved product/gas order.
+
+The current design is visible in the development simulator. Store-installed versions remain on their previously uploaded binaries until a separate release is built and distributed. Role, tablet, keyboard and provider acceptance remain tracked in the native traceability matrix.
+
+![Current native Home](../mobile-native-next/evidence/native-home-phone.png)

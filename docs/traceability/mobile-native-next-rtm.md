@@ -4,7 +4,7 @@ Approved design: [private prototype](https://easygas-mobile-next.philipmuyiwa.ch
 
 **Current full scope remains PARTIAL.** All10 requirements/10 gates,36 families,300 stable features and117 historical screen entries remain in scope. The300 leaves retain286 partial and14 external blocks; none is dropped or individually marked device-accepted. Production NO-GO/import/retain-all and prior unrelated holds are preserved.
 
-Executed: full regression1,180pass/0fail/29PostgreSQL-skipped;159focused checks pass;18latest-phase checks pass;73source compatibility checks pass. Current-source native visual, hosted continuation and installed distribution remain separately open.
+Executed: full regression1,180pass/0fail/29PostgreSQL-skipped;159focused checks pass;18latest-phase checks pass;73source compatibility checks pass. Implementation CI at3377eb41 passed1,212/1,212 including independent PostgreSQL cases; the15 follow-up recovery/component checks pass. Current-source guest phone Home/refill/delivery/calendar were observed. Full role/device acceptance, hosted continuation and installed distribution remain separately open.
 
 | ID | Requirement | Status | Evidence / remaining scope |
 |---|---|---|---|
@@ -16,7 +16,7 @@ Executed: full regression1,180pass/0fail/29PostgreSQL-skipped;159focused checks 
 | NXT-R06 | Owner, manager and finance workspaces | PARTIAL | Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open. |
 | NXT-R07 | Driver and technician workflows | PARTIAL | Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open. |
 | NXT-R08 | All 36 families and 300 features retained with real API authority | PARTIAL | All 300 original IDs and source/API mappings remain in scope: 286 partial and 14 externally blocked leaves are preserved. No current native leaf is individually accepted. |
-| NXT-R09 | Role, exception, device and visual acceptance | PARTIAL | Real API/component role and negative checks pass. Device Hub initially unavailable; after recovery the selected Expo project could not connect. Updated launcher prepared; no current-source native visual pass claimed. |
+| NXT-R09 | Role, exception, device and visual acceptance | PARTIAL | Actual guest phone Home/refill/delivery/area/calendar observed. Calendar automation is unavailable; full checkout, role, tablet and accessibility visual checks remain open. Implementation CI1,212/1,212 and follow-up15/15 pass. |
 | NXT-R10 | Manual, traceability and delivery evidence | PARTIAL | Native implementation and bounded real API/component checks completed; exact native phone/tablet visual, per-feature and hosted/store acceptance remain open. |
 
 [All300 retained feature leaves](../mobile-native-next/feature-acceptance.json). Route existence and browser prototype screenshots do not replace native feature/device acceptance.

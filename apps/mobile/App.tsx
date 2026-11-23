@@ -1150,8 +1150,9 @@ export default function App() {
                     catalogue={catalogue}
                     user={user}
                     cart={cart}
-                    done={() => {
+                    done={(orderId) => {
                       setCart([]);
+                      if (orderId) setOrderFilter(orderId);
                       setScreen("orders");
                     }}
                   />
@@ -1164,8 +1165,11 @@ export default function App() {
                     cart={cart}
                     catalogue={catalogue}
                     done={(orderId) => {
-                      setCart([]);
-                      setScreen("bookings");
+                      if (orderId) {
+                        setCart([]);
+                        setOrderFilter(orderId);
+                        setScreen("orders");
+                      } else setScreen("bookings");
                     }}
                   />
                 ) : user &&
@@ -1598,8 +1602,9 @@ export default function App() {
                       setCart([]);
                       setOrderFilter(id);
                     }}
-                    done={() => {
+                    done={(orderId) => {
                       setCart([]);
+                      if (orderId) setOrderFilter(orderId);
                       setScreen("orders");
                     }}
                   />
