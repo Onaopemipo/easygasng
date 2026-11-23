@@ -104,10 +104,14 @@ for (const role of [
               : role === "technician"
                 ? ["technician.snapshot", "bookings"]
                 : ["account.profile", "orders", "wallet", "testimonials.mine"];
-    for (const path of paths) {
-      const r = await rpc(path, undefined, token);
-      verify(role, path, r, 200);
-      if (path === "production.readiness")
+    const reads = await Promise.allSettled(
+      paths.map((path) => rpc(path, undefined, token)),
+    );
+    for (const [index, result] of reads.entries()) {
+      assert.equal(result.status, "fulfilled", role + " " + paths[index]);
+      const r = result.value;
+      verify(role, paths[index], r, 200);
+      if (paths[index] === "production.readiness")
         assert.equal(r.body.recommendation, "NO-GO");
     }
     if (["customer", "commercial", "driver", "technician"].includes(role))
@@ -117,6 +121,12 @@ for (const role of [
         "production.readiness",
       ])
         verify(role, path, await rpc(path, undefined, token), 403);
+    verify(
+      role,
+      "mixed checkout admission",
+      await rpc("checkout.mixed", {}, token),
+      ["customer", "commercial"].includes(role) ? 400 : 403,
+    );
     if (role === "customer")
       verify(
         role,

@@ -1,0 +1,41 @@
+{
+  "unchanged": true,
+  "deploymentId": "dpl_G8rxXxwGYrFWHobgnpevrLfxf68W",
+  "sourceCommit": "7e2afff4b79c88fd121dc3e728a753df36fcfd0f",
+  "stableOrigin": "https://easygas-client-demo.vercel.app",
+  "rollbackDeploymentId": "dpl_7MERX1577yLJJLDM9JJNTMfH8Htd",
+  "records": {
+    "orders": {
+      "status": 200,
+      "count": 23,
+      "sha256": "76dfb31d49537d9e37f53e219c4db190ca76de3bd5e54615815352dc4869f81f"
+    },
+    "credits": {
+      "status": 200,
+      "count": 6,
+      "sha256": "3145ce62875fbd869a8bfcc0cfbf383fcd1f37ad6e0f123df288c64e55f676ea"
+    },
+    "inventory": {
+      "status": 200,
+      "count": 12,
+      "sha256": "417b55141d8f26dafe0069550d413c911471e0ce7722f83b3f756bcf3f3d314e"
+    },
+    "ledger": {
+      "endpoint": "GET /api/finance.ledger",
+      "status": 200,
+      "count": 17,
+      "sha256": "58a13666c786da789adb32013876fbfeeff2726e9dc57a07c77dbc92caf7052c",
+      "pages": [
+        {
+          "page": 1,
+          "status": 200,
+          "rows": 17,
+          "hasMore": false,
+          "noStore": true
+        }
+      ],
+      "complete": true
+    }
+  },
+  "meaning": "Read-only before/after orders, credits, inventory and complete paginated finance ledger match; auth/session records are outside this business snapshot."
+}

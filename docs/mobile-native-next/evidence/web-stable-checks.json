@@ -1,0 +1,507 @@
+{
+  "origin": "https://easygas-client-demo.vercel.app",
+  "at": "2026-11-23T03:30:03.843Z",
+  "scope": "Read-only business checks plus temporary own auth/session restriction/revocation and public price quotes; no order, payment, stock, policy or safety writes",
+  "checks": [
+    {
+      "role": "public",
+      "action": "status",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "me",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "navigation",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "orders",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "settings?scope=lagos",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "production.readiness",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "mixed checkout admission",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "owner",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "me",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "navigation",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "orders",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "bookings",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "mixed checkout admission",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "manager",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "me",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "navigation",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "orders",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "finance.ledger?limit=25",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "mixed checkout admission",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "finance",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "me",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "driver.restrict",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "driver.snapshot",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "orders",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "purchasing",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "finance.ledger",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "production.readiness",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "mixed checkout admission",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "driver",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "me",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "technician.restrict",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "technician.snapshot",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "bookings",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "purchasing",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "finance.ledger",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "production.readiness",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "mixed checkout admission",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "technician",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "me",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "account.profile",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "orders",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "wallet",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "testimonials.mine",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "purchasing",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "finance.ledger",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "production.readiness",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "mixed checkout admission",
+      "status": 400,
+      "expected": 400,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "unowned payment intent",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "role": "customer",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "login",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "me",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "account.profile",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "orders",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "wallet",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "testimonials.mine",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "purchasing",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "finance.ledger",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "production.readiness",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "mixed checkout admission",
+      "status": 400,
+      "expected": 400,
+      "pass": true
+    },
+    {
+      "role": "commercial",
+      "action": "logout",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "public",
+      "action": "catalogue",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "public",
+      "action": "gas.catalogue",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "role": "public",
+      "action": "out-of-stock product-only quote rejected",
+      "status": 409,
+      "expected": 409,
+      "pass": true
+    },
+    {
+      "role": "public",
+      "action": "empty quote rejected",
+      "status": 400,
+      "expected": 400,
+      "pass": true
+    },
+    {
+      "role": "public",
+      "action": "identity injection rejected",
+      "status": 400,
+      "expected": 400,
+      "pass": true
+    }
+  ],
+  "passed": 71,
+  "positiveHostedProductQuote": "BLOCKED_NO_PURCHASABLE_PHYSICAL_STOCK",
+  "positiveProductQuoteEvidence": "Local native component plus real API fixture passed; hosted positive case remains blocked by existing demo stock"
+}

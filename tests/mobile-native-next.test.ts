@@ -858,3 +858,133 @@ test("NXT-MIXED-RECOVERY: an uncertain service-only checkout is recoverable besi
     await f.db.close?.();
   }
 });
+
+test("NXT-GUEST-RESUME: sign-in retains entered delivery details without a guest order write or forcing another sign-in", async () => {
+  const f = await fixture();
+  let t: any;
+  try {
+    m.host.files.clear();
+    m.host.storage.clear();
+    await f.db.query(
+      "UPDATE settings SET value=$1 WHERE key='gas.quantity_policy' AND scope='lagos'",
+      [
+        JSON.stringify({
+          minimumKg: 1,
+          maximumKg: 50,
+          incrementKg: 0.5,
+          precision: 1,
+          capacitiesKg: [3, 6, 12.5, 25, 50],
+        }),
+      ],
+    );
+    await f.db.query(
+      "INSERT INTO gas_stock(branch_id,grams,reserved_grams) VALUES('lagos',100000,0) ON CONFLICT(branch_id) DO UPDATE SET grams=100000,reserved_grams=0",
+    );
+    const tasks: Promise<any>[] = [];
+    const actions: string[] = [];
+    const api = (endpoint: string, input?: any) => {
+      const [action, q] = endpoint.split("?");
+      actions.push(action);
+      const task = f.call(
+        "customer",
+        action,
+        input ?? Object.fromEntries(new URLSearchParams(q)),
+      );
+      tasks.push(task);
+      return task;
+    };
+    async function drain() {
+      for (let n = 0; n < 5; n++) {
+        const count = tasks.length;
+        await act(async () => {
+          await Promise.allSettled(tasks);
+        });
+        if (count === tasks.length) break;
+      }
+    }
+    const gas = await api("gas.catalogue?branchId=lagos");
+    let captured: any,
+      signIns = 0;
+    function Flow({ user, initialDraft }: any) {
+      const [dock, setDock] = React.useState(null);
+      return React.createElement(
+        m.NextDockContext.Provider,
+        { value: setDock },
+        React.createElement(
+          React.Fragment,
+          null,
+          React.createElement(m.GasOrder, {
+            api,
+            user,
+            catalogue: { gas, products: [] },
+            cart: [],
+            initialDraft,
+            onSignIn: (draft: any) => {
+              captured = draft;
+              signIns++;
+            },
+            done() {},
+            onPlaced() {},
+            viewServices() {},
+          }),
+          dock,
+        ),
+      );
+    }
+    t = await mount(Flow, { user: null });
+    await drain();
+    await click(t, "Delivery details");
+    for (const [label, value] of [
+      ["Recipient name", "Synthetic guest"],
+      ["Mobile number", "08012345678"],
+      ["Street address", "12 Guest QA Street"],
+    ]) {
+      const field = t.root
+        .findAllByType("TextInput")
+        .find((x: any) => x.props.accessibilityLabel === label);
+      assert.ok(field, label);
+      await act(async () => field.props.onChangeText(value));
+    }
+    await click(t, "Review order");
+    await drain();
+    assert.equal(signIns, 1);
+    assert.equal(captured.contact.street, "12 Guest QA Street");
+    assert.equal(captured.lines[0].kg, 6);
+    assert.ok(!actions.includes("checkout"));
+    await act(async () => t.unmount());
+    t = null;
+    t = await mount(Flow, {
+      user: {
+        id: f.actors.customer.id,
+        role: "customer",
+        name: "Account name",
+      },
+      initialDraft: captured,
+    });
+    await drain();
+    assert.match(text(t), /Where should/);
+    for (const [label, value] of [
+      ["Recipient name", "Synthetic guest"],
+      ["Mobile number", "08012345678"],
+      ["Street address", "12 Guest QA Street"],
+    ])
+      assert.equal(
+        t.root
+          .findAllByType("TextInput")
+          .find((x: any) => x.props.accessibilityLabel === label).props.value,
+        value,
+      );
+    await click(t, "Review order");
+    await drain();
+    assert.equal(
+      signIns,
+      1,
+      "Authenticated review validates delivery fields instead of reopening sign-in",
+    );
+    assert.match(text(t), /Choose an available delivery area/);
+    assert.equal((await f.call("customer", "orders")).length, 0);
+  } finally {
+    if (t) await act(async () => t.unmount());
+    await f.db.close?.();
+  }
+});
